@@ -68,6 +68,7 @@ $(function () {
 	
 	myGmaps.init();
 	myGmaps.loadData();
+	myGmaps.updDetails();
 	
 	// Events
 	google.maps.event.addListener(myGmaps.objects.polyline, 'click', myGmaps.updPolylineOptions);

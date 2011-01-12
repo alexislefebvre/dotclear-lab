@@ -216,6 +216,11 @@ echo
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js').
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_maps.js').
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/style.css" />'.
+	'<script type="text/javascript">'.
+	dcPage::jsVar('myGmaps.msg.geocoder_error',__('Geocode was not successful for the following reason:')).
+	dcPage::jsVar('myGmaps.msg.type',__('Type')).
+	dcPage::jsVar('myGmaps.msg.coordinates',__('Coordinates')).
+	'</script>'.
 '</head>'.
 '<body>';
 
@@ -310,6 +315,10 @@ if (!$core->error->flag())
 		form::checkbox('scrollwheel',1,$core->blog->settings->myGmaps->scrollwheel).
 		'</label></p>'.
 		'<p>'.__('Choose map center, zoom level and map type.').'</p>'.
+		'<p>'.
+			form::field('q',50,255).
+			'<input type="button" class="submit" name="mq" id="search" value="'.__('Search').'" />'.
+		'</p>'.
 		'<div class="area" id="map_canvas"></div>'.
 	'</fieldset>'.
 	'<p class="area" id="map-details-area" >'.

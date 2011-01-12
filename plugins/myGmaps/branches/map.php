@@ -30,14 +30,14 @@ $post_open_comment = '';
 $post_open_tb = '';
 $post_meta = array();
 $post_meta = array(
-	'center' => $core->blog->settings->myGmaps->center,
-	'zoom' => $core->blog->settings->myGmaps->center,
-	'map_type' => $core->blog->settings->myGmaps->map_type,
-	'elt_type' => 'none',
-	'stroke_weight' => '',
-	'stroke_opacity' => '',
-	'stroke_color' => '',
-	'fill_color' => ''
+	'center' => array($core->blog->settings->myGmaps->center),
+	'zoom' => array($core->blog->settings->myGmaps->zoom),
+	'map_type' => array($core->blog->settings->myGmaps->map_type),
+	'elt_type' => array('none'),
+	'stroke_weight' => array(''),
+	'stroke_opacity' => array(''),
+	'stroke_color' => array(''),
+	'fill_color' => array('')
 );
 
 $post_media = array();
@@ -243,7 +243,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			
 			foreach ($post_meta as $k => $v) {
 				$core->meta->delPostMeta($post_id,$k);
-				$core->meta->setPostMeta($post_id,$k,(array_key_exists($k,$_POST) ? $_POST[$k] : $v));
+				$core->meta->setPostMeta($post_id,$k,(array_key_exists($k,$_POST) ? $_POST[$k] : $v[0]));
 			}
 			http::redirect(''.$p_url.'&go=map&id='.$post_id.'&upd=1');
 		}
@@ -267,7 +267,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			$core->callBehavior('adminAfterPostCreate',$cur,$return_id);
 			
 			foreach ($post_meta as $k => $v) {
-				$core->meta->setPostMeta($return_id,$k,(array_key_exists($k,$_POST) ? $_POST[$k] : $v));
+				$core->meta->setPostMeta($return_id,$k,(array_key_exists($k,$_POST) ? $_POST[$k] : $v[0]));
 			}
 			http::redirect(''.$p_url.'&go=map&id='.$return_id.'&crea=1');
 		}
@@ -308,6 +308,17 @@ echo
 	$next_headlink."\n".$prev_headlink.
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/style.css" />'.
 	'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
+	'<script type="text/javascript">'.
+	dcPage::jsVar('myGmaps.msg.invalid_url',__('Invalid kml URL')).
+	dcPage::jsVar('myGmaps.msg.geocoder_error',__('Geocode was not successful for the following reason:')).
+	dcPage::jsVar('myGmaps.msg.fill_color',__('Fill color:')).
+	dcPage::jsVar('myGmaps.msg.stroke_color',__('Line color:')).
+	dcPage::jsVar('myGmaps.msg.stroke_weight',__('Line weight:')).
+	dcPage::jsVar('myGmaps.msg.stroke_opacity',__('Line opacity:')).
+	dcPage::jsVar('myGmaps.msg.apply',__('Apply')).
+	dcPage::jsVar('myGmaps.msg.type',__('Type')).
+	dcPage::jsVar('myGmaps.msg.coordinates',__('Coordinates')).
+	'</script>'.
 '</head>'.
 '<body>';
 

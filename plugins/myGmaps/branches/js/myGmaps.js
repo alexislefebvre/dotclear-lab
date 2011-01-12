@@ -7,7 +7,7 @@ var myGmaps = {
 	},
 	zoom: '12',
 	type: 'roadmap',
-	elt_type: 'none',
+	elt_type: '',
 	scrollwheel: false,
 	events: [],
 	markers: [],
@@ -96,7 +96,9 @@ var myGmaps = {
 			position: latLng,
 			draggable: true
 		});
-		myGmaps.markers.push(marker);
+		if (myGmaps.elt_type != 'none') {
+			myGmaps.markers.push(marker);
+		}
 		// Add markers
 		if (myGmaps.elt_type == 'marker') {
 			if (myGmaps.markers.length > 1) {
@@ -175,7 +177,7 @@ var myGmaps = {
 			kml.setMap(myGmaps.map);
 		}
 		else {
-			alert('Wrong format');
+			alert(myGmaps.msg.invalid_url);
 		}
 	},
 	
@@ -200,7 +202,7 @@ var myGmaps = {
 						myGmaps.map.panTo(results[0].geometry.location);
 						myGmaps.addPoint(results[0].geometry.location);
 					} else {
-						alert("Geocode was not successful for the following reason: " + status);
+						alert(myGmaps.msg.geocoder_error + ' ' +status);
 					}
 				});
 			});
@@ -214,21 +216,21 @@ var myGmaps = {
 		var content = 
 		// Colors
 		'<div>' +
-		'<p><label>Fill color:' +
+		'<p><label>' + myGmaps.msg.stroke_color +
 		'<input type="text" id="line" size="7" value="'+myGmaps.objects.polyline.strokeColor+'" />' +
 		'</label></p>' +
 		'</div>' +
 		// Sliders
-		'<div><p><label>Line stroke:' +
+		'<div><p><label>' + myGmaps.msg.stroke_weight +
 		'<input type="text" id="stroke" size="3" value="'+myGmaps.objects.polyline.strokeWeight+'"/>' +
 		'<div id="slider-stroke"></div>' +
 		'</label></p>' +
-		'<p><label>Opacity:' +
+		'<p><label>' + myGmaps.msg.stroke_opacity +
 		'<input type="text" id="opacity" size="3" value="'+myGmaps.objects.polyline.strokeOpacity+'" />' +
 		'</label></p>' +
 		'<div id="slider-opacity"></div>' +
 		'</div>' +
-		'<p><input type="button" class="submit" id="apply" value="Apply" /></p>';
+		'<p><input type="button" class="submit" id="apply" value="' + myGmaps.msg.apply + '" /></p>';
 		myGmaps.infowindow.setContent(content);
 		myGmaps.infowindow.setPosition(event.latLng);
 		myGmaps.infowindow.open(myGmaps.map);
@@ -252,24 +254,24 @@ var myGmaps = {
 		var content = 
 		// Colors
 		'<div class="two-cols"><div class="col">' +
-		'<p><label>Fill color:' +
+		'<p><label>' + myGmaps.msg.fill_color +
 		'<input type="text" id="fill" size="7" value="'+myGmaps.objects.polygon.fillColor+'" />' +
 		'</label></p>' +
 		'</div><div class="col">' +
-		'<p><label>Line color:' +
+		'<p><label>' + myGmaps.msg.stroke_color +
 		'<input type="text" id="line" size="7" value="'+myGmaps.objects.polygon.strokeColor+'" />' +
 		'</div></div>' +
 		// Sliders
-		'<div><p><label>Line stroke:' +
+		'<div><p><label>' + myGmaps.msg.stroke_weight +
 		'<input type="text" id="stroke" size="3" value="'+myGmaps.objects.polygon.strokeWeight+'"/>' +
 		'<div id="slider-stroke"></div>' +
 		'</label></p>' +
-		'<p><label>Opacity:' +
+		'<p><label>' + myGmaps.msg.stroke_opacity +
 		'<input type="text" id="opacity" size="3" value="'+myGmaps.objects.polygon.strokeOpacity+'" />' +
 		'</label></p>' +
 		'<div id="slider-opacity"></div>' +
 		'</div>' +
-		'<p><input type="button" class="submit" id="apply" value="Apply" /></p>';
+		'<p><input type="button" class="submit" id="apply" value="' + myGmaps.msg.apply + '" /></p>';
 		myGmaps.infowindow.setContent(content);
 		myGmaps.infowindow.setPosition(event.latLng);
 		myGmaps.infowindow.open(myGmaps.map);
@@ -317,10 +319,10 @@ var myGmaps = {
 			points.push(marker);
 		}
 		
-		var content = '<h3>Type: ' + type + '</h3>' + '<ul>';
+		var content = '<h3>' + myGmaps.msg.type + ': ' + type + '</h3>' + '<ul>';
 		
 		for (i in points) {
-			content += '<li>#' + (parseInt(i) + 1) + ' - Coordinates: ' + points[i].getPosition().toString() + '</li>';
+			content += '<li>#' + (parseInt(i) + 1) + ' - ' + myGmaps.msg.coordinates + ': ' + points[i].getPosition().toString() + '</li>';
 			
 		}
 		
@@ -429,7 +431,9 @@ var myGmaps = {
 		$('li#marker').removeClass('selected');
 		$('li#polyline').removeClass('selected');
 		$('li#polygon').removeClass('selected');
-		$('li#' + id).addClass('selected');
+		if (id != '') {
+			$('li#' + id).addClass('selected');
+		}
 	},
 	
 	trim: function(str) {
