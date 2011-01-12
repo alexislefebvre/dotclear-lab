@@ -9,6 +9,8 @@ var myGmaps = {
 	type: 'roadmap',
 	elt_type: '',
 	scrollwheel: false,
+	icons: [],
+	iconIndex: 0,
 	events: [],
 	markers: [],
 	kmls: [],
@@ -34,6 +36,7 @@ var myGmaps = {
 		}
 	},
 	infowindow: null,
+	
 	msg: {},
 	
 	// Initialization
@@ -107,6 +110,9 @@ var myGmaps = {
 			}
 			marker.setMap(myGmaps.map);
 			marker.setTitle("#" + myGmaps.markers.length);
+			google.maps.event.addListener(marker, 'click', function() {
+				myGmaps.updIcon();
+			});
 			google.maps.event.addListener(marker, 'dblclick', function() {
 				marker.setMap(null);
 				for (var i = 0, I = myGmaps.markers.length; i < I && myGmaps.markers[i] != marker; ++i);
@@ -127,6 +133,9 @@ var myGmaps = {
 			myGmaps.path.polyline.insertAt(myGmaps.path.polyline.length, latLng);
 			marker.setMap(myGmaps.map);
 			marker.setTitle("#" + myGmaps.path.polyline.length);
+			google.maps.event.addListener(marker, 'click', function() {
+				myGmaps.updIcon();
+			});
 			google.maps.event.addListener(marker, 'dblclick', function() {
 				marker.setMap(null);
 				for (var i = 0, I = myGmaps.markers.length; i < I && myGmaps.markers[i] != marker; ++i);
@@ -147,6 +156,9 @@ var myGmaps = {
 			myGmaps.path.polygon.insertAt(myGmaps.path.polygon.length, latLng);
 			marker.setMap(myGmaps.map);
 			marker.setTitle("#" + myGmaps.path.polygon.length);
+			google.maps.event.addListener(marker, 'click', function() {
+				myGmaps.updIcon();
+			});
 			google.maps.event.addListener(marker, 'dblclick', function() {
 				marker.setMap(null);
 				for (var i = 0, I = myGmaps.markers.length; i < I && myGmaps.markers[i] != marker; ++i);
@@ -329,6 +341,13 @@ var myGmaps = {
 		content += '</ul>';
 		
 		$('#map-details').html(content);
+	},
+	
+	updIcon: function(marker) {
+		var icon = myGmaps.icons[(myGmaps.iconIndex++) % myGmaps.icons.length];
+		for (i in myGmaps.markers) {
+			myGmaps.markers[i].setIcon(icon);
+		}
 	},
 	
 	delOverlays: function(overwrite) {

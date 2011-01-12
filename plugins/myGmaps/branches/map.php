@@ -290,6 +290,17 @@ if (!empty($_POST['delete']) && $can_delete)
 	}
 }
 
+# Gets icons
+$jsVar = '';
+$icons = array();
+$list = files::getDirList(dirname(__FILE__).'/icons');
+foreach ($list['files'] as $icon) {
+	$icon = str_replace(dirname(__FILE__).'/icons/','',$icon);
+	$icon = "'index.php?pf=myGmaps/icons/".$icon."'";
+	array_push($icons,$icon);
+}
+$jsVar = 'myGmaps.icons = ['.implode(',',$icons).'];';
+
 /* DISPLAY
 -------------------------------------------------------- */
 
@@ -318,6 +329,7 @@ echo
 	dcPage::jsVar('myGmaps.msg.apply',__('Apply')).
 	dcPage::jsVar('myGmaps.msg.type',__('Type')).
 	dcPage::jsVar('myGmaps.msg.coordinates',__('Coordinates')).
+	$jsVar.
 	'</script>'.
 '</head>'.
 '<body>';
