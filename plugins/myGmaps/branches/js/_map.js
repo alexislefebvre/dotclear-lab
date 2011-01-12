@@ -48,14 +48,33 @@ $(function () {
 	if ($('input[name=scrollwheel]').val() != '') {
 		myGmaps.scrollwheel = $('input[name=scrollwheel]').val() == '1' ? true : false;
 	}
+	if ($('input[name=map_type]').val() != '') {
+		myGmaps.type = $('input[name=map_type]').val();
+	}
+	if ($('input[name=elt_type]').val() != '') {
+		myGmaps.elt_type = $('input[name=elt_type]').val();
+	}
+	if (myGmaps.elt_type == 'polyline') {
+		myGmaps.options[myGmaps.elt_type].strokeWeight = $('input[name=stroke_weight]').val();
+		myGmaps.options[myGmaps.elt_type].strokeOpacity = $('input[name=stroke_opacity]').val();
+		myGmaps.options[myGmaps.elt_type].strokeColor = $('input[name=stroke_color]').val();
+	}
+	if (myGmaps.elt_type == 'polygon') {
+		myGmaps.options[myGmaps.elt_type].strokeWeight = $('input[name=stroke_weight]').val();
+		myGmaps.options[myGmaps.elt_type].strokeOpacity = $('input[name=stroke_opacity]').val();
+		myGmaps.options[myGmaps.elt_type].strokeColor = $('input[name=stroke_color]').val();
+		myGmaps.options[myGmaps.elt_type].strokeWeight = $('input[name=stroke_weight]').val();
+	}
+	
 	myGmaps.init();
-	myGmaps.updDetails();
+	myGmaps.loadData();
 	
 	// Events
 	google.maps.event.addListener(myGmaps.objects.polyline, 'click', myGmaps.updPolylineOptions);
 	google.maps.event.addListener(myGmaps.objects.polygon, 'click', myGmaps.updPolygonOptions);
 	$('li#none,li#marker,li#polyline,li#polygon').click(function() {
 		myGmaps.startDraw($(this).attr('id'));
+		
 	});
 	$('input[name=reset]').click(function () {
 		myGmaps.delOverlays(true);
@@ -71,36 +90,11 @@ $(function () {
 		myGmaps.addKml(msg);
 	});
 	$('#entry-form').submit(function () {
-		var post_maps = $('#post_maps').val();
-		if (post_maps == '') {
-			$('#post_maps').val('none');
-		}
 		var content = $("textarea[name=post_content]").val();
 		if (content == '') {
 			$("textarea[name=post_content]").val('Pas de description');
 		}
-		setConfig(); return false;
-		var center = map.getCenter().lat()+','+map.getCenter().lng();
-		var zoom = map.getZoom();
-		var map_type = map.getMapTypeId();
-		var elt_type = type == 'hand' ? 'none' : type;
-		
-		$('input[name=center]').val(center);
-		$('input[name=zoom]').val(zoom);
-		$('input[name=map_type]').val(map_type);
-		$('input[name=elt_type]').val(elt_type);
-		
-		var list = [];
-		var icon = '';
-		for (i in markers) {
-			if (is_url(markers[i])) {
-				list.push(markers[i]);
-			}
-			else {
-				list.push(markers[i].getPosition().lat() + "|" + markers[i].getPosition().lng() + "|" + icon);
-			}
-		}
-		$('#post_excerpt').val(list.join('\n'));
+		myGmaps.setMapPoints();
 		return true;
 	});
 });

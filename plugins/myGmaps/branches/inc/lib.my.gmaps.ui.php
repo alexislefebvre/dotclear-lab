@@ -2,7 +2,7 @@
 
 class adminMyGmapsList extends adminGenericList
 {
-	public function display($page,$nb_per_page,$enclose_block='')
+	public function display($page,$nb_per_page,$p_url,$enclose_block='')
 	{
 		if ($this->rs->isEmpty())
 		{
@@ -37,7 +37,7 @@ class adminMyGmapsList extends adminGenericList
 
 			while ($this->rs->fetch())
 			{
-				echo $this->postLine();
+				echo $this->postLine($p_url);
 			}
 
 			echo $blocks[1];
@@ -46,14 +46,13 @@ class adminMyGmapsList extends adminGenericList
 		}
 	}
 
-	private function postLine()
+	private function postLine($p_url)
 	{
 		if ($this->core->auth->check('categories',$this->core->blog->id)) {
 			$cat_link = '<a href="category.php?id=%s">%s</a>';
 		} else {
 			$cat_link = '%2$s';
 		}
-		$p_url	= 'plugin.php?p='.basename(dirname(__FILE__));
 		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
 		switch ($this->rs->post_status) {
 			case 1:
@@ -79,7 +78,7 @@ class adminMyGmapsList extends adminGenericList
 		$res .=
 		'<td class="nowrap">'.
 		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
-		'<td class="maximal"><a href="'.$p_url.'&amp;do=edit&amp;id='.$this->rs->post_id.'">'.
+		'<td class="maximal"><a href="'.$p_url.'&amp;go=map&amp;id='.$this->rs->post_id.'">'.
 		html::escapeHTML($this->rs->post_title).'</a></td>'.
 		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt).'</td>'.
 		'<td class="nowrap">'.$cat_title.'</td>'.

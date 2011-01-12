@@ -20,6 +20,19 @@ var myGmaps = {
 		polyline: null,
 		polygon: null
 	},
+	options: {
+		polyline: {
+			strokeColor: '#000000',
+			strokeWeight: 3,
+			strokeOpacity: 0.5
+		},
+		polygon: {
+			fillColor: '#5555FF',
+			strokeColor: '#000000',
+			strokeWeight: 3,
+			strokeOpacity: 0.5
+		}
+	},
 	infowindow: null,
 	msg: {},
 	
@@ -33,17 +46,8 @@ var myGmaps = {
 		myGmaps.path.polyline = new google.maps.MVCArray;
 		myGmaps.path.polygon = new google.maps.MVCArray;
 		// Init objects
-		myGmaps.objects.polyline = new google.maps.Polyline({
-			strokeColor: '#000000',
-			strokeWeight: 3,
-			strokeOpacity: 0.5
-		});
-		myGmaps.objects.polygon = new google.maps.Polygon({
-			fillColor: '#5555FF',
-			strokeColor: '#000000',
-			strokeWeight: 3,
-			strokeOpacity: 0.5
-		});
+		myGmaps.objects.polyline = new google.maps.Polyline(myGmaps.options.polyline);
+		myGmaps.objects.polygon = new google.maps.Polygon(myGmaps.options.polygon);
 		myGmaps.objects.polyline.setPath(new google.maps.MVCArray([myGmaps.path.polyline]));
 		myGmaps.objects.polygon.setPath(new google.maps.MVCArray([myGmaps.path.polygon]));
 		myGmaps.objects.polyline.setMap(this.map);
@@ -71,7 +75,8 @@ var myGmaps = {
 	},
 	
 	loadData: function() {
-		var list = $('input[name=post_excerpt]').val().split("\n");
+		var list = $('textarea[name=post_excerpt]').val().split("\n");
+		myGmaps.elt_type = $('input[name=elt_type]').val();
 		for (var i = 0; i < list.length; i++) {
 			if (list[i].length > 0) {
 				if (this.is_url(list[i])) {
@@ -363,6 +368,60 @@ var myGmaps = {
 		$('input[name=center]').val(myGmaps.map.getCenter().lat() + ',' + myGmaps.map.getCenter().lng());
 		$('input[name=zoom]').val(myGmaps.map.getZoom());
 		$('input[name=map_type]').val(myGmaps.map.getMapTypeId());
+	},
+	
+	setMapPoints: function() {
+		var type = '';
+		var icon = '';
+		var stroke_weight = '';
+		var stroke_opacity = '';
+		var stroke_color = '';
+		var fill_color = '';
+		var list = [];
+		var points = [];
+		
+		 if (myGmaps.path.polyline.length > 0) {
+			type = 'polyline';
+			list = myGmaps.markers;
+			stroke_weight = myGmaps.objects.polyline.strokeWeight;
+			stroke_opacity = myGmaps.objects.polyline.strokeOpacity;
+			stroke_color = myGmaps.objects.polyline.strokeColor;
+		}
+		else if (myGmaps.path.polygon.length > 0) {
+			type = 'polygon';
+			list = myGmaps.markers;
+			stroke_weight = myGmaps.objects.polygon.strokeWeight;
+			stroke_opacity = myGmaps.objects.polygon.strokeOpacity;
+			stroke_color = myGmaps.objects.polygon.strokeColor;
+			fill_color = myGmaps.objects.polygon.fillColor;
+		}
+		else if (myGmaps.markers.length > 0) {
+			type = 'marker';
+			list = myGmaps.markers;
+		}
+		else if (myGmaps.kmls.length > 0) {
+			type = 'kml';
+			list = myGmaps.kmls;
+		}
+		else {
+			type = 'none';
+		}
+		
+		for (i in list) {
+			if (myGmaps.is_url(list[i].url)) {
+				points.push(list[i].url);
+			}
+			else {
+				points.push(list[i].getPosition().lat() + "|" + list[i].getPosition().lng() + "|" + icon);
+			}
+		}
+		
+		$('input[name=elt_type]').val(type);
+		$('input[name=stroke_weight]').val(stroke_weight);
+		$('input[name=stroke_opacity]').val(stroke_opacity);
+		$('input[name=stroke_color]').val(stroke_color);
+		$('input[name=fill_color]').val(fill_color);
+		$('textarea[name=post_excerpt]').val(points.join("\n"));
 	},
 	
 	select: function(id) {

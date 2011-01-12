@@ -276,7 +276,7 @@ if (!$core->error->flag())
 	'</form>';
 	
 	# Show posts
-	$post_list->display($page,$nb_per_page,
+	$post_list->display($page,$nb_per_page,$p_url,
 	'<form action="'.$p_url.'" method="post" id="form-entries">'.
 	
 	'%s'.

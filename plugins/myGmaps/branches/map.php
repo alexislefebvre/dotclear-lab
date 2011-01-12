@@ -14,7 +14,6 @@ $post_id = '';
 $cat_id = '';
 $post_dt = '';
 $post_type = 'map';
-$post_maps = 'none';
 $post_format = $core->auth->getOption('post_format');
 $post_password = '';
 $post_url = '';
@@ -30,6 +29,16 @@ $post_selected = false;
 $post_open_comment = '';
 $post_open_tb = '';
 $post_meta = array();
+$post_meta = array(
+	'center' => $core->blog->settings->myGmaps->center,
+	'zoom' => $core->blog->settings->myGmaps->center,
+	'map_type' => $core->blog->settings->myGmaps->map_type,
+	'elt_type' => 'none',
+	'stroke_weight' => '',
+	'stroke_opacity' => '',
+	'stroke_color' => '',
+	'fill_color' => ''
+);
 
 $post_media = array();
 
@@ -107,7 +116,6 @@ if (!empty($_REQUEST['id']))
 		$cat_id = $post->cat_id;
 		$post_dt = date('Y-m-d H:i',strtotime($post->post_dt));
 		$post_type = $post->post_type;
-		$post_maps = $post->post_maps;
 		$post_format = $post->post_format;
 		$post_password = $post->post_password;
 		$post_url = $post->post_url;
@@ -178,7 +186,7 @@ if (!empty($_POST) && $can_edit_post)
 	$post_open_comment = !empty($_POST['post_open_comment']);
 	$post_open_tb = !empty($_POST['post_open_tb']);
 	$post_selected = !empty($_POST['post_selected']);
-	$post_lang = $_POST['post_lang'];
+	$post_lang = $core->auth->getInfo('user_lang');
 	$post_password = !empty($_POST['post_password']) ? $_POST['post_password'] : null;
 	
 	$post_notes = $_POST['post_notes'];
@@ -233,22 +241,11 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			# --BEHAVIOR-- adminAfterPostUpdate
 			$core->callBehavior('adminAfterPostUpdate',$cur,$post_id);
 			
-			if (isset($_POST['post_maps'])) {
-				$tags = $_POST['post_maps'];
-				$myGmaps_center = $_POST['myGmaps_center'];
-				$myGmaps_zoom = $_POST['myGmaps_zoom'];
-				$myGmaps_type = $_POST['myGmaps_type'];
-				$meta =& $GLOBALS['core']->meta;
-				$meta->delPostMeta($post_id,'map');
-				$meta->delPostMeta($post_id,'map_options');
-				
-				foreach ($meta->splitMetaValues($tags) as $tag) {
-					$meta->setPostMeta($post_id,'map',$tag);
-				}
-				$map_options = $myGmaps_center.','.$myGmaps_zoom.','.$myGmaps_type;
-				$meta->setPostMeta($post_id,'map_options',$map_options);
+			foreach ($post_meta as $k => $v) {
+				$core->meta->delPostMeta($post_id,$k);
+				$core->meta->setPostMeta($post_id,$k,(array_key_exists($k,$_POST) ? $_POST[$k] : $v));
 			}
-			http::redirect(''.$p_url.'&do=edit&id='.$post_id.'&upd=1');
+			http::redirect(''.$p_url.'&go=map&id='.$post_id.'&upd=1');
 		}
 		catch (Exception $e)
 		{
@@ -269,21 +266,10 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			# --BEHAVIOR-- adminAfterPostCreate
 			$core->callBehavior('adminAfterPostCreate',$cur,$return_id);
 			
-			if (isset($_POST['post_maps'])) {
-				$tags = $_POST['post_maps'];
-				$myGmaps_center = $_POST['myGmaps_center'];
-				$myGmaps_zoom = $_POST['myGmaps_zoom'];
-				$myGmaps_type = $_POST['myGmaps_type'];
-				$meta =& $GLOBALS['core']->meta;
-				
-				foreach ($meta->splitMetaValues($tags) as $tag) {
-					$meta->setPostMeta($return_id,'map',$tag);
-				}
-				$map_options = $myGmaps_center.','.$myGmaps_zoom.','.$myGmaps_type;
-				$meta->setPostMeta($return_id,'map_options',$map_options);
+			foreach ($post_meta as $k => $v) {
+				$core->meta->setPostMeta($return_id,$k,(array_key_exists($k,$_POST) ? $_POST[$k] : $v));
 			}
-			
-			http::redirect(''.$p_url.'&do=edit&id='.$return_id.'&crea=1');
+			http::redirect(''.$p_url.'&go=map&id='.$return_id.'&crea=1');
 		}
 		catch (Exception $e)
 		{
@@ -298,7 +284,7 @@ if (!empty($_POST['delete']) && $can_delete)
 		# --BEHAVIOR-- adminBeforePostDelete
 		$core->callBehavior('adminBeforePostDelete',$post_id);
 		$core->blog->delPost($post_id);
-		http::redirect($p_url.'&do=list');
+		http::redirect($p_url.'&go=maps');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
@@ -380,7 +366,7 @@ if ($can_edit_post)
 {
 	echo
 	'<div id="edit-entry">'.
-	'<form action="'.$p_url.'&amp;do=edit" method="post" id="entry-form">'.
+	'<form action="'.$p_url.'&amp;go=map" method="post" id="entry-form">'.
 	'<div id="entry-sidebar">';
 	
 	echo
@@ -409,14 +395,6 @@ if ($can_edit_post)
 	'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Title:').
 	form::field('post_title',20,255,html::escapeHTML($post_title),'maximal',2).
 	'</label></p>';
-	
-	$meta =& $GLOBALS['core']->meta;
-	
-	if(isset($post)) {
-		echo form::hidden('post_maps',$meta->getMetaStr($post->post_meta,'map')).'</p>';
-	} else {
-		echo form::hidden('post_maps','').'</p>';
-	}
 	
 	echo
 	'<p class="area" id="excerpt-area" style="display:none;"><label for="post_excerpt">'.__('Coordinates:').'</label> '.
@@ -459,25 +437,12 @@ if ($can_edit_post)
 	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
 	
-	$metas = array(
-		'elt_type' => array_key_exists('elt_type',$post_meta) ? $post_meta['elt_type'] : 'none',
-		'stroke_weight' => array_key_exists('stroke_weight',$post_meta) ? $post_meta['stroke_weight'] : '',
-		'stroke_opacity' => array_key_exists('stroke_opacity',$post_meta) ? $post_meta['stroke_opacity'] : '',
-		'stroke_color' => array_key_exists('stroke_color',$post_meta) ? $post_meta['stroke_color'] : '',
-		'fill_color' => array_key_exists('fill_color',$post_meta) ? $post_meta['fill_color'] : ''
-	);
-	foreach ($metas as $k => $v) {
-		echo form::hidden($k,$v);
+	echo '<p>';
+	foreach ($post_meta as $k => $v) {
+		echo form::hidden($k,$v[0]);
 	}
-	
 	echo
-	form::hidden('center',$core->blog->settings->myGmaps->center).
-	form::hidden('zoom',$core->blog->settings->myGmaps->zoom).
-	form::hidden('map_type',$core->blog->settings->myGmaps->map_type).
-	form::hidden('scrollwheel',$core->blog->settings->myGmaps->scrollwheel);
-	
-	echo
-	'<p>'.
+	form::hidden('scrollwheel',$core->blog->settings->myGmaps->scrollwheel).
 	($post_id ? form::hidden('id',$post_id) : '').
 	'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
 	'accesskey="s" name="save" /> '.
