@@ -15,7 +15,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 $_menu['Blog']->addItem(
 
 	__('Google Maps'),
-	'plugin.php?p=myGmaps&amp;do=list','index.php?pf=myGmaps/icon.png',
+	'plugin.php?p=myGmaps&amp;go=maps','index.php?pf=myGmaps/icon.png',
 	preg_match('/plugin.php\?p=myGmaps(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('usage,contentadmin',$core->blog->id));
 

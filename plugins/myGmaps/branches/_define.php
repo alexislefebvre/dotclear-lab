@@ -11,10 +11,11 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 $this->registerModule(
-	/* Name */				"myGmaps",
+	/* Name */			"myGmaps",
 	/* Description*/		"Create Google Maps objects to include in maps associated to your posts",
 	/* Author */			"Philippe aka amalgame",
-	/* Version */			'0.7.2',
+	/* Version */			'0.7.5',
 	/* Permissions */		'usage,contentadmin'
 );
+
 ?>

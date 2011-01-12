@@ -23,11 +23,10 @@ if (version_compare($i_version,$m_version,'>=')) {
 /* Settings
 -------------------------------------------------------- */
 $core->blog->settings->addNamespace('myGmaps');
-$s =& $core->blog->settings->myGmaps;
-
-$s->put('myGmaps_center','43.0395797336425, 6.126280043989323','string','Default maps center',false,true);
-$s->put('myGmaps_zoom','12','integer','Default maps zoom level',false,true);
-$s->put('myGmaps_type','roadmap','string','Default maps type',false,true);
+$core->blog->settings->myGmaps->put('center','43.0395797336425, 6.126280043989323','string','Default maps center',false,true);
+$core->blog->settings->myGmaps->put('zoom','12','integer','Default maps zoom level',false,true);
+$core->blog->settings->myGmaps->put('map_type','roadmap','string','Default maps type',false,true);
+$core->blog->settings->myGmaps->put('scrollwheel',false,'boolean','Scrollwheel used',false,true);
 
 $core->setVersion('myGmaps',$m_version);
 

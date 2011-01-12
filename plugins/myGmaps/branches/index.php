@@ -12,29 +12,18 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) return;
 
-if ($_REQUEST['do'] == 'edit') {
-	$edit = 'map';
-	
-} elseif (isset($_GET['add_map_filters'])) {
-	require_once dirname(__FILE__).'/addmap.php';
-	
-} elseif ($_REQUEST['do'] == 'list' || isset($_POST['saveconfig']) || isset($_GET['maps_filters'])) {
-	$edit = 'maps';
-	
-} else {
-	$actions = ($_REQUEST['action']) ? true : false;
-}
+$p_url = 'plugin.php?p=myGmaps';
 
-if ($actions) {
-	require_once dirname(__FILE__).'/maps_actions.php';
+$go = isset($_GET['go']) ? $_GET['go'] : 'maps';
 
-} elseif ($edit == 'map') {
-	require_once dirname(__FILE__).'/map.php';
-
-} elseif ($edit == 'maps') {
+if ($go === 'maps') {
 	require_once dirname(__FILE__).'/maps.php';
-
-} else {
-	require_once dirname(__FILE__).'/addmap.php';
 }
+elseif ($go === 'map') {
+	require_once dirname(__FILE__).'/map.php';
+}
+elseif ($go === 'popup') {
+	require_once dirname(__FILE__).'/popup.php';
+}
+
 ?>

@@ -10,14 +10,20 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-require_once DC_ROOT.'/inc/admin/prepend.php';
+$tab = isset($_GET['tab']) ? $_GET['tab'] : 'list';
 
-$p_url	= 'plugin.php?p='.basename(dirname(__FILE__));
-$default_tab = isset($_GET['tab']) ? $_GET['tab'] : 'entries-list';
-$s =& $core->blog->settings->myGmaps;
-
-dcPage::check('usage,contentadmin');
-
+# Save config
+if (!empty($_POST['save'])) {
+	try {
+		$core->blog->settings->myGmaps->put('center',$_POST['center']);
+		$core->blog->settings->myGmaps->put('zoom',$_POST['zoom']);
+		$core->blog->settings->myGmaps->put('map_type',$_POST['map_type']);
+		$core->blog->settings->myGmaps->put('scrollwheel',$_POST['scrollwheel']);
+		http::redirect($p_url.'&go=maps&tab=config&upd=0');
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+}
 # Getting categories
 try {
 	$categories = $core->blog->getCategories(array('post_type'=>'map'));
@@ -72,10 +78,11 @@ if (!$core->error->flag())
 	
 	$post_maps_combo = array(
 	'-' => '',
-	__('none') => 'none',
-	__('point of interest') => 'point of interest',
-	__('polyline') => 'polyline',
-	__('included kml file') => 'included kml file'
+	__('None') => '',
+	__('Point of interest') => 'marker',
+	__('Polyline') => 'polyline',
+	__('Polygon') => 'polygon',
+	__('Included kml file') => 'kml'
 	);
 	
 	# Months array
@@ -187,175 +194,44 @@ if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
 		$show_filters = true;
 	}
 }
-/* Pager class
--------------------------------------------------------- */
-class adminGmapList extends adminGenericList
-{
-	public function display($page,$nb_per_page,$enclose_block='')
-	{
-		if ($this->rs->isEmpty())
-		{
-			echo '<p><strong>'.__('No element').'</strong></p>';
-		}
-		else
-		{
-			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
-			$pager->html_prev = $this->html_prev;
-			$pager->html_next = $this->html_next;
-			$pager->var_page = 'page';
-
-			$html_block =
-			'<table class="clear"><tr>'.
-			'<th colspan="2">'.__('Title').'</th>'.
-			'<th>'.__('Date').'</th>'.
-			'<th>'.__('Category').'</th>'.
-			'<th>'.__('Author').'</th>'.
-			'<th class="nowrap">'.__('Map element type').'</th>'.
-			'<th>'.__('Status').'</th>'.
-			'</tr>%s</table>';
-
-			if ($enclose_block) {
-				$html_block = sprintf($enclose_block,$html_block);
-			}
-
-			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
-
-			$blocks = explode('%s',$html_block);
-
-			echo $blocks[0];
-
-			while ($this->rs->fetch())
-			{
-				echo $this->postLine();
-			}
-
-			echo $blocks[1];
-
-			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
-		}
-	}
-
-	private function postLine()
-	{
-		if ($this->core->auth->check('categories',$this->core->blog->id)) {
-			$cat_link = '<a href="category.php?id=%s">%s</a>';
-		} else {
-			$cat_link = '%2$s';
-		}
-		$p_url	= 'plugin.php?p='.basename(dirname(__FILE__));
-		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
-		switch ($this->rs->post_status) {
-			case 1:
-				$img_status = sprintf($img,__('published'),'check-on.png');
-				break;
-			case -2:
-				$img_status = sprintf($img,__('pending'),'check-wrn.png');
-				break;
-		}
-		if ($this->rs->cat_title) {
-			$cat_title = sprintf($cat_link,$this->rs->cat_id,
-			html::escapeHTML($this->rs->cat_title));
-		} else {
-			$cat_title = __('None');
-		}
-
-		$res = '<tr class="line'.($this->rs->post_status != 1 ? ' offline' : '').'"'.
-		' id="p'.$this->rs->post_id.'">';
-		
-		$meta =& $GLOBALS['core']->meta;
-		$meta_rs = $meta->getMetaStr($this->rs->post_meta,'map');
-
-		$res .=
-		'<td class="nowrap">'.
-		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
-		'<td class="maximal"><a href="'.$p_url.'&amp;do=edit&amp;id='.$this->rs->post_id.'">'.
-		html::escapeHTML($this->rs->post_title).'</a></td>'.
-		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt).'</td>'.
-		'<td class="nowrap">'.$cat_title.'</td>'.
-		'<td class="nowrap">'.$this->rs->user_id.'</td>'.
-		'<td class="nowrap">'.__($meta_rs).'</td>'.
-		'<td class="nowrap status">'.$img_status.'</td>'.
-		'</tr>';
-
-		return $res;
-	}
-}
 
 # Get posts
 try {
 	$posts = $core->blog->getPosts($params);
 	$counter = $core->blog->getPosts($params,true);
-	$post_list = new adminGmapList($core,$posts,$counter->f(0));
+	$post_list = new adminMyGmapsList($core,$posts,$counter->f(0));
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }
 
-# Save activation 
-
-$myGmaps_center = $s->myGmaps_center;
-$myGmaps_zoom = $s->myGmaps_zoom;
-$myGmaps_type = $s->myGmaps_type;
-
-if (!empty($_POST['saveconfig'])) {
-  try {
-    $s->put('myGmaps_center',$_POST['myGmaps_center']);
-	$s->put('myGmaps_zoom',$_POST['myGmaps_zoom']);	
-	$s->put('myGmaps_type',$_POST['myGmaps_type']);
-	
-	http::redirect($p_url.'&do=list&tab=settings&upd=1');
-	
-  } catch (Exception $e) {
-    $core->error->add($e->getMessage());
-  }
-  
-}
-
 /* DISPLAY
 -------------------------------------------------------- */
-?>
-<html>
-	<head>
-		<title><?php echo __('Google Maps'); ?></title>
-		<?php
-		echo
-		dcPage::jsToolMan().
-		dcPage::jsPageTabs($default_tab).
-		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_maps_list.js').
-		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_admin_map.js')
-		?>
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-		<style type="text/css">
-        #map_canvas{height:400px;padding:3px;border:1px solid #999999;margin:-10px 0 1px 0; }
-        </style>
-	</head>
-	<body>
-<?php
+
+echo
+'<html>'.
+'<head>'.
+	'<title>'.__('Google Maps').'</title>'.
+	dcPage::jsPageTabs($tab).
+	dcPage::jsLoad('http://maps.google.com/maps/api/js?sensor=false').
+	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js').
+	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_maps.js').
+	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/style.css" />'.
+'</head>'.
+'<body>';
 
 # Display messages
-
-if (isset($_GET['upd']))
-{
-	$p_msg = '<p class="message">%s</p>';
-	
-	$a_msg = array(
-		__('Configuration successfully saved.')
-	);
-	
-	$k = (integer) $_GET['upd']-1;
-	
-	if (array_key_exists($k,$a_msg)) {
-		echo sprintf($p_msg,$a_msg[$k]);
-	}
+if (isset($_GET['upd']) && $_GET['upd'] === '0') {
+	echo '<p class="message">'.__('Configuration has been successfully saved').'</p>';
 }
 
 if (!$core->error->flag())
 {
+	echo
+	'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Google Maps').'&nbsp;-&nbsp;'.
+	'<a href="'.$p_url.'&amp;go=map" class="button">'.__('New element').'</a></h2>';
 	
-	echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Google Maps').'</h2>';
+	echo '<div class="multi-part" id="list" title="'.__('Map elements').'">';
 	
-	//
-	echo '<div class="multi-part" id="entries-list" title="'.__('Map elements').'">';
-	echo '<p><strong><a href="'.$p_url.'&amp;do=edit">'.__('New element').'</a></strong></p>';
 	if (!$show_filters) {
 		echo 
 		dcPage::jsLoad('js/filter-controls.js').
@@ -426,28 +302,35 @@ if (!$core->error->flag())
 	
 	echo '</div>';
 	
-	$myGmaps_center = $s->myGmaps_center;
-	$myGmaps_zoom = $s->myGmaps_zoom;
-	$myGmaps_type = $s->myGmaps_type;
-	
-	echo '<div class="multi-part" id="settings" title="'.__('Settings').'">'.
+	echo
+	'<div class="multi-part" id="config" title="'.__('Configuration').'">'.
 	'<form method="post" action="'.$p_url.'" id="settings-form">'.
 	'<fieldset><legend>'.__('Default map options').'</legend>'.
-	'<p>'.__('Choose map center, zoom level and map type.').'</p>'.
+		'<p class="field"><label>'.__('Use scrollwheel').
+		form::checkbox('scrollwheel',1,$core->blog->settings->myGmaps->scrollwheel).
+		'</label></p>'.
+		'<p>'.__('Choose map center, zoom level and map type.').'</p>'.
+		'<div class="area" id="map_canvas"></div>'.
 	'</fieldset>'.
-	'<p class="area" id="map_canvas"></p>'.
-	'<fieldset>'.
-		'<input type="hidden" name="myGmaps_center" id="myGmaps_center" value="'.$myGmaps_center.'" />'.
-		'<input type="hidden" name="myGmaps_zoom" id="myGmaps_zoom" value="'.$myGmaps_zoom.'" />'.
-		'<input type="hidden" name="myGmaps_type" id="myGmaps_type" value="'.$myGmaps_type.'" />'.
+	'<p class="area" id="map-details-area" >'.
+		'<label class="infowindow" for="map-details">'.__('Map details:').'</label>'.
+		'<div id="map-details"></div>'.
+	'</p>'.
+	'<p>'.
+		form::hidden('center',$core->blog->settings->myGmaps->center).
+		form::hidden('zoom',$core->blog->settings->myGmaps->zoom).
+		form::hidden('map_type',$core->blog->settings->myGmaps->map_type).
 		$core->formNonce().
-		'<input type="submit" name="saveconfig" value="'.__('Save configuration').'" />'.
-	'</fieldset>'.
+		'<input type="submit" name="save" value="'.__('Save configuration').'" />'.
+	'</p>'.
 	'</form>'.
 	'</div>';
 }
 
 dcPage::helpBlock('myGmaps');
+
+echo
+'</body>'.
+'</html>';
+
 ?>
-	</body>
-</html>

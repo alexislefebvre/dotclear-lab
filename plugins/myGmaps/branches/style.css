@@ -1,0 +1,53 @@
+/* General */
+#map_canvas{
+	height: 400px;
+	padding: 3px;
+	border: 1px solid #999999;
+	margin: 10px 0 1px 0;
+}
+textarea[name=post_excerpt] {
+	display:none;
+}
+.infowindow {
+	margin-top:1em;
+}	
+/* Map toolbar */
+#toolbar-area ul {
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+#toolbar-area ul li {
+	float: left;
+	padding: 0.2em;
+	list-style: none;
+	cursor: hand;
+}
+li#none, li#marker, li#polyline, li#polygon {
+	width: 31px;
+	height: 31px;
+}
+li#none {
+	background: transparent url(http://google.com/mapfiles/ms/t/Bsu.png) no-repeat top left;
+}
+li#none.selected {
+	background: transparent url(http://google.com/mapfiles/ms/t/Bsd.png) no-repeat top left;
+}
+li#marker {
+	background: transparent url(http://google.com/mapfiles/ms/t/Bmu.png) no-repeat top left;
+}
+li#marker.selected {
+	background: transparent url(http://google.com/mapfiles/ms/t/Bmd.png) no-repeat top left;
+}
+li#polyline {
+	background: transparent url(http://google.com/mapfiles/ms/t/Blu.png) no-repeat top left;
+}
+li#polyline.selected {
+	background: transparent url(http://google.com/mapfiles/ms/t/Bld.png) no-repeat top left;
+}
+li#polygon {
+	background: transparent url(http://google.com/mapfiles/ms/t/Bpu.png) no-repeat top left;
+}
+li#polygon.selected {
+	background: transparent url(http://google.com/mapfiles/ms/t/Bpd.png) no-repeat top left;
+}

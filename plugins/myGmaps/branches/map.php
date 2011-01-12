@@ -10,17 +10,6 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-require_once DC_ROOT.'/inc/admin/prepend.php';
-
-dcPage::check('usage,contentadmin');
-
-$p_url	= 'plugin.php?p='.basename(dirname(__FILE__));
-$s =& $core->blog->settings->myGmaps;
-
-$myGmaps_center = $s->myGmaps_center;
-$myGmaps_zoom = $s->myGmaps_zoom;
-$myGmaps_type = $s->myGmaps_type;
-	
 $post_id = '';
 $cat_id = '';
 $post_dt = '';
@@ -40,6 +29,7 @@ $post_status = $core->auth->getInfo('user_post_status');
 $post_selected = false;
 $post_open_comment = '';
 $post_open_tb = '';
+$post_meta = array();
 
 $post_media = array();
 
@@ -98,7 +88,6 @@ while ($rs->fetch()) {
 unset($all_langs);
 unset($rs);
 
-
 # Get entry informations
 if (!empty($_REQUEST['id']))
 {
@@ -133,6 +122,7 @@ if (!empty($_REQUEST['id']))
 		$post_selected = (boolean) $post->post_selected;
 		$post_open_comment = (boolean) $post->post_open_comment;
 		$post_open_tb = (boolean) $post->post_open_tb;
+		$post_meta = unserialize($post->post_meta);
 		
 		$page_title = __('Edit map element');
 		
@@ -230,12 +220,9 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		$cur->post_url = $post_url;
 	}
 	
-	
-	
 	# Update post
 	if ($post_id)
 	{
-		
 		try
 		{
 			# --BEHAVIOR-- adminBeforePostUpdate
@@ -279,8 +266,6 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			
 			$return_id = $core->blog->addPost($cur);
 			
-			
-			
 			# --BEHAVIOR-- adminAfterPostCreate
 			$core->callBehavior('adminAfterPostCreate',$cur,$return_id);
 			
@@ -321,42 +306,31 @@ if (!empty($_POST['delete']) && $can_delete)
 
 /* DISPLAY
 -------------------------------------------------------- */
-?>
-<html>
-	<head>
-		<title><?php echo $page_title; ?></title>
-		<?php
-		echo
-		dcPage::jsDatePicker().
-		dcPage::jsToolBar().
-		dcPage::jsModal().
-		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_map.js').
-		dcPage::jsConfirmClose('entry-form').
-		dcPage::jsPageTabs($default_tab).
-		$next_headlink."\n".$prev_headlink
-		?>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <style type="text/css">
-	#map_canvas{height:400px;padding:3px;border:1px solid #999999;margin:-10px 0 1px 0; }
-	textarea[name=post_excerpt] {display:none;}
-	.infowindow {margin-top:1em;}
-	</style>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
-	<body>
-<?php
 
-$default_tab = 'edit-entry';
-if (!$can_edit_post) {
-	$default_tab = '';
-}
+echo
+'<html>'.
+'<head>'.
+	'<title>'.$page_title.'</title>'.
+	dcPage::jsDatePicker().
+	dcPage::jsToolBar().
+	dcPage::jsModal().
+	dcPage::jsConfirmClose('entry-form').
+	dcPage::jsColorPicker().
+	dcPage::jsLoad('http://maps.google.com/maps/api/js?sensor=false').
+	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js').
+	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_map.js').
+	$next_headlink."\n".$prev_headlink.
+	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/style.css" />'.
+	'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
+'</head>'.
+'<body>';
 
-if (!empty($_GET['upd'])) {
-		echo '<p class="message">'.__('Map element has been successfully updated.').'</p>';
+if (isset($_GET['upd'])) {
+	echo '<p class="message">'.__('Map element has been successfully updated.').'</p>';
 }
-elseif (!empty($_GET['crea'])) {
-		echo '<p class="message">'.__('Map element has been successfully created.').'</p>';
+if (isset($_GET['crea'])) {
+	echo '<p class="message">'.__('Map element has been successfully created.').'</p>';
 }
-
 
 # XHTML conversion
 if (!empty($_GET['xconv']))
@@ -368,9 +342,12 @@ if (!empty($_GET['xconv']))
 	echo '<p class="message">'.__('Don\'t forget to validate your XHTML conversion by saving your post.').'</p>';
 }
 
-echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Google Maps').' &rsaquo; '.$page_title;
-
-echo '</h2>';
+echo
+'<h2>'.
+	html::escapeHTML($core->blog->name).' &rsaquo; '.
+	'<a href="'.$p_url.'">'.__('Google Maps').'</a> &rsaquo; '.
+	$page_title.
+'</h2>';
 
 if ($post_id)
 {
@@ -401,9 +378,10 @@ if (!$can_view_page) {
 -------------------------------------------------------- */
 if ($can_edit_post)
 {
-	echo '<div class="multi-part" title="'.__('Edit map element').'" id="edit-entry">';
-	echo '<form action="'.$p_url.'&amp;do=edit" method="post" id="entry-form">';
-	echo '<div id="entry-sidebar">';
+	echo
+	'<div id="edit-entry">'.
+	'<form action="'.$p_url.'&amp;do=edit" method="post" id="entry-form">'.
+	'<div id="entry-sidebar">';
 	
 	echo
 	'<p><label>'.__('Category:').
@@ -420,21 +398,17 @@ if ($can_edit_post)
 	
 	'<p><label>'.__('Text formating:').
 	form::combo('post_format',$formaters_combo,$post_format,'',3).
-	'</label></p>';	
+	'</label></p>';
 	
 	
-	echo '</div>';		// End #entry-sidebar
+	echo '</div>';	// End #entry-sidebar
 	
 	echo '<div id="entry-content"><fieldset class="constrained">';
 	
 	echo
 	'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Title:').
 	form::field('post_title',20,255,html::escapeHTML($post_title),'maximal',2).
-	'</label></p>'.
-	
-	'<p class="maximal" style="margin-bottom:5px"><input id="delete_overlays" type="button" value="'.__('Initialize map').'"/>'.
-	'<span> </span><input id="use_kml_file" type="button" value="'.__('Include kml file').'"/>';
-	
+	'</label></p>';
 	
 	$meta =& $GLOBALS['core']->meta;
 	
@@ -445,50 +419,82 @@ if ($can_edit_post)
 	}
 	
 	echo
-	'<p class="area" id="excerpt-area"><label for="post_excerpt">'.__('Coordinates:').'</label> '.
-	form::textarea('post_excerpt',50,3,html::escapeHTML($post_excerpt),'',2).
-	'</p>'.
+	'<p class="area" id="excerpt-area" style="display:none;"><label for="post_excerpt">'.__('Coordinates:').'</label> '.
+	form::textarea('post_excerpt',50,3,html::escapeHTML($post_excerpt)).
+	'</p>';
 	
-	'<p class="area" id="map_canvas"></p>'.
+	echo
+	'<div class="area" id="toolbar-area">'.
+		'<ul>'.
+			'<li id="none"></li>'.
+			'<li id="marker"></li>'.
+			'<li id="polyline"></li>'.
+			'<li id="polygon"></li>'.
+			'<li>'.
+				form::field('q',50,255).
+				'<input type="button" class="submit" name="mq" id="search" value="'.__('Search').'" />'.
+			'</li>'.
+			'<li><input type="button" class="submit" name="reset" id="reset"  value="'.__('Reset map').'" /></li>'.
+			'<li><input type="button" class="submit" name="kml" id="kml" value="'.__('Include kml file').'" /></li>'.
+		'</ul>'.
+	'</div>';
 	
-	'<p class="area" id="description-area" ><label class="infowindow" '.
-	'for="post_content">'.__('Description:').'</label> '.
-	form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
-	'</p>'.
+	echo
+	'<div class="area" id="map_canvas"></div>';
 	
+	echo
+	'<p class="area" id="description-area" >'.
+		'<label class="infowindow" for="post_content">'.__('Description:').'</label>'.
+		form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
+	'</p>';
+	
+	echo
+	'<p class="area" id="map-details-area" >'.
+		'<label class="infowindow" for="map-details">'.__('Map details:').'</label>'.
+		'<div id="map-details"></div>'.
+	'</p>';
+	
+	echo
 	'<p class="area" id="notes-area"><label>'.__('Notes:').'</label>'.
 	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
 	
-	if(isset($post)) {
-		$meta_rs = $meta->getMetaStr($post->post_meta,'map_options');
-		if ($meta_rs) {
-			$map_options = explode(",",$meta_rs);
-			$myGmaps_center = $map_options[0].','.$map_options[1];
-			$myGmaps_zoom = $map_options[2];
-			$myGmaps_type = $map_options[3];
-		}
+	$metas = array(
+		'elt_type' => array_key_exists('elt_type',$post_meta) ? $post_meta['elt_type'] : 'none',
+		'stroke_weight' => array_key_exists('stroke_weight',$post_meta) ? $post_meta['stroke_weight'] : '',
+		'stroke_opacity' => array_key_exists('stroke_opacity',$post_meta) ? $post_meta['stroke_opacity'] : '',
+		'stroke_color' => array_key_exists('stroke_color',$post_meta) ? $post_meta['stroke_color'] : '',
+		'fill_color' => array_key_exists('fill_color',$post_meta) ? $post_meta['fill_color'] : ''
+	);
+	foreach ($metas as $k => $v) {
+		echo form::hidden($k,$v);
 	}
+	
+	echo
+	form::hidden('center',$core->blog->settings->myGmaps->center).
+	form::hidden('zoom',$core->blog->settings->myGmaps->zoom).
+	form::hidden('map_type',$core->blog->settings->myGmaps->map_type).
+	form::hidden('scrollwheel',$core->blog->settings->myGmaps->scrollwheel);
+	
 	echo
 	'<p>'.
 	($post_id ? form::hidden('id',$post_id) : '').
 	'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
 	'accesskey="s" name="save" /> '.
-	'<input type="hidden" name="myGmaps_center" id="myGmaps_center" value="'.$myGmaps_center.'" />'.
-	'<input type="hidden" name="myGmaps_zoom" id="myGmaps_zoom" value="'.$myGmaps_zoom.'" />'.
-	'<input type="hidden" name="myGmaps_type" id="myGmaps_type" value="'.$myGmaps_type.'" />'.
 	($can_delete ? '<input type="submit" value="'.__('delete').'" name="delete" />' : '').
 	$core->formNonce().
 	'</p>';
 	
-	echo '</fieldset></div>';		// End #entry-content
-	echo '</form>';
-	echo '</div>';
-	
+	echo
+	'</fieldset></div>'.
+	'</form>'.
+	'</div>';
 }
 
-
 dcPage::helpBlock('myGmap','core_wiki');
+
+echo
+'</body>'.
+'</html>';
+
 ?>
-	</body>
-</html>
