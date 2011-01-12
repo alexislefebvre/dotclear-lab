@@ -228,12 +228,23 @@ class adminGmapList extends adminGenericList
 {
 	public function display($page,$nb_per_page,$enclose_block='')
 	{
-		if ($this->rs->isEmpty())
-		{
-			echo '<p><strong>'.__('No element').'</strong></p>';
+		global $core;
+		$meta =& $GLOBALS['core']->meta;
+		$my_params['post_id'] = $_GET['post_id'];
+		$my_params['no_content'] = true;
+		$my_params['post_type'] = array('post','page');
+					
+		$rs = $core->blog->getPosts($my_params);
+		$my_post_maps = $meta->getMetaStr($rs->post_meta,'map');
+					
+		if ($my_post_maps !='') {
+			$maps_array = explode(",",$my_post_maps);
 		}
-		else
-		{
+		
+		if ($this->rs->isEmpty() || $this->rs_count == count($maps_array)) {
+			echo '<p><strong>'.__('No element').'</strong></p>';
+		
+		} else {
 			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
 			$pager->html_prev = $this->html_prev;
 			$pager->html_next = $this->html_next;
@@ -258,20 +269,6 @@ class adminGmapList extends adminGenericList
 
 			echo $blocks[0];
 			
-			global $core;
-			$meta =& $GLOBALS['core']->meta;
-			$my_params['post_id'] = $_GET['post_id'];
-			$my_params['no_content'] = true;
-			$my_params['post_type'] = array('post','page');
-						
-			$rs = $core->blog->getPosts($my_params);
-			while ($rs->fetch()) {
-				$my_post_maps = $meta->getMetaStr($rs->post_meta,'map');
-			}			
-			if ($my_post_maps !='') {
-				$maps_array = explode(",",$my_post_maps);
-			}
-
 			while ($this->rs->fetch())
 			{
 				if (!isset($maps_array) || !in_array($this->rs->post_id,$maps_array)) {
