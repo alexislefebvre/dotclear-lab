@@ -315,13 +315,19 @@ echo
 	dcPage::jsColorPicker().
 	dcPage::jsLoad('http://maps.google.com/maps/api/js?sensor=false').
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js').
+	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/ui.core.js').
+	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/ui.slider.js').
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_map.js').
 	$next_headlink."\n".$prev_headlink.
-	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/style.css" />'.
+	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/style.css" />'.
+	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/ui.theme.css" />'.
+	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/ui.slider.css" />'.
 	'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
 	'<script type="text/javascript">'.
 	dcPage::jsVar('myGmaps.msg.invalid_url',__('Invalid kml URL')).
 	dcPage::jsVar('myGmaps.msg.geocoder_error',__('Geocode was not successful for the following reason:')).
+	dcPage::jsVar('myGmaps.msg.line_options',__('Line options')).
+	dcPage::jsVar('myGmaps.msg.fill_options',__('Fill options')).
 	dcPage::jsVar('myGmaps.msg.fill_color',__('Fill color:')).
 	dcPage::jsVar('myGmaps.msg.stroke_color',__('Line color:')).
 	dcPage::jsVar('myGmaps.msg.stroke_weight',__('Line weight:')).

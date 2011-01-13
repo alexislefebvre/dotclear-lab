@@ -69,7 +69,14 @@ li#polygon.selected {
 	margin-left: 20px;
 }
 #icons-form ul li.jquery {
-	background-position: middle center;
+	background-position: center center;
 	cursor: pointer;
 	height: 50px;
+}
+/* Windowsinfo */
+.windowinfo {
+	min-width: 400px;
+	margin: 0;
+	padding-left: 0.5em;
+	padding-right: 2.2em;
 }

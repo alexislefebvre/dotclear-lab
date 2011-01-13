@@ -226,27 +226,52 @@ var myGmaps = {
 	
 	updPolylineOptions: function(event) {
 		var content = 
-		// Colors
-		'<div>' +
-		'<p><label>' + myGmaps.msg.stroke_color +
-		'<input type="text" id="line" size="7" value="'+myGmaps.objects.polyline.strokeColor+'" />' +
-		'</label></p>' +
-		'</div>' +
-		// Sliders
-		'<div><p><label>' + myGmaps.msg.stroke_weight +
-		'<input type="text" id="stroke" size="3" value="'+myGmaps.objects.polyline.strokeWeight+'"/>' +
-		'<div id="slider-stroke"></div>' +
-		'</label></p>' +
-		'<p><label>' + myGmaps.msg.stroke_opacity +
-		'<input type="text" id="opacity" size="3" value="'+myGmaps.objects.polyline.strokeOpacity+'" />' +
-		'</label></p>' +
-		'<div id="slider-opacity"></div>' +
-		'</div>' +
-		'<p><input type="button" class="submit" id="apply" value="' + myGmaps.msg.apply + '" /></p>';
+		'<div id="polyline_options" class="windowinfo">' +
+		'<fieldset><legend>' + myGmaps.msg.line_options + '</legend>' +
+			// Color
+			'<p><label>' + myGmaps.msg.stroke_color +
+			'<input type="text" id="line" size="7" value="'+myGmaps.objects.polyline.strokeColor+'" ' +
+			'style="display:inline;" />' +
+			'</label></p>' +
+			// Line weight
+			'<p><label>' + myGmaps.msg.stroke_weight +
+			'<input type="text" id="stroke" size="2" value="'+myGmaps.objects.polyline.strokeWeight+'" ' +
+			'style="border:0; font-weight:bold; display:inline;" />' +
+			'</label></p>' +
+			'<div id="slider-stroke"></div>' +
+			// Line opacity
+			'<p><label>' + myGmaps.msg.stroke_opacity +
+			'<input type="text" id="opacity" size="3" value="'+myGmaps.objects.polyline.strokeOpacity+'" ' +
+			'style="border:0; font-weight:bold; display:inline;" />' +
+			'</label></p>' +
+			'<div id="slider-opacity"></div>' +
+		'</fieldset>' +
+		'<p><input type="button" class="submit" id="apply" value="' + myGmaps.msg.apply + '" /></p>' +
+		'</div>';
 		myGmaps.infowindow.setContent(content);
 		myGmaps.infowindow.setPosition(event.latLng);
 		myGmaps.infowindow.open(myGmaps.map);
 		$('input#line').colorPicker();
+		$('div#slider-stroke').slider({
+			value: myGmaps.objects.polyline.strokeWeight,
+			min: 1,
+			max: 20,
+			step: 1,
+			slide: function(event, ui) {
+				$('input#stroke').val(ui.value);
+			}
+		});
+		$('input#stroke').val($('div#slider-stroke').slider('value'));
+		$('div#slider-opacity').slider({
+			value: myGmaps.objects.polyline.strokeOpacity,
+			min: 0.1,
+			max: 1,
+			step: 0.01,
+			slide: function(event, ui) {
+				$('input#opacity').val(ui.value);
+			}
+		});
+		$('input#opacity').val($('div#slider-opacity').slider('value'));
 		$('input#apply').click(function() {
 			var opts = {};
 			if ($('input#line').val() != '') {
@@ -263,32 +288,60 @@ var myGmaps = {
 	},
 	
 	updPolygonOptions: function(event) {
-		var content = 
-		// Colors
-		'<div class="two-cols"><div class="col">' +
-		'<p><label>' + myGmaps.msg.fill_color +
-		'<input type="text" id="fill" size="7" value="'+myGmaps.objects.polygon.fillColor+'" />' +
-		'</label></p>' +
-		'</div><div class="col">' +
-		'<p><label>' + myGmaps.msg.stroke_color +
-		'<input type="text" id="line" size="7" value="'+myGmaps.objects.polygon.strokeColor+'" />' +
-		'</div></div>' +
-		// Sliders
-		'<div><p><label>' + myGmaps.msg.stroke_weight +
-		'<input type="text" id="stroke" size="3" value="'+myGmaps.objects.polygon.strokeWeight+'"/>' +
-		'<div id="slider-stroke"></div>' +
-		'</label></p>' +
-		'<p><label>' + myGmaps.msg.stroke_opacity +
-		'<input type="text" id="opacity" size="3" value="'+myGmaps.objects.polygon.strokeOpacity+'" />' +
-		'</label></p>' +
-		'<div id="slider-opacity"></div>' +
+		var content =
+		'<div id="polyline_options" class="windowinfo">' +
+		'<fieldset><legend>' + myGmaps.msg.fill_options + '</legend>' +
+			// Color
+			'<p><label>' + myGmaps.msg.stroke_color +
+			'<input type="text" id="fill" size="7" value="'+myGmaps.objects.polygon.fillColor+'" ' +
+			'style="display:inline;" />' +
+			'</label></p>' +
+		'</fieldset>' +
+		'<fieldset><legend>' + myGmaps.msg.line_options + '</legend>' +
+			// Color
+			'<p><label>' + myGmaps.msg.stroke_color +
+			'<input type="text" id="line" size="7" value="'+myGmaps.objects.polygon.strokeColor+'" ' +
+			'style="display:inline;" />' +
+			'</label></p>' +
+			// Line weight
+			'<p><label>' + myGmaps.msg.stroke_weight +
+			'<input type="text" id="stroke" size="2" value="'+myGmaps.objects.polygon.strokeWeight+'" ' +
+			'style="border:0; font-weight:bold; display:inline;" />' +
+			'</label></p>' +
+			'<div id="slider-stroke"></div>' +
+			// Line opacity
+			'<p><label>' + myGmaps.msg.stroke_opacity +
+			'<input type="text" id="opacity" size="3" value="'+myGmaps.objects.polygon.strokeOpacity+'" ' +
+			'style="border:0; font-weight:bold; display:inline;" />' +
+			'</label></p>' +
+			'<div id="slider-opacity"></div>' +
+		'</fieldset>' +
 		'</div>' +
 		'<p><input type="button" class="submit" id="apply" value="' + myGmaps.msg.apply + '" /></p>';
 		myGmaps.infowindow.setContent(content);
 		myGmaps.infowindow.setPosition(event.latLng);
 		myGmaps.infowindow.open(myGmaps.map);
-		$('input#fill').colorPicker();
-		$('input#line').colorPicker();
+		$('input#fill,input#line').colorPicker();
+		$('div#slider-stroke').slider({
+			value: myGmaps.objects.polyline.strokeWeight,
+			min: 1,
+			max: 20,
+			step: 1,
+			slide: function(event, ui) {
+				$('input#stroke').val(ui.value);
+			}
+		});
+		$('input#stroke').val($('div#slider-stroke').slider('value'));
+		$('div#slider-opacity').slider({
+			value: myGmaps.objects.polyline.strokeOpacity,
+			min: 0.1,
+			max: 1,
+			step: 0.01,
+			slide: function(event, ui) {
+				$('input#opacity').val(ui.value);
+			}
+		});
+		$('input#opacity').val($('div#slider-opacity').slider('value'));
 		$('input#apply').click(function() {
 			var opts = {};
 			if ($('input#fill').val() != '') {

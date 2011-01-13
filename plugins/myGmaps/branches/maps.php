@@ -237,7 +237,8 @@ echo
 	dcPage::jsLoad('http://maps.google.com/maps/api/js?sensor=false').
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js').
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_maps.js').
-	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/style.css" />'.
+	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/style.css" />'.
+	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/ui.theme.css" />'.
 	'<script type="text/javascript">'.
 	dcPage::jsVar('myGmaps.msg.geocoder_error',__('Geocode was not successful for the following reason:')).
 	dcPage::jsVar('myGmaps.msg.type',__('Type')).
@@ -379,7 +380,7 @@ if (!$core->error->flag())
 	'<ul>';
 	foreach (myGmapsUtils::getMapIcons() as $icon) {
 		echo sprintf(
-			'<li style="background-image: url(%1$s); background-repeat: no-repeat; background-position: top center;">%2$s</li>',
+			'<li class="ui-corner-top ui-corner-bottom" style="background-image: url(%1$s); background-repeat: no-repeat; background-position: top center;">%2$s</li>',
 			myGmapsUtils::getAdminIconURL(basename($icon)),
 			form::checkbox(array('ids[]'),basename($icon),false)
 		);
