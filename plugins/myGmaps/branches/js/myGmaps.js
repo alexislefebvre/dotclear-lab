@@ -344,7 +344,7 @@ var myGmaps = {
 	},
 	
 	updIcon: function(marker) {
-		var icon = myGmaps.icons[(myGmaps.iconIndex++) % myGmaps.icons.length];
+		var icon = myGmaps.icons[myGmaps.iconIndex++ % myGmaps.icons.length];
 		for (i in myGmaps.markers) {
 			myGmaps.markers[i].setIcon(icon);
 		}

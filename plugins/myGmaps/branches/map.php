@@ -329,7 +329,7 @@ echo
 	dcPage::jsVar('myGmaps.msg.apply',__('Apply')).
 	dcPage::jsVar('myGmaps.msg.type',__('Type')).
 	dcPage::jsVar('myGmaps.msg.coordinates',__('Coordinates')).
-	$jsVar.
+	myGmapsUtils::getMapIconsJS().
 	'</script>'.
 '</head>'.
 '<body>';

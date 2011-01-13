@@ -51,3 +51,25 @@ li#polygon {
 li#polygon.selected {
 	background: transparent url(http://google.com/mapfiles/ms/t/Bpd.png) no-repeat top left;
 }
+/* Icons management */
+#icons-form ul {
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+#icons-form ul li {
+	float: left;
+	margin: 0.2em;
+	list-style: none;
+	width: 50px;
+	height: 70px;
+}
+#icons-form ul li input{
+	margin-top: 50px;
+	margin-left: 20px;
+}
+#icons-form ul li.jquery {
+	background-position: middle center;
+	cursor: pointer;
+	height: 50px;
+}

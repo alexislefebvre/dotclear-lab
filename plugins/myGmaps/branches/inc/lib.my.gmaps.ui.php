@@ -1,5 +1,35 @@
 <?php
 
+class myGmapsUtils
+{
+	public static function getMapIcons()
+	{
+		$list = files::getDirList(path::real(dirname(__FILE__).'/../icons'));
+		return $list['files'];
+	}
+	
+	public static function getAdminIconURL($filename)
+	{
+		return sprintf('index.php?pf=myGmaps/icons/%s',$filename);
+	}
+	
+	public static function getMapIconsJS()
+	{
+		$root = path::real(dirname(__FILE__).'/../icons');
+		$icons = array();
+		
+		$mask = '#'.$root.'/(.*)#';
+		
+		foreach (self::getMapIcons() as $icon)
+		{
+			$icon = preg_replace('#'.$root.'/(.*)#',"'index.php?pf=myGmaps/icons/$1'",$icon); 
+			array_push($icons,$icon);
+		}
+		
+		return sprintf('myGmaps.icons = [%s];',implode(',',$icons));
+	}
+}
+
 class adminMyGmapsList extends adminGenericList
 {
 	public function display($page,$nb_per_page,$p_url,$enclose_block='')

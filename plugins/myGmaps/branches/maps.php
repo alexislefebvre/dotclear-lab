@@ -24,6 +24,28 @@ if (!empty($_POST['save'])) {
 		$core->error->add($e->getMessage());
 	}
 }
+# Add icon
+if (!empty($_POST['send'])) {
+	try{
+		files::uploadStatus($_FILES['upfile']);
+		$fm = new filemanager(dirname(__FILE__).'/icons');
+		$fm->uploadFile($_FILES['upfile']['tmp_name'],$_FILES['upfile']['name']);
+		http::redirect($p_url.'&go=maps&tab=icons&add=1');
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+}
+# Delete icons
+if (!empty($_POST['delete'])) {
+	try {
+		foreach ($_POST['ids'] as $filename) {
+			unlink(dirname(__FILE__).'/icons/'.$filename);
+		}
+		http::redirect($p_url.'&go=maps&tab=icons&del=1');
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+}
 # Getting categories
 try {
 	$categories = $core->blog->getCategories(array('post_type'=>'map'));
@@ -220,6 +242,7 @@ echo
 	dcPage::jsVar('myGmaps.msg.geocoder_error',__('Geocode was not successful for the following reason:')).
 	dcPage::jsVar('myGmaps.msg.type',__('Type')).
 	dcPage::jsVar('myGmaps.msg.coordinates',__('Coordinates')).
+	dcPage::jsVar('myGmaps.msg.no_icon_selected',__('Please, select at leat one icon')).
 	'</script>'.
 '</head>'.
 '<body>';
@@ -227,6 +250,12 @@ echo
 # Display messages
 if (isset($_GET['upd']) && $_GET['upd'] === '0') {
 	echo '<p class="message">'.__('Configuration has been successfully saved').'</p>';
+}
+if (isset($_GET['add']) && $_GET['add'] === '1') {
+	echo '<p class="message">'.__('Icon has been successfully added').'</p>';
+}
+if (isset($_GET['del']) && $_GET['del'] === '1') {
+	echo '<p class="message">'.__('Selected icons have been successfully deleted').'</p>';
 }
 
 if (!$core->error->flag())
@@ -332,6 +361,36 @@ if (!$core->error->flag())
 		$core->formNonce().
 		'<input type="submit" name="save" value="'.__('Save configuration').'" />'.
 	'</p>'.
+	'</form>'.
+	'</div>';
+	
+	echo
+	'<div class="multi-part" id="icons" title="'.__('Icons').'">'.
+	'<form method="post" action="'.$p_url.'&amp;tab=icons" id="icons-form" enctype="multipart/form-data">'.
+	'<fieldset><legend>'.__('Add icon').'</legend>'.
+	'<p><label>'.__('Choose a file:').
+	' ('.sprintf(__('Maximum size %s'),files::size(DC_MAX_UPLOAD_SIZE)).')'.
+	'<input type="file" name="upfile" size="20" />'.
+	'</label></p>'.
+	'<p><input type="submit" name="send" value="'.__('send').'" /></p>'.
+	'</fieldset>'.
+	'<fieldset><legend>'.__('Delete icons').'</legend>'.
+	'<p>'.__('Select icons to delete by clicking on them').'</p>'.
+	'<ul>';
+	foreach (myGmapsUtils::getMapIcons() as $icon) {
+		echo sprintf(
+			'<li style="background-image: url(%1$s); background-repeat: no-repeat; background-position: top center;">%2$s</li>',
+			myGmapsUtils::getAdminIconURL(basename($icon)),
+			form::checkbox(array('ids[]'),basename($icon),false)
+		);
+	}
+	echo
+	'</ul>'.
+	'<p>'.
+	$core->formNonce().
+	'<input type="submit" name="delete" value="'.__('Delete selected icons').'" />'.
+	'</p>'.
+	'</fieldset>'.
 	'</form>'.
 	'</div>';
 }

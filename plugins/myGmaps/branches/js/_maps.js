@@ -26,7 +26,7 @@ $(function() {
 	myGmaps.updDetails();
 	
 	var icon = new google.maps.MarkerImage(
-		'index.php?pf=myGmaps/icons/target_icon.png',
+		'index.php?pf=myGmaps/images/target_icon.png',
 		null,
 		null,
 		new google.maps.Point(32, 32)
@@ -57,6 +57,33 @@ $(function() {
 	$('input[name=q]').keypress(function(event) {
 		if (event.keyCode == 13) {
 			$('input[name=mq]').click();
+			return false;
+		}
+	});
+	
+	// Icons tab
+	$('#icons-form li').each(function() {
+		var css = {
+			'background-position': 'middle center',
+			'cursor': 'pointer',
+			'height': '50px'
+		};
+		$(this).css(css);
+		$(this).children('input').css('display','none');
+		$(this).click(function() {
+			if ($(this).children('input').is(':checked')) {
+				$(this).children('input').removeAttr('checked');
+				$(this).css('background-color','transparent');
+			}
+			else {
+				$(this).children('input').attr('checked',true);
+				$(this).css('background-color','#ccc');
+			}
+		});
+	});
+	$('#icons-form input[name=delete]').click(function() {
+		if ($('#icons-form li input:checked').size() == 0) {
+			alert(myGmaps.msg.no_icon_selected);
 			return false;
 		}
 	});
