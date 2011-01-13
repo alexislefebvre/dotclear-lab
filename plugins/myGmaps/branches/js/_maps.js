@@ -2,8 +2,8 @@ $(function() {
 	$('.checkboxes-helpers').each(function() {
 		dotclear.checkboxesHelpers(this);
 	});
-	//$('#form-entries td input[type=checkbox]').enableShiftClick();
-	//dotclear.postsActionsHelper();
+	$('#form-entries td input[type=checkbox]').enableShiftClick();
+	dotclear.postsActionsHelper();
 	
 	$('#map-details-area label').toggleWithLegend($('#map-details'), {
 		cookie: 'dcx_map_detail'
