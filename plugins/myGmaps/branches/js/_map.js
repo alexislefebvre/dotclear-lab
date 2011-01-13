@@ -24,7 +24,7 @@ $(function () {
 	// Hide some fields	
 	$('#description-area label').toggleWithLegend($('#description-area').children().not('label'), {
 		cookie: 'dcx_map_description',
-		hide: $('#post_content').val() == 'Pas de description'
+		hide: $('#post_content').val() == myGmaps.msg.no_description
 	});
 	$('#map-details-area label').toggleWithLegend($('#map-details'), {
 		cookie: 'dcx_map_detail'
@@ -93,7 +93,7 @@ $(function () {
 	$('#entry-form').submit(function () {
 		var content = $("textarea[name=post_content]").val();
 		if (content == '') {
-			$("textarea[name=post_content]").val('Pas de description');
+			$("textarea[name=post_content]").val(myGmaps.msg.no_description);
 		}
 		myGmaps.setMapPoints();
 		return true;

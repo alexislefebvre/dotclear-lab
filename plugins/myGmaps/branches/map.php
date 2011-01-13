@@ -324,6 +324,7 @@ echo
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/ui.slider.css" />'.
 	'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
 	'<script type="text/javascript">'.
+	dcPage::jsVar('myGmaps.msg.no_description',__('No description')).
 	dcPage::jsVar('myGmaps.msg.invalid_url',__('Invalid kml URL')).
 	dcPage::jsVar('myGmaps.msg.geocoder_error',__('Geocode was not successful for the following reason:')).
 	dcPage::jsVar('myGmaps.msg.line_options',__('Line options')).

@@ -289,7 +289,7 @@ var myGmaps = {
 	
 	updPolygonOptions: function(event) {
 		var content =
-		'<div id="polyline_options" class="windowinfo">' +
+		'<div id="polygon_options" class="windowinfo">' +
 		'<fieldset><legend>' + myGmaps.msg.fill_options + '</legend>' +
 			// Color
 			'<p><label>' + myGmaps.msg.stroke_color +
