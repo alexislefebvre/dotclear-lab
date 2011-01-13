@@ -63,7 +63,8 @@ class myGmapsPostBehaviors
 	public static function postHeaders()
 	{
 		return
-		'<script type="text/javascript">'."\n".
+		dcPage::jsLoad('index.php?pf=myGmaps/js/_post.js');
+		/*'<script type="text/javascript">'."\n".
 		'$(document).ready(function() {'."\n".
 			'$(\'a.map-remove\').click(function() {'."\n".
 			'msg = \''.__('Are you sure you want to remove this map?').'\';'."\n".
@@ -87,7 +88,7 @@ class myGmapsPostBehaviors
 				'a.element-remove:hover, a.element-remove:focus {'."\n".
 				'color : #06c !important;'."\n".
 		'}'."\n".
-		'</style>';
+		'</style>';*/
 		
 	}
 	public static function adminPostForm($post)
@@ -101,7 +102,7 @@ class myGmapsPostBehaviors
 			if (!$meta_rs) {
 				echo 
 					'<fieldset><legend>'.__('Google Map').'</legend>'.
-					'<p><a href="plugin.php?p=myGmaps&amp;post_id='.$id.'">'.__('Add a map to entry').'</a></p>'.
+					'<p><a class="add-maps" href="plugin.php?p=myGmaps&go=maps_popup&popup=1&post_id='.$id.'">'.__('Add a map to entry').'</a></p>'.
 					'</fieldset>';
 			} else {
 				

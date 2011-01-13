@@ -118,7 +118,7 @@ class adminMyGmapsList extends adminGenericList
 
 		$res .=
 		'<td class="nowrap">'.
-		form::checkbox(array('ids[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
+		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
 		'<td class="maximal"><a href="'.$p_url.'&amp;go=map&amp;id='.$this->rs->post_id.'">'.
 		html::escapeHTML($this->rs->post_title).'</a></td>'.
 		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt).'</td>'.

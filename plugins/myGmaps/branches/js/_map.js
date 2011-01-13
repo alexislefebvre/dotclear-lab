@@ -23,15 +23,13 @@ $(function () {
 	
 	// Hide some fields	
 	$('#description-area label').toggleWithLegend($('#description-area').children().not('label'), {
-		cookie: 'dcx_map_description',
-		hide: $('#post_content').val() == myGmaps.msg.no_description
+		cookie: 'dcx_map_description'
 	});
 	$('#map-details-area label').toggleWithLegend($('#map-details'), {
 		cookie: 'dcx_map_detail'
 	});
 	$('#notes-area label').toggleWithLegend($('#notes-area').children().not('label'), {
-		cookie: 'dcx_post_notes',
-		hide: $('#post_notes').val() == ''
+		cookie: 'dcx_post_notes'
 	});
 	
 	// Map initialization

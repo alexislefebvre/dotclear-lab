@@ -12,7 +12,19 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) return;
 
-$p_url = 'plugin.php?p=myGmaps';
+$p_url	= 'plugin.php?p=myGmaps';
+$filters	= array(
+	'user_id',
+	'cat_id',
+	'status',
+	'post_maps',
+	'month',
+	'lang',
+	'sortby',
+	'order',
+	'page',
+	'nb'	
+);
 
 $go = isset($_GET['go']) ? $_GET['go'] : 'maps';
 
@@ -22,8 +34,12 @@ if ($go === 'maps') {
 elseif ($go === 'map') {
 	require_once dirname(__FILE__).'/map.php';
 }
-elseif ($go === 'popup') {
-	require_once dirname(__FILE__).'/popup.php';
+elseif ($go === 'maps_actions') {
+	require_once dirname(__FILE__).'/maps_actions.php';
 }
+elseif ($go === 'maps_popup') {
+	require_once dirname(__FILE__).'/maps_popup.php';
+}
+
 
 ?>

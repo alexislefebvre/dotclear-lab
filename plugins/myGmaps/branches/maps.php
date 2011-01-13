@@ -10,7 +10,7 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-$tab = isset($_GET['tab']) ? $_GET['tab'] : 'list';
+$tab	= isset($_GET['tab']) ? $_GET['tab'] : 'list';
 
 # Save config
 if (!empty($_POST['save'])) {
@@ -42,45 +42,6 @@ if (!empty($_POST['delete'])) {
 			unlink(dirname(__FILE__).'/icons/'.$filename);
 		}
 		http::redirect($p_url.'&go=maps&tab=icons&del=1');
-	} catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-}
-# Actions
-if (!empty($_POST['action']))
-{
-	try {
-		$ids = $_POST['ids'];
-		$act = $_POST['action'];
-		$redir = 0;
-		# Change map posts status
-		if ($act === 'published' || $act === 'pending' || $act === 'unpublished') {
-			foreach ($ids as $id) {
-				switch ($act) {
-					case 'published' : $status = 1; break;
-					case 'pending' : $status = -2; break;
-					case 'unpublished' : $status = 0; break;
-					default : $status = 1; break;
-				}
-				$core->blog->updPostStatus($id,$status);
-			}
-			$redir = 1;
-		}
-		# change category or author
-		if ($act === 'category' || $act === 'author') {
-			require_once dirname(__FILE__).'/maps_actions.php';
-			exit;
-		}
-		# Delete map posts
-		if ($act === 'delete') {
-			foreach ($ids as $id) {
-				# --BEHAVIOR-- adminBeforePostDelete
-				$core->callBehavior('adminBeforePostDelete',$id);				
-				$core->blog->delPost($id);
-			}
-			$redir = 2;
-		}
-		http::redirect($p_url.'&act='.$redir);
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
@@ -304,6 +265,12 @@ if (isset($_GET['act']) && $_GET['act'] === '1') {
 	$msg = __('Selected map posts status have been successfully changed');
 }
 if (isset($_GET['act']) && $_GET['act'] === '2') {
+	$msg = __('Selected map posts categories have been successfully changed');
+}
+if (isset($_GET['act']) && $_GET['act'] === '3') {
+	$msg = __('Selected map posts authors have been successfully changed');
+}
+if (isset($_GET['act']) && $_GET['act'] === '4') {
 	$msg = __('Selected map posts have been successfully deleted');
 }
 echo $msg !== '' ? sprintf('<p class="message">%s</p>',$msg) : '';
@@ -359,9 +326,15 @@ if (!$core->error->flag())
 	'</fieldset>'.
 	'</form>';
 	
+	$hidden_fields = '';
+	foreach ($filters as $k) {
+		if (array_key_exists($k,$_GET)) {
+			$hidden_fields .= form::hidden(array($k),$_GET[$k]);
+		}
+	}
 	# Show posts
 	$post_list->display($page,$nb_per_page,$p_url,
-	'<form action="'.$p_url.'" method="post" id="form-entries">'.
+	'<form action="'.$p_url.'&amp;go=maps_actions" method="post" id="form-entries">'.
 	
 	'%s'.
 	
@@ -370,6 +343,7 @@ if (!$core->error->flag())
 	
 	'<p class="col right">'.__('Selected map elements action:').' '.
 	form::combo('action',$combo_action).
+	$hidden_fields.
 	'<input type="submit" value="'.__('ok').'" /></p>'.
 	$core->formNonce().
 	'</div>'.
