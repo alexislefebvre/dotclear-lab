@@ -2,15 +2,15 @@ $(function() {
 	$('.checkboxes-helpers').each(function() {
 		dotclear.checkboxesHelpers(this);
 	});
-	$('#form-entries td input[type=checkbox]').enableShiftClick();
-	dotclear.postsActionsHelper();
+	//$('#form-entries td input[type=checkbox]').enableShiftClick();
+	//dotclear.postsActionsHelper();
 	
 	$('#map-details-area label').toggleWithLegend($('#map-details'), {
 		cookie: 'dcx_map_detail'
 	});
 	
 	// Configuration tab
-	$('#config').onetabload(function() {
+	$('#config').tabload(function() {
 		if ($('input[name=center]').val() != '') {
 			myGmaps.center.lat = $('input[name=center]').val().split(',')[0];
 			myGmaps.center.lng = $('input[name=center]').val().split(',')[1];
@@ -62,6 +62,7 @@ $(function() {
 			}
 		});
 	});
+	$('#config').tabload();
 	
 	// Icons tab
 	$('#icons-form li').each(function() {
@@ -79,7 +80,7 @@ $(function() {
 			}
 			else {
 				$(this).children('input').attr('checked',true);
-				$(this).css('background-color','#ccc');
+				$(this).css('background-color','#E2DFCA');
 			}
 		});
 	});

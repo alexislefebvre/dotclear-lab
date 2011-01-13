@@ -91,6 +91,9 @@ class adminMyGmapsList extends adminGenericList
 			case -2:
 				$img_status = sprintf($img,__('pending'),'check-wrn.png');
 				break;
+			case 0:
+				$img_status = sprintf($img,__('unpublished'),'check-off.png');
+				break;
 		}
 		if ($this->rs->cat_title) {
 			$cat_title = sprintf($cat_link,$this->rs->cat_id,
@@ -102,18 +105,26 @@ class adminMyGmapsList extends adminGenericList
 		$res = '<tr class="line'.($this->rs->post_status != 1 ? ' offline' : '').'"'.
 		' id="p'.$this->rs->post_id.'">';
 		
-		$meta =& $GLOBALS['core']->meta;
-		$meta_rs = $meta->getMetaStr($this->rs->post_meta,'map');
+		$type_list = array(
+			'none' => __('None'),
+			'marker' => __('Point of interest'),
+			'polyline' => __('Polyline'),
+			'polygon' => __('Polygon'),
+			'kml' => __('Included kml file')
+		);
+		$meta = unserialize($this->rs->post_meta);
+		
+		$type = array_key_exists($meta['elt_type'][0],$type_list) ? $type_list[$meta['elt_type'][0]] : '';
 
 		$res .=
 		'<td class="nowrap">'.
-		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
+		form::checkbox(array('ids[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
 		'<td class="maximal"><a href="'.$p_url.'&amp;go=map&amp;id='.$this->rs->post_id.'">'.
 		html::escapeHTML($this->rs->post_title).'</a></td>'.
 		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt).'</td>'.
 		'<td class="nowrap">'.$cat_title.'</td>'.
 		'<td class="nowrap">'.$this->rs->user_id.'</td>'.
-		'<td class="nowrap">'.__($meta_rs).'</td>'.
+		'<td class="nowrap">'.$type.'</td>'.
 		'<td class="nowrap status">'.$img_status.'</td>'.
 		'</tr>';
 

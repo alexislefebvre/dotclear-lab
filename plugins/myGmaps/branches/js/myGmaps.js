@@ -230,133 +230,178 @@ var myGmaps = {
 		'<fieldset><legend>' + myGmaps.msg.line_options + '</legend>' +
 			// Color
 			'<p><label>' + myGmaps.msg.stroke_color +
-			'<input type="text" id="line" size="7" value="'+myGmaps.objects.polyline.strokeColor+'" ' +
-			'style="display:inline;" />' +
+			'<input type="text" id="stroke_color" size="7" value="'+myGmaps.objects.polyline.strokeColor+'" ' +
+			'class="colorpicker" />' +
 			'</label></p>' +
 			// Line weight
 			'<p><label>' + myGmaps.msg.stroke_weight +
-			'<input type="text" id="stroke" size="2" value="'+myGmaps.objects.polyline.strokeWeight+'" ' +
+			'<input type="text" id="stroke_weight" size="2" value="'+myGmaps.objects.polyline.strokeWeight+'" ' +
 			'style="border:0; font-weight:bold; display:inline;" />' +
 			'</label></p>' +
-			'<div id="slider-stroke"></div>' +
+			'<div id="slider_stroke_weight"></div>' +
 			// Line opacity
 			'<p><label>' + myGmaps.msg.stroke_opacity +
-			'<input type="text" id="opacity" size="3" value="'+myGmaps.objects.polyline.strokeOpacity+'" ' +
+			'<input type="text" id="stroke_opacity" size="3" value="'+myGmaps.objects.polyline.strokeOpacity+'" ' +
 			'style="border:0; font-weight:bold; display:inline;" />' +
 			'</label></p>' +
-			'<div id="slider-opacity"></div>' +
+			'<div id="slider_stroke_opacity"></div>' +
 		'</fieldset>' +
-		'<p><input type="button" class="submit" id="apply" value="' + myGmaps.msg.apply + '" /></p>' +
+		'<p>' +
+			'<input type="button" class="submit" id="apply" value="' + myGmaps.msg.apply + '" />' +
+			'<input type="button" class="submit" id="close" value="' + myGmaps.msg.close + '" />' +
+		'</p>' +
 		'</div>';
 		myGmaps.infowindow.setContent(content);
 		myGmaps.infowindow.setPosition(event.latLng);
 		myGmaps.infowindow.open(myGmaps.map);
-		$('input#line').colorPicker();
-		$('div#slider-stroke').slider({
+		$('div#polyline_options input.colorpicker').colorPicker();
+		$('div#slider_stroke_weight').slider({
 			value: myGmaps.objects.polyline.strokeWeight,
 			min: 1,
 			max: 20,
 			step: 1,
 			slide: function(event, ui) {
-				$('input#stroke').val(ui.value);
+				$('input#stroke_weight').val(ui.value);
 			}
 		});
-		$('input#stroke').val($('div#slider-stroke').slider('value'));
-		$('div#slider-opacity').slider({
+		$('input#stroke_weight').val($('div#slider_stroke_weight').slider('value'));
+		$('div#slider_stroke_opacity').slider({
 			value: myGmaps.objects.polyline.strokeOpacity,
 			min: 0.1,
 			max: 1,
 			step: 0.01,
 			slide: function(event, ui) {
-				$('input#opacity').val(ui.value);
+				$('input#stroke_opacity').val(ui.value);
 			}
 		});
-		$('input#opacity').val($('div#slider-opacity').slider('value'));
+		$('input#stroke_opacity').val($('div#slider_stroke_opacity').slider('value'));
 		$('input#apply').click(function() {
 			var opts = {};
-			if ($('input#line').val() != '') {
-				opts.strokeColor = $('input#line').val();
+			if ($('input#stroke_color').val() != '') {
+				opts.strokeColor = $('input#stroke_color').val();
 			}
-			if ($('input#stroke').val() != '') {
-				opts.strokeWeight = $('input#stroke').val();
+			if ($('input#stroke_weight').val() != '') {
+				opts.strokeWeight = $('input#stroke_weight').val();
 			}
-			if ($('input#opacity').val() != '') {
-				opts.strokeOpacity = $('input#opacity').val();
+			if ($('input#stroke_opacity').val() != '') {
+				opts.strokeOpacity = $('input#stroke_opacity').val();
 			}
 			myGmaps.objects.polyline.setOptions(opts);
+		});
+		$('input#close').click(function() {
+			myGmaps.infowindow.close();
+			return false;
+		});
+		$('input').keypress(function(event) {
+			if (event.keyCode == 13) {
+				$('input#apply').click();
+				return false;
+			}
 		});
 	},
 	
 	updPolygonOptions: function(event) {
 		var content =
 		'<div id="polygon_options" class="windowinfo">' +
-		'<fieldset><legend>' + myGmaps.msg.fill_options + '</legend>' +
-			// Color
-			'<p><label>' + myGmaps.msg.stroke_color +
-			'<input type="text" id="fill" size="7" value="'+myGmaps.objects.polygon.fillColor+'" ' +
-			'style="display:inline;" />' +
-			'</label></p>' +
-		'</fieldset>' +
 		'<fieldset><legend>' + myGmaps.msg.line_options + '</legend>' +
 			// Color
 			'<p><label>' + myGmaps.msg.stroke_color +
-			'<input type="text" id="line" size="7" value="'+myGmaps.objects.polygon.strokeColor+'" ' +
-			'style="display:inline;" />' +
+			'<input type="text" id="stroke_color" size="7" value="'+myGmaps.objects.polygon.strokeColor+'" ' +
+			'class="colorpicker" />' +
 			'</label></p>' +
 			// Line weight
 			'<p><label>' + myGmaps.msg.stroke_weight +
-			'<input type="text" id="stroke" size="2" value="'+myGmaps.objects.polygon.strokeWeight+'" ' +
+			'<input type="text" id="stroke_weight" size="2" value="'+myGmaps.objects.polygon.strokeWeight+'" ' +
 			'style="border:0; font-weight:bold; display:inline;" />' +
 			'</label></p>' +
-			'<div id="slider-stroke"></div>' +
+			'<div id="slider_stroke_weight"></div>' +
 			// Line opacity
 			'<p><label>' + myGmaps.msg.stroke_opacity +
-			'<input type="text" id="opacity" size="3" value="'+myGmaps.objects.polygon.strokeOpacity+'" ' +
+			'<input type="text" id="stroke_opacity" size="3" value="'+myGmaps.objects.polygon.strokeOpacity+'" ' +
 			'style="border:0; font-weight:bold; display:inline;" />' +
 			'</label></p>' +
-			'<div id="slider-opacity"></div>' +
+			'<div id="slider_stroke_opacity"></div>' +
 		'</fieldset>' +
-		'</div>' +
-		'<p><input type="button" class="submit" id="apply" value="' + myGmaps.msg.apply + '" /></p>';
+		'<fieldset><legend>' + myGmaps.msg.fill_options + '</legend>' +
+			// Fill Color
+			'<p><label>' + myGmaps.msg.fill_color +
+			'<input type="text" id="fill_color" size="7" value="'+myGmaps.objects.polygon.fillColor+'" ' +
+			'class="colorpicker" />' +
+			'</label></p>' +
+			// Fill opacity
+			'<p><label>' + myGmaps.msg.fill_opacity +
+			'<input type="text" id="fill_opacity" size="3" value="'+myGmaps.objects.polygon.fillOpacity+'" ' +
+			'style="border:0; font-weight:bold; display:inline;" />' +
+			'</label></p>' +
+			'<div id="slider_fill_opacity"></div>' +
+		'</fieldset>' +
+		'<p>'+
+			'<input type="button" class="submit" id="apply" value="' + myGmaps.msg.apply + '" />' +
+			'<input type="button" class="submit" id="close" value="' + myGmaps.msg.close + '" />' +
+		'</p>' +
+		'</div>';
 		myGmaps.infowindow.setContent(content);
 		myGmaps.infowindow.setPosition(event.latLng);
 		myGmaps.infowindow.open(myGmaps.map);
-		$('input#fill,input#line').colorPicker();
-		$('div#slider-stroke').slider({
+		$('div#polygon_options input.colorpicker').colorPicker();
+		$('div#slider_stroke_weight').slider({
 			value: myGmaps.objects.polyline.strokeWeight,
 			min: 1,
 			max: 20,
 			step: 1,
 			slide: function(event, ui) {
-				$('input#stroke').val(ui.value);
+				$('input#stroke_weight').val(ui.value);
 			}
 		});
-		$('input#stroke').val($('div#slider-stroke').slider('value'));
-		$('div#slider-opacity').slider({
+		$('input#stroke_weight').val($('div#slider_stroke_weight').slider('value'));
+		$('div#slider_stroke_opacity').slider({
 			value: myGmaps.objects.polyline.strokeOpacity,
 			min: 0.1,
 			max: 1,
 			step: 0.01,
 			slide: function(event, ui) {
-				$('input#opacity').val(ui.value);
+				$('input#stroke_opacity').val(ui.value);
 			}
 		});
-		$('input#opacity').val($('div#slider-opacity').slider('value'));
+		$('input#stroke_opacity').val($('div#slider_stroke_opacity').slider('value'));
+		$('div#slider_fill_opacity').slider({
+			value: myGmaps.objects.polyline.strokeWeight,
+			min: 1,
+			max: 20,
+			step: 1,
+			slide: function(event, ui) {
+				$('input#fill_opacity').val(ui.value);
+			}
+		});
+		$('input#fill_opacity').val($('div#slider_fill_opacity').slider('value'));
 		$('input#apply').click(function() {
 			var opts = {};
-			if ($('input#fill').val() != '') {
-				opts.fillColor = $('input#fill').val();
+			if ($('input#stroke_color').val() != '') {
+				opts.strokeColor = $('input#stroke_color').val();
 			}
-			if ($('input#line').val() != '') {
-				opts.strokeColor = $('input#line').val();
+			if ($('input#stroke_weight').val() != '') {
+				opts.strokeWeight = $('input#stroke_weight').val();
 			}
-			if ($('input#stroke').val() != '') {
-				opts.strokeWeight = $('input#stroke').val();
+			if ($('input#stroke_opacity').val() != '') {
+				opts.strokeOpacity = $('input#stroke_opacity').val();
 			}
-			if ($('input#opacity').val() != '') {
-				opts.strokeOpacity = $('input#opacity').val();
+			if ($('input#fill_color').val() != '') {
+				opts.fillColor = $('input#fill_color').val();
+			}
+			if ($('input#fill_opacity').val() != '') {
+				opts.fillOpacity = $('input#fill_opacity').val();
 			}
 			myGmaps.objects.polygon.setOptions(opts);
+		});
+		$('input#close').click(function() {
+			myGmaps.infowindow.close();
+			return false;
+		});
+		$('input').keypress(function(event) {
+			if (event.keyCode == 13) {
+				$('input#apply').click();
+				return false;
+			}
 		});
 	},
 	
@@ -447,27 +492,29 @@ var myGmaps = {
 	setMapPoints: function() {
 		var type = '';
 		var icon = '';
+		var stroke_color = '';
 		var stroke_weight = '';
 		var stroke_opacity = '';
-		var stroke_color = '';
 		var fill_color = '';
+		var fill_opacity = '';
 		var list = [];
 		var points = [];
 		
 		 if (myGmaps.path.polyline.length > 0) {
 			type = 'polyline';
 			list = myGmaps.markers;
+			stroke_color = myGmaps.objects.polyline.strokeColor;
 			stroke_weight = myGmaps.objects.polyline.strokeWeight;
 			stroke_opacity = myGmaps.objects.polyline.strokeOpacity;
-			stroke_color = myGmaps.objects.polyline.strokeColor;
 		}
 		else if (myGmaps.path.polygon.length > 0) {
 			type = 'polygon';
 			list = myGmaps.markers;
+			stroke_color = myGmaps.objects.polygon.strokeColor;
 			stroke_weight = myGmaps.objects.polygon.strokeWeight;
 			stroke_opacity = myGmaps.objects.polygon.strokeOpacity;
-			stroke_color = myGmaps.objects.polygon.strokeColor;
 			fill_color = myGmaps.objects.polygon.fillColor;
+			fill_opacity = myGmaps.objects.polygon.fillOpacity;
 		}
 		else if (myGmaps.markers.length > 0) {
 			type = 'marker';
@@ -491,10 +538,11 @@ var myGmaps = {
 		}
 		
 		$('input[name=elt_type]').val(type);
+		$('input[name=stroke_color]').val(stroke_color);
 		$('input[name=stroke_weight]').val(stroke_weight);
 		$('input[name=stroke_opacity]').val(stroke_opacity);
-		$('input[name=stroke_color]').val(stroke_color);
 		$('input[name=fill_color]').val(fill_color);
+		$('input[name=fill_opacity]').val(fill_opacity);
 		$('textarea[name=post_excerpt]').val(points.join("\n"));
 	},
 	

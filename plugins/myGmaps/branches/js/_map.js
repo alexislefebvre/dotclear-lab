@@ -55,15 +55,16 @@ $(function () {
 		myGmaps.elt_type = $('input[name=elt_type]').val();
 	}
 	if (myGmaps.elt_type == 'polyline') {
+		myGmaps.options[myGmaps.elt_type].strokeColor = $('input[name=stroke_color]').val();
 		myGmaps.options[myGmaps.elt_type].strokeWeight = $('input[name=stroke_weight]').val();
 		myGmaps.options[myGmaps.elt_type].strokeOpacity = $('input[name=stroke_opacity]').val();
-		myGmaps.options[myGmaps.elt_type].strokeColor = $('input[name=stroke_color]').val();
 	}
 	if (myGmaps.elt_type == 'polygon') {
-		myGmaps.options[myGmaps.elt_type].strokeWeight = $('input[name=stroke_weight]').val();
-		myGmaps.options[myGmaps.elt_type].strokeOpacity = $('input[name=stroke_opacity]').val();
 		myGmaps.options[myGmaps.elt_type].strokeColor = $('input[name=stroke_color]').val();
 		myGmaps.options[myGmaps.elt_type].strokeWeight = $('input[name=stroke_weight]').val();
+		myGmaps.options[myGmaps.elt_type].strokeOpacity = $('input[name=stroke_opacity]').val();
+		myGmaps.options[myGmaps.elt_type].fillColor = $('input[name=fill_color]').val();
+		myGmaps.options[myGmaps.elt_type].fillOpacity = $('input[name=fill_opacity]').val();
 	}
 	
 	myGmaps.init();

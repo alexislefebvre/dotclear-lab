@@ -19,7 +19,7 @@ if (!empty($_POST['save'])) {
 		$core->blog->settings->myGmaps->put('zoom',$_POST['zoom']);
 		$core->blog->settings->myGmaps->put('map_type',$_POST['map_type']);
 		$core->blog->settings->myGmaps->put('scrollwheel',$_POST['scrollwheel']);
-		http::redirect($p_url.'&go=maps&tab=config&upd=0');
+		http::redirect($p_url.'&go=maps&tab=config&upd=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
@@ -42,6 +42,45 @@ if (!empty($_POST['delete'])) {
 			unlink(dirname(__FILE__).'/icons/'.$filename);
 		}
 		http::redirect($p_url.'&go=maps&tab=icons&del=1');
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+}
+# Actions
+if (!empty($_POST['action']))
+{
+	try {
+		$ids = $_POST['ids'];
+		$act = $_POST['action'];
+		$redir = 0;
+		# Change map posts status
+		if ($act === 'published' || $act === 'pending' || $act === 'unpublished') {
+			foreach ($ids as $id) {
+				switch ($act) {
+					case 'published' : $status = 1; break;
+					case 'pending' : $status = -2; break;
+					case 'unpublished' : $status = 0; break;
+					default : $status = 1; break;
+				}
+				$core->blog->updPostStatus($id,$status);
+			}
+			$redir = 1;
+		}
+		# change category or author
+		if ($act === 'category' || $act === 'author') {
+			require_once dirname(__FILE__).'/maps_actions.php';
+			exit;
+		}
+		# Delete map posts
+		if ($act === 'delete') {
+			foreach ($ids as $id) {
+				# --BEHAVIOR-- adminBeforePostDelete
+				$core->callBehavior('adminBeforePostDelete',$id);				
+				$core->blog->delPost($id);
+			}
+			$redir = 2;
+		}
+		http::redirect($p_url.'&act='.$redir);
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
@@ -94,13 +133,14 @@ if (!$core->error->flag())
 	
 	$status_combo = array(
 	'-' => '',
+	__('published') => '1',
 	__('pending') => '-2',
-	__('online') => '1'
+	__('unpublished') => '0'
 	);
 	
 	$post_maps_combo = array(
 	'-' => '',
-	__('None') => '',
+	__('None') => 'none',
 	__('Point of interest') => 'marker',
 	__('Polyline') => 'polyline',
 	__('Polygon') => 'polygon',
@@ -132,8 +172,9 @@ $combo_action = array();
 if ($core->auth->check('publish,contentadmin',$core->blog->id))
 {
 	$combo_action[__('Status')] = array(
-		__('Publish') => 'publish',
-		__('Mark as pending') => 'pending'
+		__('Published') => 'published',
+		__('Pending') => 'pending',
+		__('Unpublished') => 'unpublished'
 	);
 }
 
@@ -249,15 +290,23 @@ echo
 '<body>';
 
 # Display messages
-if (isset($_GET['upd']) && $_GET['upd'] === '0') {
-	echo '<p class="message">'.__('Configuration has been successfully saved').'</p>';
+$msg = '';
+if (isset($_GET['upd']) && $_GET['upd'] === '1') {
+	$msg = __('Configuration has been successfully saved');
 }
 if (isset($_GET['add']) && $_GET['add'] === '1') {
-	echo '<p class="message">'.__('Icon has been successfully added').'</p>';
+	$msg = __('Icon has been successfully added');
 }
 if (isset($_GET['del']) && $_GET['del'] === '1') {
-	echo '<p class="message">'.__('Selected icons have been successfully deleted').'</p>';
+	$msg = __('Selected icons have been successfully deleted');
 }
+if (isset($_GET['act']) && $_GET['act'] === '1') {
+	$msg = __('Selected map posts status have been successfully changed');
+}
+if (isset($_GET['act']) && $_GET['act'] === '2') {
+	$msg = __('Selected map posts have been successfully deleted');
+}
+echo $msg !== '' ? sprintf('<p class="message">%s</p>',$msg) : '';
 
 if (!$core->error->flag())
 {
@@ -322,14 +371,6 @@ if (!$core->error->flag())
 	'<p class="col right">'.__('Selected map elements action:').' '.
 	form::combo('action',$combo_action).
 	'<input type="submit" value="'.__('ok').'" /></p>'.
-	form::hidden(array('user_id'),$user_id).
-	form::hidden(array('cat_id'),$cat_id).
-	form::hidden(array('status'),$status).
-	form::hidden(array('month'),$month).
-	form::hidden(array('sortby'),$sortby).
-	form::hidden(array('order'),$order).
-	form::hidden(array('page'),$page).
-	form::hidden(array('nb'),$nb_per_page).
 	$core->formNonce().
 	'</div>'.
 	'</form>'

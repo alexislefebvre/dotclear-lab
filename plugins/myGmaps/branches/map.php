@@ -21,8 +21,8 @@ $post_lang = $core->auth->getInfo('user_lang');
 $post_title = '';
 $post_excerpt = '';
 $post_excerpt_xhtml = '';
-$post_content = 'Pas de description';
-$post_content_xhtml = '<p>Pas de description</p>';
+$post_content = __('No Description');
+$post_content_xhtml = '<p>'.__('No Description').'</p>';
 $post_notes = '';
 $post_status = $core->auth->getInfo('user_post_status');
 $post_selected = false;
@@ -37,7 +37,8 @@ $post_meta = array(
 	'stroke_weight' => array(''),
 	'stroke_opacity' => array(''),
 	'stroke_color' => array(''),
-	'fill_color' => array('')
+	'fill_color' => array(''),
+	'fill_opacity' => array('')
 );
 
 $post_media = array();
@@ -73,8 +74,9 @@ try {
 
 # Status combo
 $status_combo = array(
+	__('published') => '1',
 	__('pending') => '-2',
-	__('online') => '1'
+	__('unpublished') => '0'
 );
 
 # Formaters combo
@@ -195,6 +197,12 @@ if (!empty($_POST) && $can_edit_post)
 		$post_url = $_POST['post_url'];
 	}
 	
+	foreach ($post_meta as $k => $v) {
+		if (array_key_exists($k,$_POST)) {
+			$post_meta[$k] = array($_POST[$k]);
+		}
+	}
+	
 	$core->blog->setPostContent(
 		$post_id,$post_format,$post_lang,
 		$post_excerpt,$post_excerpt_xhtml,$post_content,$post_content_xhtml
@@ -290,17 +298,6 @@ if (!empty($_POST['delete']) && $can_delete)
 	}
 }
 
-# Gets icons
-$jsVar = '';
-$icons = array();
-$list = files::getDirList(dirname(__FILE__).'/icons');
-foreach ($list['files'] as $icon) {
-	$icon = str_replace(dirname(__FILE__).'/icons/','',$icon);
-	$icon = "'index.php?pf=myGmaps/icons/".$icon."'";
-	array_push($icons,$icon);
-}
-$jsVar = 'myGmaps.icons = ['.implode(',',$icons).'];';
-
 /* DISPLAY
 -------------------------------------------------------- */
 
@@ -330,10 +327,12 @@ echo
 	dcPage::jsVar('myGmaps.msg.line_options',__('Line options')).
 	dcPage::jsVar('myGmaps.msg.fill_options',__('Fill options')).
 	dcPage::jsVar('myGmaps.msg.fill_color',__('Fill color:')).
+	dcPage::jsVar('myGmaps.msg.fill_opacity',__('Fill opacity:')).
 	dcPage::jsVar('myGmaps.msg.stroke_color',__('Line color:')).
 	dcPage::jsVar('myGmaps.msg.stroke_weight',__('Line weight:')).
 	dcPage::jsVar('myGmaps.msg.stroke_opacity',__('Line opacity:')).
 	dcPage::jsVar('myGmaps.msg.apply',__('Apply')).
+	dcPage::jsVar('myGmaps.msg.close',__('Close')).
 	dcPage::jsVar('myGmaps.msg.type',__('Type')).
 	dcPage::jsVar('myGmaps.msg.coordinates',__('Coordinates')).
 	myGmapsUtils::getMapIconsJS().
