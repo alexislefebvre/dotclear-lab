@@ -14,16 +14,16 @@ if (!defined('DC_CONTEXT_ADMIN')) return;
 
 $p_url	= 'plugin.php?p=myGmaps';
 $filters	= array(
-	'user_id',
-	'cat_id',
-	'status',
-	'post_maps',
-	'month',
-	'lang',
-	'sortby',
-	'order',
-	'page',
-	'nb'	
+	'user_id' => '',
+	'cat_id' => '',
+	'status' => '',
+	'post_maps' => '',
+	'month' => '',
+	'lang' => '',
+	'sortby' => '',
+	'order' => '',
+	'page' => '',
+	'nb' => ''
 );
 
 $go = isset($_GET['go']) ? $_GET['go'] : 'maps';

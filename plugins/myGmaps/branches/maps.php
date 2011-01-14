@@ -152,30 +152,25 @@ if ($core->auth->check('delete,contentadmin',$core->blog->id))
 
 /* Get posts
 -------------------------------------------------------- */
-$user_id = !empty($_GET['user_id']) ?	$_GET['user_id'] : '';
-$cat_id = !empty($_GET['cat_id']) ?	$_GET['cat_id'] : '';
-$status = isset($_GET['status']) ?	$_GET['status'] : '';
-$month = !empty($_GET['month']) ?		$_GET['month'] : '';
-$post_maps = !empty($_GET['post_maps']) ?		$_GET['post_maps'] : '';
-$sortby = !empty($_GET['sortby']) ?	$_GET['sortby'] : 'post_dt';
-$order = !empty($_GET['order']) ? $_GET['order'] : 'desc';
+foreach ($filters as $k => $v) {
+	${$k} = array_key_exists($k,$_GET) ? $_GET[$k] : $v;
+}
 
 $show_filters = false;
 
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
 $nb_per_page =  30;
 
-if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
-	if ($nb_per_page != $_GET['nb']) {
+if (!empty($nb) && (integer) $nb > 0) {
+	if ($nb_per_page != $nb) {
 		$show_filters = true;
 	}
-	$nb_per_page = (integer) $_GET['nb'];
+	$nb_per_page = (integer) $nb;
 }
 
 $params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
 $params['no_content'] = true;
 $params['post_type'] = 'map';
-//$params['columns'] = array('post_maps');
 
 # - User filter
 if ($user_id !== '' && in_array($user_id,$users_combo)) {
@@ -317,7 +312,6 @@ if (!$core->error->flag())
 	form::combo('order',$order_combo,$order).'</label></p>'.
 	'<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 	__('Map elements per page').'</label> '.
-	$core->formNonce().
 	'<input type="submit" name="maps_filters" value="'.__('filter').'" /></p>'.
 	form::hidden(array('p'),'myGmaps').
 	'</div>'.

@@ -28,6 +28,61 @@ class myGmapsUtils
 		
 		return sprintf('myGmaps.icons = [%s];',implode(',',$icons));
 	}
+	
+	public static function getMapDataJS($post_id = null)
+	{
+		global $core;
+		
+		if (is_null($post_id) || !is_array($post_id)) {
+			return;
+		}
+		
+		
+		
+		$map = '%1$s = new google.maps.Map(document.getElementById("%2$s"), %3$s);';
+		$bound = 'bounds.extend(%1$s);';
+		$bounds = 'bounds = new google.maps.LatLngBounds();';
+		$icon = '%1$s.setIcon(%2$s);';
+		$marker =
+		'marker = new google.maps.Marker({'."\n".
+			'position: google.maps.LatLng(%1$s,%2$s),'."\n".
+			'map: %3$s'."\n".
+		'});';
+		$infowindow =
+		'infowindow = new google.maps.InfoWindow({'."\n".
+			'position: %1$s'."\n".
+			'content: %2$s'."\n".
+		'})';
+		$listener =
+		'google.maps.event.addListener(%1$s, %2$s, function() {'."\n".
+			'%3$s.setcontent(%4$s);'."\n".
+			'%3$s.open(%5$s,%1$s);'."\n".
+		'});';
+		$fit = '%1$s.fitBounds(bounds);';
+		
+		$map_data = array();
+		
+		$data = $core->blog->getPosts(array('post_type' => 'map', 'post_id' => $post_id));
+		
+		while ($data->fetch())
+		{
+			$coord = explode("\n",$data->post_excerpt);
+			$meta = $core->meta->getMetaArray($data->post_meta);
+			$type = $meta['elt_type'][0];
+			
+			if ($type === 'marker') {
+				$point = explode('|',$coord[0]);
+				array_push($map_data,sprintf($marker,$point[0],$point[1],'map'));
+				array_push($map_data,sprintf($bound,'marker.getPosition()'));
+			}
+		}
+		
+		array_push($map_data,sprintf($fit,'map'));
+		array_unshift($map_data,sprintf($map,'map','map_convas','{}'));
+		array_unshift($map_data,'var map, bounds, marker, infowindow, polyline, polygon;');
+		
+		return implode("\n",$map_data);
+	}
 }
 
 class adminMyGmapsList extends adminGenericList
