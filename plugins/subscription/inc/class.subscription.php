@@ -72,9 +72,9 @@ class Subscription
 		global $core;
 		
 		//settings
-		$core->blog->settings->setNamespace('subscription');
-		$blogs_folder_path		= $core->blog->settings->blogs_folder_path;	
-		$dotclear_folder_path	= $core->blog->settings->dotclear_folder_path;	
+		$settings = new dcSettings($core, null);
+		$blogs_folder_path		= $settings->subscription->blogs_folder_path;	
+		$dotclear_folder_path	= $settings->subscription->dotclear_folder_path;	
 		
 		//blog
 		$root_url = 'http://'.$subscription['blog_url'].'.'.urlSubscription::getDomainName().'/';
@@ -82,7 +82,10 @@ class Subscription
 		$cur = $core->con->openCursor($core->prefix.'blog');
 	
 		$cur->blog_id	= $subscription['blog_url'];
-		$cur->blog_url	= $root_url.'index.php?';
+		
+		$cur->blog_url	= $root_url.'index.php';
+		//$cur->blog_url.= ($core->url->mode == 'query_string') ? '?' : '/';
+		
 		$cur->blog_name = $subscription['blog_name'];
 		
 		$core->addBlog($cur);

@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"Subscription",
 	/* Description*/		"Public blog and user creation form for multiblogs",
 	/* Author */			"kemar",
-	/* Version */			'2.0 alpha',
+	/* Version */			'1.1',
 	/* Permissions */		null
 );
 ?>
