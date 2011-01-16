@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */			"Annuaire",
 	/* Description*/		"Un annuaire des blogs avec categories",
 	/* Author */			"kemar",
-	/* Version */			'2.0 alpha',
+	/* Version */			'1.1',
 	/* Permissions */		null
 );
 ?>

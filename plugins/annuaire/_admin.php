@@ -47,8 +47,7 @@ class annuaireBehaviors {
 			$list[$categories->title] = $categories->category_id;
 		}
 		
-		$core->blog->settings->setNamespace('annuaire');
-		$selected = $core->blog->settings->category;
+		$selected = $core->blog->settings->annuaire->category;
 			
 		
 		echo('<fieldset><legend>'.__('Blog category').'</legend>'.
@@ -66,8 +65,7 @@ class annuaireBehaviors {
 	public static function adminBeforeBlogUpdate($cur, $blog_id) {
 		global $core;
 
-		$core->blog->settings->setNamespace('annuaire');
-		$core->blog->settings->put('category', $_POST['category'], 'integer');
+		$core->blog->settings->annuaire->put('category', $_POST['category'], 'integer');
 		$core->blog->triggerBlog();
 	}
 
