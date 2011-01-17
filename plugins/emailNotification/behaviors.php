@@ -100,12 +100,31 @@ class notificationBehaviors
 			
 			$msg = preg_replace('%</p>\s*<p>%msu',"\n\n",$rs->comment_content);
 			$msg = html::clean($msg);
+
+			if ($cur->comment_status == 1)
+			{
+				$status = __('published');
+			}
+			elseif ($cur->comment_status == 0)
+			{
+				$status = __('unpublished');
+			}
+			elseif ($cur->comment_status == -1)
+			{
+				$status = __('pending');
+			}
+			else
+			{
+				# unknown status
+				$status = $cur->comment_status;
+			}
 			
 			$msg .= "\n\n-- \n".
 			sprintf(__('Blog: %s'),$core->blog->name)."\n".
 			sprintf(__('Entry: %s <%s>'),$rs->post_title,$rs->getPostURL())."\n".
 			sprintf(__('Comment by: %s <%s>'),$rs->comment_author,$rs->comment_email)."\n".
 			sprintf(__('Website: %s'),$rs->getAuthorURL())."\n".
+			sprintf(__('Comment status: %s'),$status)."\n".
 			sprintf(__('Edit this comment: <%s>'),DC_ADMIN_URL.
 				((substr(DC_ADMIN_URL,-1) != '/') ? '/' : '').
 				'comment.php?id='.$cur->comment_id.
@@ -113,6 +132,9 @@ class notificationBehaviors
 			__('You must log in on the backend before clicking on this link to go directly to the comment.');
 			
 			$msg = __('You received a new comment on your blog:')."\n\n".$msg;
+
+			# --BEHAVIOR-- emailNotificationAppendToEmail
+			$msg .= $core->callBehavior('emailNotificationAppendToEmail',$cur);
 			
 			foreach ($ulist as $email) {
 				$h = array_merge(array('From: '.$email),$headers);

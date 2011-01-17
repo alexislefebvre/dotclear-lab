@@ -1,10 +1,8 @@
-# Language: français
-# Module: emailNotification - 1.0.3
-# Date: 2010-02-13 20:14:39
-# Translated with dcTranslater - 1.2
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: behaviors.php:22
 msgid "never"
@@ -27,34 +25,50 @@ msgid "Notify new comments by email:"
 msgstr "Avertir des nouveaux commentaires par e-mail :"
 
 #: behaviors.php:98
-msgid ""%s" - New comment"
+msgid "\"%s\" - New comment"
 msgstr "\"%s\" - Nouveau commentaire"
 
-#: behaviors.php:105
+#: behaviors.php:106
+msgid "published"
+msgstr "publié"
+
+#: behaviors.php:110
+msgid "unpublished"
+msgstr "non publié"
+
+#: behaviors.php:114
+msgid "pending"
+msgstr "en attente"
+
+#: behaviors.php:123
 msgid "Blog: %s"
 msgstr "Blog : %s"
 
-#: behaviors.php:106
+#: behaviors.php:124
 msgid "Entry: %s <%s>"
 msgstr "Billet : %s <%s>"
 
-#: behaviors.php:107
+#: behaviors.php:125
 msgid "Comment by: %s <%s>"
 msgstr "Commentaire par : %s <%s>"
 
-#: behaviors.php:108
+#: behaviors.php:126
 msgid "Website: %s"
 msgstr "Site web : %s"
 
-#: behaviors.php:109
+#: behaviors.php:127
+msgid "Comment status: %s"
+msgstr "Statut du commentaire : %s"
+
+#: behaviors.php:128
 msgid "Edit this comment: <%s>"
 msgstr "Modifier ce commentaire : %s"
 
-#: behaviors.php:113
+#: behaviors.php:132
 msgid "You must log in on the backend before clicking on this link to go directly to the comment."
 msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce commentaire."
 
-#: behaviors.php:115
+#: behaviors.php:134
 msgid "You received a new comment on your blog:"
 msgstr "Vous avez reçu un nouveau commentaire sur votre blog :"
 
