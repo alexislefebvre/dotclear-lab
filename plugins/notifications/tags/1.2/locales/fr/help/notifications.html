@@ -1,0 +1,102 @@
+<html>
+<head>
+	<title>Notifications</title>
+</head>
+
+<body>
+	<p><strong><em>IMPORTANT: Pour être en mesure de voir les notifications, il faut
+	que le plugin soit activé (voir Onglet configuration) mais aussi que vous ayez
+	coché la case <q>Activer les notifications</q> dans vos préférences utilisateur
+	</em></strong></p>
+	
+	<h3>Introduction</h3>
+	<dl>
+		<dd>Le plugin notification permet d'afficher sur l'interface d'administration
+		des notifications concernant n'importe quelle fonction de Dotclear
+		(billets/pages/commentaires/plugins/thèmes/etc...)</dd>
+	</dl>
+	
+	<h3>Onglet <q>Composants enregistrés</q></h3>
+	<dl>
+		<dt>Liste des composants</dt>
+		<dd>Notifications fonctionne grâce à des composants. Ces derniers sont un moyen
+		de regrouper visuellement le type de notifications qui est affichée.</dd>
+		<dd>Chaque ligne représente un composant avec:
+			<ul>
+				<li>son nom</li>
+				<li>le lien vers la définition des permissions relatives au composant.
+				Ces permissions permettent de définir quels utilisateurs peuvent voir
+				les notifications</li>
+				<li>l'image du composant: elle sera affichée dans le coin supérieur gauche
+				de chaque notification appartenant à ce composant</li>
+				<li>son statut: <ul>
+					<li>actif: toutes notifications relatives à ce composant seront
+					enregistrées <strong>et</strong> affichées</li>
+					<li>non actif: toutes notifications relatives à ce composant 
+					<strong>ne seront pas</strong> enregistrées <strong>et ne seront
+					pas</strong> affichées</li>
+				</ul></li>
+			</ul>
+		</dd>
+		
+		<dt>Actions sur les composants</dt>
+		<dd>Chaque composant peut être activé/désactivé à volonté. Pour effectuer ces
+		opérations, il suffit de sélectionner les composants voulus, sélectionner l'action
+		à faire dans le selecteur en bas à droite de la liste et cliquer sur <q>ok</q></dd>
+	</dl>
+		
+	<h3>Définition des permissions</h3>
+	<dl>
+		<dt>Les types de notifications</dt>
+		<dd>A chaque notification, relative à un composant, est affecté un type:<ul>
+			<li>new: pour toute action créant un nouveau contenu</li>
+			<li>upd: pour toute action mettant à jour du contenu</li>
+			<li>del: pour toute action supprimant du contenu</li>
+			<li>msg: pour toute action nécessitant un message d'information</li>
+			<li>err: pour toute action nécessitant un message d'erreur</li>
+			<li>spm: pour toute action considérée comme spam</li>
+		</ul></dd>
+		
+		<dt>Choix des permissions</dt>
+		<dd>Pour chacun de ces types, il est possible de personaliser l'affichage des notifications
+		suivant les autorisations des utilisateurs. Les permissions affichées dans le selecteur
+		sont les mêmes que sur page de définition de permission d'un utilisateur sur chaque
+		blog.</dd>
+		<dd>Par exemple, pour le composant <q>Post</q>, type <q>new</q>, si vous définissez
+		la permission à <q>administrateur</q>, seuls les utilisateurs ayant des droits
+		supérieurs ou égaux à cette permission veront ce type de notifications</dd>
+	</dl>
+	
+	<h3>Onglet <q>Configuration</q></h3>
+	<dl>
+		<dt>Activer les notifications</dt>
+		<dd>Activation générale du plugin notification. Permet aux utilisateurs de choisir ou non
+		d'afficher les notifications relatives à leurs permissions</dd>
+		
+		<dt>Coller les notifications</dt>
+		<dd>Une notification <q>collée</q> signifie qu'elle reste affichée tant que l'utilisateur
+		n'aura pas cliquer sur le bouton de fermeture de celle ci ou le bouton <q>Fermer tout</q></dd>
+		
+		<dt>Afficher toutes les notifications de tous les blogs</dt>
+		<dd>Affiche sur le blog courant les notifications relatives au blog ainsi qu'aux autres
+		blogs de la plateforme. <strong>Cet affichage n'est visible que pour les administrateurs
+		et super administrateurs</strong></dd>
+		
+		<dt>Position des notifications</dt>
+		<dd>Défini la position de l'affichage des notifications</dd>
+		
+		<dt>Temps d'affichage des notifications</dt>
+		<dd>Temps pour lequel chaque notification reste affichée. Ce temps doit être défini en secondes.
+		<strong>Cette option n'est prise compte que si la case <q>Coller les notifications</q> n'est
+		pas cochée</strong></dd>
+		
+		<dt>Temps entre chaque requête</dt>
+		<dd>Intervale de temps entre deux requêtes pour la vérification de nouvelles notifications.
+		Ce temps doit être défini en secondes</dd>
+		
+		<dt>Nettoyer automatiquement les notifications</dt>
+		<dd>Defini si le plugin doit vider automatiquement la table des notifications pour celles
+		consommées</dd>
+	</dl>
+</body>
+</html>
