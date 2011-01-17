@@ -195,6 +195,8 @@ else {
 	'</fieldset>';
 }
 
+dcPage::helpBlock('notifications');
+
 echo
 '</body>'.
 '</html>';
