@@ -3,20 +3,21 @@
 	height: 400px;
 	border: 1px solid #999999;
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
 textarea[name=post_excerpt] {
 	display:none;
 }
-.infowindow {
-	margin-top:1em;
-}	
+tr.bind {
+	background-color: #999999;
+}
 /* Map toolbar */
-#toolbar-area ul {
+#map_toolbar ul {
 	overflow: hidden;
 	padding: 0;
 	margin: 0;
 }
-#toolbar-area ul li {
+#map_toolbar ul li {
 	float: left;
 	padding: 0.2em;
 	list-style: none;
@@ -73,9 +74,16 @@ li#polygon.selected {
 	height: 50px;
 }
 /* Windowsinfo */
-.windowinfo {
-	min-width: 400px;
-	margin: 0;
-	padding-left: 0.5em;
-	padding-right: 2.2em;
+.infowindow {
+	min-width: 450px;
+	max-height: 400px;
+	overflow: hidden;
+	margin-bottom: 1.5em;
+}
+.infowindow input, .infowindow label {
+	display: inline;
+}
+.infowindow input {
+	font-weight: bold;
+	border: none;
 }

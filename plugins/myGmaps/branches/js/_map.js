@@ -32,69 +32,78 @@ $(function () {
 		cookie: 'dcx_post_notes'
 	});
 	
-	// Map initialization
-	if ($('input[name=center]').val() != '') {
-		myGmaps.center.lat = $('input[name=center]').val().split(',')[0];
-		myGmaps.center.lng = $('input[name=center]').val().split(',')[1];
+	var opts = {};
+	
+	opts.center = {
+		lat: parseFloat($('input[name=center]').val().split(',')[0]),
+		lng: parseFloat($('input[name=center]').val().split(',')[1])
 	}
-	if ($('input[name=zoom]').val() != '') {
-		myGmaps.zoom = $('input[name=zoom]').val();
+	opts.zoom = $('input[name=zoom]').val();
+	opts.map_type = $('input[name=map_type]').val();
+	opts.scrollwheel = $('input[name=scrollwheel]').val();
+	opts.mode = 'edit';
+	
+	myGmaps.init(opts);
+	
+	var polyline = {};
+	var polygon = {};
+	
+	if ($('input[name=stroke_color]').val() != '') {
+		polyline.strokeColor = $('input[name=stroke_color]').val();
+		polygon.strokeColor = $('input[name=stroke_color]').val();
 	}
-	if ($('input[name=map_type]').val() != '') {
-		myGmaps.type = $('input[name=map_type]').val();
+	if ($('input[name=stroke_weight]').val() != '') {
+		polyline.strokeWeight = parseFloat($('input[name=stroke_weight]').val());
+		polygon.strokeWeight = parseFloat($('input[name=stroke_weight]').val());
 	}
-	if ($('input[name=scrollwheel]').val() != '') {
-		myGmaps.scrollwheel = $('input[name=scrollwheel]').val() == '1' ? true : false;
+	if ($('input[name=stroke_opacity]').val() != '') {
+		polyline.strokeOpacity = parseFloat($('input[name=stroke_opacity]').val());
+		polygon.strokeOpacity = parseFloat($('input[name=stroke_opacity]').val());
 	}
-	if ($('input[name=map_type]').val() != '') {
-		myGmaps.type = $('input[name=map_type]').val();
+	if ($('input[name=fill_color]').val() != '') {
+		polygon.fillColor = $('input[name=fill_color]').val();
 	}
-	if ($('input[name=elt_type]').val() != '') {
-		myGmaps.elt_type = $('input[name=elt_type]').val();
-	}
-	if (myGmaps.elt_type == 'polyline') {
-		myGmaps.options[myGmaps.elt_type].strokeColor = $('input[name=stroke_color]').val();
-		myGmaps.options[myGmaps.elt_type].strokeWeight = $('input[name=stroke_weight]').val();
-		myGmaps.options[myGmaps.elt_type].strokeOpacity = $('input[name=stroke_opacity]').val();
-	}
-	if (myGmaps.elt_type == 'polygon') {
-		myGmaps.options[myGmaps.elt_type].strokeColor = $('input[name=stroke_color]').val();
-		myGmaps.options[myGmaps.elt_type].strokeWeight = $('input[name=stroke_weight]').val();
-		myGmaps.options[myGmaps.elt_type].strokeOpacity = $('input[name=stroke_opacity]').val();
-		myGmaps.options[myGmaps.elt_type].fillColor = $('input[name=fill_color]').val();
-		myGmaps.options[myGmaps.elt_type].fillOpacity = $('input[name=fill_opacity]').val();
+	if ($('input[name=fill_opacity]').val() != '') {
+		polygon.fillOpacity = parseFloat($('input[name=fill_opacity]').val());
 	}
 	
-	myGmaps.init();
-	myGmaps.loadData();
-	myGmaps.updDetails();
+	myGmaps.setObjectsOptions('polyline',polyline);
+	myGmaps.setObjectsOptions('polygon',polygon);
 	
-	// Events
-	google.maps.event.addListener(myGmaps.objects.polyline, 'click', myGmaps.updPolylineOptions);
-	google.maps.event.addListener(myGmaps.objects.polygon, 'click', myGmaps.updPolygonOptions);
-	$('li#none,li#marker,li#polyline,li#polygon').click(function() {
-		myGmaps.startDraw($(this).attr('id'));
-		
-	});
-	$('input[name=reset]').click(function () {
-		myGmaps.delOverlays(true);
-	});
-	$('input[name=q]').keypress(function(event) {
-		if (event.keyCode == 13) {
-			$('input[name=mq]').click();
-			return false;
+	var item = {
+		type: '',
+		markers: [],
+		icon: '',
+		infowindow: '',
+		url: '',
+		o: []
+	}
+	var markers = $('textarea[name=post_excerpt]').val().split("\n");
+	
+	item.type = $('input[name=elt_type]').val();
+	item.icon = $('input[name=icon]').val();
+	
+	if (item.type != 'none') {
+		for (i in markers) {
+			if (myGmaps.isUrl(markers[i])) {
+				item.url = markers[i];
+			}
+			else {
+				item.markers.push({
+					lat: markers[i].split('|')[0],
+					lng: markers[i].split('|')[1]
+				});
+			}
 		}
-	});
-	$('input[name=kml]').click(function () {
-		var msg = prompt('URL:', '');
-		myGmaps.addKml(msg);
-	});
+		myGmaps.addItems(item);
+	}
+	
 	$('#entry-form').submit(function () {
 		var content = $("textarea[name=post_content]").val();
 		if (content == '') {
 			$("textarea[name=post_content]").val(myGmaps.msg.no_description);
 		}
-		myGmaps.setMapPoints();
+		myGmaps.savePoints();
 		return true;
 	});
 });

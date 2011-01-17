@@ -34,6 +34,7 @@ $post_meta = array(
 	'zoom' => array($core->blog->settings->myGmaps->zoom),
 	'map_type' => array($core->blog->settings->myGmaps->map_type),
 	'elt_type' => array('none'),
+	'icon' => array(''),
 	'stroke_weight' => array(''),
 	'stroke_opacity' => array(''),
 	'stroke_color' => array(''),
@@ -132,7 +133,7 @@ if (!empty($_REQUEST['id']))
 		$post_selected = (boolean) $post->post_selected;
 		$post_open_comment = (boolean) $post->post_open_comment;
 		$post_open_tb = (boolean) $post->post_open_tb;
-		$post_meta = unserialize($post->post_meta);
+		$post_meta = $core->meta->getMetaArray($post->post_meta);
 		
 		$page_title = __('Edit map element');
 		
@@ -309,34 +310,13 @@ echo
 	dcPage::jsToolBar().
 	dcPage::jsModal().
 	dcPage::jsConfirmClose('entry-form').
-	dcPage::jsColorPicker().
-	dcPage::jsLoad('http://maps.google.com/maps/api/js?sensor=false').
-	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js').
-	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/ui.core.js').
-	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/ui.slider.js').
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_map.js').
+	myGmapsUtils::jsCommon('edit').
 	$next_headlink."\n".$prev_headlink.
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/style.css" />'.
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/ui.theme.css" />'.
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/ui.slider.css" />'.
 	'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
-	'<script type="text/javascript">'.
-	dcPage::jsVar('myGmaps.msg.no_description',__('No description')).
-	dcPage::jsVar('myGmaps.msg.invalid_url',__('Invalid kml URL')).
-	dcPage::jsVar('myGmaps.msg.geocoder_error',__('Geocode was not successful for the following reason:')).
-	dcPage::jsVar('myGmaps.msg.line_options',__('Line options')).
-	dcPage::jsVar('myGmaps.msg.fill_options',__('Fill options')).
-	dcPage::jsVar('myGmaps.msg.fill_color',__('Fill color:')).
-	dcPage::jsVar('myGmaps.msg.fill_opacity',__('Fill opacity:')).
-	dcPage::jsVar('myGmaps.msg.stroke_color',__('Line color:')).
-	dcPage::jsVar('myGmaps.msg.stroke_weight',__('Line weight:')).
-	dcPage::jsVar('myGmaps.msg.stroke_opacity',__('Line opacity:')).
-	dcPage::jsVar('myGmaps.msg.apply',__('Apply')).
-	dcPage::jsVar('myGmaps.msg.close',__('Close')).
-	dcPage::jsVar('myGmaps.msg.type',__('Type')).
-	dcPage::jsVar('myGmaps.msg.coordinates',__('Coordinates')).
-	myGmapsUtils::getMapIconsJS().
-	'</script>'.
 '</head>'.
 '<body>';
 
@@ -429,22 +409,6 @@ if ($can_edit_post)
 	'<p class="area" id="excerpt-area" style="display:none;"><label for="post_excerpt">'.__('Coordinates:').'</label> '.
 	form::textarea('post_excerpt',50,3,html::escapeHTML($post_excerpt)).
 	'</p>';
-	
-	echo
-	'<div class="area" id="toolbar-area">'.
-		'<ul>'.
-			'<li id="none"></li>'.
-			'<li id="marker"></li>'.
-			'<li id="polyline"></li>'.
-			'<li id="polygon"></li>'.
-			'<li>'.
-				form::field('q',50,255).
-				'<input type="button" class="submit" name="mq" id="search" value="'.__('Search').'" />'.
-			'</li>'.
-			'<li><input type="button" class="submit" name="reset" id="reset"  value="'.__('Reset map').'" /></li>'.
-			'<li><input type="button" class="submit" name="kml" id="kml" value="'.__('Include kml file').'" /></li>'.
-		'</ul>'.
-	'</div>';
 	
 	echo
 	'<div class="area" id="map_canvas"></div>';

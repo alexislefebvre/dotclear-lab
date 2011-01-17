@@ -231,16 +231,10 @@ echo
 '<head>'.
 	'<title>'.__('Google Maps').'</title>'.
 	dcPage::jsPageTabs($tab).
-	dcPage::jsLoad('http://maps.google.com/maps/api/js?sensor=false').
-	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js').
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_maps.js').
+	myGmapsUtils::jsCommon().
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/style.css" />'.
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/ui.theme.css" />'.
-	'<script type="text/javascript">'.
-	dcPage::jsVar('myGmaps.msg.geocoder_error',__('Geocode was not successful for the following reason:')).
-	dcPage::jsVar('myGmaps.msg.type',__('Type')).
-	dcPage::jsVar('myGmaps.msg.coordinates',__('Coordinates')).
-	dcPage::jsVar('myGmaps.msg.no_icon_selected',__('Please, select at leat one icon')).
 	'</script>'.
 '</head>'.
 '<body>';
@@ -350,14 +344,11 @@ if (!$core->error->flag())
 	'<div class="multi-part" id="config" title="'.__('Configuration').'">'.
 	'<form method="post" action="'.$p_url.'" id="settings-form">'.
 	'<fieldset><legend>'.__('Default map options').'</legend>'.
-		'<p class="field"><label>'.__('Use scrollwheel').
+		'<p>'.__('Choose map center, zoom level / mode and map type:').'</p>'.
+		'<p class="form-note">'.__('Clic on a map to set the center').'</p>'.
+		'<p class="field"><label>'.__('Use zoom scrollwheel').
 		form::checkbox('scrollwheel',1,$core->blog->settings->myGmaps->scrollwheel).
 		'</label></p>'.
-		'<p>'.__('Choose map center, zoom level and map type.').'</p>'.
-		'<p>'.
-			form::field('q',50,255).
-			'<input type="button" class="submit" name="mq" id="search" value="'.__('Search').'" />'.
-		'</p>'.
 		'<div class="area" id="map_canvas"></div>'.
 	'</fieldset>'.
 	'<p class="area" id="map-details-area" >'.

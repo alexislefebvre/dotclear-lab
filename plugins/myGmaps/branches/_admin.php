@@ -67,10 +67,88 @@ class myGmapsBehaviors
 	{
 		global $core;
 		
-		echo 
+		$table = '';
+		$p_a = '<a href="%s">%s</a>';
+		$items = $links = array();
+		
+		$meta = $core->meta->getMetaArray($cur->post_meta);
+		
+		$rs = $core->blog->getPosts(array('post_type' => 'map', 'post_id' => $meta['map']));
+		
+		while ($rs->fetch()) {
+			if ($core->auth->check('categories',$core->blog->id)) {
+				$cat_link = '<a href="category.php?id=%s">%s</a>';
+			} else {
+				$cat_link = '%2$s';
+			}
+			if ($rs->cat_title) {
+				$cat_title = sprintf($cat_link,$rs->cat_id,
+				html::escapeHTML($rs->cat_title));
+			} else {
+				$cat_title = __('None');
+			}
+			
+			$type_list = array(
+				'none' => __('None'),
+				'marker' => __('Point of interest'),
+				'polyline' => __('Polyline'),
+				'polygon' => __('Polygon'),
+				'kml' => __('Included kml file')
+			);
+			$rs_meta = $core->meta->getMetaArray($rs->post_meta);
+			$type = array_key_exists($rs_meta['elt_type'][0],$type_list) ? $type_list[$rs_meta['elt_type'][0]] : '';
+			
+			array_push(
+				$items,
+				'<tr>'.
+				'<td class="maximal"><a href="plugin.php?p=myGmaps&amp;go=map&amp;id='.$rs->post_id.
+				'" title="'.__('Edit map element').' : '.html::escapeHTML($rs->post_title).'">'.
+				html::escapeHTML($rs->post_title).'</a></td>'.
+				'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rs->post_dt).'</td>'.
+				'<td class="nowrap">'.$cat_title.'</td>'.
+				'<td class="nowrap">'.$rs->user_id.'</td>'.
+				'<td class="nowrap">'.$type.'</td>'.
+				'<td class="nowrap"></td>'.
+				'</tr>'
+			);
+		}
+		
+		if (count($items) > 0) {
+			$table = sprintf(
+				'<table class="clear"><tr>'.
+				'<th>'.__('Title').'</th>'.
+				'<th>'.__('Date').'</th>'.
+				'<th>'.__('Category').'</th>'.
+				'<th>'.__('Author').'</th>'.
+				'<th class="nowrap">'.__('Type').'</th>'.
+				'<th>&nbsp;</th>'.
+				'</tr>'.
+				'%s'.
+				'</table>',
+				implode("\n",$items)
+			);
+			array_push($links,sprintf($p_a,'plugin.php?p=myGmaps&go=maps_post&post_id='.$cur->post_id,__('Edit map')));
+			array_push($links,sprintf($p_a,'',__('Remove map')));
+		}
+		else {
+			array_push($links,sprintf($p_a,'plugin.php?p=myGmaps&go=maps_post&post_id='.$cur->post_id,__('Add a map to entry')));
+		}
+		
+		echo
 		'<fieldset><legend>'.__('Google Map').'</legend>'.
-		'<p><a href="plugin.php?p=myGmaps&go=maps_popup&post_id='.$cur->post_id.'">'.__('Add a map to entry').'</a></p>'.
+		$table.
+		'<p>';
+		/*
+		foreach ($links as $link) {
+			echo sprintf('<p class="col right">%s</p>',$link);
+		}
+		*/
+		echo implode(' - ',$links);
+		echo
+		'</p>'.
 		'</fieldset>';
+		
+		
 		/*$id = $post->post_id;
 		$type = $post->post_type;
 		$meta =& $GLOBALS['core']->meta;

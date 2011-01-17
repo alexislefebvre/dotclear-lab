@@ -37,8 +37,8 @@ elseif ($go === 'map') {
 elseif ($go === 'maps_actions') {
 	require_once dirname(__FILE__).'/maps_actions.php';
 }
-elseif ($go === 'maps_popup') {
-	require_once dirname(__FILE__).'/maps_popup.php';
+elseif ($go === 'maps_post') {
+	require_once dirname(__FILE__).'/maps_post.php';
 }
 
 

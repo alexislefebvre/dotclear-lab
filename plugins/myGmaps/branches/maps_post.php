@@ -10,18 +10,25 @@ if (is_null($post_id)) {
 
 if (!$core->error->flag())
 {
-	$maps = $core->meta->getMetadata(array(
-		'meta_type' => 'map',
-		'post_id' => $post_id
-	));
-	
 	# Bind map elements
 	if (isset($_POST['bind'])) {
 		try {
-			$core->meta->delPostMeta($post_id,'map');
 			foreach ($_POST['entries'] as $id) {
+				$core->meta->delPostMeta($post_id,'map',$id);
 				$core->meta->setPostMeta($post_id,'map',$id);
-			}	
+			}
+			http::redirect($p_url.'&go=maps_post&post_id='.$post_id.'&upd=1');
+		} catch (Exception $e) {
+			$core->error->add($e->getMessage());
+		}
+	}
+	# Unbind map elements
+	if (isset($_POST['unbind'])) {
+		try {
+			foreach ($_POST['entries'] as $id) {
+				$core->meta->delPostMeta($post_id,'map',$id);
+			}
+			http::redirect($p_url.'&go=maps_post&post_id='.$post_id.'&upd=2');
 		} catch (Exception $e) {
 			$core->error->add($e->getMessage());
 		}
@@ -116,13 +123,18 @@ if (!$core->error->flag())
 	}
 	
 	$params = array();
-	$exclude = array();
+	$bind = array();
+	
+	$maps = $core->meta->getMetadata(array(
+		'meta_type' => 'map',
+		'post_id' => $post_id
+	));
 	
 	while ($maps->fetch()) {
-		array_push($exclude,$maps->meta_id);
+		array_push($bind,$maps->meta_id);
 	}
-	if (count($exclude) > 0) {
-		$params['sql'] = 'AND post_id not '.$core->con->in($exclude);
+	if (count($bind) > 0) {
+		//$params['sql'] = 'AND post_id not '.$core->con->in($bind);
 	}
 
 	$show_filters = false;
@@ -186,7 +198,7 @@ if (!$core->error->flag())
 	# Get posts
 	try {
 		$posts = $core->blog->getPosts($params);
-		$post_list = new adminMyGmapsList($core,$posts,$posts->count());
+		$post_list = new adminMyGmapsBindList($core,$posts,$posts->count());
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
@@ -197,20 +209,28 @@ if (!$core->error->flag())
 	'<html>'.
 	'<head>'.
 		'<title>'.__('Google Map').'</title>'.
-		dcPage::jsLoad('http://maps.google.com/maps/api/js?sensor=false').
-		dcPage::jsLoad('index.php?pf=myGmaps/js/myGmaps.js').
 		dcPage::jsLoad('index.php?pf=myGmaps/js/_maps_post.js').
+		myGmapsUtils::jsCommon().
+		myGmapsUtils::jsData($bind).
 		'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/style.css" />'.
-		'<script type="text/javascript">'.
-		'$(function() {'.
-		myGmapsUtils::getMapDataJS($exclude).
-		'})'.
-		'</script>'.
 	'</head>'.
-	'<body>'.
+	'<body>';
+	
+	if (isset($_GET['upd'])) {
+		$msg = '';
+		if ($_GET['upd'] === '1') {
+			$msg = __('Selected map elements have been successfully bound');
+		}
+		if ($_GET['upd'] === '2') {
+			$msg = __('Selected map elements have been successfully unbound');
+		}
+		echo sprintf('<p class="message">%s</p>',$msg);
+	}
+	
+	echo
 	'<h2>'.
 		html::escapeHTML($core->blog->name).' &rsaquo; '.
-		'<a href="'.$p_url.'">'.__('Google Maps').'</a> &rsaquo; '.
+		'<a href="post.php?id='.$post_id.'">'.sprintf(__('Entry #%s'),$post_id).'</a> &rsaquo; '.
 		__('Bind map elements to an entry').
 	'</h2>';
 
@@ -224,7 +244,7 @@ if (!$core->error->flag())
 	echo
 	'<form action="'.$p_url.'" method="get" id="filters-form">'.
 	form::hidden(array('p'),'myGmaps').
-	form::hidden(array('go'),'maps_popup').
+	form::hidden(array('go'),'maps_post').
 	form::hidden(array('post_id'),$post_id).
 	'<fieldset><legend>'.__('Filters').'</legend>'.
 	'<div class="three-cols">'.
@@ -259,8 +279,8 @@ if (!$core->error->flag())
 	'</form>';
 	
 	# Show map elements
-	$post_list->display($page,$nb_per_page,$p_url,
-	'<form action="'.$p_url.'&amp;go=maps_popup&amp;post_id='.$post_id.'" method="post" id="form-entries">'.
+	$post_list->display($page,$nb_per_page,$p_url,$bind,
+	'<form action="'.$p_url.'&amp;go=maps_post&amp;post_id='.$post_id.'" method="post" id="form-entries">'.
 	
 	'%s'.
 	
@@ -269,7 +289,8 @@ if (!$core->error->flag())
 	
 	'<p class="col right">'.
 	form::hidden('post_id',$post_id).
-	'<input type="submit" name="bind" value="'.__('Bind selected map elements').'" /></p>'.
+	'<input type="submit" name="bind" value="'.__('Bind selected map elements').'" />'.
+	'<input type="submit" name="unbind" value="'.__('Unbind selected map elements').'" /></p>'.
 	$core->formNonce().
 	'</div>'.
 	'</form>'
