@@ -56,11 +56,6 @@ var myGmaps = {
 		google.maps.event.addListener(myGmaps.map, 'center_changed', myGmaps.setMapOptions);
 		google.maps.event.addListener(myGmaps.map, 'zoom_changed', myGmaps.setMapOptions);
 		google.maps.event.addListener(myGmaps.map, 'maptypeid_changed', myGmaps.setMapOptions);
-		/*if (myGmaps.mode == 'edit') {
-			google.maps.event.addListener(myGmaps.map, 'click', myGmaps.updDetails);
-			google.maps.event.addListener(myGmaps.map, 'dblclick', myGmaps.updDetails);
-			google.maps.event.addListener(myGmaps.map, 'dragend', myGmaps.updDetails);
-		}*/
 	},
 	
 	setMapOptions: function() {
@@ -145,6 +140,7 @@ var myGmaps = {
 				myGmaps.setListeners(item.o[k],(parseInt(k) == 0 ? item.type : 'marker'));
 			}
 		}
+		myGmaps.updDetails();
 	},
 	
 	addPoint: function(latlng) {
@@ -176,33 +172,40 @@ var myGmaps = {
 			}
 			
 			myGmaps.setListeners(marker,'marker');
+			myGmaps.updDetails();
 		}
 	},
 	
 	updPoint: function(latlng,i) {
+		var index = i;
 		var item = myGmaps.items[0];
 		
 		if (item.type == 'polyline' || item.type == 'polygon') {
-			item.o[0].getPath().setAt(parseInt(i) - 1,latlng);
+			index = parseInt(i) - 1;
 		}
-		item.markers[i] = {
+		item.o[0].getPath().setAt(index,latlng);
+		item.markers[index] = {
 			lat: latlng.lat(),
 			lng: latlng.lng()
 		};
 		item.o[i].setPosition(latlng);
+		
+		for (j = (item.type == 'marker' ? 0 : 1); j < item.o.length; j++) {
+			item.o[j].setTitle('#' + (parseInt(j) + (item.type == 'marker' ? 1 : 0)));
+		}
 	},
 	
-	delPoint: function() {
+	delPoint: function(i) {
+		var index = i;
 		var item = myGmaps.items[0];
 		
-		for (var i = 0, I = item.o.length; i < I && item.o[i] != this; ++i);
-		
 		if (item.type == 'polyline' || item.type == 'polygon') {
-			item.o[0].getPath().removeAt(parseInt(i) -1);
+			index = parseInt(i) - 1;
 		}
+		item.o[0].getPath().removeAt(index);
+		item.markers.splice(index, 1);
 		item.o[i].setMap(null);
 		item.o.splice(i, 1);
-		item.markers.splice(parseInt(i) - (item.type == 'marker' ? 0 : 1), 1);
 		
 		for (j = (item.type == 'marker' ? 0 : 1); j < item.o.length; j++) {
 			item.o[j].setTitle('#' + (parseInt(j) + (item.type == 'marker' ? 1 : 0)));
@@ -261,13 +264,13 @@ var myGmaps = {
 	
 	setListeners: function(item,type) {
 		if (myGmaps.mode == 'view') {
-			myGmaps.events.push(google.maps.event.addListener(item, 'click', function(event) {
+			/*myGmaps.events.push(google.maps.event.addListener(item, 'click', function(event) {
 				var latlng = type != 'marker' ? event.latLng : item.getPosition();
 				myGmaps.infowindow.close();
 				myGmaps.infowindow.setContent('');
 				myGmaps.infowindow.setPosition(latlng);
 				myGmaps.infowindow.open(myGmaps.map);
-			}));
+			}));*/
 		}
 		if (myGmaps.mode == 'edit') {
 			if (type == 'polyline') {
@@ -277,10 +280,15 @@ var myGmaps = {
 				myGmaps.events.push(google.maps.event.addListener(item, 'click', myGmaps.updPolygonOptions));
 			}
 			if (type == 'marker') {
-				myGmaps.events.push(google.maps.event.addListener(item, 'click', myGmaps.delPoint));
+				myGmaps.events.push(google.maps.event.addListener(item, 'click', function() {
+					for (var i = 1, I = myGmaps.items[0].o.length; i < I && myGmaps.items[0].o[i] != item; ++i);
+					myGmaps.delPoint(i);
+					myGmaps.updDetails();
+				}));
 				myGmaps.events.push(google.maps.event.addListener(item, 'dragend', function() {
 					for (var i = 1, I = myGmaps.items[0].o.length; i < I && myGmaps.items[0].o[i] != item; ++i);
 					myGmaps.updPoint(item.getPosition(),i);
+					myGmaps.updDetails();
 				}));
 				myGmaps.events.push(google.maps.event.addListener(item, 'rightclick', myGmaps.updMakerOptions));
 			}
@@ -454,21 +462,10 @@ var myGmaps = {
 			append($('<legend/>').append(myGmaps.msg.marker_options)).
 			append($('<p/>').append('choose the marker icon:'))
 		);
-		content.append($('<p/>').
-			append($('<input/>').attr({type:'button',class:'submit',id:'apply'}).val(myGmaps.msg.apply)).
-			append($('<input/>').attr({type:'button',class:'submit',id:'close'}).val(myGmaps.msg.close))
-		);
 		
 		myGmaps.infowindow.setContent(content.get(0));
 		myGmaps.infowindow.setPosition(this.getPosition());
 		myGmaps.infowindow.open(myGmaps.map);
-		$('input#apply').click(function() {
-			
-		});
-		$('input#close').click(function() {
-			myGmaps.infowindow.close();
-			return false;
-		});
 	},
 	
 	updPolylineOptions: function(event) {
@@ -478,16 +475,16 @@ var myGmaps = {
 			append($('<legend/>').append(myGmaps.msg.line_options)).
 			append($('<p/>').
 				append($('<label/>').append(myGmaps.msg.stroke_color)).
-				append($('<input/>').attr('type','text').attr({id:'stroke_color',size:'7',class:'colorpicker',style:'display:inline;'}).val(myGmaps.items[0].o[0].strokeColor))
+				append($('<input/>').attr('type','text').attr({id:'stroke_color',size:'7',class:'colorpicker'}).val(myGmaps.items[0].o[0].strokeColor))
 			).
 			append($('<p/>').
 				append($('<label/>').append(myGmaps.msg.stroke_weight)).
-				append($('<input/>').attr({type:'text',id:'stroke_weight',size:'3',style:'border:0; font-weight:bold; display:inline;'}).val(myGmaps.items[0].o[0].strokeWeight)).
+				append($('<input/>').attr({type:'text',id:'stroke_weight',size:'3'}).val(myGmaps.items[0].o[0].strokeWeight)).
 				append($('<div/>').attr('id','slider_stroke_weight'))
 			).
 			append($('<p/>').
 				append($('<label/>').append(myGmaps.msg.stroke_opacity)).
-				append($('<input/>').attr({type:'text',id:'stroke_opacity',size:'3',style:'border:0; font-weight:bold; display:inline;'}).val(myGmaps.items[0].o[0].strokeOpacity)).
+				append($('<input/>').attr({type:'text',id:'stroke_opacity',size:'3'}).val(myGmaps.items[0].o[0].strokeOpacity)).
 				append($('<div/>').attr('id','slider_stroke_opacity'))
 			)
 		);
@@ -645,10 +642,12 @@ var myGmaps = {
 					item.markers[j].lat + ', ' + item.markers[j].lng
 				));
 			}
-			list.append($('<li/>').append(myGmaps.msg.type + ': ' + item.type).append(points));
+			list.append($('<li/>').append(myGmaps.msg.type + ' - ' + item.type).append(points));
 		}
 		
-		$('#map-details').html(list);
+		if (true) {};
+		
+		$('#map-details').html(list.get(0));
 	},
 	
 	markAsSelected: function(id) {

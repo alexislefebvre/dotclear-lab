@@ -120,7 +120,7 @@ class myGmapsUtils
 			array_push($post_id,'null');
 		}
 		
-		$data = $core->blog->getPosts(array('post_type' => 'map', 'post_id' => $post_id));
+		$data = $core->blog->getPosts(array('post_type' => 'map', 'post_id' => $post_id, 'post_status' => 1));
 		
 		while ($data->fetch())
 		{
@@ -130,7 +130,7 @@ class myGmapsUtils
 			$type = $meta['elt_type'][0];
 			$markers = array();
 			$icon = array_key_exists($meta['icon']) ? $meta['icon'][0] : '';
-			$infowindow = html::escapeHTML($data->post_content_xhtml);
+			$infowindow = html::escapeHTML(preg_replace("#(\n|\r)#",'',$data->getContent(true)));
 			$url = '';
 			
 			if ($type !== 'kml' && $type !== 'none') {

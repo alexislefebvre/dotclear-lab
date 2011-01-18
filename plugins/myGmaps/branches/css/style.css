@@ -78,7 +78,8 @@ li#polygon.selected {
 	min-width: 450px;
 	max-height: 400px;
 	overflow: hidden;
-	margin-bottom: 1.5em;
+	margin: 0 1.5em 1.5em 0;
+	padding-right: 0.5em;
 }
 .infowindow input, .infowindow label {
 	display: inline;
