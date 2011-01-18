@@ -156,6 +156,8 @@ class myGmapsUtils
 	
 	public static function jsIcons()
 	{
+		$icon_data = array();
+		
 		foreach (self::getIcons() as $icon) {
 			array_push($icon_data,sprintf("'%s'",self::getIconURL(basename($icon))));
 		}
