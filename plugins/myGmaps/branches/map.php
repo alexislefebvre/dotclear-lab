@@ -432,7 +432,7 @@ if ($can_edit_post)
 	
 	echo
 	'<p class="area" id="notes-area">'.
-		'<label for="map-post_notes">'.__('Notes:').'</label>'.
+		'<label for="post_notes">'.__('Notes:').'</label>'.
 		form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
 	

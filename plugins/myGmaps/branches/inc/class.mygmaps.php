@@ -49,9 +49,8 @@ class myGmapsUtils
 		$res .=
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
-		dcPage::jsVar('myGmaps.msg.apply',__('Apply')).
+		dcPage::jsVar('myGmaps.msg.autofit',__('Auto fit')).
 		dcPage::jsVar('myGmaps.msg.coordinates',__('Coordinates')).
-		dcPage::jsVar('myGmaps.msg.close',__('Close')).
 		dcPage::jsVar('myGmaps.msg.fill_color',__('Fill color:')).
 		dcPage::jsVar('myGmaps.msg.fill_opacity',__('Fill opacity:')).
 		dcPage::jsVar('myGmaps.msg.fill_options',__('Fill options')).
@@ -60,10 +59,13 @@ class myGmapsUtils
 		dcPage::jsVar('myGmaps.msg.line_options',__('Line options')).
 		dcPage::jsVar('myGmaps.msg.no_description',__('No description')).
 		dcPage::jsVar('myGmaps.msg.marker_options',__('Marker options')).
+		dcPage::jsVar('myGmaps.msg.kml',__('Include KML file')).
 		dcPage::jsVar('myGmaps.msg.select_instructions',__('After selecting type, click on a map to add a point, click on one point to delete it and right click on one point to custom it')).
 		dcPage::jsVar('myGmaps.msg.stroke_color',__('Line color:')).
 		dcPage::jsVar('myGmaps.msg.stroke_weight',__('Line weight:')).
 		dcPage::jsVar('myGmaps.msg.stroke_opacity',__('Line opacity:')).
+		dcPage::jsVar('myGmaps.msg.reset',__('Reset map')).
+		dcPage::jsVar('myGmaps.msg.search',__('Search')).
 		dcPage::jsVar('myGmaps.msg.type',__('Type')).
 		dcPage::jsVar('dotclear.msg.confirm_delete_posts',__("Are you sure you want to delete selected map elements (%s)?")).
 		"\n//]]>\n".

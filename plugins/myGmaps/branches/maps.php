@@ -217,7 +217,7 @@ if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
 # Get posts
 try {
 	$posts = $core->blog->getPosts($params);
-	$post_list = new adminMyGmapsList($core,$posts,$posts->f(0));
+	$post_list = new adminMyGmapsList($core,$posts,$posts->count());
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }

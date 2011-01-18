@@ -155,11 +155,12 @@ var myGmaps = {
 				lat: latlng.lat(),
 				lng: latlng.lng()
 			};
+			var title = '#' + (item.type == 'marker' ? 1 : item.o.length);
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(latlng.lat(),latlng.lng()),
 				draggable: true,
 				map: myGmaps.map,
-				title: '#' + (item.markers.length + 1)
+				title: title
 			});
 		
 			if (item.type == 'marker' && item.o.length > 0) {
@@ -194,10 +195,6 @@ var myGmaps = {
 			lng: latlng.lng()
 		};
 		item.o[i].setPosition(latlng);
-		
-		for (j = (item.type == 'marker' ? 0 : 1); j < item.o.length; j++) {
-			item.o[j].setTitle('#' + (parseInt(j) + (item.type == 'marker' ? 1 : 0)));
-		}
 	},
 	
 	delPoint: function(i) {
@@ -288,13 +285,13 @@ var myGmaps = {
 			}
 			if (type == 'marker') {
 				myGmaps.events.push(google.maps.event.addListener(item, 'click', function() {
-					for (var i = 1, I = myGmaps.items[0].o.length; i < I && myGmaps.items[0].o[i] != item; ++i);
+					for (var i = 0, I = myGmaps.items[0].o.length; i < I && myGmaps.items[0].o[i] != item; ++i);
 					myGmaps.infowindow.close();
 					myGmaps.delPoint(i);
 					myGmaps.updDetails();
 				}));
 				myGmaps.events.push(google.maps.event.addListener(item, 'dragend', function() {
-					for (var i = 1, I = myGmaps.items[0].o.length; i < I && myGmaps.items[0].o[i] != item; ++i);
+					for (var i = 0, I = myGmaps.items[0].o.length; i < I && myGmaps.items[0].o[i] != item; ++i);
 					myGmaps.infowindow.close();
 					myGmaps.updPoint(item.getPosition(),i);
 					myGmaps.updDetails();
@@ -342,6 +339,9 @@ var myGmaps = {
 			var item = myGmaps.items[i];
 			for (i in item.markers) {
 				bounds.extend(new google.maps.LatLng(item.markers[i].lat,item.markers[i].lng));
+			}
+			if (item.type == 'kml') {
+				bounds.union(item.o[0].getDefaultViewport());
 			}
 		}
 		
@@ -393,7 +393,7 @@ var myGmaps = {
 	drawSearchButton: function(tb) {
 		tb.append($('<li/>').
 			append($('<input/>').attr({name:'q',type:'text',size:'50',maxlength:'255'})).
-			append($('<input/>').attr({name:'mq',type:'button',class:'submit'}).val('Search'))
+			append($('<input/>').attr({name:'mq',type:'button',class:'submit'}).val(myGmaps.msg.search))
 		);
 		
 		tb.find('input[name=q]').keypress(function(event) {
@@ -419,7 +419,7 @@ var myGmaps = {
 		if (myGmaps.mode != 'edit') return;
 		
 		tb.append($('<li/>').
-			append($('<input/>').attr({name:'autofit',type:'button',class:'submit'}).val('Auto fit'))
+			append($('<input/>').attr({name:'autofit',type:'button',class:'submit'}).val(myGmaps.msg.autofit))
 		);
 		
 		tb.find('input[name=autofit]').click(function() {
@@ -431,7 +431,7 @@ var myGmaps = {
 		if (myGmaps.mode != 'edit') return;
 		
 		tb.append($('<li/>').
-			append($('<input/>').attr({name:'reset',type:'button',class:'submit'}).val('Reset map'))
+			append($('<input/>').attr({name:'reset',type:'button',class:'submit'}).val(myGmaps.msg.reset))
 		);
 		
 		tb.find('input[name=reset]').click(function() {
@@ -443,7 +443,7 @@ var myGmaps = {
 		if (myGmaps.mode != 'edit') return;
 		
 		tb.append($('<li/>').
-			append($('<input/>').attr({name:'kml',type:'button',class:'submit'}).val('Include kml file'))
+			append($('<input/>').attr({name:'kml',type:'button',class:'submit'}).val(myGmaps.msg.kml))
 		);
 		
 		tb.find('input[name=kml]').click(function() {
@@ -667,6 +667,8 @@ var myGmaps = {
 		for (i in myGmaps.items) {
 			var item = myGmaps.items[i];
 			var points = $('<ul/>');
+			var markers = item.markers;
+			
 			for (j in item.markers) {
 				points.append($('<li/>').append(
 					'#' + (parseInt(j) + 1) + ' - ' + myGmaps.msg.coordinates + ': ' +
