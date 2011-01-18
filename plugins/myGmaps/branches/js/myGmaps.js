@@ -105,6 +105,11 @@ var myGmaps = {
 		for (i in myGmaps.items) {
 			var item = myGmaps.items[i];
 			var path = new google.maps.MVCArray;
+			var show_marker = true;
+			
+			if (myGmaps.mode == 'view' && item.type != 'marker' && item.icon == '') {
+				show_marker = false;
+			}
 			
 			if (item.loaded) continue;
 			
@@ -123,17 +128,19 @@ var myGmaps = {
 			}
 			
 			for (j in item.markers) {
-				var draggable = myGmaps.mode != 'view' ? true : false;
-				var raiseondrag = myGmaps.mode == 'config' ? false : true;
-				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(item.markers[j].lat,item.markers[j].lng),
-					icon: item.icon,
-					draggable: draggable,
-					raiseOnDrag: raiseondrag,
-					title: '#' + (parseInt(j) + 1),
-					map: myGmaps.map
-				});
-				item.o.push(marker);
+				if (show_marker) {
+					var draggable = myGmaps.mode != 'view' ? true : false;
+					var raiseondrag = myGmaps.mode == 'config' ? false : true;
+					var marker = new google.maps.Marker({
+						position: new google.maps.LatLng(item.markers[j].lat,item.markers[j].lng),
+						icon: item.icon,
+						draggable: draggable,
+						raiseOnDrag: raiseondrag,
+						title: '#' + (parseInt(j) + 1),
+						map: myGmaps.map
+					});
+					item.o.push(marker);
+				}
 				if (item.type == 'polyline' || item.type == 'polygon') {
 					path.insertAt(path.length, new google.maps.LatLng(item.markers[j].lat,item.markers[j].lng));
 				}
@@ -369,7 +376,7 @@ var myGmaps = {
 		tb.append($('<li/>').attr('id','marker'));
 		tb.append($('<li/>').attr('id','polyline'));
 		tb.append($('<li/>').attr('id','polygon'));
-		tb.after($('<p/>').attr('class','form-note').append(myGmaps.msg.select_instructions));
+		tb.after($('<p/>').addClass('form-note').append(myGmaps.msg.select_instructions));
 		
 		tb.find('li#none,li#marker,li#polyline,li#polygon').click(function() {
 			var elt_type = $(this).attr('id');
@@ -393,7 +400,7 @@ var myGmaps = {
 	drawSearchButton: function(tb) {
 		tb.append($('<li/>').
 			append($('<input/>').attr({name:'q',type:'text',size:'50',maxlength:'255'})).
-			append($('<input/>').attr({name:'mq',type:'button',class:'submit'}).val(myGmaps.msg.search))
+			append($('<input/>').attr({name:'mq',type:'button'}).addClass('submit').val(myGmaps.msg.search))
 		);
 		
 		tb.find('input[name=q]').keypress(function(event) {
@@ -419,7 +426,7 @@ var myGmaps = {
 		if (myGmaps.mode != 'edit') return;
 		
 		tb.append($('<li/>').
-			append($('<input/>').attr({name:'autofit',type:'button',class:'submit'}).val(myGmaps.msg.autofit))
+			append($('<input/>').attr({name:'autofit',type:'button'}).addClass('submit').val(myGmaps.msg.autofit))
 		);
 		
 		tb.find('input[name=autofit]').click(function() {
@@ -431,7 +438,7 @@ var myGmaps = {
 		if (myGmaps.mode != 'edit') return;
 		
 		tb.append($('<li/>').
-			append($('<input/>').attr({name:'reset',type:'button',class:'submit'}).val(myGmaps.msg.reset))
+			append($('<input/>').attr({name:'reset',type:'button'}).addClass('submit').val(myGmaps.msg.reset))
 		);
 		
 		tb.find('input[name=reset]').click(function() {
@@ -443,7 +450,7 @@ var myGmaps = {
 		if (myGmaps.mode != 'edit') return;
 		
 		tb.append($('<li/>').
-			append($('<input/>').attr({name:'kml',type:'button',class:'submit'}).val(myGmaps.msg.kml))
+			append($('<input/>').attr({name:'kml',type:'button'}).addClass('submit').val(myGmaps.msg.kml))
 		);
 		
 		tb.find('input[name=kml]').click(function() {
@@ -466,7 +473,7 @@ var myGmaps = {
 	},
 	
 	updMakerOptions: function() {
-		var content = $('<div/>').attr({id:'marker_options',class:'infowindow'});
+		var content = $('<div/>').attr('id','marker_options').addClass('infowindow');
 		var list = $('<ul/>');
 		
 		for (i in icons) {
@@ -499,13 +506,13 @@ var myGmaps = {
 	},
 	
 	updPolylineOptions: function(event) {
-		var content = $('<div/>').attr({id:'polyline_options',class:'infowindow'});
+		var content = $('<div/>').attr('id','polyline_options').addClass('infowindow');
 		
 		content.append($('<fieldset/>').
 			append($('<legend/>').append(myGmaps.msg.line_options)).
 			append($('<p/>').
 				append($('<label/>').append(myGmaps.msg.stroke_color)).
-				append($('<input/>').attr('type','text').attr({id:'stroke_color',size:'7',class:'colorpicker'}).val(myGmaps.items[0].o[0].strokeColor))
+				append($('<input/>').attr({type:'text',id:'stroke_color',size:'7'}).addClass('colorpicker').val(myGmaps.items[0].o[0].strokeColor))
 			).
 			append($('<p/>').
 				append($('<label/>').append(myGmaps.msg.stroke_weight)).
@@ -566,14 +573,14 @@ var myGmaps = {
 	},
 	
 	updPolygonOptions: function(event) {
-		var content = $('<div/>').attr({id:'polygon_options',class:'infowindow two-cols'});
+		var content = $('<div/>').attr('id','polygon_options').addClass('infowindow two-cols');
 		
-		content.append($('<div/>').attr('class','col').append(
+		content.append($('<div/>').addClass('col').append(
 			$('<fieldset/>').
 				append($('<legend/>').append(myGmaps.msg.line_options)).
 				append($('<p/>').
 					append($('<label/>').append(myGmaps.msg.stroke_color)).
-					append($('<input/>').attr('type','text').attr({id:'stroke_color',size:'7',class:'colorpicker'}).val(myGmaps.items[0].o[0].strokeColor))
+					append($('<input/>').attr('type','text').attr({id:'stroke_color',size:'7'}).addClass('colorpicker').val(myGmaps.items[0].o[0].strokeColor))
 				).
 				append($('<p/>').
 					append($('<label/>').append(myGmaps.msg.stroke_weight)).
@@ -587,12 +594,12 @@ var myGmaps = {
 				)
 			)
 		);
-		content.append($('<div/>').attr('class','col').append(
+		content.append($('<div/>').addClass('col').append(
 			$('<fieldset/>').
 				append($('<legend/>').append(myGmaps.msg.fill_options)).
 				append($('<p/>').
 					append($('<label/>').append(myGmaps.msg.fill_color)).
-					append($('<input/>').attr({type:'text',id:'fill_color',size:'7',class:'colorpicker'}).val(myGmaps.items[0].o[0].fillColor))
+					append($('<input/>').attr({type:'text',id:'fill_color',size:'7'}).addClass('colorpicker').val(myGmaps.items[0].o[0].fillColor))
 				).
 				append($('<p/>').
 					append($('<label/>').append(myGmaps.msg.fill_opacity)).

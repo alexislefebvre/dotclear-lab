@@ -355,11 +355,11 @@ if (!$core->error->flag())
 	echo
 	form::hidden(array('scrollwheel'),($core->blog->settings->myGmaps->scrollwheel ? 'true' : 'false')).
 	form::hidden(array('post_id'),$post_id).
+	$core->formNonce().
 	'<input type="submit" value="'.__('Auto fit').' (a)" '.
 	'accesskey="a" name="autofit" /> '.
 	'<input type="submit" value="'.__('Save map configuration (center, zoom, type)').' (s)" '.
 	'accesskey="s" name="save" /> '.
-	$core->formNonce().
 	'</p>'.
 	'</form>';
 	

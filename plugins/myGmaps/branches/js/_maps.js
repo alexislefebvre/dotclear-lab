@@ -24,7 +24,7 @@ $(function() {
 			infowindow: '',
 			url: '',
 			o: []
-		}
+		};
 		
 		if ($('input[name=center]').val() != '') {
 			item.markers.push({
@@ -34,7 +34,7 @@ $(function() {
 			opts.center = {
 				lat: parseFloat($('input[name=center]').val().split(',')[0]),
 				lng: parseFloat($('input[name=center]').val().split(',')[1])
-			}
+			};
 		}
 		if ($('input[name=zoom]').val() != '') {
 			opts.zoom = $('input[name=zoom]').val();
