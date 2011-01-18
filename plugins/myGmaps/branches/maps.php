@@ -217,8 +217,7 @@ if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
 # Get posts
 try {
 	$posts = $core->blog->getPosts($params);
-	$counter = $core->blog->getPosts($params,true);
-	$post_list = new adminMyGmapsList($core,$posts,$counter->f(0));
+	$post_list = new adminMyGmapsList($core,$posts,$posts->f(0));
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }
@@ -352,7 +351,7 @@ if (!$core->error->flag())
 		'<div class="area" id="map_canvas"></div>'.
 	'</fieldset>'.
 	'<p class="area" id="map-details-area" >'.
-		'<label class="infowindow" for="map-details">'.__('Map details:').'</label>'.
+		'<label for="map-details">'.__('Map details:').'</label>'.
 		'<div id="map-details"></div>'.
 	'</p>'.
 	'<p>'.

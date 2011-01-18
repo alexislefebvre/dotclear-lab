@@ -28,7 +28,6 @@ $post_status = $core->auth->getInfo('user_post_status');
 $post_selected = false;
 $post_open_comment = '';
 $post_open_tb = '';
-$post_meta = array();
 $post_meta = array(
 	'center' => array($core->blog->settings->myGmaps->center),
 	'zoom' => array($core->blog->settings->myGmaps->zoom),
@@ -415,19 +414,20 @@ if ($can_edit_post)
 	
 	echo
 	'<p class="area" id="description-area" >'.
-		'<label class="infowindow" for="post_content">'.__('Description:').'</label>'.
+		'<label for="post_content">'.__('Description:').'</label>'.
 		form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
 	'</p>';
 	
 	echo
 	'<p class="area" id="map-details-area" >'.
-		'<label class="infowindow" for="map-details">'.__('Map details:').'</label>'.
+		'<label for="map-details">'.__('Map details:').'</label>'.
 		'<div id="map-details"></div>'.
 	'</p>';
 	
 	echo
-	'<p class="area" id="notes-area"><label>'.__('Notes:').'</label>'.
-	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
+	'<p class="area" id="notes-area">'.
+		'<label for="map-post_notes">'.__('Notes:').'</label>'.
+		form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
 	
 	echo '<p>';
@@ -435,7 +435,7 @@ if ($can_edit_post)
 		echo form::hidden($k,$v[0]);
 	}
 	echo
-	form::hidden('scrollwheel',$core->blog->settings->myGmaps->scrollwheel).
+	form::hidden(array('scrollwheel'),($core->blog->settings->myGmaps->scrollwheel ? 'true' : 'false')).
 	($post_id ? form::hidden('id',$post_id) : '').
 	'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
 	'accesskey="s" name="save" /> '.

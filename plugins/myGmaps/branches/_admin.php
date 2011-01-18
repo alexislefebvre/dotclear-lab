@@ -12,10 +12,10 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$core->addBehavior('adminPostHeaders',array('myGmapsBehaviors','postHeaders'));
-$core->addBehavior('adminPageHeaders',array('myGmapsBehaviors','postHeaders'));
-$core->addBehavior('adminPostForm',array('myGmapsBehaviors','adminPostForm'));
-$core->addBehavior('adminPageForm',array('myGmapsBehaviors','adminPageForm'));
+$core->addBehavior('adminPostHeaders',array('myGmapsBehaviors','adminHeaders'));
+$core->addBehavior('adminPageHeaders',array('myGmapsBehaviors','adminHeaders'));
+$core->addBehavior('adminPostForm',array('myGmapsBehaviors','adminForm'));
+$core->addBehavior('adminPageForm',array('myGmapsBehaviors','adminForm'));
 
 $_menu['Blog']->addItem(
 	__('Google Maps'),
@@ -24,58 +24,51 @@ $_menu['Blog']->addItem(
 	$core->auth->check('usage,contentadmin',$core->blog->id)
 );
 
-if (isset($_GET['remove']) && $_GET['remove'] == 'map') {
-	try {
-	$post_id = $_GET['id'];
-	$meta =& $GLOBALS['core']->meta;
-	$meta->delPostMeta($post_id,'map');
-	$meta->delPostMeta($post_id,'map_options');
-	if ($_GET['post_type'] == 'page') {
-		http::redirect('plugin.php?p=pages&act=page&id='.$post_id);
-	} else {
-		http::redirect(DC_ADMIN_URL.'post.php?id='.$post_id);
-	}
-	
-  } catch (Exception $e) {
-    $core->error->add($e->getMessage());
-  }
-} elseif (!empty($_GET['remove']) && is_numeric($_GET['remove'])) {
-	try {
-	$post_id = $_GET['id'];
-	$meta =& $GLOBALS['core']->meta;
-	$meta->delPostMeta($post_id,'map',(integer) $_GET['remove']);
-	
-	if ($_GET['post_type'] == 'page') {
-		http::redirect('plugin.php?p=pages&act=page&id='.$post_id);
-	} else {
-		http::redirect(DC_ADMIN_URL.'post.php?id='.$post_id);
-	}
-	
-  } catch (Exception $e) {
-    $core->error->add($e->getMessage());
-  }
-}
-
 class myGmapsBehaviors
 {
-	public static function postHeaders()
+	public static function adminHeaders()
 	{
-		return;
+		return dcPage::jsLoad('index.php?pf=myGmaps/js/_post.js');
 	}
 	
-	public static function adminPostForm($cur)
+	public static function adminForm($cur)
 	{
 		global $core;
 		
 		$table = '';
+		$post_id = 'NULL';
 		$p_a = '<a href="%s">%s</a>';
+		$p_img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
 		$items = $links = array();
+		
+		$redir = new ArrayObject;
+		$redir['post'] = 'post.php?id=%s';
+		$redir['page'] = 'plugin.php?p=pages&act=page&id=%s';
+		
+		# --BEHAVIOR-- coreBlogConstruct
+		$core->callBehavior('myGmapsRedirURL',$redir);
 		
 		$meta = $core->meta->getMetaArray($cur->post_meta);
 		
-		$rs = $core->blog->getPosts(array('post_type' => 'map', 'post_id' => $meta['map']));
+		if (array_key_exists('map',$meta)) {
+			$post_id = $meta['map'];
+		}
+		
+		$rs = $core->blog->getPosts(array('post_type' => 'map', 'post_id' => $post_id));
 		
 		while ($rs->fetch()) {
+			
+			switch ($rs->post_status) {
+				case 1:
+					$img_status = sprintf($p_img,__('published'),'check-on.png');
+					break;
+				case -2:
+					$img_status = sprintf($p_img,__('pending'),'check-wrn.png');
+					break;
+				case 0:
+					$img_status = sprintf($p_img,__('unpublished'),'check-off.png');
+					break;
+			}
 			if ($core->auth->check('categories',$core->blog->id)) {
 				$cat_link = '<a href="category.php?id=%s">%s</a>';
 			} else {
@@ -101,14 +94,14 @@ class myGmapsBehaviors
 			array_push(
 				$items,
 				'<tr>'.
-				'<td class="maximal"><a href="plugin.php?p=myGmaps&amp;go=map&amp;id='.$rs->post_id.
+				'<td class="maximal"><a href="'.sprintf('plugin.php?p=myGmaps&amp;go=map&amp;id=%s',$rs->post_id).
 				'" title="'.__('Edit map element').' : '.html::escapeHTML($rs->post_title).'">'.
 				html::escapeHTML($rs->post_title).'</a></td>'.
 				'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rs->post_dt).'</td>'.
 				'<td class="nowrap">'.$cat_title.'</td>'.
 				'<td class="nowrap">'.$rs->user_id.'</td>'.
 				'<td class="nowrap">'.$type.'</td>'.
-				'<td class="nowrap"></td>'.
+				'<td class="nowrap status">'.$img_status.'</td>'.
 				'</tr>'
 			);
 		}
@@ -121,112 +114,39 @@ class myGmapsBehaviors
 				'<th>'.__('Category').'</th>'.
 				'<th>'.__('Author').'</th>'.
 				'<th class="nowrap">'.__('Type').'</th>'.
-				'<th>&nbsp;</th>'.
+				'<th>'.__('Status').'</th>'.
 				'</tr>'.
 				'%s'.
 				'</table>',
 				implode("\n",$items)
 			);
-			array_push($links,sprintf($p_a,'plugin.php?p=myGmaps&go=maps_post&post_id='.$cur->post_id,__('Edit map')));
+			array_push($links,sprintf($p_a,sprintf(
+				'plugin.php?p=myGmaps&go=maps_post&amp;post_id=%s&amp;redir=%s',
+				$cur->post_id,rawurlencode((array_key_exists($cur->post_type,$redir) ? $redir[$cur->post_type] : ''))
+			),__('Edit map')));
 			array_push($links,sprintf($p_a,'',__('Remove map')));
 		}
 		else {
-			array_push($links,sprintf($p_a,'plugin.php?p=myGmaps&go=maps_post&post_id='.$cur->post_id,__('Add a map to entry')));
+			array_push($links,sprintf($p_a,sprintf(
+				'plugin.php?p=myGmaps&go=maps_post&amp;post_id=%s&amp;redir=%s',
+				$cur->post_id,rawurlencode((array_key_exists($cur->post_type,$redir) ? $redir[$cur->post_type] : ''))
+			),__('Add map')));
 		}
 		
 		echo
-		'<fieldset><legend>'.__('Google Map').'</legend>'.
-		$table.
-		'<p>';
-		/*
-		foreach ($links as $link) {
-			echo sprintf('<p class="col right">%s</p>',$link);
-		}
-		*/
-		echo implode(' - ',$links);
-		echo
-		'</p>'.
-		'</fieldset>';
-		
-		
-		/*$id = $post->post_id;
-		$type = $post->post_type;
-		$meta =& $GLOBALS['core']->meta;
-		$meta_rs = $meta->getMetaStr($post->post_meta,'map_options');
-		if ($id) {
-			if (!$meta_rs) {
-				echo 
-					'<fieldset><legend>'.__('Google Map').'</legend>'.
-					'<p><a class="add-maps" href="plugin.php?p=myGmaps&go=maps_popup&popup=1&post_id='.$id.'">'.__('Add a map to entry').'</a></p>'.
-					'</fieldset>';
-			} else {
-				
-				$meta =& $GLOBALS['core']->meta;
-				$maps_array = explode(",",$meta->getMetaStr($post->post_meta,'map'));
-				$maps_options = explode(",",$meta->getMetaStr($post->post_meta,'map_options'));
-				
-				echo '<fieldset><legend>'.__('Google Map').'</legend>'.
-				'<h3>'.__('Map elements').'</h3>';
-				if ($meta->getMetaStr($post->post_meta,'map') != '') {
-					echo
-						'<table class="clear"><tr>'.
-						'<th>'.__('Title').'</th>'.
-						'<th>'.__('Date').'</th>'.
-						'<th>'.__('Category').'</th>'.
-						'<th>'.__('Author').'</th>'.
-						'<th class="nowrap">'.__('Type').'</th>'.
-						'<th>&nbsp;</th>'.
-						'</tr>';
-					
-					$params['post_type'] = 'map';
-					$params['no_content'] = true;
-					
-					$rsp = $core->blog->getPosts($params);
-					while ($rsp->fetch()) {
-						if (in_array($rsp->post_id,$maps_array)) {
-							$meta_rs = $meta->getMetaStr($rsp->post_meta,'map');
-							if ($core->auth->check('categories',$core->blog->id)) {
-								$cat_link = '<a href="category.php?id=%s">%s</a>';
-							} else {
-								$cat_link = '%2$s';
-							}
-							if ($rsp->cat_title) {
-								$cat_title = sprintf($cat_link,$rsp->cat_id,
-								html::escapeHTML($rsp->cat_title));
-							} else {
-								$cat_title = __('None');
-							}
-							echo
-							'<tr>'.
-							'<td class="maximal"><a href="plugin.php?p=myGmaps&amp;do=edit&amp;id='.$rsp->post_id.'" title="'.__('Edit map element').' : '.html::escapeHTML($rsp->post_title).'">'.html::escapeHTML($rsp->post_title).'</a></td>'.
-							'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rsp->post_dt).'</td>'.
-							'<td class="nowrap">'.$cat_title.'</td>'.
-							'<td class="nowrap">'.$rsp->user_id.'</td>'.
-							'<td class="nowrap">'.__($meta_rs).'</td>'.
-							'<td class="nowrap"><a class="element-remove" href="'.DC_ADMIN_URL.'post.php?id='.$id.'&amp;remove='.$rsp->post_id.'" title="'.__('Remove map element').' : '.html::escapeHTML($rsp->post_title).'">[x]</a></td>'.
-							'</tr>';
-							
-						}
-					}
-	
-					echo '</table>';
-				} else {
-					echo '<p>'.__('No element (empty map)').'</p>';
-				}
-				echo
-				'<div class="two-cols">'.
-				'<p class="col"><a href="plugin.php?p=myGmaps&amp;post_id='.$id.'"><strong>'.__('Edit map').'</strong></a></p>'.
-				'<p class="col right"><a class="map-remove" href="'.DC_ADMIN_URL.'post.php?id='.$id.'&amp;remove=map"><strong>'.__('Remove map').'</strong></a></p>'.
-				'</div>'.
-				'</fieldset>';
-				
-			}
-		}*/
+		'<p class="area" id="map-area" >'.
+			'<label for="map">'.__('Google Map').'</label>'.
+			'<div id="map">'.
+				$table.
+				'<p>'.implode(' - ',$links).'</p>'.
+			'</div>'.
+		'</p>';
 	}
 	
 	public static function adminPageForm($post)
 	{
 		global $core;
 	}
-}   
+}
+
 ?>

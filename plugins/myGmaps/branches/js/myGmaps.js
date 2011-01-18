@@ -116,7 +116,7 @@ var myGmaps = {
 				item.o[0].setPath(new google.maps.MVCArray([path]));
 			}
 			if (item.type == 'kml') {
-				v.o.push(new google.maps.KmlLayer(o.url, {map: myGmaps.map, preserveViewport: true}));
+				item.o.push(new google.maps.KmlLayer(item.url, {map: myGmaps.map, preserveViewport: true}));
 			}
 			
 			for (j in item.markers) {
@@ -182,8 +182,8 @@ var myGmaps = {
 		
 		if (item.type == 'polyline' || item.type == 'polygon') {
 			index = parseInt(i) - 1;
+			item.o[0].getPath().setAt(index,latlng);
 		}
-		item.o[0].getPath().setAt(index,latlng);
 		item.markers[index] = {
 			lat: latlng.lat(),
 			lng: latlng.lng()
@@ -201,8 +201,8 @@ var myGmaps = {
 		
 		if (item.type == 'polyline' || item.type == 'polygon') {
 			index = parseInt(i) - 1;
+			item.o[0].getPath().removeAt(index);
 		}
-		item.o[0].getPath().removeAt(index);
 		item.markers.splice(index, 1);
 		item.o[i].setMap(null);
 		item.o.splice(i, 1);
@@ -644,8 +644,6 @@ var myGmaps = {
 			}
 			list.append($('<li/>').append(myGmaps.msg.type + ' - ' + item.type).append(points));
 		}
-		
-		if (true) {};
 		
 		$('#map-details').html(list.get(0));
 	},

@@ -1,7 +1,8 @@
 <?php
 
 $post_id		= isset($_REQUEST['post_id']) ? $_REQUEST['post_id'] : null;
-$page		= !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
+$redir		= isset($_REQUEST['redir']) ? rawurldecode($_REQUEST['redir']) : '';
+$page		= isset($_GET['page']) ? (integer) $_GET['page'] : 1;
 $nb_per_page	= 30;
 
 if (is_null($post_id)) {
@@ -10,6 +11,28 @@ if (is_null($post_id)) {
 
 if (!$core->error->flag())
 {
+	$redir = sprintf($redir,$post_id);
+	
+	$meta = array(
+		'center' => array($core->blog->settings->myGmaps->center),
+		'zoom' => array($core->blog->settings->myGmaps->zoom),
+		'map_type' => array($core->blog->settings->myGmaps->map_type)
+	);
+	
+	$post = $core->blog->getPosts(array('post_id' => $post_id));
+	
+	$post_meta = $core->meta->getMetaArray($post->post_meta);
+	foreach ($meta as $k => $v) {
+		if (array_key_exists($k,$post_meta)) {
+			$meta[$k] = $post_meta[$k];
+		}
+	}
+	foreach ($meta as $k => $v) {
+		if (array_key_exists($k,$_POST)) {
+			$meta[$k] = array($_POST[$k]);
+		}
+	}
+	
 	# Bind map elements
 	if (isset($_POST['bind'])) {
 		try {
@@ -17,7 +40,10 @@ if (!$core->error->flag())
 				$core->meta->delPostMeta($post_id,'map',$id);
 				$core->meta->setPostMeta($post_id,'map',$id);
 			}
-			http::redirect($p_url.'&go=maps_post&post_id='.$post_id.'&upd=1');
+			http::redirect(sprintf(
+				'%1$s&go=maps_post&post_id=%2$s&upd=%3$s&redir=%4$s',
+				$p_url,$post_id,1,rawurlencode($redir)
+			));
 		} catch (Exception $e) {
 			$core->error->add($e->getMessage());
 		}
@@ -28,7 +54,25 @@ if (!$core->error->flag())
 			foreach ($_POST['entries'] as $id) {
 				$core->meta->delPostMeta($post_id,'map',$id);
 			}
-			http::redirect($p_url.'&go=maps_post&post_id='.$post_id.'&upd=2');
+			http::redirect(sprintf(
+				'%1$s&go=maps_post&post_id=%2$s&upd=%3$s&redir=%4$s',
+				$p_url,$post_id,2,rawurlencode($redir)
+			));
+		} catch (Exception $e) {
+			$core->error->add($e->getMessage());
+		}
+	}
+	# Save map config
+	if (isset($_POST['save'])) {
+		try {
+			foreach ($meta as $k => $v) {
+				$core->meta->delPostMeta($post_id,$k,$v[0]);
+				$core->meta->setPostMeta($post_id,$k,$v[0]);
+			}
+			http::redirect(sprintf(
+				'%1$s&go=maps_post&post_id=%2$s&upd=%3$s&redir=%4$s',
+				$p_url,$post_id,2,rawurlencode($redir)
+			));
 		} catch (Exception $e) {
 			$core->error->add($e->getMessage());
 		}
@@ -123,7 +167,7 @@ if (!$core->error->flag())
 	}
 	
 	$params = array();
-	$bind = array();
+	$bound = array();
 	
 	$maps = $core->meta->getMetadata(array(
 		'meta_type' => 'map',
@@ -131,10 +175,7 @@ if (!$core->error->flag())
 	));
 	
 	while ($maps->fetch()) {
-		array_push($bind,$maps->meta_id);
-	}
-	if (count($bind) > 0) {
-		//$params['sql'] = 'AND post_id not '.$core->con->in($bind);
+		array_push($bound,$maps->meta_id);
 	}
 
 	$show_filters = false;
@@ -198,7 +239,7 @@ if (!$core->error->flag())
 	# Get posts
 	try {
 		$posts = $core->blog->getPosts($params);
-		$post_list = new adminMyGmapsBindList($core,$posts,$posts->count());
+		$post_list = new adminMyGmapsList($core,$posts,$posts->count(),$bound);
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
@@ -211,7 +252,7 @@ if (!$core->error->flag())
 		'<title>'.__('Google Map').'</title>'.
 		dcPage::jsLoad('index.php?pf=myGmaps/js/_maps_post.js').
 		myGmapsUtils::jsCommon().
-		myGmapsUtils::jsData($bind).
+		myGmapsUtils::jsData($bound).
 		'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/style.css" />'.
 	'</head>'.
 	'<body>';
@@ -230,8 +271,8 @@ if (!$core->error->flag())
 	echo
 	'<h2>'.
 		html::escapeHTML($core->blog->name).' &rsaquo; '.
-		'<a href="post.php?id='.$post_id.'">'.sprintf(__('Entry #%s'),$post_id).'</a> &rsaquo; '.
-		__('Bind map elements to an entry').
+		'<a href="'.$redir.'">'.sprintf(__('Item #%s'),$post_id).'</a> &rsaquo; '.
+		__('Bind map elements').
 	'</h2>';
 
 
@@ -246,6 +287,7 @@ if (!$core->error->flag())
 	form::hidden(array('p'),'myGmaps').
 	form::hidden(array('go'),'maps_post').
 	form::hidden(array('post_id'),$post_id).
+	form::hidden(array('redir'),$redir).
 	'<fieldset><legend>'.__('Filters').'</legend>'.
 	'<div class="three-cols">'.
 	'<div class="col">'.
@@ -279,8 +321,8 @@ if (!$core->error->flag())
 	'</form>';
 	
 	# Show map elements
-	$post_list->display($page,$nb_per_page,$p_url,$bind,
-	'<form action="'.$p_url.'&amp;go=maps_post&amp;post_id='.$post_id.'" method="post" id="form-entries">'.
+	$post_list->display($page,$nb_per_page,$p_url,
+	'<form action="'.sprintf('%1$s&amp;go=maps_post',$p_url).'" method="post" id="form-entries">'.
 	
 	'%s'.
 	
@@ -289,6 +331,7 @@ if (!$core->error->flag())
 	
 	'<p class="col right">'.
 	form::hidden('post_id',$post_id).
+	form::hidden('redir',$redir).
 	'<input type="submit" name="bind" value="'.__('Bind selected map elements').'" />'.
 	'<input type="submit" name="unbind" value="'.__('Unbind selected map elements').'" /></p>'.
 	$core->formNonce().
@@ -298,6 +341,28 @@ if (!$core->error->flag())
 	
 	echo
 	'<div class="area" id="map_canvas"></div>';
+	
+	echo
+	'<form action="" method="post">'.
+	'<p>';
+	foreach ($meta as $k => $v) {
+		echo form::hidden($k,$v[0]);
+	}
+	echo
+	form::hidden(array('scrollwheel'),($core->blog->settings->myGmaps->scrollwheel ? 'true' : 'false')).
+	form::hidden(array('post_id'),$post_id).
+	form::hidden(array('redir'),$redir).
+	'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
+	'accesskey="s" name="save" /> '.
+	$core->formNonce().
+	'</p>'.
+	'</form>';
+	
+	echo
+	'<p class="area" id="map-details-area" >'.
+		'<label for="map-details">'.__('Map details:').'</label>'.
+		'<div id="map-details"></div>'.
+	'</p>';
 }
 
 echo
