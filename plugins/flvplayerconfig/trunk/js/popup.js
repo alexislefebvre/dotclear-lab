@@ -1,3 +1,14 @@
+/* -- BEGIN LICENSE BLOCK ----------------------------------
+ * This file is part of flvplayerconfig, a plugin for Dotclear 2.
+ * 
+ * Copyright (c) 2010 Rasibus Master and contributors
+ * postmaster@rasib.us
+ * 
+ * Licensed under the GPL version 2.0 license.
+ * A copy of this license is available in LICENSE file or at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * -- END LICENSE BLOCK ------------------------------------*/
+
 function urlencode (clearString) {
   var output = '';
   var x = 0;
@@ -43,7 +54,6 @@ $(function(){
 				if( $(this).val() != ref[$(this).attr('id')] )
 					data[$(this).attr('id')] = $(this).val();
 		});
-		
 		tb.elements.flvplayerconfig.fncall[tb.mode].call(tb);
 	};
 });

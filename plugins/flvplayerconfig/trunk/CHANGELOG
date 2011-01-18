@@ -1,0 +1,6 @@
+flvPlayerConfig 1.6 - 2011-01-16
+===========================================================
+* Activation dans la page d'administration du blog
+* nouveauté dans l'intégration du flv
+il faut finir les lignes par des ;
+* Correction de deux gros bug
