@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -22,9 +22,9 @@ if (version_compare($old_version,$new_version,'>=')) {return;}
 # Install or update
 try
 {
-	if (version_compare(DC_VERSION,'2.2-alpha','<'))
+	if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','<'))
 	{
-		throw new Exception('Plugin called kUtRL requires Dotclear 2.2 or higher.');
+		throw new Exception('kUtRL requires Dotclear 2.2');
 	}
 	
 	# Table
@@ -53,6 +53,7 @@ try
 	$core->blog->settings->addNamespace('kUtRL');
 	$s = $core->blog->settings->kUtRL;
 	$s->put('kutrl_active',false,'boolean','Enabled kutrl plugin',false,true);
+	$s->put('kutrl_plugin_service','default','string','Service to use to shorten links on third part plugins',false,true);
 	$s->put('kutrl_admin_service','local','string','Service to use to shorten links on admin',false,true);
 	$s->put('kutrl_tpl_service','local','string','Service to use to shorten links on template',false,true);
 	$s->put('kutrl_wiki_service','local','string','Service to use to shorten links on contents',false,true);
@@ -78,16 +79,6 @@ try
 	$s->put('kutrl_srv_yourls_base','','string','URL of YOURLS service',false,true);
 	$s->put('kutrl_srv_yourls_username','','string','User name to YOURLS service',false,true);
 	$s->put('kutrl_srv_yourls_password','','string','User password to YOURLS service',false,true);
-	# Twitter settings
-	$s->put('kutrl_twit_msg','%L by %U on %B','string','Tweet message to send',false,true);
-	$s->put('kutrl_twit_onadmin',true,'boolean','Send tweet on new link on administration form',false,true);
-	$s->put('kutrl_twit_onpublic',false,'boolean','Send tweet on new link on public form',false,true);
-	$s->put('kutrl_twit_ontpl',false,'boolean','Send tweet on new link on templates',false,true);
-	$s->put('kutrl_twit_onwiki',false,'boolean','Send tweet on new link on wiki synthax',false,true);
-	$s->put('kutrl_twit_post_msg','%T on %L','string','Special tweet message to send on admin edit entry page',false,true);
-	$s->put('kutrl_twit_msg','%B shorten %L','string','Special tweet message to send',false,true);
-	$s->put('kutrl_identica_login','','string','Identica login',false,true);
-	$s->put('kutrl_identica_pass','','string','Identica passowrd',false,true);
 	
 	# Version
 	$core->setVersion('kUtRL',$new_version);

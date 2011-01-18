@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -109,10 +109,6 @@ class adminKutrl
 				form::field('kutrl_create_custom',32,32,'',3).
 				'</label></p>';
 			}
-			echo
-			'<p><label class="classic">'.
-			form::checkbox('kutrl_twit_send',1,0,'',3).' '.
-			__('Send to Twitter status').'</label></p>';
 		}
 		else
 		{
@@ -187,23 +183,10 @@ class adminKutrl
 			$rs = $kut->hash($new_post_url,$custom); // better to update (not yet implemented)
 			$url = $kut->url_base.$rs->hash;
 			
-			# Send new url to messengers
-			if (!empty($rs) && !empty($_POST['kutrl_twit_send']))
+			# ex: Send new url to messengers
+			if (!empty($rs))
 			{
-				$twit = $core->blog->settings->kUtRL->kutrl_twit_post_msg;
-				if (!$twit)
-				{
-					$twit = $core->blog->settings->kUtRL->kutrl_twit_msg;
-				}
-				if ($twit)
-				{
-					$twit = str_replace(
-						array('%T','%L','%B','%U'),
-						array($post_title,$url,$core->blog->name,$core->auth->getInfo('user_cn'))
-						,$twit
-					);
-					kutrlSendToMessengers($core,$twit);
-				}
+				$core->callBehavior('adminAfterKutrlCreate',$core,$rs,$title);
 			}
 		}
 	}
@@ -237,23 +220,10 @@ class adminKutrl
 		$rs = $kut->hash($rs->getURL(),$custom);
 		$url = $kut->url_base.$rs->hash;
 		
-		# Send new url to messengers
-		if (!empty($rs) && !empty($_POST['kutrl_twit_send']))
+		# ex: Send new url to messengers
+		if (!empty($rs))
 		{
-			$twit = $core->blog->settings->kUtRL->kutrl_twit_post_msg;
-			if (!$twit)
-			{
-				$twit = $core->blog->settings->kUtRL->kutrl_twit_msg;
-			}
-			if ($twit)
-			{
-				$twit = str_replace(
-					array('%T','%L','%B','%U'),
-					array($title,$url,$core->blog->name,$core->auth->getInfo('user_cn'))
-					,$twit
-				);
-				kutrlSendToMessengers($core,$twit);
-			}
+			$core->callBehavior('adminAfterKutrlCreate',$core,$rs,$title);
 		}
 	}
 	

@@ -1,14 +1,14 @@
 # Language: Français
-# Module: kUtRL - 0.5
-# Date: 2010-09-09 01:58:30
+# Module: kUtRL - 0.6
+# Date: 2011-01-18 09:07:08
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: kUtRL 0.5\n"
+"Project-Id-Version: kUtRL 0.6\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-09-09T01:58:30+00:00\n"
+"PO-Revision-Date: 2011-01-18T09:07:08+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,11 +16,10 @@ msgstr ""
 
 #: _admin.php:19
 #: _widgets.php:22
-#: default-templates/kutrl.html:48
-#: inc/index.link.php:116
+#: inc/index.link.php:111
 #: inc/index.links.php:203
 #: inc/index.service.php:42
-#: inc/index.setting.php:155
+#: inc/index.setting.php:74
 #: index.php:41
 #: index.php:42
 msgid "Links shortener"
@@ -36,43 +35,39 @@ msgid "Create short link"
 msgstr "Créer un lien court"
 
 #: _admin.php:108
-#: inc/index.link.php:140
+#: inc/index.link.php:135
 msgid "Custom short link:"
 msgstr "Lien court personnalisé :"
 
-#: _admin.php:115
-msgid "Send to Twitter status"
-msgstr "Envoyer au status Twitter"
-
-#: _admin.php:122
+#: _admin.php:118
 #: _widgets.php:178
 msgid "never followed"
 msgstr "jamais suivi"
 
-#: _admin.php:126
+#: _admin.php:122
 #: _widgets.php:182
 msgid "followed one time"
 msgstr "suivi une fois"
 
-#: _admin.php:130
+#: _admin.php:126
 #: _widgets.php:186
 msgid "followed %s times"
 msgstr "suivi %s fois"
 
-#: _admin.php:137
-#: _admin.php:294
+#: _admin.php:133
+#: _admin.php:264
 msgid "delete short link"
 msgstr "effacer un lien court"
 
-#: _admin.php:293
+#: _admin.php:263
 msgid "create short link"
 msgstr "créer un lien court"
 
-#: _public.php:141
+#: _public.php:143
 msgid "Failed to verify protected field."
 msgstr "Impossible de vérifier le champs de protection."
 
-#: _public.php:149
+#: _public.php:151
 #: inc/index.link.php:40
 #: inc/services/class.bilbolinks.service.php:64
 #: inc/services/class.bitly.service.php:76
@@ -82,49 +77,48 @@ msgstr "Impossible de vérifier le champs de protection."
 msgid "Service is not well configured."
 msgstr "Le service n'est pas correctement configuré."
 
-#: _public.php:157
+#: _public.php:159
 msgid "This string is not a valid URL."
 msgstr "Cette chaine n'est pas un lien valide."
 
-#: _public.php:165
+#: _public.php:167
 #: inc/index.link.php:49
 msgid "This link is too short."
 msgstr "Ce lien est trop court."
 
-#: _public.php:173
+#: _public.php:175
 #: inc/index.link.php:52
 msgid "This type of link is not allowed."
 msgstr "Ce type de lien n'est pas autorisé."
 
-#: _public.php:182
+#: _public.php:184
 #: inc/index.link.php:55
 msgid "Short links are limited to this blog URL."
 msgstr "Les liens courts sont limités à l'URL de ce blog."
 
-#: _public.php:190
+#: _public.php:192
 #: inc/index.link.php:58
 msgid "This link is already a short link."
 msgstr "Ce lien est dèjà un lien court."
 
-#: _public.php:203
-#: _public.php:222
+#: _public.php:205
+#: _public.php:224
 #: inc/index.link.php:69
 #: inc/index.link.php:90
 msgid "Short link for %s is %s"
 msgstr "Le lien court pour %s est %s"
 
-#: _public.php:214
+#: _public.php:216
 msgid "Failed to create short link."
 msgstr "Impossible de créer le lien court."
 
-#: _public.php:230
-#: _public.php:310
-#: _public.php:531
-#: inc/lib.wiki.kutrl.php:90
-msgid "public"
-msgstr "publique"
+#: _public.php:233
+#: _public.php:337
+#: _public.php:558
+msgid "New public short URL"
+msgstr "Nouvelle URL courte"
 
-#: _public.php:403
+#: _public.php:430
 #: _widgets.php:106
 msgid "Rewrite \"%s\" in next field to show that you are not a robot:"
 msgstr "Recopier \"%s\" dans le champs suivant pour montrer que vous n'êtes pas une machine :"
@@ -188,28 +182,13 @@ msgid "Hide no followed links"
 msgstr "Cacher les liens non suivis"
 
 #: _widgets.php:102
-#: default-templates/kutrl.html:55
-#: inc/index.link.php:133
+#: inc/index.link.php:128
 msgid "Long link:"
 msgstr "Lien long :"
 
 #: _widgets.php:109
-#: default-templates/kutrl.html:62
 msgid "Create"
 msgstr "Créer"
-
-#: default-templates/kutrl404.html:14
-#: default-templates/kutrl404.html:38
-msgid "URL not found"
-msgstr "URL non trouvée"
-
-#: default-templates/kutrl404.html:42
-msgid "The URL you are looking for does not exist."
-msgstr "Le lien que vous recherchez n'existe pas."
-
-#: default-templates/kutrl404.html:45
-msgid "Create your own short URL"
-msgstr "Créer votre propre lien court"
 
 #: inc/index.link.php:37
 msgid "There is nothing to shorten."
@@ -231,26 +210,31 @@ msgstr "Ce lien court personnalisé est déjà pris."
 msgid "Failed to create short link. This could be caused by a service failure."
 msgstr "Impossible de créé un lien court. Ceci peut être causé par un problème du service."
 
-#: inc/index.link.php:120
+#: inc/index.link.php:98
+#: inc/lib.wiki.kutrl.php:90
+msgid "New short URL"
+msgstr "Nouvelle URL courte"
+
+#: inc/index.link.php:115
 #: inc/index.links.php:207
 #: inc/index.service.php:52
-#: inc/index.setting.php:165
+#: inc/index.setting.php:84
 msgid "New link"
 msgstr "Nouveau lien"
 
-#: inc/index.link.php:125
+#: inc/index.link.php:120
 msgid "You must set an admin service."
 msgstr "Vous devez définir un service admin."
 
-#: inc/index.link.php:132
+#: inc/index.link.php:127
 msgid "Shorten link using service \"%s\""
 msgstr "Raccourcir un lien en utilisant le service \"%s\""
 
-#: inc/index.link.php:142
+#: inc/index.link.php:137
 msgid "Only if you want a custom short link."
 msgstr "Uniquement si vous souhaitez un lien court personnalisé."
 
-#: inc/index.link.php:147
+#: inc/index.link.php:142
 msgid "You can use \"bob!!\" if you want a semi-custom link, it starts with \"bob\" and \"!!\" will be replaced by an increment value."
 msgstr "Vous pouvez utiliser \"bob!!\" si vous souhaitez un lien semi-personnalisé, il commencera par \"bob\" et \"!!\" sera remplacé par une valeur incrémentale."
 
@@ -267,7 +251,7 @@ msgid "Long link"
 msgstr "Lien long"
 
 #: inc/index.links.php:132
-#: inc/index.setting.php:150
+#: inc/index.setting.php:69
 msgid "disabled"
 msgstr "Désactivé"
 
@@ -300,149 +284,90 @@ msgstr "page d'accueil"
 msgid "Learn more about %s."
 msgstr "En savoir plus à propos de %s."
 
-#: inc/index.setting.php:164
+#: inc/index.setting.php:83
 #: index.php:36
 msgid "Settings"
 msgstr "Paramètres"
 
-#: inc/index.setting.php:169
+#: inc/index.setting.php:88
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: inc/index.setting.php:172
+#: inc/index.setting.php:91
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: inc/index.setting.php:175
+#: inc/index.setting.php:94
 msgid "General rules"
 msgstr "Réglages"
 
-#: inc/index.setting.php:178
+#: inc/index.setting.php:97
 msgid "Limit short link to current blog"
 msgstr "Limiter les liens court à ce blog"
 
-#: inc/index.setting.php:179
+#: inc/index.setting.php:98
 msgid "Only link started with this blog URL could be shortened."
 msgstr "Uniquement les liens commençant par l'URL de ce blog pourront être réduits."
 
-#: inc/index.setting.php:182
+#: inc/index.setting.php:101
 msgid "Passive mode"
 msgstr "Mode passif"
 
-#: inc/index.setting.php:183
+#: inc/index.setting.php:102
 msgid "If this extension is disabled and the passive mode is enabled, \"kutrl\" tags (like EntryKurl) will display long urls instead of nothing on templates."
 msgstr "Si cette extension est désactivée et que le mode passif est activé, les balises \"kutrl\" (comme EntryKutrl) afficheront les liens longs au lieu de rien."
 
-#: inc/index.setting.php:186
+#: inc/index.setting.php:105
 msgid "Active mode"
 msgstr "Mode actif"
 
-#: inc/index.setting.php:187
+#: inc/index.setting.php:106
 msgid "If the active mode is enabled, all know default template tags (like EntryURL) will display short urls instead of long ones on templates."
 msgstr "Si le mode actif est acitvé, les balises de thème (comme EntryURL) afficheront les liens court au lieu des longs."
 
-#: inc/index.setting.php:190
+#: inc/index.setting.php:107
+msgid "You can disable URL shortening for a specific template tag by adding attribute disable_kutrl=\"1\" to it."
+msgstr "Vous pouvez désactiver la réduction d'URL pour une balise de template spécifique en lui ajoutant l'attribut disable_kutrl=\"1\""
+
+#: inc/index.setting.php:110
 msgid "Create short link for new entries"
 msgstr "Créer un lien court pour les nouveaux billets"
 
-#: inc/index.setting.php:191
+#: inc/index.setting.php:111
 msgid "This can be changed on page of creation/edition of an entry."
 msgstr "Ceci peut être changé sur la page d'édition / création d'un billet."
 
-#: inc/index.setting.php:194
+#: inc/index.setting.php:114
 msgid "Default services"
 msgstr "Services par défaut"
 
-#: inc/index.setting.php:200
+#: inc/index.setting.php:120
 msgid "Administration:"
 msgstr "Administration :"
 
-#: inc/index.setting.php:203
+#: inc/index.setting.php:123
 msgid "Service to use in this admin page and on edit page of an entry."
 msgstr "Service à utiliser sur cette page d'administration ou sur la page d'édition d'un billet."
 
-#: inc/index.setting.php:209
+#: inc/index.setting.php:132
+msgid "Service to use on third part plugins."
+msgstr "Service à utiliser par les plugins tiers"
+
+#: inc/index.setting.php:138
 msgid "Templates:"
 msgstr "Templates :"
 
-#: inc/index.setting.php:212
+#: inc/index.setting.php:141
 msgid "Shorten links automatically when using template value like \"EntryKutrl\"."
-msgstr "Réduit automatiquement les liens des templates utilisant les balises tels que \"EntryKutrl\"."
+msgstr "Réduit automatiquement les liens des templates utilisant les balises telles que \"EntryKutrl\"."
 
-#: inc/index.setting.php:218
+#: inc/index.setting.php:147
 msgid "Contents:"
 msgstr "Contenus :"
 
-#: inc/index.setting.php:221
+#: inc/index.setting.php:150
 msgid "Shorten links automatically found in contents using wiki synthax."
 msgstr "Réduit automatiquement les liens des contenus utilisant la syntax wiki."
-
-#: inc/index.setting.php:224
-msgid "Messenger"
-msgstr "Messagerie"
-
-#: inc/index.setting.php:226
-msgid "Identi.ca account"
-msgstr "Compte Identi.ca"
-
-#: inc/index.setting.php:227
-#: inc/services/class.bitly.service.php:51
-#: inc/services/class.trim.service.php:47
-#: inc/services/class.yourls.service.php:62
-msgid "Login:"
-msgstr "Identifiant :"
-
-#: inc/index.setting.php:233
-msgid "Type a password only to change old one."
-msgstr "Entrer un mot de passe uniquement pour changer l'ancien."
-
-#: inc/index.setting.php:236
-msgid "To use a Twitter account you must install plugin called \"TaC\""
-msgstr "Pour utiliser un compte Twitter vous devez installer le plugin nommé \"TaC\""
-
-#: inc/index.setting.php:239
-msgid "Twitter account"
-msgstr "Compte Twitter"
-
-#: inc/index.setting.php:261
-msgid "Message"
-msgstr "Message"
-
-#: inc/index.setting.php:265
-msgid "Use wildcard %L for short URL, %B for blog name, %U for user name."
-msgstr "Utiliser les jokers %L pour le lien court, %B pour le nom du blog, %U pour l'utilisateur."
-
-#: inc/index.setting.php:266
-msgid "Entry message:"
-msgstr "Message d'un billet :"
-
-#: inc/index.setting.php:269
-msgid "This is a special message that can be used on admin enrty page, use wildcard %T for entry title, %L for short URL, %B for blog name, %U for user name."
-msgstr "C'est un message spécial qui sera utilisé sur la page d'édition d'un billet, utiliser les jokers %T pour le titre du billet, %L pour le lien court, %B pour le blog, %U pour l'utilisateur."
-
-#: inc/index.setting.php:271
-msgid "Activation"
-msgstr "Activation"
-
-#: inc/index.setting.php:272
-msgid "Send message when short url is created on:"
-msgstr "Envoyer un message lorsqu'un lien court est créé dans :"
-
-#: inc/index.setting.php:275
-msgid "administration form"
-msgstr "le formulaire de la page d'administration"
-
-#: inc/index.setting.php:278
-msgid "public form"
-msgstr "le formulaire de la page publique"
-
-#: inc/index.setting.php:281
-msgid "template"
-msgstr "les balises de thème"
-
-#: inc/index.setting.php:284
-msgid "content"
-msgstr "le contenu (wiki)"
 
 #: inc/lib.kutrl.activityreport.php:17
 msgid "Plugin kUtRL"
@@ -457,28 +382,9 @@ msgid "New short link of type \"%s\" and hash \"%s\" was created."
 msgstr "Un nouveau lien court de type \"%s\" et de hash \"%s\" a été créé."
 
 #: inc/lib.kutrl.srv.php:52
+#: inc/services/class.default.service.php:49
 msgid "There is nothing to configure for this service."
 msgstr "Il n'y a rien à configurer pour ce service."
-
-#: inc/lib.kutrl.statusnet.php:29
-msgid "User is not set."
-msgstr "L'utilisateur est pas renseigné."
-
-#: inc/lib.kutrl.statusnet.php:39
-msgid "Nothing to send."
-msgstr "Il n'y a rien à envoyer."
-
-#: inc/lib.kutrl.statusnet.php:54
-msgid "Failed to send message (%s)"
-msgstr "Impossible d'envoyer le message (%s)"
-
-#: inc/lib.kutrl.statusnet.php:115
-msgid "Failed to get short url (%s)"
-msgstr "Impossible de récupérer le lien court (%s)"
-
-#: inc/lib.kutrl.statusnet.php:121
-msgid "Failed to get short url"
-msgstr "Impossible de récupérer le lien court"
 
 #: inc/lib.wiki.kutrl.php:84
 msgid "%s (Shorten with %s)"
@@ -495,6 +401,10 @@ msgstr "Ceci est l'URL du service bilbolinks que vous souhaitez utiliser. Ex: \"
 
 #: inc/services/class.bilbolinks.service.php:71
 #: inc/services/class.bilbolinks.service.php:83
+#: inc/services/class.custom.service.php:101
+#: inc/services/class.custom.service.php:114
+#: inc/services/class.default.service.php:72
+#: inc/services/class.default.service.php:85
 #: inc/services/class.isgd.service.php:39
 #: inc/services/class.isgd.service.php:51
 #: inc/services/class.shortto.service.php:39
@@ -510,6 +420,12 @@ msgstr "Le service n'est pas disponible."
 #: inc/services/class.trim.service.php:107
 msgid "Service rate limit exceeded."
 msgstr "La limitation d'envoie au service est atteinte."
+
+#: inc/services/class.bitly.service.php:51
+#: inc/services/class.trim.service.php:47
+#: inc/services/class.yourls.service.php:62
+msgid "Login:"
+msgstr "Identifiant :"
 
 #: inc/services/class.bitly.service.php:55
 msgid "This is your login to sign up to bit.ly."
@@ -533,6 +449,8 @@ msgstr "Ceci publie tous vos liens sur votre page public bit.ly"
 
 #: inc/services/class.bitly.service.php:84
 #: inc/services/class.bitly.service.php:106
+#: inc/services/class.googl.service.php:42
+#: inc/services/class.googl.service.php:63
 msgid "Failed to call service."
 msgstr "Impossible d'appeler le service."
 
@@ -540,6 +458,67 @@ msgstr "Impossible d'appeler le service."
 #: inc/services/class.bitly.service.php:115
 msgid "An error occured with code %s and message \"%s\""
 msgstr "Une erreur est survenu avec le code \"%s\" et le message \"%s\""
+
+#: inc/services/class.custom.service.php:73
+msgid "You can set a configurable service."
+msgstr "Vous pouvez configurer un service particulier."
+
+#: inc/services/class.custom.service.php:74
+msgid "It consists on a simple query to an URL with only one param."
+msgstr "Il effectue une simple requête à une URL avec un seul paramètre."
+
+#: inc/services/class.custom.service.php:75
+msgid "It must respond with a http code 200 on success."
+msgstr "Il doit répondre avec un code HTTP de 200 en cas de succès"
+
+#: inc/services/class.custom.service.php:76
+msgid "It must returned the short URL (or only hash) in clear text."
+msgstr "Il doit retourner l'URL courte (ou seulement le hash) en texte clair."
+
+#: inc/services/class.custom.service.php:77
+msgid "API URL:"
+msgstr "URL de l'API:"
+
+#: inc/services/class.custom.service.php:80
+msgid "Full path to API of the URL shortener. ex: \"http://is.gd/api.php\""
+msgstr "Chemin complet vers l'API. ex: \"http://is.gd.php\""
+
+#: inc/services/class.custom.service.php:81
+#: inc/services/class.default.service.php:59
+msgid "Short URL domain:"
+msgstr "Domaine des URLs courtes:"
+
+#: inc/services/class.custom.service.php:84
+msgid "Common part of the short URL. ex: \"http://is.gd/\""
+msgstr "Partie commune aux URLs courtes. ex: \"http://is.gd/\""
+
+#: inc/services/class.custom.service.php:85
+msgid "API URL param:"
+msgstr "Paramètre de l'URL"
+
+#: inc/services/class.custom.service.php:88
+msgid "Param of the query. ex: \"longurl\""
+msgstr "Paramètre de la raquête. ex: \"longurl\""
+
+#: inc/services/class.custom.service.php:91
+msgid "Encode URL"
+msgstr "Encoder l'URL à raccourcir"
+
+#: inc/services/class.default.service.php:51
+msgid "This service is set to:"
+msgstr "Ce service est règlé comme suit:"
+
+#: inc/services/class.default.service.php:55
+msgid "Full API URL:"
+msgstr "URL complet vers l'API:"
+
+#: inc/services/class.default.service.php:57
+msgid "Query param:"
+msgstr "Paramètre de la requête:"
+
+#: inc/services/class.default.service.php:61
+msgid "Encode URL:"
+msgstr "Encodage des URLs à raccourcir:"
 
 #: inc/services/class.local.service.php:46
 msgid "Settings:"
@@ -678,4 +657,79 @@ msgstr "Lien raccourcie avec succès"
 #: index.php:52
 msgid "Links successfully deleted"
 msgstr "Liens supprimés avec succès"
+
+msgid "Send to Twitter status"
+msgstr "Envoyer au status Twitter"
+
+msgid "public"
+msgstr "publique"
+
+msgid "URL not found"
+msgstr "URL non trouvée"
+
+msgid "The URL you are looking for does not exist."
+msgstr "Le lien que vous recherchez n'existe pas."
+
+msgid "Create your own short URL"
+msgstr "Créer votre propre lien court"
+
+msgid "Messenger"
+msgstr "Messagerie"
+
+msgid "Identi.ca account"
+msgstr "Compte Identi.ca"
+
+msgid "Type a password only to change old one."
+msgstr "Entrer un mot de passe uniquement pour changer l'ancien."
+
+msgid "To use a Twitter account you must install plugin called \"TaC\""
+msgstr "Pour utiliser un compte Twitter vous devez installer le plugin nommé \"TaC\""
+
+msgid "Twitter account"
+msgstr "Compte Twitter"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Use wildcard %L for short URL, %B for blog name, %U for user name."
+msgstr "Utiliser les jokers %L pour le lien court, %B pour le nom du blog, %U pour l'utilisateur."
+
+msgid "Entry message:"
+msgstr "Message d'un billet :"
+
+msgid "This is a special message that can be used on admin enrty page, use wildcard %T for entry title, %L for short URL, %B for blog name, %U for user name."
+msgstr "C'est un message spécial qui sera utilisé sur la page d'édition d'un billet, utiliser les jokers %T pour le titre du billet, %L pour le lien court, %B pour le blog, %U pour l'utilisateur."
+
+msgid "Activation"
+msgstr "Activation"
+
+msgid "Send message when short url is created on:"
+msgstr "Envoyer un message lorsqu'un lien court est créé dans :"
+
+msgid "administration form"
+msgstr "le formulaire de la page d'administration"
+
+msgid "public form"
+msgstr "le formulaire de la page publique"
+
+msgid "template"
+msgstr "les balises de thème"
+
+msgid "content"
+msgstr "le contenu (wiki)"
+
+msgid "User is not set."
+msgstr "L'utilisateur est pas renseigné."
+
+msgid "Nothing to send."
+msgstr "Il n'y a rien à envoyer."
+
+msgid "Failed to send message (%s)"
+msgstr "Impossible d'envoyer le message (%s)"
+
+msgid "Failed to get short url (%s)"
+msgstr "Impossible de récupérer le lien court (%s)"
+
+msgid "Failed to get short url"
+msgstr "Impossible de récupérer le lien court"
 

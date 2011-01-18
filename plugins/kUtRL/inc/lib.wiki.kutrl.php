@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -84,12 +84,10 @@ class kutrlWiki
 			$res['title'] = sprintf(__('%s (Shorten with %s)'),$rs->url,__($kut->name));
 			if ($testurl == $content) $res['content'] = $res['url'];
 			
-			# Send new url to messengers
-			if ($s->kutrl_twit_onwiki && $s->kutrl_twit_msg && $is_new)
+			# ex: Send new url to messengers
+			if (!empty($rs))
 			{
-				$user = !defined('DC_CONTEXT_ADMIN') ? __('public') : $core->auth->getInfo('user_cn');
-				$twit = str_replace(array('%L','%B','%U'),array($res['url'],$core->blog->name,$user),$s->kutrl_twit_msg);
-				kutrlSendToMessengers($core,$twit);
+				$core->callBehavior('wikiAfterKutrlCreate',$core,$rs,__('New short URL'));
 			}
 			
 			return $res;

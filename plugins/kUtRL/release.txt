@@ -1,7 +1,16 @@
-x.x xxxxxxxx
+todo
  - Added public page of the list of know urls and in/visible status
  - Added passworded links
- - fixed or removed tweet from comment when it is spam
+
+0.6 20110118 'prepare the soCial révolution'
+ * Added default defined service (for all blogs of a multiblog)
+ * Added configurable external service
+ * Added goog.gl client service (first step)
+ * Added default settings for third part plugins
+ * Added behaviors after short link creation
+ * Added attribute to disable URL shortining on template tag with 'active mode' (fixed bug on URL of POST form)
+ * Remove all messenger functions: this is to another plugin to do that
+ * Remove priority in plugin definition
 
 0.5 20100909
  * Removed old Twitter functions

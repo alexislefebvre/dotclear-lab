@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -19,6 +19,8 @@ $core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates'
 $core->addBehavior('publicBeforeDocument',array('pubKutrl','publicBeforeDocument'));
 $core->addBehavior('publicHeadContent',array('pubKutrl','publicHeadContent'));
 $core->addBehavior('publicBeforeContentFilter',array('pubKutrl','publicBeforeContentFilter'));
+$core->addBehavior('templateBeforeValue',array('pubKutrl','templateBeforeValue'));
+$core->addBehavior('templateAfterValue',array('pubKutrl','templateAfterValue'));
 
 $core->tpl->addBlock('kutrlPageIf',array('tplKutrl','pageIf'));
 $core->tpl->addBlock('kutrlMsgIf',array('tplKutrl','pageMsgIf'));
@@ -225,10 +227,10 @@ class urlKutrl extends dcUrlHandlers
 					);
 					$core->blog->triggerBlog();
 					
-					# Send new url to messengers
-					if ($s->kutrl_twit_onpublic && $s->kutrl_twit_msg) {
-						$twit = str_replace(array('%L','%B','%U'),array($new_url,$core->blog->name,__('public')),$s->kutrl_twit_msg);
-						kutrlSendToMessengers($core,$twit);
+					# ex: Send new url to messengers
+					if (!empty($rs))
+					{
+						$core->callBehavior('publicAfterKutrlCreate',$core,$rs,__('New public short URL'));
 					}
 				}
 			}
@@ -269,46 +271,71 @@ class urlKutrl extends dcUrlHandlers
 
 class pubKutrl
 {
-	# Replace long urls on the fly for default tags
+	# List of template tag which content URL that can be shortenn
+	public static $know_tags = array(
+		'AttachmentURL',
+		'CategoryURL',
+		'MediaURL',
+		'EntryAuthorURL',
+		'EntryURL',
+		'EntryCategoryURL',
+		'CommentAuthorURL',
+		'CommentPostURL'
+	);
+	
+	# Disable URL shoretning on filtered tag
+	public static function templateBeforeValue($core,$tag,$attr)
+	{
+		if (!empty($attr['disable_kutrl']) && in_array($tag,pubKutrl::$know_tags))
+		{
+			return '<?php $GLOBALS["disable_kutrl"] = true; ?>';
+		}
+		return;
+	}
+
+	# Re unable it after tag
+	public static function templateAfterValue($core,$tag,$attr)
+	{
+		if (!empty($attr['disable_kutrl']) && in_array($tag,pubKutrl::$know_tags))
+		{
+			return '<?php $GLOBALS["disable_kutrl"] = false; ?>';
+		}
+		return;
+	}
+	
+	# Replace long urls on the fly (on filter) for default tags
 	public static function publicBeforeContentFilter($core,$tag,$args)
 	{
-		if (!$core->blog->settings->kUtRL->kutrl_active 
-		 || !$core->blog->settings->kUtRL->kutrl_tpl_active) return;
-		
-		$know_tags = array(
-			'AttachmentURL',
-			'CategoryURL',
-			'MediaURL',
-			'EntryAuthorURL',
-			'EntryURL',
-			'EntryCategoryURL',
-			'CommentAuthorURL',
-			'CommentPostURL'
-		);
-		
 		# Unknow tag
-		if (!in_array($tag,$know_tags)) return;
+		if (!in_array($tag,pubKutrl::$know_tags)) return;
 		
-		global $_ctx;
-		
-		# Oups
-		if (!$_ctx->exists('kutrl')) return;
-		
-		# Existing
-		if (false !== ($kutrl_rs = $_ctx->kutrl->isKnowUrl($args[0])))
+		# URL shortening is disabled by tag attribute
+		if (empty($GLOBALS['disable_kutrl']))
 		{
-			$args[0] = $_ctx->kutrl->url_base.$kutrl_rs->hash;
-		}
-		# New
-		elseif (false !== ($kutrl_rs = $_ctx->kutrl->hash($args[0])))
-		{
-			$args[0] = $_ctx->kutrl->url_base.$kutrl_rs->hash;
-		
-			# Send new url on messengers
-			if ($_ctx->kutrl_twit_ontpl && $s->kutrl_twit_msg)
+			# kUtRL is not activated
+			if (!$core->blog->settings->kUtRL->kutrl_active 
+			 || !$core->blog->settings->kUtRL->kutrl_tpl_active) return;
+			
+			global $_ctx;
+			
+			# Oups
+			if (!$_ctx->exists('kutrl')) return;
+			
+			# Existing
+			if (false !== ($kutrl_rs = $_ctx->kutrl->isKnowUrl($args[0])))
 			{
-				$twit = str_replace(array('%L','%B','%U'),array($_ctx->kutrl->url_base.$kutrl_rs->hash,$core->blog->name,__('public')),$s->kutrl_twit_msg);
-				kutrlSendToMessengers($core,$twit);
+				$args[0] = $_ctx->kutrl->url_base.$kutrl_rs->hash;
+			}
+			# New
+			elseif (false !== ($kutrl_rs = $_ctx->kutrl->hash($args[0])))
+			{
+				$args[0] = $_ctx->kutrl->url_base.$kutrl_rs->hash;
+			
+				# ex: Send new url to messengers
+				if (!empty($kutrl_rs))
+				{
+					$core->callBehavior('publicAfterKutrlCreate',$core,$kutrl_rs,__('New public short URL'));
+				}
 			}
 		}
 	}
@@ -526,12 +553,10 @@ class tplKutrl
 		" elseif (false !== (\$kutrl_rs = \$_ctx->kutrl->hash(".$str."))) { ".
 		"  echo ".sprintf($f,'$_ctx->kutrl->url_base.$kutrl_rs->hash')."; ".
 		
-		# Send new url on messengers
-		"if (\$_ctx->kutrl_twit_ontpl && \$s->kutrl_twit_msg) { ".
-		 "\$twit = str_replace(array('%L','%B','%U'),array(\$_ctx->kutrl->url_base.\$kutrl_rs->hash,\$core->blog->name,__('public')),\$s->kutrl_twit_msg); ".
-		 "kutrlSendToMessengers(\$core,\$twit); ".
-		 " unset(\$twit); ".
-		"} \n".
+		# ex: Send new url to messengers
+		" if (!empty(\$kutrl_rs)) { ".
+		"  \$core->callBehavior('publicAfterKutrlCreate',\$core,\$kutrl_rs,__('New public short URL')); ".
+		" } \n".
 		
 		" } \n".
 		" unset(\$kutrl_rs); \n".

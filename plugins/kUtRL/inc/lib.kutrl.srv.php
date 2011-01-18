@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -185,13 +185,21 @@ class kutrlServices
 	}
 
 	# Post request
-	public static function post($server,$data,$verbose=true,$get=false)
+	public static function post($server,$data,$verbose=true,$get=false,$headers=array())
 	{
 		$url = (string) $server;
 		$client = netHttp::initClient($url,$url);
 		$client->setUserAgent('kUtRL - http://kutrl.fr');
 		$client->setPersistReferers(false);
 
+		if (is_array($headers) && !empty($headers))
+		{
+			foreach($headers as $header)
+			{
+				$client->setMoreHeader($header);
+			}
+		}
+		
 		if ($get)
 		{
 			$client->get($url,$data);

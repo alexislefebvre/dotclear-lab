@@ -1,16 +1,15 @@
 <?php
 // Language: Français 
-// Module: kUtRL - 0.5
-// Date: 2010-09-09 01:58:30 
+// Module: kUtRL - 0.6
+// Date: 2011-01-18 09:07:08 
 // Translated with dcTranslater - 1.5 
 
 #_admin.php:19
 #_widgets.php:22
-#default-templates/kutrl.html:48
-#inc/index.link.php:116
+#inc/index.link.php:111
 #inc/index.links.php:203
 #inc/index.service.php:42
-#inc/index.setting.php:155
+#inc/index.setting.php:74
 #index.php:41
 #index.php:42
 $GLOBALS['__l10n']['Links shortener'] = 'Réducteur de liens';
@@ -23,35 +22,32 @@ $GLOBALS['__l10n']['Short link'] = 'Lien court';
 $GLOBALS['__l10n']['Create short link'] = 'Créer un lien court';
 
 #_admin.php:108
-#inc/index.link.php:140
+#inc/index.link.php:135
 $GLOBALS['__l10n']['Custom short link:'] = 'Lien court personnalisé :';
 
-#_admin.php:115
-$GLOBALS['__l10n']['Send to Twitter status'] = 'Envoyer au status Twitter';
-
-#_admin.php:122
+#_admin.php:118
 #_widgets.php:178
 $GLOBALS['__l10n']['never followed'] = 'jamais suivi';
 
-#_admin.php:126
+#_admin.php:122
 #_widgets.php:182
 $GLOBALS['__l10n']['followed one time'] = 'suivi une fois';
 
-#_admin.php:130
+#_admin.php:126
 #_widgets.php:186
 $GLOBALS['__l10n']['followed %s times'] = 'suivi %s fois';
 
-#_admin.php:137
-#_admin.php:294
+#_admin.php:133
+#_admin.php:264
 $GLOBALS['__l10n']['delete short link'] = 'effacer un lien court';
 
-#_admin.php:293
+#_admin.php:263
 $GLOBALS['__l10n']['create short link'] = 'créer un lien court';
 
-#_public.php:141
+#_public.php:143
 $GLOBALS['__l10n']['Failed to verify protected field.'] = 'Impossible de vérifier le champs de protection.';
 
-#_public.php:149
+#_public.php:151
 #inc/index.link.php:40
 #inc/services/class.bilbolinks.service.php:64
 #inc/services/class.bitly.service.php:76
@@ -60,41 +56,40 @@ $GLOBALS['__l10n']['Failed to verify protected field.'] = 'Impossible de vérifi
 #inc/services/class.yourls.service.php:80
 $GLOBALS['__l10n']['Service is not well configured.'] = 'Le service n\'est pas correctement configuré.';
 
-#_public.php:157
+#_public.php:159
 $GLOBALS['__l10n']['This string is not a valid URL.'] = 'Cette chaine n\'est pas un lien valide.';
 
-#_public.php:165
+#_public.php:167
 #inc/index.link.php:49
 $GLOBALS['__l10n']['This link is too short.'] = 'Ce lien est trop court.';
 
-#_public.php:173
+#_public.php:175
 #inc/index.link.php:52
 $GLOBALS['__l10n']['This type of link is not allowed.'] = 'Ce type de lien n\'est pas autorisé.';
 
-#_public.php:182
+#_public.php:184
 #inc/index.link.php:55
 $GLOBALS['__l10n']['Short links are limited to this blog URL.'] = 'Les liens courts sont limités à l\'URL de ce blog.';
 
-#_public.php:190
+#_public.php:192
 #inc/index.link.php:58
 $GLOBALS['__l10n']['This link is already a short link.'] = 'Ce lien est dèjà un lien court.';
 
-#_public.php:203
-#_public.php:222
+#_public.php:205
+#_public.php:224
 #inc/index.link.php:69
 #inc/index.link.php:90
 $GLOBALS['__l10n']['Short link for %s is %s'] = 'Le lien court pour %s est %s';
 
-#_public.php:214
+#_public.php:216
 $GLOBALS['__l10n']['Failed to create short link.'] = 'Impossible de créer le lien court.';
 
-#_public.php:230
-#_public.php:310
-#_public.php:531
-#inc/lib.wiki.kutrl.php:90
-$GLOBALS['__l10n']['public'] = 'publique';
+#_public.php:233
+#_public.php:337
+#_public.php:558
+$GLOBALS['__l10n']['New public short URL'] = 'Nouvelle URL courte';
 
-#_public.php:403
+#_public.php:430
 #_widgets.php:106
 $GLOBALS['__l10n']['Rewrite "%s" in next field to show that you are not a robot:'] = 'Recopier "%s" dans le champs suivant pour montrer que vous n\'êtes pas une machine :';
 
@@ -143,23 +138,11 @@ $GLOBALS['__l10n']['Limit:'] = 'Limite :';
 $GLOBALS['__l10n']['Hide no followed links'] = 'Cacher les liens non suivis';
 
 #_widgets.php:102
-#default-templates/kutrl.html:55
-#inc/index.link.php:133
+#inc/index.link.php:128
 $GLOBALS['__l10n']['Long link:'] = 'Lien long :';
 
 #_widgets.php:109
-#default-templates/kutrl.html:62
 $GLOBALS['__l10n']['Create'] = 'Créer';
-
-#default-templates/kutrl404.html:14
-#default-templates/kutrl404.html:38
-$GLOBALS['__l10n']['URL not found'] = 'URL non trouvée';
-
-#default-templates/kutrl404.html:42
-$GLOBALS['__l10n']['The URL you are looking for does not exist.'] = 'Le lien que vous recherchez n\'existe pas.';
-
-#default-templates/kutrl404.html:45
-$GLOBALS['__l10n']['Create your own short URL'] = 'Créer votre propre lien court';
 
 #inc/index.link.php:37
 $GLOBALS['__l10n']['There is nothing to shorten.'] = 'I n\'y a rien à réduire.';
@@ -176,22 +159,26 @@ $GLOBALS['__l10n']['This custom short url is already taken.'] = 'Ce lien court p
 #inc/index.link.php:82
 $GLOBALS['__l10n']['Failed to create short link. This could be caused by a service failure.'] = 'Impossible de créé un lien court. Ceci peut être causé par un problème du service.';
 
-#inc/index.link.php:120
+#inc/index.link.php:98
+#inc/lib.wiki.kutrl.php:90
+$GLOBALS['__l10n']['New short URL'] = 'Nouvelle URL courte';
+
+#inc/index.link.php:115
 #inc/index.links.php:207
 #inc/index.service.php:52
-#inc/index.setting.php:165
+#inc/index.setting.php:84
 $GLOBALS['__l10n']['New link'] = 'Nouveau lien';
 
-#inc/index.link.php:125
+#inc/index.link.php:120
 $GLOBALS['__l10n']['You must set an admin service.'] = 'Vous devez définir un service admin.';
 
-#inc/index.link.php:132
+#inc/index.link.php:127
 $GLOBALS['__l10n']['Shorten link using service "%s"'] = 'Raccourcir un lien en utilisant le service "%s"';
 
-#inc/index.link.php:142
+#inc/index.link.php:137
 $GLOBALS['__l10n']['Only if you want a custom short link.'] = 'Uniquement si vous souhaitez un lien court personnalisé.';
 
-#inc/index.link.php:147
+#inc/index.link.php:142
 $GLOBALS['__l10n']['You can use "bob!!" if you want a semi-custom link, it starts with "bob" and "!!" will be replaced by an increment value.'] = 'Vous pouvez utiliser "bob!!" si vous souhaitez un lien semi-personnalisé, il commencera par "bob" et "!!" sera remplacé par une valeur incrémentale.';
 
 #inc/index.links.php:23
@@ -204,7 +191,7 @@ $GLOBALS['__l10n']['Service'] = 'Service';
 $GLOBALS['__l10n']['Long link'] = 'Lien long';
 
 #inc/index.links.php:132
-#inc/index.setting.php:150
+#inc/index.setting.php:69
 $GLOBALS['__l10n']['disabled'] = 'Désactivé';
 
 #inc/index.links.php:220
@@ -229,114 +216,69 @@ $GLOBALS['__l10n']['homepage'] = 'page d\'accueil';
 #inc/index.service.php:76
 $GLOBALS['__l10n']['Learn more about %s.'] = 'En savoir plus à propos de %s.';
 
-#inc/index.setting.php:164
+#inc/index.setting.php:83
 #index.php:36
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#inc/index.setting.php:169
+#inc/index.setting.php:88
 $GLOBALS['__l10n']['Plugin activation'] = 'Activation de l\'extension';
 
-#inc/index.setting.php:172
+#inc/index.setting.php:91
 $GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
 
-#inc/index.setting.php:175
+#inc/index.setting.php:94
 $GLOBALS['__l10n']['General rules'] = 'Réglages';
 
-#inc/index.setting.php:178
+#inc/index.setting.php:97
 $GLOBALS['__l10n']['Limit short link to current blog'] = 'Limiter les liens court à ce blog';
 
-#inc/index.setting.php:179
+#inc/index.setting.php:98
 $GLOBALS['__l10n']['Only link started with this blog URL could be shortened.'] = 'Uniquement les liens commençant par l\'URL de ce blog pourront être réduits.';
 
-#inc/index.setting.php:182
+#inc/index.setting.php:101
 $GLOBALS['__l10n']['Passive mode'] = 'Mode passif';
 
-#inc/index.setting.php:183
+#inc/index.setting.php:102
 $GLOBALS['__l10n']['If this extension is disabled and the passive mode is enabled, "kutrl" tags (like EntryKurl) will display long urls instead of nothing on templates.'] = 'Si cette extension est désactivée et que le mode passif est activé, les balises "kutrl" (comme EntryKutrl) afficheront les liens longs au lieu de rien.';
 
-#inc/index.setting.php:186
+#inc/index.setting.php:105
 $GLOBALS['__l10n']['Active mode'] = 'Mode actif';
 
-#inc/index.setting.php:187
+#inc/index.setting.php:106
 $GLOBALS['__l10n']['If the active mode is enabled, all know default template tags (like EntryURL) will display short urls instead of long ones on templates.'] = 'Si le mode actif est acitvé, les balises de thème (comme EntryURL) afficheront les liens court au lieu des longs.';
 
-#inc/index.setting.php:190
+#inc/index.setting.php:107
+$GLOBALS['__l10n']['You can disable URL shortening for a specific template tag by adding attribute disable_kutrl="1" to it.'] = 'Vous pouvez désactiver la réduction d\'URL pour une balise de template spécifique en lui ajoutant l\'attribut disable_kutrl="1"';
+
+#inc/index.setting.php:110
 $GLOBALS['__l10n']['Create short link for new entries'] = 'Créer un lien court pour les nouveaux billets';
 
-#inc/index.setting.php:191
+#inc/index.setting.php:111
 $GLOBALS['__l10n']['This can be changed on page of creation/edition of an entry.'] = 'Ceci peut être changé sur la page d\'édition / création d\'un billet.';
 
-#inc/index.setting.php:194
+#inc/index.setting.php:114
 $GLOBALS['__l10n']['Default services'] = 'Services par défaut';
 
-#inc/index.setting.php:200
+#inc/index.setting.php:120
 $GLOBALS['__l10n']['Administration:'] = 'Administration :';
 
-#inc/index.setting.php:203
+#inc/index.setting.php:123
 $GLOBALS['__l10n']['Service to use in this admin page and on edit page of an entry.'] = 'Service à utiliser sur cette page d\'administration ou sur la page d\'édition d\'un billet.';
 
-#inc/index.setting.php:209
+#inc/index.setting.php:132
+$GLOBALS['__l10n']['Service to use on third part plugins.'] = 'Service à utiliser par les plugins tiers';
+
+#inc/index.setting.php:138
 $GLOBALS['__l10n']['Templates:'] = 'Templates :';
 
-#inc/index.setting.php:212
-$GLOBALS['__l10n']['Shorten links automatically when using template value like "EntryKutrl".'] = 'Réduit automatiquement les liens des templates utilisant les balises tels que "EntryKutrl".';
+#inc/index.setting.php:141
+$GLOBALS['__l10n']['Shorten links automatically when using template value like "EntryKutrl".'] = 'Réduit automatiquement les liens des templates utilisant les balises telles que "EntryKutrl".';
 
-#inc/index.setting.php:218
+#inc/index.setting.php:147
 $GLOBALS['__l10n']['Contents:'] = 'Contenus :';
 
-#inc/index.setting.php:221
+#inc/index.setting.php:150
 $GLOBALS['__l10n']['Shorten links automatically found in contents using wiki synthax.'] = 'Réduit automatiquement les liens des contenus utilisant la syntax wiki.';
-
-#inc/index.setting.php:224
-$GLOBALS['__l10n']['Messenger'] = 'Messagerie';
-
-#inc/index.setting.php:226
-$GLOBALS['__l10n']['Identi.ca account'] = 'Compte Identi.ca';
-
-#inc/index.setting.php:227
-#inc/services/class.bitly.service.php:51
-#inc/services/class.trim.service.php:47
-#inc/services/class.yourls.service.php:62
-$GLOBALS['__l10n']['Login:'] = 'Identifiant :';
-
-#inc/index.setting.php:233
-$GLOBALS['__l10n']['Type a password only to change old one.'] = 'Entrer un mot de passe uniquement pour changer l\'ancien.';
-
-#inc/index.setting.php:236
-$GLOBALS['__l10n']['To use a Twitter account you must install plugin called "TaC"'] = 'Pour utiliser un compte Twitter vous devez installer le plugin nommé "TaC"';
-
-#inc/index.setting.php:239
-$GLOBALS['__l10n']['Twitter account'] = 'Compte Twitter';
-
-#inc/index.setting.php:261
-$GLOBALS['__l10n']['Message'] = 'Message';
-
-#inc/index.setting.php:265
-$GLOBALS['__l10n']['Use wildcard %L for short URL, %B for blog name, %U for user name.'] = 'Utiliser les jokers %L pour le lien court, %B pour le nom du blog, %U pour l\'utilisateur.';
-
-#inc/index.setting.php:266
-$GLOBALS['__l10n']['Entry message:'] = 'Message d\'un billet :';
-
-#inc/index.setting.php:269
-$GLOBALS['__l10n']['This is a special message that can be used on admin enrty page, use wildcard %T for entry title, %L for short URL, %B for blog name, %U for user name.'] = 'C\'est un message spécial qui sera utilisé sur la page d\'édition d\'un billet, utiliser les jokers %T pour le titre du billet, %L pour le lien court, %B pour le blog, %U pour l\'utilisateur.';
-
-#inc/index.setting.php:271
-$GLOBALS['__l10n']['Activation'] = 'Activation';
-
-#inc/index.setting.php:272
-$GLOBALS['__l10n']['Send message when short url is created on:'] = 'Envoyer un message lorsqu\'un lien court est créé dans :';
-
-#inc/index.setting.php:275
-$GLOBALS['__l10n']['administration form'] = 'le formulaire de la page d\'administration';
-
-#inc/index.setting.php:278
-$GLOBALS['__l10n']['public form'] = 'le formulaire de la page publique';
-
-#inc/index.setting.php:281
-$GLOBALS['__l10n']['template'] = 'les balises de thème';
-
-#inc/index.setting.php:284
-$GLOBALS['__l10n']['content'] = 'le contenu (wiki)';
 
 #inc/lib.kutrl.activityreport.php:17
 $GLOBALS['__l10n']['Plugin kUtRL'] = 'Extension kUtRL';
@@ -348,22 +290,8 @@ $GLOBALS['__l10n']['Short link creation'] = 'Création de lien court';
 $GLOBALS['__l10n']['New short link of type "%s" and hash "%s" was created.'] = 'Un nouveau lien court de type "%s" et de hash "%s" a été créé.';
 
 #inc/lib.kutrl.srv.php:52
+#inc/services/class.default.service.php:49
 $GLOBALS['__l10n']['There is nothing to configure for this service.'] = 'Il n\'y a rien à configurer pour ce service.';
-
-#inc/lib.kutrl.statusnet.php:29
-$GLOBALS['__l10n']['User is not set.'] = 'L\'utilisateur est pas renseigné.';
-
-#inc/lib.kutrl.statusnet.php:39
-$GLOBALS['__l10n']['Nothing to send.'] = 'Il n\'y a rien à envoyer.';
-
-#inc/lib.kutrl.statusnet.php:54
-$GLOBALS['__l10n']['Failed to send message (%s)'] = 'Impossible d\'envoyer le message (%s)';
-
-#inc/lib.kutrl.statusnet.php:115
-$GLOBALS['__l10n']['Failed to get short url (%s)'] = 'Impossible de récupérer le lien court (%s)';
-
-#inc/lib.kutrl.statusnet.php:121
-$GLOBALS['__l10n']['Failed to get short url'] = 'Impossible de récupérer le lien court';
 
 #inc/lib.wiki.kutrl.php:84
 $GLOBALS['__l10n']['%s (Shorten with %s)'] = '% (réduit avec %s)';
@@ -377,6 +305,10 @@ $GLOBALS['__l10n']['This is the root URL of the "bilbolinks" service you want to
 
 #inc/services/class.bilbolinks.service.php:71
 #inc/services/class.bilbolinks.service.php:83
+#inc/services/class.custom.service.php:101
+#inc/services/class.custom.service.php:114
+#inc/services/class.default.service.php:72
+#inc/services/class.default.service.php:85
 #inc/services/class.isgd.service.php:39
 #inc/services/class.isgd.service.php:51
 #inc/services/class.shortto.service.php:39
@@ -390,6 +322,11 @@ $GLOBALS['__l10n']['Service is unavailable.'] = 'Le service n\'est pas disponibl
 #inc/services/class.bilbolinks.service.php:88
 #inc/services/class.trim.service.php:107
 $GLOBALS['__l10n']['Service rate limit exceeded.'] = 'La limitation d\'envoie au service est atteinte.';
+
+#inc/services/class.bitly.service.php:51
+#inc/services/class.trim.service.php:47
+#inc/services/class.yourls.service.php:62
+$GLOBALS['__l10n']['Login:'] = 'Identifiant :';
 
 #inc/services/class.bitly.service.php:55
 $GLOBALS['__l10n']['This is your login to sign up to bit.ly.'] = 'Ceci est votre login d\'inscription sur bit.ly.';
@@ -408,11 +345,59 @@ $GLOBALS['__l10n']['This publish all short links on your bit.ly public page.'] =
 
 #inc/services/class.bitly.service.php:84
 #inc/services/class.bitly.service.php:106
+#inc/services/class.googl.service.php:42
+#inc/services/class.googl.service.php:63
 $GLOBALS['__l10n']['Failed to call service.'] = 'Impossible d\'appeler le service.';
 
 #inc/services/class.bitly.service.php:93
 #inc/services/class.bitly.service.php:115
 $GLOBALS['__l10n']['An error occured with code %s and message "%s"'] = 'Une erreur est survenu avec le code "%s" et le message "%s"';
+
+#inc/services/class.custom.service.php:73
+$GLOBALS['__l10n']['You can set a configurable service.'] = 'Vous pouvez configurer un service particulier.';
+
+#inc/services/class.custom.service.php:74
+$GLOBALS['__l10n']['It consists on a simple query to an URL with only one param.'] = 'Il effectue une simple requête à une URL avec un seul paramètre.';
+
+#inc/services/class.custom.service.php:75
+$GLOBALS['__l10n']['It must respond with a http code 200 on success.'] = 'Il doit répondre avec un code HTTP de 200 en cas de succès';
+
+#inc/services/class.custom.service.php:76
+$GLOBALS['__l10n']['It must returned the short URL (or only hash) in clear text.'] = 'Il doit retourner l\'URL courte (ou seulement le hash) en texte clair.';
+
+#inc/services/class.custom.service.php:77
+$GLOBALS['__l10n']['API URL:'] = 'URL de l\'API:';
+
+#inc/services/class.custom.service.php:80
+$GLOBALS['__l10n']['Full path to API of the URL shortener. ex: "http://is.gd/api.php"'] = 'Chemin complet vers l\'API. ex: "http://is.gd.php"';
+
+#inc/services/class.custom.service.php:81
+#inc/services/class.default.service.php:59
+$GLOBALS['__l10n']['Short URL domain:'] = 'Domaine des URLs courtes:';
+
+#inc/services/class.custom.service.php:84
+$GLOBALS['__l10n']['Common part of the short URL. ex: "http://is.gd/"'] = 'Partie commune aux URLs courtes. ex: "http://is.gd/"';
+
+#inc/services/class.custom.service.php:85
+$GLOBALS['__l10n']['API URL param:'] = 'Paramètre de l\'URL';
+
+#inc/services/class.custom.service.php:88
+$GLOBALS['__l10n']['Param of the query. ex: "longurl"'] = 'Paramètre de la raquête. ex: "longurl"';
+
+#inc/services/class.custom.service.php:91
+$GLOBALS['__l10n']['Encode URL'] = 'Encoder l\'URL à raccourcir';
+
+#inc/services/class.default.service.php:51
+$GLOBALS['__l10n']['This service is set to:'] = 'Ce service est règlé comme suit:';
+
+#inc/services/class.default.service.php:55
+$GLOBALS['__l10n']['Full API URL:'] = 'URL complet vers l\'API:';
+
+#inc/services/class.default.service.php:57
+$GLOBALS['__l10n']['Query param:'] = 'Paramètre de la requête:';
+
+#inc/services/class.default.service.php:61
+$GLOBALS['__l10n']['Encode URL:'] = 'Encodage des URLs à raccourcir:';
 
 #inc/services/class.local.service.php:46
 $GLOBALS['__l10n']['Settings:'] = 'paramètre :';
@@ -517,5 +502,55 @@ $GLOBALS['__l10n']['Link successfully shorten'] = 'Lien raccourcie avec succès'
 
 #index.php:52
 $GLOBALS['__l10n']['Links successfully deleted'] = 'Liens supprimés avec succès';
+
+$GLOBALS['__l10n']['Send to Twitter status'] = 'Envoyer au status Twitter';
+
+$GLOBALS['__l10n']['public'] = 'publique';
+
+$GLOBALS['__l10n']['URL not found'] = 'URL non trouvée';
+
+$GLOBALS['__l10n']['The URL you are looking for does not exist.'] = 'Le lien que vous recherchez n\'existe pas.';
+
+$GLOBALS['__l10n']['Create your own short URL'] = 'Créer votre propre lien court';
+
+$GLOBALS['__l10n']['Messenger'] = 'Messagerie';
+
+$GLOBALS['__l10n']['Identi.ca account'] = 'Compte Identi.ca';
+
+$GLOBALS['__l10n']['Type a password only to change old one.'] = 'Entrer un mot de passe uniquement pour changer l\'ancien.';
+
+$GLOBALS['__l10n']['To use a Twitter account you must install plugin called "TaC"'] = 'Pour utiliser un compte Twitter vous devez installer le plugin nommé "TaC"';
+
+$GLOBALS['__l10n']['Twitter account'] = 'Compte Twitter';
+
+$GLOBALS['__l10n']['Message'] = 'Message';
+
+$GLOBALS['__l10n']['Use wildcard %L for short URL, %B for blog name, %U for user name.'] = 'Utiliser les jokers %L pour le lien court, %B pour le nom du blog, %U pour l\'utilisateur.';
+
+$GLOBALS['__l10n']['Entry message:'] = 'Message d\'un billet :';
+
+$GLOBALS['__l10n']['This is a special message that can be used on admin enrty page, use wildcard %T for entry title, %L for short URL, %B for blog name, %U for user name.'] = 'C\'est un message spécial qui sera utilisé sur la page d\'édition d\'un billet, utiliser les jokers %T pour le titre du billet, %L pour le lien court, %B pour le blog, %U pour l\'utilisateur.';
+
+$GLOBALS['__l10n']['Activation'] = 'Activation';
+
+$GLOBALS['__l10n']['Send message when short url is created on:'] = 'Envoyer un message lorsqu\'un lien court est créé dans :';
+
+$GLOBALS['__l10n']['administration form'] = 'le formulaire de la page d\'administration';
+
+$GLOBALS['__l10n']['public form'] = 'le formulaire de la page publique';
+
+$GLOBALS['__l10n']['template'] = 'les balises de thème';
+
+$GLOBALS['__l10n']['content'] = 'le contenu (wiki)';
+
+$GLOBALS['__l10n']['User is not set.'] = 'L\'utilisateur est pas renseigné.';
+
+$GLOBALS['__l10n']['Nothing to send.'] = 'Il n\'y a rien à envoyer.';
+
+$GLOBALS['__l10n']['Failed to send message (%s)'] = 'Impossible d\'envoyer le message (%s)';
+
+$GLOBALS['__l10n']['Failed to get short url (%s)'] = 'Impossible de récupérer le lien court (%s)';
+
+$GLOBALS['__l10n']['Failed to get short url'] = 'Impossible de récupérer le lien court';
 
 ?>
