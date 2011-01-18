@@ -41,13 +41,6 @@ class myGmapsBehaviors
 		$p_img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
 		$items = $links = array();
 		
-		$redir = new ArrayObject;
-		$redir['post'] = 'post.php?id=%s';
-		$redir['page'] = 'plugin.php?p=pages&act=page&id=%s';
-		
-		# --BEHAVIOR-- coreBlogConstruct
-		$core->callBehavior('myGmapsRedirURL',$redir);
-		
 		$meta = $core->meta->getMetaArray($cur->post_meta);
 		
 		if (array_key_exists('map',$meta)) {
@@ -121,15 +114,15 @@ class myGmapsBehaviors
 				implode("\n",$items)
 			);
 			array_push($links,sprintf($p_a,sprintf(
-				'plugin.php?p=myGmaps&go=maps_post&amp;post_id=%s&amp;redir=%s',
-				$cur->post_id,rawurlencode((array_key_exists($cur->post_type,$redir) ? $redir[$cur->post_type] : ''))
+				'plugin.php?p=myGmaps&go=maps_post&amp;post_id=%s',
+				$cur->post_id
 			),__('Edit map')));
 			array_push($links,sprintf($p_a,'',__('Remove map')));
 		}
 		else {
 			array_push($links,sprintf($p_a,sprintf(
-				'plugin.php?p=myGmaps&go=maps_post&amp;post_id=%s&amp;redir=%s',
-				$cur->post_id,rawurlencode((array_key_exists($cur->post_type,$redir) ? $redir[$cur->post_type] : ''))
+				'plugin.php?p=myGmaps&go=maps_post&amp;post_id=%s',
+				$cur->post_id
 			),__('Add map')));
 		}
 		

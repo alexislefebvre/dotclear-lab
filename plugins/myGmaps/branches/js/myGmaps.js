@@ -95,6 +95,7 @@ var myGmaps = {
 		}
 		else {
 			myGmaps.items.push(item);
+			
 		}
 		myGmaps.loadItems();
 		myGmaps.setListeners(myGmaps.map,'map');
@@ -104,6 +105,8 @@ var myGmaps = {
 		for (i in myGmaps.items) {
 			var item = myGmaps.items[i];
 			var path = new google.maps.MVCArray;
+			
+			if (item.loaded) continue;
 			
 			myGmaps.elt_type = item.type;
 				
@@ -137,8 +140,10 @@ var myGmaps = {
 			}
 			
 			for (k in item.o) {
-				myGmaps.setListeners(item.o[k],(parseInt(k) == 0 ? item.type : 'marker'));
+				myGmaps.setListeners(item.o[k],(parseInt(k) == 0 ? item.type : 'marker'),item.infowindow);
 			}
+			
+			item.loaded = true;
 		}
 		myGmaps.updDetails();
 	},
@@ -262,15 +267,17 @@ var myGmaps = {
 		$('textarea[name=post_excerpt]').val(points.join("\n"));
 	},
 	
-	setListeners: function(item,type) {
+	setListeners: function(item,type,infowindow) {
 		if (myGmaps.mode == 'view') {
-			/*myGmaps.events.push(google.maps.event.addListener(item, 'click', function(event) {
-				var latlng = type != 'marker' ? event.latLng : item.getPosition();
-				myGmaps.infowindow.close();
-				myGmaps.infowindow.setContent('');
-				myGmaps.infowindow.setPosition(latlng);
-				myGmaps.infowindow.open(myGmaps.map);
-			}));*/
+			if (type == 'marker' || type == 'polyline' || type == 'polygon') {
+				myGmaps.events.push(google.maps.event.addListener(item, 'click', function(event) {
+					var latlng = type != 'marker' ? event.latLng : item.getPosition();
+					myGmaps.infowindow.close();
+					myGmaps.infowindow.setContent(infowindow);
+					myGmaps.infowindow.setPosition(latlng);
+					myGmaps.infowindow.open(myGmaps.map);
+				}));
+			}
 		}
 		if (myGmaps.mode == 'edit') {
 			if (type == 'polyline') {
@@ -282,11 +289,13 @@ var myGmaps = {
 			if (type == 'marker') {
 				myGmaps.events.push(google.maps.event.addListener(item, 'click', function() {
 					for (var i = 1, I = myGmaps.items[0].o.length; i < I && myGmaps.items[0].o[i] != item; ++i);
+					myGmaps.infowindow.close();
 					myGmaps.delPoint(i);
 					myGmaps.updDetails();
 				}));
 				myGmaps.events.push(google.maps.event.addListener(item, 'dragend', function() {
 					for (var i = 1, I = myGmaps.items[0].o.length; i < I && myGmaps.items[0].o[i] != item; ++i);
+					myGmaps.infowindow.close();
 					myGmaps.updPoint(item.getPosition(),i);
 					myGmaps.updDetails();
 				}));
@@ -294,6 +303,7 @@ var myGmaps = {
 			}
 			if (type == 'map') {
 				myGmaps.events.push(google.maps.event.addListener(item, 'click', function(event) {
+					myGmaps.infowindow.close();
 					myGmaps.addPoint(event.latLng);
 					myGmaps.infowindow.close();
 				}));
@@ -456,16 +466,36 @@ var myGmaps = {
 	},
 	
 	updMakerOptions: function() {
-		var content = $('<div/>').attr('id','marker_options').addClass('infowindows');
+		var content = $('<div/>').attr({id:'marker_options',class:'infowindow'});
+		var list = $('<ul/>');
 		
-		content.append($('<fieldset/>').
+		for (i in icons) {
+			list.append($('<li/>').append(
+				$('<img/>').attr('src',icons[i])
+			));
+		}
+		
+		content.append($('<fieldset/>').attr('id','icons-form').
 			append($('<legend/>').append(myGmaps.msg.marker_options)).
-			append($('<p/>').append('choose the marker icon:'))
+			append($('<p/>').append('choose the marker icon:')).
+			append(list)
 		);
 		
+		myGmaps.infowindow.close();
 		myGmaps.infowindow.setContent(content.get(0));
 		myGmaps.infowindow.setPosition(this.getPosition());
 		myGmaps.infowindow.open(myGmaps.map);
+		
+		$('fieldset#icons-form li').click(function() {
+			var start = 0;
+			if (myGmaps.elt_type == 'polyline' || myGmaps.elt_type == 'polygon') {
+				start = 1;
+			}
+			for (i = start; i < myGmaps.items[0].o.length; i++) {
+				myGmaps.items[0].o[i].setIcon($(this).find('img').attr('src'));
+				myGmaps.items[0].icon = $(this).find('img').attr('src');
+			}
+		});
 	},
 	
 	updPolylineOptions: function(event) {
@@ -489,6 +519,7 @@ var myGmaps = {
 			)
 		);
 		
+		myGmaps.infowindow.close();
 		myGmaps.infowindow.setContent(content.get(0));
 		myGmaps.infowindow.setPosition(event.latLng);
 		myGmaps.infowindow.open(myGmaps.map);

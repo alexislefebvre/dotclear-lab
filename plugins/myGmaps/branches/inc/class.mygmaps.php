@@ -2,31 +2,17 @@
 
 class myGmapsUtils
 {
-	public static function getMapIcons()
+	public static function getIcons()
 	{
 		$list = files::getDirList(path::real(dirname(__FILE__).'/../icons'));
 		return $list['files'];
 	}
 	
-	public static function getAdminIconURL($filename)
+	public static function getIconURL($filename)
 	{
-		return sprintf('index.php?pf=myGmaps/icons/%s',$filename);
-	}
-	
-	public static function getMapIconsJS()
-	{
-		$root = path::real(dirname(__FILE__).'/../icons');
-		$icons = array();
+		global $core;
 		
-		$mask = '#'.$root.'/(.*)#';
-		
-		foreach (self::getMapIcons() as $icon)
-		{
-			$icon = preg_replace('#'.$root.'/(.*)#',"'index.php?pf=myGmaps/icons/$1'",$icon); 
-			array_push($icons,$icon);
-		}
-		
-		return sprintf('myGmaps.icons = [%s];',implode(',',$icons));
+		return sprintf($core->blog->url.'pf=myGmaps/icons/%s',$filename);
 	}
 	
 	public static function jsCommon($mode = 'view')
@@ -94,7 +80,7 @@ class myGmapsUtils
 			return;
 		}
 		
-		$map_data = array();
+		$map_data = $items = array();
 		$p_item = '{'.
 			'type: "%1$s",'.
 			'markers: [%2$s],'.
@@ -129,8 +115,8 @@ class myGmapsUtils
 			
 			$type = $meta['elt_type'][0];
 			$markers = array();
-			$icon = array_key_exists($meta['icon']) ? $meta['icon'][0] : '';
-			$infowindow = html::escapeHTML(preg_replace("#(\n|\r)#",'',$data->getContent(true)));
+			$icon = array_key_exists('icon',$meta) ? $meta['icon'][0] : '';
+			$infowindow = addslashes(preg_replace("#(\n|\r)#",'',$data->getContent(true)));
 			$url = '';
 			
 			if ($type !== 'kml' && $type !== 'none') {
@@ -156,12 +142,8 @@ class myGmapsUtils
 			}
 			
 			$item = sprintf($p_item,$type,implode(',',$markers),$icon,$infowindow,$url);
-			
-			array_push($map_data,sprintf('myGmaps.addItems(%s);',$item));
-		}
 		
-		if (count($map_data) > 0) {
-			//array_push($map_data,'myGmaps.autoFit();');
+			array_push($map_data,sprintf('myGmaps.addItems(%s);',$item));
 		}
 		
 		return
@@ -169,6 +151,20 @@ class myGmapsUtils
 		"$(function() {\n".
 		implode("\n",$map_data).
 		"\n});\n".
+		"</script>\n";
+	}
+	
+	public static function jsIcons()
+	{
+		foreach (self::getIcons() as $icon) {
+			array_push($icon_data,sprintf("'%s'",self::getIconURL(basename($icon))));
+		}
+		
+		return
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		sprintf("var icons = [%s];\n",implode(",\n",$icon_data)).
+		"\n//]]>\n".
 		"</script>\n";
 	}
 }

@@ -377,10 +377,10 @@ if (!$core->error->flag())
 	'<fieldset><legend>'.__('Delete icons').'</legend>'.
 	'<p>'.__('Select icons to delete by clicking on them').'</p>'.
 	'<ul>';
-	foreach (myGmapsUtils::getMapIcons() as $icon) {
+	foreach (myGmapsUtils::getIcons() as $icon) {
 		echo sprintf(
 			'<li class="ui-corner-top ui-corner-bottom" style="background-image: url(%1$s); background-repeat: no-repeat; background-position: top center;">%2$s</li>',
-			myGmapsUtils::getAdminIconURL(basename($icon)),
+			myGmapsUtils::getIconURL(basename($icon)),
 			form::checkbox(array('ids[]'),basename($icon),false)
 		);
 	}

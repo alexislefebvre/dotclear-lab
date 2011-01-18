@@ -132,8 +132,13 @@ if (!empty($_REQUEST['id']))
 		$post_selected = (boolean) $post->post_selected;
 		$post_open_comment = (boolean) $post->post_open_comment;
 		$post_open_tb = (boolean) $post->post_open_tb;
-		$post_meta = $core->meta->getMetaArray($post->post_meta);
 		
+		$meta = $core->meta->getMetaArray($post->post_meta);
+		foreach ($post_meta as $k => $v) {
+			if (array_key_exists($k,$meta)) {
+				$post_meta[$k] = $meta[$k];
+			}
+		}
 		$page_title = __('Edit map element');
 		
 		$can_edit_post = $post->isEditable();
@@ -311,6 +316,7 @@ echo
 	dcPage::jsConfirmClose('entry-form').
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_map.js').
 	myGmapsUtils::jsCommon('edit').
+	myGmapsUtils::jsIcons().
 	$next_headlink."\n".$prev_headlink.
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/style.css" />'.
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/ui.theme.css" />'.

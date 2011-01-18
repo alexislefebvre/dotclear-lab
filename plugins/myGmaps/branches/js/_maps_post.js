@@ -19,6 +19,10 @@ $(function() {
 		
 		return true;
 	});
+	$('input[name=autofit]').click(function() {
+		myGmaps.autoFit();
+		return false;
+	});
 	
 	var opts = {};
 	
