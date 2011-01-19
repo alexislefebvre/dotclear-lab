@@ -25,6 +25,7 @@ var myGmaps = {
 			fillOpacity: 0.3
 		}
 	},
+	show_details: true,
 	msg: {},
 	maps: [],
 	infowindows: [],
@@ -54,6 +55,7 @@ var myGmaps = {
 		}
 		
 		myGmaps.drawToolbar();
+		myGmaps.drawDetailsTab();
 		myGmaps.initListerner();
 	},
 	
@@ -279,7 +281,7 @@ var myGmaps = {
 	setListeners: function(item,type,infowindow) {
 		if (myGmaps.mode == 'view') {
 			if (type == 'marker' || type == 'polyline' || type == 'polygon') {
-				myGmaps.events.push(google.maps.event.addListener(item, 'click', function(event) {
+				myGmaps.events.push(new google.maps.event.addListener(item, 'click', function(event) {
 					for (var i = 0, I = myGmaps.maps.length; i < I && myGmaps.maps[i] != item.map; ++i);
 					var latlng = type != 'marker' ? event.latLng : item.getPosition();
 					myGmaps.infowindows[i].close();
@@ -478,6 +480,42 @@ var myGmaps = {
 		});
 	},
 	
+	drawDetailsTab: function() {
+		if (!myGmaps.show_details) return;
+		
+		var tab = $('<div/>').attr('id','details-tab').css({
+			'width': $(myGmaps.target).width(),
+			'padding-bottom': '10px'
+		});
+		
+		tab.append($('<div/>').attr('id','details-tab-content').css({
+			'max-height': '250px',
+			'overflow': 'auto',
+			'background-color': '#E2DFCA',
+			'border': '1px solid #999999',
+			'border-top': 'none',
+			'display': 'none'
+		}));
+		tab.append($('<div/>').attr('id','details-tab-pin').css({'height': '30px'}).
+			append($('<div/>').attr('id','details-tab-pin-img').css({
+				'height': '100%',
+				'width': '50px',
+				'margin-top': '-1px',
+				'background': '#E2DFCA url(index.php?pf=myGmaps/icon.png) no-repeat center center',
+				'border': '1px solid #999999',
+				'border-top': 'none'
+			}))
+		);
+		
+		$(myGmaps.target).after(tab);
+		
+		$('#details-tab-pin-img').click(function() {
+			$(this).parent().prev().slideToggle('fast',function() {
+				myGmaps.updDetails();
+			});
+		});
+	},
+	
 	updMakerOptions: function() {
 		var content = $('<div/>').attr('id','marker_options').addClass('infowindow');
 		var list = $('<ul/>');
@@ -673,6 +711,8 @@ var myGmaps = {
 	},
 	
 	updDetails: function() {
+		if (!myGmaps.show_details) return;
+		
 		var type = '';
 		
 		var list = $('<ul/>');
@@ -710,7 +750,7 @@ var myGmaps = {
 			);
 		}
 		
-		$('#map-details').html(list.get(0));
+		$('#details-tab-content').html(list.get(0));
 	},
 	
 	markAsSelected: function(id) {

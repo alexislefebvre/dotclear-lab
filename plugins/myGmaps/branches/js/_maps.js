@@ -5,12 +5,8 @@ $(function() {
 	$('#form-entries td input[type=checkbox]').enableShiftClick();
 	dotclear.postsActionsHelper();
 	
-	$('#map-details-area label').toggleWithLegend($('#map-details'), {
-		cookie: 'dcx_map_detail'
-	});
-	
 	// Configuration tab
-	$('#config').tabload(function() {
+	$('#config').onetabload(function() {
 		var opts = {};
 		var item = {
 			type: 'marker',
@@ -54,7 +50,6 @@ $(function() {
 			});
 		});
 	});
-	$('#config').tabload();
 	
 	// Icons tab
 	$('#icons-form li').each(function() {

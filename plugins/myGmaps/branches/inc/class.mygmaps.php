@@ -12,7 +12,7 @@ class myGmapsUtils
 	{
 		global $core;
 		
-		return sprintf($core->blog->url.'pf=myGmaps/icons/%s',$filename);
+		return sprintf('index.php?pf=myGmaps/icons/%s',$filename);
 	}
 	
 	public static function jsCommon($mode = 'view')
@@ -73,8 +73,13 @@ class myGmapsUtils
 		dcPage::jsVar('myGmaps.msg.stroke_opacity',__('Line opacity:')).
 		dcPage::jsVar('myGmaps.msg.reset',__('Reset map')).
 		dcPage::jsVar('myGmaps.msg.search',__('Search')).
-		dcPage::jsVar('myGmaps.msg.type',__('Type')).
-		dcPage::jsVar('dotclear.msg.confirm_delete_posts',__("Are you sure you want to delete selected map elements (%s)?")).
+		dcPage::jsVar('myGmaps.msg.type',__('Type'));
+		
+		if ($mode === 'config') {
+			$res .= dcPage::jsVar('dotclear.msg.confirm_delete_posts',__("Are you sure you want to delete selected map elements (%s)?"));
+		}
+		
+		$res .=
 		"\n//]]>\n".
 		"</script>\n";
 		

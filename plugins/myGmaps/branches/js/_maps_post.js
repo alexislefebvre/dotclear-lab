@@ -2,9 +2,6 @@ $(function() {
 	$('.checkboxes-helpers').each(function() {
 		dotclear.checkboxesHelpers(this);
 	});
-	$('#map-details-area label').toggleWithLegend($('#map-details'), {
-		cookie: 'dcx_map_detail'
-	});
 	$('#form-entries td input[type=checkbox]').enableShiftClick();
 	$('#form-entries').submit(function() {
 		var checked = false;

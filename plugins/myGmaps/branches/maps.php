@@ -231,7 +231,7 @@ echo
 	'<title>'.__('Google Maps').'</title>'.
 	dcPage::jsPageTabs($tab).
 	dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_maps.js').
-	myGmapsUtils::jsCommon().
+	myGmapsUtils::jsCommon('config').
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/style.css" />'.
 	'<link type="text/css" rel="stylesheet" href="'.DC_ADMIN_URL.'?pf=myGmaps/css/ui.theme.css" />'.
 	'</script>'.
@@ -350,10 +350,6 @@ if (!$core->error->flag())
 		'</label></p>'.
 		'<div class="area" id="map_canvas"></div>'.
 	'</fieldset>'.
-	'<p class="area" id="map-details-area" >'.
-		'<label for="map-details">'.__('Map details:').'</label>'.
-		'<div id="map-details"></div>'.
-	'</p>'.
 	'<p>'.
 		form::hidden('center',$core->blog->settings->myGmaps->center).
 		form::hidden('zoom',$core->blog->settings->myGmaps->zoom).

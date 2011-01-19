@@ -35,6 +35,10 @@ class myGmapsBehaviors
 	{
 		global $core;
 		
+		if (is_null($cur)) {
+			return;
+		}
+		
 		$table = '';
 		$post_id = 'NULL';
 		$p_a = '<a href="%s">%s</a>';
@@ -117,7 +121,6 @@ class myGmapsBehaviors
 				'plugin.php?p=myGmaps&go=maps_post&amp;post_id=%s',
 				$cur->post_id
 			),__('Edit map')));
-			array_push($links,sprintf($p_a,'',__('Remove map')));
 		}
 		else {
 			array_push($links,sprintf($p_a,sprintf(
@@ -134,11 +137,6 @@ class myGmapsBehaviors
 				'<p>'.implode(' - ',$links).'</p>'.
 			'</div>'.
 		'</p>';
-	}
-	
-	public static function adminPageForm($post)
-	{
-		global $core;
 	}
 }
 

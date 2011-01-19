@@ -25,9 +25,6 @@ $(function () {
 	$('#description-area label').toggleWithLegend($('#description-area').children().not('label'), {
 		cookie: 'dcx_map_description'
 	});
-	$('#map-details-area label').toggleWithLegend($('#map-details'), {
-		cookie: 'dcx_map_detail'
-	});
 	$('#notes-area label').toggleWithLegend($('#notes-area').children().not('label'), {
 		cookie: 'dcx_post_notes'
 	});

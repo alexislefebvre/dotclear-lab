@@ -362,12 +362,6 @@ if (!$core->error->flag())
 	'accesskey="s" name="save" /> '.
 	'</p>'.
 	'</form>';
-	
-	echo
-	'<p class="area" id="map-details-area" >'.
-		'<label for="map-details">'.__('Map details:').'</label>'.
-		'<div id="map-details"></div>'.
-	'</p>';
 }
 
 echo

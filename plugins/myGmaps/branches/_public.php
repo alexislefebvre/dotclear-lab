@@ -19,7 +19,7 @@ class myGmapsPublic
 {
 	public static function coreBlogGetPosts($cur)
 	{
-		$cur->extend('myGmapsUtilsRsExt');
+		$cur->extend('myGmapsRsExt');
 	}
 	
 	public static function publicFooterContent($core,$_ctx)
@@ -35,7 +35,7 @@ class myGmapsPublic
 			'<div id="'.$map_id.'" style="with:100%; height:400px;"></div>'."\n".
 			'<script type="text/javascript">'."\n".
 			"$(function(){\n".
-			"var opts = {target:'#".$map_id."'};\n".
+			'var opts = '.$_ctx->posts->getMapOptions()."\n". 
 			"myGmaps.init(opts);\n".
 			"});\n".
 			"</script>\n".
