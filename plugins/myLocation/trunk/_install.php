@@ -24,6 +24,7 @@ $core->blog->settings->myLocation->put('enable',false,'boolean','Enable myLocati
 $core->blog->settings->myLocation->put('position','afterContent','string','Position of location display',false,true);
 $core->blog->settings->myLocation->put('accuracy','city','string','Geolocalisation accuracy',false,true);
 $core->blog->settings->myLocation->put('css','','string','Custom CSS',false,true);
+$core->blog->settings->myLocation->put('mask','<a href="%1$s">%2$s</a>','string','Display mask',false,true);
 
 # --INSTALL AND UPDATE PROCEDURES--
 $s = new dbStruct($core->con,$core->prefix);

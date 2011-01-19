@@ -22,7 +22,8 @@ if (isset($_POST['save'])) {
 		$core->blog->settings->myLocation->put('position',$_POST['position']);
 		$core->blog->settings->myLocation->put('css',$_POST['css']);
 		$core->blog->settings->myLocation->put('accuracy',$_POST['accuracy']);
-		http::redirect($p_url.'&upd');
+		$core->blog->settings->myLocation->put('mask',$_POST['mask']);
+		http::redirect($p_url.'&upd=1');
 	}
 	catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -60,22 +61,27 @@ echo
 '<h2>'.$core->blog->name.' &rsaquo; '.__('myLocation').'</h2>'.
 '<form method="post" action="'.$p_url.'">'.
 '<fieldset><legend>'.__('General options').'</legend>'.
-'<p><label class="classic">'.
+'<p><label class="classic" for="enable">'.
 	form::checkbox('enable','1',$core->blog->settings->myLocation->enable).
 	__('Enable geolocation').'</label></p>'.
-'<p><label class="field">'.
+'<p><label class="field" for="position">'.
 	__('Position of location display').'&nbsp;'.
 	form::combo('position',$combo_positions,$core->blog->settings->myLocation->position).
 '</label></p>'.
-'<p><label class="field">'.
+'<p><label class="field" for="css">'.
 	__('Custom CSS').
 	form::field('css',100,255,$core->blog->settings->myLocation->css).
 '</label></p>'.
 '<p class="form-note">'.__('Leave blank to use the default plugin CSS').'</p>'.
-'<p><label class="field">'.
+'<p><label class="field" for="accuracy">'.
 	__('Geolocalisation accuracy').'&nbsp;'.
 	form::combo('accuracy',$combo_accuracy,$core->blog->settings->myLocation->accuracy).
 '</label></p>'.
+'<p><label class="field" for="mask">'.
+	__('Display mask').'&nbsp;'.
+	form::field('mask',100,255,html::escapeHTML($core->blog->settings->myLocation->mask)).
+'</label></p>'.
+'<p class="form-note">'.__('%1$s = Google Maps URL, %2$s = location text').'</p>'.
 '</fieldset>'.
 '<p>'.$core->formNonce().'<input type="submit" name="save" value="'.__('Save').'" /></p>'.
 '</form>'.
