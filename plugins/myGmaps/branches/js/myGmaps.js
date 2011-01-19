@@ -26,13 +26,18 @@ var myGmaps = {
 		}
 	},
 	msg: {},
+	maps: [],
+	infowindows: [],
 	items: [],
 	events: [],
 	
 	init: function(opts) {
 		jQuery.extend(myGmaps,opts);
-		myGmaps.map = new google.maps.Map($(myGmaps.target).get(0), myGmaps.getMapOptions());
-		myGmaps.infowindow = new google.maps.InfoWindow();
+		myGmaps.maps.push(new google.maps.Map($(myGmaps.target).get(0), myGmaps.getMapOptions()));
+		myGmaps.infowindows.push(new google.maps.InfoWindow());
+		
+		myGmaps.map = myGmaps.maps[(myGmaps.maps.length - 1)];
+		myGmaps.infowindow = myGmaps.infowindows[(myGmaps.infowindows.length - 1)];
 		
 		var modes = [
 			'view',
@@ -275,11 +280,12 @@ var myGmaps = {
 		if (myGmaps.mode == 'view') {
 			if (type == 'marker' || type == 'polyline' || type == 'polygon') {
 				myGmaps.events.push(google.maps.event.addListener(item, 'click', function(event) {
+					for (var i = 0, I = myGmaps.maps.length; i < I && myGmaps.maps[i] != item.map; ++i);
 					var latlng = type != 'marker' ? event.latLng : item.getPosition();
-					myGmaps.infowindow.close();
-					myGmaps.infowindow.setContent(infowindow);
-					myGmaps.infowindow.setPosition(latlng);
-					myGmaps.infowindow.open(myGmaps.map);
+					myGmaps.infowindows[i].close();
+					myGmaps.infowindows[i].setContent(infowindow);
+					myGmaps.infowindows[i].setPosition(latlng);
+					myGmaps.infowindows[i].open(myGmaps.maps[i]);
 				}));
 			}
 		}

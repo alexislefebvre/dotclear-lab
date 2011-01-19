@@ -31,19 +31,21 @@ class myGmapsUtils
 			'language' => $core->blog->settings->system->lang
 		);
 		
+		$root_url = $mode === 'view' ? $core->blog->getQmarkURL() : DC_ADMIN_URL.'index.php?';
+		
 		array_walk($params,create_function('&$v,$k','$v=sprintf("%s=%s",$k,$v);'));
 		
 		$param_str = count($params) > 0 ? sprintf('?%s',implode('&',$params)) : '';
 		
 		$res =
 		dcPage::jsLoad('http://maps.google.com/maps/api/js'.$param_str).
-		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js');
+		dcPage::jsLoad($root_url.'pf=myGmaps/js/myGmaps.js');
 		
 		if ($mode === 'edit') {
 			$res .=
 			dcPage::jsColorPicker().
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/ui.core.js').
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/ui.slider.js');
+			dcPage::jsLoad($root_url.'pf=myGmaps/js/ui.core.js').
+			dcPage::jsLoad($root_url.'pf=myGmaps/js/ui.slider.js');
 		}
 		
 		$res .=
