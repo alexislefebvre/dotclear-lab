@@ -450,7 +450,7 @@ var myGmaps = {
 		if (myGmaps.mode != 'edit') return;
 		
 		tb.append($('<li/>').
-			append($('<input/>').attr({name:'kml',type:'button'}).addClass('submit').val(myGmaps.msg.kml))
+			append($('<input/>').attr({name:'kml',type:'button'}).addClass('submit').val(myGmaps.msg.include_kml))
 		);
 		
 		tb.find('input[name=kml]').click(function() {
@@ -682,7 +682,20 @@ var myGmaps = {
 					item.markers[j].lat + ', ' + item.markers[j].lng
 				));
 			}
-			list.append($('<li/>').append(myGmaps.msg.type + ' - ' + item.type).append(points));
+			
+			var extend = [];
+			if (item.type == 'polyline' || item.type == 'polygon') {
+				extend.push((item.o[0].getLength()/1000).toFixed(2) + ' km'); 
+			}
+			if (item.type == 'polygon') {
+				extend.push((item.o[0].getArea()/1000000).toFixed(2) + ' km<sup>2</sup>'); 
+			}
+			
+			list.append($('<li/>').
+				append(myGmaps.msg.type + ' - ' + myGmaps.msg[item.type] + (
+					extend.length > 0 ? ' (' + extend.join(', ') + ')' : '')).
+				append(points)
+			);
 		}
 		
 		$('#map-details').html(list.get(0));

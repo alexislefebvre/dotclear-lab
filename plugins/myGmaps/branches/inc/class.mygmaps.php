@@ -19,7 +19,7 @@ class myGmapsUtils
 	{
 		global $core;
 		
-		$allowed_modes = array('view','edit');
+		$allowed_modes = array('view','edit','config');
 		
 		if (!array_key_exists($mode,array_flip($allowed_modes))) {
 			$mode = 'view';
@@ -37,7 +37,8 @@ class myGmapsUtils
 		
 		$res =
 		dcPage::jsLoad('http://maps.google.com/maps/api/js'.$param_str).
-		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js');
+		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js').
+		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_extend.js');
 		
 		if ($mode === 'edit') {
 			$res .=
@@ -57,9 +58,14 @@ class myGmapsUtils
 		dcPage::jsVar('myGmaps.msg.geocoder_error',__('Geocode was not successful for the following reason:')).
 		dcPage::jsVar('myGmaps.msg.invalid_url',__('Invalid kml URL')).
 		dcPage::jsVar('myGmaps.msg.line_options',__('Line options')).
+		dcPage::jsVar('myGmaps.msg.none',__('None')).
 		dcPage::jsVar('myGmaps.msg.no_description',__('No description')).
+		dcPage::jsVar('myGmaps.msg.marker',__('Point of interest')).
 		dcPage::jsVar('myGmaps.msg.marker_options',__('Marker options')).
-		dcPage::jsVar('myGmaps.msg.kml',__('Include KML file')).
+		dcPage::jsVar('myGmaps.msg.polyline',__('Polyline')).
+		dcPage::jsVar('myGmaps.msg.polygon',__('Polygon')).
+		dcPage::jsVar('myGmaps.msg.kml',__('Included kml file')).
+		dcPage::jsVar('myGmaps.msg.include_kml',__('Include KML file')).
 		dcPage::jsVar('myGmaps.msg.select_instructions',__('After selecting type, click on a map to add a point, click on one point to delete it and right click on one point to custom it')).
 		dcPage::jsVar('myGmaps.msg.stroke_color',__('Line color:')).
 		dcPage::jsVar('myGmaps.msg.stroke_weight',__('Line weight:')).
