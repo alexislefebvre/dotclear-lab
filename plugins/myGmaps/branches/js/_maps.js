@@ -59,7 +59,6 @@ $(function() {
 	// Icons tab
 	$('#icons-form li').each(function() {
 		var css = {
-			'background-position': 'middle center',
 			'cursor': 'pointer',
 			'height': '50px'
 		};
