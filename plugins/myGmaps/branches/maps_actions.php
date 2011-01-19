@@ -80,7 +80,7 @@ if (!empty($action) && count(entries) > 0)
 		if ($action === 'delete') {
 			foreach ($entries as $id) {
 				# --BEHAVIOR-- adminBeforePostDelete
-				$core->callBehavior('adminBeforePostDelete',$id);				
+				$core->callBehavior('adminBeforePostDelete',$id);
 				$core->blog->delPost($id);
 			}
 			$act = 4;

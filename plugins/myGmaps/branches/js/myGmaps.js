@@ -231,7 +231,7 @@ var myGmaps = {
 		var fill_opacity = '';
 		var points = [];
 		
-		if (myGmaps.items.length > 0) {
+		if (myGmaps.items.length > 0 && myGmaps.items[0].markers.length > 0) {
 			var item = myGmaps.items[0];
 			
 			type = item.type;
@@ -685,10 +685,16 @@ var myGmaps = {
 			
 			var extend = [];
 			if (item.type == 'polyline' || item.type == 'polygon') {
-				extend.push((item.o[0].getLength()/1000).toFixed(2) + ' km'); 
+				extend.push(myGmaps.convertTo(
+					google.maps.geometry.spherical.computeLength(item.o[0].getPath()),
+					'km',2
+				));
 			}
 			if (item.type == 'polygon') {
-				extend.push((item.o[0].getArea()/1000000).toFixed(2) + ' km<sup>2</sup>'); 
+				extend.push(myGmaps.convertTo(
+					google.maps.geometry.spherical.computeArea(item.o[0].getPath()),
+					'km2',2
+				));
 			}
 			
 			list.append($('<li/>').
@@ -707,6 +713,39 @@ var myGmaps = {
 		$('li#polyline').removeClass('selected');
 		$('li#polygon').removeClass('selected');
 		$('li#' + id).addClass('selected');
+	},
+	
+	convertTo: function(number,unit,fixTo) {
+		var units = {
+			km2: {
+				label: 'km<sup>2</sup>',
+				coeff: 1000000
+			},
+			m2: {
+				label: 'm<sup>2</sup>',
+				coeff: 1
+			},
+			cm2: {
+				label: 'cm<sup>2</sup>',
+				coeff: 10000
+			},
+			km: {
+				label: 'km',
+				coeff: 1000
+			},
+			m: {
+				label: 'm',
+				coeff: 1
+			},
+			cm: {
+				label: 'cm',
+				coeff: 100
+			}
+		};
+		
+		if (!units.hasOwnProperty(unit)) return;
+		
+		return (number / units[unit].coeff).toFixed(fixTo) + ' ' + units[unit].label;
 	},
 	
 	trim: function(str) {

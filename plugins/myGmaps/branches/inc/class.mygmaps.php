@@ -27,7 +27,7 @@ class myGmapsUtils
 		
 		$params = array(
 			'sensor' => 'false',
-			//'libraries' => 'geometry',
+			'libraries' => 'geometry',
 			'language' => $core->blog->settings->system->lang
 		);
 		
@@ -37,8 +37,7 @@ class myGmapsUtils
 		
 		$res =
 		dcPage::jsLoad('http://maps.google.com/maps/api/js'.$param_str).
-		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js').
-		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/_extend.js');
+		dcPage::jsLoad(DC_ADMIN_URL.'?pf=myGmaps/js/myGmaps.js');
 		
 		if ($mode === 'edit') {
 			$res .=
