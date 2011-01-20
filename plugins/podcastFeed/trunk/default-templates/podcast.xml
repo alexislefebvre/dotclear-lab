@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet title="XSL formatting" type="text/xsl" href="{{tpl:BlogURL}}feed/rss2/xslt" ?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  version="2.0">
+<channel>
+  <title>{{tpl:PodcastTitle}}</title>
+  <link>{{tpl:PodcastLink}}</link>
+  <language>{{tpl:PodcastLanguage}}</language>
+  <copyright>{{tpl:BlogCopyrightNotice encode_xml="1"}}</copyright>
+  <itunes:subtitle>{{tpl:PodcastSubTitle}}</itunes:subtitle>
+  <itunes:author>{{tpl:PodcastAuthor}}</itunes:author>
+  <description>{{tpl:PodcastDescription}}</description>
+  <tpl:PodcastIfHasItunesSummary>
+    <itunes:summary>{{tpl:PodcastItunesSummary}}</itunes:summary>
+  </tpl:PodcastIfHasItunesSummary>
+  <tpl:PodcastIfHasOwner>
+    <itunes:owner>
+      <itunes:name>{{tpl:PodcastOwnerName}}</itunes:name>
+      <itunes:email>{{tpl:PodcastOwnerEmail}}</itunes:email>
+    </itunes:owner>
+  </tpl:PodcastIfHasOwner>
+  <image>
+	<url>{{tpl:PodcastImage}}</url>
+	<title>{{tpl:PodcastTitle}}</title>
+	<link>{{tpl:PodcastLink}}</link>
+  </image>
+  <tpl:PodcastIfHasItunesImage>
+    <itunes:image href="{{tpl:PodcastItunesImage}}" />
+  </tpl:PodcastIfHasItunesImage>
+  {{tpl:PodcastItunesCategory}}
+  <itunes:explicit>{{tpl:PodcastItunesExplicit}}</itunes:explicit>
+  <pubDate>{{tpl:BlogUpdateDate rfc822="1"}}</pubDate>
+  <atom:link href="{{tpl:SysSelfURI}}" rel="self" type="application/rss+xml"/>
+  
+  <tpl:Entries category="podcast">
+  
+  <item>
+    <title>{{tpl:EntryTitle encode_xml="1"}}</title>
+    <itunes:author>{{tpl:EntryAuthorCommonName encode_xml="1"}}</itunes:author>
+    <itunes:summary>
+      <tpl:EntryIf extended="1">
+        {{tpl:EntryExcerpt absolute_urls="1" encode_html="1" remove_html="1"}}
+      </tpl:EntryIf>
+      <tpl:EntryIf extended="0">
+        {{tpl:EntryContent absolute_urls="1" encode_html="1" remove_html="1" cut_string="3999"}}
+      </tpl:EntryIf>
+	</itunes:summary>
+	<description>{{tpl:EntryExcerpt absolute_urls="1" encode_xml="1"}}
+    {{tpl:EntryContent absolute_urls="1" encode_xml="1"}}</description>
+	<tpl:Attachments>
+      <enclosure url="{{tpl:AttachmentURL}}"
+      length="{{tpl:AttachmentSize full="1"}}" type="{{tpl:AttachmentMimeType}}" />
+    </tpl:Attachments>
+	<guid isPermaLink="false">{{tpl:EntryFeedID}}</guid>
+	<pubDate>{{tpl:EntryDate rfc822="1"}}</pubDate>
+    <link>{{tpl:EntryURL}}</link>
+	<itunes:keywords>{{tpl:ItunesKeywords}}</itunes:keywords>
+  </item>
+  </tpl:Entries>
+  
+</channel>
+</rss>
