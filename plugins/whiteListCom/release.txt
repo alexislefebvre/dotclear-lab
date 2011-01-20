@@ -1,3 +1,9 @@
+0.5 20110119
+ * Fixed calls to blog object
+ * Fixed (hope so) postgreSQL compatibility
+ * Added messages on admin
+ * New year copyright
+
 0.4 20100605
  * Switched to DC 2.2
 

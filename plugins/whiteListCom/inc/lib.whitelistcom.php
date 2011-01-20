@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of whiteListCom, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -13,10 +13,12 @@
 if (!defined('DC_RC_PATH')){return;}
 
 # Filter for unmoderated authors
+# This filter is used only if comments are moderates
 class whiteListComModeratedFilter extends dcSpamFilter
 {
 	public $name = 'Unmoderated authors';
 	public $has_gui = true;
+	
 	
 	protected function setInfo()
 	{
@@ -25,7 +27,11 @@ class whiteListComModeratedFilter extends dcSpamFilter
 	
 	public function isSpam($type,$author,$email,$site,$ip,$content,$post_id,&$status)
 	{
-		if ($type != 'comment') return null;
+		if ($type != 'comment' || $this->core->blog === null 
+		 || $this->core->blog->settings->system->comments_pub) 
+		{
+			return null;
+		}
 		
 		try
 		{
@@ -66,7 +72,17 @@ class whiteListComModeratedFilter extends dcSpamFilter
 			$this->core->error->add($e->getMessage());
 		}
 		
-		$res =
+		$res = '';
+		
+		if ($this->core->blog->settings->system->comments_pub) 
+		{
+			$res .= 
+			'<p class="message">'.
+			__('This filter is used only if comments are moderates').
+			'</p>';
+		}
+		
+		$res .=
 		'<form action="'.html::escapeURL($url).'" method="post">'.
 		'<p>'.__('Check the users who can make comments without being moderated.').'</p>'.
 		'<div class="two-cols">'.
@@ -343,7 +359,7 @@ class whiteListCom
 			'FROM '.$this->core->prefix.'comment C '.
 			'LEFT JOIN '.$this->core->prefix.'post P ON C.post_id=P.post_id '.
 			"WHERE blog_id='".$this->blog."' AND comment_trackback=0 ".
-			'GROUP BY comment_email '
+			'GROUP BY comment_email, comment_author ' // Added author to fix postgreSql
 		);
 		while($rs->fetch())
 		{
@@ -372,6 +388,12 @@ class whiteListComBehaviors
 	public static function switchStatus($cur,$id)
 	{
 		global $core;
+		
+		if ($core->blog === null 
+		 || $core->blog->settings->system->comments_pub)
+		{
+			return null;
+		}
 		
 		if ($cur->comment_spam_filter == 'whiteListComModeratedFilter'
 		 && $cur->comment_spam_status == 'unmoderated')
