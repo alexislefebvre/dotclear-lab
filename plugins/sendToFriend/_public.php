@@ -47,7 +47,7 @@ class tplEnvoyer extends dcUrlHandlers
 					$_ctx->sdf = new sdf();					
 					$_ctx->sdf->id = (int)$args;
 					$_ctx->sdf->title = $rs->post_title;
-					$_ctx->sdf->url = $core->blog->url.'post/'.$rs->post_url;
+					$_ctx->sdf->url = $rs->getURL();
 					$_ctx->sdf->abstract = tplEnvoyer::getAbstract($rs->post_excerpt_xhtml,$rs->post_content_xhtml);
 					if(isset($_POST['submit'])){
 						try{					
