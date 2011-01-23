@@ -27,6 +27,15 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
+if (!$core->auth->check('admin',$core->blog->id))
+{
+	echo('<html><head><title>Error</title></head>'.
+		'<body><p class="error">'.
+		__('Invalid permission.').
+		'</p></body></html>');
+	return;
+}
+
 $settings =& $core->blog->settings;
 
 try

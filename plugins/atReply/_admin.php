@@ -31,6 +31,7 @@ l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
 $core->addBehavior('adminAfterCommentDesc',
 	array('AtReplyAdmin','adminAfterCommentDesc'));
+
 $core->addBehavior('adminBeforeCommentCreate',
 	array('AtReplyAdmin','adminBeforeCommentCreate'));
 
