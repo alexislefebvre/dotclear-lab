@@ -49,7 +49,7 @@
 
   <div id="content-info">
 
-    <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a> &rsaquo; <a href="{{tpl:MessageThreadURL}}">{{tpl:MessageEntryTitle}}</a>
+    <h2><a href="{{tpl:MessageThreadURL}}">{{tpl:MessageEntryTitle}}</a>
     </h2>
     
   </div>
@@ -59,12 +59,12 @@
 </tpl:SysIfFormError>
 
 <form action="{{tpl:SysSelfURI}}" method="post" id="comment-form">
-<tpl:IfMessagePreview>
 <div id="pr">
 <div class="register-preview">{{tpl:MessageEditContent}}</div>
-<p class="buttons"><input type="submit" class="submit" value="{{tpl:lang finish}}" /></p>
+<p class="buttons"><input type="submit" class="submit" value="{{tpl:lang save}}" />
+ - <a href="{{tpl:ModerationDeleteMessage}}" class="button" title="{{tpl:lang delete the message}}">{{tpl:lang delete}}</a>
+ </p>
 </div>
-</tpl:IfMessagePreview>
 
 <h3>{{tpl:lang Edit a message}}</h3>
 <fieldset>
@@ -83,7 +83,6 @@
 
 <fieldset>
 <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
-<tpl:IfMessagePreview><input type="submit" class="submit" value="{{tpl:lang finish}}" /></tpl:IfMessagePreview></p>
 </fieldset>
 
 </form>

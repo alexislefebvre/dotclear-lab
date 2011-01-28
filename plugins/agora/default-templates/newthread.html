@@ -48,7 +48,13 @@
 
   <div id="content-info">
 
-   <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a> &rsaquo;<tpl:IfThreadPreview><tpl:Categories><tpl:placeComboSelected> {{tpl:CategoryTitle encode_html="1"}} </tpl:placeComboSelected></tpl:Categories></tpl:IfThreadPreview></h2>
+   <tpl:IfThreadPreview>
+    <tpl:Categories>
+     <tpl:placeComboSelected>
+      <h2>{{tpl:CategoryTitle encode_html="1"}}</h2>
+     </tpl:placeComboSelected>
+    </tpl:Categories>
+  </tpl:IfThreadPreview>
     
   </div>
 
@@ -60,10 +66,9 @@
     <form action="{{tpl:SysSelfURI}}#pr" method="post" id="comment-form">
       <tpl:IfThreadPreview>
         <div id="pr">
-          <h3>{{tpl:lang Your new thread}}</h3>
 	<h2 class="post-title">{{tpl:ThreadPreviewTitle}}</h2>
             <div class="thread-preview">{{tpl:ThreadPreviewContent}}</div>
-          <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
+          <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang create}}" /></p>
         </div>
       </tpl:IfThreadPreview>
       
@@ -100,8 +105,6 @@
         <textarea name="t_content" id="t_content" cols="35"
         rows="7">{{tpl:ThreadPreviewContent raw="1" encode_html="1"}}</textarea>
         </p>
-        <p class="form-help">{{tpl:lang HTML code is displayed as text and web addresses are
-        automatically converted.}}</p>
         
         <!-- # --BEHAVIOR-- publicThreadFormAfterContent -->
         {{tpl:SysBehavior behavior="publicThreadFormAfterContent"}}
@@ -109,7 +112,7 @@
       
       <fieldset>
         <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
-        <tpl:IfThreadPreview><input type="submit" class="submit" value="{{tpl:lang send}}" /></tpl:IfThreadPreview></p>
+        <tpl:IfThreadPreview><input type="submit" class="submit" value="{{tpl:lang create}}" /></tpl:IfThreadPreview></p>
       </fieldset>
     </form>
 

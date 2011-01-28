@@ -19,6 +19,12 @@ if (version_compare($core->getVersion('agora'),$version,'>=')){
 	return;
 }
 
+if (version_compare(phpversion(),'5.3','<')) {
+	$core->error->add(sprintf(__('PHP version is %s (5.3 or earlier needed).'),phpversion()));
+	$core->plugins->deactivateModule('agora');
+	return false;
+}
+
 # --INSTALL AND UPDATE PROCEDURES--
 $s = new dbStruct($core->con,$core->prefix);
 

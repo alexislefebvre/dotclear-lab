@@ -46,29 +46,20 @@
 <div id="main">
   <div id="content">
 
-  <div id="content-info">
-
-    <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a><tpl:Categories><tpl:ThreadComboSelected> &rsaquo;  {{tpl:CategoryTitle encode_html="1"}} </tpl:ThreadComboSelected></tpl:Categories>
-     &rsaquo;  <a href="{{tpl:EntryURL}}">{{tpl:EntryTitle}}</a>
-    </h2>
-    
-  </div>
-
   <tpl:SysIfFormError>
 <p class="error">{{tpl:SysFormError}}</p>
 </tpl:SysIfFormError>
 
 <form action="{{tpl:SysSelfURI}}" method="post" id="comment-form">
-<tpl:IfEditPreview>
 <div id="pr">
-<h3>{{tpl:lang Edit the post}}</h3>
 <h2 class="register-preview">{{tpl:PostEditTitle}}</h2>
 <p class="register-preview">{{tpl:PostEditContent}}</p>
-<p class="buttons"><input type="submit" class="submit" value="{{tpl:lang finish}}" /></p>
+<p class="buttons"><input type="submit" class="submit" value="{{tpl:lang save}}" />
+ - <a href="{{tpl:ModerationDeleteThread}}" class="button" title="{{tpl:lang delete the thread}}">{{tpl:lang delete}}</a>
+</p>
 </div>
-</tpl:IfEditPreview>
 
-<h3>{{tpl:lang Edit a post}}</h3>
+<h3>{{tpl:lang Edit the thread}}</h3>
 <fieldset>
 
 <!-- # --BEHAVIOR-- publicEditFormBefore -->
@@ -80,29 +71,29 @@
 	value="{{tpl:PostEditTitle encode_html="1"}}" />
 </p>
 
-					<tpl:Categories>
-						<tpl:CategoriesHeader>
-						        <p class="field">
-							<label for="ed_cat">{{tpl:lang Category}}&nbsp;:</label>
-							<select name="ed_cat" id="ed_cat">
-						<option value="">
-							&nbsp;
-						</option>
-						</tpl:CategoriesHeader>
-						<option value="{{tpl:placeID}}" <tpl:placeComboSelected> selected=selected  </tpl:placeComboSelected>>
-							{{tpl:placeSpacer}}
-							&bull; {{tpl:CategoryTitle encode_html="1"}}
-						</option>
-						<tpl:CategoriesFooter>
-							</select>
-							</p>
-						</tpl:CategoriesFooter>
-					</tpl:Categories>
+<tpl:Categories>
+	<tpl:CategoriesHeader>
+	        <p class="field">
+		<label for="ed_cat">{{tpl:lang Category}}&nbsp;:</label>
+		<select name="ed_cat" id="ed_cat">
+	<option value="">
+		&nbsp;
+	</option>
+	</tpl:CategoriesHeader>
+	<option value="{{tpl:placeID}}" <tpl:placeComboSelected> selected=selected  </tpl:placeComboSelected>>
+		{{tpl:placeSpacer}}
+		&bull; {{tpl:CategoryTitle encode_html="1"}}
+	</option>
+	<tpl:CategoriesFooter>
+		</select>
+		</p>
+	</tpl:CategoriesFooter>
+</tpl:Categories>
 
   
 <p class="field"><label for="ed_content">{{tpl:lang Message}}&nbsp;:</label>
 	<textarea name="ed_content" id="ed_content" cols="35"
-	rows="7">{{tpl:PostEditContent raw="1" encode_html="1"}}</textarea>
+	rows="7">{{tpl:PostEditContent raw="1"}}</textarea>
 </p>
 
 <!-- # --BEHAVIOR-- publicEditFormAfter -->
@@ -111,7 +102,6 @@
 
 <fieldset>
 <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
-<tpl:IfRegisterPreview><input type="submit" class="submit" value="{{tpl:lang finish}}" /></tpl:IfRegisterPreview></p>
 </fieldset>
 
 </form>

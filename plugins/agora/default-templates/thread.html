@@ -29,7 +29,6 @@
   <link rel="section" href="{{tpl:placeURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
   </tpl:Categories>
   
-
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:AgoraFeedURL type="atom"}}" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
   
@@ -57,8 +56,7 @@
     </tpl:EntryIf>
      - <a href="{{tpl:EntryURL}}">{{tpl:lang Permalink}}</a> 
 <tpl:userIsModo>
-- <a href="{{tpl:ModerationEditThread}}">{{tpl:lang edit}}</a>
-- <a href="{{tpl:ModerationDeleteThread}}">{{tpl:lang delete}}</a>
+- [<a href="{{tpl:ModerationEditThread}}">{{tpl:lang edit}}</a>]
 </tpl:userIsModo>
       </p>
     <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
@@ -96,29 +94,30 @@
     </tpl:AttachmentsFooter>
   </tpl:Attachments>
  
+<tpl:SysIfAgoraMessage>
+<p class="message">{{tpl:SysAgoraMessage}}</p>
+</tpl:SysIfAgoraMessage>
 
-  <tpl:EntryTags type="nbmessages">
+<tpl:EntryIf comments_active="0"><strong>{{tpl:lang Thread closed}}</strong></tpl:EntryIf>
+
+<tpl:Messages sortby="id?desc">
+    <tpl:MessagesHeader>
       <div id="comments">
     <h3>{{tpl:lang Messages}}</h3>
-
-<tpl:Messages>
-
-    <tpl:MessagesHeader>
       <dl>
     </tpl:MessagesHeader>
 
-      <dt id="m{{tpl:MessageID}}" class="{{tpl:MessageIfOdd}} {{tpl:MessageIfFirst}}"><a
+      <dt id="m{{tpl:MessageID}}" class="{{tpl:MessageIfOdd}} {{tpl:MessageIfFirst}} {{tpl:MessageIfMe}}"><a
       href="#m{{tpl:MessageID}}" class="comment-number">{{tpl:MessageOrderNumber}}.</a>
-      {{tpl:lang On}} {{tpl:MessageDate}}, {{tpl:MessageTime}}
+      {{tpl:lang On}} {{tpl:MessageCreaDate}}
       {{tpl:lang by}} <a href="{{tpl:MessageProfileUserID}}">{{tpl:MessageAuthorCommonName}}</a>
       <tpl:userIsModo>
-      - <a href="{{tpl:ModerationEditMessage}}"> {{tpl:lang edit}}</a>
-      - <a href="{{tpl:ModerationDeleteMessage}}"> {{tpl:lang delete}}</a>
+      - [<a href="{{tpl:ModerationEditMessage}}">{{tpl:lang edit}}</a>]
       </tpl:userIsModo>
 
 </dt>
       
-      <dd class="{{tpl:MessageIfOdd}} {{tpl:MessageIfFirst}}">
+      <dd class="{{tpl:MessageIfOdd}} {{tpl:MessageIfFirst}} {{tpl:MessageIfMe}}">
       <!-- # --BEHAVIOR-- publicMessageBeforeContent -->
       {{tpl:SysBehavior behavior="publicMessageBeforeContent"}}
       
@@ -128,23 +127,16 @@
       {{tpl:SysBehavior behavior="publicMessageAfterContent"}}
       </dd>
 
-
-
-
         <tpl:MessagesFooter>
       </dl>
-
+      </div>     <!--#comments -->
     </tpl:MessagesFooter>
 
   </tpl:Messages>
-      </div>     <!--#comments -->
 
-  </tpl:EntryTags>
-
-      <tpl:SysIfThreadUpdated>
-      <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>
-    </tpl:SysIfThreadUpdated>
-  
+<tpl:SysIfThreadUpdated>
+ <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>
+</tpl:SysIfThreadUpdated>
 
 <tpl:EntryIf comments_active="1">
     
@@ -175,8 +167,6 @@
         <textarea name="p_content" id="p_content" cols="35"
         rows="7">{{tpl:MessagePreviewContent raw="1" encode_html="1"}}</textarea>
         </p>
-        <p class="form-help">{{tpl:lang HTML code is displayed as text and web addresses are
-        automatically converted.}}</p>
         
         <!-- # --BEHAVIOR-- publicAnswerFormAfterContent -->
         {{tpl:SysBehavior behavior="publicAnswerFormAfterContent"}}
@@ -193,7 +183,6 @@
   title="{{tpl:lang This thread's messages Atom feed}}">{{tpl:lang This thread's messages feed}}</a></p>
 
   </tpl:EntryIf>
-  <tpl:EntryIf comments_active="0">{{tpl:lang Thread closed}}</tpl:EntryIf>
   </div>
 
 </div> <!-- End #main -->

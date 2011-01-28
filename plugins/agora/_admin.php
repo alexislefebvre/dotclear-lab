@@ -54,6 +54,9 @@ $core->blog->agora = new agora($core,false);
 $core->auth->setPermissionType('member',__('is an agora member'));
 $core->auth->setPermissionType('moderator',__('can moderate the agora'));
 
+# Admin behaviors
+$core->addBehavior('adminPostsActions',array('agoraBehaviors','adminPostsActions'));
+
 # Rest methods
 $core->rest->addFunction('getMessageById',array('agoraRestMethods','getMessageById'));
 

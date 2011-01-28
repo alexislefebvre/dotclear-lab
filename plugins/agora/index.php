@@ -135,6 +135,8 @@ class adminThreadList extends adminGenericList
 		$res = '<tr class="line'.($this->rs->post_status != 1 ? ' offline' : '').'"'.
 		' id="p'.$this->rs->post_id.'">';
 		
+		$messages_count = (integer) $this->core->meta->getMetaRecordset($this->rs->post_meta,'thread_nbmessages')->meta_id - 1 ;
+		
 		$res .=
 		'<td class="nowrap">'.
 		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
@@ -143,7 +145,7 @@ class adminThreadList extends adminGenericList
 		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt).'</td>'.
 		'<td class="nowrap">'.$cat_title.'</td>'.
 		'<td class="nowrap">'.$this->rs->user_id.'</td>'.
-		'<td class="nowrap">'.$this->rs->nb_comment.'</td>'.
+		'<td class="nowrap">'.$messages_count.'</td>'.
 		'<td class="nowrap status">'.$img_status.' '.$selected.' '.$protected.' '.$attach.'</td>'.
 		'</tr>';
 		
@@ -272,6 +274,13 @@ if ($core->auth->check('admin',$core->blog->id))
 if ($core->auth->check('delete,contentadmin',$core->blog->id))
 {
 	$combo_action[__('Delete')] = array(__('Delete') => 'delete');
+}
+
+if ($core->auth->check('contentadmin',$core->blog->id))
+{
+	$combo_action[__('Reset')] = array(
+		__('Reset messages count') => 'messagescount'
+	);
 }
 
 /* Get posts

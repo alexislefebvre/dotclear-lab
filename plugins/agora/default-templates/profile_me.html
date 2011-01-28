@@ -40,7 +40,7 @@
 
   <div id="content-info">
 
-  <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a> &rsaquo; {{tpl:lang Profile}} &rsaquo; {{tpl:ProfileUserID}}</h2>
+  <h2>{{tpl:ProfileUserID}}</h2>
     
   </div>
 
@@ -48,6 +48,8 @@
 <p class="error">{{tpl:SysFormError}}</p>
 </tpl:SysIfFormError>
 
+<!-- # --BEHAVIOR-- publicProfileContentBefore -->
+{{tpl:SysBehavior behavior="publicProfileContentBefore"}}
 
 <form action="{{tpl:profileURL}}/{{tpl:ProfileUserID}}" method="post" id="comment-form">
 
@@ -55,12 +57,12 @@
 <fieldset>
 
 <!-- # --BEHAVIOR-- publicLoginFormBefore -->
-{{tpl:SysBehavior behavior="publicLoginFormBefore"}}
+{{tpl:SysBehavior behavior="publicProfileFormBefore"}}
 
-<p class="field"><label for="li_pseudo">{{tpl:lang Name or nickname}}&nbsp;:</label>
+<!--p class="field"><label for="li_pseudo">{{tpl:lang Name or nickname}}&nbsp;:</label>
 	<input name="li_pseudo" id="li_pseudo" type="text" size="30" maxlength="255"
 	value="{{tpl:ProfileUserDisplayName}}" />
-</p>
+</p-->
 
 <p class="field"><label for="li_email">{{tpl:lang Email address}}&nbsp;:</label>
 	<input name="li_email" id="li_email" type="text" size="30" maxlength="255"
@@ -90,8 +92,8 @@
 {{tpl:ProfileUserUpdDate}}
 </p>
 
-<!-- # --BEHAVIOR-- publicLoginFormAfter -->
-{{tpl:SysBehavior behavior="publicLoginFormAfter"}}
+<!-- # --BEHAVIOR-- publicProfileFormAfter -->
+{{tpl:SysBehavior behavior="publicProfileFormAfter"}}
 </fieldset>
 
 <fieldset>
@@ -101,38 +103,8 @@
 
 </form>
 
-<tpl:Entries type="thread" no_content="1" lastn="10">
-	<tpl:EntriesHeader>
-		<h2>{{tpl:lang Last threads}}</h2>
-		<ul>
-	</tpl:EntriesHeader>
-
-	<li id="p{{tpl:EntryID}}" class="thread {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}">
-	<a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a>
-	<em>{{tpl:lang on}} {{tpl:EntryCreaDate}}
-	<tpl:EntryIf has_category="1">(<a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a>)</tpl:EntryIf>
-	</em></li>
-
-	<tpl:EntriesFooter>
-		</ul>
-	</tpl:EntriesFooter>
-</tpl:Entries>
-
-<tpl:Messages no_content="1" lastn="10" order="desc" sortby="post_id">
-	<tpl:MessagesHeader>
-		<h2>{{tpl:lang Last messages}}</h2>
-		<ul>
-	</tpl:MessagesHeader>
-
-	<li id="p{{tpl:MessageID}}" class="message">
-	<a href="{{tpl:MessageThreadURL}}#m{{tpl:MessageID}}">{{tpl:MessageEntryTitle}}</a>
-	<em>{{tpl:lang on}} {{tpl:MessageDate}}, {{tpl:MessageTime}}
-	</em></li>
-
-	<tpl:MessagesFooter>
-		</ul>
-	</tpl:MessagesFooter>
-</tpl:Messages>
+<!-- # --BEHAVIOR-- publicProfileContentAfter -->
+{{tpl:SysBehavior behavior="publicProfileContentAfter"}}
 
 </div>
 
@@ -154,4 +126,3 @@
 </div> <!-- End #page -->
 </body>
 </html>
-

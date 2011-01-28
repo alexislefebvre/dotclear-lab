@@ -1,0 +1,9 @@
+Behaviors page login.html : 
+
+publicLoginFormAfter & publicLoginFormBefore
+1°) Register : Enregistrer un nouveau compte : option admin : urlHandler défini O/N : côté public afficher un texte et un lien vers la page (url_blog/register)
+
+2°) Recover : Récupérer un nouveau mot de passe via la sauce classique : demande du user & email, génération d'une clé de contrôle envoyé par mail, lien à cliquer pour réinitialiser le mot de passe. Option admin & configuration dépendante : $core->auth->allowPassChange() : afficher un texte "J'ai oublié mon mot de passe"
+
+
+TODO

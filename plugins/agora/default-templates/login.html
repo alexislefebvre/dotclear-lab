@@ -24,7 +24,6 @@
   <meta name="dc.format" content="text/html" />
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
-  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
   
   {{tpl:include src="_head.html"}}
 
@@ -38,12 +37,6 @@
 
 <div id="main">
   <div id="content">
-
-  <div id="content-info">
-
-  <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a> &rsaquo; {{tpl:lang Login}}</h2>
-    
-  </div>
 
 <tpl:SysIfFormError>
 <p class="error">{{tpl:SysFormError}}</p>
@@ -72,7 +65,7 @@
 </fieldset>
 
 <fieldset>
-<p class="buttons"><input type="submit" class="submit" name="li_login_go" value="{{tpl:lang send}}" /></p>
+<p class="buttons"><input type="submit" class="submit" name="li_login_go" value="{{tpl:lang login}}" /></p>
 </fieldset>
 
 </form>

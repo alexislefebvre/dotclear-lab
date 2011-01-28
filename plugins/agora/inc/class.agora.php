@@ -35,7 +35,7 @@ class agora
 		{
 			$this->core->auth = new dcPublicAuth($core);
 		}
-		$this->core->log = new dcLog($core);
+		//$this->core->log = new dcLog($core);
 	}
 	
 	public function getUser($id)
@@ -45,14 +45,17 @@ class agora
 		return $this->getUsers($params);
 	}
 	
-	public function getUsers($params=array(),$count_only=false)
+	public function getUsers($params=array(),$count_only=false,$perm='member')
 	{
+		$perm = $this->con->escape('%|'.strtolower($perm).'|%');
 		if ($count_only)
 		{
 			$strReq =
 			'SELECT count(U.user_id) '.
 			'FROM '.$this->prefix.'user U '.
-			'WHERE NULL IS NULL ';
+				'LEFT JOIN '.$this->prefix."permissions PE ON '".$this->con->escape($this->core->blog->id)."' = PE.blog_id ".
+			"WHERE PE.user_id = U.user_id ".
+			"AND (permissions LIKE '".$perm."' OR permissions LIKE '%|admin|%')";
 		}
 		else
 		{
@@ -64,7 +67,9 @@ class agora
 			'count(P.post_id) AS nb_post '.
 			'FROM '.$this->prefix.'user U '.
 				'LEFT JOIN '.$this->prefix.'post P ON U.user_id = P.user_id '.
-			'WHERE NULL IS NULL ';
+				'JOIN '.$this->prefix."permissions PE ON '".$this->con->escape($this->core->blog->id)."' = PE.blog_id ".
+			"WHERE PE.user_id = U.user_id ".
+			"AND (permissions LIKE '".$perm."' OR permissions LIKE '%|admin|%')";
 		}
 		
 		if (!empty($params['q'])) {
@@ -84,7 +89,8 @@ class agora
 			$strReq .= 'GROUP BY U.user_id,user_super,user_status,user_pwd,user_name,'.
 			'user_firstname,user_displayname,user_email,user_url,'.
 			'user_desc, user_lang,user_tz,user_post_status,user_options,'.
-			'user_creadt, user_upddt ';
+			'user_creadt, user_upddt, '.
+			'permissions ';
 			
 			if (!empty($params['order']) && !$count_only) {
 				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
@@ -96,7 +102,7 @@ class agora
 		if (!$count_only && !empty($params['limit'])) {
 			$strReq .= $this->con->limit($params['limit']);
 		}
-		
+		//print_r($strReq);exit;// end trace
 		$rs = $this->con->select($strReq);
 		$rs->user_creadt = strtotime($rs->user_creadt);
 		$rs->user_upddt = strtotime($rs->user_upddt);
@@ -162,27 +168,34 @@ class agora
 			throw new Exception(__('Cannot login. Empty password.'));
 		}
 		
-		if (!$this->core->auth->checkPublicUser($login,$passwd,$key))
+		if ($this->core->auth->checkPublicUser($login,$passwd,$key) === false)
 		{
 			throw new Exception(__('Cannot login. Check.'));
 		}
+		//elseif (!$this->core->auth->check('member',$this->core->blog->id))
+		//elseif (!$this->getUser($login)->isEmpty())
+		// Weird ... need to explore why auth->check doesn't work.
 		elseif ($this->isMember($login) === false)
 		{
 			throw new Exception(__('User is not a member of forum'));
 		}
 		else
 		{
-			$this->core->session->start();
+			//$this->core->session->start();
+			//$this->session = new sessionDB($this->con,$this->prefix.'session',DC_SESSION_NAME,'',null,DC_ADMIN_SSL);
+			if (!session_id()) {
+				$this->core->session->start();
+			}
 			$_SESSION['sess_user_id'] = $login;
 			$_SESSION['sess_browser_uid'] = http::browserUID(DC_MASTER_KEY);
 			$_SESSION['sess_blog_id'] = $this->core->blog->id;
 			$_SESSION['sess_user_lastseen'] = $this->getLastVisitUser($login);
-			$_SESSION['sess_forum'] = 1;
+			$_SESSION['sess_agora'] = 1;
 			if (isset($_POST['li_remember'])) {
 				$cookie_forum =
 				http::browserUID(DC_MASTER_KEY.$login.crypt::hmac(DC_MASTER_KEY,$passwd)).
 				bin2hex(pack('a32',$login));
-				setcookie('dc_forum_'.$this->core->blog->id,$cookie_forum,strtotime('+15 days'));
+				setcookie('dc_agora_'.$this->core->blog->id,$cookie_forum,strtotime('+15 days'));
 			}
 			
 			// later, we may set the cookie for comments...
@@ -205,7 +218,7 @@ class agora
 		$url_login = $this->core->blog->url.$this->core->url->getBase('login');
 		$sub = __('Account confirmation request on Agora');
 		$msg = 
-		sprintf(__('Welcome to the forum of %s'),$this->core->blog->name)."\n".
+		sprintf(__('Welcome to the agora of %s'),$this->core->blog->name)."\n".
 		__('To activate your account and verify your e-mail address, please click on the following link:').
 		"\n\n".
 		$link.'key='.$key.
@@ -227,15 +240,25 @@ class agora
 		$this->sendEmail($mail,$sub,$msg);
 	}
 
-	public function sendRecoveryEmail($mail,$key)
+	public function sendRecoveryEmail($mail,$user_id,$key)
 	{
-		
+		$sub =__('Password reset');
+		$recover_url = $this->core->blog->url.$this->core->url->getBase('recover').'/';
+		$msg =
+		__('Someone has requested to reset the password for the following agora and username.')."\n\n".
+		$this->core->blog->url.$this->core->url->getBase('agora')."\n".__('Username:').' '.$user_id."\n\n".
+		__('To reset your password visit the following address, otherwise just ignore this email and nothing will happen.')."\n".
+		$recover_url.$key;
 		$this->sendEmail($mail,$sub,$msg);
 	}
 	
 	public function sendNewPasswordEmail($mail,$user_id,$pwd)
 	{
-		
+		$sub = __('Your new password');
+		$msg =
+		__('Username:').' '.$user_id."\n".
+		__('Password:').' '.$pwd."\n\n";
+
 		$this->sendEmail($mail,$sub,$msg);
 	}
 	
@@ -254,7 +277,7 @@ class agora
 		
 		$sub = '['.$this->core->blog->name.'] '.$sub;
 		$sub = mail::B64Header($sub);
-		echo $msg; // trace
+		//echo $msg; // trace
 		mail::sendMail($dest,$sub,$msg,$headers);
 	}
 
@@ -324,25 +347,7 @@ class agora
 
 	public function triggerThread($id)
 	{
-		/*$strReq = 'SELECT COUNT(post_id) '.
-				'FROM '.$this->prefix.'post '.
-				'WHERE thread_id = '.(integer) $id.' '.
-				'AND post_status = 1 ';
-		
-		$rs = $this->con->select($strReq);*/
-		
 		$cur = $this->con->openCursor($this->prefix.'post');
-		
-		/*if ($rs->isEmpty()) {
-			return;
-		}
-		*/
-		//$cur->nb_comment = (integer) $rs->f(0);
-		//$cur->post_upddt = date('Y-m-d H:i:s');
-		/*$cur->post_tz = $this->core->auth->getInfo('user_tz');
-		$offset = dt::getTimeOffset($cur->post_tz);
-		$now = time() + $offset;
-		$cur->post_dt = date('Y-m-d H:i:00',$now);*/
 		$offset = dt::getTimeOffset($this->core->blog->settings->system->blog_timezone);
 		$cur->post_dt = date('Y-m-d H:i:s',time() + $offset);
 		$cur->update('WHERE post_id = '.(integer) $id);
@@ -387,21 +392,27 @@ class agora
 
 	public function isMember($user_id)
 	{
-		return $this->hasUserPerm($user_id,'member');
+		return $this->check($user_id,'member');
 	}
 	
 	public function isModerator($user_id)
 	{
-		return $this->hasUserPerm($user_id,'moderator');
+		return $this->check($user_id,'moderator');
 	}
 
-	public function hasUserPerm($user_id,$perm)
+	public function check($user_id,$perm)
 	{
+		if ($this->core->auth->isSuperAdmin()) {
+			return true;
+		}
 		$res = $this->core->getUserPermissions($user_id);
 		$blog_id = $this->core->blog->id;
 		
 		if (!empty($res) && is_array($res[$blog_id]['p']))
 		{
+			if (array_key_exists('admin',$res[$blog_id]['p'])) {
+				return true;
+			}
 			if (array_key_exists($perm,$res[$blog_id]['p'])) {
 				return true;
 			}
@@ -430,7 +441,7 @@ class agora
 		}
 		
 		$post_id = $rs->post_id;
-		$core->meta->delPostMeta($post_id,'nbmessages');
+		$core->meta->delPostMeta($post_id,'thread_nbmessages');
 		
 		$strReq = 'SELECT COUNT(post_id) '.
 				'FROM '.$this->prefix.'message '.
@@ -443,18 +454,34 @@ class agora
 		
 		$rs = $this->con->select($strReq);
 		
-		//$cur = $this->con->openCursor($this->prefix.'post');
-		
 		if ($rs->isEmpty()) {
 			return;
 		}
 		else {
 			//$cur->nb_comment = (integer) $rs->f(0);
-			$core->meta->setPostMeta($post_id,'nbmessages',$rs->f(0) );
+			$core->meta->setPostMeta($post_id,'thread_nbmessages',$rs->f(0) + 1);
 		}
+	}
+	
+	public function countMessages($post_id)
+	{
+		global $core;
 		
-		//$cur->update('WHERE post_id = '.(integer) $post_id);
+		$core->meta->delPostMeta($post_id,'thread_nbmessages');
 		
+		$strReq = 'SELECT COUNT(post_id) '.
+				'FROM '.$this->prefix.'message '.
+				'WHERE post_id = '.(integer) $post_id.' '.
+				'AND message_status = 1 ';
+		
+		$rs = $this->con->select($strReq);
+		
+		if ($rs->isEmpty()) {
+			$core->meta->setPostMeta($post_id,'thread_nbmessages',1);
+		}
+		else {
+			$core->meta->setPostMeta($post_id,'thread_nbmessages',$rs->f(0) + 1);
+		}
 	}
 	
 	public function getMessages($params=array(),$count_only=false)
@@ -480,7 +507,7 @@ class agora
 			'SELECT message_id,M.post_id, M.user_id, message_dt, '.
 			'message_tz, message_creadt, message_upddt, message_format, '.
 			$content_req.' message_status, '.
-			'P.post_title, P.post_url, P.post_type, P.post_dt, './/P.user_id, '.
+			'P.post_title, P.post_url, P.post_type, P.post_dt, P.user_id AS post_user_id, '.
 			//'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
 			//'U.user_url, '.
 			'V.user_name, V.user_firstname, V.user_displayname, V.user_email, '.

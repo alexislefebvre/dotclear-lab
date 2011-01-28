@@ -47,24 +47,24 @@
   <div id="content">
 
   <div id="content-info">
+<tpl:SysIf current_mode="agora">
 	{{tpl:agoraAnnounce}}
+</tpl:SysIf>
   </div>
 
-<tpl:Entries type="thread" no_content="1" sortby="selected?desc,date?desc">
+<tpl:Entries type="thread" sortby="selected?desc,date?desc" no_content="1">
 
-  <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}}">
-    <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-    <p class="post-info"> 
-{{tpl:lang created}} {{tpl:lang by}} <a href="{{tpl:ThreadProfileUserID}}">{{tpl:EntryAuthorCommonName}}</a> {{tpl:lang on}} {{tpl:EntryCreaDate}}
+ <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}}">
+  <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+  <p class="post-info">
+   {{tpl:lang By}} <a href="{{tpl:ThreadProfileUserID}}">{{tpl:EntryAuthorCommonName}}</a>
+   {{tpl:lang on}} {{tpl:EntryCreaDate}}
     <tpl:EntryIf has_category="1">
     - <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
     </tpl:EntryIf>
-</p>
-
-<tpl:Messages lastn="1" order="desc"><p class="post-info"><tpl:EntryTags type="nbmessages">{{tpl:TagID}} {{tpl:lang message(s)}} - </tpl:EntryTags>{{tpl:lang Last}}
-      {{tpl:lang by}} {{tpl:MessageAuthorCommonName}} {{tpl:lang on}} {{tpl:MessageDate}}, {{tpl:MessageTime}}</p></tpl:Messages>
-
-  </div>
+	- <a href="{{tpl:EntryURL}}#comments">{{tpl:EntryMessageCount}}</a>
+  </p>
+ </div>
 
 <tpl:EntriesFooter>
 

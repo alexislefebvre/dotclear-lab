@@ -3,13 +3,32 @@
 #
 # This file is part of agora, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Osku , Tomtom and contributors
+# Copyright (c) 2009-2010 Osku ,Tomtom and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
+class rsExtThread
+{
+	public static function threadInfo($rs,$info)
+	{
+		//return dcMeta::getMetaRecord($rs->core,$rs->post_meta,'thread_'.$info)->meta_id;
+		return $rs->core->meta->getMetaRecordset($rs->post_meta,'thread_'.$info)->meta_id;
+	}
+	
+	public static function getMessagesCount($rs)
+	{
+		return $rs->threadInfo('nbmessages');
+	}
+	
+	public static function checkIfClosedThread(&$rs)
+	{
+		return $rs->threadInfo('closed');
+	}
+}
 
 class rsExtMessage
 {
@@ -76,6 +95,12 @@ class rsExtMessage
 		$date_part = date('Y-m-d',strtotime($rs->message_dt));
 		
 		return 'tag:'.$url['host'].','.$date_part.':'.$rs->message_id;
+	}
+	
+	public static function isMe($rs)
+	{
+		return
+		$rs->user_id == $rs->post_user_id;
 	}
 }
 ?>
