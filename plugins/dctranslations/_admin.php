@@ -17,7 +17,7 @@ if (1==1) {
     $core->addBehavior('adminPostHeaders',array('translationBehaviors','postHeaders'));
     $core->addBehavior('adminAfterPostCreate',array('translationBehaviors','setTranslations'));
     $core->addBehavior('adminAfterPostUpdate',array('translationBehaviors','setTranslations'));
-    $core->addBehavior('adminPageForm',array('translationBehaviors','pageForm'));
+    $core->addBehavior('adminPageForm',array('translationBehaviors','postForm'));
     $core->addBehavior('adminPageHeaders',array('translationBehaviors','postHeaders'));
     $core->addBehavior('adminAfterPageCreate',array('translationBehaviors','setTranslations'));
     $core->addBehavior('adminAfterPageUpdate',array('translationBehaviors','setTranslations'));
