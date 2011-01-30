@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"so.cial.me",
 	/* Description*/		"Socialize your blog.",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1-beta1',
+	/* Version */			'0.1-beta2',
 	/* Permissions */		'admin'
 );
 	/* date */		#20110130
