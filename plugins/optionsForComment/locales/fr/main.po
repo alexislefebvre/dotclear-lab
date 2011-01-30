@@ -1,66 +1,34 @@
 # Language: Français
-# Module: optionsForComment - 0.1-alpha1
-# Date: 2010-09-25 13:30:19
+# Module: optionsForComment - 0.2
+# Date: 2011-01-29 23:18:33
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: optionsForComment 0.1-alpha1\n"
+"Project-Id-Version: optionsForComment 0.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-09-25T13:30:19+00:00\n"
+"PO-Revision-Date: 2011-01-29T23:18:33+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: inc/lib.ofc.anonymouscomment.php:21
+#: inc/lib.ofc.anonymouscomment.php:35
 msgid "Allow anonnymous comments"
 msgstr "Autoriser les commentaires anonymes"
 
-#: inc/lib.ofc.anonymouscomment.php:50
+#: inc/lib.ofc.anonymouscomment.php:64
 msgid "Somebody"
 msgstr "Quelqu'un"
 
-#: inc/lib.ofc.anonymouscomment.php:84
+#: inc/lib.ofc.anonymouscomment.php:98
 msgid "Anonymous comment"
 msgstr "Commentaire anonyme"
 
-#: inc/lib.ofc.emailoptionnel.php:12
+#: inc/lib.ofc.emailoptionnel.php:26
 msgid "Optional email address"
 msgstr "Adresse Email facultative"
-
-#: inc/lib.ofc.twitterlogin.php:32
-msgid "Failed to register plugin"
-msgstr "Impossible d'enregistrer le plugin"
-
-#: inc/lib.ofc.twitterlogin.php:72
-msgid "To use this option you must install plugin called \"TaC\"."
-msgstr "Pour utiliser cette option vous devez installer l'extnesion nommé \"TaC\"."
-
-#: inc/lib.ofc.twitterlogin.php:76
-msgid "To use this option you must register it into the plugin \"TaC\"."
-msgstr "Pour utiliser cette option vous devez enregistrer cette extension dans l'extension \"TaC\"."
-
-#: inc/lib.ofc.twitterlogin.php:77
-msgid "Register extension"
-msgstr "Enregistrer l'extension"
-
-#: inc/lib.ofc.twitterlogin.php:81
-msgid "Extension registered into the plugin \"TaC\"."
-msgstr "Extension enregistrée dans le plugin \"TaC\"."
-
-#: inc/lib.ofc.twitterlogin.php:84
-msgid "Enable Twitter login on comments"
-msgstr "Autoriser l'identification depuis Twitter sur les commentaires"
-
-#: inc/lib.ofc.twitterlogin.php:176
-msgid "Logged in as %s"
-msgstr "Connecté en tant que %s"
-
-#: inc/lib.ofc.twitterlogin.php:178
-msgid "Disconnect"
-msgstr "Se déconnecter"
 
 #: index.php:64
 msgid "Configuration successfully updated."
@@ -88,5 +56,5 @@ msgstr "Thème"
 
 #: index.php:90
 msgid "Additionnal style sheet:"
-msgstr "Feuille de style additionnelle"
+msgstr "Feuille de style additionnelle :"
 

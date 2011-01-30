@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of optionsForComment, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -25,5 +25,7 @@ if ($core->blog->settings->optionsForComment->active) {
 	$core->addBehavior('publicHeadContent',array('optionsForComment','publicHeadContent'));
 	# Au debut du formulaire publique
 	$core->addBehavior('publicCommentFormBeforeContent',array('optionsForComment','publicCommentFormBeforeContent'));
+	# Dans l'entete de la page publique
+	$core->addBehavior('publicFooterContent',array('optionsForComment','publicFooterContent'));
 }
 ?>

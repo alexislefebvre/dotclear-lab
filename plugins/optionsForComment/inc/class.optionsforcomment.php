@@ -1,4 +1,16 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of optionsForComment, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2009-2011 JC Denis and contributors
+# jcdenis@gdwd.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
+if (!defined('DC_RC_PATH')){return;}
 
 class optionsForComment
 {
@@ -37,6 +49,7 @@ class optionsForComment
 			"<!-- style for plugin optionsForComment -->\n".
 			'<style type="text/css">'."\n".$p."</style>\n";
 		}
+		
 		# JS class
 		echo 
 		"<!-- JS for plugin optionsForComment -->\n".
@@ -44,7 +57,7 @@ class optionsForComment
 		
 		$js_vars = new ArrayObject();
 		
-		$core->callBehavior('optionsForCommentPublicHead',$core,$_ctx,$js_vars);
+		$res = $core->callBehavior('optionsForCommentPublicHead',$core,$_ctx,$js_vars);
 		
 		echo 
 		'<script type="text/javascript">'."\n".
@@ -56,7 +69,8 @@ class optionsForComment
 		}
 		echo 
 		"//]]>\n".
-		"</script>\n";
+		"</script>\n".
+		$res;
 	}
 	
 	# /inc/public/lib.urlhandlers.php#L393

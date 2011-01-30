@@ -1,2 +1,6 @@
+0.2 20110130
+ * Removed Twitter feature (this this to another plugin to do that)
+ * Added behaviors to open plugins (see exemple in plugin dcLibTwitter)
+
 0.1 20100927
  * First lab release
