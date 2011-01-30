@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"Tumblr libraries",
 	/* Description*/		"Tumblr library for Dotclear's plugins",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1-beta1',
+	/* Version */			'0.1-beta2',
 	/* Permissions */		'admin'
 );
 	/* date */		#20110130
