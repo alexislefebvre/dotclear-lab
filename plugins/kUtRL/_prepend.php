@@ -32,9 +32,6 @@ if (!defined('SHORTEN_SERVICE_ENCODE')) {
 	define('SHORTEN_SERVICE_ENCODE',TRUE);
 }
 
-# Namespace for settings
-$core->blog->settings->addNamespace('kUtRL');
-
 # Main class
 $__autoload['kutrlServices'] = dirname(__FILE__).'/inc/lib.kutrl.srv.php';
 $__autoload['kutrlLog'] = dirname(__FILE__).'/inc/lib.kutrl.log.php';
@@ -74,7 +71,7 @@ $core->addBehavior('coreInitWikiSimpleComment',array('kutrlWiki','coreInitWiki')
 $core->url->register('kutrl','go','^go(/(.*?)|)$',array('urlKutrl','redirectUrl'));
 
 # Add kUtRL events on plugin activityReport
-if ($core->blog->settings->kUtRL->kutrl_extend_activityreport && defined('ACTIVITY_REPORT'))
+if (defined('ACTIVITY_REPORT'))
 {
 	require_once dirname(__FILE__).'/inc/lib.kutrl.activityreport.php';
 }

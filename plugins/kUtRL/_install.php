@@ -61,10 +61,6 @@ try
 	$s->put('kutrl_tpl_passive',true,'boolean','Return long url on kutrl tags if kutrl is unactivate',false,true);
 	$s->put('kutrl_tpl_active',false,'boolean','Return short url on dotclear tags if kutrl is active',false,true);
 	$s->put('kutrl_admin_entry_default',true,'boolean','Create short link an new entry by default',false,true);
-	# Settings for features related to others plugins
-	$s->put('kutrl_extend_importexport',true,'boolean','Enabled import/export behaviors',false,true);
-	$s->put('kutrl_extend_activityreport',true,'boolean','Enabled activiyReport behaviors',false,true);
-	$s->put('kutrl_extend_dcadvancedcleaner',true,'boolean','Enabled activiyReport behaviors',false,true);
 	# Settings for "local" service
 	$local_css =
 	".shortenkutrlwidget input { border: 1px solid #CCCCCC; }\n".

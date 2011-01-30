@@ -35,15 +35,11 @@ if ($core->blog->settings->kUtRL->kutrl_active)
 	$core->addBehavior('adminPostsActions',array('adminKutrl','adminPostsActions'));
 }
 
-# Import/export
-if ($core->blog->settings->kUtRL->kutrl_extend_importexport)
-{
-	$core->addBehavior('exportFull',array('backupKutrl','exportFull'));
-	$core->addBehavior('exportSingle',array('backupKutrl','exportSingle'));
-	$core->addBehavior('importInit',array('backupKutrl','importInit'));
-	$core->addBehavior('importSingle',array('backupKutrl','importSingle'));
-	$core->addBehavior('importFull',array('backupKutrl','importFull'));
-}
+$core->addBehavior('exportFull',array('backupKutrl','exportFull'));
+$core->addBehavior('exportSingle',array('backupKutrl','exportSingle'));
+$core->addBehavior('importInit',array('backupKutrl','importInit'));
+$core->addBehavior('importSingle',array('backupKutrl','importSingle'));
+$core->addBehavior('importFull',array('backupKutrl','importFull'));
 
 # Admin behaviors class
 class adminKutrl

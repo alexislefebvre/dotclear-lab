@@ -2,6 +2,9 @@ todo
  - Added public page of the list of know urls and in/visible status
  - Added passworded links
 
+0.6.1 20110130
+ * Cleaned up script
+
 0.6 20110118 'prepare the soCial révolution'
  * Added default defined service (for all blogs of a multiblog)
  * Added configurable external service

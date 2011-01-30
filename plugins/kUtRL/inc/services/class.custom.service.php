@@ -94,6 +94,8 @@ class customKutrlService extends kutrlServices
 	
 	public function testService()
 	{
+		if (empty($this->url_api)) return false;
+		
 		$url = $this->url_encode ? urlencode($this->url_test) : $this->url_test;
 		$arg = array($this->url_param => $url);
 		if (!self::post($this->url_api,$arg,true,true))

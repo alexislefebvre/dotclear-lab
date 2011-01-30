@@ -12,9 +12,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-# This file is used by plugin dcAdvancedCleaner
-if (!$this->core->blog->settings->kutrl_extend_dcadvancedcleaner) return;
-
 $this->addUserAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',
