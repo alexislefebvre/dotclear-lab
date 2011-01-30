@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"Joliprint",
 	/* Description*/		"Add button to turn articles into pdf",
 	/* Author */			"JC Denis",
-	/* Version */			'0.3',
+	/* Version */			'0.3.1',
 	/* Permissions */		'admin'
 );
 	/* date */		#20110130

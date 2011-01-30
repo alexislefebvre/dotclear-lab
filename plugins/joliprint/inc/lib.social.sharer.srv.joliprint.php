@@ -7,7 +7,7 @@ class joliprintSoCialMeSharerService extends soCialMeService
 		'id' => 'joliprint',
 		'name' => 'Joliprint',
 		'home' => 'http://joliprint.com',
-		'icon' => 'index.php?pf=joliprint/icon.png'
+		'icon' => 'pf=joliprint/icon.png'
 	);
 	protected $actions = array(
 		'playIconContent' => true,
