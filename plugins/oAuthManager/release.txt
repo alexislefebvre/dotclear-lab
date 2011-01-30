@@ -1,0 +1,4 @@
+0.1 20110130
+ * First public release
+ * Support only oAuth 1.0a
+ * Support only client side
