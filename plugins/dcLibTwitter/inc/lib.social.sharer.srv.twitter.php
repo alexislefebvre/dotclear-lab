@@ -108,7 +108,7 @@ class twitterSoCialMeSharerService extends soCialMeService
 		$url = !empty($record['shorturl']) ? $record['shorturl'] : $record['url'];
 		$title = html::clean($record['title']);
 		
-		return soCialMeUtils::preloadBox(soCialMeUtils::easyLink('http://twitthis.com/twit?url='.urlencode($url).'&amp;title='.urlencode($title),$this->name,$this->url.$this->icon));
+		return soCialMeUtils::preloadBox(soCialMeUtils::easyLink('http://twitthis.com/twit?url='.urlencode($url).'&amp;title='.urlencode($title),$this->name,$this->icon));
 	}
 	
 	public function playSmallScript() { return $this->parseScript(); }
