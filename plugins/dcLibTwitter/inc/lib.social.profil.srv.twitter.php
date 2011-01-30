@@ -21,7 +21,7 @@ class twitterSoCialMeProfilService extends soCialMeService
 		'id' => 'twitter',
 		'name' => 'Twitter',
 		'home' => 'http://twitter.com',
-		'icon' => '/index.php?pf=dcLibTwitter/icon.png'
+		'icon' => 'pf=dcLibTwitter/icon.png'
 	);
 	
 	protected $actions = array(

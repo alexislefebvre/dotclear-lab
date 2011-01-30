@@ -21,7 +21,7 @@ class twitterSoCialMeSharerService extends soCialMeService
 		'id' => 'twitter',
 		'name' => 'Twitter',
 		'home' => 'http://twitter.com',
-		'icon' => '/index.php?pf=dcLibTwitter/icon.png'
+		'icon' => 'pf=dcLibTwitter/icon.png'
 	);
 	
 	protected $actions = array(
@@ -108,7 +108,7 @@ class twitterSoCialMeSharerService extends soCialMeService
 		$url = !empty($record['shorturl']) ? $record['shorturl'] : $record['url'];
 		$title = html::clean($record['title']);
 		
-		return soCialMeUtils::preloadBox(soCialMeUtils::easyLink('http://twitthis.com/twit?url='.urlencode($url).'&amp;title='.urlencode($title),$this->name,$this->icon));
+		return soCialMeUtils::preloadBox(soCialMeUtils::easyLink('http://twitthis.com/twit?url='.urlencode($url).'&amp;title='.urlencode($title),$this->name,$this->url.$this->icon));
 	}
 	
 	public function playSmallScript() { return $this->parseScript(); }
