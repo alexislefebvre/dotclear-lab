@@ -1,3 +1,6 @@
+0.3 20110130
+ * Added joliprint to plugin soCialMe (sharer)
+
 0.2 20110103
  * Changed pictures path and added some buttons style
  * Enable widget on all posts context

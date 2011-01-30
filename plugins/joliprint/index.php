@@ -128,8 +128,17 @@ echo
 <p class="field"><label>'.
 form::checkbox(array('active'),'1',$active).
 __('Enable extension').'</label></p>
-</fieldset>
+</fieldset>';
 
+if ($core->plugins->moduleExists('soCialMe'))
+{
+	echo '<p><a href="plugin.php?p=soCialMe&amp;page=sharer" '.
+	'title="'.__('Go to soCialMe admin page').'">'.
+	__('You can also add joliprint buttons from the plugin soCialMe').
+	'</a></p>';
+}
+
+echo '
 <fieldset id="button"><legend>'. __('Button').'</legend>
 <h4>'.__('Picture:').'</h4>';
 

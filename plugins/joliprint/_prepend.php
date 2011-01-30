@@ -17,4 +17,8 @@ global $__autoload, $core;
 $__autoload['joliprint'] = dirname(__FILE__).'/inc/class.joliprint.php';
 
 $core->url->register('joliprint','joliprint','^joliprint/(.+)$',array('joliprintUrl','joliprint'));
+
+# Add to SocCial Sharer
+$__autoload['joliprintSoCialMeSharerService'] = dirname(__FILE__).'/inc/lib.social.sharer.srv.joliprint.php';
+$core->addBehavior('soCialMeSharerService',create_function(null,'return array("joliprint","joliprintSoCialMeSharerService");'));
 ?>
