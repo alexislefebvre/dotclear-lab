@@ -20,7 +20,7 @@ class identicaSoCialMeSharerService extends soCialMeService
 		'id' => 'identica',
 		'name' => 'Identica',
 		'home' => 'http://identi.ca',
-		'icon' => '/index.php?pf=dcLibIdentica/icon.png'
+		'icon' => 'pf=dcLibIdentica/icon.png'
 	);
 	
 	protected $actions = array(
@@ -82,7 +82,7 @@ class identicaSoCialMeSharerService extends soCialMeService
 			urlencode($title).' '.urlencode($url).
 			(!empty($this->config['via']) ? ' '.$this->config['via'] : ''),
 			$this->name,
-			'/index.php?pf=dcLibIdentica/inc/icons/identica-'.$type.'.png'
+			$this->url.'pf=dcLibIdentica/inc/icons/identica-'.$type.'.png'
 		));
 	}
 	
