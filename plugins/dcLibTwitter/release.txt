@@ -1,0 +1,4 @@
+0.1-beta1 20110130
+ * First publis release of Twitter libraries for Dotclear
+ * Added support of plugin soCialMe
+ * Added support of plugin optionsForComment (with noddles avatar)
