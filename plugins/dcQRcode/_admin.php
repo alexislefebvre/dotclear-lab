@@ -12,6 +12,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
+dcQRcode::defineCachePath($core);
+
 # Load _wigdets.php
 require dirname(__FILE__).'/_widgets.php';
 
