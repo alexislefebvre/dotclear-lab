@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of periodical, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Periodical",
 	/* Description*/		"Published periodically entries",
 	/* Author */			"JC Denis",
-	/* Version */			'0.4',
+	/* Version */			'0.5',
 	/* Permissions */		'usage,contentadmin'
 );
-	/* date */		#20100909
+	/* date */		#20110130
 ?>

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of periodical, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -20,7 +20,7 @@ if (version_compare($old_version,$new_version,'>=')) return;
 try
 {
 	# Check DC version
-	if (version_compare(DC_VERSION,'2.2-beta','<'))
+	if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','<'))
 	{
 		throw new Exception('periodical requires Dotclear 2.2');
 	}
@@ -53,9 +53,6 @@ try
 	$s->put('periodical_upddate',true,'boolean','Update post date',false,true);
 	$s->put('periodical_updurl',false,'boolean','Update post url',false,true);
 	$s->put('periodical_pub_order','post_dt asc','string','Order of publication',false,true);
-	$s->put('periodical_statusnet_login','','string','Login to connect toStatusNet service',false,true);
-	$s->put('periodical_statusnet_pass','','string','Password to connect to StatusNet service',false,true);
-	$s->put('periodical_statusnet_msg','','string','Message to send to StatusNet service',false,true);
 	
 	# Version
 	$core->setVersion('periodical',$new_version);

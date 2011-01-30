@@ -1,3 +1,11 @@
+0.5 20110130
+ * Fixed install on nightly buid
+ * Fixed call to blog object on prepend
+ * Removed mesenger fonctions (this is to another plugin to do that)
+ * Added behavior on post update
+ * Added periodical to plugin soCialMe
+ * New year copyright
+
 0.4 20100909
  * Removed old Twitter functions
  * Added StatusNet small functions (Identica)

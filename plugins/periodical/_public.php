@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of periodical, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -12,6 +12,8 @@
 
 if (!defined('DC_RC_PATH')){return;}
 if (!in_array($core->url->type,array('default','feed'))) {return;}
+
+$core->blog->settings->addNamespace('periodical'); 
 
 $core->addBehavior('publicBeforeDocument',array('publicBehaviorPeriodical','publishPeriodicalEntries'));
 
@@ -34,20 +36,6 @@ class publicBehaviorPeriodical
 			{
 				$per->unlockUpdate();
 				return;
-			}
-			
-			# Messengers
-			$statusnet_login = $s->periodical_statusnet_login;
-			$statusnet_pass =  $s->periodical_statusnet_pass;
-			$statusnet_msg =  $s->periodical_statusnet_msg;
-			$has_access = false;
-			if ($statusnet_msg) {
-				if(true === $core->plugins->moduleExists('TaC')) {
-					$tac = new tac($core,'periodical',null);
-					if (true === $tac->checkRegistry()) {
-						$has_access = $tac->checkAccess();
-					}
-				}
 			}
 			
 			$now = dt::toUTC(time());
@@ -144,41 +132,10 @@ class publicBehaviorPeriodical
 									$last_tz = $per->getNextTime($last_tz,$periods->periodical_pub_int);
 									$last_nb = 0;
 								}
-								# Auto tweet to StatusNet (identica)
-								if ($statusnet_msg && $statusnet_login && $statusnet_pass)
-								{
-									$shortposturl = periodicalLibStatusNet::shorten($posts->getURL());
-									$shortposturl = $shortposturl ? $shortposturl : $posts->getURL();
-									$shortsiteurl = periodicalLibStatusNet::shorten($core->blog->url);
-									$shortsiteurl = $shortsiteurl ? $shortsiteurl : $core->blog->url;
-									
-									$msg = str_replace(
-										array('%posttitle%','%posturl%','%shortposturl%','%postauthor%','%sitetitle%','%siteurl%','%shortsiteurl%'),
-										array($posts->post_title,$posts->getURL(),$shortposturl,$posts->getUserCN(),$core->blog->name,$core->blog->url,$shortsiteurl),
-										$statusnet_msg
-									);
-									if (!empty($msg))
-									{
-										periodicalLibStatusNet::send($identica_login,$identica_pass,$msg);
-									}
-								}
-								# Auto tweet to Twitter
-								if ($statusnet_msg && $has_tac) {
 								
-									$shortposturl = tacTools::shorten($posts->getURL());
-									$shortposturl = $shortposturl ? $shortposturl : $posts->getURL();
-									$shortsiteurl = tacTools::shorten($core->blog->url);
-									$shortsiteurl = $shortsiteurl ? $shortsiteurl : $core->blog->url;
-									
-									$msg = str_replace(
-										array('%posttitle%','%posturl%','%shortposturl%','%postauthor%','%sitetitle%','%siteurl%','%shortsiteurl%'),
-										array($posts->post_title,$posts->getURL(),$shortposturl,$posts->getUserCN(),$core->blog->name,$core->blog->url,$shortsiteurl),
-										$statusnet_msg
-									);
-									if (!empty($msg)) {
-										$tac->post('statuses/update',array('status'=>$msg));
-									}
-								}
+								# --BEHAVIOR-- periodicalAfterPublishedPeriodicalEntry
+								$this->core->callBehavior('periodicalAfterPublishedPeriodicalEntry',$core,$posts,$periods);
+								
 							}
 							$core->blog->triggerBlog();
 						}
