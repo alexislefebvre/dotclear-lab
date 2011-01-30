@@ -33,7 +33,7 @@ class zcfsSoCialMeWriter
 		$key = 'zcfscreate';
 		
 		# Is install
-		if (!$core->moduleExists('soCialMe')) return;
+		if (!$core->plugins->moduleExists('soCialMe')) return;
 		
 		# Is active
 		if (!$core->blog->settings->soCialMeWriter->active) return;
