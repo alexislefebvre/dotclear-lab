@@ -67,7 +67,7 @@ class periodicalSoCialMeWriter
 			{
 				foreach($actions[$key]['Message'] as $service_id)
 				{
-					$soCialMeWriter->send($service_id,'Message',$message_txt);
+					$soCialMeWriter->play($service_id,'Message','Content',$message_txt);
 				}
 			}
 		}
@@ -77,7 +77,7 @@ class periodicalSoCialMeWriter
 		{
 			foreach($actions[$key]['Link'] as $service_id)
 			{
-				$soCialMeWriter->send($service_id,'Link',$post->post_title,$shortposturl);
+				$soCialMeWriter->play($service_id,'Link','Content',$post->post_title,$shortposturl);
 			}
 		}
 		
