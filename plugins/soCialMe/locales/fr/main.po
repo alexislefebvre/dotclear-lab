@@ -1,0 +1,319 @@
+# Language: Français
+# Module: soCialMe - 0.1-beta1
+# Date: 2011-01-30 00:40:31
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: soCialMe 0.1-beta1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-01-30T00:40:31+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:12
+msgid "Share this"
+msgstr "Partager ça"
+
+#: _widgets.php:49
+msgid "All"
+msgstr "Tous"
+
+#: _widgets.php:51
+msgid "Group"
+msgstr "Groupe"
+
+#: inc/index.profil.location.php:12
+#: inc/index.sharer.location.php:93
+msgid "Configure place and style of each services on your blog."
+msgstr "Configurer l'emplacement et le style de chaque services pour ce blog"
+
+#: inc/index.profil.location.php:12
+msgid "Badges are just simple pictures linked to your sociales profils"
+msgstr "Les bagdes sont de simples images liées à vos profils sociaux"
+
+#: inc/index.profil.location.php:12
+msgid "Title of the group of badges:"
+msgstr "Titre du groupe de bagdes :"
+
+#: inc/index.profil.location.php:12
+msgid "On home page only"
+msgstr "Uniquement sur la page d'accueil"
+
+#: inc/index.profil.location.php:12
+#: inc/index.sharer.location.php:139
+msgid "Select things to show and their size:"
+msgstr "Selectionner les objets à affciher et leurs tailles :"
+
+#: inc/index.sharer.location.php:17
+msgid "home page"
+msgstr "la page d'accueil"
+
+#: inc/index.sharer.location.php:18
+msgid "post pages"
+msgstr "la page d'un billet"
+
+#: inc/index.sharer.location.php:19
+msgid "tags pages"
+msgstr "les pages des tags"
+
+#: inc/index.sharer.location.php:20
+msgid "archives pages"
+msgstr "les pages des archives"
+
+#: inc/index.sharer.location.php:21
+msgid "category pages"
+msgstr "les pages de catégorie"
+
+#: inc/index.sharer.location.php:22
+msgid "entries feed"
+msgstr "le flux des billets"
+
+#: inc/index.sharer.location.php:30
+msgid "\"%s\" pages from extension muppet"
+msgstr "la page de type \"%s\" de l'extension muppet"
+
+#: inc/index.sharer.location.php:113
+msgid "Title of the group of buttons:"
+msgstr "Titre du groupe de boutons :"
+
+#: inc/index.sharer.location.php:122
+msgid "Select type of pages where to show buttons:"
+msgstr "Selectionner le type de pages ou afficher les boutons :"
+
+#: inc/index.writer.event.php:12
+msgid "Configure services to use on each event of your blog."
+msgstr "Configurer les services à utiliser pour chaque événement de votre blog."
+
+#: inc/index.writer.event.php:12
+msgid "Format:"
+msgstr "Format :"
+
+#: inc/index.writer.event.php:12
+msgid "You can use wildcards like %s"
+msgstr "Vous pouvez utiliser les jokers %s"
+
+#: inc/index.writer.message.php:12
+msgid "Send message through your configured services."
+msgstr "Envoyer un message à travers les services configurés."
+
+#: inc/index.writer.message.php:12
+msgid "Send simple short message"
+msgstr "Envoyer un simple message"
+
+#: inc/index.writer.message.php:12
+msgid "Message:"
+msgstr "Message :"
+
+#: inc/index.writer.message.php:12
+#: inc/index.writer.message.php:12
+msgid "Select services to post on:"
+msgstr "Selectionner les services à utiliser :"
+
+#: inc/index.writer.message.php:12
+msgid "Send simple link"
+msgstr "Envoyer un simple liens"
+
+#: inc/lib.index.order.php:72
+msgid "Configure the order of the services of this part."
+msgstr "Configurer l'ordre des services pour chaque partie."
+
+#: inc/lib.index.order.php:75
+msgid "Priority"
+msgstr "Priorité"
+
+#: inc/lib.index.order.php:76
+msgid "Select display order of services for each location."
+msgstr "Selectionner l'ordre d'affichage des services pour chaque lieu."
+
+#: inc/lib.index.order.php:89
+msgid "List of services for %s"
+msgstr "Liste des services pour \"%s\""
+
+#: inc/lib.index.service.php:12
+msgid "Configure options for each service."
+msgstr "Configurer les options de chaque service."
+
+#: inc/lib.index.service.php:12
+msgid "homepage"
+msgstr "page d'accueil"
+
+#: inc/lib.index.service.php:12
+msgid "homepage of"
+msgstr "page d'accueil de"
+
+#: inc/lib.index.service.php:12
+msgid "Learn more about %s."
+msgstr "En savoir plus à propos de %s."
+
+#: inc/lib.index.service.php:12
+msgid "The following services have no configuration."
+msgstr "Les services suivant n'ont pas de configuration."
+
+#: inc/lib.index.setting.php:39
+msgid "Configure global settings for this part."
+msgstr "Configurer les paramètres pour cette partie."
+
+#: inc/lib.index.setting.php:42
+msgid "Style"
+msgstr "Style"
+
+#: inc/lib.index.setting.php:43
+msgid "Additionnal style sheet:"
+msgstr "Feuille de style additionnelle :"
+
+#: inc/lib.index.setting.php:45
+msgid "Elements are placed in HTML tag \"div\" of class \"social-%1$ss social-LOCATION_ID\". Each Element in HTML tag \"li\" of class \"social-%1$s social-id-SERVICE_ID\"."
+msgstr "Les éléments sont placés dans des balises HTML \"div\" de classe \"social-%1$ss social-LOCATION_ID\". Chaque élément dans une balise HTML \"li\" de classe \"social-%1$s social-id-SERVICE_ID\"."
+
+#: inc/lib.social.profil.php:33
+msgid "Page header"
+msgstr "En tête de page"
+
+#: inc/lib.social.profil.php:34
+msgid "Place a group of bagdes just after page title"
+msgstr "Place un groue de bagdes juste après le titre de la page"
+
+#: inc/lib.social.profil.php:43
+msgid "Place a group of badges on footer"
+msgstr "Place un groupe de badges en pied de page"
+
+#: inc/lib.social.profil.php:51
+msgid "Widget"
+msgstr "Widget"
+
+#: inc/lib.social.profil.php:52
+msgid "Place group of bagdes on widget. You must set up widget."
+msgstr "Place un groupe de bagdes dans un widget. Vous devez configurer le widget."
+
+#: inc/lib.social.sharer.php:12
+msgid "Before post content"
+msgstr "Avant le contenu du billet"
+
+#: inc/lib.social.sharer.php:12
+msgid "Place a group of buttons just before post content"
+msgstr "Place un groupe de boutons juste avant le contenu d'un billet"
+
+#: inc/lib.social.sharer.php:12
+msgid "After post content"
+msgstr "Après le contenu du billet"
+
+#: inc/lib.social.sharer.php:12
+msgid "Place group of buttons just before post content"
+msgstr "Place un groupe de boutons juste après le contenu d'un billet"
+
+#: inc/lib.social.sharer.php:12
+msgid "On a widget"
+msgstr "Dans un widget"
+
+#: inc/lib.social.sharer.php:12
+msgid "Place group of buttons on widget. You must set up widget."
+msgstr "Place un groupe de boutons dans un widget. Vous devez configurer le widget."
+
+#: inc/lib.social.writer.php:12
+msgid "Post update"
+msgstr "Mise à jour d'un billet"
+
+#: inc/lib.social.writer.php:12
+msgid "When a post is updated on your blog:"
+msgstr "Lorsqu'un billet est mise à jour sur votre blog :"
+
+#: inc/lib.social.writer.php:12
+msgid "Post publish"
+msgstr "Publication d'un billet"
+
+#: inc/lib.social.writer.php:12
+msgid "When a post is published on your blog:"
+msgstr "Lorsqu'un billet est marqué comme publié sur votre blog :"
+
+#: inc/lib.social.writer.php:12
+msgid "Create user"
+msgstr "Création d'un utilisateur"
+
+#: inc/lib.social.writer.php:12
+msgid "When a user is added on your blog:"
+msgstr "Lrsqu'un nouvel utilisateur est ajouter à votre blog"
+
+#: inc/lib.utils.php:45
+msgid "Please wait"
+msgstr "Veuillez patienter"
+
+#: inc/lib.utils.php:52
+msgid "Social home"
+msgstr "Accueil"
+
+#: inc/lib.utils.php:195
+msgid "Share on %s"
+msgstr "Partager sur %s"
+
+#: inc/lib.utils.php:198
+msgid "View my profil on %s"
+msgstr "Voir mon profil sur %s"
+
+#: index.php:12
+msgid "Help your visitors to share content of your blog on social networks."
+msgstr "Aide vos visiteurs à partager le contenu de votre blog sur les resaux sociaux."
+
+#: index.php:12
+#: index.php:12
+msgid "Locations"
+msgstr "Emplacements"
+
+#: index.php:12
+#: index.php:12
+msgid "Orders"
+msgstr "Ordres"
+
+#: index.php:12
+#: index.php:12
+#: index.php:12
+#: index.php:12
+msgid "Services"
+msgstr "Services"
+
+#: index.php:12
+#: index.php:12
+#: index.php:12
+#: index.php:12
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:12
+msgid "Show your social profiles and counters."
+msgstr "Afficher vos profils et compteur sociaux"
+
+#: index.php:12
+msgid "Send and share content from your blog to your social networks."
+msgstr "Envoyer et partager le contenu de votre blog sur les réseaux sociaux."
+
+#: index.php:12
+msgid "Message"
+msgstr "Message"
+
+#: index.php:12
+msgid "Events"
+msgstr "Evénements"
+
+#: index.php:12
+msgid "Add feeds and other stream from social networks to your blog."
+msgstr "Ajouter les flux de vos réseaux sociaux à votre blog."
+
+#: index.php:12
+msgid "Feeds"
+msgstr "Fils de syndication"
+
+#: index.php:12
+msgid "Administrate"
+msgstr "Administrer"
+
+#: index.php:12
+msgid "Enable this part"
+msgstr "Activer cette partie"
+
+#: index.php:12
+msgid "Latest news from so.cial.me"
+msgstr "Dernières nouvelles de so.cial.me"
+

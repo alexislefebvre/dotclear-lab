@@ -1,0 +1,5 @@
+todo
+ - specific installer for soCialMe extensions
+
+0.1-beta1
+ * First public release
