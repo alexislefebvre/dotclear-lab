@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis, BG and contributors
+# Copyright (c) 2009-2011 JC Denis, BG and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -213,7 +213,7 @@ if ($action == 'updatefeed' && !empty($_POST['feeds']))
 	try {
 		foreach($_POST['feeds'] as $feed_id)
 		{
-			$zc->checkFeedsUpdate($feed_id);
+			$zc->checkFeedsUpdate($feed_id,true);
 		}
 		http::redirect($p_url.'&part=feeds&msg='.$action);
 	}

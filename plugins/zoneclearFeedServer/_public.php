@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis, BG and contributors
+# Copyright (c) 2009-2011 JC Denis, BG and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -12,6 +12,10 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
+# Namespace for settings
+$core->blog->settings->addNamespace('zoneclearFeedServer');
+
+# Widgets
 require_once dirname(__FILE__).'/_widgets.php';
 
 $core->addBehavior('coreBlogGetPosts',array('zoneclearFeedServerPublicBehaviors','coreBlogGetPosts'));

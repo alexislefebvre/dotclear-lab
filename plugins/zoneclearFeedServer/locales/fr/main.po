@@ -1,56 +1,56 @@
 # Language: Français
-# Module: zoneclearFeedServer - 1.1
-# Date: 2010-09-08 17:26:11
+# Module: zoneclearFeedServer - 1.3
+# Date: 2011-01-30 11:14:09
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: zoneclearFeedServer 1.1\n"
+"Project-Id-Version: zoneclearFeedServer 1.3\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-09-08T17:26:11+00:00\n"
+"PO-Revision-Date: 2011-01-30T11:14:09+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:19
+#: _admin.php:23
 #: inc/index.feed.php:593
 #: inc/index.feeds.php:381
-#: inc/index.setting.php:142
+#: inc/index.setting.php:76
 #: index.php:36
 msgid "Feeds server"
 msgstr "Serveur de flux"
 
-#: _admin.php:45
+#: _admin.php:54
 msgid "%s disabled feeds"
 msgstr "%s flux désactivés"
 
-#: _admin.php:45
+#: _admin.php:54
 msgid "one disable feed"
 msgstr "Un flux désactivé"
 
-#: _admin.php:86
+#: _admin.php:95
 msgid "Feed source"
 msgstr "Source du flux"
 
-#: _admin.php:89
+#: _admin.php:98
 msgid "feed URL"
 msgstr "URL du fil"
 
-#: _admin.php:90
+#: _admin.php:99
 msgid "site URL"
 msgstr "URL du site"
 
-#: _admin.php:98
+#: _admin.php:107
 msgid "Edit this feed"
 msgstr "Modifier ce flux"
 
-#: _public.php:183
+#: _public.php:192
 msgid "Original post on <a href=\"%s\">%s</a>"
 msgstr "Billet original sur <a href=\"%s\">%s</a>"
 
-#: _public.php:194
+#: _public.php:203
 msgid "Read more details about this feed"
 msgstr "Lire plus de détails à propos de ce flux"
 
@@ -136,59 +136,59 @@ msgstr "un billet"
 msgid "%s entries"
 msgstr "%s billets"
 
-#: inc/class.zoneclear.feed.server.php:702
+#: inc/class.zoneclear.feed.server.php:660
 msgid "disabled"
 msgstr "désactivé"
 
-#: inc/class.zoneclear.feed.server.php:703
+#: inc/class.zoneclear.feed.server.php:661
 msgid "enabled"
 msgstr "activé"
 
-#: inc/class.zoneclear.feed.server.php:710
+#: inc/class.zoneclear.feed.server.php:668
 msgid "every hour"
 msgstr "toutes les heures"
 
-#: inc/class.zoneclear.feed.server.php:711
+#: inc/class.zoneclear.feed.server.php:669
 msgid "every two hours"
 msgstr "toutes les deux heures"
 
-#: inc/class.zoneclear.feed.server.php:712
+#: inc/class.zoneclear.feed.server.php:670
 msgid "two times per day"
 msgstr "deux fois par jour"
 
-#: inc/class.zoneclear.feed.server.php:713
+#: inc/class.zoneclear.feed.server.php:671
 msgid "every day"
 msgstr "tous les jours"
 
-#: inc/class.zoneclear.feed.server.php:714
+#: inc/class.zoneclear.feed.server.php:672
 msgid "every two days"
 msgstr "tous les deux jours"
 
-#: inc/class.zoneclear.feed.server.php:715
+#: inc/class.zoneclear.feed.server.php:673
 msgid "every week"
 msgstr "toutes les semaines"
 
-#: inc/class.zoneclear.feed.server.php:770
+#: inc/class.zoneclear.feed.server.php:728
 msgid "home page"
 msgstr "la page d'accueil"
 
-#: inc/class.zoneclear.feed.server.php:771
+#: inc/class.zoneclear.feed.server.php:729
 msgid "post pages"
 msgstr "la page d'un billet"
 
-#: inc/class.zoneclear.feed.server.php:772
+#: inc/class.zoneclear.feed.server.php:730
 msgid "tags pages"
 msgstr "les pages des tags"
 
-#: inc/class.zoneclear.feed.server.php:773
+#: inc/class.zoneclear.feed.server.php:731
 msgid "archives pages"
 msgstr "les pages des archives"
 
-#: inc/class.zoneclear.feed.server.php:774
+#: inc/class.zoneclear.feed.server.php:732
 msgid "category pages"
 msgstr "les pages de catégorie"
 
-#: inc/class.zoneclear.feed.server.php:775
+#: inc/class.zoneclear.feed.server.php:733
 msgid "entries feed"
 msgstr "le flux des billets"
 
@@ -230,7 +230,7 @@ msgstr "Vous devez donner une catégorie valide."
 
 #: inc/index.feed.php:599
 #: inc/index.feeds.php:386
-#: inc/index.setting.php:151
+#: inc/index.setting.php:92
 msgid "Feeds"
 msgstr "Fils de syndication"
 
@@ -241,7 +241,7 @@ msgstr "Edition de flux"
 #: inc/index.feed.php:604
 #: inc/index.feed.php:608
 #: inc/index.feeds.php:387
-#: inc/index.setting.php:153
+#: inc/index.setting.php:94
 msgid "New feed"
 msgstr "Nouveau flux"
 
@@ -270,11 +270,11 @@ msgstr "Information sur le flux"
 msgid "Owner:"
 msgstr "Propriétaire :"
 
-#: inc/index.feed.php:655
+#: inc/index.feed.php:656
 msgid "Tweeter or Identica ident:"
 msgstr "Identifiant Twiiter ou Identi.ca :"
 
-#: inc/index.feed.php:658
+#: inc/index.feed.php:659
 msgid "Site URL:"
 msgstr "URL du site :"
 
@@ -363,153 +363,98 @@ msgstr "Sélectionner une fréquence :"
 msgid "Selected feeds action:"
 msgstr "Action sur les flux sélectionnés :"
 
-#: inc/index.setting.php:128
+#: inc/index.setting.php:62
 msgid "disable"
 msgstr "désactiver"
 
-#: inc/index.setting.php:129
+#: inc/index.setting.php:63
 msgid "before display"
 msgstr "avant l'affichage"
 
-#: inc/index.setting.php:130
+#: inc/index.setting.php:64
 msgid "after display"
 msgstr "après l'affichage"
 
-#: inc/index.setting.php:131
+#: inc/index.setting.php:65
 msgid "through Ajax"
 msgstr "A travers Ajax"
 
-#: inc/index.setting.php:152
+#: inc/index.setting.php:93
 #: index.php:34
 msgid "Settings"
 msgstr "Paramètres"
 
-#: inc/index.setting.php:157
+#: inc/index.setting.php:98
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: inc/index.setting.php:160
+#: inc/index.setting.php:101
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: inc/index.setting.php:163
+#: inc/index.setting.php:104
 msgid "General rules"
 msgstr "Réglages"
 
-#: inc/index.setting.php:166
+#: inc/index.setting.php:107
 msgid "Status of new posts:"
 msgstr "Status des nouveaux billets :"
 
-#: inc/index.setting.php:169
+#: inc/index.setting.php:110
 msgid "Owner of entries created by zoneclearFeedServer:"
 msgstr "Propriétaire des billets créés par zoneclearFeedServer :"
 
-#: inc/index.setting.php:172
+#: inc/index.setting.php:113
 msgid "Update feeds on public side:"
 msgstr "Mettre à jour les flux depuis la partie publique :"
 
-#: inc/index.setting.php:175
+#: inc/index.setting.php:116
 msgid "Number of feeds to update at one time:"
 msgstr "Nombre de flux à mettre à jour à la fois :"
 
-#: inc/index.setting.php:179
+#: inc/index.setting.php:120
 msgid "Enable public page"
 msgstr "Activer la page publique"
 
-#: inc/index.setting.php:183
+#: inc/index.setting.php:122
+msgid "Dotclear cache is not writable or not well configured!"
+msgstr "Le cache de Dotclear n'est pas accessible en écriture ou n'est pas configuré!"
+
+#: inc/index.setting.php:128
 msgid "A writable cache folder is required to use this extension."
 msgstr "Un dossier de cache accessible en écriture est nécessaire pour utiliser cette extension."
 
-#: inc/index.setting.php:184
+#: inc/index.setting.php:129
 msgid "If you set a large number of feeds to update at one time, this may cause a timeout error. We recommand to keep it to one."
 msgstr "Si vous paramètrez un grand nombre de flux à mettre à jour, ceci peut causer une erreur de timeout. Il est recommandé de laisser cette valeur à 1."
 
-#: inc/index.setting.php:185
+#: inc/index.setting.php:130
 msgid "If you use cron script, you can disable public update."
 msgstr "Si vous utilisez un script cron, vous pouvez désactiver la mise à jour publique."
 
-#: inc/index.setting.php:186
+#: inc/index.setting.php:131
 msgid "If active, a public list of feeds are available at \"%s\"."
 msgstr "Si activé, une page publique de la liste des flux est disponible à l'adresse %s ."
 
-#: inc/index.setting.php:187
+#: inc/index.setting.php:132
 msgid "In order to do update through Ajax, your theme must have behavior publicHeadContent."
 msgstr "Pour utiliser la mise à jour depuis Ajax, votre thème doit avoir le behavior publicheadContent."
 
-#: inc/index.setting.php:194
-msgid "Identi.ca account"
-msgstr "Compte Identi.ca"
-
-#: inc/index.setting.php:195
-msgid "Login:"
-msgstr "Identifiant :"
-
-#: inc/index.setting.php:201
-msgid "Type a password only to change old one."
-msgstr "Entrer un mot de passe uniquement pour changer l'ancien."
-
-#: inc/index.setting.php:202
-#: inc/index.setting.php:243
-msgid "Message"
-msgstr "Message"
-
-#: inc/index.setting.php:208
-msgid "Send automatically message to Identi.ca on new post only if status of new post is \"pusblished\"."
-msgstr "Envoie automatiquement un message sur Identi.ca lors d'ajout de billet si le status des nouveaux billets est \"publié\"."
-
-#: inc/index.setting.php:209
-#: inc/index.setting.php:250
-msgid "Leave empty \"ident\" to not use this feature."
-msgstr "Laisser vide votre identifiant pour ne pas envoyer de tweet."
-
-#: inc/index.setting.php:210
-#: inc/index.setting.php:251
-msgid "For message, use wildcard: %posttitle%, %postlink%, %postauthor%, %posttweeter%, %sitetitle%, %sitelink%"
-msgstr "Pour le message utiliser les jokers: %posttitle%, %postlink%, %postauthor%, %posttweeter%, %sitetitle%, %sitelink%"
-
-#: inc/index.setting.php:213
-msgid "To use a Twitter account you must install plugin called \"TaC\""
-msgstr "Pour utiliser un compte Twitter vous devez installer le plugin nommé \"TaC\""
-
-#: inc/index.setting.php:249
-msgid "Send automatically message to Twitter on new post only if status of new post is \"pusblished\"."
-msgstr "Envoie automatiquement un message sur Twitter lors d'ajout de billet si le status des nouveaux billets est \"publié\"."
-
-#: inc/index.setting.php:259
+#: inc/index.setting.php:141
 msgid "Display"
 msgstr "Affichage"
 
-#: inc/index.setting.php:262
+#: inc/index.setting.php:144
 msgid "Show full content on:"
 msgstr "Afficher le contenu complet sur :"
 
-#: inc/index.setting.php:273
+#: inc/index.setting.php:155
 msgid "Entries title"
 msgstr "Titre des billets"
 
-#: inc/index.setting.php:274
+#: inc/index.setting.php:156
 msgid "Redirect to original post on:"
 msgstr "Rediriger vers le billet original sur :"
-
-#: inc/lib.zcfs.statusnet.php:29
-msgid "User is not set."
-msgstr "L'utilisateur est pas renseigné."
-
-#: inc/lib.zcfs.statusnet.php:39
-msgid "Nothing to send."
-msgstr "Il n'y a rien à envoyer."
-
-#: inc/lib.zcfs.statusnet.php:54
-msgid "Failed to send message (%s)"
-msgstr "Impossible d'envoyer le message (%s)"
-
-#: inc/lib.zcfs.statusnet.php:115
-msgid "Failed to get short url (%s)"
-msgstr "Impossible de récupérer le lien court (%s)"
-
-#: inc/lib.zcfs.statusnet.php:121
-msgid "Failed to get short url"
-msgstr "Impossible de récupérer le lien court"
 
 #: inc/lib.zoneclear.feed.server.activityreport.php:16
 msgid "Plugin zoneclearFeedServer"
@@ -554,6 +499,14 @@ msgstr "status d'un flux"
 #: inc/lib.zoneclear.feed.server.activityreport.php:59
 msgid "Feed named \"%s\" point to \"%s\" has been set to \"%s\""
 msgstr "Le flux nommé \"%s\" pointant vers \"%s\" a été marqué comme \"%s\""
+
+#: inc/lib.zoneclear.feed.server.socialmewriter.php:21
+msgid "New Zoneclear post"
+msgstr "Nouveu billet Zoneclear"
+
+#: inc/lib.zoneclear.feed.server.socialmewriter.php:22
+msgid "When a feed has new entry"
+msgstr "Lorsqu'un flux a un nouveau billet"
 
 #: index.php:29
 msgid "Please wait"

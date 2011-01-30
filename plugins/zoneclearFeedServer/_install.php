@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis, BG and contributors
+# Copyright (c) 2009-2011 JC Denis, BG and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -20,60 +20,11 @@ if (version_compare($old_version,$new_version,'>=')) return;
 try
 {
 	# Check DC version (dev on)
-	if (version_compare(DC_VERSION,'2.2-alpha','<'))
+	if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','<'))
 	{
-		throw new Exception('Plugin called zoneclearFeedServer requires Dotclear 2.2 or higher.');
+		throw new Exception('zoneclearFeedServer requires Dotclear 2.2');
 	}
-/*
-	// No one has old version now
-	# Update fields name on old version (fixed pgSQL compatibility)
-	if ($old_version != '' && version_compare($old_version,'0.5.1.1','<'))
-	{
-		$fields = array(
-			array('id','feed_id',"BIGINT( 20 ) NOT NULL DEFAULT '0'"),
-			array('creadt','feed_creadt',"TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'"),
-			array('upddt','feed_upddt',"TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'"),
-			array('type','feed_type',"VARCHAR( 32 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'feed'"),
-			array('upd_int','feed_upd_int',"INT( 11 ) NOT NULL DEFAULT '3600'"),
-			array('upd_last','feed_upd_last',"INT( 11 ) NOT NULL DEFAULT '0'"),
-			array('status','feed_status',"SMALLINT( 6 ) NOT NULL DEFAULT '0'"),
-			array('name','feed_name',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"),
-			array('desc','feed_desc',"LONGTEXT CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL"),
-			array('url','feed_url',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"),
-			array('feed','feed_feed',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"),
-			array('tags','feed_tags',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL"),
-			array('owner','feed_owner',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"),
-			array('lang','feed_lang',"VARCHAR( 5 ) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL"),
-			array('nb_out','feed_nb_out',"INT( 11 ) NOT NULL DEFAULT '0'"),
-			array('nb_in','feed_nb_in',"INT( 11 ) NOT NULL DEFAULT '0'")
-		);
-
-		if ($core->con->driver() == 'pgsql')
-		{
-			foreach($fields as $k => $field) {
-				$core->con->execute(
-					'ALTER TABLE '.$core->prefix.'zc_feed '.
-					'RENAME COLUMN '.
-					$core->con->escapeSystem($field[0]).
-					' TO '.
-					$core->con->escapeSystem($field[1]).';'
-				);
-			}
-		}
-		else
-		{
-			foreach($fields as $k => $field) {
-				$core->con->execute(
-					'ALTER TABLE '.$core->prefix.'zc_feed '.
-					'CHANGE '.
-					$core->con->escapeSystem($field[0]).' '.
-					$core->con->escapeSystem($field[1]).' '.
-					$field[2].';'
-				);
-			}
-		}
-	}
-//*/
+	
 	# Tables
 	$t = new dbStruct($core->con,$core->prefix);
 	$t->zc_feed
@@ -116,11 +67,6 @@ try
 	$s->put('zoneclearFeedServer_user','','string','User id that has right on post',false,true);
 	$s->put('zoneclearFeedServer_post_full_tpl',serialize(array('post','category','tag','archive')),'string','List of templates types for full feed',false,true);
 	$s->put('zoneclearFeedServer_post_title_redir',serialize(array('feed')),'string','List of templates types for redirection to original post',false,true);
-	
-	$s->put('zoneclearFeedServer_identica_login','','string','Identica user login',false,true);
-	$s->put('zoneclearFeedServer_identica_pass','','string','Identica user password',false,true);
-	$s->put('zoneclearFeedServer_identica_default_message','','string','Identica default message',false,true);
-	$s->put('zoneclearFeedServer_twitter_default_message','','string','Twitter default message',false,true);
 	
 	# Version
 	$core->setVersion('zoneclearFeedServer',$new_version);

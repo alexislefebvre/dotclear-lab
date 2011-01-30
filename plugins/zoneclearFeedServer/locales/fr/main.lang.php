@@ -1,38 +1,38 @@
 <?php
 // Language: Français 
-// Module: zoneclearFeedServer - 1.1
-// Date: 2010-09-08 17:26:11 
+// Module: zoneclearFeedServer - 1.3
+// Date: 2011-01-30 11:14:08 
 // Translated with dcTranslater - 1.5 
 
-#_admin.php:19
+#_admin.php:23
 #inc/index.feed.php:593
 #inc/index.feeds.php:381
-#inc/index.setting.php:142
+#inc/index.setting.php:76
 #index.php:36
 $GLOBALS['__l10n']['Feeds server'] = 'Serveur de flux';
 
-#_admin.php:45
+#_admin.php:54
 $GLOBALS['__l10n']['%s disabled feeds'] = '%s flux désactivés';
 
-#_admin.php:45
+#_admin.php:54
 $GLOBALS['__l10n']['one disable feed'] = 'Un flux désactivé';
 
-#_admin.php:86
+#_admin.php:95
 $GLOBALS['__l10n']['Feed source'] = 'Source du flux';
 
-#_admin.php:89
+#_admin.php:98
 $GLOBALS['__l10n']['feed URL'] = 'URL du fil';
 
-#_admin.php:90
+#_admin.php:99
 $GLOBALS['__l10n']['site URL'] = 'URL du site';
 
-#_admin.php:98
+#_admin.php:107
 $GLOBALS['__l10n']['Edit this feed'] = 'Modifier ce flux';
 
-#_public.php:183
+#_public.php:192
 $GLOBALS['__l10n']['Original post on <a href="%s">%s</a>'] = 'Billet original sur <a href="%s">%s</a>';
 
-#_public.php:194
+#_public.php:203
 $GLOBALS['__l10n']['Read more details about this feed'] = 'Lire plus de détails à propos de ce flux';
 
 #_widgets.php:23
@@ -97,46 +97,46 @@ $GLOBALS['__l10n']['one entry'] = 'un billet';
 #_widgets.php:175
 $GLOBALS['__l10n']['%s entries'] = '%s billets';
 
-#inc/class.zoneclear.feed.server.php:702
+#inc/class.zoneclear.feed.server.php:660
 $GLOBALS['__l10n']['disabled'] = 'désactivé';
 
-#inc/class.zoneclear.feed.server.php:703
+#inc/class.zoneclear.feed.server.php:661
 $GLOBALS['__l10n']['enabled'] = 'activé';
 
-#inc/class.zoneclear.feed.server.php:710
+#inc/class.zoneclear.feed.server.php:668
 $GLOBALS['__l10n']['every hour'] = 'toutes les heures';
 
-#inc/class.zoneclear.feed.server.php:711
+#inc/class.zoneclear.feed.server.php:669
 $GLOBALS['__l10n']['every two hours'] = 'toutes les deux heures';
 
-#inc/class.zoneclear.feed.server.php:712
+#inc/class.zoneclear.feed.server.php:670
 $GLOBALS['__l10n']['two times per day'] = 'deux fois par jour';
 
-#inc/class.zoneclear.feed.server.php:713
+#inc/class.zoneclear.feed.server.php:671
 $GLOBALS['__l10n']['every day'] = 'tous les jours';
 
-#inc/class.zoneclear.feed.server.php:714
+#inc/class.zoneclear.feed.server.php:672
 $GLOBALS['__l10n']['every two days'] = 'tous les deux jours';
 
-#inc/class.zoneclear.feed.server.php:715
+#inc/class.zoneclear.feed.server.php:673
 $GLOBALS['__l10n']['every week'] = 'toutes les semaines';
 
-#inc/class.zoneclear.feed.server.php:770
+#inc/class.zoneclear.feed.server.php:728
 $GLOBALS['__l10n']['home page'] = 'la page d\'accueil';
 
-#inc/class.zoneclear.feed.server.php:771
+#inc/class.zoneclear.feed.server.php:729
 $GLOBALS['__l10n']['post pages'] = 'la page d\'un billet';
 
-#inc/class.zoneclear.feed.server.php:772
+#inc/class.zoneclear.feed.server.php:730
 $GLOBALS['__l10n']['tags pages'] = 'les pages des tags';
 
-#inc/class.zoneclear.feed.server.php:773
+#inc/class.zoneclear.feed.server.php:731
 $GLOBALS['__l10n']['archives pages'] = 'les pages des archives';
 
-#inc/class.zoneclear.feed.server.php:774
+#inc/class.zoneclear.feed.server.php:732
 $GLOBALS['__l10n']['category pages'] = 'les pages de catégorie';
 
-#inc/class.zoneclear.feed.server.php:775
+#inc/class.zoneclear.feed.server.php:733
 $GLOBALS['__l10n']['entries feed'] = 'le flux des billets';
 
 #inc/index.feed.php:190
@@ -168,7 +168,7 @@ $GLOBALS['__l10n']['You must provide valid category.'] = 'Vous devez donner une 
 
 #inc/index.feed.php:599
 #inc/index.feeds.php:386
-#inc/index.setting.php:151
+#inc/index.setting.php:92
 $GLOBALS['__l10n']['Feeds'] = 'Fils de syndication';
 
 #inc/index.feed.php:603
@@ -177,7 +177,7 @@ $GLOBALS['__l10n']['Edit feed'] = 'Edition de flux';
 #inc/index.feed.php:604
 #inc/index.feed.php:608
 #inc/index.feeds.php:387
-#inc/index.setting.php:153
+#inc/index.setting.php:94
 $GLOBALS['__l10n']['New feed'] = 'Nouveau flux';
 
 #inc/index.feed.php:627
@@ -199,10 +199,10 @@ $GLOBALS['__l10n']['Feed information'] = 'Information sur le flux';
 #inc/index.feed.php:652
 $GLOBALS['__l10n']['Owner:'] = 'Propriétaire :';
 
-#inc/index.feed.php:655
+#inc/index.feed.php:656
 $GLOBALS['__l10n']['Tweeter or Identica ident:'] = 'Identifiant Twiiter ou Identi.ca :';
 
-#inc/index.feed.php:658
+#inc/index.feed.php:659
 $GLOBALS['__l10n']['Site URL:'] = 'URL du site :';
 
 #inc/index.feeds.php:21
@@ -269,117 +269,75 @@ $GLOBALS['__l10n']['Select a frequency:'] = 'Sélectionner une fréquence :';
 #inc/index.feeds.php:492
 $GLOBALS['__l10n']['Selected feeds action:'] = 'Action sur les flux sélectionnés :';
 
-#inc/index.setting.php:128
+#inc/index.setting.php:62
 $GLOBALS['__l10n']['disable'] = 'désactiver';
 
-#inc/index.setting.php:129
+#inc/index.setting.php:63
 $GLOBALS['__l10n']['before display'] = 'avant l\'affichage';
 
-#inc/index.setting.php:130
+#inc/index.setting.php:64
 $GLOBALS['__l10n']['after display'] = 'après l\'affichage';
 
-#inc/index.setting.php:131
+#inc/index.setting.php:65
 $GLOBALS['__l10n']['through Ajax'] = 'A travers Ajax';
 
-#inc/index.setting.php:152
+#inc/index.setting.php:93
 #index.php:34
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#inc/index.setting.php:157
+#inc/index.setting.php:98
 $GLOBALS['__l10n']['Plugin activation'] = 'Activation de l\'extension';
 
-#inc/index.setting.php:160
+#inc/index.setting.php:101
 $GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
 
-#inc/index.setting.php:163
+#inc/index.setting.php:104
 $GLOBALS['__l10n']['General rules'] = 'Réglages';
 
-#inc/index.setting.php:166
+#inc/index.setting.php:107
 $GLOBALS['__l10n']['Status of new posts:'] = 'Status des nouveaux billets :';
 
-#inc/index.setting.php:169
+#inc/index.setting.php:110
 $GLOBALS['__l10n']['Owner of entries created by zoneclearFeedServer:'] = 'Propriétaire des billets créés par zoneclearFeedServer :';
 
-#inc/index.setting.php:172
+#inc/index.setting.php:113
 $GLOBALS['__l10n']['Update feeds on public side:'] = 'Mettre à jour les flux depuis la partie publique :';
 
-#inc/index.setting.php:175
+#inc/index.setting.php:116
 $GLOBALS['__l10n']['Number of feeds to update at one time:'] = 'Nombre de flux à mettre à jour à la fois :';
 
-#inc/index.setting.php:179
+#inc/index.setting.php:120
 $GLOBALS['__l10n']['Enable public page'] = 'Activer la page publique';
 
-#inc/index.setting.php:183
+#inc/index.setting.php:122
+$GLOBALS['__l10n']['Dotclear cache is not writable or not well configured!'] = 'Le cache de Dotclear n\'est pas accessible en écriture ou n\'est pas configuré!';
+
+#inc/index.setting.php:128
 $GLOBALS['__l10n']['A writable cache folder is required to use this extension.'] = 'Un dossier de cache accessible en écriture est nécessaire pour utiliser cette extension.';
 
-#inc/index.setting.php:184
+#inc/index.setting.php:129
 $GLOBALS['__l10n']['If you set a large number of feeds to update at one time, this may cause a timeout error. We recommand to keep it to one.'] = 'Si vous paramètrez un grand nombre de flux à mettre à jour, ceci peut causer une erreur de timeout. Il est recommandé de laisser cette valeur à 1.';
 
-#inc/index.setting.php:185
+#inc/index.setting.php:130
 $GLOBALS['__l10n']['If you use cron script, you can disable public update.'] = 'Si vous utilisez un script cron, vous pouvez désactiver la mise à jour publique.';
 
-#inc/index.setting.php:186
+#inc/index.setting.php:131
 $GLOBALS['__l10n']['If active, a public list of feeds are available at "%s".'] = 'Si activé, une page publique de la liste des flux est disponible à l\'adresse %s .';
 
-#inc/index.setting.php:187
+#inc/index.setting.php:132
 $GLOBALS['__l10n']['In order to do update through Ajax, your theme must have behavior publicHeadContent.'] = 'Pour utiliser la mise à jour depuis Ajax, votre thème doit avoir le behavior publicheadContent.';
 
-#inc/index.setting.php:194
-$GLOBALS['__l10n']['Identi.ca account'] = 'Compte Identi.ca';
-
-#inc/index.setting.php:195
-$GLOBALS['__l10n']['Login:'] = 'Identifiant :';
-
-#inc/index.setting.php:201
-$GLOBALS['__l10n']['Type a password only to change old one.'] = 'Entrer un mot de passe uniquement pour changer l\'ancien.';
-
-#inc/index.setting.php:202
-#inc/index.setting.php:243
-$GLOBALS['__l10n']['Message'] = 'Message';
-
-#inc/index.setting.php:208
-$GLOBALS['__l10n']['Send automatically message to Identi.ca on new post only if status of new post is "pusblished".'] = 'Envoie automatiquement un message sur Identi.ca lors d\'ajout de billet si le status des nouveaux billets est "publié".';
-
-#inc/index.setting.php:209
-#inc/index.setting.php:250
-$GLOBALS['__l10n']['Leave empty "ident" to not use this feature.'] = 'Laisser vide votre identifiant pour ne pas envoyer de tweet.';
-
-#inc/index.setting.php:210
-#inc/index.setting.php:251
-$GLOBALS['__l10n']['For message, use wildcard: %posttitle%, %postlink%, %postauthor%, %posttweeter%, %sitetitle%, %sitelink%'] = 'Pour le message utiliser les jokers: %posttitle%, %postlink%, %postauthor%, %posttweeter%, %sitetitle%, %sitelink%';
-
-#inc/index.setting.php:213
-$GLOBALS['__l10n']['To use a Twitter account you must install plugin called "TaC"'] = 'Pour utiliser un compte Twitter vous devez installer le plugin nommé "TaC"';
-
-#inc/index.setting.php:249
-$GLOBALS['__l10n']['Send automatically message to Twitter on new post only if status of new post is "pusblished".'] = 'Envoie automatiquement un message sur Twitter lors d\'ajout de billet si le status des nouveaux billets est "publié".';
-
-#inc/index.setting.php:259
+#inc/index.setting.php:141
 $GLOBALS['__l10n']['Display'] = 'Affichage';
 
-#inc/index.setting.php:262
+#inc/index.setting.php:144
 $GLOBALS['__l10n']['Show full content on:'] = 'Afficher le contenu complet sur :';
 
-#inc/index.setting.php:273
+#inc/index.setting.php:155
 $GLOBALS['__l10n']['Entries title'] = 'Titre des billets';
 
-#inc/index.setting.php:274
+#inc/index.setting.php:156
 $GLOBALS['__l10n']['Redirect to original post on:'] = 'Rediriger vers le billet original sur :';
-
-#inc/lib.zcfs.statusnet.php:29
-$GLOBALS['__l10n']['User is not set.'] = 'L\'utilisateur est pas renseigné.';
-
-#inc/lib.zcfs.statusnet.php:39
-$GLOBALS['__l10n']['Nothing to send.'] = 'Il n\'y a rien à envoyer.';
-
-#inc/lib.zcfs.statusnet.php:54
-$GLOBALS['__l10n']['Failed to send message (%s)'] = 'Impossible d\'envoyer le message (%s)';
-
-#inc/lib.zcfs.statusnet.php:115
-$GLOBALS['__l10n']['Failed to get short url (%s)'] = 'Impossible de récupérer le lien court (%s)';
-
-#inc/lib.zcfs.statusnet.php:121
-$GLOBALS['__l10n']['Failed to get short url'] = 'Impossible de récupérer le lien court';
 
 #inc/lib.zoneclear.feed.server.activityreport.php:16
 $GLOBALS['__l10n']['Plugin zoneclearFeedServer'] = 'Extension zoneclearFeedServer';
@@ -413,6 +371,12 @@ $GLOBALS['__l10n']['feed status'] = 'status d\'un flux';
 
 #inc/lib.zoneclear.feed.server.activityreport.php:59
 $GLOBALS['__l10n']['Feed named "%s" point to "%s" has been set to "%s"'] = 'Le flux nommé "%s" pointant vers "%s" a été marqué comme "%s"';
+
+#inc/lib.zoneclear.feed.server.socialmewriter.php:21
+$GLOBALS['__l10n']['New Zoneclear post'] = 'Nouveu billet Zoneclear';
+
+#inc/lib.zoneclear.feed.server.socialmewriter.php:22
+$GLOBALS['__l10n']['When a feed has new entry'] = 'Lorsqu\'un flux a un nouveau billet';
 
 #index.php:29
 $GLOBALS['__l10n']['Please wait'] = 'Veuillez patienter';

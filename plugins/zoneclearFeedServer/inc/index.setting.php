@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis, BG and contributors
+# Copyright (c) 2009-2011 JC Denis, BG and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -24,66 +24,11 @@ $post_title_redir = @unserialize($s->zoneclearFeedServer_post_title_redir);
 if (!is_array($post_title_redir)) $post_title_redir = array();
 $feeduser = (string) $s->zoneclearFeedServer_user;
 
-$identica_login = (string) $s->zoneclearFeedServer_identica_login;
-$identica_pass = (string) $s->zoneclearFeedServer_identica_pass;
-$identica_default_message = (string) $s->zoneclearFeedServer_identica_default_message;
-$twitter_default_message = (string) $s->zoneclearFeedServer_twitter_default_message;
-
 $section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
 
-// Special Twitter
-$has_tac = $has_registry = $has_access = $has_grant = false;
-$has_tac = $core->plugins->moduleExists('TaC');
-if ($has_tac) {
 
-	try {
-		// always
-		$tac = new tac($core,'zoneclearFeedServer',null);
-		$has_registry = $tac->checkRegistry();
-		
-		// register plugin to tac
-		if (!$has_registry) {
-			$cur = $core->con->openCursor($core->prefix.'tac_registry');
-			$cur->cr_id = 'zoneclearFeedServer';
-			$cur->cr_key = 'R1uiJxPNKWSg2ZruRpfmDA';
-			$cur->cr_secret = 'tpdtvsdtiiDAV3SSdGsR2vh5E8z1Uu9Fnhbamx6ck';
-			$cur->cr_url_request = 'http://twitter.com/oauth/request_token';
-			$cur->cr_url_access = 'http://twitter.com/oauth/access_token';
-			$cur->cr_url_autorize = 'http://twitter.com/oauth/authorize';
-			$cur->cr_url_authenticate = 'https://api.twitter.com/oauth/authenticate';
-			
-			$tac->addRegistry($cur);
-			
-			$has_registry = $tac->checkRegistry();
-			
-			if (!$has_registry) {
-				throw new Exception(__('Failed to register plugin'));
-			}
-		}
-		// test user
-		$has_access = $tac->checkAccess();
-		
-		// request temp token
-		if ($action == 'requesttwitter') {
-			$url = $tac->requestAccess(DC_ADMIN_URL.'plugin.php?p=zoneclearFeedServer&part=setting&action=granttwitter&section=setting-twitter');
-			http::redirect($url);
-		}
-		
-		// request final token
-		if ($action == 'granttwitter') {
-			$has_grant = $tac->grantAccess();
-			
-			if (!$has_grant) {
-				$tac->cleanAccess();
-			}
-			http::redirect($p_url.'&part=setting&action=&section=setting-twitter');
-		}
-	}
-	catch(Exception $e) {
-		$has_registry = $has_access = $has_grant = false;
-		$core->error->add($e->getMessage());
-	}
-}
+# --BEHAVIOR-- zonclearFeedServerSettingPrepend
+$core->callBehavior('zonclearFeedServerSettingPrepend',$core);
 
 
 if ($default_part == 'setting' && $action == 'savesetting')
@@ -101,17 +46,6 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s->put('zoneclearFeedServer_post_full_tpl',serialize($_POST['post_full_tpl']));
 		$s->put('zoneclearFeedServer_post_title_redir',serialize($_POST['post_title_redir']));
 		$s->put('zoneclearFeedServer_user',(string) $_POST['feeduser']);
-		
-		$s->put('zoneclearFeedServer_identica_login',(string) $_POST['identica_login']);
-		if (!empty($_POST['identica_pass'])) {
-			$s->put('zoneclearFeedServer_identica_pass',(string) $_POST['identica_pass']);
-		}
-		$s->put('zoneclearFeedServer_identica_default_message',(string) $_POST['identica_default_message']);
-		if (isset($_POST['twitter_default_message'])) {
-			$s->put('zoneclearFeedServer_twitter_default_message',(string) $_POST['twitter_default_message']);
-		}
-
-		//todo save twitter settings
 		
 		$core->blog->triggerBlog();
 		
@@ -144,7 +78,14 @@ dcPage::jsColorPicker().
 dcPage::jsLoad('index.php?pf=zoneclearFeedServer/js/setting.js').
 "<script type=\"text/javascript\">\n//<![CDATA[\n".
 dcPage::jsVar('jcToolsBox.prototype.section',$section).
-"\n//]]>\n</script>\n".
+"\n//]]>\n</script>\n";
+
+
+# --BEHAVIOR-- zoneclearFeedServerSettingHead
+$core->callBehavior('zoneclearFeedServerSettingHead',$core);
+
+
+echo 
 '</head>
 <body>
 <h2>'.html::escapeHTML($core->blog->name).
@@ -176,7 +117,11 @@ __('Number of feeds to update at one time:').'<br />'.
 form::field('update_limit',6,4,$update_limit).'</label></p>
 <p class="field"><label>'.
 form::checkbox(array('pub_active'),'1',$pub_active).
-__('Enable public page').'</label></p>
+__('Enable public page').'</label></p>';
+if (!is_writable(DC_TPL_CACHE)) {
+	echo '<p class="error">'.__('Dotclear cache is not writable or not well configured!').'</p>';
+}
+echo '
 </div><div class="col">
 <h3>'.__('Information').'</h3>
 <ul>
@@ -187,73 +132,10 @@ __('Enable public page').'</label></p>
 <li>'.__('In order to do update through Ajax, your theme must have behavior publicHeadContent.').'</li>
 </ul>
 </div></div>
-</fieldset>
-
-<fieldset id="setting-identica"><legend>'.__('Identi.ca').'</legend>
-<div class="two-cols"><div class="col">
-<h3>'.__('Identi.ca account').'</h3>
-<p><label class="classic">'.__('Login:').'<br />'.
-form::field('identica_login',50,255,$identica_login,'',2).'
-</label></p>
-<p><label class="classic">'.__('Password:').'<br />'.
-form::password('identica_pass',50,255,'','',2).'
-</label></p>
-<p class="form-note">'.__('Type a password only to change old one.').'</p>
-<h3>'.__('Message').'</h3>
-<p><label class="classic">'.__('Text:').'<br />'.
-form::field('identica_default_message',50,255,$identica_default_message,'',2).'
-</label></p>
-</div><div class="col">
-<ul>
-<li>'.__('Send automatically message to Identi.ca on new post only if status of new post is "pusblished".').'</li>
-<li>'.__('Leave empty "ident" to not use this feature.').'</li>
-<li>'.__('For message, use wildcard: %posttitle%, %postlink%, %postauthor%, %posttweeter%, %sitetitle%, %sitelink%').'</li>
-</ul>';
-if (!$has_tac) {
-	echo '<p>'.__('To use a Twitter account you must install plugin called "TaC"').'</p>';
-}
-echo '
-</div></div>
 </fieldset>';
 
-if ($has_tac) {
-	echo '
-	<fieldset id="setting-twitter"><legend>'.__('Twitter').'</legend>
-	<div class="two-cols"><div class="col">';
-
-	if (!$has_access) {
-		echo '
-		<p><a href="'.$p_url.
-		'&amp;part=setting&amp;action=requesttwitter&amp;section=setting-twitter'.
-		'"><img src="index.php?pf=TaC/img/tac_light.png" alt="Sign in with Twitter"/></a></p>';
-	}
-	else {
-		$user = $tac->get('account/verify_credentials');
-		$content = $tac->get('account/rate_limit_status');
-		
-		echo '
-		<ul>
-		<li>'.sprintf(__('Your are connected as "%s"'),$user->screen_name).'</li>
-		<li>'.sprintf(__('It remains %s API hits'),$content->remaining_hits).'</li>
-		<li><a href="'.$p_url.'&amp;part=setting&amp;action=cleantwitter&amp;section=setting-twitter">'.__('Disconnect and clean access').'</a></li>
-		</ul>';
-	}
-
-	echo '
-	<h3>'.__('Message').'</h3>
-	<p><label class="classic">'.__('Text:').'<br />'.
-	form::field('twitter_default_message',50,255,$twitter_default_message,'',2).'
-	</label></p>
-	</div><div class="col">
-	<ul>
-	<li>'.__('Send automatically message to Twitter on new post only if status of new post is "pusblished".').'</li>
-	<li>'.__('Leave empty "ident" to not use this feature.').'</li>
-	<li>'.__('For message, use wildcard: %posttitle%, %postlink%, %postauthor%, %posttweeter%, %sitetitle%, %sitelink%').'</li>
-	</ul>
-	</div></div>
-	</fieldset>
-	';
-}
+# --BEHAVIOR-- zonclearFeedServerAdminForm
+$core->callBehavior('zonclearFeedServerAdminForm',$core);
 
 echo '
 <fieldset id="setting-display"><legend>'. __('Display').'</legend>

@@ -1,7 +1,16 @@
 x.x xxxxxxxx
  * Not fixed disallow self blog feeds
+ * Added plugin muppet support (request Mathieu M.)
 
-1.2 201011
+1.3 20110130
+ * Fixed install on nightly build
+ * Fixed bug on null blog (and settings)
+ * Added verbose on admin side
+ * Added behaviors to open to others plugins (ie messenger)
+ * Added support of plugin soCialMe (writer part)
+ * Removed messenger functions (as it's to another plugin to do this)
+
+1.2 20100911
  * Added plugin tweakurls support (Thanks Mathieu M.)
 
 1.1 20100908

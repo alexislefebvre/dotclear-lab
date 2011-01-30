@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis, BG and contributors
+# Copyright (c) 2009-2011 JC Denis, BG and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -351,7 +351,7 @@ class zoneclearFeedServer
 	}
 	
 	# Check and add/update post related to record if needed
-	public function checkFeedsUpdate($id=null)
+	public function checkFeedsUpdate($id=null,$throw=false)
 	{
 		# Limit to one update at a time
 		try
@@ -360,6 +360,7 @@ class zoneclearFeedServer
 		}
 		catch (Exception $e)
 		{
+			if ($throw) throw $e;
 			return false;
 		}
 		
@@ -377,25 +378,6 @@ class zoneclearFeedServer
 		
 		# Set feeds user
 		$this->enableUser($s->zoneclearFeedServer_user);
-	
-		// Identica
-		$identica_msg = $s->zoneclearFeedServer_identica_default_message;
-		$identica_login = $s->zoneclearFeedServer_identica_login;
-		$identica_pass = $s->zoneclearFeedServer_identica_pass;
-
-		// Twitter
-		$has_tac = $has_registry = $has_access = false;
-		$twitter_msg = $s->zoneclearFeedServer_twitter_default_message;
-		if ($twitter_msg) {
-			$has_tac = $this->core->plugins->moduleExists('TaC');
-			if ($has_tac) {
-				$tac = new tac($this->core,'zoneclearFeedServer',null);
-				$has_registry = $tac->checkRegistry();
-			}
-			if ($has_registry) {
-				$has_access = $tac->checkAccess();
-			}
-		}
 		
 		$updates = false;
 		$loop_mem = array();
@@ -441,7 +423,7 @@ class zoneclearFeedServer
 					{
 						$item_TS = $item->TS ? $item->TS : $time;
 						$item_link = $this->con->escape($item->link);
-						$do_tweet = false;
+						$is_new_published_entry = false;
 						
 						# Not updated since last visit
 						if (!$id && $item_TS < $f->feed_upd_last) continue;
@@ -493,7 +475,7 @@ class zoneclearFeedServer
 								# Auto tweet new post
 								if ($cur_post->post_status == 1)
 								{
-									$do_tweet = true;
+									$is_new_published_entry = true;
 								}
 							}
 							# Update entry
@@ -505,12 +487,6 @@ class zoneclearFeedServer
 								$this->core->callBehavior('zoneclearFeedServerBeforePostUpdate',$cur_post,$post_id);
 								
 								$this->core->auth->sudo(array($this->core->blog,'updPost'),$post_id,$cur_post);
-								
-								# Auto tweet updated post
-								if ($old_post->post_status == 1)
-								{
-									//$do_tweet = true;
-								}
 								
 								# Quick delete old meta
 								$this->con->execute(
@@ -526,34 +502,37 @@ class zoneclearFeedServer
 							}
 							
 							# Quick add new meta
+							$meta = new ArrayObject();
+							$meta->tweeter = $f->feed_tweeter;
+							
 							$cur_meta->clean();
 							$cur_meta->post_id = $post_id;
 							$cur_meta->meta_type = 'zoneclearfeed_url';
-							$cur_meta->meta_id = $item->link;
+							$cur_meta->meta_id = $meta->url = $item->link;
 							$cur_meta->insert();
 							
 							$cur_meta->clean();
 							$cur_meta->post_id = $post_id;
 							$cur_meta->meta_type = 'zoneclearfeed_author';
-							$cur_meta->meta_id = $creator;
+							$cur_meta->meta_id = $meta->author = $creator;
 							$cur_meta->insert();
 							
 							$cur_meta->clean();
 							$cur_meta->post_id = $post_id;
 							$cur_meta->meta_type = 'zoneclearfeed_site';
-							$cur_meta->meta_id = $f->feed_url;
+							$cur_meta->meta_id = $meta->site = $f->feed_url;
 							$cur_meta->insert();
 							
 							$cur_meta->clean();
 							$cur_meta->post_id = $post_id;
 							$cur_meta->meta_type = 'zoneclearfeed_sitename';
-							$cur_meta->meta_id = $f->feed_name;
+							$cur_meta->meta_id = $meta->sitename = $f->feed_name;
 							$cur_meta->insert();
 							
 							$cur_meta->clean();
 							$cur_meta->post_id = $post_id;
 							$cur_meta->meta_type = 'zoneclearfeed_id';
-							$cur_meta->meta_id = $f->feed_id;
+							$cur_meta->meta_id = $meta->id = $f->feed_id;
 							$cur_meta->insert();
 							
 							# Add new tags
@@ -567,45 +546,11 @@ class zoneclearFeedServer
 							{
 								$this->core->auth->sudo(array($this->core->meta,'setPostMeta'),$post_id,'tag',dcMeta::sanitizeMetaID($tag));
 							}
+							$meta->tags = $tags;
 							
-							# Auto tweet post on Identica
-							if ($do_tweet && $identica_msg && $identica_login && $identica_pass)
-							{
-								$shortposturl = zcfsLibStatusNet::shorten($item->link);
-								$shortposturl = $shortposturl ? $shortposturl : $item->link;
-								
-								$shortsiteurl = zcfsLibStatusNet::shorten($f->feed_url);
-								$shortsiteurl = $shortsiteurl ? $shortsiteurl : $f->feed_url;
-								
-								$msg = str_replace(
-									array('%posttitle%','%postlink%','%postauthor%','%posttweeter%','%sitetitle%','%sitelink%'),
-									array($cur_post->post_title,$shortposturl,$creator,$f->feed_tweeter,$f->feed_name,$shortsiteurl),
-									$identica_msg
-								);
-								if (!empty($msg))
-								{
-									zcfsLibStatusNet::send($identica_login,$identica_pass,$msg);
-								}
-							}
+							# --BEHAVIOR-- zoneclearFeedServerAfterFeedUpdate
+							$this->core->callBehavior('zoneclearFeedServerAfterFeedUpdate',$this->core,$is_new_published_entry,$cur_post,$meta);
 							
-							# Auto tweet post on Twitter
-							if ($do_tweet && $has_tac && $twitter_msg) {
-							
-								$shortposturl = tacTools::shorten($item->link);
-								$shortposturl = $shortposturl ? $shortposturl : $item->link;
-								
-								$shortsiteurl = tacTools::shorten($f->feed_url);
-								$shortsiteurl = $shortsiteurl ? $shortsiteurl : $f->feed_url;
-								
-								$msg = str_replace(
-									array('%posttitle%','%postlink%','%postauthor%','%posttweeter%','%sitetitle%','%sitelink%'),
-									array($cur_post->post_title,$shortposturl,$creator,$f->feed_tweeter,$f->feed_name,$f->feed_url),
-									$twitter_msg
-								);
-								if (!empty($msg)) {
-									$tac->post('statuses/update',array('status'=>$msg));
-								}
-							}
 						}
 						catch (Exception $e)
 						{

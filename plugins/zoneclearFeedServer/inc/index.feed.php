@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis, BG and contributors
+# Copyright (c) 2009-2011 JC Denis, BG and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -652,9 +652,10 @@ if ($can_view_page)
 	'<p><label class="required">'.__('Owner:').
 	form::field(array('feed_owner'),60,255,$feed_owner,'maximal',2).
 	'</label></p>'.
+	// move this away
 	'<p><label>'.__('Tweeter or Identica ident:').
 	form::field(array('feed_tweeter'),60,64,$feed_tweeter,'maximal',2).
-	'</label></p>'.
+	'</label></p>'.//
 	'<p><label class="required">'.__('Site URL:').
 	form::field(array('feed_url'),60,255,$feed_url,'maximal',2).
 	'</label></p>'.
@@ -666,7 +667,14 @@ if ($can_view_page)
 	'</label></p>'.
 	'<p><label>'.__('Tags:').
 	form::field(array('feed_tags'),60,255,$feed_tags,'maximal',2).
-	'</label></p>'.
+	'</label></p>';
+	
+	
+	# --BEHAVIOR-- zoneclearFeedServerFeedForm
+	$core->callBehavior('zoneclearFeedServerFeedForm',$core,$feed_id);
+
+	
+	echo 
 	'</div>'.
 	
 	'<p class="clear">'.
