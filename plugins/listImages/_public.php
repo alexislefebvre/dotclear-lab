@@ -3,7 +3,7 @@
 #
 # This file is part of listImages plugin for Dotclear 2.
 #
-# Copyright (c) 2008 Kozlika, Franck Paul and contributors
+# Copyright (c) 2011 Kozlika, Franck Paul and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -57,6 +57,7 @@ class widgetEntryImages
 		$link = $w->link;
 		$exif = 0;
 		$legend = $w->legend;
+		$bubble = $w->bubble;
 		$from = $w->from;
 		$start = abs((integer) $w->start);
 		$length = abs((integer) $w->length);
@@ -68,7 +69,7 @@ class widgetEntryImages
 		
 		// Appel de la fonction de traitement pour chacun des billets
 		while ($rs->fetch()) {
-			$ret .= tplEntryImages::EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $from, $start, $length, $rs);
+			$ret .= tplEntryImages::EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $bubble, $from, $start, $length, $rs);
 		}
 		
 		// Fin d'affichage
@@ -88,6 +89,7 @@ class widgetEntryImages
 		link : entry, image (défaut), none
 		from : excerpt, content, full (défaut)
 		legend : none (défaut), image, entry
+		bubble : none, image (défaut), entry
 		start : 1 (défaut) à n
 		length : 0 (défaut) à n, 0 = toutes
 
@@ -113,6 +115,7 @@ class tplEntryImages
 			link : entry, image (défaut), none
 			from : excerpt, content, full (défaut)
 			legend : none (défaut), image, entry
+			bubble : none, image (défaut), entry
 			start : 1 (défaut) à n
 			length : 0 (défaut) à n, 0 = toutes
 	*/
@@ -124,6 +127,7 @@ class tplEntryImages
 		$link = isset($attr['link']) ? trim($attr['link']) : '';
 		$exif = isset($attr['exif']) ? 1 : 0;
 		$legend = isset($attr['legend']) ? trim($attr['legend']) : '';
+		$bubble = isset($attr['bubble']) ? trim($attr['bubble']) : '';
 		$from = isset($attr['from']) ? trim($attr['from']) : '';
 		$start = isset($attr['start']) ? (int)$attr['start'] : 1;
 		$length = isset($attr['length']) ? (int)$attr['length'] : 0;
@@ -134,6 +138,7 @@ class tplEntryImages
 			"'".addslashes($link)."', ".
 			$exif.", ".
 			"'".addslashes($legend)."', ".
+			"'".addslashes($bubble)."', ".
 			"'".addslashes($from)."', ".
 			$start.", ".
 			$length."".
@@ -144,7 +149,7 @@ class tplEntryImages
 	// -----------------------------------
 
 	// Fonction de génération de la liste des images ciblées par la balise template
-	public static function EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $from, $start, $length, $rs = null)
+	public static function EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $bubble, $from, $start, $length, $rs = null)
 	{
 		global $core, $_ctx;
 		
@@ -161,6 +166,9 @@ class tplEntryImages
 		$exif = (bool)$exif;
 		if (!preg_match('/^entry|image|none$/',$legend)) {
 			$legend = 'none';
+		}
+		if (!preg_match('/^entry|image|none$/',$bubble)) {
+			$bubble = 'image';
 		}
 		if (!preg_match('/^excerpt|content|full$/',$from)) {
 			$from = 'full';
@@ -247,6 +255,20 @@ class tplEntryImages
 										$img_legend = '<a href="'.$rs->getURL().'" title="'.sprintf(__('Go to entry %s'),$img_legend).'">'.$img_legend.'</a>';
 									}
 								}
+								
+								if ($bubble != 'none') {
+									// Un titre d'image est requis
+									if ($bubble == 'image') {
+										// Le titre est déjà positionné
+										;
+									} else {
+										// On utilise le titre du billet
+										$img_title = html::escapeHTML($rs->post_title);
+									}
+								} else {
+									// Pas de titre sur l'image
+									$img_title = '';
+								}
 
 								// Ouverture div englobante si en div et légende requise (et existante)
 								if ($legend != 'none' && $html_tag == 'div') {
@@ -267,7 +289,7 @@ class tplEntryImages
 									} else {
 										// Lien vers le billet d'origine
 										$href = $rs->getURL();
-										$href_title = $rs->post_title;
+										$href_title = html::escapeHTML($rs->post_title);
 									}
 									$res .= '<a href="'.$href.'" title="'.$href_title.'">';
 								}

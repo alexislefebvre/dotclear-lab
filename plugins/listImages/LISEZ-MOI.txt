@@ -39,6 +39,10 @@ Ajout d'une légende.
 Valeurs possibles : entry (titre du billet d'origine avec lien), image (title s'il existe, sinon alt s'il existe, sinon légende vide), none (pas de légende)
 	Si la valeur choisie pour html_tag est div, alors la légende est placée dans un <p class="legend"></p> et l'ensemble image + légende est placé dans un <div class="outer_portrait|outer-landscape"></div>.
 	Si la valeur choisie pour html_tag est span ou li, alors la légende est précédée d'un retour à la ligne (<br />) et placée dans un <span class="legend"></span>.
+	
+* bubble
+Définit le titre positionné pour l'image.
+Valeurs possibles : entry (titre du billet d'origine), image (titre de l'image s'il existe), none (pas de titre)
 
 * start
 Choix de la première image listée au sein du billet.

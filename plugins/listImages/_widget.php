@@ -3,7 +3,7 @@
 #
 # This file is part of listImages plugin for Dotclear 2.
 #
-# Copyright (c) 2008 Kozlika, Franck Paul and contributors
+# Copyright (c) 2011 Kozlika, Franck Paul and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -40,6 +40,8 @@ class EntryImagesBehaviors
 		$w->EntryImages->setting('from',__('Search image in'),1,'combo',
 			array('content and excerpt' => 'full', 'excerpt only' => 'excerpt', 'content only' => 'content'));
 		$w->EntryImages->setting('legend',__('Legend'),1,'combo',
+			array('none' => 'none', 'image' => 'image', 'entry' => 'entry'));
+		$w->EntryImages->setting('bubble',__('Image title'),1,'combo',
 			array('none' => 'none', 'image' => 'image', 'entry' => 'entry'));
 		$w->EntryImages->setting('start',__('Start from'),'1');
 		$w->EntryImages->setting('length',__('Number (empty or 0 = all)'),'0');
