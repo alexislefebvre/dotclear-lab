@@ -379,8 +379,11 @@ class tplEntryImages
 			}
 		}
 		// Récupération des dimensions de l'image originale
-		$media_info = getimagesize($root.'/'.$info['dirname'].'/'.$base.'.'.$info['extension']);
-		// Détermination de l'orientation de l'image
+		if (file_exists($root.'/'.$info['dirname'].'/'.$base.'.'.strtoupper($info['extension']))) {
+			$media_info = getimagesize($root.'/'.$info['dirname'].'/'.$base.'.'.strtoupper($info['extension']));
+		} else {
+			$media_info = getimagesize($root.'/'.$info['dirname'].'/'.$base.'.'.$info['extension']);
+		}		// Détermination de l'orientation de l'image
 		$sens = ($media_info[0] > $media_info[1] ? "landscape" : "portrait");
 		
 		if ($res) {
