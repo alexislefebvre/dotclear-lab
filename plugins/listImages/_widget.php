@@ -34,7 +34,7 @@ class EntryImagesBehaviors
 		$w->EntryImages->setting('size',__('Image size'),1,'combo',
 			array('thumbnail' => 't', 'square' => 'sq', 'small' => 's', 'medium' => 'm', 'original' => 'o'));
 		$w->EntryImages->setting('html_tag',__('HTML tag'),1,'combo',
-			array('span' => 'span', 'list' => 'li', 'div' => 'div'));
+			array('span' => 'span', 'list' => 'li', 'div' => 'div', 'none' => 'none'));
 		$w->EntryImages->setting('link',__('Image link'),1,'combo',
 			array('image' => 'image', 'entry' => 'entry', 'none' => 'none'));
 		$w->EntryImages->setting('from',__('Search image in'),1,'combo',

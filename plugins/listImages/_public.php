@@ -85,7 +85,7 @@ class widgetEntryImages
 
 	Attributs (optionnels) :
 		size :	sq, t (défaut), s, m, o (voir tailles de miniature du gestionnaire de médias)
-		html_tag : span (défaut), li, div
+		html_tag : span (défaut), li, div, none
 		link : entry, image (défaut), none
 		from : excerpt, content, full (défaut)
 		legend : none (défaut), image, entry
@@ -111,7 +111,7 @@ class tplEntryImages
 			{{tpl:EntryImages}} -> extraira toutes les images du billet courant et les retourne sous la forme d'une série de span contenant l'image au format thumbnail liée vers l'image au format original
 		Attributs (optionnels) :
 			size :	sq, t (défaut), s, m, o (voir tailles de miniature du gestionnaire de médias)
-			html_tag : span (défaut), li, div
+			html_tag : span (défaut), li, div, none
 			link : entry, image (défaut), none
 			from : excerpt, content, full (défaut)
 			legend : none (défaut), image, entry
@@ -157,7 +157,7 @@ class tplEntryImages
 		if (!preg_match('/^sq|t|s|m|o$/',$size)) {
 			$size = 't';
 		}
-		if (!preg_match('/^span|li|div$/',$html_tag)) {
+		if (!preg_match('/^span|li|div|none$/',$html_tag)) {
 			$html_tag = 'span';
 		}
 		if (!preg_match('/^entry|image|none$/',$link)) {
@@ -277,55 +277,62 @@ class tplEntryImages
 								}
 
 								// Ouverture balise
-								$res .= '<'.$html_tag.' class="'.$sens.'">';
+								if ($html_tag != 'none') {
+									// Début de la balise englobante
+									$res .= '<'.$html_tag.' class="'.$sens.'">';
 
-								if ($link != 'none') {
-									// Si un lien est requis
-									if ($link == 'image') {
-										// Lien vers l'image originale
-										$href = self::ContentImageLookup($p_root,$i,"o",$sens);
-										$href = $p_url.(dirname($i) != '/' ? dirname($i) : '').'/'.$href;
-										$href_title = $img_alt;
-									} else {
-										// Lien vers le billet d'origine
-										$href = $rs->getURL();
-										$href_title = html::escapeHTML($rs->post_title);
+									if ($link != 'none') {
+										// Si un lien est requis
+										if ($link == 'image') {
+											// Lien vers l'image originale
+											$href = self::ContentImageLookup($p_root,$i,"o",$sens);
+											$href = $p_url.(dirname($i) != '/' ? dirname($i) : '').'/'.$href;
+											$href_title = $img_alt;
+										} else {
+											// Lien vers le billet d'origine
+											$href = $rs->getURL();
+											$href_title = html::escapeHTML($rs->post_title);
+										}
+										$res .= '<a href="'.$href.'" title="'.$href_title.'">';
 									}
-									$res .= '<a href="'.$href.'" title="'.$href_title.'">';
 								}
 
+								// Mise en place de l'image
 								$res .= '<img src="'.$src_img.'" alt="'.$img_alt.'" '.($img_title == '' ? '' : 'title="'.$img_title.'" ').'/>';
 
-								if ($link != 'none') {
-									// Fermeture du lien requis
-									$res .= '</a>';
-								}
+								if ($html_tag != 'none') {
+									// Fin de la balise englobante
+									if ($link != 'none') {
+										// Fermeture du lien requis
+										$res .= '</a>';
+									}
 
-								if ($legend != 'none' && $html_tag == 'div') {
-									// Fermeture balise
-									$res .= '</'.$html_tag.'>';
-									$res .= "\n";
-								}
+									if ($legend != 'none' && $html_tag == 'div') {
+										// Fermeture balise
+										$res .= '</'.$html_tag.'>';
+										$res .= "\n";
+									}
 
-								if ($legend != 'none') {
-									// Une légende est requise
-									if ($img_legend != '') {
-										if ($html_tag == 'div') {
-											$res .= '<p class="legend">'.$img_legend.'</p>';
-										} else {
-											$res .= '<br /><span class="legend">'.$img_legend.'</span>';
+									if ($legend != 'none') {
+										// Une légende est requise
+										if ($img_legend != '') {
+											if ($html_tag == 'div') {
+												$res .= '<p class="legend">'.$img_legend.'</p>';
+											} else {
+												$res .= '<br /><span class="legend">'.$img_legend.'</span>';
+											}
 										}
 									}
-								}
 
-								// Fermeture div englobante si en div et légende requise (et existante)
-								if ($legend != 'none' && $html_tag == 'div') {
-									$res .= '</div>';
-									$res .= "\n";
-								} else {
-									// Fermeture balise
-									$res .= '</'.$html_tag.'>';
-									$res .= "\n";
+									// Fermeture div englobante si en div et légende requise (et existante)
+									if ($legend != 'none' && $html_tag == 'div') {
+										$res .= '</div>';
+										$res .= "\n";
+									} else {
+										// Fermeture balise
+										$res .= '</'.$html_tag.'>';
+										$res .= "\n";
+									}
 								}
 							} else {
 								// L'image au format demandé n'a pas été trouvée, on cherchera une image de plus pour tenter de satisfaire la demande

@@ -22,7 +22,7 @@ Valeurs possibles : sq (square), t (thumbnail), s (small), m (medium), o (origin
 
 * html_tag
 Balisage html pour chaque item.
-Valeurs possibles : span (élément), li (élément de liste), div (boîte),
+Valeurs possibles : span (élément), li (élément de liste), div (boîte), none (aucune balise)
 	Classe CSS : une classe "portrait" ou "landscape" sera ajoutée à cette balise en fonction du sens de l'image.
 	Attention si vous choisissez li, pensez à placer en début et fin de boucle la balise html englobante (ul ou ol) ; si vous choisissez span, pensez à placer en début et fin de boucle la balise html englobante (p). 
 
