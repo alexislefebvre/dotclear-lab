@@ -47,8 +47,9 @@ class contributeDocument extends dcUrlHandlers
 		# /from /dotclear/inc/public/lib.urlhandlers.php
 		
 		global $core;
-		
-		$settings =& $core->blog->settings;
+
+		$core->blog->settings->addNamespace('contribute');
+		$settings =& $core->blog->settings->contribute;
 
 		if (!$settings->contribute_active)
 		{
@@ -675,6 +676,10 @@ class contributeDocument extends dcUrlHandlers
 							$content .= sprintf(__('Email address: %s'),$mail);
 							$content .= "\n\n";
 						}
+
+						# IP address
+						$content .= sprintf(__('IP Address: %s'),http::realIP());
+						$content .= "\n\n";
 						
 						$params = array();
 						$params['post_id'] = $post_id;

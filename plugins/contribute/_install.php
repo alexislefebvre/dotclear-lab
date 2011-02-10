@@ -35,14 +35,12 @@ $i_version = $core->getVersion('contribute');
 if (version_compare($i_version,$m_version,'>=')) {return;}
 
 # default settings
-$core->blog->settings->setNameSpace('contribute');
-
-$core->blog->settings->put('contribute_help',
+$core->blog->settings->addNamespace('contribute');
+$core->blog->settings->contribute->put('contribute_help',
 	base64_encode('<p>help</p>'),'string',
 	'Contribute help',
 	# don't replace old value, global setting
 	false,true);
-$core->blog->settings->setNameSpace('system');
 
 # La procédure d'installation commence vraiment là
 $core->setVersion('contribute',$m_version);

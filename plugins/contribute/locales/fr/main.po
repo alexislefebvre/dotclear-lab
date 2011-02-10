@@ -1,33 +1,48 @@
+# Language: Français
+# Module: contribute - 1.0-alpha31
+# Date: 2011-02-10 18:55:55
+# Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: contribute 1.0-alpha29\n"
+"Project-Id-Version: contribute 1.0-alpha31\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-07-08T17:35:32+00:00\n"
+"PO-Revision-Date: 2011-02-10T18:55:55+00:00\n"
 "Last-Translator: Ubuntu\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: _admin.php:26
+#: _widget.php:40
+#: _widget.php:43
+#: default-templates/contribute.html:9
+#: default-templates/contribute.html:150
+#: index.php:150
+#: index.php:170
+#: index.php:406
+#: index.php:411
 msgid "Contribute"
 msgstr "Contribuer"
 
+#: _admin.php:163
 msgid "Delete this author"
 msgstr "Effacer cet auteur"
 
+#: _widget.php:42
 msgid "Title:"
 msgstr "Titre&nbsp;:"
 
+#: _widget.php:46
 msgid "Write a post for this blog"
 msgstr "Écrire un billet pour ce blog"
 
+#: inc/lib.contribute.document.php:184
 msgid "No default post."
 msgstr "Pas de billet par défaut."
 
+#: inc/lib.contribute.document.php:689
 msgid "URL: %s"
 msgstr "URL : %s"
-
-msgid "Edit this entry: %s"
-msgstr "Éditer ce billet : %s"
 

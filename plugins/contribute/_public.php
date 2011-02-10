@@ -107,8 +107,13 @@ class contributeBehaviors
 {
 	public static function coreBlogGetPosts($rs)
 	{
-		if (!$GLOBALS['core']->blog->settings->contribute_active) {return;}
-		$rs->extend('rsExtContributePosts');
+		global $core;
+		
+		$core->blog->settings->addNamespace('contribute');
+		if ($GLOBALS['core']->blog->settings->contribute->contribute_active)
+		{
+			$rs->extend('rsExtContributePosts');
+		}
 	}
 }
 

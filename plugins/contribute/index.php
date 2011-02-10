@@ -25,13 +25,13 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
-$settings =& $core->blog->settings;
+$core->blog->settings->addNamespace('contribute');
+$settings =& $core->blog->settings->contribute;
 
 try
 {
 	if (!empty($_POST['saveconfig']))
 	{
-		$settings->setNameSpace('contribute');
 		$settings->put('contribute_active',!empty($_POST['contribute_active']),
 			'boolean','Enable Contribute');
 		$settings->put('contribute_user',$_POST['contribute_user'],
@@ -90,8 +90,6 @@ try
 		$mymeta_values = base64_encode(serialize($mymeta_values));
 		$settings->put('contribute_mymeta_values',$mymeta_values,'string',
 			'Active My Meta values');
-		# inspired by lightbox/admin.php
-		$settings->setNameSpace('system');
 		
 		http::redirect($p_url.'&saveconfig=1');
 	}

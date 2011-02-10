@@ -135,32 +135,32 @@ class contributeTpl
 		
 		if (isset($attr['excerpt']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_excerpt';
+			$if[] = '$core->blog->settings->contribute->contribute_allow_excerpt';
 		}
 		
 		if (isset($attr['category']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_category';
+			$if[] = '$core->blog->settings->contribute->contribute_allow_category';
 		}
 		
 		if (isset($attr['tags']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_tags';
+			$if[] = '$core->blog->settings->contribute->contribute_allow_tags';
 		}
 		
 		if (isset($attr['mymeta']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_mymeta';
+			$if[] = '$core->blog->settings->contribute->contribute_allow_mymeta';
 		}
 		
 		if (isset($attr['notes']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_notes';
+			$if[] = '$core->blog->settings->contribute->contribute_allow_notes';
 		}
 		
 		if (isset($attr['author']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_author';
+			$if[] = '$core->blog->settings->contribute->contribute_allow_author';
 		}
 		
 		if (!empty($if)) {
@@ -201,7 +201,7 @@ class contributeTpl
 	public static function ContributeIfNameAndEmailAreNotRequired($attr,
 		$content)
 	{
-		$if = '$core->blog->settings->contribute_require_name_email !== true';
+		$if = '$core->blog->settings->contribute->contribute_require_name_email !== true';
 		
 		return '<?php if('.$if.') : ?>'.
 			$content."\n".

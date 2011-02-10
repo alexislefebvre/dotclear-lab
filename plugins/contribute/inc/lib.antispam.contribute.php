@@ -44,7 +44,7 @@ class contributeAntispam
 		self::$filters->init($core->spamfilters);
 	}
 	
-	public static function isSpam(&$cur)
+	public static function isSpam($cur)
 	{
 		self::initFilters();
 		return(self::$filters->isSpam($cur));

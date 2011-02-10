@@ -82,7 +82,7 @@ class contribute
 		}
 		
 		$mymeta_values = @unserialize(@base64_decode(
-			$core->blog->settings->contribute_mymeta_values));
+			$core->blog->settings->contribute->contribute_mymeta_values));
 		
 		if (!is_array($mymeta_values)) {$mymeta_values = array();}
 		
@@ -162,7 +162,7 @@ class contribute
 	{
 		global $core;
 		
-		if (!$core->blog->settings->contribute_allow_mymeta) {return;}
+		if (!$core->blog->settings->contribute->contribute_allow_mymeta) {return;}
 		
 		$array = array();
 		
