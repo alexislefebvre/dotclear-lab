@@ -69,7 +69,7 @@ class urlKutrl extends dcUrlHandlers
 		$_ctx->kutrl_hmf = hmfKutrl::create();
 		$_ctx->kutrl_hmfp = hmfKutrl::protect($_ctx->kutrl_hmf);
 		
-		$kut = new $core->kutrlServices['local']($core,$s->kutrl_limit_to_blog);
+		$kut = new localKutrlService($core);
 		
 		# Nothing on url
 		if ($m[1] == '/')
@@ -178,7 +178,7 @@ class urlKutrl extends dcUrlHandlers
 
 			if (!$err)
 			{
-				if ($s->kutrl_limit_to_blog && !$kut->isBlogUrl($url))
+				if (!$kut->allow_external_url && !$kut->isBlogUrl($url))
 				{
 					$err = true;
 					$_ctx->kutrl_msg = __('Short links are limited to this blog URL.');
@@ -350,10 +350,11 @@ class pubKutrl
 		# Twitter feature when auto create short link on template
 		$_ctx->kutrl_twit_ontpl = (boolean) $s->kutrl_twit_ontpl;
 		
-		if (!$s->kutrl_active || !$s->kutrl_tpl_service 
-		 || !isset($core->kutrlServices[$s->kutrl_tpl_service])) return;
+		if (!$s->kutrl_active || !$s->kutrl_tpl_service) return;
 		
-		$_ctx->kutrl = new $core->kutrlServices[$s->kutrl_tpl_service]($core,$s->kutrl_limit_to_blog);
+		if (null === ($kut = kutrl::quickPlace('tpl'))) return;
+		
+		$_ctx->kutrl = $kut;
 	}
 	
 	public static function publicHeadContent($core)

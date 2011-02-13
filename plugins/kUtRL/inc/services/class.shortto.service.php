@@ -12,25 +12,18 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-class shorttoKutrlService extends kutrlServices
+class shorttoKutrlService extends kutrlService
 {
-	public $core;
-
-	public $id = 'shortto';
-	public $name = 'short.to';
-	public $home = 'http://short.to';
-
-	private $url_api = 'http://short.to/s.txt';
-	private $url_test = 'http://dotclear.jcdenis.com/go/kUtRL';
-
-	public function __construct($core,$limit_to_blog=true)
-	{
-		parent::__construct($core,$limit_to_blog);
-
-		$this->url_base = 'http://short.to/';
-		$this->url_min_length = 25;
-	}
-
+	protected $config = array(
+		'id' => 'shortto',
+		'name' => 'short.to',
+		'home' => 'http://short.to',
+		
+		'url_api' => 'http://short.to/s.txt',
+		'url_base' => 'http://short.to/',
+		'url_min_len' => 25
+	);
+	
 	public function testService()
 	{
 		$arg = array('url' => urlencode($this->url_test));
@@ -41,7 +34,7 @@ class shorttoKutrlService extends kutrlServices
 		}
 		return true;
 	}
-
+	
 	public function createHash($url,$hash=null)
 	{
 		$arg = array('url' => $url);
@@ -51,12 +44,12 @@ class shorttoKutrlService extends kutrlServices
 			$this->error->add(__('Service is unavailable.'));
 			return false;
 		}
-
+		
 		$rs = new ArrayObject();
 		$rs->hash = str_replace($this->url_base,'',$response);
 		$rs->url = $url;
 		$rs->type = $this->id;
-
+		
 		return $rs;
 	}
 }

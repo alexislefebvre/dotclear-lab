@@ -12,67 +12,65 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-class yourlsKutrlService extends kutrlServices
+class yourlsKutrlService extends kutrlService
 {
-	public $id = 'yourls';
-	public $name = 'YOURLS';
-	public $home = 'http://yourls.org';
-
-	private $url_api = '';
-	private $url_test = 'http://dotclear.jcdenis.com/go/kUtRL';
+	protected $config = array(
+		'id' => 'yourls',
+		'name' => 'YOURLS',
+		'home' => 'http://yourls.org'
+	);
+	
 	private $args = array(
 		'username' => '',
 		'password' => '',
 		'format' => 'xml',
 		'action' => 'shorturl'
 	);
-
-	public function __construct($core,$limit_to_blog=true)
+	
+	protected function init()
 	{
-		parent::__construct($core,$limit_to_blog);
-
-		$this->args['username'] = $this->s->kutrl_srv_yourls_username;
-		$this->args['password'] = $this->s->kutrl_srv_yourls_password;
-
-		$base = (string) $this->s->kutrl_srv_yourls_base;
+		$this->args['username'] = $this->settings->kutrl_srv_yourls_username;
+		$this->args['password'] = $this->settings->kutrl_srv_yourls_password;
+		
+		$base = (string) $this->settings->kutrl_srv_yourls_base;
 		//if (!empty($base) && substr($base,-1,1) != '/') $base .= '/';
-
-		$this->url_api = $base;
-		$this->url_base = $base;
-		$this->url_min_length = strlen($base)+3;
+		
+		$this->config['url_api'] = $base;
+		$this->config['url_base'] = $base;
+		$this->config['url_min_len'] = strlen($base)+3;
 	}
-
+	
 	public function saveSettings()
 	{
-		$this->s->put('kutrl_srv_yourls_username',$_POST['kutrl_srv_yourls_username']);
-		$this->s->put('kutrl_srv_yourls_password',$_POST['kutrl_srv_yourls_password']);
-		$this->s->put('kutrl_srv_yourls_base',$_POST['kutrl_srv_yourls_base']);
+		$this->settings->put('kutrl_srv_yourls_username',$_POST['kutrl_srv_yourls_username']);
+		$this->settings->put('kutrl_srv_yourls_password',$_POST['kutrl_srv_yourls_password']);
+		$this->settings->put('kutrl_srv_yourls_base',$_POST['kutrl_srv_yourls_base']);
 	}
-
+	
 	public function settingsForm()
 	{
 		echo 
 	    '<p><label class="classic">'.
 		__('Url of the service:').'<br />'.
-	    form::field(array('kutrl_srv_yourls_base'),50,255,$this->s->kutrl_srv_yourls_base).
+	    form::field(array('kutrl_srv_yourls_base'),50,255,$this->settings->kutrl_srv_yourls_base).
 		'</label></p>'.
 	    '<p class="form-note">'.
 	    __('This is the URL of the YOURLS service you want to use. Ex: "http://www.smaller.org/api.php".').
 	    '</p>'.
 		'<p><label class="classic">'.__('Login:').'<br />'.
-		form::field(array('kutrl_srv_yourls_username'),50,255,$this->s->kutrl_srv_yourls_username).
+		form::field(array('kutrl_srv_yourls_username'),50,255,$this->settings->kutrl_srv_yourls_username).
 		'</label></p>'.
 		'<p class="form-note">'.
 		__('This is your user name to sign up to this YOURLS service.').
 		'</p>'.
 		'<p><label class="classic">'.__('Password:').'<br />'.
-		form::field(array('kutrl_srv_yourls_password'),50,255,$this->s->kutrl_srv_yourls_password).
+		form::field(array('kutrl_srv_yourls_password'),50,255,$this->settings->kutrl_srv_yourls_password).
 		'</label></p>'.
 		'<p class="form-note">'.
 		__('This is your password to sign up to this YOURLS service.').
 		'</p>';
 	}
-
+	
 	public function testService()
 	{
 		if (empty($this->url_api))
@@ -80,17 +78,17 @@ class yourlsKutrlService extends kutrlServices
 			$this->error->add(__('Service is not well configured.'));
 			return false;
 		}
-
+		
 		$args = $this->args;
 		$args['url'] = $this->url_test;
-
+		
 		if (!($response = self::post($this->url_api,$this->args,true)))
 		{
 			$this->error->add(__('Service is unavailable.'));
 			return false;
 		}
 		$rsp = @simplexml_load_string($response);
-
+		
 		if ($rsp && $rsp->status == 'success')
 		{
 			return true;
@@ -98,26 +96,27 @@ class yourlsKutrlService extends kutrlServices
 		$this->error->add(__('Authentication to service failed.'));
 		return false;
 	}
-
+	
 	public function createHash($url,$hash=null)
 	{
 		$args = $this->args;
 		$args['url'] = $url;
-
+		
 		if (!($response = self::post($this->url_api,$args,true)))
 		{
 			$this->error->add(__('Service is unavailable.'));
 			return false;
 		}
-
+		
 		$rsp = @simplexml_load_string($response);
-
+		
 		if ($rsp && $rsp->status == 'success')
 		{
 			$rs = new ArrayObject();
 			$rs->hash = $rsp->url[0]->keyword;
 			$rs->url = $url;
 			$rs->type = $this->id;
+			
 			return $rs;
 		}
 		$this->error->add(__('Unreadable service response.'));

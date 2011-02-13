@@ -14,16 +14,12 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-$section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
-$img_green = '<img src="images/check-on.png" alt="ok" />';
-$img_red = '<img src="images/check-off.png" alt="fail" />';
-
 # Save services settings
 if ($action == 'saveservice')
 {
 	try
 	{
-		foreach($core->kutrlServices as $service_id => $service)
+		foreach(kutrl::getServices($core) as $service_id => $service)
 		{
 			$o = new $service($core);
 			$o->saveSettings();
@@ -53,7 +49,7 @@ dcPage::jsVar('jcToolsBox.prototype.section',$section).
 '</h2>'.$msg.'
 <form id="service-form" method="post" action="'.$p_url.'">';
 
-foreach($core->kutrlServices as $service_id => $service)
+foreach(kutrl::getServices($core) as $service_id => $service)
 {
 	$o = new $service($core);
 	
@@ -87,7 +83,8 @@ echo '
 $core->formNonce().
 form::hidden(array('p'),'kUtRL').
 form::hidden(array('part'),'service').
-form::hidden(array('action'),'saveservice').'
+form::hidden(array('action'),'saveservice').
+form::hidden(array('section'),$section).'
 </p></div>
 </form>';
 dcPage::helpBlock('kUtRL');

@@ -12,30 +12,32 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-class localKutrlService extends kutrlServices
+class localKutrlService extends kutrlService
 {
-	public $id = 'local';
-	public $name = 'kUtRL';
-	public $home = 'http://kutrl.fr';
-
-	public function __construct($core,$limit_to_blog=true)
+	protected $config = array(
+		'id' => 'local',
+		'name' => 'kUtRL',
+		'home' => 'http://kutrl.fr',
+		
+		'allow_custom_hash' => true
+	);
+	
+	protected function init()
 	{
-		parent::__construct($core,$limit_to_blog);
+		$protocols = (string) $this->settings->kutrl_srv_local_protocols;
+		$this->config['allow_protocols'] = empty($protocols) ? array() : explode(',',$protocols);
 
-		$protocols = (string) $this->s->kutrl_srv_local_protocols;
-		$this->allowed_protocols = empty($protocols) ? array() : explode(',',$protocols);
-		$this->allow_customized_hash = true;
-
-		$this->url_base = $core->blog->url.$core->url->getBase('kutrl').'/';
-		$this->url_min_length = strlen($this->url_base) + 2;
+		$this->config['url_base'] = $this->core->blog->url.$this->core->url->getBase('kutrl').'/';
+		$this->config['url_min_len'] = strlen($this->url_base) + 2;
+		
 	}
-
+	
 	public function saveSettings()
 	{
-		$this->s->put('kutrl_srv_local_protocols',$_POST['kutrl_srv_local_protocols'],'string');
-		$this->s->put('kutrl_srv_local_public',isset($_POST['kutrl_srv_local_public']),'boolean');
-		$this->s->put('kutrl_srv_local_css',$_POST['kutrl_srv_local_css'],'string');
-		$this->s->put('kutrl_srv_local_404_active',isset($_POST['kutrl_srv_local_404_active']),'boolean');
+		$this->settings->put('kutrl_srv_local_protocols',$_POST['kutrl_srv_local_protocols'],'string');
+		$this->settings->put('kutrl_srv_local_public',isset($_POST['kutrl_srv_local_public']),'boolean');
+		$this->settings->put('kutrl_srv_local_css',$_POST['kutrl_srv_local_css'],'string');
+		$this->settings->put('kutrl_srv_local_404_active',isset($_POST['kutrl_srv_local_404_active']),'boolean');
 	}
 
 	public function settingsForm()
@@ -46,7 +48,7 @@ class localKutrlService extends kutrlServices
 		'<p><strong>'.__('Settings:').'</strong></p>'.
 	    '<p><label class="classic">'.
 		__('Allowed protocols:').'<br />'.
-	    form::field(array('kutrl_srv_local_protocols'),50,255,$this->s->kutrl_srv_local_protocols).
+	    form::field(array('kutrl_srv_local_protocols'),50,255,$this->settings->kutrl_srv_local_protocols).
 		'</label></p>'.
 
 	    '<p class="form-note">'.
@@ -54,17 +56,17 @@ class localKutrlService extends kutrlServices
 	    '</p>'.
 
 		'<p><label class="classic">'.
-		form::checkbox(array('kutrl_srv_local_public'),'1',$this->s->kutrl_srv_local_public).' '.
+		form::checkbox(array('kutrl_srv_local_public'),'1',$this->settings->kutrl_srv_local_public).' '.
 		__('Enable public page for visitors to shorten links').
 		'</label></p>'.
 
 		'<p class="area" id="style-area"><label for="_style">'.__('CSS:').'</label>'.
-		form::textarea('kutrl_srv_local_css',50,3,html::escapeHTML($this->s->kutrl_srv_local_css),'',2).
+		form::textarea('kutrl_srv_local_css',50,3,html::escapeHTML($this->settings->kutrl_srv_local_css),'',2).
 		'</p>'.
 		'<p class="form-note">'.__('You can add here special cascading style sheet. Body of page has class "dc-kutrl" and widgets have class "shortenkutrlwidget" and "rankkutrlwidget".').'</p>'.
 
 		'<p><label class="classic">'.
-		form::checkbox(array('kutrl_srv_local_404_active'),'1',$this->s->kutrl_srv_local_404_active).' '.
+		form::checkbox(array('kutrl_srv_local_404_active'),'1',$this->settings->kutrl_srv_local_404_active).' '.
 		__('Enable special 404 error public page for unknow urls').
 		'</label></p>'.
 		'<p class="form-note">'.__('If this is not activated, the default 404 page of the theme will be display.').'</p>'.
@@ -98,7 +100,7 @@ class localKutrlService extends kutrlServices
 
 	public function testService()
 	{
-		if (!empty($this->allowed_protocols))
+		if (!empty($this->allow_protocols))
 		{
 			return true;
 		}
@@ -147,7 +149,7 @@ class localKutrlService extends kutrlServices
 			$this->error->add(__('Custom short link is not valid.'));
 			return false;
 		}
-
+		
 		# Save link
 		try {
 			$this->log->insert($rs->url,$rs->hash,$type,$rs->type);
@@ -159,14 +161,14 @@ class localKutrlService extends kutrlServices
 		}
 		return false;
 	}
-
+	
 	protected function last($type)
 	{
 		return 
 		false === ($rs = $this->log->select(null,null,$type,'local')) ?
 		-1 : $rs->hash;
 	}
-
+	
 	protected function next($last_id,$prefix='')
 	{
 		if ($last_id == -1)
@@ -178,25 +180,25 @@ class localKutrlService extends kutrlServices
 			for($x = 1; $x <= strlen($last_id); $x++)
 			{
 				$pos = strlen($last_id) - $x;
-
+				
 				if ($last_id[$pos] != 'z')
 				{
 					$next_id = $this->increment($last_id,$pos);
 					break;
 				}
 			}
-
+			
 			if (!isset($next_id))
 			{
 				$next_id = $this->append($last_id);
 			}
 		}
-
+		
 		return 
 		false === $this->log->select(null,$prefix.$next_id,null,'local') ?
 		$next_id : $this->next($next_id,$prefix);
 	}
-
+	
 	protected function append($id)
 	{
 		$id = str_split($id);
@@ -206,12 +208,12 @@ class localKutrlService extends kutrlServices
 		}
 		return implode($id).'0';
 	}
-
+	
 	protected function increment($id,$pos)
 	{
 		$id = str_split($id);
 		$char = $id[$pos];
-
+		
 		if (is_numeric($char))
 		{
 			$new_char = $char < 9 ? $char + 1 : 'a';
@@ -229,10 +231,10 @@ class localKutrlService extends kutrlServices
 				$id[$x] = 0;
 			}
 		}
-
+		
 		return implode($id);
 	}
-
+	
 	public function getUrl($hash)
 	{
 		if (false === ($rs = $this->log->select(null,$hash,null,'local')))
@@ -247,7 +249,7 @@ class localKutrlService extends kutrlServices
 		$this->log->counter($rs->id,'up');
 		return $rs->url;
 	}
-
+	
 	public function deleteUrl($url,$delete=false)
 	{
 		if (false === ($rs = $this->log->select($url,null,null,'local')))

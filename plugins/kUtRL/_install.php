@@ -57,7 +57,7 @@ try
 	$s->put('kutrl_admin_service','local','string','Service to use to shorten links on admin',false,true);
 	$s->put('kutrl_tpl_service','local','string','Service to use to shorten links on template',false,true);
 	$s->put('kutrl_wiki_service','local','string','Service to use to shorten links on contents',false,true);
-	$s->put('kutrl_limit_to_blog',false,'boolean','Limited short url to current blog\'s url',false,true);
+	$s->put('kutrl_allow_external_url',true,'boolean','Limited short url to current blog\'s url',false,true);
 	$s->put('kutrl_tpl_passive',true,'boolean','Return long url on kutrl tags if kutrl is unactivate',false,true);
 	$s->put('kutrl_tpl_active',false,'boolean','Return short url on dotclear tags if kutrl is active',false,true);
 	$s->put('kutrl_admin_entry_default',true,'boolean','Create short link an new entry by default',false,true);

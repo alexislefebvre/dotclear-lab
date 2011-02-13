@@ -54,17 +54,9 @@ class adminKutrl
 		global $core;
 		$s = $core->blog->settings->kUtRL;
 		
-		if (!$s->kutrl_active || !$s->kutrl_admin_service
-		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
+		if (!$s->kutrl_active || !$s->kutrl_admin_service) return;
 		
-		try
-		{
-			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
-		}
-		catch (Exception $e)
-		{
-			return;
-		}
+		if (null === ($kut = kutrl::quickPlace('admin'))) return;
 		
 		if ($post)
 		{
@@ -97,7 +89,7 @@ class adminKutrl
 			form::checkbox('kutrl_create',1,$chk,'',3).' '.
 			__('Create short link').'</label></p>';
 			
-			if ($kut->allow_customized_hash)
+			if ($kut->allow_custom_hash)
 			{
 				echo 
 				'<p class="classic">'.
@@ -138,18 +130,9 @@ class adminKutrl
 		$s = $core->blog->settings->kUtRL;
 		
 		# Create: see adminAfterPostCreate
-		if (!empty($_POST['kutrl_create'])
-		 || !$s->kutrl_active || !$s->kutrl_admin_service 
-		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
+		if (!empty($_POST['kutrl_create']) || !$s->kutrl_active) return;
 		
-		try
-		{
-			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
-		}
-		catch (Exception $e)
-		{
-			return;
-		}
+		if (null === ($kut = kutrl::quickPlace('admin'))) return;
 		
 		if (empty($_POST['kutrl_old_post_url'])) return;
 		
@@ -192,25 +175,16 @@ class adminKutrl
 		global $core;
 		$s = $core->blog->settings->kUtRL;
 		
-		if (empty($_POST['kutrl_create']) 
-		 || !$s->kutrl_active || !$s->kutrl_admin_service 
-		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
+		if (empty($_POST['kutrl_create']) || !$s->kutrl_active) return;
 		
-		try
-		{
-			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
-		}
-		catch (Exception $e)
-		{
-			return;
-		}
+		if (null === ($kut = kutrl::quickPlace('admin'))) return;
 		
 		$rs = $core->blog->getPosts(array('post_id'=>$post_id));
 		$title = html::escapeHTML($rs->post_title);
 		
 		if ($rs->isEmpty()) return;
 		
-		$custom = !empty($_POST['kutrl_create_custom']) && $kut->allow_customized_hash ?
+		$custom = !empty($_POST['kutrl_create_custom']) && $kut->allow_custom_hash ?
 			$_POST['kutrl_create_custom'] : null;
 		
 		$rs = $kut->hash($rs->getURL(),$custom);
@@ -228,17 +202,9 @@ class adminKutrl
 		global $core;
 		$s = $core->blog->settings->kUtRL;
 		
-		if (!$s->kutrl_active || !$s->kutrl_admin_service 
-		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
+		if (!$s->kutrl_active) return;
 		
-		try
-		{
-			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
-		}
-		catch (Exception $e)
-		{
-			return;
-		}
+		if (null === ($kut = kutrl::quickPlace('admin'))) return;
 		
 		$rs = $core->blog->getPosts(array('post_id'=>$post_id));
 		
@@ -252,9 +218,8 @@ class adminKutrl
 		global $core;
 		$s = $core->blog->settings->kUtRL;
 		
-		if (!$s->kutrl_active || !$s->kutrl_admin_service
-		 || !$core->auth->check('admin',$core->blog->id) 
-		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
+		if (!$s->kutrl_active 
+		 || !$core->auth->check('admin',$core->blog->id)) return;
 		
 		$args[0][__('kUtRL')][__('create short link')] = 'kutrl_create';
 		$args[0][__('kUtRL')][__('delete short link')] = 'kutrl_delete';
@@ -267,17 +232,9 @@ class adminKutrl
 		
 		$s = $core->blog->settings->kUtRL;
 		
-		if (!$s->kutrl_active || !$s->kutrl_admin_service 
-		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
+		if (!$s->kutrl_active) return;
 		
-		try
-		{
-			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
-		}
-		catch (Exception $e)
-		{
-			return;
-		}
+		if (null === ($kut = kutrl::quickPlace('admin'))) return;
 		
 		while ($posts->fetch())
 		{

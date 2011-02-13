@@ -14,20 +14,14 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-$s_admin_service = (string) $s->kutrl_admin_service;
-$s_limit_to_blog = (boolean) $s->kutrl_limit_to_blog;
-
-if (isset($core->kutrlServices[$s_admin_service]))
-{
-	$kut = new $core->kutrlServices[$s_admin_service]($core,$s_limit_to_blog);
-}
+$kut = kutrl::quickPlace('admin');
 
 # Create a new link
 if ($action == 'createlink') {
 
 	try
 	{
-		if (!isset($core->kutrlServices[$s_admin_service]))
+		if (null === $kut)
 			throw new Exception('Unknow service');
 		
 		$url = trim($core->con->escape($_POST['str']));
@@ -39,7 +33,7 @@ if ($action == 'createlink') {
 		if (!$kut->testService())
 			throw new Exception(__('Service is not well configured.'));
 		
-		if (null !== $hash && !$kut->allow_customized_hash)
+		if (null !== $hash && !$kut->allow_custom_hash)
 			throw new Exception(__('This service does not allowed custom hash.'));
 		
 		if (!$kut->isValidUrl($url))
@@ -51,7 +45,7 @@ if ($action == 'createlink') {
 		if (!$kut->isProtocolUrl($url))
 			throw new Exception(__('This type of link is not allowed.'));
 		
-		if ($s_limit_to_blog && !$kut->isBlogUrl($url))
+		if (!$kut->allow_external_url && !$kut->isBlogUrl($url))
 			throw new Exception(__('Short links are limited to this blog URL.'));
 		
 		if ($kut->isServiceUrl($url))
@@ -115,7 +109,7 @@ echo '
 ' &rsaquo; '.__('New link').
 '</h2>'.$msg;
 
-if (!isset($core->kutrlServices[$s_admin_service]))
+if (null === $kut)
 {
 	echo '<p>'.__('You must set an admin service.').'</p>';
 }
@@ -128,7 +122,7 @@ else
 	<p class="classic"><label for="str">'.__('Long link:').
 	form::field('str',100,255,'').'</label></p>';
 	
-	if ($kut->allow_customized_hash)
+	if ($kut->allow_custom_hash)
 	{
 		echo
 		'<p class="classic"><label for="custom">'.

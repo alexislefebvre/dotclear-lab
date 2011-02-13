@@ -25,19 +25,11 @@ class kutrlWiki
 		if (!empty($_POST['preview']) 
 		 || !empty($GLOBALS['_ctx']) && $GLOBALS['_ctx']->preview) return;
 		
-		if (!$s->kutrl_active || !$s->kutrl_wiki_service 
-		 || !isset($core->kutrlServices[$s->kutrl_wiki_service])) return;
+		if (!$s->kutrl_active) return;
 		
-		try
-		{
-			$kut = new $core->kutrlServices[$s->kutrl_wiki_service]($core,$s->kutrl_limit_to_blog);
-		}
-		catch (Exception $e)
-		{
-			return;
-		}
+		if (null === ($kut = kutrl::quickPlace('admin'))) return;
 		
-		foreach($kut->allowed_protocols as $protocol)
+		foreach($kut->allow_protocols as $protocol)
 		{
 			$wiki2xhtml->registerFunction(
 				'url:'.$protocol,
@@ -51,17 +43,9 @@ class kutrlWiki
 		global $core;
 		$s = $core->blog->settings->kUtRL;
 		
-		if (!$s->kutrl_active || !$s->kutrl_wiki_service 
-		 || !isset($core->kutrlServices[$s->kutrl_wiki_service])) return;
+		if (!$s->kutrl_active) return;
 		
-		try
-		{
-			$kut = new $core->kutrlServices[$s->kutrl_wiki_service]($core,$s->kutrl_limit_to_blog);
-		}
-		catch (Exception $e)
-		{
-			return array();
-		}
+		if (null === ($kut = kutrl::quickPlace('admin'))) return array();
 		
 		# Test if long url exists
 		$is_new = false;

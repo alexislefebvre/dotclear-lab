@@ -2,6 +2,13 @@ todo
  - Added public page of the list of know urls and in/visible status
  - Added passworded links
 
+1.0 20110213
+ * Added generic class to easlily access services
+ * Changed generic service class (and class extend it)
+ * Fixed config of default service
+ * Fixed display of admin fake section
+ * Added checkbox helpers on admin
+
 0.6.1 20110130
  * Cleaned up script
 

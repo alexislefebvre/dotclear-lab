@@ -12,35 +12,27 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-class customKutrlService extends kutrlServices
+class customKutrlService extends kutrlService
 {
-	public $id = 'custom';
-	public $name = 'Custom';
-	public $home = '';
+	protected $config = array(
+		'id' => 'custom',
+		'name' => 'Custom'
+	);
 	
-	private $url_api = '';
-	public $url_base = '';
-	private $url_param = '';
-	private $url_encode = true;
-	
-	private $url_test = 'http://dotclear.jcdenis.com/go/kUtRL';
-	
-	public function __construct($core,$limit_to_blog=true)
+	protected function init()
 	{
-		parent::__construct($core,$limit_to_blog);
-		
-		$config = unserialize(base64_decode($this->s->kutrl_srv_custom));
+		$config = unserialize(base64_decode($this->settings->kutrl_srv_custom));
 		if (!is_array($config))
 		{
 			$config = array();
 		}
 		
-		$this->url_api = !empty($config['url_api']) ? $config['url_api'] : '';
-		$this->url_base = !empty($config['url_base']) ? $config['url_base'] : '';
-		$this->url_param = !empty($config['url_param']) ? $config['url_param'] : '';
-		$this->url_encode = !empty($config['url_api']) ? true : false;
+		$this->config['url_api'] = !empty($config['url_api']) ? $config['url_api'] : '';
+		$this->config['url_base'] = !empty($config['url_base']) ? $config['url_base'] : '';
+		$this->config['url_param'] = !empty($config['url_param']) ? $config['url_param'] : '';
+		$this->config['url_encode'] = !empty($config['url_api']);
 		
-		$this->url_min_length = strlen($this->url_base) + 2;
+		$this->config['url_min_length'] = strlen($this->url_base) + 2;
 	}
 	
 	public function saveSettings()
@@ -51,7 +43,7 @@ class customKutrlService extends kutrlServices
 			'url_param' => $_POST['kutrl_srv_custom_url_param'],
 			'url_encode' => !empty($_POST['kutrl_srv_custom_url_encode'])
 		);
-		$this->s->put('kutrl_srv_custom',base64_encode(serialize($config)));
+		$this->settings->put('kutrl_srv_custom',base64_encode(serialize($config)));
 	}
 	
 	public function settingsForm()
@@ -62,7 +54,7 @@ class customKutrlService extends kutrlServices
 			'url_param' => '',
 			'url_encode' => true
 		);
-		$config = unserialize(base64_decode($this->s->kutrl_srv_custom));
+		$config = unserialize(base64_decode($this->settings->kutrl_srv_custom));
 		if (!is_array($config))
 		{
 			$config = array();

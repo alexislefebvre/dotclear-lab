@@ -19,34 +19,30 @@ $s_plugin_service = (string) $s->kutrl_plugin_service;
 $s_admin_service = (string) $s->kutrl_admin_service;
 $s_tpl_service = (string) $s->kutrl_tpl_service;
 $s_wiki_service = (string) $s->kutrl_wiki_service;
-$s_limit_to_blog = (boolean) $s->kutrl_limit_to_blog;
+$s_allow_external_url = (boolean) $s->kutrl_allow_external_url;
 $s_tpl_passive = (boolean) $s->kutrl_tpl_passive;
 $s_tpl_active = (boolean) $s->kutrl_tpl_active;
 $s_admin_entry_default = (string) $s->kutrl_admin_entry_default;
 
-$section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
-$img_green = '<img src="images/check-on.png" alt="ok" />';
-$img_red = '<img src="images/check-off.png" alt="fail" />';
-
 if ($default_part == 'setting' && $action == 'savesetting')
 {
 	try {
-		$s_active = isset($_POST['s_active']);
+		$s_active = !empty($_POST['s_active']);
 		$s_admin_service = $_POST['s_admin_service'];
 		$s_plugin_service = $_POST['s_plugin_service'];
 		$s_tpl_service = $_POST['s_tpl_service'];
 		$s_wiki_service = $_POST['s_wiki_service'];
-		$s_limit_to_blog = isset($_POST['s_limit_to_blog']);
-		$s_tpl_passive = isset($_POST['s_tpl_passive']);
-		$s_tpl_active = isset($_POST['s_tpl_active']);
-		$s_admin_entry_default = isset($_POST['s_admin_entry_default']);
+		$s_allow_external_url = !empty($_POST['s_allow_external_url']);
+		$s_tpl_passive = !empty($_POST['s_tpl_passive']);
+		$s_tpl_active = !empty($_POST['s_tpl_active']);
+		$s_admin_entry_default = !empty($_POST['s_admin_entry_default']);
 		
 		$s->put('kutrl_active',$s_active);
 		$s->put('kutrl_plugin_service',$s_plugin_service);
 		$s->put('kutrl_admin_service',$s_admin_service);
 		$s->put('kutrl_tpl_service',$s_tpl_service);
 		$s->put('kutrl_wiki_service',$s_wiki_service);
-		$s->put('kutrl_limit_to_blog',$s_limit_to_blog);
+		$s->put('kutrl_allow_external_url',$s_allow_external_url);
 		$s->put('kutrl_tpl_passive',$s_tpl_passive);
 		$s->put('kutrl_tpl_active',$s_tpl_active);
 		$s->put('kutrl_admin_entry_default',$s_admin_entry_default);
@@ -61,7 +57,7 @@ if ($default_part == 'setting' && $action == 'savesetting')
 }
 
 $services_combo = array();
-foreach($core->kutrlServices as $service_id => $service)
+foreach(kutrl::getServices($core) as $service_id => $service)
 {
 	$o = new $service($core);
 	$services_combo[__($o->name)] = $o->id;
@@ -93,9 +89,9 @@ __('Enable plugin').'</label></p>
 
 <fieldset id="setting-option"><legend>'. __('General rules').'</legend>
 <p><label class="classic">'.
-form::checkbox(array('s_limit_to_blog'),'1',$s_limit_to_blog).
-__('Limit short link to current blog').'</label></p>
-<p class="form-note">'.__('Only link started with this blog URL could be shortened.').'</p>
+form::checkbox(array('s_allow_external_url'),'1',$s_allow_external_url).
+__('Allow short link for external URL').'</label></p>
+<p class="form-note">'.__('Not only link started with this blog URL could be shortened.').'</p>
 <p><label class="classic">'.
 form::checkbox(array('s_tpl_passive'),'1',$s_tpl_passive).
 __('Passive mode').'</label></p>
@@ -113,36 +109,40 @@ __('Create short link for new entries').'</label></p>
 
 <fieldset id="setting-service"><legend>'. __('Default services').'</legend>
 <p><label>';
-if (!empty($msg) && isset($core->kutrlServices[$s_admin_service])) {
-	$o = new $core->kutrlServices[$s_admin_service]($core);
-	echo $o->testService() ? $img_green : $img_red;
+if (!empty($msg)) {
+	if (null !== ($o = kutrl::quickPlace($s_admin_service))) {
+		echo $o->testService() ? $img_green : $img_red;
+	}
 }
 echo '&nbsp;'.__('Administration:').'<br />'.
 form::combo(array('s_admin_service'),$services_combo,$s_admin_service).'
 </label></p>
 <p class="form-note">'.__('Service to use in this admin page and on edit page of an entry.').'</p>
 <p><label>';
-if (!empty($msg) && isset($core->kutrlServices[$s_plugin_service])) {
-	$o = new $core->kutrlServices[$s_plugin_service]($core);
-	echo $o->testService() ? $img_green : $img_red;
+if (!empty($msg)) {
+	if (null !== ($o = kutrl::quickPlace($s_plugin_service))) {
+		echo $o->testService() ? $img_green : $img_red;
+	}
 }
 echo '&nbsp;'.__('Extensions:').'<br />'.
 form::combo(array('s_plugin_service'),$services_combo,$s_plugin_service).'
 </label></p>
 <p class="form-note">'.__('Service to use on third part plugins.').'</p>
 <p><label>';
-if (!empty($msg) && isset($core->kutrlServices[$s_tpl_service])) {
-	$o = new $core->kutrlServices[$s_tpl_service]($core);
-	echo $o->testService() ? $img_green : $img_red;
+if (!empty($msg)) {
+	if (null !== ($o = kutrl::quickPlace($s_tpl_service))) {
+		echo $o->testService() ? $img_green : $img_red;
+	}
 }
 echo '&nbsp;'.__('Templates:').'<br />'.
 form::combo(array('s_tpl_service'),$ext_services_combo,$s_tpl_service).'
 </label></p>
 <p class="form-note">'.__('Shorten links automatically when using template value like "EntryKutrl".').'</p>
 <p><label>';
-if (!empty($msg) && isset($core->kutrlServices[$s_wiki_service])) {
-	$o = new $core->kutrlServices[$s_wiki_service]($core);
-	echo $o->testService() ? $img_green : $img_red;
+if (!empty($msg)) {
+	if (null !== ($o = kutrl::quickPlace($s_wiki_service))) {
+		echo $o->testService() ? $img_green : $img_red;
+	}
 }
 echo '&nbsp;'.__('Contents:').'<br />'.
 form::combo(array('s_wiki_service'),$ext_services_combo,$s_wiki_service).'
@@ -155,7 +155,8 @@ form::combo(array('s_wiki_service'),$ext_services_combo,$s_wiki_service).'
 $core->formNonce().
 form::hidden(array('p'),'kUtRL').
 form::hidden(array('part'),'setting').
-form::hidden(array('action'),'savesetting').'
+form::hidden(array('action'),'savesetting').
+form::hidden(array('section'),$section).'
 </p></div>
 </form>';
 dcPage::helpBlock('kUtRL');

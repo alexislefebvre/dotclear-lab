@@ -12,7 +12,7 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-class googlKutrlService extends kutrlServices
+class googlKutrlService extends kutrlService
 {
 	public $id = 'googl';
 	public $name = 'goo.gl';
@@ -24,11 +24,9 @@ class googlKutrlService extends kutrlServices
 		'key' => 'AIzaSyDE1WfOMdnrnX8p51jSmVodenaNk385asc'
 	);
 	private $headers = array('Content-Type: application/json');
-
-	public function __construct($core,$limit_to_blog=true)
+	
+	protected function init()
 	{
-		parent::__construct($core,$limit_to_blog);
-
 		$this->url_base = 'http://goo.gl/';
 		$this->url_min_length = 20;
 	}

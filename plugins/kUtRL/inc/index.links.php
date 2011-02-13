@@ -21,7 +21,7 @@ class kutrlLinkslist extends adminGenericList
 	{
 		if ($this->rs->isEmpty())
 			echo '<p><strong>'.__('No short link').'</strong></p>';
-
+		
 		else {
 			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
 
@@ -39,41 +39,40 @@ class kutrlLinkslist extends adminGenericList
 				'</thead>'.
 				'<tbody>%s</tbody>'.
 				'</table>';
-
+			
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 			$blocks = explode('%s',$html_block);
 			echo $blocks[0];
-
+			
 			$this->rs->index(((integer)$page - 1) * $nb_per_page);
 			$iter = 0;
 			while ($iter < $nb_per_page) {
-
+			
 				echo $this->line($url,$iter);
-
+				
 				if ($this->rs->isEnd())
 					break;
 				else
 					$this->rs->moveNext();
-
+				
 				$iter++;
 			}
 			echo $blocks[1];
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 		}
 	}
-
+	
 	private function line($url,$loop)
 	{
 		$type = $this->rs->kut_type;
 		$hash = $this->rs->kut_hash;
-
-		if (isset($this->core->kutrlServices[$this->rs->kut_type]))
+		
+		if (null !== ($o = kutrl::quickService($this->rs->kut_type)))
 		{
-			$o = new $this->core->kutrlServices[$this->rs->kut_type]($this->core);
 			$type = '<a href="'.$o->home.'" title="'.$o->name.'">'.$o->name.'</a>';
 			$hash = '<a href="'.$o->url_base.$hash.'" title="'.$o->url_base.$hash.'">'.$hash.'</a>';
 		}
-
+		
 		return
 		'<tr class="line">'."\n".
 		'<td class="nowrap">'.
@@ -124,7 +123,7 @@ $order_combo = array(
 );
 
 $services_combo = array();
-foreach($core->kutrlServices as $service_id => $service)
+foreach(kutrl::getServices($core) as $service_id => $service)
 {
 	$o = new $service($core);
 	$services_combo[__($o->name)] = $o->id;
@@ -167,13 +166,11 @@ if ($action == 'deletelinks')
 		{
 			$rs = $log->getLogs(array('kut_id'=>$id));
 			if ($rs->isEmpty()) continue;
-
-			if(!isset($core->kutrlServices[$rs->kut_type])) continue;
-
-			$o = new $core->kutrlServices[$rs->kut_type]($core);
+			
+			if (null === ($o = kutrl::quickService($rs->kut_type))) continue;
 			$o->remove($rs->kut_url);
 		}
-
+		
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&part=links&urlsrv='.$urlsrv.'&sortby='.$sortby.'&order='.$order.'&nb='.$nb_per_page.'&page='.$page.'&msg='.$action);
 	}
@@ -200,7 +197,11 @@ if (!$show_filters) {
 
 echo '
 <html>
-<head><title>kUtRL, '.__('Links shortener').'</title>'.$header.'</head>
+<head><title>kUtRL, '.__('Links shortener').'</title>'.
+"\n<script type=\"text/javascript\"> \n".
+"$(function(){ $('.checkboxes-helpers').each(function(){dotclear.checkboxesHelpers(this);}); }); \n".
+"</script>\n".
+$header.'</head>
 <body>
 <h2>kUtRL'.
 ' &rsaquo; '.__('Links').

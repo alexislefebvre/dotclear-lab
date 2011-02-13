@@ -10,32 +10,61 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-# This file contents parent class of shorten link services 
-
-class kutrlServices
+# Generic class for shorten link service
+# A service class must extends this one
+class kutrlService
 {
 	public $core;
 	public $error;
-	public $s;
+	public $settings;
 	public $log;
-	public $limit_to_blog;
-
-	public $id = 'undefined';
-	public $name = 'undefined';
-
-	public $allow_customized_hash = false;
-	public $allowed_protocols = array('http://');
-	public $url_base = '';
-	public $url_min_length = 0;
-
-	public function __construct($core,$limit_to_blog=true)
+	
+	protected $config = array();
+	
+	public function __construct($core)
 	{
 		$this->core = $core;
-		$this->s = $core->blog->settings->kUtRL;
+		$this->settings = $core->blog->settings->kUtRL;
 		$this->log = new kutrlLog($core);
-		$this->limit_to_blog = (boolean) $limit_to_blog;
 		$this->error = new dcError();
 		$this->error->setHTMLFormat('%s',"%s\n");
+		
+		$this->init();
+		
+		// Force setting
+		$allow_external_url = $this->settings->kutrl_allow_external_url;
+		$this->config['$allow_external_url'] = null === $allow_external_url ?
+			true : $allow_external_url;
+		
+		$this->config = array_merge(
+			array(
+				'id' => 'undefined',
+				'name' => 'undefined',
+				'home' => '',
+				
+				'allow_external_url' => true,
+				'allow_custom_hash' => false,
+				'allow_protocols' => array('http://'),
+				
+				'url_test' => 'http://dotclear.jcdenis.com/go/kUtRL',
+				'url_api' => '',
+				'url_base' => '',
+				'url_min_len' => 0
+			),
+			$this->config
+		);
+	}
+	
+	# Magic get for config values
+	public function __get($k)
+	{
+		return isset($this->config[$k]) ? $this->config[$k] : null;
+	}
+	
+	# Additionnal actions on child start
+	protected function init()
+	{
+		//
 	}
 
 	# Save settings from admin page
@@ -74,13 +103,13 @@ class kutrlServices
 	# Test if an url is long enoutgh
 	public function isLongerUrl($url)
 	{
-		return ($this->url_min_length >= $url);
+		return ((integer) $this->url_min_len >= $url);
 	}
 
 	# Test if an url protocol (eg: http://) is allowed
 	public function isProtocolUrl($url)
 	{
-		foreach($this->allowed_protocols as $protocol)
+		foreach($this->allow_protocols as $protocol)
 		{
 			if (empty($protocol)) continue;
 
@@ -118,7 +147,7 @@ class kutrlServices
 		{
 			return false;
 		}
-		if ($hash && !$this->allow_customized_hash)
+		if ($hash && !$this->allow_custom_hash)
 		{
 			return false;
 		}
@@ -130,7 +159,7 @@ class kutrlServices
 		{
 			return false;
 		}
-		if ($this->limit_to_blog && !$this->isBlogUrl($url))
+		if (!$this->allow_external_url && $this->isBlogUrl($url))
 		{
 			return false;
 		}
@@ -167,6 +196,7 @@ class kutrlServices
 	public function remove($url)
 	{
 		if (!($rs = $this->isKnowUrl($url))) return false;
+		echo 'la';
 		$this->deleteUrl($url);
 		$this->log->delete($rs->id);
 		return true;

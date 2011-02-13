@@ -21,6 +21,9 @@ $s = $core->blog->settings->kUtRL;
 # Default values
 $show_filters = false;
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
+$section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
+$img_green = '<img src="images/check-on.png" alt="ok" />';
+$img_red = '<img src="images/check-off.png" alt="fail" />';
 
 $header = 
 dcPage::jsLoad('index.php?pf=kUtRL/js/main.js').
