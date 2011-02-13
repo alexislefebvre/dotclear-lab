@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Twitter libraries",
 	/* Description*/		"Twitter library for dotclear's plugin",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1-beta2',
+	/* Version */			'0.2.1',
 	/* Permissions */		'admin'
 );
-	/* date */		#20110130
+	/* date */		#20110213
 ?>

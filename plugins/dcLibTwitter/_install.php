@@ -48,11 +48,12 @@ try
 		'extra_tweets_lncolor' => '#1985B5',
 		'extra_avatars' => false
 	)));
-	$social_writer = base64_encode(serialize(array()));
+	$social_writer = $social_reader = base64_encode(serialize(array()));
 	
 	$s->put('soCialMe_sharer',$social_sharer,'string','config for soCialMe Sharer',false,true);
 	$s->put('soCialMe_profil',$social_profil,'string','config for soCialMe Profil',false,true);
 	$s->put('soCialMe_writer',$social_writer,'string','config for soCialMe Writer',false,true);
+	$s->put('soCialMe_reader',$social_reader,'string','config for soCialMe Reader',false,true);
 	$s->put('optionsForComment_enable',false,'boolean','Enable twitter login on optionForComment',false,true);
 	
 	# Version

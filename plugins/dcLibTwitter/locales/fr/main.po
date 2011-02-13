@@ -1,14 +1,14 @@
 # Language: Français
-# Module: dcLibTwitter - 0.1-beta1
-# Date: 2011-01-30 00:37:56
+# Module: dcLibTwitter - 0.2
+# Date: 2011-02-13 15:53:51
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: dcLibTwitter 0.1-beta1\n"
+"Project-Id-Version: dcLibTwitter 0.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-01-30T00:37:56+00:00\n"
+"PO-Revision-Date: 2011-02-13T15:53:51+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -34,76 +34,92 @@ msgstr "Connecté en tant que %s"
 msgid "Disconnect"
 msgstr "Déconnecter"
 
-#: inc/lib.social.profil.srv.twitter.php:103
+#: inc/lib.social.profil.srv.twitter.php:96
 msgid "Normal"
 msgstr "Normal"
 
-#: inc/lib.social.profil.srv.twitter.php:104
+#: inc/lib.social.profil.srv.twitter.php:97
 msgid "Grey"
 msgstr "Gris"
 
-#: inc/lib.social.profil.srv.twitter.php:105
+#: inc/lib.social.profil.srv.twitter.php:98
 msgid "Dark"
 msgstr "Sombre"
 
-#: inc/lib.social.profil.srv.twitter.php:110
-#: inc/lib.social.sharer.srv.twitter.php:69
+#: inc/lib.social.profil.srv.twitter.php:103
+#: inc/lib.social.sharer.srv.twitter.php:66
 msgid "Your screen name:"
 msgstr "Votre identifiant (screen name) :"
 
-#: inc/lib.social.profil.srv.twitter.php:113
+#: inc/lib.social.profil.srv.twitter.php:106
 msgid "This is your screen name like it appears on your twitter home page URL."
 msgstr "C'est votre nom tel qu'il apparait dans l'URL de votre page Twitter."
 
-#: inc/lib.social.profil.srv.twitter.php:114
+#: inc/lib.social.profil.srv.twitter.php:107
 msgid "Static badges"
 msgstr "Badges statique"
 
-#: inc/lib.social.profil.srv.twitter.php:115
+#: inc/lib.social.profil.srv.twitter.php:108
 msgid "Static badges color:"
 msgstr "Couleur des badges statiques :"
 
-#: inc/lib.social.profil.srv.twitter.php:118
+#: inc/lib.social.profil.srv.twitter.php:111
 msgid "Small  extra badge"
 msgstr "Petit badge version extra"
 
-#: inc/lib.social.profil.srv.twitter.php:122
+#: inc/lib.social.profil.srv.twitter.php:115
 msgid "Text color:"
 msgstr "Couleur du texte :"
 
-#: inc/lib.social.profil.srv.twitter.php:125
+#: inc/lib.social.profil.srv.twitter.php:118
 msgid "Big extra badge"
 msgstr "Grand badges version extra"
 
-#: inc/lib.social.profil.srv.twitter.php:132
+#: inc/lib.social.profil.srv.twitter.php:125
 msgid "Shell background color:"
 msgstr "Couleur de fond de la fenêtre :"
 
-#: inc/lib.social.profil.srv.twitter.php:135
+#: inc/lib.social.profil.srv.twitter.php:128
 msgid "Shell text color:"
 msgstr "Couleur du texte de la fenêtre :"
 
-#: inc/lib.social.profil.srv.twitter.php:138
+#: inc/lib.social.profil.srv.twitter.php:131
 msgid "Tweets background color:"
 msgstr "Couleur de fond des tweets :"
 
-#: inc/lib.social.profil.srv.twitter.php:141
+#: inc/lib.social.profil.srv.twitter.php:134
 msgid "Tweets text color:"
 msgstr "Couleur du texte des tweets :"
 
-#: inc/lib.social.profil.srv.twitter.php:144
+#: inc/lib.social.profil.srv.twitter.php:137
 msgid "Tweets link color:"
 msgstr "Couleur des liens :"
 
-#: inc/lib.social.profil.srv.twitter.php:149
+#: inc/lib.social.profil.srv.twitter.php:142
 msgid "Show avatars"
 msgstr "Afficher les avatars"
 
-#: inc/lib.social.profil.srv.twitter.php:162
+#: inc/lib.social.profil.srv.twitter.php:155
 msgid "Follow %s on Twitter"
 msgstr "Suivre %s sur Twitter"
 
-#: inc/lib.social.sharer.srv.twitter.php:72
+#: inc/lib.social.reader.srv.twitter.php:61
+msgid "%s retweets what %s says"
+msgstr "%s a repris ce que %s a dit"
+
+#: inc/lib.social.reader.srv.twitter.php:72
+msgid "%s says in reply to %s"
+msgstr "%s a répondu à %s"
+
+#: inc/lib.social.reader.srv.twitter.php:73
+msgid "%s says"
+msgstr "%s a dit"
+
+#: inc/lib.social.reader.srv.twitter.php:137
+msgid "%s from %s"
+msgstr "%s depuis %s"
+
+#: inc/lib.social.sharer.srv.twitter.php:69
 msgid "This attributes the shared tweet to you. Do not use @."
 msgstr "Vous attribue le tweet partager. Ne pas utiliser @."
 

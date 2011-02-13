@@ -13,7 +13,7 @@
 if (!defined('DC_RC_PATH')){return;}
 
 # This class play with plugin optionsForComment to add Twitter login button
-class ofcTwitter extends optionsForComment
+class ofcTwitter
 {
 	public static function optionsForCommentAdminPrepend($core,$action)
 	{
@@ -117,7 +117,7 @@ class ofcTwitter extends optionsForComment
 		
 		$js_vars['ofcTwitter_access'] = (integer) $_ctx->ofcTwitter_access;
 		
-		echo self::jsLoad($core->blog->getQmarkURL().'pf=dcLibTwitter/js/ofc.twitter.js');
+		echo optionsForComment::jsLoad($core->blog->getQmarkURL().'pf=dcLibTwitter/js/ofc.twitter.js');
 	}
 	
 	public static function optionsForCommentPublicForm($core,$_ctx)

@@ -25,21 +25,18 @@ class twitterSoCialMeSharerService extends soCialMeService
 	);
 	
 	protected $actions = array(
+		'playPublicScript' => true,
 		'playIconContent' => true,
 		'playSmallContent' => true,
-		'playSmallScript' => true,
-		'playBigContent' => true,
-		'playBigScript' => true
+		'playBigContent' => true
 	);
 	
 	protected $config = array('via' => '');
-	private $script_loaded = false; //prevent from loading JS twice
 	
 	protected function init()
 	{
 		$config = $this->core->blog->settings->dcLibTwitter->soCialMe_sharer;
-		$config = @unserialize(base64_decode($config));
-		if (!is_array($config)) $config = array();
+		$config = soCialMeUtils::decode($config);
 		
 		$this->config = array_merge($this->config,$config);
 		
@@ -54,7 +51,7 @@ class twitterSoCialMeSharerService extends soCialMeService
 		$this->config = array(
 			'via' => !empty($_POST['dcLibTwitter_soCialMe_via']) ? $_POST['dcLibTwitter_soCialMe_via'] : ''
 		);
-		$config = base64_encode(serialize($this->config));
+		$config = soCialMeUtils::encode($this->config);
 		
 		$this->core->blog->settings->dcLibTwitter->put('soCialMe_sharer',$config);
 	}
@@ -75,12 +72,13 @@ class twitterSoCialMeSharerService extends soCialMeService
 		'</form>';
 	}
 	
-	private function parseScript()
+	public function playPublicScript($available)
 	{
-		if ($this->script_loaded) return '';
-		
-		$this->script_loaded = true;
-		return '<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>';
+		if (isset($available['Small']) && in_array($this->id,$available['Small']) 
+		 || isset($available['Big']) && in_array($this->id,$available['Big']))
+		{
+			return '<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>';
+		}
 	}
 	
 	private function parseContent($type,$record)
@@ -111,8 +109,6 @@ class twitterSoCialMeSharerService extends soCialMeService
 		return soCialMeUtils::preloadBox(soCialMeUtils::easyLink('http://twitthis.com/twit?url='.urlencode($url).'&amp;title='.urlencode($title),$this->name,$this->icon));
 	}
 	
-	public function playSmallScript() { return $this->parseScript(); }
-	public function playBigScript() { return $this->parseScript(); }
 	public function playSmallContent($record) { return $this->parseContent('horizontal',$record); }
 	public function playBigContent($record) { return $this->parseContent('vertical',$record); }
 }

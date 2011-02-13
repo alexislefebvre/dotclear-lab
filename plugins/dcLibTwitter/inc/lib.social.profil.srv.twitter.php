@@ -26,17 +26,11 @@ class twitterSoCialMeProfilService extends soCialMeService
 	
 	protected $actions = array(
 		'playIconContent' => true,
-		'playIconScript' => false,
 		'playSmallContent' => true,
-		'playSmallScript' => false,
 		'playBigContent' => true,
-		'playBigScript' => false,
 		'playSmallExtraContent' => true,
-		'playSmallExtraScript' => false,
 		'playMediumExtraContent' => true,
-		'playMediumExtraScript' => false,
-		'playBigExtraContent' => true,
-		'playBigExtraScript' => false
+		'playBigExtraContent' => true
 	);
 	
 	protected $available = true;
@@ -61,8 +55,7 @@ class twitterSoCialMeProfilService extends soCialMeService
 	{
 		$this->core->blog->settings->addNamespace('dcLibTwitter');
 		$config = $this->core->blog->settings->dcLibTwitter->soCialMe_profil;
-		$config = @unserialize(base64_decode($config));
-		if (!is_array($config)) $config = array();
+		$config = soCialMeUtils::decode($config);
 		
 		$this->config = array_merge($this->config,$config);
 		
@@ -90,7 +83,7 @@ class twitterSoCialMeProfilService extends soCialMeService
 			'extra_tweets_lncolor' => !empty($_POST['dcLibTwitter_soCialMe_extra_tweets_lncolor']) ? self::color($_POST['dcLibTwitter_soCialMe_extra_tweets_lncolor']) : '#1985B5',
 			'extra_avatars' => !empty($_POST['dcLibTwitter_soCialMe_extra_avatars']),
 		);
-		$config = base64_encode(serialize($this->config));
+		$config = soCialMeUtils::encode($this->config);
 		
 		$this->core->blog->settings->dcLibTwitter->put('soCialMe_profil',$config);
 	}

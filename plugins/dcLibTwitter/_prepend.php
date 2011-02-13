@@ -12,6 +12,9 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
+# Utils
+$__autoload['twitterUtils'] = dirname(__FILE__).'/inc/lib.twitter.utils.php';
+
 # Add to plugin oAuthManager
 $__autoload['oAuthClient10Twitter'] = dirname(__FILE__).'/inc/lib.oauth.client.1.0.twitter.php';
 $core->addBehavior('oAuthManagerClientLoader',array('dcLibTwitterBehaviors','oAuthClient'));
