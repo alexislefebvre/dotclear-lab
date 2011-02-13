@@ -1,0 +1,5 @@
+0.2 20110213
+ * Added feed to ''Reader'' part
+
+0.1-beta1 20110130
+ * First public release
