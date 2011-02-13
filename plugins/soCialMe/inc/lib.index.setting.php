@@ -26,7 +26,7 @@ if ($request_act == 'save')
 		
 		$core->blog->triggerBlog();
 		
-		http::redirect(soCialMeUtils::link(0,$request_page,$request_part));
+		http::redirect(soCialMeAdmin::link(0,$request_page,$request_part));
 	}
 	catch (Exception $e)
 	{
@@ -35,9 +35,9 @@ if ($request_act == 'save')
 }
 
 # Settings form
-echo soCialMeUtils::top($page).
+echo soCialMeAdmin::top($page).
 '<p>'.__('Configure global settings for this part.').'</p>'.
-'<form id="setting-form" method="post" action="'.soCialMeUtils::link(1,$request_page).'">'.
+'<form id="setting-form" method="post" action="'.soCialMeAdmin::link(1,$request_page).'">'.
 
 '<fieldset id="setting-style"><legend>'. __('Style').'</legend>'.
 '<p><label class="classic">'.__('Additionnal style sheet:').'<br />'.

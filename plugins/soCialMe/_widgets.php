@@ -12,50 +12,5 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-# Sharer
-$core->addBehavior('initWidgets',array('soCialMeSharerWidget','soCialMeSharerPostAdmin'));
-
-class soCialMeSharerWidget
-{
-	public static function soCialMeSharerPostAdmin($w)
-	{
-		$w->create('soCialMeSharerPost',
-			__('SoCialMe sharer'),array('soCialMeSharerWidget','soCialMeSharerPostPublic')
-		);
-	}
-	
-	public static function soCialMeSharerPostPublic($w)
-	{
-		global $core, $_ctx;
-		
-		return soCialMeSharer::publicContent('onwidget',$core,$_ctx);
-	}
-}
-
-# Profil
-$core->addBehavior('initWidgets',array('soCialMeProfilWidget','soCialMeProfilBadgeAdmin'));
-
-class soCialMeProfilWidget
-{
-	public static function soCialMeProfilBadgeAdmin($w)
-	{
-		$w->create('soCialMeProfilBagde',
-			__('SoCialMe profil'),array('soCialMeProfilWidget','soCialMeProfilBadgePublic')
-		);
-		
-		$so = new soCialMeProfil($GLOBALS['core']);
-
-		$combo = array_flip($so->things());
-		$combo[__('All')] = '';
-		
-		$w->soCialMeProfilBagde->setting('thing',__('Group'),'','combo',$combo);
-	}
-	
-	public static function soCialMeProfilBadgePublic($w)
-	{
-		global $core;
-		
-		return soCialMeProfil::publicContent('onwidget',$core,$w->thing);
-	}
-}
+$core->addBehavior('initWidgets',array('soCialMeWidget','soCialMeWidgetAdmin'));
 ?>

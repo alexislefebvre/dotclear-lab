@@ -55,11 +55,11 @@ if ($request_act == 'save')
 			}
 		}
 		
-		$page['setting']->put('order',base64_encode(serialize($s_order)));
+		$page['setting']->put('order',soCialMeUtils::encode($s_order));
 		
 		$core->blog->triggerBlog();
 		
-		http::redirect(soCialMeUtils::link(0,$request_page,$request_part));
+		http::redirect(soCialMeAdmin::link(0,$request_page,$request_part));
 	}
 	catch (Exception $e)
 	{
@@ -68,9 +68,9 @@ if ($request_act == 'save')
 }
 
 # Settings form
-echo soCialMeUtils::top($page,dcPage::jsToolMan().soCialMeUtils::multiDragsortScript($things)).
+echo soCialMeAdmin::top($page,dcPage::jsToolMan().soCialMeAdmin::multiDragsortScript($things)).
 '<p>'.__('Configure the order of the services of this part.').'</p>'.
-'<form id="setting-form" method="post" action="'.soCialMeUtils::link(1,$request_page).'">'.
+'<form id="setting-form" method="post" action="'.soCialMeAdmin::link(1,$request_page).'">'.
 
 '<fieldset id="setting-priority"><legend>'. __('Priority').'</legend>'.
 '<p>'.__('Select display order of services for each location.').'</p>';

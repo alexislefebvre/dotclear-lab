@@ -12,38 +12,18 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-#Combos
-$combo_pages = array(
-	'default' => __('home page'),
-	'post' => __('post pages'),
-	'tag' => __('tags pages'),
-	'archive' =>__('archives pages') ,
-	'category' => __('category pages'),
-	'feed' => __('entries feed')
-);
-if ($core->plugins->moduleExists('muppet'))
-{
-	$muppet_page = muppet::getPostTypes();
-	
-	foreach($muppet_page as $k => $v)
-	{
-		$n = sprintf(__('"%s" pages from extension muppet'),$v['name']);
-		$combo_pages[$k] = $n;
-	}
-}
-
 # Services features
 foreach($page['class']->things() as $thing => $title)
 {
 	$things[$thing] = __($title);
-	$usable[$thing] = $page['class']->can($thing.'Script',$thing.'Content');
+	$usable[$thing] = $page['class']->can($thing.'Before',$thing.'Content');
 }
 
-# Writer features and settings
+# Profil features and settings
 $markers = $page['class']->getMarkers();
 $s_action = $page['class']->getMarker('action',array());
 $s_title = $page['class']->getMarker('title','');
-$s_page = $page['class']->getMarker('page',false);
+$s_homeonly = $page['class']->getMarker('homeonly',false);
 
 # Save settings
 if ($request_act == 'save')
@@ -60,23 +40,20 @@ if ($request_act == 'save')
 					array_keys($_POST['s_action_'.$place.'_'.$action]) : array();
 			}
 			
-			if ($marker['title'])
+			if (!empty($marker['title']))
 			{
 				$s_title[$place] = !empty($_POST['s_title_'.$place]) ? $_POST['s_title_'.$place] : '';
 			}
-			if ($marker['page'])
+			if (!empty($marker['homeonly']))
 			{
-				foreach($combo_pages as $page_id => $plop)
-				{
-					$s_page[$place][$page_id] = !empty($_POST['s_page_'.$place.'_'.$page_id]);
-				}
+				$s_homeonly[$place] = !empty($_POST['s_homeonly_'.$place]);
 			}
 		}
 		
 		# save
 		$page['setting']->put('action',soCialMeUtils::encode($s_action));
 		$page['setting']->put('title',soCialMeUtils::encode($s_title));
-		$page['setting']->put('page',soCialMeUtils::encode($s_page));
+		$page['setting']->put('homeonly',soCialMeUtils::encode($s_homeonly));
 		
 		$core->blog->triggerBlog();
 		
@@ -88,10 +65,10 @@ if ($request_act == 'save')
 	}
 }
 
-# Display
+# Settings form
 echo soCialMeAdmin::top($page,dcPage::jsLoad('index.php?pf=soCialMe/js/action.js')).
-'<p>'.__('Configure place and style of each services on your blog.').'</p>'.
-'<form id="action-form" method="post" action="'.soCialMeAdmin::link(1,$request_page).'">';
+'<p>'.__('Configure stream you want to use.').'</p>'.
+'<form id="action-form" method="post" action="'.soCialMeAdmin::link(1,$request_part).'">';
 
 foreach($markers as $place => $marker)
 {
@@ -110,38 +87,39 @@ foreach($markers as $place => $marker)
 	{
 		echo 
 		'<div class="two-cols"><div class="col">'.
-		'<p><label class="classic">'.__('Title of the group of buttons:').'<br />'.
+		'<p><label class="classic">'.__('Title of the stream:').'<br />'.
 		form::field(array('s_title_'.$place),50,255,$s_title[$place]).
 		'</label></p>'.
 		'</div><div class="col">';
 	}
 	
-	if ($marker['page'])
+	if (!empty($marker['homeonly']))
 	{
 		echo 
-		'<p>'.__('Select type of pages where to show buttons:').'</p>';
-		
-		foreach($combo_pages as $page_id => $page_name)
-		{
-			echo 
-			'<p><label class="classic">'.
-			form::checkbox(array('s_page_'.$place.'_'.$page_id),'1',!empty($s_page[$place][$page_id])).
-			$page_name.'</label></p>';
-		}
+		'<p><label class="classic">'.
+		form::checkbox(array('s_homeonly_'.$place),'1',!empty($s_homeonly[$place])).' '.
+		__('On home page only').'</label></p>';
 	}
 	
-	if ($marker['title'])
+	if (!empty($marker['title']))
 	{
 		echo '</div></div>';
 	}
 	
 	echo 
-	'<p class="clear">'.__('Select things to show and their size:').'</p>'.
+	'<p class="clear">'.__('Select services to use:').'</p>'.
 	'<div class="three-cols">';
 	
+	$i = 0;
 	foreach($marker['action'] as $action)
 	{
 		if (empty($usable[$action])) continue;
+
+		$i++;
+		if ($i == 4) {
+			$i = 0;
+			echo '</div><div class="clear three-cols">';
+		}
 		
 		echo '<div class="col"><div class="socialbox"><h4>'.$things[$action].'</h4><ul>';
 		

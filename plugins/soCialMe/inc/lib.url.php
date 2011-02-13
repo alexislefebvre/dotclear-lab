@@ -9,15 +9,4 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
-if (!defined('DC_RC_PATH')){return;}
-
-$this->registerModule(
-	/* Name */			"so.cial.me",
-	/* Description*/		"Socialize your blog.",
-	/* Author */			"JC Denis",
-	/* Version */			'0.2',
-	/* Permissions */		'admin'
-);
-	/* date */		#20110213
-?>
+if (!defined('DC_RC_PATH')){return;}# URL handlerclass soCialMeURL extends dcUrlHandlers{	public static function soCialMeReaderPage($args)	{		global $core;				$params = array(			'size' => 'normal',			'service'=> '',			'thing' => 'Page',			'limit' => 30		);				$res = soCialMeReader::publicContent('onpage',$core,$params);				if (empty($res)) {			self::p404();		}		echo $res;		exit;	}}?>

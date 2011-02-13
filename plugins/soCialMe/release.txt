@@ -1,5 +1,15 @@
 todo
  - specific installer for soCialMe extensions
 
+0.2 20110213
+ * Added part called ''Reader''
+ * Added cache system
+ * Moved and grouped functions
+ * Reduced call repeat on public side
+
+0.1-beta3
+ * Fixed config for default url shortener
+ * Fixed new version of plugin kUtRL
+
 0.1-beta1
  * First public release

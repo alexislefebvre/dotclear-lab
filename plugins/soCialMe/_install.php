@@ -46,15 +46,23 @@ try
 	
 	# Settings
 	$sharer_css = 
-	".social-sharers { margin: 0 auto; }\n".
-	".social-sharers ul { display: inline-block; list-style: none; margin: 0; padding: 0; border: none !important; }\n".
-	".social-sharers ul li { display: inline-block; margin: 0 2px; padding: 0; border: none !important;}\n".
-	".social-sharer { margin: 1px; }";
+	".social-sharers { margin: 0 auto; } \n".
+	".social-sharers ul { display: inline-block; list-style: none; margin: 0; padding: 0; border: none !important; } \n".
+	".social-sharers ul li { display: inline-block; margin: 0 2px; padding: 0; border: none !important;} \n".
+	".social-sharer { margin: 1px; } ";
+	$reader_css = 
+	".social-reader div { margin: 0 !important; } \n".
+	".social-reader { margin-bottom: 1em; } \n".
+	".social-reader img { float: left; margin-right: 2px; } \n".
+	".social-reader .reader-title { font-weight: bold; } \n".
+	".social-reader .reader-content { clear: both; font-size: 1.2em; } \n".
+	".social-reader .reader-url { float: right; } \n".
+	".reader-icon { float:right; margin: 2px; }";
 	$profil_css = 
-	".social-profils { margin: 0 auto; }\n".
-	".social-profils ul { display: inline-block; list-style: none; margin: 0; padding: 0; border: none !important; }\n".
-	".social-profils ul li { display: inline-block; margin: 0 2px; padding: 0; border: none !important;}\n.".
-	".social-profil { margin: 1px; }";
+	".social-profils { margin: 0 auto; } \n".
+	".social-profils ul { display: inline-block; list-style: none; margin: 0; padding: 0; border: none !important; } \n".
+	".social-profils ul li { display: inline-block; margin: 0 2px; padding: 0; border: none !important;} \n.".
+	".social-profil { margin: 1px; } ";
 	
 	$core->blog->settings->addNamespace('soCialMe');
 	$core->blog->settings->soCialMe->put('active',true,'boolean','Enable soCialMe plugin',false,true);
@@ -65,6 +73,7 @@ try
 	
 	$core->blog->settings->addNamespace('soCialMeReader');
 	$core->blog->settings->soCialMeReader->put('active',false,'boolean','Enable soCialMe Reader',false,true);
+	$core->blog->settings->soCialMeReader->put('css',$reader_css,'string','Additional CSS for soCialMe Reaer',false,true);
 	
 	$core->blog->settings->addNamespace('soCialMeWriter');
 	$core->blog->settings->soCialMeWriter->put('active',false,'boolean','Enable soCialMe Writer',false,true);

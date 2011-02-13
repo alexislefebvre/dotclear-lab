@@ -1,17 +1,8 @@
 <?php
 // Language: Français 
-// Module: soCialMe - 0.1-beta1
-// Date: 2011-01-30 00:40:31 
+// Module: soCialMe - 0.2
+// Date: 2011-02-13 15:47:50 
 // Translated with dcTranslater - 1.5 
-
-#_admin.php:12
-$GLOBALS['__l10n']['Share this'] = 'Partager ça';
-
-#_widgets.php:49
-$GLOBALS['__l10n']['All'] = 'Tous';
-
-#_widgets.php:51
-$GLOBALS['__l10n']['Group'] = 'Groupe';
 
 #inc/index.profil.location.php:12
 #inc/index.sharer.location.php:93
@@ -24,11 +15,21 @@ $GLOBALS['__l10n']['Badges are just simple pictures linked to your sociales prof
 $GLOBALS['__l10n']['Title of the group of badges:'] = 'Titre du groupe de bagdes :';
 
 #inc/index.profil.location.php:12
+#inc/index.reader.stream.php:101
 $GLOBALS['__l10n']['On home page only'] = 'Uniquement sur la page d\'accueil';
 
 #inc/index.profil.location.php:12
 #inc/index.sharer.location.php:139
 $GLOBALS['__l10n']['Select things to show and their size:'] = 'Selectionner les objets à affciher et leurs tailles :';
+
+#inc/index.reader.stream.php:70
+$GLOBALS['__l10n']['Configure stream you want to use.'] = 'Configurer les flux que vous souhaitez utiliser.';
+
+#inc/index.reader.stream.php:90
+$GLOBALS['__l10n']['Title of the stream:'] = 'Titre du flux :';
+
+#inc/index.reader.stream.php:110
+$GLOBALS['__l10n']['Select services to use:'] = 'Selectionner les services a utiliser :';
 
 #inc/index.sharer.location.php:17
 $GLOBALS['__l10n']['home page'] = 'la page d\'accueil';
@@ -81,6 +82,15 @@ $GLOBALS['__l10n']['Select services to post on:'] = 'Selectionner les services �
 
 #inc/index.writer.message.php:12
 $GLOBALS['__l10n']['Send simple link'] = 'Envoyer un simple liens';
+
+#inc/lib.admin.php:50
+$GLOBALS['__l10n']['Please wait'] = 'Veuillez patienter';
+
+#inc/lib.admin.php:57
+$GLOBALS['__l10n']['Manage social services'] = 'Gérer les services sociaux';
+
+#inc/lib.admin.php:163
+$GLOBALS['__l10n']['Share this'] = 'Partager ça';
 
 #inc/lib.index.order.php:72
 $GLOBALS['__l10n']['Configure the order of the services of this part.'] = 'Configurer l\'ordre des services pour chaque partie.';
@@ -136,6 +146,22 @@ $GLOBALS['__l10n']['Widget'] = 'Widget';
 #inc/lib.social.profil.php:52
 $GLOBALS['__l10n']['Place group of bagdes on widget. You must set up widget.'] = 'Place un groupe de bagdes dans un widget. Vous devez configurer le widget.';
 
+#inc/lib.social.reader.php:32
+$GLOBALS['__l10n']['Search comment or trackback from an external service.'] = 'Rechercher des commenaires ou rétroliens depuis un service externe.';
+
+#inc/lib.social.reader.php:38
+#inc/lib.social.sharer.php:12
+$GLOBALS['__l10n']['On a widget'] = 'Dans un widget';
+
+#inc/lib.social.reader.php:39
+$GLOBALS['__l10n']['Show a stream on a widget from external services.'] = 'Afficher un flux provenant de services externes dans un widget.';
+
+#inc/lib.social.reader.php:50
+$GLOBALS['__l10n']['On a page'] = 'Sur un page';
+
+#inc/lib.social.reader.php:51
+$GLOBALS['__l10n']['Show a stream on a page from external services.'] = 'Afficher un flux provenant de services externes dans une page.';
+
 #inc/lib.social.sharer.php:12
 $GLOBALS['__l10n']['Before post content'] = 'Avant le contenu du billet';
 
@@ -147,9 +173,6 @@ $GLOBALS['__l10n']['After post content'] = 'Après le contenu du billet';
 
 #inc/lib.social.sharer.php:12
 $GLOBALS['__l10n']['Place group of buttons just before post content'] = 'Place un groupe de boutons juste après le contenu d\'un billet';
-
-#inc/lib.social.sharer.php:12
-$GLOBALS['__l10n']['On a widget'] = 'Dans un widget';
 
 #inc/lib.social.sharer.php:12
 $GLOBALS['__l10n']['Place group of buttons on widget. You must set up widget.'] = 'Place un groupe de boutons dans un widget. Vous devez configurer le widget.';
@@ -172,66 +195,79 @@ $GLOBALS['__l10n']['Create user'] = 'Création d\'un utilisateur';
 #inc/lib.social.writer.php:12
 $GLOBALS['__l10n']['When a user is added on your blog:'] = 'Lrsqu\'un nouvel utilisateur est ajouter à votre blog';
 
-#inc/lib.utils.php:45
-$GLOBALS['__l10n']['Please wait'] = 'Veuillez patienter';
-
-#inc/lib.utils.php:52
-$GLOBALS['__l10n']['Social home'] = 'Accueil';
-
-#inc/lib.utils.php:195
+#inc/lib.utils.php:102
 $GLOBALS['__l10n']['Share on %s'] = 'Partager sur %s';
 
-#inc/lib.utils.php:198
+#inc/lib.utils.php:105
 $GLOBALS['__l10n']['View my profil on %s'] = 'Voir mon profil sur %s';
 
-#index.php:12
+#inc/lib.widget.php:32
+#inc/lib.widget.php:59
+$GLOBALS['__l10n']['All'] = 'Tous';
+
+#inc/lib.widget.php:34
+$GLOBALS['__l10n']['Group:'] = 'Groupe :';
+
+#inc/lib.widget.php:62
+$GLOBALS['__l10n']['Small'] = 'Petit';
+
+#inc/lib.widget.php:68
+$GLOBALS['__l10n']['Limit:'] = 'Limite :';
+
+#inc/lib.widget.php:69
+$GLOBALS['__l10n']['Stream:'] = 'Flux :';
+
+#inc/lib.widget.php:70
+$GLOBALS['__l10n']['Size of icon:'] = 'Taille des icônes :';
+
+#index.php:13
 $GLOBALS['__l10n']['Help your visitors to share content of your blog on social networks.'] = 'Aide vos visiteurs à partager le contenu de votre blog sur les resaux sociaux.';
 
-#index.php:12
-#index.php:12
+#index.php:13
+#index.php:13
 $GLOBALS['__l10n']['Locations'] = 'Emplacements';
 
-#index.php:12
-#index.php:12
+#index.php:13
+#index.php:13
 $GLOBALS['__l10n']['Orders'] = 'Ordres';
 
-#index.php:12
-#index.php:12
-#index.php:12
-#index.php:12
+#index.php:13
+#index.php:13
+#index.php:13
+#index.php:20
 $GLOBALS['__l10n']['Services'] = 'Services';
 
-#index.php:12
-#index.php:12
-#index.php:12
-#index.php:12
+#index.php:13
+#index.php:13
+#index.php:13
+#index.php:21
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#index.php:12
+#index.php:13
 $GLOBALS['__l10n']['Show your social profiles and counters.'] = 'Afficher vos profils et compteur sociaux';
 
-#index.php:12
+#index.php:13
 $GLOBALS['__l10n']['Send and share content from your blog to your social networks.'] = 'Envoyer et partager le contenu de votre blog sur les réseaux sociaux.';
 
-#index.php:12
+#index.php:13
 $GLOBALS['__l10n']['Message'] = 'Message';
 
-#index.php:12
+#index.php:13
 $GLOBALS['__l10n']['Events'] = 'Evénements';
 
-#index.php:12
+#index.php:16
 $GLOBALS['__l10n']['Add feeds and other stream from social networks to your blog.'] = 'Ajouter les flux de vos réseaux sociaux à votre blog.';
 
-#index.php:12
-$GLOBALS['__l10n']['Feeds'] = 'Fils de syndication';
+#index.php:19
+$GLOBALS['__l10n']['Streams'] = 'Flux';
 
-#index.php:12
+#index.php:24
 $GLOBALS['__l10n']['Administrate'] = 'Administrer';
 
-#index.php:12
+#index.php:25
 $GLOBALS['__l10n']['Enable this part'] = 'Activer cette partie';
 
-#index.php:12
+#index.php:26
 $GLOBALS['__l10n']['Latest news from so.cial.me'] = 'Dernières nouvelles de so.cial.me';
 
 ?>
