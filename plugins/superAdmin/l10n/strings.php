@@ -12,10 +12,6 @@ __('(including %d spam comments since your last visit)');
 # admin/comments.php
 __('(in the blog timezone)');
 
-# admin/media_item.php
-__('(in the %s blog)');
-__('Entries containing this media id or the same files:');
-
 # admin/posts.php
 __('Since my last visit, on %s');
 __('%A, %B %e %Y, %H:%M');

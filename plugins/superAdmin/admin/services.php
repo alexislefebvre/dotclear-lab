@@ -32,7 +32,7 @@ $core->rest->serve();
 /* Common REST methods */
 class dcRestMethods
 {
-	public static function getPostById(&$core,$get)
+	public static function getPostById($core,$get)
 	{
 		if (empty($get['id'])) {
 			throw new Exception('No post ID');
@@ -100,7 +100,7 @@ class dcRestMethods
 		return $rsp;
 	}
 	
-	public static function getCommentById(&$core,$get)
+	public static function getCommentById($core,$get)
 	{
 		if (empty($get['id'])) {
 			throw new Exception('No comment ID');

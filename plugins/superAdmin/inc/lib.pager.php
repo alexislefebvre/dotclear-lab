@@ -131,11 +131,19 @@ class superAdminPostList extends adminGenericList
 			$attach = sprintf($img,sprintf($attach_str,$nb_media),'attach.png');
 		}
 		
-		$post_url = $p_url.'&amp;file=post&amp;id='.$this->rs->post_id;
+		$post_url = $this->core->getPostAdminURL($this->rs->post_type,
+			$this->rs->post_id).
+			'&amp;switchblog='.urlencode($this->rs->blog_id);
 		
 		if ($this->rs->post_type == 'post')
 		{
-			$post_link = '<a href="'.$post_url.'">'.
+			$class = '';
+			if ($this->rs->blog_id != $this->core->blog->id)
+			{
+				$class = ' class="superAdmin-change-blog"';
+			}
+			
+			$post_link = '<a href="'.$post_url.'"'.$class.'>'.
 				html::escapeHTML($this->rs->post_title).'</a>';
 		}
 		else
@@ -243,11 +251,19 @@ class superAdminCommentList extends adminGenericList
 			'&amp;order='.$order.
 			'&amp;ip='.rawurlencode($this->rs->comment_ip);
 		
-		$post_url = $p_url.'&amp;file=post&amp;id='.$this->rs->post_id;
+		$post_url = $this->core->getPostAdminURL($this->rs->post_type,
+			$this->rs->post_id).
+			'&amp;switchblog='.urlencode($this->rs->blog_id);
+
+		$class = '';
+		if ($this->rs->blog_id != $this->core->blog->id)
+		{
+			$class = ' class="superAdmin-change-blog"';
+		}
 		
 		if ($this->rs->post_type == 'post')
 		{
-			$post_link = '<a href="'.$post_url.'">'.
+			$post_link = '<a href="'.$post_url.'"'.$class.'>'.
 				html::escapeHTML($this->rs->post_title).'</a>';
 		}
 		else
@@ -256,10 +272,8 @@ class superAdminCommentList extends adminGenericList
 				' ('.html::escapeHTML($this->rs->post_type).')';
 		}
 		
-		$comment_url =
-			$p_url.
-			'&amp;file=comment'.
-			'&amp;comment_id='.$this->rs->comment_id;
+		$comment_url = 'comment.php?id='.$this->rs->comment_id.
+			'&amp;switchblog='.urlencode($this->rs->blog_id);
 		
 		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
 		switch ($this->rs->comment_status) {
@@ -300,7 +314,8 @@ class superAdminCommentList extends adminGenericList
 		'<td>'.$blog_link.'</td>'.	
 		'<td class="nowrap">'.($this->rs->comment_trackback ? __('trackback') : __('comment')).'</td>'.
 		'<td class="nowrap status">'.$img_status.'</td>'.
-		'<td class="nowrap status"><a href="'.$comment_url.'">'.
+		'<td class="nowrap status">'.
+		'<a href="'.$comment_url.'"'.$class.'>'.
 		'<img src="images/edit-mini.png" alt="" title="'.__('Edit this comment').'" /></a></td>';
 		
 		$res .= '</tr>';

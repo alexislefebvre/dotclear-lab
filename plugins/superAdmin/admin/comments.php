@@ -195,7 +195,20 @@ if (!$show_filters) {
 # --BEHAVIOR-- adminCommentsHeaders
 $starting_script .= $core->callBehavior('adminCommentsHeaders');
 
-dcPage::open(__('Comments'),$starting_script);
+dcPage::open(__('Comments'),$starting_script.
+	"<script type=\"text/javascript\">
+  //<![CDATA[
+  ".
+  	dcPage::jsVar('dotclear.msg.confirm_change_blog',
+  	__('Are you sure you want to change the current blog?')).
+  	"
+  	$(function() {
+			$('.superAdmin-change-blog').click(function() {
+				return window.confirm(dotclear.msg.confirm_change_blog);
+			});
+		});
+  //]]>
+  </script>");
 
 echo '<h2>'.html::escapeHTML('Super Admin').' &rsaquo; '.__('Comments').'</h2>';
 

@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Super Admin, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009, 2011 Moe (http://gniark.net/)
 #
 # Super Admin is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -63,9 +63,6 @@ if (!empty($_REQUEST['file']))
 {
 	switch ($_REQUEST['file'])
 	{
-		case 'comment' :
-			require dirname(__FILE__).'/admin/comment.php';
-			break;
 		case 'comments' :
 			require dirname(__FILE__).'/admin/comments.php';
 			break;
@@ -81,20 +78,8 @@ if (!empty($_REQUEST['file']))
 		case 'posts_actions' :
 			require dirname(__FILE__).'/admin/posts_actions.php';
 			break;
-		case 'post' :
-			require dirname(__FILE__).'/admin/post.php';
-			break;
 		case 'cpmv_post' :
 			require dirname(__FILE__).'/cpmv_post.php';
-			break;
-		case 'media_item' :
-			require dirname(__FILE__).'/admin/media_item.php';
-			break;
-		case 'media' :
-			require dirname(__FILE__).'/admin/media.php';
-			break;
-		case 'post_media' :
-			require dirname(__FILE__).'/admin/post_media.php';
 			break;
 		case 'medias' :
 			require dirname(__FILE__).'/medias.php';

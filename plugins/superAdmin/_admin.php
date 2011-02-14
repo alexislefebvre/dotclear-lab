@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Super Admin, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009, 2011 Moe (http://gniark.net/)
 #
 # Super Admin is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -25,6 +25,8 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 dcPage::checkSuper();
 
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
 $_menu['Plugins']->addItem(__('Super Admin'),'plugin.php?p=superAdmin',
 	'index.php?pf=superAdmin/icon.png',
 	preg_match('/plugin.php\?p=superAdmin(&.*)?$/',$_SERVER['REQUEST_URI']),
@@ -40,7 +42,7 @@ if ($core->auth->isSuperAdmin())
 require_once(dirname(__FILE__).'/inc/lib.superAdmin.php');
 
 class superAdminAdmin {
-	public static function adminDashboardIcons(&$core, &$icons)
+	public static function adminDashboardIcons($core,$icons)
 	{
 		$spam_count =
 			superAdmin::getComments(array('comment_status'=>-2),true)->f(0);

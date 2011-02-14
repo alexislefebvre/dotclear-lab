@@ -98,7 +98,7 @@ class superAdmin
 		$strReq .=
 		'FROM '.$core->prefix.'post P '.
 		'INNER JOIN '.$core->prefix.'user U ON U.user_id = P.user_id '.
-		'LEFT OUTER JOIN '.$core->prefix.'blog B ON P.blog_id = B.blog_id '.
+		'INNER JOIN '.$core->prefix.'blog B ON P.blog_id = B.blog_id '.
 		'LEFT OUTER JOIN '.$core->prefix.'category C ON P.cat_id = C.cat_id ';
 		
 		if (!empty($params['from'])) {
@@ -303,17 +303,15 @@ class superAdmin
 		$dt_fc .= '000000';
 		
 		$strReq = 'SELECT DISTINCT('.$core->con->dateFormat('post_dt',$dt_f).') AS dt '.
-				',COUNT(P.post_id) AS nb_post '.
-				'FROM '.$core->prefix.'post P LEFT JOIN '.$core->prefix.'category C '.
-				'ON P.cat_id = C.cat_id '.
-				"WHERE P.blog_id = '".$core->con->escape($core->blog->id)."' ";
+			',COUNT(P.post_id) AS nb_post '.
+			'FROM '.$core->prefix.'post P LEFT JOIN '.$core->prefix.'category C '.
+			'ON P.cat_id = C.cat_id ';
 		
 		$strReq .= 'GROUP BY dt ';
 		
 		$order = 'desc';
 		
-		$strReq .=
-		'ORDER BY dt '.$order.' ';
+		$strReq .= 'ORDER BY dt '.$order.' ';
 		
 		$rs = $core->con->select($strReq);
 		$rs->extend('rsExtDates');

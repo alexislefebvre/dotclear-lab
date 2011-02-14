@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Super Admin, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009, 2011 Moe (http://gniark.net/)
 #
 # Super Admin is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -177,7 +177,8 @@ if (isset($_POST['copy']))
 	unset($rs);
 	
 	http::redirect($p_url.'&file=cpmv_post&post_id='.$post_id.
-		'&new_post_id='.$return_id.'&blog_id='.$blog_id.'&post_copied=1');
+		'&new_post_id='.$return_id.'&blog_id='.urlencode($blog_id).
+		'&post_copied=1');
 }
 elseif (isset($_POST['move']))
 {
@@ -207,7 +208,8 @@ elseif (isset($_POST['move']))
 		$core->error->add($e->getMessage());
 	}
 	
-	http::redirect($p_url.'&file=cpmv_post&post_id='.$post_id.'&post_moved=1');
+	http::redirect($p_url.'&file=cpmv_post&post_id='.$post_id.
+		'&blog_id='.urlencode($blog_id).'&post_moved=1');
 }
 
 if (isset($_GET['post_copied']))
@@ -217,22 +219,39 @@ if (isset($_GET['post_copied']))
 	$rs_blog = $core->getBlogs(array('blog_id' => $_GET['blog_id']));
 	
 	$blog_name = $rs_blog->blog_name;
+
+	$class = '';
+	if ($rs->blog_id != $core->blog_id)
+	{
+		$class = ' class="superAdmin-change-blog"';
+	}
 	
 	$msg = sprintf(__('Entry #%1$s %2$s copied to blog %3$s, new entry id: #%4$s'),
 		$post_id,'<strong>'.$rs->post_title.'</strong>',
 		'<strong>'.$blog_name.'</strong>',
 		(isset($_GET['new_post_id']) ?
-		'<a href="'.$p_url.'&amp;file=post&amp;id='.$_GET['new_post_id'].
-		'">'.$_GET['new_post_id'].'</a>' : ''));
+		'<a href="'.
+			$core->getPostAdminURL($rs->post_type,$_GET['new_post_id']).
+			'&amp;switchblog='.urlencode($blog_id).
+			'"'.$class.'>'.
+			$_GET['new_post_id'].'</a>' : ''));
 	
 	$blog_id = $rs->blog_id;
 } elseif (isset($_GET['post_moved']))
 {
 	$rs = superAdmin::getPosts(array('post_id' => $post_id));
+
+	$class = '';
+	if ($rs->blog_id != $core->blog_id)
+	{
+		$class = ' class="superAdmin-change-blog"';
+	}
 	
 	$msg = sprintf(__('Entry #%1$s %2$s moved to blog %3$s'),
-		'<a href="'.$p_url.'&amp;file=post&amp;id='.$post_id.
-		'">'.$post_id.'</a>',
+		'<a href="'.
+			$core->getPostAdminURL($rs->post_type,$post_id).
+			'&amp;switchblog='.urlencode($blog_id).
+			'"'.$class.'>'.$post_id.'</a>',
 		'<strong>'.$rs->post_title.'</strong>',
 		'<strong>'.$rs->blog_name.'</strong>');
 	
@@ -251,15 +270,20 @@ dcPage::open(__('Copy or move entry'),
   	__('Are you sure you want to copy the post?')).
   	dcPage::jsVar('dotclear.msg.confirm_move_post',
   	__('Are you sure you want to move the post?')).
+  	dcPage::jsVar('dotclear.msg.confirm_change_blog',
+  	__('Are you sure you want to change the current blog?')).
   	"
   	$(function() {
-		$('input[name=\"copy\"]').click(function() {
-			return window.confirm(dotclear.msg.confirm_copy_post);
+			$('input[name=\"copy\"]').click(function() {
+				return window.confirm(dotclear.msg.confirm_copy_post);
+			});
+			$('input[name=\"move\"]').click(function() {
+				return window.confirm(dotclear.msg.confirm_move_post);
+			});
+			$('.superAdmin-change-blog').click(function() {
+				return window.confirm(dotclear.msg.confirm_change_blog);
+			});
 		});
-		$('input[name=\"move\"]').click(function() {
-			return window.confirm(dotclear.msg.confirm_move_post);
-		});
-	});
   //]]>
   </script>");
 
