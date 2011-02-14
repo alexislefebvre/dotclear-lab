@@ -54,11 +54,6 @@ $msg = (string)'';
 
 $tab = 'comments';
 
-if (!empty($_GET['comment_deleted']))
-{
-	$msg = __('Comment has been successfully deleted.');
-}
-
 if (!empty($_REQUEST['file']))
 {
 	switch ($_REQUEST['file'])

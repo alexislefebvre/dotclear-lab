@@ -81,6 +81,6 @@ $(function() {
 	$('.checkboxes-helpers').each(function() {
 		dotclear.checkboxesHelpers(this);
 	});
-	
+	$('#form-comments td input[type=checkbox]').enableShiftClick();
 	dotclear.commentsActionsHelper();
 });

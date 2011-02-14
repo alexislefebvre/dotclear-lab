@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Super Admin, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009, 2011 Moe (http://gniark.net/)
 #
 # Super Admin is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -119,20 +119,20 @@ if (!$core->error->flag())
 
 # Actions combo box
 $combo_action = array();
-if ($core->auth->check('publish,contentadmin',$core->blog->id))
-{
-	$combo_action[__('publish')] = 'publish';
-	$combo_action[__('unpublish')] = 'unpublish';
-	$combo_action[__('schedule')] = 'schedule';
-	$combo_action[__('mark as pending')] = 'pending';
-}
-$combo_action[__('mark as selected')] = 'selected';
-$combo_action[__('mark as unselected')] = 'unselected';
 
-if ($core->auth->check('delete,contentadmin',$core->blog->id))
-{
-	$combo_action[__('delete')] = 'delete';
-}
+$combo_action[__('Status')] = array(
+	__('Publish') => 'publish',
+	__('Unpublish') => 'unpublish',
+	__('Schedule') => 'schedule',
+	__('Mark as pending') => 'pending'
+);
+
+$combo_action[__('Mark')] = array(
+	__('Mark as selected') => 'selected',
+	__('Mark as unselected') => 'unselected'
+);
+
+$combo_action[__('Delete')] = array(__('Delete') => 'delete');
 
 /* Get posts
 -------------------------------------------------------- */
@@ -153,8 +153,6 @@ $lang = !empty($_GET['lang']) ?		$_GET['lang'] : '';
 
 $sortby = !empty($_GET['sortby']) ?	$_GET['sortby'] : 'post_dt';
 $order = !empty($_GET['order']) ?		$_GET['order'] : 'desc';
-
-$media_id = isset($_GET['media_id']) ?	$_GET['media_id'] : '';
 
 $show_filters = false;
 
@@ -259,7 +257,8 @@ if (!$show_filters) {
 	$starting_script .= dcPage::jsLoad('js/filter-controls.js');
 }
 
-dcPage::open(__('Entries'),$starting_script.
+dcPage::open(__('Entries').' &laquo; '.__('Super Admin'),
+	$starting_script.
 	"<script type=\"text/javascript\">
   //<![CDATA[
   ".
@@ -307,12 +306,6 @@ if (!$core->error->flag())
 		'<div class="col">'.
 		'<p><label>'.__('Search:').' '.
 			form::field('q',30,255,html::escapeHTML($q)).'</label></p> '.
-		'</div>'.
-		
-		'<div class="col">'.
-		'<p><label>'.__('Media id:').' '.
-			form::field('media_id',30,255,html::escapeHTML($media_id)).
-			'</label></p> '.
 		'</div>'.
 	'</div>'.
 	

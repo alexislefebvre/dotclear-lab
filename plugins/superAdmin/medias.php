@@ -34,11 +34,6 @@ $tab = 'medias';
 
 $msg = (string)'';
 
-$media_id = ( (isset($_REQUEST['media_id']))
-	? (integer) $_REQUEST['media_id'] : null);
-
-unset($rs);
-
 $query = 'SELECT setting_value '.
 	'FROM '.$core->prefix.'setting '.
 	'WHERE (blog_id IS NULL) '.
@@ -85,7 +80,7 @@ unset($rs);
 /* DISPLAY
 -------------------------------------------------------- */
 
-dcPage::open(__('Media directories'),
+dcPage::open(__('Media directories').' &laquo; '.__('Super Admin'),
 	dcPage::jsPageTabs($tab));
 
 echo('<h2>'.html::escapeHTML('Super Admin').' &rsaquo; '.__('Media directories').'</h2>');

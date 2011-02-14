@@ -261,7 +261,7 @@ if (isset($_GET['post_copied']))
 /* DISPLAY
 -------------------------------------------------------- */
 
-dcPage::open(__('Copy or move entry'),
+dcPage::open(__('Copy or move entry').' &laquo; '.__('Super Admin'),
 	dcPage::jsPageTabs($tab).
 	"<script type=\"text/javascript\">
   //<![CDATA[

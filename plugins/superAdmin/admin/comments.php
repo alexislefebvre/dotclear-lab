@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Super Admin, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009, 2011 Moe (http://gniark.net/)
 #
 # Super Admin is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -195,7 +195,8 @@ if (!$show_filters) {
 # --BEHAVIOR-- adminCommentsHeaders
 $starting_script .= $core->callBehavior('adminCommentsHeaders');
 
-dcPage::open(__('Comments'),$starting_script.
+dcPage::open(__('Comments').' &laquo; '.__('Super Admin'),
+	$starting_script.
 	"<script type=\"text/javascript\">
   //<![CDATA[
   ".
