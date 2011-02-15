@@ -13,4 +13,6 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $__resources['help']['core_posts_sa'] =
 	dirname(__FILE__).'/help/core_posts.html';
+$__resources['help']['change_blog'] =
+	dirname(__FILE__).'/help/change_blog.html';
 ?>

@@ -263,7 +263,8 @@ dcPage::open(__('Entries').' &laquo; '.__('Super Admin'),
   //<![CDATA[
   ".
   	dcPage::jsVar('dotclear.msg.confirm_change_blog',
-  	__('Are you sure you want to change the current blog?')).
+  	__('Are you sure you want to change the current blog?').' '.
+  		__('See the help for more information.')).
   	"
   	$(function() {
 			$('.superAdmin-change-blog').click(function() {
@@ -400,6 +401,6 @@ if (!$core->error->flag())
 		__('Media directories').'</a></p>');
 }
 
-dcPage::helpBlock('core_posts_sa');
+dcPage::helpBlock('change_blog', 'core_posts_sa');
 dcPage::close();
 ?>

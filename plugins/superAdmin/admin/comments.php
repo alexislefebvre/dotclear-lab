@@ -201,7 +201,8 @@ dcPage::open(__('Comments').' &laquo; '.__('Super Admin'),
   //<![CDATA[
   ".
   	dcPage::jsVar('dotclear.msg.confirm_change_blog',
-  	__('Are you sure you want to change the current blog?')).
+  	__('Are you sure you want to change the current blog?').' '.
+  		__('See the help for more information.')).
   	"
   	$(function() {
 			$('.superAdmin-change-blog').click(function() {
@@ -351,6 +352,6 @@ echo('<p><a href="'.$p_url.'&amp;file=cpmv_post" class="multi-part">'.
 echo('<p><a href="'.$p_url.'&amp;file=medias" class="multi-part">'.
 	__('Media directories').'</a></p>');
 
-dcPage::helpBlock('core_comments');
+dcPage::helpBlock('change_blog', 'core_comments');
 dcPage::close();
 ?>

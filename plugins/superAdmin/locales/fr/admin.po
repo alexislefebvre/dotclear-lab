@@ -1,14 +1,14 @@
 # Language: Français
-# Module: superAdmin - 0.6
-# Date: 2011-02-14 22:31:45
+# Module: superAdmin - 0.6.2
+# Date: 2011-02-15 20:35:12
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: superAdmin 0.6\n"
+"Project-Id-Version: superAdmin 0.6.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-02-14T22:31:45+00:00\n"
+"PO-Revision-Date: 2011-02-15T20:35:12+00:00\n"
 "Last-Translator: Ubuntu\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,133 +16,117 @@ msgstr ""
 
 #: _admin.php:54
 #: _admin.php:58
-#: l10n/strings.php:6
 msgid "%s spam comment"
 msgstr "%s commentaire indésirable"
 
 #: _admin.php:63
-#: l10n/strings.php:7
 msgid "%s spam comments"
 msgstr "%s commentaires indésirables"
 
 #: _admin.php:80
-#: l10n/strings.php:9
 msgid "(including %d spam comment since your last visit)"
 msgstr "(dont %s commentaire indésirable depuis votre dernière visite)"
 
 #: _admin.php:84
-#: l10n/strings.php:10
 msgid "(including %d spam comments since your last visit)"
 msgstr "(dont %s commentaires indésirables depuis votre dernière visite)"
 
-#: admin/comments.php:203
-#: admin/posts.php:343
+#: admin/comments.php:204
+#: admin/posts.php:266
 #: cpmv_post.php:274
 msgid "Are you sure you want to change the current blog?"
 msgstr "Êtes-vous certain de vouloir changer le blog courant ?"
 
-#: admin/comments.php:227
-#: admin/posts.php:364
-#: cpmv_post.php:306
-#: l10n/strings.php:3
-#: medias.php:109
+#: admin/comments.php:205
+#: admin/posts.php:267
+#: cpmv_post.php:275
+msgid "See the help for more information."
+msgstr "Voyez l'aide pour de plus amples informations."
+
+#: admin/comments.php:229
+#: admin/posts.php:288
+#: cpmv_post.php:307
+#: medias.php:104
 msgid "Make this tab my default tab"
 msgstr "Définir comme onglet par défaut"
 
-#: admin/comments.php:255
-#: admin/posts.php:398
-#: l10n/strings.php:16
+#: admin/comments.php:257
+#: admin/posts.php:316
 msgid "Since my last visit, on %s"
 msgstr "Depuis ma dernière visite, le %s"
 
-#: admin/comments.php:256
-#: admin/posts.php:399
-#: l10n/strings.php:17
+#: admin/comments.php:258
+#: admin/posts.php:317
 msgid "%A, %B %e %Y, %H:%M"
 msgstr "%A %e %B %Y, %H:%M"
 
-#: admin/comments.php:349
-#: admin/posts.php:481
+#: admin/comments.php:351
+#: admin/posts.php:399
 #: cpmv_post.php:264
-#: cpmv_post.php:290
-#: cpmv_post.php:299
-#: l10n/strings.php:21
-#: medias.php:100
+#: cpmv_post.php:291
+#: cpmv_post.php:300
+#: medias.php:95
 msgid "Copy or move entry"
 msgstr "Copier ou déplacer un billet"
 
-#: admin/comments.php:351
-#: admin/posts.php:483
-#: cpmv_post.php:329
-#: l10n/strings.php:44
-#: medias.php:88
-#: medias.php:91
-#: medias.php:102
+#: admin/comments.php:353
+#: admin/posts.php:401
+#: cpmv_post.php:330
+#: medias.php:83
+#: medias.php:86
+#: medias.php:97
 msgid "Media directories"
 msgstr "Répertoires des médias"
 
 #: cpmv_post.php:229
-#: l10n/strings.php:23
 msgid "Entry #%1$s %2$s copied to blog %3$s, new entry id: #%4$s"
 msgstr "Billet #%1$s %2$s copié vers le blog %3$s, id du nouveau billet : #%4$s"
 
 #: cpmv_post.php:250
-#: l10n/strings.php:24
 msgid "Entry #%1$s %2$s moved to blog %3$s"
 msgstr "Billet #%1$s %2$s déplacé vers le blog %3$s"
 
 #: cpmv_post.php:270
-#: l10n/strings.php:28
 msgid "Are you sure you want to copy the post?"
 msgstr "Êtes-vous certain de vouloir copier le billet ?"
 
 #: cpmv_post.php:272
-#: l10n/strings.php:29
 msgid "Are you sure you want to move the post?"
 msgstr "Êtes-vous certain de vouloir déplacer le billet ?"
 
-#: cpmv_post.php:312
-#: l10n/strings.php:31
+#: cpmv_post.php:313
 msgid "Entry:"
 msgstr "Billet :"
 
-#: cpmv_post.php:314
-#: l10n/strings.php:32
+#: cpmv_post.php:315
 msgid "Copy or move to blog:"
 msgstr "Copier ou déplacer vers le blog :"
 
-#: cpmv_post.php:316
-#: l10n/strings.php:33
+#: cpmv_post.php:317
 msgid "Status of the copied or moved entry:"
 msgstr "État du billet copié ou déplacé :"
 
-#: cpmv_post.php:320
-#: l10n/strings.php:35
+#: cpmv_post.php:321
 msgid "The category will be removed if the entry is not copied to the same blog."
 msgstr "La catégorie sera supprimée si le billet n'est pas copié sur le même blog."
 
-#: cpmv_post.php:323
-#: l10n/strings.php:37
+#: cpmv_post.php:324
 msgid "Copy"
 msgstr "Copier"
 
-#: cpmv_post.php:324
-#: l10n/strings.php:38
+#: cpmv_post.php:325
 msgid "Move"
 msgstr "Déplacer"
 
 #: inc/lib.pager.php:58
 #: inc/lib.pager.php:202
-#: l10n/strings.php:13
 msgid "(in the blog timezone)"
 msgstr "(dans le fuseau horaire du blog)"
 
-#: l10n/strings.php:26
-msgid "Move entry"
-msgstr "Déplacer un billet"
-
-#: l10n/strings.php:42
-#: medias.php:120
+#: medias.php:115
 msgid "Public directory"
 msgstr "Répertoire public"
+
+msgid "Move entry"
+msgstr "Déplacer un billet"
 

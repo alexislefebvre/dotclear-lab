@@ -242,7 +242,7 @@ if (isset($_GET['post_copied']))
 	$rs = superAdmin::getPosts(array('post_id' => $post_id));
 
 	$class = '';
-	if ($rs->blog_id != $core->blog_id)
+	if ($rs->blog_id != $core->blog->id)
 	{
 		$class = ' class="superAdmin-change-blog"';
 	}
@@ -271,7 +271,8 @@ dcPage::open(__('Copy or move entry').' &laquo; '.__('Super Admin'),
   	dcPage::jsVar('dotclear.msg.confirm_move_post',
   	__('Are you sure you want to move the post?')).
   	dcPage::jsVar('dotclear.msg.confirm_change_blog',
-  	__('Are you sure you want to change the current blog?')).
+  	__('Are you sure you want to change the current blog?').' '.
+  		__('See the help for more information.')).
   	"
   	$(function() {
 			$('input[name=\"copy\"]').click(function() {
@@ -327,6 +328,8 @@ echo('</div>');
 
 echo('<p><a href="'.$p_url.'&amp;file=medias" class="multi-part">'.
 	__('Media directories').'</a></p>');
+
+dcPage::helpBlock('change_blog');
 
 dcPage::close();
 ?>
