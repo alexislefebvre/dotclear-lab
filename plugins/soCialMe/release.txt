@@ -1,6 +1,9 @@
 todo
  - specific installer for soCialMe extensions
 
+0.2.1 20110218
+ * Fixed display of selected page type on Sharer
+
 0.2 20110213
  * Added part called ''Reader''
  * Added cache system
