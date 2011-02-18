@@ -1,0 +1,32 @@
+# Language: Français
+# Module: dcLibFacebook - 0.1-beta1
+# Date: 2011-01-30 00:23:35
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: dcLibFacebook 0.1-beta1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-01-30T00:23:35+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: inc/lib.social.sharer.srv.facebook.php:57
+msgid "Light"
+msgstr "Clair"
+
+#: inc/lib.social.sharer.srv.facebook.php:58
+msgid "Dark"
+msgstr "Sombre"
+
+#: inc/lib.social.sharer.srv.facebook.php:64
+msgid "Colors scheme:"
+msgstr "Schema de couleurs :"
+
+#: inc/lib.social.sharer.srv.facebook.php:67
+msgid "This is the color scheme for the small and big buttons."
+msgstr "C'est le schema de couleur des petit et grand boutons."
+
