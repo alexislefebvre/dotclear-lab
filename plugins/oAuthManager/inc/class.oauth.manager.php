@@ -57,10 +57,7 @@ class oAuthManager
 		
 		$strReq .= "WHERE C.uid > 0 "; //always true huhu
 		
-		if (!$this->core->auth->isSuperAdmin())
-		{
-			$strReq .= "AND blog_id = '".$this->blog."' ";
-		}
+		$strReq .= $this->blog();
 		
 		if (!empty($params['sql']))
 		{

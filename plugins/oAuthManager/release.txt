@@ -1,3 +1,7 @@
+0.2-alpha2 20110218
+ * Added oAuth 2.0 draft 10 support (first step)
+ * Moved storage to the same class oAuthClientStore for oAuth 1 et 2
+
 0.1 20110130
  * First public release
  * Support only oAuth 1.0a

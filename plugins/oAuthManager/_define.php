@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"oAuth manager",
 	/* Description*/		"Manage oAuth access for plugins and users",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.2-alpha2',
 	/* Permissions */		'admin'
 );
-	/* date */		#20110130
+	/* date */		#20110218
 ?>

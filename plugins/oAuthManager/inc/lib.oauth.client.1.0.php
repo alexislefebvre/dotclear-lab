@@ -78,7 +78,7 @@ class oAuthClient10
 		$this->config = array_merge($default,$config);
 		
 		# storage
-		$this->store = new oAuthClient10Store($core);
+		$this->store = new oAuthClientStore($core);
 		
 		# load start values
 		$this->reset();

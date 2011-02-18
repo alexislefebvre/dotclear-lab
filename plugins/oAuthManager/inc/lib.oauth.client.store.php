@@ -12,7 +12,7 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-class oAuthClient10Store
+class oAuthClientStore
 {
 	private $core;
 	private $con;
@@ -53,7 +53,7 @@ class oAuthClient10Store
 	{
 		$rs = $this->con->select(
 			'SELECT uid, plugin_id, client_id, user_id, '.
-			'name, state, token, secret, mtime, expiry '.
+			'name, state, token, secret, mtime, expiry, more '.
 			'FROM '.$this->table.' '.
 			"WHERE blog_id = '".$this->blog."' ".
 			"AND plugin_id = '".$this->con->escape($plugin_id)."' ".
@@ -105,6 +105,7 @@ class oAuthClient10Store
 			$res['name'] = null;
 			$res['token'] = null;
 			$res['secret'] = null;
+			$res['more'] = null;
 			$res['mtime'] = $cur->mtime;
 			$res['expiry'] = null;
 		}
