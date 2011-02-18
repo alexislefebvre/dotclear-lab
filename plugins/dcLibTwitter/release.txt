@@ -1,3 +1,6 @@
+0.2.2
+ * Fixed comment_status
+
 0.2 20110213
  * Added ''Reader'' part
 
@@ -5,6 +8,6 @@
  * Fixed php error on exend class
 
 0.1-beta1 20110130
- * First publis release of Twitter libraries for Dotclear
+ * First public release of Twitter libraries for Dotclear
  * Added support of plugin soCialMe
  * Added support of plugin optionsForComment (with noddles avatar)

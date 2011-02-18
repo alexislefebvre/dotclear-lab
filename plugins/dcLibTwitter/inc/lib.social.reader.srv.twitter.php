@@ -122,7 +122,8 @@ if (!defined('DC_RC_PATH')){return;}# Add twitter to plugin soCialMe (reader p
 					# Get trackbacks of this post
 					$params = array(
 						'post_id' => $_ctx->posts->post_id,
-						'comment_trackback' => 1
+						'comment_trackback' => 1,
+						'comment_status_not' => 3
 					);
 					$trackbacks = $this->core->blog->getComments($params);
 				
