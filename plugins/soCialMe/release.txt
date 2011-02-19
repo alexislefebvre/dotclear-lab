@@ -1,5 +1,9 @@
 todo
  - specific installer for soCialMe extensions
+ - Add to reader the ability of creating post that resume one week of a service
+
+0.2.2 20110219
+ * Removed  feed from index (speed up admin page)
 
 0.2.1 20110218
  * Fixed display of selected page type on Sharer
