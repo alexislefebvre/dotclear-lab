@@ -21,13 +21,30 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_RC_PATH')) {return;}
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-$this->registerModule(
-	/* Name */					'Super Admin',
-	/* Description*/		'Administrate the posts and comments of all the blogs ',
-	/* Author */				'Moe (http://gniark.net/)',
-	/* Version */				'0.6.3',
-	/* Permissions */		null
-);
+# On lit la version du plugin
+$m_version = $core->plugins->moduleInfo('superAdmin','version');
+ 
+# On lit la version du plugin dans la table des versions
+$i_version = $core->getVersion('superAdmin');
+ 
+# La version dans la table est supérieure ou égale à
+# celle du module, on ne fait rien puisque celui-ci
+# est installé
+if (version_compare($i_version,$m_version,'>=')) {return;}
+
+# default settings
+$core->blog->settings->addNamespace('superAdmin');
+$core->blog->settings->superAdmin->put('enable_content_edition',
+	false,'boolean',
+	'Enable content edition of other blogs from the plugin',
+	# don't replace old value, global setting
+	false,true);
+
+# La procédure d'installation commence vraiment là
+$core->setVersion('superAdmin',$m_version);
+
+return true;
+
 ?>

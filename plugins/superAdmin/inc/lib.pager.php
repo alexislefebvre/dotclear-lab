@@ -132,24 +132,32 @@ class superAdminPostList extends adminGenericList
 		}
 		
 		$post_url = $this->core->getPostAdminURL($this->rs->post_type,
-			$this->rs->post_id).
-			'&amp;switchblog='.urlencode($this->rs->blog_id);
-		
-		if ($this->rs->post_type == 'post')
+			$this->rs->post_id);
+
+		$post_type = '';
+		if ($this->rs->post_type != 'post')
 		{
-			$class = '';
-			if ($this->rs->blog_id != $this->core->blog->id)
-			{
-				$class = ' class="superAdmin-change-blog"';
-			}
-			
-			$post_link = '<a href="'.$post_url.'"'.$class.'>'.
-				html::escapeHTML($this->rs->post_title).'</a>';
+			$post_type = sprintf(__(' (%s)'),$this->rs->post_type);
 		}
+
+		# the entry is from the current blog
+		if ($this->rs->blog_id == $this->core->blog->id)
+		{
+			$post_link = '<a href="'.$post_url.'">'.
+				html::escapeHTML($this->rs->post_title).$post_type.'</a>';
+		}
+		# the entry is from a different blog, edition links are active
+		else if ($this->core->blog->settings->superAdmin->enable_content_edition)
+		{
+			$post_link = '<a href="'.$post_url.
+				'&amp;switchblog='.urlencode($this->rs->blog_id).'" '.
+				'class="superAdmin-change-blog">'.
+				html::escapeHTML($this->rs->post_title).$post_type.'</a>';
+		}
+		# the entry is from a different blog and edition links are disabled
 		else
 		{
-			$post_link = html::escapeHTML($this->rs->post_title).
-				' ('.html::escapeHTML($this->rs->post_type).')';
+			$post_link = html::escapeHTML($this->rs->post_title).$post_type;
 		}
 		
 		$author_link = '<a href="'.$p_url.
@@ -175,7 +183,7 @@ class superAdminPostList extends adminGenericList
 		'<td class="nowrap">'.$this->rs->nb_comment.'</td>'.
 		'<td class="nowrap">'.$this->rs->nb_trackback.'</td>'.
 		'<td class="nowrap status">'.$img_status.' '.$selected.' '.$protected.' '.$attach.'</td>'.
-		'</tr>';
+		'</tr>'."\n";
 		
 		return $res;
 	}
@@ -252,28 +260,46 @@ class superAdminCommentList extends adminGenericList
 			'&amp;ip='.rawurlencode($this->rs->comment_ip);
 		
 		$post_url = $this->core->getPostAdminURL($this->rs->post_type,
-			$this->rs->post_id).
-			'&amp;switchblog='.urlencode($this->rs->blog_id);
+			$this->rs->post_id);
 
-		$class = '';
-		if ($this->rs->blog_id != $this->core->blog->id)
+		$post_type = '';
+		if ($this->rs->post_type != 'post')
 		{
-			$class = ' class="superAdmin-change-blog"';
+			$post_type = sprintf(__(' (%s)'),$this->rs->post_type);
 		}
-		
-		if ($this->rs->post_type == 'post')
+
+		# the entry is from the current blog
+		if ($this->rs->blog_id == $this->core->blog->id)
 		{
-			$post_link = '<a href="'.$post_url.'"'.$class.'>'.
-				html::escapeHTML($this->rs->post_title).'</a>';
+			$post_link = '<a href="'.$post_url.'">'.
+				html::escapeHTML($this->rs->post_title).$post_type.'</a>';
+
+			$comment_link = '<a href="comment.php?id='.$this->rs->comment_id.
+				'"><img src="images/edit-mini.png" alt="" title="'.
+				__('Edit this comment').'" /></a>';
 		}
+		# the entry is from a different blog, edition links are active
+		else if ($this->core->blog->settings->superAdmin->enable_content_edition)
+		{
+			$post_link = '<a href="'.$post_url.
+				'&amp;switchblog='.urlencode($this->rs->blog_id).'" '.
+				'class="superAdmin-change-blog">'.
+				html::escapeHTML($this->rs->post_title).$post_type.'</a>';
+
+			$comment_link = '<a href="comment.php?id='.$this->rs->comment_id.
+				'&amp;switchblog='.urlencode($this->rs->blog_id).
+				'" class="superAdmin-change-blog">'.
+				'<img src="images/edit-mini.png" alt="" title="'.
+				__('Edit this comment').'" /></a>';
+		}
+		# the entry is from a different blog and edition links are disabled
 		else
 		{
-			$post_link = html::escapeHTML($this->rs->post_title).
-				' ('.html::escapeHTML($this->rs->post_type).')';
+			$post_link = html::escapeHTML($this->rs->post_title).$post_type;
+
+			$comment_link = '&nbsp;';
 		}
 		
-		$comment_url = 'comment.php?id='.$this->rs->comment_id.
-			'&amp;switchblog='.urlencode($this->rs->blog_id);
 		
 		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
 		switch ($this->rs->comment_status) {
@@ -314,11 +340,9 @@ class superAdminCommentList extends adminGenericList
 		'<td>'.$blog_link.'</td>'.	
 		'<td class="nowrap">'.($this->rs->comment_trackback ? __('trackback') : __('comment')).'</td>'.
 		'<td class="nowrap status">'.$img_status.'</td>'.
-		'<td class="nowrap status">'.
-		'<a href="'.$comment_url.'"'.$class.'>'.
-		'<img src="images/edit-mini.png" alt="" title="'.__('Edit this comment').'" /></a></td>';
+		'<td class="nowrap status">'.$comment_link.'</td>';
 		
-		$res .= '</tr>';
+		$res .= '</tr>'."\n";
 		
 		return $res;
 	}

@@ -146,5 +146,8 @@ echo($t);
 
 echo('</div>');
 
+echo('<p><a href="'.$p_url.'&amp;file=settings" class="multi-part">'.
+	__('Settings').'</a></p>');
+
 dcPage::close();
 ?>

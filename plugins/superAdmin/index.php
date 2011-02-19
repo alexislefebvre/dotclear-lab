@@ -79,6 +79,9 @@ if (!empty($_REQUEST['file']))
 		case 'medias' :
 			require dirname(__FILE__).'/medias.php';
 			break;
+		case 'settings' :
+			require dirname(__FILE__).'/settings.php';
+			break;
 		default :
 			require dirname(__FILE__).'/admin/posts.php';
 			break;
