@@ -68,5 +68,4 @@ class facebookUtils
 		return $s;
 	}
 }
-
 ?>

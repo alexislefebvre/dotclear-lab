@@ -10,32 +10,11 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
-
-# Add Facebook to plugin soCialMe (profil part)
-class facebookSoCialMeProfilService extends soCialMeService
-{
-	protected $part = 'profil';
-	
-	protected $define = array(
-		'id' => 'facebook',
-		'name' => 'Facebook',
-		'home' => 'http://facebook.com',
-		'icon' => 'pf=dcLibFacebook/icon.png'
-	);
-	
-	protected $actions = array(
+if (!defined('DC_RC_PATH')){return;}# Add facebook to plugin soCialMe (reader part)class facebookSoCialMeReaderService extends soCialMeService{	protected $part = 'reader';		protected $define = array(		'id' => 'facebook',		'name' => 'Facebook',		'home' => 'http://facebook.com',		'icon' => 'pf=dcLibFacebook/icon.png'	);		protected $actions = array(
 		'playServerScript' => true,
-		'playIconContent' => true,
-		'playSmallContent' => true,
-		'playBigContent' => true,
-		'playMediumExtraContent' => true
-	);
-	
-	protected $available = true;
-	
-	private $oauth = false;
-	private $cache_timeout = 900; //15 minutes
+		'playWidgetContent' => true,
+		'playPageContent' => true	);		private $oauth = false;
+	private $cache_timeout = 300; //5 minutes
 	
 	protected function init()
 	{
@@ -49,8 +28,8 @@ class facebookSoCialMeProfilService extends soCialMeService
 			$this->oauth = oAuthClient::load($this->core,'facebook',
 				array(
 					'user_id' => null,
-					'plugin_id' => 'soCialMeWriter',
-					'plugin_name' => __('SoCialMe Writer'),
+					'plugin_id' => 'soCialMeReader',
+					'plugin_name' => __('SoCialMe Reader'),
 					'token' => $oauth_settings['client_id'], //app_id
 					'secret' => $oauth_settings['client_secret'], //app_secret
 					'options' => array(
@@ -128,24 +107,7 @@ class facebookSoCialMeProfilService extends soCialMeService
 		return $res;
 	}
 	
-	public function parseContent($img)
-	{ 
-		return !$this->oauth || !$this->oauth->info('id') ? 
-			null : 
-			soCialMeUtils::preloadBox(
-				soCialMeUtils::easyLink(
-					$this->oauth->info('profil_url'),
-					$this->name,
-					$this->url.$img,
-					'profil'
-				)
-			);
-	}
-	public function playIconContent() { return $this->parseContent('pf=dcLibFacebook/inc/icons/icon-small.png'); }
-	public function playSmallContent() { return $this->parseContent('pf=dcLibFacebook/inc/icons/icon-medium.png'); }
-	public function playBigContent() { return $this->parseContent('pf=dcLibFacebook/inc/icons/icon-big.png'); }
-	
-	# Put last user profil into cache file
+	# Put last user checkins into cache file
 	public function playServerScript($available)
 	{
 		if (!$this->available || $this->oauth->state() != 2) return;
@@ -155,64 +117,68 @@ class facebookSoCialMeProfilService extends soCialMeService
 		#
 		
 		# cache filename
-		$file_user_profil = $this->core->blog->id.$this->id.'user_profil';
+		$file_user_statuses = $this->core->blog->id.$this->id.'user_statuses';
 		
 		# check cache expiry
-		if (isset($available['MediumExtra']) && in_array($this->id,$available['MediumExtra']) 
-		 && soCialMeCacheFile::expired($file_user_profil,'enc',$this->cache_timeout))
+		if((isset($available['Widget']) && in_array($this->id,$available['Widget']) 
+		 || isset($available['Page']) && in_array($this->id,$available['Page'])) 
+		&& soCialMeCacheFile::expired($file_user_statuses,'enc',$this->cache_timeout))
 		{
-			$record = $this->oauth->get('me');
-//echo '<pre style="text-align:left;">'.print_r($rsp,true).'</pre>';exit(1);
+			$rsp = $this->oauth->get('me/statuses');
 			
-			if ($record)
+			if ($rsp && $rsp->data)
 			{
+				$rs = $rsp->data;
+				
 				# Parse response
 				$records = null;
-				
-				$records[0]['service'] = $this->id;
-				$records[0]['author'] = $record->name;
-				$records[0]['source_name'] = $this->name;
-				$records[0]['source_url'] = $this->home;
-				$records[0]['source_icon'] = $this->icon;
-				
-				$records[0]['me'] = true;
-				$records[0]['date'] = strtotime($record->updated_time);
-				$records[0]['url'] = $record->link;
-				$records[0]['avatar'] = 'https://graph.facebook.com/'.$record->id.'/picture?type=normal';
-				$records[0]['icon'] = 'https://graph.facebook.com/'.$record->id.'/picture?type=small';
-				
-				soCialMeCacheFile::write($file_user_profil,'enc',soCialMeUtils::encode($records));
+				$i = 0;
+				foreach($rs as $record)
+				{
+					$records[$i]['service'] = $this->id;
+					$records[$i]['author'] = $this->oauth->info('name');
+					$records[$i]['source_name'] = $this->name;
+					$records[$i]['source_url'] = $this->home;
+					$records[$i]['source_icon'] = $this->icon;
+					
+					$records[$i]['me'] = $record->from->name == $this->oauth->info('name');
+					$records[$i]['date'] = strtotime($record->updated_time);
+					$records[$i]['url'] = 'http://facebook.com/'.$record->from->id.'/posts/'.$record->id;
+					$records[$i]['title'] = sprintf(__('%s says'),$record->from->name);
+					$records[$i]['content'] = $record->message;
+
+					$records[$i]['avatar'] = 'https://graph.facebook.com/'.$record->from->id.'/picture?type=normal';
+					$records[$i]['icon'] = 'https://graph.facebook.com/'.$record->from->id.'/picture?type=small';
+					
+					$i++;
+				}
+				# Create cache file
+				if (!empty($records)) {
+					soCialMeCacheFile::write($file_user_statuses,'enc',soCialMeUtils::encode($records));
+				}
 			}
 		}
 	}
 	
-	public function playMediumExtraContent()
+	public function playWidgetContent()
+	{
+		return self::parseContent();
+	}
+	
+	public function playPageContent()
+	{
+		return self::parseContent();
+	}
+	
+	private function parseContent()
 	{
 		if (!$this->available) return;
 		# cache filename
-		$file = $this->core->blog->id.$this->id.'user_profil';
+		$file = $this->core->blog->id.$this->id.'user_statuses';
 		# Read cache content
 		$content = soCialMeCacheFile::read($file,'enc');
 		if (empty($content)) return;
 		# Parse content
-		$rs = soCialMeUtils::decode($content);
-//echo '<p>rs:</p><pre style="text-align:left;">'.print_r($rs,true).'</pre>';exit(1);
-		if (empty($rs)) return;
-		
-		$record = $rs[0];
-		
-		$res = 
-		'<div class="facebook-profil">';
-		if ($record['avatar']) {
-			$res .= '<img src="'.$record['avatar'].'" alt="'.$record['author'].'" /> ';
-		}
-		$res .= 
-		'<strong>'.$record['author'].'</strong><br />'.
-		'<a href="'.$record['url'].'">'.sprintf(__('View my profil on %s'),$this->name).'</a><br />'.
-		'<em>'.sprintf(__('Last update on %s'),dt::str($this->core->blog->settings->system->date_format.', '.$this->core->blog->settings->system->time_format,$record['date'])).'</em>'.
-		'</div>';
-		
-		return $res;
+		return soCialMeUtils::decode($content);
 	}
-}
-?>
+}?>

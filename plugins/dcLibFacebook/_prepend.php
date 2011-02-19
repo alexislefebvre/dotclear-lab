@@ -27,6 +27,8 @@ $__autoload['facebookSoCialMeWriterService'] = dirname(__FILE__).'/inc/lib.socia
 $core->addBehavior('soCialMeWriterService',array('dcLibFacebookBehaviors','soCialMeWriter'));
 $__autoload['facebookSoCialMeProfilService'] = dirname(__FILE__).'/inc/lib.social.profil.srv.facebook.php';
 $core->addBehavior('soCialMeProfilService',array('dcLibFacebookBehaviors','soCialMeProfil'));
+$__autoload['facebookSoCialMeReaderService'] = dirname(__FILE__).'/inc/lib.social.reader.srv.facebook.php';
+$core->addBehavior('soCialMeReaderService',array('dcLibFacebookBehaviors','soCialMeReader'));
 
 class dcLibFacebookBehaviors
 {
@@ -54,6 +56,11 @@ class dcLibFacebookBehaviors
 	public static function soCialMeProfil()
 	{
 		return array('facebook','facebookSoCialMeProfilService');
+	}
+	
+	public static function soCialMeReader()
+	{
+		return array('facebook','facebookSoCialMeReaderService');
 	}
 }
 ?>
