@@ -218,11 +218,11 @@ class foursquareSoCialMeProfilService extends soCialMeService
 		{
 			$res .=
 			'<div class="foursquare-badge">'.
-			'<img src="'.$record['icon'].'" alt="'.$record['title'].'" /><br />'.
+			'<img src="'.$record['icon'].'" alt="'.$record['title'].'" /> '.
 			'<strong>'.$record['title'].'</strong><br />'.
 			$record['content'].'<br />'.
 			'<em>'.dt::str($this->core->blog->settings->system->date_format.', '.$this->core->blog->settings->system->time_format,$record['date']).'</em>'.
-			'</div> ';
+			'</div>';
 		}
 		return $res;
 	}
