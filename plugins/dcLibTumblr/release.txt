@@ -1,3 +1,7 @@
+0.2 20110219
+ * Added support of SoCialMe Profil
+ * Fixed settings name for SoCialMe Writer
+
 0.1-beta1 
  * First publis release of Tumblr libraries for Dotclear
  * Added support of plugin soCialMe (writer part)

@@ -35,8 +35,14 @@ try
 		'email'=>'',
 		'password'=>''
 	)));
+	$social_profil = base64_encode(serialize(array(
+		'email'=>'',
+		'password'=>'',
+		'id' => ''
+	)));
 	
 	$s->put('soCialMe_writer',$social_writer,'string','config for soCialMe Writer',false,true);
+	$s->put('soCialMe_profil',$social_profil,'string','config for soCialMe Profil',false,true);
 	
 	# Version
 	$core->setVersion('dcLibTumblr',$new_version);

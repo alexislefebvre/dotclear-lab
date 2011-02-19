@@ -17,4 +17,6 @@ global $__autoload, $core;
 # Add to SocCial Wrtier
 $__autoload['tumblrSoCialMeWriterService'] = dirname(__FILE__).'/inc/lib.social.writer.srv.tumblr.php';
 $core->addBehavior('soCialMeWriterService',create_function(null,'return array("tumblr","tumblrSoCialMeWriterService");'));
+$__autoload['tumblrSoCialMeProfilService'] = dirname(__FILE__).'/inc/lib.social.profil.srv.tumblr.php';
+$core->addBehavior('soCialMeProfilService',create_function(null,'return array("tumblr","tumblrSoCialMeProfilService");'));
 ?>
