@@ -45,8 +45,13 @@ $rs = superAdmin::getPosts();
 
 while ($rs->fetch())
 {
+	$post_type = '';
+	if ($rs->post_type != 'post')
+	{
+		$post_type = sprintf(__(' (%s)'),$rs->post_type);
+	}
 	$posts_list[html::escapeHTML($rs->post_title).' - '.$rs->post_dt.
-		' ('.html::escapeHTML($rs->blog_name).') (#'.$rs->post_id.')'] = $rs->post_id;
+		$post_type.' ('.html::escapeHTML($rs->blog_name).') (#'.$rs->post_id.')'] = $rs->post_id;
 }
 
 unset($rs);
@@ -226,19 +231,20 @@ if (isset($_GET['post_copied']))
 
 	if (isset($_GET['new_post_id']))
 	{
-		if ($core->blog->settings->superAdmin->enable_content_edition)
+		if ($rs->blog_id == $core->blog->id)
 		{
-			$class = '';
-			if ($rs->blog_id != $core->blog->id)
-			{
-				$class = ' class="superAdmin-change-blog"';
-			}
-			
+			$new_entry_id = 
+			'<a href="'.
+				$core->getPostAdminURL($rs->post_type,$_GET['new_post_id']).
+				'">'.$_GET['new_post_id'].'</a>';
+		}
+		else if (superAdminAdmin::enableContentEditionPref())
+		{
 			$new_entry_id = 
 			'<a href="'.
 				$core->getPostAdminURL($rs->post_type,$_GET['new_post_id']).
 				'&amp;switchblog='.urlencode($blog_id).
-				'"'.$class.'>'.
+				'" class="superAdmin-change-blog">'.
 				$_GET['new_post_id'].'</a>';
 		}
 		else
@@ -255,30 +261,29 @@ if (isset($_GET['post_copied']))
 } elseif (isset($_GET['post_moved']))
 {
 	$rs = superAdmin::getPosts(array('post_id' => $post_id));
-	
-	if ($core->blog->settings->superAdmin->enable_content_edition)
+
+	if ($rs->blog_id == $core->blog->id)
 	{
-		$class = '';
-		if ($rs->blog_id != $core->blog->id)
-		{
-			$class = ' class="superAdmin-change-blog"';
-		}
-		
-		$msg = sprintf(__('Entry #%1$s %2$s moved to blog %3$s'),
-			'<a href="'.
+		$post_link = '<a href="'.
+				$core->getPostAdminURL($rs->post_type,$post_id).
+				'">'.$post_id.'</a>';
+	}
+	else if (superAdminAdmin::enableContentEditionPref())
+	{
+		$post_link = '<a href="'.
 				$core->getPostAdminURL($rs->post_type,$post_id).
 				'&amp;switchblog='.urlencode($blog_id).
-				'"'.$class.'>'.$post_id.'</a>',
-			'<strong>'.$rs->post_title.'</strong>',
-			'<strong>'.$rs->blog_name.'</strong>');
+				'" class="superAdmin-change-blog">'.$post_id.'</a>';
 	}
 	else
 	{
-		$msg = sprintf(__('Entry #%1$s %2$s moved to blog %3$s'),
-			$post_id,
-			'<strong>'.$rs->post_title.'</strong>',
-			'<strong>'.$rs->blog_name.'</strong>');
+		$post_link = $post_id;
 	}
+
+	$msg = sprintf(__('Entry #%1$s %2$s moved to blog %3$s'),
+		$post_link,
+		'<strong>'.$rs->post_title.'</strong>',
+		'<strong>'.$rs->blog_name.'</strong>');
 	
 	$blog_id = $rs->blog_id;
 }
@@ -353,13 +358,8 @@ echo('</div>');
 
 echo('<p><a href="'.$p_url.'&amp;file=medias" class="multi-part">'.
 	__('Media directories').'</a></p>');
-echo('<p><a href="'.$p_url.'&amp;file=settings" class="multi-part">'.
-	__('Settings').'</a></p>');
 
-if ($core->blog->settings->superAdmin->enable_content_edition)
-{
-	dcPage::helpBlock('change_blog');
-}
+dcPage::helpBlock('change_blog');
 
 dcPage::close();
 ?>

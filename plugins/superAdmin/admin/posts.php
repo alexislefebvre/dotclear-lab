@@ -399,18 +399,9 @@ if (!$core->error->flag())
 		__('Copy or move entry').'</a></p>');
 	echo('<p><a href="'.$p_url.'&amp;file=medias" class="multi-part">'.
 		__('Media directories').'</a></p>');
-	echo('<p><a href="'.$p_url.'&amp;file=settings" class="multi-part">'.
-	__('Settings').'</a></p>');
 }
 
-if ($core->blog->settings->superAdmin->enable_content_edition)
-{
-	dcPage::helpBlock('change_blog', 'core_posts_sa');
-}
-else
-{
-	dcPage::helpBlock('core_posts_sa');
-}
+dcPage::helpBlock('change_blog', 'core_posts_sa');
 
 dcPage::close();
 ?>

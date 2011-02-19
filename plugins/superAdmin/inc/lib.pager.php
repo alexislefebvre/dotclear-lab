@@ -73,7 +73,10 @@ class superAdminPostList extends adminGenericList
 			$blocks = explode('%s',$html_block);
 			
 			echo $blocks[0];
-			
+
+			$this->enable_content_edition =
+				(boolean) superAdminAdmin::enableContentEditionPref();
+
 			while ($this->rs->fetch())
 			{
 				echo $this->postLine();
@@ -139,7 +142,7 @@ class superAdminPostList extends adminGenericList
 		{
 			$post_type = sprintf(__(' (%s)'),$this->rs->post_type);
 		}
-
+		
 		# the entry is from the current blog
 		if ($this->rs->blog_id == $this->core->blog->id)
 		{
@@ -147,7 +150,7 @@ class superAdminPostList extends adminGenericList
 				html::escapeHTML($this->rs->post_title).$post_type.'</a>';
 		}
 		# the entry is from a different blog, edition links are active
-		else if ($this->core->blog->settings->superAdmin->enable_content_edition)
+		else if ($this->enable_content_edition)
 		{
 			$post_link = '<a href="'.$post_url.
 				'&amp;switchblog='.urlencode($this->rs->blog_id).'" '.
@@ -225,6 +228,9 @@ class superAdminCommentList extends adminGenericList
 			$blocks = explode('%s',$html_block);
 			
 			echo $blocks[0];
+
+			$this->enable_content_edition =
+				(boolean) superAdminAdmin::enableContentEditionPref();
 			
 			while ($this->rs->fetch())
 			{
@@ -279,7 +285,7 @@ class superAdminCommentList extends adminGenericList
 				__('Edit this comment').'" /></a>';
 		}
 		# the entry is from a different blog, edition links are active
-		else if ($this->core->blog->settings->superAdmin->enable_content_edition)
+		else if ($this->enable_content_edition)
 		{
 			$post_link = '<a href="'.$post_url.
 				'&amp;switchblog='.urlencode($this->rs->blog_id).'" '.

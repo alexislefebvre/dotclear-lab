@@ -39,6 +39,13 @@ if ($core->auth->isSuperAdmin())
 		array('superAdminAdmin','adminDashboardIcons'));
 }
 
+$core->addBehavior('adminUserForm',
+	array('superAdminAdmin','adminUserForm'));
+$core->addBehavior('adminPreferencesForm',
+	array('superAdminAdmin','adminUserForm'));
+$core->addBehavior('adminBeforeUserUpdate',
+	array('superAdminAdmin','adminBeforeUserUpdate'));
+
 require_once(dirname(__FILE__).'/inc/lib.superAdmin.php');
 
 class superAdminAdmin {
@@ -94,6 +101,37 @@ class superAdminAdmin {
 		
 		$icons['superAdmin'] = array($str,$url,
 			'index.php?pf=superAdmin/img/'.$icon);
+	}
+
+	public static function adminUserForm($core)
+	{
+		echo
+		'<fieldset><legend>'.__('Super Admin').'</legend>'.
+		'<p><label class="classic">'.
+		form::checkbox('superAdmin_enable_content_edition',1,
+			self::enableContentEditionPref()).' '.
+			__('Enable content edition of other blogs from the plugin').
+		'</label></p>'.
+		'</fieldset>';
+	}
+	
+	public static function adminBeforeUserUpdate($cur,$user_id='')
+	{
+		$cur->user_options['superAdmin_enable_content_edition'] =
+			!empty($_POST['superAdmin_enable_content_edition']);
+	}
+
+	public static function enableContentEditionPref()
+	{
+		$options = $GLOBALS['core']->auth->getOptions();
+
+		if (!is_array($options)) {return(null);}
+		
+		$value =
+			array_key_exists('superAdmin_enable_content_edition',$options)
+			? $options['superAdmin_enable_content_edition'] : false;
+		
+		return $value;
 	}
 }
 ?>
