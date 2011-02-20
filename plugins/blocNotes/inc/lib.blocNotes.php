@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Bloc-Notes.
-# Copyright 2008,2010 Moe (http://gniark.net/)
+# Copyright 2008,2010,2011 Moe (http://gniark.net/)
 #
 # Bloc-Notes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,8 +34,10 @@ class blocNotes
 		public static function form()
 		{
 			global $core;
+
+			$core->blog->settings->addNameSpace('blocnotes');
 			
-			$set = $core->blog->settings;
+			$set = $core->blog->settings->blocnotes;
 			
 			$notes = $core->con->select('SELECT bloc_notes '.
 				'FROM '.$core->prefix.'user '.
@@ -73,9 +75,9 @@ class blocNotes
 				$cur->bloc_notes = $_POST['blocNotes_personal_text'];
 				$cur->update('WHERE user_id = \''.$core->con->escape($core->auth->userID()).'\'');
 				
-				$core->blog->settings->setNameSpace('blocnotes');
+				$core->blog->settings->addNameSpace('blocnotes');
 				# Blog-specific notebook
-				$core->blog->settings->put('blocNotes_text',
+				$core->blog->settings->blocnotes->put('blocNotes_text',
 					base64_encode($_POST['blocNotes_text']),'text',
 					'Bloc-Notes\' text');
 			}

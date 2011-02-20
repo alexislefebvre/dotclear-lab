@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Bloc-Notes.
-# Copyright 2008,2009,2010 Moe (http://gniark.net/)
+# Copyright 2008,2009,2010,2011 Moe (http://gniark.net/)
 #
 # Bloc-Notes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,5 +49,70 @@ $_menu['Plugins']->addItem(__('Notebook'),
 	preg_match('/plugin.php\?p=blocNotes(&.*)?$/',
 	$_SERVER['REQUEST_URI']),
 	$core->auth->check('usage,contentadmin',$core->blog->id));
+
+
+# backups
+
+/*$core->addBehavior('exportFull',
+	array('blocNotesExportImport','exportFull'));
+$core->addBehavior('exportSingle',
+	array('blocNotesExportImport','exportSingle'));
+$core->addBehavior('importInit',
+	array('blocNotesExportImport','importInit'));
+$core->addBehavior('importSingle',
+	array('blocNotesExportImport','importSingle'));
+$core->addBehavior('importFull',
+	array('blocNotesExportImport','importFull'));
+
+class blocNotesExportImport
+{
+	public static function exportFull($core,$exp)
+	{
+		$exp->export('user',
+			'SELECT bloc_notes, user_id '.
+			'FROM '.$core->prefix.'user U '.
+			"WHERE U.bloc_notes != '' "
+		);
+	}
 	
+	public static function exportSingle($core,$exp,$blog_id)
+	{
+		# from /dotclear/admin/blog_pref.php
+		$blog_users = $core->getBlogPermissions($blog_id,$core->auth->isSuperAdmin());
+		$blog_users = array_keys($blog_users);
+		
+		$exp->export('user',
+			'SELECT bloc_notes, user_id '.
+			'FROM '.$core->prefix.'user U '.
+			"WHERE U.bloc_notes != '' ".
+			"AND U.user_id ".$core->con->in($blog_users)
+		);
+	}
+	
+	public static function importInit($bk,$core)
+	{
+		$bk->cur_user = $core->con->openCursor($core->prefix.'user');
+	}
+	
+	public static function importFull($line,$bk,$core)
+	{
+		if ($line->__name == 'user')
+		{
+			$bk->cur_user->bloc_notes   = (string) $line->bloc_notes;
+			$bk->cur_meta->update('WHERE user_id = \''.
+				$core->con->escape($line->user_id).'\'');
+		}
+	}
+	
+	public static function importSingle($line,$bk,$core)
+	{
+		if ($line->__name == 'user')
+		{
+			$bk->cur_user->bloc_notes   = (string) $line->bloc_notes;
+			$bk->cur_meta->update('WHERE user_id = \''.
+				$core->con->escape($line->user_id).'\'');
+		}
+	}
+}*/
+
 ?>
