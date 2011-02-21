@@ -29,10 +29,8 @@ class foursquareSoCialMeProfilService extends soCialMeService
 		'playIconContent' => true,
 		'playSmallContent' => true,
 		'playBigContent' => true,
-		'playMediumExtraContent' => true
+		'playCardContent' => true
 	);
-	
-	protected $available = true;
 	
 	private $oauth = false;
 	
@@ -43,7 +41,7 @@ class foursquareSoCialMeProfilService extends soCialMeService
 		
 		# Required plugin oAuthManager
 		# Used name of parent plugin
-		if (!empty($oauth_settings['client_id']) && soCialMeUtils::checkPlugin('oAuthManager','0.2-alpha1'))
+		if (!empty($oauth_settings['client_id']) && soCialMeUtils::checkPlugin('oAuthManager','0.3'))
 		{
 			$this->oauth = oAuthClient::load($this->core,'foursquare',
 				array(
@@ -126,16 +124,19 @@ class foursquareSoCialMeProfilService extends soCialMeService
 	
 	public function parseContent($img)
 	{ 
-		return !$this->oauth || !$this->oauth->info('id') ? 
-			null : 
-			soCialMeUtils::preloadBox(
-				soCialMeUtils::easyLink(
-					'http://foursquare.com/user/'.$this->oauth->info('id'),
-					$this->name,
-					$this->url.$img,
-					'profil'
-				)
-			);
+		if (!$this->oauth || !$this->oauth->info('id')) return;
+		
+		$record[0] = array(
+			'service' => $this->id,
+			'source_name' => $this->name,
+			'source_url' => $this->home,
+			'source_icon' => $this->icon,
+			'preload' => true,
+			'title' => sprintf(__('View my profil on %s'),$this->name),
+			'avatar' => $this->url.$img,
+			'url' => 'http://foursquare.com/user/'.$this->oauth->info('id')
+		);
+		return $record;
 	}
 	public function playIconContent() { return $this->parseContent('pf=dcLibFoursquare/inc/icons/icon-small.png'); }
 	public function playSmallContent() { return $this->parseContent('pf=dcLibFoursquare/inc/icons/icon-medium.png'); }
@@ -148,27 +149,48 @@ class foursquareSoCialMeProfilService extends soCialMeService
 	{
 		if (!$this->available || $this->oauth->state() != 2) return;
 		
-		#
-		# Cache for user badges
-		#
-		
 		# cache filename
-		$file_user_badges = $this->core->blog->id.$this->id.'user_badges';
+		$file = $this->core->blog->id.$this->id.'user_profil_and_badges';
 		
 		# check cache expiry
-		if(isset($available['MediumExtra']) && in_array($this->id,$available['MediumExtra']) 
-		&& soCialMeCacheFile::expired($file_user_badges,'enc',$this->cache_timeout))
+		if(isset($available['Card']) && in_array($this->id,$available['Card']) 
+		 && soCialMeCacheFile::expired($file,'enc',$this->cache_timeout))
 		{
-			# call API
+			$i = 0;
+			$records = null;
+			$this->log('Get','playServerScript','user_profil_and_badges');
+			
+			// profil
+			$rsp = foursquareUtils::api($this->oauth,'users/self');
+			
+			if ($rsp && $rsp->user)
+			{
+				$rs = $rsp->user;
+				
+				$records[$i]['service'] = $this->id;
+				$records[$i]['author'] = $this->oauth->info('name');
+				$records[$i]['source_name'] = $this->name;
+				$records[$i]['source_url'] = $this->home;
+				$records[$i]['source_icon'] = $this->icon;
+				
+				$records[$i]['me'] = true;
+				$records[$i]['url'] = 'http://foursquare.com/user/'.$rs->id;
+				$records[$i]['title'] = $rs->firstName.' '.$rs->lastName;
+				$records[$i]['excerpt'] = sprintf(__('View my profil on %s'),$this->name);
+				$records[$i]['content'] = sprintf(__('%s checkins, %s badges'),$rs->checkins->count,$rs->badges->count);
+				$records[$i]['avatar'] = 'http://playfoursquare.s3.amazonaws.com/userpix_thumbs/QENPJKQ33TFQLNRS.png';
+				$records[$i]['icon'] = 'http://playfoursquare.s3.amazonaws.com/userpix_thumbs/QENPJKQ33TFQLNRS.png';
+				
+				$i++;
+			}
+			
+			// badges
 			$rsp = foursquareUtils::api($this->oauth,'users/self/badges');
-//echo '<p>rsp:</p><pre style="text-align:left;">'.print_r($rsp,true).'</pre>';exit(1);
+			
 			if ($rsp && $rsp->badges)
 			{
 				$rs = $rsp->badges;
 				
-				# Parse response
-				$records = null;
-				$i = 0;
 				foreach($rs as $record)
 				{
 					$unlock = $record->unlocks;
@@ -184,47 +206,35 @@ class foursquareSoCialMeProfilService extends soCialMeService
 					$records[$i]['date'] = $record->unlocks[0]->checkins[0]->createdAt;
 					$records[$i]['url'] = 'http://foursquare.com/user/'.$this->oauth->info('id').'/bagdes/'.$record->id;
 					$records[$i]['title'] = sprintf(__('%s has got the %s badge'),$this->oauth->info('name'),$record->name);
+					$records[$i]['excerpt'] = sprintf(__('View this badge on %s'),$this->name);
 					$records[$i]['content'] = $record->description;
 					$records[$i]['avatar'] = $record->image->prefix.$recorf->image->size[1].$record->image->name;
 					$records[$i]['icon'] = $record->image->prefix.$recorf->image->size[0].$record->image->name;
 					
 					$i++;
 				}
-				# Create cache file
-				if (!empty($records)) {
-					soCialMeCacheFile::write($file_user_badges,'enc',soCialMeUtils::encode($records));
-				}
+			}
+			
+			# Set cache file
+			if (empty($records)) {
+				soCialMeCacheFile::touch($file,'enc');
+			}
+			else {
+				soCialMeCacheFile::write($file,'enc',soCialMeUtils::encode($records));
 			}
 		}
 	}
 	
-	# List from cache file user unlock badges on soCialMe "medium extra content"
-	public function playMediumExtraContent()
+	# List from cache file user unlock badges on soCialMe "card content"
+	public function playCardContent()
 	{
 		if (!$this->available) return;
-		# cache filename
-		$file = $this->core->blog->id.$this->id.'user_badges';
-		# Read cache content
+		
+		$file = $this->core->blog->id.$this->id.'user_profil_and_badges';
 		$content = soCialMeCacheFile::read($file,'enc');
 		if (empty($content)) return;
-		# Parse content
-		$rs = soCialMeUtils::decode($content);
-//echo '<p>rs:</p><pre style="text-align:left;">'.print_r($rs,true).'</pre>';exit(1);
-		if (empty($rs)) return;
 		
-		$res = '';
-		
-		foreach($rs as $record)
-		{
-			$res .=
-			'<div class="foursquare-badge">'.
-			'<img src="'.$record['icon'].'" alt="'.$record['title'].'" /> '.
-			'<strong>'.$record['title'].'</strong><br />'.
-			$record['content'].'<br />'.
-			'<em>'.dt::str($this->core->blog->settings->system->date_format.', '.$this->core->blog->settings->system->time_format,$record['date']).'</em>'.
-			'</div>';
-		}
-		return $res;
+		return soCialMeUtils::decode($content);
 	}
 }
 ?>

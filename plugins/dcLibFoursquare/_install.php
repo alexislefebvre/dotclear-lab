@@ -31,11 +31,10 @@ try
 	$core->blog->settings->addNamespace('dcLibFoursquare');
 	$s = $core->blog->settings->dcLibFoursquare;
 	
-	$social_profil = base64_encode(serialize(array(
-		
-	)));
+	$social_profil = $social_reader = base64_encode(serialize(array()));
 	
 	$s->put('soCialMe_profil',$social_profil,'string','config for soCialMe Profil',false,true);
+	$s->put('soCialMe_preader',$social_reader,'string','config for soCialMe Reader',false,true);
 	
 	$s->put('oauth_admin','','string','oAuth2 app ref for admin side',false,true);
 	$s->put('oauth_public','','string','oAuth2 app ref for public side',false,true);//not use

@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Foursquare libraries",
 	/* Description*/		"Foursquare library for Dotclear's plugins",
 	/* Author */			"JC Denis",
-	/* Version */			'0.2',
+	/* Version */			'0.3',
 	/* Permissions */		'admin'
 );
-	/* date */		#20110219
+	/* date */		#20110220
 ?>

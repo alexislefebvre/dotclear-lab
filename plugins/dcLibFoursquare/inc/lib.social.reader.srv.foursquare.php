@@ -13,8 +13,8 @@
 if (!defined('DC_RC_PATH')){return;}# Add foursquare to plugin soCialMe (reader part)class foursquareSoCialMeReaderService extends soCialMeService{	protected $part = 'reader';		protected $define = array(		'id' => 'foursquare',		'name' => 'Foursquare',		'home' => 'http://foursquare.com',		'icon' => 'pf=dcLibFoursquare/icon.png'	);		protected $actions = array(
 		'playServerScript' => true,
 		'playWidgetContent' => true,
-		'playPageContent' => true	);		private $oauth = false;
-	private $cache_timeout = 300; //5 minutes
+		'playPageContent' => true	);	
+	private $oauth = false;
 	private $chekins_returned = 20;
 	
 	protected function init()
@@ -24,7 +24,7 @@ if (!defined('DC_RC_PATH')){return;}# Add foursquare to plugin soCialMe (reade
 		
 		# Required plugin oAuthManager
 		# Used name of parent plugin
-		if (!empty($oauth_settings['client_id']) && soCialMeUtils::checkPlugin('oAuthManager','0.2-alpha1'))
+		if (!empty($oauth_settings['client_id']) && soCialMeUtils::checkPlugin('oAuthManager','0.3'))
 		{
 			$this->oauth = oAuthClient::load($this->core,'foursquare',
 				array(
@@ -110,30 +110,27 @@ if (!defined('DC_RC_PATH')){return;}# Add foursquare to plugin soCialMe (reade
 	{
 		if (!$this->available || $this->oauth->state() != 2) return;
 		
-		#
-		# Cache for user checkins
-		#
-		
 		# cache filename
-		$file_user_checkins = $this->core->blog->id.$this->id.'user_checkins';
+		$file = $this->core->blog->id.$this->id.'user_checkins';
 		
 		# check cache expiry
 		if((isset($available['Widget']) && in_array($this->id,$available['Widget']) 
 		 || isset($available['Page']) && in_array($this->id,$available['Page'])) 
-		&& soCialMeCacheFile::expired($file_user_checkins,'enc',$this->cache_timeout))
+		&& soCialMeCacheFile::expired($file,'enc',$this->cache_timeout))
 		{
+			$records = null;
+			$this->log('Get','playServerScript','user_checkins');
 			# call API
 			$params = array(
 				'limit' => (integer) $this->chekins_returned
 			);
 			$rsp = foursquareUtils::api($this->oauth,'users/self/checkins',$params);
-			//echo '<pre style="text-align:left;">'.print_r($rsp,true).'</pre>';exit(1);
+			
 			if ($rsp && $rsp->checkins->count)
 			{
 				$rs = $rsp->checkins->items;
 				
 				# Parse response
-				$records = null;
 				$i = 0;
 				foreach($rs as $record)
 				{
@@ -171,10 +168,14 @@ if (!defined('DC_RC_PATH')){return;}# Add foursquare to plugin soCialMe (reade
 					
 					$i++;
 				}
-				# Create cache file
-				if (!empty($records)) {
-					soCialMeCacheFile::write($file_user_checkins,'enc',soCialMeUtils::encode($records));
-				}
+			}
+			
+			# Set cache file
+			if (empty($records)) {
+				soCialMeCacheFile::touch($file,'enc');
+			}
+			else {
+				soCialMeCacheFile::write($file,'enc',soCialMeUtils::encode($records));
 			}
 		}
 	}

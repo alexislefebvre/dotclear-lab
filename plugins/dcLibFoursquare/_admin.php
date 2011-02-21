@@ -17,6 +17,6 @@ $_menu['System']->addItem(
 	__('API Foursquare'),
 	'plugin.php?p=dcLibFoursquare','index.php?pf=dcLibFoursquare/icon.png',
 	preg_match('/plugin.php\?p=dcLibFoursquare(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id)
+	$core->auth->isSuperAdmin()
 );
 ?>

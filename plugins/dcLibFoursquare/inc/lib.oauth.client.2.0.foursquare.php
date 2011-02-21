@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}# Config for oauth 1.0 client managerclass oAuthClient20Foursquare extends oAuthClient20{	# Set oauth config	public function __construct($core,$config)	{		$service = array(			'client_id' => 'foursquare',			'client_name' => __('Foursquare'),			'api_url' => 'https://api.foursquare.com/v2/',			'authorize' => 'https://foursquare.com/oauth2/authenticate',			'access_token' => 'https://foursquare.com/oauth2/access_token',
+if (!defined('DC_RC_PATH')){return;}# Config for oauth 2 client managerclass oAuthClient20Foursquare extends oAuthClient20{	# Set oauth config	public function __construct($core,$config)	{		$service = array(			'client_id' => 'foursquare',			'client_name' => __('Foursquare'),			'api_url' => 'https://api.foursquare.com/v2/',			'authorize' => 'https://foursquare.com/oauth2/authenticate',			'access_token' => 'https://foursquare.com/oauth2/access_token',
 			'options' => array(
 				'response_type' => 'code'
 			)		);				$config = array_merge($service,$config);				parent::__construct($core,$config);	}		# Save user screen name after grant access	protected function onGrantAccess()	{		if ($this->state() == 2)		{
