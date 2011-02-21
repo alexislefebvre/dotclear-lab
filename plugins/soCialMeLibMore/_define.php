@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"SoCialMe services",
 	/* Description*/		"More services for the plugin SoCialMe",
 	/* Author */			"JC Denis",
-	/* Version */			'0.2',
+	/* Version */			'0.3',
 	/* Permissions */		'admin'
 );
-	/* date */		#20110213
+	/* date */		#20110220
 ?>

@@ -71,7 +71,4 @@ $core->addBehavior('soCialMeProfilService',create_function(null,'return array("n
 //f
 $__autoload['feedMoreSoCialMeReaderService'] = dirname(__FILE__).'/inc/lib.social.reader.srv.more.php';
 $core->addBehavior('soCialMeReaderService',create_function(null,'return array("feed","feedMoreSoCialMeReaderService");'));
-
-
-//ajouter RSS, flattr, sharethis...
 ?>
