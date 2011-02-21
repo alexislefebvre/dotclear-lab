@@ -15,6 +15,8 @@ if (!defined('DC_RC_PATH')){return;}
 class identicaSoCialMeSharerService extends soCialMeService
 {
 	protected $part = 'sharer';
+	protected $setting_ns = 'dcLibIdentica';
+	protected $setting_id = 'soCialMe_sharer';
 	
 	protected $define = array(
 		'id' => 'identica',
@@ -28,16 +30,13 @@ class identicaSoCialMeSharerService extends soCialMeService
 		'playSmallContent' => true
 	);
 	
-	protected $config = array('via' => '');
+	protected $config = array(
+		'via' => ''
+	);
 	
 	protected function init()
 	{
-		$config = $this->core->blog->settings->dcLibIdentica->soCialMe_sharer;
-		$config = @unserialize(base64_decode($config));
-		if (!is_array($config)) $config = array();
-		
-		$this->config = array_merge($this->config,$config);
-		
+		$this->readSettings();
 		$this->available = true;
 		return true;
 	}
@@ -49,9 +48,7 @@ class identicaSoCialMeSharerService extends soCialMeService
 		$this->config = array(
 			'via' => !empty($_POST['dcLibIdentica_soCialMe_via']) ? $_POST['dcLibIdentica_soCialMe_via'] : ''
 		);
-		$config = base64_encode(serialize($this->config));
-		
-		$this->core->blog->settings->dcLibIdentica->put('soCialMe_sharer',$config);
+		$this->writeSettings();
 	}
 	
 	public function adminForm($service_id,$admin_url)
@@ -70,30 +67,35 @@ class identicaSoCialMeSharerService extends soCialMeService
 		'</form>';
 	}
 	
-	private function parseContent($type,$record)
+	private function parseContent($type,$post)
 	{
-		if (!$record || empty($record['title'])) return;
+		if (!$post || empty($post['title'])) return;
 		
-		$url = !empty($record['shorturl']) ? $record['shorturl'] : $record['url'];
-		$title = html::clean($record['title']);
+		$title = html::clean($post['title']);
+		$url = !empty($post['shorturl']) ? $post['shorturl'] : $post['url'];
+		$url = 'http://identi.ca//index.php?action=newnotice&amp;status_textarea='.urlencode($title).' '.urlencode($url).(!empty($this->config['via']) ? ' '.$this->config['via'] : '');
 		
-		return soCialMeUtils::preloadBox(soCialMeUtils::easyLink(
-			'http://identi.ca//index.php?action=newnotice&amp;status_textarea='.
-			urlencode($title).' '.urlencode($url).
-			(!empty($this->config['via']) ? ' '.$this->config['via'] : ''),
-			$this->name,
-			$this->url.'pf=dcLibIdentica/inc/icons/identica-'.$type.'.png'
-		));
+		$record[0] = array(
+			'service' => $this->id,
+			'source_name' => $this->name,
+			'source_url' => $this->home,
+			'source_icon' => $this->icon,
+			'preload' => true,
+			'title' => sprintf(__('Share on %s'),$this->name),
+			'avatar' => $this->url.'pf=dcLibIdentica/inc/icons/identica-'.$type.'.png',
+			'url' => $url
+		);
+		return $record;
 	}
 	
-	public function playIconContent($record)
+	public function playIconContent($post)
 	{
-		return $this->parseContent('icon',$record);
+		return $this->parseContent('icon',$post);
 	}
 	
-	public function playSmallContent($record)
+	public function playSmallContent($post)
 	{
-		return $this->parseContent('small',$record);
+		return $this->parseContent('small',$post);
 	}
 }
 ?>

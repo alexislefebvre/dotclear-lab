@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Identica librairies",
 	/* Description*/		"Identica library for Dotclear's plugins",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1-beta2',
+	/* Version */			'0.3',
 	/* Permissions */		'admin'
 );
-	/* date */		#20110130
+	/* date */		#20110220
 ?>

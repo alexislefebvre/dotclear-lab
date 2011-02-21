@@ -1,3 +1,6 @@
+0.3 20110220
+ * Followed soCialMe new system
+
 0.1-beta1 20110130
  * First publis release of Identica libraries for Dotclear
  * Added support of plugin soCialMe
