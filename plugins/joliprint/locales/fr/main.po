@@ -1,26 +1,26 @@
 # Language: Français
-# Module: joliprint - 0.2
-# Date: 2011-01-03 14:55:21
+# Module: joliprint - 0.4
+# Date: 2011-02-20 18:50:41
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: joliprint 0.2\n"
+"Project-Id-Version: joliprint 0.4\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-01-03T14:55:21+00:00\n"
+"PO-Revision-Date: 2011-02-20T18:50:41+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: _widgets.php:28
-#: index.php:134
+#: index.php:143
 msgid "Picture:"
 msgstr "Image :"
 
 #: _widgets.php:34
-#: index.php:149
+#: index.php:158
 msgid "Country:"
 msgstr "Province :"
 
@@ -29,7 +29,7 @@ msgid "Big"
 msgstr "Grand"
 
 #: inc/class.joliprint.php:27
-#: index.php:133
+#: index.php:142
 msgid "Button"
 msgstr "Bouton"
 
@@ -118,35 +118,43 @@ msgstr "Activation de l'extension"
 msgid "Enable extension"
 msgstr "Activer l'extension"
 
-#: index.php:148
+#: index.php:136
+msgid "Go to soCialMe admin page"
+msgstr "Aller à la page d'administration de soCialMe"
+
+#: index.php:137
+msgid "You can also add joliprint buttons from the plugin soCialMe"
+msgstr "Vous pouvez également ajouter les boutons joliprint depuis le plugin soCialMe"
+
+#: index.php:157
 msgid "This text is placed after icon only and on mouseover."
 msgstr "Ce text est placé après l'icône seulement et au survole."
 
-#: index.php:156
+#: index.php:165
 msgid "Show on posts from:"
 msgstr "Afficher sur les billets de :"
 
-#: index.php:166
+#: index.php:175
 msgid "Place:"
 msgstr "Emplacement :"
 
-#: index.php:170
+#: index.php:179
 msgid "Additionnal style sheet:"
 msgstr "Feuille de style additionnelle :"
 
-#: index.php:173
+#: index.php:182
 msgid "This button is placed in HTML tag \"div\" of class \"postjoliprint\"."
 msgstr "Ce bouton est placé dans une balise HTML \"div\" de classe \"postjoliprint\""
 
-#: index.php:174
+#: index.php:183
 msgid "Compatibility:"
 msgstr "Compatibilité :"
 
-#: index.php:177
+#: index.php:186
 msgid "Enable usage of a clean version of post"
 msgstr "Utiliser la version allégée d'un billet"
 
-#: index.php:178
+#: index.php:187
 msgid "This can help if some extensions are not correctly transcribed in PDF."
 msgstr "Ceci peut aider si des extensions ne sont pas correctement transcrites en PDF."
 

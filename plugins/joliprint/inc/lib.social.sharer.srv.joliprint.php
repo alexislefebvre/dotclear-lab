@@ -1,8 +1,21 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of joliprint, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2009-2011 JC Denis and contributors
+# jcdenis@gdwd.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')){return;}
 
 class joliprintSoCialMeSharerService extends soCialMeService
 {
+	protected $part = 'sharer';
+	protected $available = true;
 	protected $define = array(
 		'id' => 'joliprint',
 		'name' => 'Joliprint',
@@ -14,29 +27,34 @@ class joliprintSoCialMeSharerService extends soCialMeService
 		'playSmallContent' => true,
 		'playBigContent' => true
 	);
-	protected $available = true;
-	protected $part = 'sharer';
 	
-	public function playIconContent($record)
+	public function playIconContent($post)
 	{
-		return $this->parseHTML('joliprint-icon.png',$record);
+		return $this->parseHTML('joliprint-icon.png',$post);
 	}
 	
-	public function playBigContent($record)
+	public function playBigContent($post)
 	{
-		return $this->parseHTML('joliprint-share-style.png',$record);
+		return $this->parseHTML('joliprint-share-style.png',$post);
 	}
 	
-	public function playSmallContent($record)
+	public function playSmallContent($post)
 	{
-		return $this->parseHTML('joliprint-share-button.png',$record);
+		return $this->parseHTML('joliprint-share-button.png',$post);
 	}
 	
-	private function parseHTML($type,$record)
+	private function parseHTML($type,$post)
 	{
-		if (!$record || empty($record['url'])) return;
+		if (!$post || empty($post['url'])) return;
 		
-		return soCialMeUtils::preloadBox(joliprint::toHTML(array('url'=>$record['url'],'button'=>$type)));
+		$record[0] = array(
+			'service' => $this->id,
+			'source_name' => $this->name,
+			'source_url' => $this->home,
+			'source_icon' => $this->icon,
+			'content' => joliprint::toHTML(array('url'=>$post['url'],'button'=>$type))
+		);
+		return $record;
 	}
 }
 ?>
