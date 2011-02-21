@@ -1,4 +1,5 @@
-0.2.2
+0.3 20110220
+ * Followed SoCialMe new system
  * Fixed comment_status
 
 0.2 20110213

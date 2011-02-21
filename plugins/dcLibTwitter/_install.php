@@ -36,7 +36,7 @@ try
 	)));
 	$social_profil = base64_encode(serialize(array(
 		'badge_color' => 'a',
-		'screen_name'=>'',
+		//'screen_name'=>'',
 		'extra_height' =>  '300',
 		'extra_width' => '250',
 		'extra_small_bgcolor' => '#1985B5',

@@ -16,6 +16,8 @@ if (!defined('DC_RC_PATH')){return;}
 class twitterSoCialMeSharerService extends soCialMeService
 {
 	protected $part = 'sharer';
+	protected $setting_ns = 'dcLibTwitter';
+	protected $setting_id = 'soCialMe_sharer';
 	
 	protected $define = array(
 		'id' => 'twitter',
@@ -31,15 +33,13 @@ class twitterSoCialMeSharerService extends soCialMeService
 		'playBigContent' => true
 	);
 	
-	protected $config = array('via' => '');
+	protected $config = array(
+		'via' => ''
+	);
 	
 	protected function init()
 	{
-		$config = $this->core->blog->settings->dcLibTwitter->soCialMe_sharer;
-		$config = soCialMeUtils::decode($config);
-		
-		$this->config = array_merge($this->config,$config);
-		
+		$this->readSettings();
 		$this->available = true;
 		return true;
 	}
@@ -51,9 +51,7 @@ class twitterSoCialMeSharerService extends soCialMeService
 		$this->config = array(
 			'via' => !empty($_POST['dcLibTwitter_soCialMe_via']) ? $_POST['dcLibTwitter_soCialMe_via'] : ''
 		);
-		$config = soCialMeUtils::encode($this->config);
-		
-		$this->core->blog->settings->dcLibTwitter->put('soCialMe_sharer',$config);
+		$this->writeSettings();
 	}
 	
 	public function adminForm($service_id,$admin_url)
@@ -81,15 +79,15 @@ class twitterSoCialMeSharerService extends soCialMeService
 		}
 	}
 	
-	private function parseContent($type,$record)
+	private function parseContent($type,$post)
 	{
-		if (!$record || empty($record['title'])) return;
+		if (!$post || empty($post['title'])) return;
 		
-		$url = !empty($record['shorturl']) ? $record['shorturl'] : $record['url'];
-		$url2 = $url != $record['url'] ? $record['url'] : '';
-		$title = html::clean($record['title']);
+		$url = !empty($post['shorturl']) ? $post['shorturl'] : $post['url'];
+		$url2 = $url != $post['url'] ? $post['url'] : '';
+		$title = html::clean($post['title']);
 		
-		return 
+		$content =  
 		'<a href="http://twitter.com/share" class="twitter-share-button" '.
 		'data-url="'.$url.'" '.
 		(!empty($this->config['via']) ? 'data-via="'.$this->config['via'].'" ' : '').
@@ -97,20 +95,40 @@ class twitterSoCialMeSharerService extends soCialMeService
 		'data-related="dcSoCialMe" '.
 		($url2 ? 'data-counturl="'.$url2.'" ' : '').
 		'data-count="'.$type.'">'.sprintf(__('Share on %s'),$this->name).'</a>';
+		
+		$record[0] = array(
+			'service' => $this->id,
+			'source_name' => $this->name,
+			'source_url' => $this->home,
+			'source_icon' => $this->icon,
+			'preload' => false,
+			'content' => $content
+		);
+		return $record;
 	}
 	
-	public function playIconContent($record)
+	public function playIconContent($post)
 	{
-		if (!$record || empty($record['title'])) return;
+		if (!$post || empty($post['title'])) return;
 		
-		$url = !empty($record['shorturl']) ? $record['shorturl'] : $record['url'];
-		$title = html::clean($record['title']);
+		$url = !empty($post['shorturl']) ? $post['shorturl'] : $post['url'];
+		$title = html::clean($post['title']);
 		
-		return soCialMeUtils::preloadBox(soCialMeUtils::easyLink('http://twitthis.com/twit?url='.urlencode($url).'&amp;title='.urlencode($title),$this->name,$this->icon));
+		$record[0] = array(
+			'service' => $this->id,
+			'source_name' => $this->name,
+			'source_url' => $this->home,
+			'source_icon' => $this->icon,
+			'preload' => true,
+			'title' => sprintf(__('Share on %s'),$this->name),
+			'avatar' => $this->icon,
+			'url' => 'http://twitthis.com/twit?url='.urlencode($url).'&amp;title='.urlencode($title)
+		);
+		return $record;
 	}
 	
-	public function playSmallContent($record) { return $this->parseContent('horizontal',$record); }
-	public function playBigContent($record) { return $this->parseContent('vertical',$record); }
+	public function playSmallContent($post) { return $this->parseContent('horizontal',$post); }
+	public function playBigContent($post) { return $this->parseContent('vertical',$post); }
 }
 
 ?>

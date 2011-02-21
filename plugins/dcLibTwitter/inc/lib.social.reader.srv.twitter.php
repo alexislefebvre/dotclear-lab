@@ -14,8 +14,9 @@ if (!defined('DC_RC_PATH')){return;}# Add twitter to plugin soCialMe (reader p
 		'playServerScript' => true,
 		'playWidgetContent' => true,
 		'playPageContent' => true,
-		'playCommentContent' => true	);		private $oauth = false;
-	private $cache_timeout = 300; //5 minutes
+		'playCommentContent' => true	);
+	
+	private $oauth = false;
 	private $tweets_returned = 10;
 	private $retweets_show = 1;		protected function init()	{		# Required plugin oAuthManager		# Used name of parent plugin		if (soCialMeUtils::checkPlugin('oAuthManager','0.1'))		{			$this->oauth = oAuthClient::load($this->core,'twitter',				array(					'user_id' => null,					'plugin_id' => 'soCialMeReader',					'plugin_name' => __('SoCialMe Reader'),					'token' => 'fjWBGGA5qkR009ZikITvQ',					'secret' => '1Une37GYVs3Xn0zMHAcX5kq1KFfos2uMrwXd5aJ9U'				)			);		}				if (false === $this->oauth)		{			$this->available = false;			return false;		}				$this->available = true;		return true;	}		public function adminSave($service_id,$admin_url)	{		if (!$this->available || $service_id != $this->id) return;				$request_step = !empty($_REQUEST['step']) ? $_REQUEST['step'] : null;				if (!$request_step)		{			return;		}		elseif ($request_step == 'request')		{			$this->oauth->getRequestToken($admin_url.'&step=callback');		}		elseif ($request_step == 'callback')		{			$this->oauth->getAccessToken();		}		elseif ($request_step == 'clean')		{			$this->oauth->removeToken();		}	}		public function adminForm($service_id,$admin_url)	{		if (!$this->available) return;		$admin_url = str_replace('&','&amp;',$admin_url);				$res = '<p>';		if ($this->oauth->state() == 1)		{			$res .= '<a class="button" href="'.$admin_url.'&amp;step=clean">'.sprintf(__('Something went wrong, clean acces of %s from %s'),$this->oauth->config('plugin_name'),$this->oauth->config('client_name')).'</a>';		}		elseif ($this->oauth->state() == 2)		{
 			$user = $this->oauth->getScreenName();
@@ -24,7 +25,7 @@ if (!defined('DC_RC_PATH')){return;}# Add twitter to plugin soCialMe (reader p
 				$res .= '<p>'.sprintf(__('Your are connected as "%s"'),$user).'</p>';
 			}			$res .= '<a class="button" href="'.$admin_url.'&amp;step=clean">'.sprintf(__('Disconnet %s from %s'),$this->oauth->config('plugin_name'),$this->oauth->config('client_name')).'</a>';		}		elseif ($this->oauth->state() == 0)		{			$res .= '<a class="button" href="'.$admin_url.'&amp;step=request">'.sprintf(__('Connect %s to %s'),$this->oauth->config('plugin_name'),$this->oauth->config('client_name')).'</a>';		}		$res .= '</p>';				return $res;	}
 	
-	# Put user timeline into cache file
+	# Put user timeline into cache file and search for trackback
 	public function playServerScript($available)
 	{
 		if (!$this->available || $this->oauth->state() != 2) return;
@@ -41,6 +42,8 @@ if (!defined('DC_RC_PATH')){return;}# Add twitter to plugin soCialMe (reader p
 		 || isset($available['Page']) && in_array($this->id,$available['Page'])) 
 		&& soCialMeCacheFile::expired($file_user_timeline,'enc',$this->cache_timeout))
 		{
+			$records = null;
+			$this->log('Get','playServerScript','user_timeline');
 			# call API
 			$params = array(
 				'count' => $this->tweets_returned,
@@ -48,10 +51,9 @@ if (!defined('DC_RC_PATH')){return;}# Add twitter to plugin soCialMe (reader p
 			);
 			$rs = $this->oauth->get('statuses/user_timeline',$params);
 			
+			# Parse response
 			if ($rs)
 			{
-				# Parse response
-				$records = null;
 				$i = 0;
 				foreach($rs as $record)
 				{
@@ -85,10 +87,14 @@ if (!defined('DC_RC_PATH')){return;}# Add twitter to plugin soCialMe (reader p
 					}
 					$i++;
 				}
-				# Create cache file
-				if (!empty($records)) {
-					soCialMeCacheFile::write($file_user_timeline,'enc',soCialMeUtils::encode($records));
-				}
+			}
+			
+			# Set cache file
+			if (empty($records)) {
+				soCialMeCacheFile::touch($file_user_timeline,'enc');
+			}
+			else {
+				soCialMeCacheFile::write($file_user_timeline,'enc',soCialMeUtils::encode($records));
 			}
 		}
 		
@@ -108,6 +114,7 @@ if (!defined('DC_RC_PATH')){return;}# Add twitter to plugin soCialMe (reader p
 			# check cache expiry
 			if(soCialMeCacheFile::expired($file_post_trackback,'enc',$this->cache_timeout))
 			{
+				$this->log('Get','playServerScript','post_trackback');
 				# Search URL of this post
 				$url = $_ctx->posts->getURL();
 				$shorturl = soCialMeUtils::reduceURL($url);
@@ -165,8 +172,8 @@ if (!defined('DC_RC_PATH')){return;}# Add twitter to plugin soCialMe (reader p
 						}
 					}
 				}
-				soCialMeCacheFile::write($file_post_trackback,'enc',' ');
 			}
+			soCialMeCacheFile::write($file_post_trackback,'enc',' ');
 		}
 	}
 	
@@ -192,7 +199,7 @@ if (!defined('DC_RC_PATH')){return;}# Add twitter to plugin soCialMe (reader p
 		return soCialMeUtils::decode($content);
 	}
 	
-	public static function playCommentContent($post_id)
+	public function playCommentContent($post_id)
 	{
 		// nothing to do here. All is done in playServerScript
 		// but this func must exist
