@@ -1,3 +1,6 @@
+0.3 20110220
+ * Followed SoCialMe new system
+
 0.2 20110219
  * Added support of SoCialMe Profil
  * Fixed settings name for SoCialMe Writer

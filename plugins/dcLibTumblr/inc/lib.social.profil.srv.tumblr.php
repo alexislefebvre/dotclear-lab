@@ -18,9 +18,6 @@ class tumblrSoCialMeProfilService extends soCialMeService
 	protected $part = 'profil';
 	protected $setting_ns = 'dcLibTumblr';
 	protected $setting_id = 'soCialMe_profil';
-	protected $config = array('email'=>'','password'=>'','id'=>'');
-	protected $available = true;
-	private $cache_timeout = 900; //15 minutes
 	
 	protected $define = array(
 		'id' => 'tumblr',
@@ -34,7 +31,13 @@ class tumblrSoCialMeProfilService extends soCialMeService
 		'playIconContent' => true,
 		'playSmallContent' => true,
 		'playBigContent' => true,
-		'playMediumExtraContent' => true
+		'playCardContent' => true
+	);
+	
+	protected $config = array(
+		'email'=>'',
+		'password'=>'',
+		'id'=>''
 	);
 	
 	public function init()
@@ -93,14 +96,17 @@ class tumblrSoCialMeProfilService extends soCialMeService
 	{
 		if (!$this->available || empty($this->config['email']) || empty($this->config['password']) || empty($this->config['id'])) return;
 		
-		return soCialMeUtils::preloadBox(
-			soCialMeUtils::easyLink(
-				'http://'.$this->config['id'].'.tumblr.com',
-				$this->name,
-				$this->url.$img,
-				'profil'
-			)
+		$record[0] = array(
+			'service' => $this->id,
+			'source_name' => $this->name,
+			'source_url' => $this->home,
+			'source_icon' => $this->icon,
+			'preload' => true,
+			'title' => sprintf(__('View my profil on %s'),$this->name),
+			'avatar' => $this->url.$img,
+			'url' => 'http://'.$this->config['id'].'.tumblr.com'
 		);
+		return $record;
 	}
 	
 	public function playIconContent() { return $this->parseContent('pf=dcLibTumblr/inc/icons/icon-small.png'); }
@@ -112,71 +118,57 @@ class tumblrSoCialMeProfilService extends soCialMeService
 	{
 		if (!$this->available || empty($this->config['email']) || empty($this->config['password']) || empty($this->config['id'])) return;
 		
-		#
-		# Cache for user checkins
-		#
-		
 		# cache filename
-		$file_user_profil = $this->core->blog->id.$this->id.'user_profil';
+		$file = $this->core->blog->id.$this->id.'user_profil';
 		
 		# check cache expiry
-		if (isset($available['MediumExtra']) && in_array($this->id,$available['MediumExtra']) 
-		 && soCialMeCacheFile::expired($file_user_profil,'enc',$this->cache_timeout))
+		if (!isset($available['Card']) || !in_array($this->id,$available['Card']) 
+		 || !soCialMeCacheFile::expired($file,'enc',$this->cache_timeout))
 		{
-			$rs = $this->query('http://www.tumblr.com/api/authenticate');
+			return;
+		}
+		
+		$records = null;
+		$this->log('Get','playServerScript','user_profil');
+		$rs = $this->query('http://www.tumblr.com/api/authenticate');
+		
+		if ($rs && $rs->tumblelog)
+		{
+			$record = $rs->tumblelog;
 			
-			if ($rs && $rs->tumblelog)
-			{
-				$record = $rs->tumblelog;
-				
-				# Parse response
-				$records = null;
-				
-				$records[0]['service'] = $this->id;
-				$records[0]['author'] = (string) $record->name;
-				$records[0]['source_name'] = $this->name;
-				$records[0]['source_url'] = $this->home;
-				$records[0]['source_icon'] = $this->icon;
-				
-				$records[0]['me'] = true;
-				$records[0]['title'] = (string) $record['title'][0];
-				$records[0]['content'] = sprintf(__('%s posts'),(string) $record['posts'][0]).', '.sprintf(__('%s followers'),(string) $record['followers'][0]);
-				$records[0]['url'] = (string) $record['url'][0];
-				$records[0]['avatar'] = preg_replace('/^(.*?)_([0-9]+)\.([a-z]{3})$/','\1_64.\3',(string) $record['avatar-url'][0]);
-				$records[0]['icon'] = preg_replace('/^(.*?)_([0-9]+)\.([a-z]{3})$/','\1_16.\3',(string) $record['avatar-url'][0]);
-				
-				soCialMeCacheFile::write($file_user_profil,'enc',soCialMeUtils::encode($records));
-			}
+			$records[0]['service'] = $this->id;
+			$records[0]['author'] = (string) $record->name;
+			$records[0]['source_name'] = $this->name;
+			$records[0]['source_url'] = $this->home;
+			$records[0]['source_icon'] = $this->icon;
+			
+			$records[0]['me'] = true;
+			$records[0]['title'] = (string) $record['title'][0];
+			$records[0]['excerpt'] = sprintf(__('View my profil on %s'),$this->name);
+			$records[0]['content'] = sprintf(__('%s posts'),(string) $record['posts'][0]).', '.sprintf(__('%s followers'),(string) $record['followers'][0]);
+			$records[0]['url'] = (string) $record['url'][0];
+			$records[0]['avatar'] = preg_replace('/^(.*?)_([0-9]+)\.([a-z]{3})$/','\1_64.\3',(string) $record['avatar-url'][0]);
+			$records[0]['icon'] = preg_replace('/^(.*?)_([0-9]+)\.([a-z]{3})$/','\1_16.\3',(string) $record['avatar-url'][0]);
+		}
+		
+		# Set cache file
+		if (empty($records)) {
+			soCialMeCacheFile::touch($file,'enc');
+		}
+		else {
+			soCialMeCacheFile::write($file,'enc',soCialMeUtils::encode($records));
 		}
 	}
 	
-	public function playMediumExtraContent()
+	public function playCardContent()
 	{
 		if (!$this->available) return;
-		# cache filename
+		
 		$file = $this->core->blog->id.$this->id.'user_profil';
-		# Read cache content
 		$content = soCialMeCacheFile::read($file,'enc');
 		if (empty($content)) return;
-		# Parse content
-		$rs = soCialMeUtils::decode($content);
 		
-		if (empty($rs)) return;
-		
-		$record = $rs[0];
-		
-		$res = 
-		'<div class="tumblr-profil">';
-		if ($record['avatar']) {
-			$res .= '<img src="'.$record['avatar'].'" alt="'.$record['author'].'" /> ';
-		}
-		$res .= 
-		'<strong>'.$record['title'].'</strong><br />'.
-		'<a href="'.$record['url'].'">'.sprintf(__('View my profil on %s'),$this->name).'</a><br />'.
-		'<em>'.$record['content'].'</em>'.
-		'</div>';
-		
-		return $res;
+		return soCialMeUtils::decode($content);
 	}
 	
 	private function query($url,$data=array())
