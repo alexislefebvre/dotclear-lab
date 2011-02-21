@@ -17,6 +17,6 @@ $_menu['System']->addItem(
 	__('API Facebook'),
 	'plugin.php?p=dcLibFacebook','index.php?pf=dcLibFacebook/icon.png',
 	preg_match('/plugin.php\?p=dcLibFacebook(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id)
+	$core->auth->isSuperAdmin()
 );
 ?>

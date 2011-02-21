@@ -14,7 +14,7 @@ if (!defined('DC_RC_PATH')){return;}# Add facebook to plugin soCialMe (writer 
 		'playArticleContent' => true	);		private $oauth = false;		protected function init()	{
 		# read facebook app settings for admin side
 		$oauth_settings = facebookUtils::decodeApp('admin');
-				# Required plugin oAuthManager		# Used name of parent plugin		if (!empty($oauth_settings['client_id']) && soCialMeUtils::checkPlugin('oAuthManager','0.2-alpha1'))		{			$this->oauth = oAuthClient::load($this->core,'facebook',				array(					'user_id' => null,					'plugin_id' => 'soCialMeWriter',					'plugin_name' => __('SoCialMe Writer'),					'token' => $oauth_settings['client_id'], //app_id					'secret' => $oauth_settings['client_secret'], //app_secret
+				# Required plugin oAuthManager		# Used name of parent plugin		if (!empty($oauth_settings['client_id']) && soCialMeUtils::checkPlugin('oAuthManager','0.3'))		{			$this->oauth = oAuthClient::load($this->core,'facebook',				array(					'user_id' => null,					'plugin_id' => 'soCialMeWriter',					'plugin_name' => __('SoCialMe Writer'),					'token' => $oauth_settings['client_id'], //app_id					'secret' => $oauth_settings['client_secret'], //app_secret
 					'options' => array(
 						'scope' => 'offline_access,publish_stream'
 					)				)			);		}				if (false === $this->oauth)		{			$this->available = false;			return false;		}				$this->available = true;		return true;	}		public function adminSave($service_id,$admin_url)	{		if (!$this->available || $service_id != $this->id) return;				$request_step = !empty($_REQUEST['step']) ? $_REQUEST['step'] : null;				if (!$request_step)		{			return;		}		elseif ($request_step == 'request')		{			$this->oauth->getRequestToken($admin_url.'&step=callback');		}		elseif ($request_step == 'callback' && !empty($_REQUEST['code']))		{			$this->oauth->getAccessToken($admin_url.'&step=callback');		}		elseif ($request_step == 'clean')		{			$this->oauth->removeToken();		}
@@ -50,5 +50,6 @@ if (!defined('DC_RC_PATH')){return;}# Add facebook to plugin soCialMe (writer 
 	{
 		if (!$this->available || $this->oauth->state() != 2) return;
 		
+		$this->log('Post','playXxxContent','feed');
 		$this->oauth->post('me/feed',$params);
 	}}?>

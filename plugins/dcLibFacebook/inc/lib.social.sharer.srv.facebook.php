@@ -15,26 +15,29 @@ if (!defined('DC_RC_PATH')){return;}
 # fblike
 class fblikeSoCialMeSharerService extends soCialMeService
 {
+	protected $part = 'sharer';
 	protected $setting_ns = 'dcLibFacebook';
 	protected $setting_id = 'soCialMe_sharer';
-	protected $config = array('colorscheme' => 'light');
+	
+	protected $define = array(
+		'id' => 'facebook',
+		'name' => 'Facebook like',
+		'home' => 'http://facebook.com',
+		'icon' => 'pf=dcLibFacebook/icon.png'
+	);
+	
+	protected $actions = array(
+		'playIconContent' => true,
+		'playSmallContent' => true,
+		'playBigContent' => true
+	);
+	
+	protected $config = array(
+		'colorscheme' => 'light'
+	);
 	
 	public function init()
 	{
-		$this->part = 'sharer';
-		
-		$this->define = array(
-			'id' => 'facebook',
-			'name' => 'Facebook like',
-			'home' => 'http://facebook.com',
-			'icon' => 'pf=dcLibFacebook/icon.png'
-		);
-		$this->actions = array(
-			'playIconContent' => true,
-			'playSmallContent' => true,
-			'playBigContent' => true
-		);
-		
 		$this->readSettings();
 		$this->available = true;
 		return true;
@@ -70,37 +73,45 @@ class fblikeSoCialMeSharerService extends soCialMeService
 		'</form>';
 	}
 	
-	public function playIconContent($record)
+	public function playIconContent($post)
 	{
-		if (!$record) return;
-		$url = !empty($record['shorturl']) ? $record['shorturl'] : $record['url'];
+		if (!$post) return;
+		$url = !empty($post['shorturl']) ? $post['shorturl'] : $post['url'];
 		
-		return soCialMeUtils::preloadBox(soCialMeUtils::easyLink('http://www.facebook.com/share.php?u='.urlencode($url),$this->name,$this->icon));
+		$record[0] = array(
+			'service' => $this->id,
+			'source_name' => $this->name,
+			'source_url' => $this->home,
+			'source_icon' => $this->icon,
+			'preload' => true,
+			'title' => sprintf(__('Share on %s'),$this->name),
+			'avatar' => $this->icon,
+			'url' => 'http://www.facebook.com/share.php?u='.urlencode($url)
+		);
+		return $record;
 	}
 	
-	public function playBigContent($record)
+	public function playBigContent($post)
 	{
-		return $this->parseContent('box_count',$record);
+		return $this->parseContent('box_count',$post);
 	}
 	
-	public function playSmallContent($record)
+	public function playSmallContent($post)
 	{
-		return $this->parseContent('button_count',$record);
+		return $this->parseContent('button_count',$post);
 	}
 	
-	private function parseContent($type,$record)
+	private function parseContent($type,$post)
 	{
-		if (!$record) return;
-		$url = !empty($record['shorturl']) ? $record['shorturl'] : $record['url'];
+		if (!$post) return;
+		$url = !empty($post['shorturl']) ? $post['shorturl'] : $post['url'];
 		
+		$w = 60; $h = 62;
 		if ($type == 'button_count') {
 			$w = 90; $h = 20;
 		}
-		else {
-			$w = 60; $h = 62;
-		}
 		
-		return soCialMeUtils::preloadBox(
+		$content = 
 		'<iframe src="http://www.facebook.com/plugins/like.php?'.
 		'href='.urlencode($url).
 		'&amp;layout='.$type.
@@ -110,7 +121,17 @@ class fblikeSoCialMeSharerService extends soCialMeService
 		'&amp;colorscheme='.(!empty($this->config['colorscheme']) ? $this->config['colorscheme'] : 'light').
 		'&amp;height='.$h.'" '.
 		'style="border:none; overflow:hidden; width:'.$w.'px; height:'.$h.'px;" '.
-		'scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
+		'scrolling="no" frameborder="0" allowTransparency="true"></iframe>';
+		
+		$record[0] = array(
+			'service' => $this->id,
+			'source_name' => $this->name,
+			'source_url' => $this->home,
+			'source_icon' => $this->icon,
+			'preload' => true,
+			'content' => $content
+		);
+		return $record;
 	}
 }
 ?>

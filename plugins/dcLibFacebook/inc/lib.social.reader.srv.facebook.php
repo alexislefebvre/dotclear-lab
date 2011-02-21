@@ -14,7 +14,6 @@ if (!defined('DC_RC_PATH')){return;}# Add facebook to plugin soCialMe (reader 
 		'playServerScript' => true,
 		'playWidgetContent' => true,
 		'playPageContent' => true	);		private $oauth = false;
-	private $cache_timeout = 300; //5 minutes
 	
 	protected function init()
 	{
@@ -23,7 +22,7 @@ if (!defined('DC_RC_PATH')){return;}# Add facebook to plugin soCialMe (reader 
 		
 		# Required plugin oAuthManager
 		# Used name of parent plugin
-		if (!empty($oauth_settings['client_id']) && soCialMeUtils::checkPlugin('oAuthManager','0.2-alpha1'))
+		if (!empty($oauth_settings['client_id']) && soCialMeUtils::checkPlugin('oAuthManager','0.3'))
 		{
 			$this->oauth = oAuthClient::load($this->core,'facebook',
 				array(
@@ -112,26 +111,22 @@ if (!defined('DC_RC_PATH')){return;}# Add facebook to plugin soCialMe (reader 
 	{
 		if (!$this->available || $this->oauth->state() != 2) return;
 		
-		#
-		# Cache for user checkins
-		#
-		
 		# cache filename
-		$file_user_statuses = $this->core->blog->id.$this->id.'user_statuses';
+		$file = $this->core->blog->id.$this->id.'user_statuses';
 		
 		# check cache expiry
 		if((isset($available['Widget']) && in_array($this->id,$available['Widget']) 
 		 || isset($available['Page']) && in_array($this->id,$available['Page'])) 
-		&& soCialMeCacheFile::expired($file_user_statuses,'enc',$this->cache_timeout))
+		&& soCialMeCacheFile::expired($file,'enc',$this->cache_timeout))
 		{
+			$records = null;
+			$this->log('Get','playServerScript','user_statuses');
 			$rsp = $this->oauth->get('me/statuses');
 			
 			if ($rsp && $rsp->data)
 			{
 				$rs = $rsp->data;
 				
-				# Parse response
-				$records = null;
 				$i = 0;
 				foreach($rs as $record)
 				{
@@ -152,10 +147,13 @@ if (!defined('DC_RC_PATH')){return;}# Add facebook to plugin soCialMe (reader 
 					
 					$i++;
 				}
-				# Create cache file
-				if (!empty($records)) {
-					soCialMeCacheFile::write($file_user_statuses,'enc',soCialMeUtils::encode($records));
-				}
+			}
+			
+			if (empty($records)) {
+				soCialMeCacheFile::touch($file,'enc');
+			}
+			else {
+				soCialMeCacheFile::write($file,'enc',soCialMeUtils::encode($records));
 			}
 		}
 	}

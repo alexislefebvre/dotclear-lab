@@ -10,6 +10,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_RC_PATH')){return;}
+
 class facebookUtils
 {
 	public static $default_app = array('client_id'=>'','client_secret'=>'','redirect_uri'=>'');

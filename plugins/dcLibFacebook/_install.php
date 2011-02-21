@@ -34,8 +34,12 @@ try
 	$social_sharer = base64_encode(serialize(array(
 		'colorscheme'=>'light'
 	)));
+	$social_reader = $social_writer = $social_profil = base64_encode(serialize(array()));
 	
 	$s->put('soCialMe_sharer',$social_sharer,'string','config for soCialMe Sharer',false,true);
+	$s->put('soCialMe_reader',$social_reader,'string','config for soCialMe Reader',false,true);
+	$s->put('soCialMe_writer',$social_writer,'string','config for soCialMe Writer',false,true);
+	$s->put('soCialMe_profil',$social_profil,'string','config for soCialMe Profil',false,true);
 	
 	$s->put('oauth_admin','','string','oAuth2 app ref for admin side',false,true);
 	$s->put('oauth_public','','string','oAuth2 app ref for public side',false,true);//not use yet
