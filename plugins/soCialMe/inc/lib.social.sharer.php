@@ -10,4 +10,28 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}class soCialMeSharer extends soCialMe{	protected $ns = 'soCialMeSharer';	protected $things = array(		'Icon' => 'Icon button',		'Small' => 'Small button',		'Big' => 'Big button'	);	protected $markers = null;		# Load markers (all actions things)	public function init()	{		# before post		$markers['beforepost'] = array(			'name' => __('Before post content'),			'description' => __('Place a group of buttons just before post content'),			'action' => array('Icon','Small','Big'),			'title' => true,			'page' => true		);				# after post		$markers['afterpost'] = array(			'name' => __('After post content'),			'description' => __('Place group of buttons just before post content'),			'action' => array('Icon','Small','Big'),			'title' => true,			'page' => true		);				# on widget		$markers['onwidget'] = array(			'name' => __('On a widget'),			'description' => __('Place group of buttons on widget. You must set up widget.'),			'action' => array('Icon','Small','Big'),			'title' => true,			'page' => false		);				$this->markers = $markers;	}		# Public content (on page and widget)	public static function publicContent($place,$core,$_ctx)	{		# Active		if (!$core->blog->settings->soCialMeSharer->active 		 || !$_ctx->exists('posts'))		{			return;		}				# main class		$class = new soCialMeSharer($core);				# Pages		$s_page = $class->getMarker('page',false);				if ($place != 'onwidget' && (empty($s_page) || !is_array($s_page) 		 || !isset($s_page[$place]) || empty($s_page[$place][$core->url->type])))		{			return;		}				# Services		$s_action = $class->getMarker('action',array());				if (empty($s_action) || !is_array($s_action) || !isset($s_action[$place]))		{			return;		}				# Title		$s_title = $class->getMarker('title','');				# Parse post info		$record = soCialMeUtils::fillPlayRecord(array(			'url' => $_ctx->posts->getURL(),			'title' => $_ctx->posts->post_title,			'excerpt' => $_ctx->posts->post_excerpt_xhtml,			'content' => $_ctx->posts->post_content_xhtml,			'category' =>  $_ctx->posts->cat_title,			'tags' => $_ctx->posts->post_meta,			'author' => $_ctx->posts->user_displayname,			'type' => 'text'		));				$title = '';		if (isset($s_title[$place]) && !empty($s_title[$place]))		{			$title =  $place == 'onwidget' ?				'<h2>'.$s_title[$place].'</h2>' :				'<h3>'.$s_title[$place].'</h3>';		}				# Get services codes		foreach($class->things() as $thing => $plop)		{			$rs[$thing] = '';			$usable[$thing] = $class->can($thing.'Content');		}				# Reorder		$s_order = $class->fillOrder($usable);				# Get buttons		foreach($s_order as $thing => $services)		{			if (!isset($s_action[$place][$thing]) || empty($s_action[$place][$thing])) continue;						foreach($services as $id)			{				if (!in_array($id,$s_action[$place][$thing])) continue;								$rs[$thing] .= '<li class="social-sharer social-id-'.$id.'">'.$class->play($id,$thing,'Content',$record).'</li>';			}		}				# Display		$res = '';		foreach($rs as $thing => $content)		{			if (empty($content)) continue;						$res .= 			'<div class="social-sharers '.$place.'-'.$thing.'">'.			$title.'<ul>'.$content.'</ul></div>';		}		return $res;	}}?>
+if (!defined('DC_RC_PATH')){return;}class soCialMeSharer extends soCialMe{
+	protected $part = 'sharer';	protected $ns = 'soCialMeSharer';
+	protected $markers = null;	protected $things = array(		'Icon' => 'Icon button',		'Small' => 'Small button',		'Big' => 'Big button'	);
+	
+	# Construct admin pages
+	public static function adminNav()
+	{
+		if (!defined('DC_CONTEXT_ADMIN')) return null;
+		
+		return array(
+			'title' => __('Sharer'),
+			'description' => __('Help your visitors to share content of your blog on social networks.'),
+			'ns' => 'soCialMeSharer',
+			'parts' => array(
+				'location' => __('Locations'),
+				'order' => __('Orders'),
+				'service' => __('Services'),
+				'setting' => __('Settings')
+			),
+			'common' => array('order','service','setting')
+		);
+	}		# Load markers (all actions things)	public function init()	{		# before post		$markers['beforepost'] = array(			'name' => __('Before post content'),			'description' => __('Place a group of buttons just before post content'),			'action' => array('Icon','Small','Big'),			'title' => true,			'page' => true,
+			'order' => true		);				# after post		$markers['afterpost'] = array(			'name' => __('After post content'),			'description' => __('Place group of buttons just before post content'),			'action' => array('Icon','Small','Big'),			'title' => true,			'page' => true,
+			'order' => true		);				# on widget		$markers['onwidget'] = array(			'name' => __('On a widget'),			'description' => __('Place group of buttons on widget. You must set up widget.'),			'action' => array('Icon','Small','Big'),			'title' => true,			'page' => false,
+			'order' => true		);				$this->markers = $markers;	}}?>

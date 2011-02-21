@@ -18,12 +18,12 @@ class soCialMeWidget
 	{
 		# soCialMe Sharer
 		$w->create('soCialMeSharerPost',
-			__('Social sharer'),array('soCialMeWidget','soCialMeSharerPostPublic')
+			__('Social sharer'),array('soCialMePublic','widgetSharerPostPublic')
 		);
 		
 		# soCialMe Profil
 		$w->create('soCialMeProfilBagde',
-			__('Social profil'),array('soCialMeWidget','soCialMeProfilBadgePublic')
+			__('Social profil'),array('soCialMePublic','widgetProfilBadgePublic')
 		);
 		
 		$so = new soCialMeProfil($GLOBALS['core']);
@@ -35,7 +35,7 @@ class soCialMeWidget
 		
 		# soCialMe Reader
 		$w->create('soCialMeReaderStream',
-			__('Social reader'),array('soCialMeWidget','soCialMeReaderStreamPublic')
+			__('Social reader'),array('soCialMePublic','widgetReaderStreamPublic')
 		);
 		
 		$class = new soCialMeReader($GLOBALS['core']);
@@ -68,39 +68,6 @@ class soCialMeWidget
 		$w->soCialMeReaderStream->setting('limit',__('Limit:'),10);
 		$w->soCialMeReaderStream->setting('service',__('Stream:'),'','combo',$combo_service);
 		$w->soCialMeReaderStream->setting('size',__('Size of icon:'),'small','combo',$combo_avatar);
-	}
-	
-	# soCialMe Sharer post
-	public static function soCialMeSharerPostPublic($w)
-	{
-		global $core, $_ctx;
-		
-		return soCialMeSharer::publicContent('onwidget',$core,$_ctx);
-	}
-	
-	# soCialMe Profil badge
-	public static function soCialMeProfilBadgePublic($w)
-	{
-		global $core;
-		
-		return soCialMeProfil::publicContent('onwidget',$core,$w->thing);
-	}
-	
-	# soCialMe Reader stream
-	public static function soCialMeReaderStreamPublic($w)
-	{
-		global $core;
-		
-		if ($core->url->type == 'soCialMeReader') return;
-		
-		$params = array(
-			'title' => $w->title,
-			'size' => $w->size,
-			'service'=>$w->service,
-			'thing' => 'Widget',
-			'limit' => (integer) $w->limit
-		);
-		return soCialMeReader::publicContent('onwidget',$core,$params);
 	}
 }
 ?>

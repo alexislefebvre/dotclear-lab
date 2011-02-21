@@ -15,53 +15,63 @@ if (!defined('DC_RC_PATH')){return;}
 # Public behaviors
 class soCialMePublic
 {
-	# available social parts
-	public static $nss = array('soCialMeSharer','soCialMeReader','soCialMeWriter','soCialMeProfil');
-	
 	# Declare soCialMe Tpl (before document)
 	public static function publicBeforeDocument($core)
 	{
-		# soCialMe tpl path
+		# Load social part class once for all one page
+		foreach(soCialMeUtils::getParts() as $part => $ns)
+		{
+			$core->{$ns} = new $ns($core);
+		}
+		# tpl path
 		$core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/../default-templates');
-		# soCialMe Reader tags
-		$core->tpl->addBlock('SoCialMeReaders',array('soCialMeTemplate','SoCialMeReaders'));
-		$core->tpl->addBlock('SoCialMeReadersIf',array('soCialMeTemplate','SoCialMeReadersIf'));
-		$core->tpl->addValue('SoCialMeReadersTitle',array('soCialMeTemplate','SoCialMeReadersTitle'));
-		$core->tpl->addBlock('SoCialMeReadersHeader',array('soCialMeTemplate','SoCialMeReadersHeader'));
-		$core->tpl->addBlock('SoCialMeReadersFooter',array('soCialMeTemplate','SoCialMeReadersFooter'));
-		$core->tpl->addBlock('SoCialMeReaderIf',array('soCialMeTemplate','SoCialMeReaderIf'));
-		$core->tpl->addValue('SoCialMeReaderIfFirst',array('soCialMeTemplate','SoCialMeReaderIfFirst'));
-		$core->tpl->addValue('SoCialMeReaderIfOdd',array('soCialMeTemplate','SoCialMeReaderIfOdd'));
-		$core->tpl->addValue('SoCialMeReaderIfMe',array('soCialMeTemplate','SoCialMeReaderIfMe'));
-		$core->tpl->addValue('SoCialMeReaderId',array('soCialMeTemplate','SoCialMeReaderId'));
-		$core->tpl->addValue('SoCialMeReaderService',array('soCialMeTemplate','SoCialMeReaderService'));
-		$core->tpl->addValue('SoCialMeReaderSourceName',array('soCialMeTemplate','SoCialMeReaderSourceName'));
-		$core->tpl->addValue('SoCialMeReaderSourceURL',array('soCialMeTemplate','SoCialMeReaderSourceURL'));
-		$core->tpl->addValue('SoCialMeReaderSourceIcon',array('soCialMeTemplate','SoCialMeReaderSourceIcon'));
-		$core->tpl->addValue('SoCialMeReaderTitle',array('soCialMeTemplate','SoCialMeReaderTitle'));
-		$core->tpl->addValue('SoCialMeReaderContent',array('soCialMeTemplate','SoCialMeReaderContent'));
-		$core->tpl->addValue('SoCialMeReaderIcon',array('soCialMeTemplate','SoCialMeReaderIcon'));
-		$core->tpl->addValue('SoCialMeReaderAvatar',array('soCialMeTemplate','SoCialMeReaderAvatar'));
-		$core->tpl->addValue('SoCialMeReaderDate',array('soCialMeTemplate','SoCialMeReaderDate'));
-		$core->tpl->addValue('SoCialMeReaderTime',array('soCialMeTemplate','SoCialMeReaderTime'));
-		$core->tpl->addValue('SoCialMeReaderURL',array('soCialMeTemplate','SoCialMeReaderURL'));
+		# Records tags
+		$core->tpl->addBlock('SoCialMePreloadBox',array('soCialMeTemplate','SoCialMePreloadBox'));
+		$core->tpl->addBlock('SoCialMeRecords',array('soCialMeTemplate','SoCialMeRecords'));
+		$core->tpl->addBlock('SoCialMeRecordsOptionsIf',array('soCialMeTemplate','SoCialMeRecordsOptionsIf'));
+		$core->tpl->addBlock('SoCialMeRecordsIf',array('soCialMeTemplate','SoCialMeRecordsIf'));
+		$core->tpl->addValue('SoCialMeRecordsTitle',array('soCialMeTemplate','SoCialMeRecordsTitle'));
+		$core->tpl->addValue('SoCialMeRecordsPart',array('soCialMeTemplate','SoCialMeRecordsPart'));
+		$core->tpl->addValue('SoCialMeRecordsThing',array('soCialMeTemplate','SoCialMeRecordsThing'));
+		$core->tpl->addValue('SoCialMeRecordsPlace',array('soCialMeTemplate','SoCialMeRecordsPlace'));
+		$core->tpl->addBlock('SoCialMeRecordsHeader',array('soCialMeTemplate','SoCialMeRecordsHeader'));
+		$core->tpl->addBlock('SoCialMeRecordsFooter',array('soCialMeTemplate','SoCialMeRecordsFooter'));
+		# Record tags
+		$core->tpl->addBlock('SoCialMeRecordIf',array('soCialMeTemplate','SoCialMeRecordIf'));
+		$core->tpl->addBlock('SoCialMeRecordFieldIf',array('soCialMeTemplate','SoCialMeRecordFieldIf'));
+		$core->tpl->addValue('SoCialMeRecordIfFirst',array('soCialMeTemplate','SoCialMeRecordIfFirst'));
+		$core->tpl->addValue('SoCialMeRecordIfOdd',array('soCialMeTemplate','SoCialMeRecordIfOdd'));
+		$core->tpl->addValue('SoCialMeRecordIfMe',array('soCialMeTemplate','SoCialMeRecordIfMe'));
+		$core->tpl->addValue('SoCialMeRecordId',array('soCialMeTemplate','SoCialMeRecordId'));
+		$core->tpl->addValue('SoCialMeRecordService',array('soCialMeTemplate','SoCialMeRecordService'));
+		$core->tpl->addValue('SoCialMeRecordSourceName',array('soCialMeTemplate','SoCialMeRecordSourceName'));
+		$core->tpl->addValue('SoCialMeRecordSourceURL',array('soCialMeTemplate','SoCialMeRecordSourceURL'));
+		$core->tpl->addValue('SoCialMeRecordSourceIcon',array('soCialMeTemplate','SoCialMeRecordSourceIcon'));
+		$core->tpl->addValue('SoCialMeRecordTitle',array('soCialMeTemplate','SoCialMeRecordTitle'));
+		$core->tpl->addValue('SoCialMeRecordExcerpt',array('soCialMeTemplate','SoCialMeRecordExcerpt'));
+		$core->tpl->addValue('SoCialMeRecordContent',array('soCialMeTemplate','SoCialMeRecordContent'));
+		$core->tpl->addValue('SoCialMeRecordIcon',array('soCialMeTemplate','SoCialMeRecordIcon'));
+		$core->tpl->addValue('SoCialMeRecordAvatar',array('soCialMeTemplate','SoCialMeRecordAvatar'));
+		$core->tpl->addValue('SoCialMeRecordDate',array('soCialMeTemplate','SoCialMeRecordDate'));
+		$core->tpl->addValue('SoCialMeRecordTime',array('soCialMeTemplate','SoCialMeRecordTime'));
+		$core->tpl->addValue('SoCialMeRecordURL',array('soCialMeTemplate','SoCialMeRecordURL'));
+		# Reader page tags
+		$core->tpl->addValue('SoCialMeReaderPageTitle',array('soCialMeTemplate','SoCialMeReaderPageTitle'));
+		$core->tpl->addValue('SoCialMeReaderPageContent',array('soCialMeTemplate','SoCialMeReaderPageContent'));
 	}
 	
 	# Load soCialMe CSS (head content)
 	public static function publicHeadContent($core)
 	{
-		foreach(self::$nss as $ns)
+		foreach(soCialMeUtils::getParts() as $part => $ns)
 		{
-			if (!$core->blog->settings->{$ns}->active 
-			 || !$core->blog->settings->{$ns}->css)
-			{
-				continue;
-			}
+			$css = $core->blog->settings->{$ns}->css;
+			if (!$core->{$ns}->active || !$css) continue;
 			
 			echo 
 			"\n<!-- Style for plugin ".$ns." --> \n".
 			'<style type="text/css">'."\n".
-			html::escapeHTML($core->blog->settings->{$ns}->css)."\n".
+			html::escapeHTML($css)."\n".
 			"</style>\n";
 		}
 	}
@@ -69,74 +79,120 @@ class soCialMePublic
 	# Execute services actions (top content)
 	public static function publicTopAfterContent($core)
 	{
-		# soCialMe Profil
-		echo soCialMeProfil::publicContent('ontop',$core);
+		echo self::playContent($core,'ontop');
 	}
 	
 	# Execute services actions (before post content)
 	public static function publicEntryBeforeContent($core,$_ctx)
 	{
-		# soCialMe Sharer
-		echo soCialMeSharer::publicContent('beforepost',$core,$_ctx);
+		$params = self::getPostContext($core,$_ctx);
+		if (!$params) return;
+		
+		echo self::playContent($core,'beforepost',$params);
 	}
 	
 	# Execute services actions (after post content)
 	public static function publicEntryAfterContent($core,$_ctx)
 	{
-		# soCialMe Sharer
-		echo soCialMeSharer::publicContent('afterpost',$core,$_ctx);
+		$params = self::getPostContext($core,$_ctx);
+		if (!$params) return;
+		
+		echo self::playContent($core,'afterpost',$params);
 	}
 	
-	# Execute services actions like playPublicScript (footer content)
+	# Execute services actions and script (footer content)
 	public static function publicFooterContent($core)
 	{
-		# soCialMe Profil
-		echo soCialMeProfil::publicContent('onfooter',$core);
-		# Commons
+		echo self::playContent($core,'onfooter');
 		echo self::playScript($core,'Public');
 	}
 	
-	# Execute services actions like playServerScript (after document)
+	# Execute services script (after document)
+	// This is used to put records in cache
+	// todo: send this to an external ajax query or cron
 	public static function publicAfterDocument($core)
 	{
 		self::playScript($core,'Server');
+	}
+	
+	# Widget soCialMe Sharer post
+	public static function widgetSharerPostPublic($w)
+	{
+		global $core, $_ctx;
+		$params = self::getPostContext($core,$_ctx);
+		if (!$params) return;
+		
+		echo  $core->soCialMeSharer->playContent('onwidget',$params);
+	}
+	
+	# Widget soCialMe Profil badge
+	public static function widgetProfilBadgePublic($w)
+	{
+		global $core;
+		$params = array(
+			'thing' => $w->thing
+		);
+		echo  $core->soCialMeProfil->playContent('onwidget',$params);
+	}
+	
+	# Widget soCialMe Reader stream
+	public static function widgetReaderStreamPublic($w)
+	{
+		global $core;
+		
+		if ($core->url->type == 'soCialMeReader') return;
+		
+		$params = array(
+			'title' => $w->title,
+			'size' => $w->size,
+			'service'=>$w->service,
+			'thing' => 'Widget',
+			'limit' => (integer) $w->limit,
+			'order' => 'date',
+			'sort' => 'asc'
+		);
+		echo $core->soCialMeReader->playContent('onwidget',$params);
+	}
+	
+	# Commons for playXxxContent
+	private static function playContent($core,$place,$params=array())
+	{
+		$res = '';
+		foreach(soCialMeUtils::getParts() as $part => $ns)
+		{
+			$res .= $core->{$ns}->playContent($place,$params);
+		}
+		return $res;
 	}
 	
 	# Commons for playXxxScript
 	private static function playScript($core,$type)
 	{
 		$res = '';
-		foreach(self::$nss as $ns)
+		foreach(soCialMeUtils::getParts() as $part => $ns)
 		{
-			# social part not active
-			if (!$core->blog->settings->{$ns}->active) continue;
-			# social part class
-			$class = new $ns($core);
-			# get services that have hidden func
-			$services = $class->can($type.'Script');
-			# nothing to do
-			if (empty($services)) continue;
-			# get list of func per service per thing
-			$available = array();
-			$things = $class->things();
-			foreach($things as $thing => $plop)
-			{
-				$available[$thing] = $class->can($thing.'Content',$thing.'Script');
-			}
-			# nothing to do
-			if (empty($available)) continue;
-			# loop through services to do their job
-			foreach($services as $service_id)
-			{
-				if (!soCialMeUtils::thingsHasService($available,$service_id)) continue;
-				try {
-					$tmp = $class->play($service_id,$type,'Script',$available);
-					$res .= $tmp;
-				}
-				catch (Exception $e) { }
-			}
+			$res .= $core->{$ns}->playScript($type);
 		}
 		return $res;
+	}
+	
+	# Retrieve post info from context
+	private static function getPostContext($core,$_ctx)
+	{
+		if (!$_ctx->exists('posts')) return array();
+		
+		return array(
+			'more' => soCialMeUtils::fillPlayRecord(array(
+				'url' => $_ctx->posts->getURL(),
+				'title' => $_ctx->posts->post_title,
+				'excerpt' => $_ctx->posts->post_excerpt_xhtml,
+				'content' => $_ctx->posts->post_content_xhtml,
+				'category' =>  $_ctx->posts->cat_title,
+				'tags' => $_ctx->posts->post_meta,
+				'author' => $_ctx->posts->user_displayname,
+				'type' => 'text'
+			)
+		));
 	}
 }
 ?>

@@ -44,13 +44,17 @@ $__autoload['soCialMeTemplate'] = dirname(__FILE__).'/inc/lib.template.php';
 $__autoload['soCialMeURL'] = dirname(__FILE__).'/inc/lib.url.php';
 $__autoload['soCialMeUtils'] = dirname(__FILE__).'/inc/lib.utils.php';
 $__autoload['soCialMeWidget'] = dirname(__FILE__).'/inc/lib.widget.php';
-# profil
-$__autoload['soCialMeProfil'] = dirname(__FILE__).'/inc/lib.social.profil.php';
-# reader
-$__autoload['soCialMeReader'] = dirname(__FILE__).'/inc/lib.social.reader.php';
-$core->url->register('soCialMeReader','reader','^reader(/(.*?)|)$',array('soCialMeURL','soCialMeReaderPage'));
 # sharer
 $__autoload['soCialMeSharer'] = dirname(__FILE__).'/inc/lib.social.sharer.php';
+$core->addBehavior('soCialMePart',create_function(null,'return array("sharer","soCialMeSharer");'));
+# profil
+$__autoload['soCialMeProfil'] = dirname(__FILE__).'/inc/lib.social.profil.php';
+$core->addBehavior('soCialMePart',create_function(null,'return array("profil","soCialMeProfil");'));
 # writer
 $__autoload['soCialMeWriter'] = dirname(__FILE__).'/inc/lib.social.writer.php';
+$core->addBehavior('soCialMePart',create_function(null,'return array("writer","soCialMeWriter");'));
+# reader
+$__autoload['soCialMeReader'] = dirname(__FILE__).'/inc/lib.social.reader.php';
+$core->addBehavior('soCialMePart',create_function(null,'return array("reader","soCialMeReader");'));
+$core->url->register('soCialMeReader','reader','^reader(/(.*?)|)$',array('soCialMeURL','soCialMeReaderPage'));
 ?>

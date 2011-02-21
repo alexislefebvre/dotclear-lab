@@ -14,14 +14,33 @@ if (!defined('DC_RC_PATH')){return;}
 
 class soCialMeReader extends soCialMe
 {
+	protected $part = 'reader';
 	protected $ns = 'soCialMeReader';
+	protected $markers = null;
 	protected $things = array(
 		'Feed' => 'Source',
 		'Widget' => 'Source',
 		'Page' => 'Source',
 		'Comment' => 'Source'
 	);
-	protected $markers = null;
+	
+	# Construct admin pages
+	public static function adminNav()
+	{
+		if (!defined('DC_CONTEXT_ADMIN')) return null;
+		
+		return array(
+			'title' => __('Reader'),
+			'description' => __('Add feeds and other stream from social networks to your blog.'),
+			'ns' => 'soCialMeReader',
+			'parts' => array(
+				'stream' => __('Streams'),
+				'service' => __('Services'),
+				'setting' => __('Settings')
+			),
+			'common' => array('service','setting')
+		);
+	}
 	
 	# Load markers (all actions things)
 	public function init()

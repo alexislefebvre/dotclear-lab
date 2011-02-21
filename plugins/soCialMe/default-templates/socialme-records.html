@@ -1,0 +1,91 @@
+<tpl:SoCialMeRecordsOptionsIf part="reader" thing="Page">
+<tpl:SoCialMeRecordsIf has_record="0">
+<p class="no_tweet">{{tpl:lang No status yet...}}</p>
+</tpl:SoCialMeRecordsIf>
+<tpl:SoCialMeRecords>
+<div class="post {{tpl:SoCialMeRecordIfMe}} {{tpl:SoCialMeRecordIfFirst}} {{tpl:SoCialMeRecordIfOdd}}" id="status_{{tpl:SoCialMeRecordId}}">
+<h2 class="post-title">
+  <a href="{{tpl:SoCialMeRecordURL}}" title="{{tpl:lang View source}}">{{tpl:SoCialMeRecordTitle}}</a>
+</h2>
+<p class="post-info">{{tpl:lang on}} {{tpl:SoCialMeRecordDate}}, {{tpl:SoCialMeRecordTime}}
+- <a href="{{tpl:SoCialMeRecordSourceURL}}">{{tpl:SoCialMeRecordSourceName encode_html="1"}}</a> 
+<a class="record-icon" href="{{tpl:SoCialMeRecordSourceURL}}" title="{{tpl:lang view site}}"><img src="{{tpl:SoCialMeRecordSourceIcon}}" alt="{{tpl:SoCialMeRecordSourceName}}" /></a> 
+<tpl:SoCialMeRecordFieldIf icon="1"><a class="record-url" href="{{tpl:SoCialMeRecordURL}}" title="{{tpl:lang view source}}"><img src="{{tpl:SoCialMeRecordIcon}}" alt="{{tpl:lang icon}}" /></a> </tpl:SoCialMeRecordFieldIf>
+</p>
+<div class="post-content">{{tpl:SoCialMeRecordContent}}</div>
+</div>
+</tpl:SoCialMeRecords>
+</tpl:SoCialMeRecordsOptionsIf>
+
+<tpl:SoCialMeRecordsOptionsIf part="reader" thing="Widget">
+<div class="social-readers social-Widget">
+<tpl:SoCialMeRecordsIf has_title="1">
+<h2>{{tpl:SoCialMeRecordsTitle}}</h2>
+</tpl:SoCialMeRecordsIf>
+<tpl:SoCialMeRecordsIf has_record="0">
+<p class="no_tweet">{{tpl:lang No status yet...}}</p>
+</tpl:SoCialMeRecordsIf>
+<tpl:SoCialMeRecords>
+<tpl:SoCialMeRecordsHeader><ul></tpl:SoCialMeRecordsHeader>
+<li class="social-reader social-id-{{tpl:SoCialMeRecordService}} {{tpl:SoCialMeRecordIfMe}} {{tpl:SoCialMeRecordIfFirst}} {{tpl:SoCialMeRecordIfOdd}}" id="status_{{tpl:SoCialMeRecordId}}">
+<div class="record-title">
+<tpl:SoCialMeRecordsIf use_icon="small"><tpl:SoCialMeRecordFieldIf icon="1"><img src="{{tpl:SoCialMeRecordIcon}}" alt="{{tpl:lang avatar}}" /></tpl:SoCialMeRecordFieldIf></tpl:SoCialMeRecordsIf>
+<tpl:SoCialMeRecordsIf use_icon="normal"><tpl:SoCialMeRecordFieldIf avatar="1"><img src="{{tpl:SoCialMeRecordAvatar}}" alt="{{tpl:lang avatar}}" /></tpl:SoCialMeRecordFieldIf></tpl:SoCialMeRecordsIf>
+{{tpl:SoCialMeRecordTitle}}<br />
+{{tpl:lang on}} {{tpl:SoCialMeRecordDate}}, {{tpl:SoCialMeRecordTime}}
+<a class="record-url" href="{{tpl:SoCialMeRecordURL}}" title="{{tpl:lang view source}}"><img src="{{tpl:SoCialMeRecordSourceIcon}}" alt="{{tpl:SoCialMeRecordSourceName}}" /></a></div>
+<div class="record-content">{{tpl:SoCialMeRecordContent remove_html="1" cut_string="350"}}</div>
+</li>
+<tpl:SoCialMeRecordsFooter></ul></tpl:SoCialMeRecordsFooter>
+</tpl:SoCialMeRecords>
+</div>
+</tpl:SoCialMeRecordsOptionsIf>
+
+<tpl:SoCialMeRecordsOptionsIf part="profil" thing="Card">
+<div class="social-{{tpl:SoCialMeRecordsPart}}s social-{{tpl:SoCialMeRecordsThing}}">
+<tpl:SoCialMeRecordsIf has_title="1">
+<h2>{{tpl:SoCialMeRecordsTitle}}</h2>
+</tpl:SoCialMeRecordsIf>
+<tpl:SoCialMeRecords>
+<tpl:SoCialMeRecordsHeader><ul></tpl:SoCialMeRecordsHeader>
+<li class="social-{{tpl:SoCialMeRecordsPart}} social-id-{{tpl:SoCialMeRecordService}}">
+<tpl:SoCialMeRecordFieldIf avatar="1"><img class="record-icon" src="{{tpl:SoCialMeRecordAvatar}}" alt="{{tpl:lang avatar}}" /></tpl:SoCialMeRecordFieldIf>
+<div class="record-title">{{tpl:SoCialMeRecordTitle}}</div>
+<tpl:SoCialMeRecordFieldIf content="1"><div class="record-content">{{tpl:SoCialMeRecordContent}}</div></tpl:SoCialMeRecordFieldIf>
+<tpl:SoCialMeRecordFieldIf date="1"><div class="record-date">{{tpl:SoCialMeRecordDate}}, {{tpl:SoCialMeRecordTime}}</div></tpl:SoCialMeRecordFieldIf>
+<tpl:SoCialMeRecordFieldIf excerpt="1"><div class="record-url"><a href="{{tpl:SoCialMeRecordURL}}" title="{{tpl:SoCialMeRecordTitle}}">{{tpl:SoCialMeRecordExcerpt}}</a> <img src="{{tpl:SoCialMeRecordSourceIcon}}" alt="{{tpl:SoCialMeRecordSourceName}}"/></div></tpl:SoCialMeRecordFieldIf>
+</li>
+<tpl:SoCialMeRecordsFooter></ul></tpl:SoCialMeRecordsFooter>
+</tpl:SoCialMeRecords>
+</div>
+</tpl:SoCialMeRecordsOptionsIf>
+
+<tpl:SoCialMeRecordsOptionsIf part="profil,sharer" thing="Icon,Small,Big">
+<div class="social-{{tpl:SoCialMeRecordsPart}}s social-{{tpl:SoCialMeRecordsThing}}">
+<tpl:SoCialMeRecordsIf has_title="1">
+<h2>{{tpl:SoCialMeRecordsTitle}}</h2>
+</tpl:SoCialMeRecordsIf>
+<tpl:SoCialMeRecords>
+<tpl:SoCialMeRecordsHeader><ul></tpl:SoCialMeRecordsHeader>
+<li class="social-{{tpl:SoCialMeRecordsPart}} social-id-{{tpl:SoCialMeRecordService}}">
+<tpl:SoCialMeRecordFieldIf content="1"><tpl:SoCialMePreloadBox>{{tpl:SoCialMeRecordContent}}</tpl:SoCialMePreloadBox></tpl:SoCialMeRecordFieldIf>
+<tpl:SoCialMeRecordFieldIf content="0" preload="1"><tpl:SoCialMePreloadBox><a class="record-url" href="{{tpl:SoCialMeRecordURL}}" title="{{tpl:SoCialMeRecordTitle}}"><img src="{{tpl:SoCialMeRecordAvatar}}" alt="{{tpl:SoCialMeRecordTitle}}" /><\/a></tpl:SoCialMePreloadBox></tpl:SoCialMeRecordFieldIf>
+<tpl:SoCialMeRecordFieldIf content="0" preload="0"><a class="record-url" href="{{tpl:SoCialMeRecordURL}}" title="{{tpl:SoCialMeRecordTitle}}"><img src="{{tpl:SoCialMeRecordAvatar}}" alt="{{tpl:SoCialMeRecordTitle}}" /></a></tpl:SoCialMeRecordFieldIf>
+</li>
+<tpl:SoCialMeRecordsFooter></ul></tpl:SoCialMeRecordsFooter>
+</tpl:SoCialMeRecords>
+</div>
+</tpl:SoCialMeRecordsOptionsIf>
+
+<tpl:SoCialMeRecordsOptionsIf part="profil" thing="SmallExtra,BigExtra">
+<div class="social-{{tpl:SoCialMeRecordsPart}}s social-{{tpl:SoCialMeRecordsThing}}">
+<tpl:SoCialMeRecordsIf has_title="1">
+<h2>{{tpl:SoCialMeRecordsTitle}}</h2>
+</tpl:SoCialMeRecordsIf>
+<tpl:SoCialMeRecords><tpl:SoCialMeRecordFieldIf content="1">
+<div class="social-{{tpl:SoCialMeRecordsPart}} social-id-{{tpl:SoCialMeRecordService}}">
+<tpl:SoCialMePreloadBox>{{tpl:SoCialMeRecordContent}}</tpl:SoCialMePreloadBox>
+</div>
+</tpl:SoCialMeRecordFieldIf></tpl:SoCialMeRecords>
+</div>
+</tpl:SoCialMeRecordsOptionsIf>

@@ -50,22 +50,34 @@ try
 	".social-sharers ul { display: inline-block; list-style: none; margin: 0; padding: 0; border: none !important; } \n".
 	".social-sharers ul li { display: inline-block; margin: 0 2px; padding: 0; border: none !important;} \n".
 	".social-sharer { margin: 1px; } ";
+	
 	$reader_css = 
 	".social-reader div { margin: 0 !important; } \n".
 	".social-reader { margin-bottom: 1em; } \n".
 	".social-reader img { float: left; margin-right: 2px; } \n".
-	".social-reader .reader-title { font-weight: bold; } \n".
-	".social-reader .reader-content { clear: both; font-size: 1.2em; } \n".
-	".social-reader .reader-url { float: right; } \n".
-	".reader-icon { float:right; margin: 2px; }";
+	".social-reader .record-title { font-weight: bold; } \n".
+	".social-reader .record-content { clear: both; font-size: 1.2em; } \n".
+	".social-reader .record-url { float: right; } \n".
+	".record-icon { float:right; margin: 2px; } ";
+	
 	$profil_css = 
 	".social-profils { margin: 0 auto; } \n".
 	".social-profils ul { display: inline-block; list-style: none; margin: 0; padding: 0; border: none !important; } \n".
 	".social-profils ul li { display: inline-block; margin: 0 2px; padding: 0; border: none !important;} \n.".
-	".social-profil { margin: 1px; } ";
+	".social-profil { margin: 1px; } ".
+	// advanced exemple for Card
+	".social-Card ul li.social-profil { float: left; color: #000; background-color: #FFF; border: 2px solid #000 !important; margin: 2px; padding: 2px; height: 64px; width: 270px; } \n".
+	".social-Card { float: left; margin: 2px; padding: 2px; } \n".
+	".social-Card div { white-space: nowrap; } \n".
+	".social-Card .record-icon { float: left; margin: 2px; width: 57px; height: 57px; } \n".
+	".social-Card .record-title { font-weight: bold; } \n".
+	".social-Card .record-content { font-style: italic; } ";
 	
 	$core->blog->settings->addNamespace('soCialMe');
 	$core->blog->settings->soCialMe->put('active',true,'boolean','Enable soCialMe plugin',false,true);
+	$core->blog->settings->soCialMe->put('debug','dc','string','Enable soCialMe debug log',false,true);
+	$core->blog->settings->soCialMe->put('log_timeout',604800,'integer','Logs life',false,true);
+	$core->blog->settings->soCialMe->put('cache_timeout',900,'integer','Cache life',false,true);
 	
 	$core->blog->settings->addNamespace('soCialMeSharer');
 	$core->blog->settings->soCialMeSharer->put('active',false,'boolean','Enable soCialMe Sharer',false,true);

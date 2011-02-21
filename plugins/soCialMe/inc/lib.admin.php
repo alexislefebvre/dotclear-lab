@@ -22,8 +22,6 @@ class soCialMeAdmin
 	# Admin URLs
 	public static function link($amp,$page='',$part='',$lib='',$more='')
 	{
-		if (!defined('DC_CONTEXT_ADMIN')) return '';
-		
 		$url = DC_ADMIN_URL.'plugin.php?p=soCialMe&page=%s&part=%s&lib=%s%s';
 		if ($amp) {
 			$url = str_replace('&','&amp;',$url);
@@ -34,8 +32,6 @@ class soCialMeAdmin
 	# Top admin menu
 	public static function top($page='',$more_head='')
 	{
-		if (!defined('DC_CONTEXT_ADMIN')) return '';
-		
 		$title = !empty($page['title']) ? ' '.$page['title'] : '';
 		$menu = !empty($page['parts']) ? ' &rsaquo; '.self::menu($page['parts']) : '';
 		$section = !empty($_REQUEST['section']) ? $_REQUEST['section'] : '';

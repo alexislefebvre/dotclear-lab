@@ -10,4 +10,22 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}# URL handlerclass soCialMeURL extends dcUrlHandlers{	public static function soCialMeReaderPage($args)	{		global $core;				$params = array(			'size' => 'normal',			'service'=> '',			'thing' => 'Page',			'limit' => 30		);				$res = soCialMeReader::publicContent('onpage',$core,$params);				if (empty($res)) {			self::p404();		}		echo $res;		exit;	}}?>
+if (!defined('DC_RC_PATH')){return;}# URL handlerclass soCialMeURL extends dcUrlHandlers{	public static function soCialMeReaderPage($args)	{		global $core, $_ctx;
+		
+		// get content now as context could be crushed
+		$params = array(
+			'size' => 'normal',
+			'service'=> '',
+			'thing' => 'Page',
+			'limit' => 5,
+			'order' => 'date',
+			'sort' => 'desc'
+		);
+		$content = $core->soCialMeReader->playContent('onpage',$params);
+		$title = $_ctx->soCialMeRecordsTitle;
+		
+		// turn to page context
+		$_ctx->soCialMeReaderPageTitle = $title;
+		$_ctx->soCialMeReaderPageContent = $content;
+		$res = $core->tpl->getData('socialme-reader-page.html');				if (empty($res)) {			self::p404();
+			exit;		}		echo $res;		exit;	}}?>

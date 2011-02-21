@@ -14,16 +14,36 @@ if (!defined('DC_RC_PATH')){return;}
 
 class soCialMeProfil extends soCialMe
 {
+	protected $part = 'profil';
 	protected $ns = 'soCialMeProfil';
+	protected $markers = null;
 	protected $things = array(
 		'Icon' => 'Icon badge',
 		'Small' => 'Small badge',
 		'Big' => 'Big badge',
+		'Card' => 'Identity card',
 		'SmallExtra' => 'Small extra badge',
-		'MediumExtra' => 'Medium extra bagde',
 		'BigExtra' => 'Big extra badge'
 	);
-	protected $markers = null;
+	
+	# Construct admin pages
+	public static function adminNav()
+	{
+		if (!defined('DC_CONTEXT_ADMIN')) return null;
+		
+		return array(
+			'title' => __('Profil'),
+			'description' => __('Show your social profiles and counters.'),
+			'ns' => 'soCialMeProfil',
+			'parts' => array(
+				'location' => __('Locations'),
+				'order' => __('Orders'),
+				'service' => __('Services'),
+				'setting' => __('Settings')
+			),
+			'common' => array('order','service','setting')
+		);
+	}
 	
 	# Load markers (all actions things)
 	public function init()
@@ -32,103 +52,33 @@ class soCialMeProfil extends soCialMe
 		$markers['ontop'] = array(
 			'name' => __('Page header'),
 			'description' => __('Place a group of bagdes just after page title'),
-			'action' => array('Icon','Small','Big','SmallExtra','MediumExtra','BigExtra'),
+			'action' => array('Icon','Small','Big','Card','SmallExtra','BigExtra'),
 			'title' => true,
-			'homeonly' => true
+			'homeonly' => true,
+			'order' => true
 		);
 		
 		# after post
 		$markers['onfooter'] = array(
 			'name' => __('Footer'),
 			'description' => __('Place a group of badges on footer'),
-			'action' => array('Icon','Small','Big','SmallExtra','MediumExtra','BigExtra'),
+			'action' => array('Icon','Small','Big','Card','SmallExtra','BigExtra'),
 			'title' => true,
-			'homeonly' => true
+			'homeonly' => true,
+			'order' => true
 		);
 		
 		# on widget
 		$markers['onwidget'] = array(
 			'name' => __('Widget'),
 			'description' => __('Place group of bagdes on widget. You must set up widget.'),
-			'action' => array('Icon','Small','Big','SmallExtra','MediumExtra','BigExtra'),
+			'action' => array('Icon','Small','Big','Card','SmallExtra','BigExtra'),
 			'title' => true,
-			'homeonly' => true
+			'homeonly' => true,
+			'order' => true
 		);
 		
 		$this->markers = $markers;
-	}
-	
-	# Public content (on page and widget)
-	public static function publicContent($place,$core)
-	{
-		# Active
-		if (!$core->blog->settings->soCialMeProfil->active) 
-		{
-			return;
-		}
-		
-		# main class
-		$class = new soCialMeProfil($core);
-		
-		# Only on home page
-		$s_homeonly = $class->getMarker('homeonly',false);
-		if (!empty($s_homeonly) && is_array($s_homeonly) && isset($s_homeonly[$place]) 
-		&& !empty($s_homeonly[$place]) && $core->url->type != 'default')
-		{
-			return;
-		}
-		
-		# Services
-		$s_action = $class->getMarker('action',array());
-		if (empty($s_action) || !is_array($s_action) || !isset($s_action[$place]))
-		{
-			return;
-		}
-		
-		# Title
-		$s_title = $class->getMarker('title','');
-		
-		# Get services codes
-		foreach($class->things() as $thing => $plop)
-		{
-			if (!empty($thing_limit) && $thing != $thing_limit) continue;
-			
-			$usable[$thing] = $class->can($thing.'Content');
-			$rs[$thing] = '';
-		}
-		
-		# Reorder
-		$s_order = $class->fillOrder($usable);
-		
-		# Get actions
-		foreach($s_order as $thing => $services)
-		{
-			if (!isset($s_action[$place][$thing]) || empty($s_action[$place][$thing])) continue;
-			
-			foreach($services as $id)
-			{
-				if (!in_array($id,$s_action[$place][$thing])) continue;
-				
-				$rs[$thing] .= '<li class="social-profil social-id-'.$id.'">'.$class->play($id,$thing,'Content',null).'</li>';
-			}
-		}
-		
-		# Combine
-		$res = '';
-		foreach($rs as $thing => $content)
-		{
-			if (empty($content)) continue;
-			
-			$res .= '<div class="social-profils '.$place.'-'.$thing.'">';
-			if (isset($s_title[$place]) && !empty($s_title[$place]))
-			{
-				$res .= $place == 'onwidget' ?
-					'<h2>'.$s_title[$place].'</h2>' :
-					'<h3>'.$s_title[$place].'</h3>';
-			}
-			$res .= '<ul>'.$content.'</ul></div>';
-		}
-		return $res;
 	}
 }
 ?>

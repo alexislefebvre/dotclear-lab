@@ -14,6 +14,52 @@ if (!defined('DC_RC_PATH')){return;}
 
 class soCialMeUtils
 {
+	public static function getParts()
+	{
+		global $core;
+		
+		$rs = array();
+		$list = $core->getBehaviors('soCialMePart');
+		
+		if (empty($list)) return $rs;
+		
+		foreach($list as $k => $callback)
+		{
+			try
+			{
+				list($part,$ns) = call_user_func($callback);
+				
+				if (empty($part) || empty($ns)) continue;
+				$rs[$part] = $ns;
+			}
+			catch (Exception $e) {}
+		}
+		
+		return $rs;
+	}
+	
+	public static $record = array(
+		'author' => '',
+		'avatar' => '',
+		'category' => '',
+		'content' => '',
+		'date' => '',
+		'email' => '',
+		'excerpt' => '',
+		'icon' => '',
+		'me' => false,
+		'preload' => 0,
+		'service' => 'unknow',
+		'shorturl' => '',
+		'source_name' => '',
+		'source_url' => '',
+		'source_img' => '',
+		'tags' => '',
+		'title' => '',
+		'type' => '',
+		'url' => ''
+	);
+	
 	# Reduce link
 	public static function reduceURL($url,$custom=null)
 	{
@@ -96,6 +142,7 @@ class soCialMeUtils
 	}
 	
 	# Shortcut for a standard link with an image
+//deprecated
 	public static function easyLink($href,$title,$src,$type='sharer')
 	{
 		if ($type == 'sharer') {
@@ -112,19 +159,20 @@ class soCialMeUtils
 	}
 	
 	//not always so speed, bug on some case (if there's an onload event)
+//deprecated
 	public static function preloadBox($content)
 	{
-		if (!isset($GLOBALS['soCialMePreloadBoxNumber'])) $GLOBALS['soCialMePreloadBoxNumber'] = 0;
+		if (!isset($GLOBALS['soCialMeOldPreloadBoxNumber'])) $GLOBALS['soCialMeOldPreloadBoxNumber'] = 0;
 		
-		$GLOBALS['soCialMePreloadBoxNumber'] += 1;
+		$GLOBALS['soCialMeOldPreloadBoxNumber'] += 1;
 		
 		return
-		'<div id="social-preloadbox'.$GLOBALS['soCialMePreloadBoxNumber'].'"></div>'.
+		'<div id="social-oldpreloadbox'.$GLOBALS['soCialMeOldPreloadBoxNumber'].'"></div>'.
 		'<script type="text/javascript">'.
 		"\n//<![CDATA[ \n".
-		'$(\'#social-preloadbox'.$GLOBALS['soCialMePreloadBoxNumber'].'\').hide(); '.
+		'$(\'#social-oldpreloadbox'.$GLOBALS['soCialMeOldPreloadBoxNumber'].'\').hide(); '.
 		'$(document).ready(function(){ '.
-		'$(\'#social-preloadbox'.$GLOBALS['soCialMePreloadBoxNumber'].'\').show().replaceWith($(\''.$content.'\')); '.
+		'$(\'#social-oldpreloadbox'.$GLOBALS['soCialMeOldPreloadBoxNumber'].'\').show().replaceWith($(\''.$content.'\')); '.
 		"}); ".
 		"\n//]]> \n".
 		'</script> ';
@@ -136,32 +184,11 @@ class soCialMeUtils
 	{
 		if (!is_array($partial)) $partial = array();
 		
-		$full = array(
-			'author' => '',
-			'avatar' => '',
-			'category' => '',
-			'content' => '',
-			'date' => '',
-			'email' => '',
-			'excerpt' => '',
-			'icon' => '',
-			'me' => false,
-			'service' => 'unknow',
-			'shorturl' => '',
-			'source_name' => '',
-			'source_url' => '',
-			'source_img' => '',
-			'tags' => '',
-			'title' => '',
-			'type' => '',
-			'url' => ''
-		);
-		
 		if (!empty($partial['url']) && empty($partial['shorturl'])) {
 			$partial['shorturl'] = soCialMeUtils::reduceURL($partial['url']);
 		}
 		
-		return new arrayObject(array_merge($full,$partial));
+		return new arrayObject(array_merge(self::$record,$partial));
 	}
 	
 	# Turn array from play() func into a record

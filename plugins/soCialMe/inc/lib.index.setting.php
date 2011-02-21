@@ -41,7 +41,7 @@ echo soCialMeAdmin::top($page).
 
 '<fieldset id="setting-style"><legend>'. __('Style').'</legend>'.
 '<p><label class="classic">'.__('Additionnal style sheet:').'<br />'.
-form::textarea(array('s_css'),164,5,$s_css,'maximal').'</label></p>'.
+form::textarea(array('s_css'),164,5,html::escapeHTML($s_css),'maximal').'</label></p>'.
 '<p class="form-note">'.sprintf(__('Elements are placed in HTML tag "div" of class "social-%1$ss social-LOCATION_ID". Each Element in HTML tag "li" of class "social-%1$s social-id-SERVICE_ID".'),$request_page).'</p>'.
 '</fieldset>'.
 '<div class="clear">'.
