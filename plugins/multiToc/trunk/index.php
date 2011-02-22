@@ -13,10 +13,11 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $p_url	= 'plugin.php?p=multiToc';
-$settings	= unserialize($core->blog->settings->multiToc->multitoc_settings);
 
 if (!empty($_POST['save']))
 {
+	$settings	= unserialize($core->blog->settings->multiToc->multitoc_settings);
+	
 	$types = array('cat','tag','alpha','post');
 	
 	foreach ($types as $type) {
@@ -34,14 +35,6 @@ if (!empty($_POST['save']))
 	$core->blog->settings->multiToc->put('multitoc_settings',serialize($settings));
 	http::redirect($p_url.'&upd=1');
 }
-
-function getSetting($type,$value)
-{
-	global $settings;
-	
-	return isset($settings[$type][$value]) ? $settings[$type][$value] : '';
-}
-
 
 echo
 '<html>'.

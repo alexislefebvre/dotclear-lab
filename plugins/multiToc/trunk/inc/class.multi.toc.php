@@ -219,48 +219,48 @@ class multiTocUi
 			'<legend>'.$legend.'</legend>'.
 			'<div class="two-cols"><div class="col">'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_enable',1,getSetting($type,'enable')).$enable.
-			'</label></p>'.
-			'<p><label>'.
-			$order_group.
-			form::combo(array($type.'_order_group'),$order_group_data,getSetting($type,'order_group')).
+			form::checkbox($type.'_enable',1,multiTocUi::getSetting($type,'enable')).$enable.
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_display_nb_entry',1,getSetting($type,'display_nb_entry')).
+			form::checkbox($type.'_display_nb_entry',1,multiTocUi::getSetting($type,'display_nb_entry')).
 			__('Display entry number of each group').
 			'</label></p>'.
-			'<p><label>'.
-			$order_entry.
-			form::combo(array($type.'_order_entry'),$order_entry_data,getSetting($type,'order_entry')).
-			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_display_date',1,getSetting($type,'display_date')).
+			form::checkbox($type.'_display_date',1,multiTocUi::getSetting($type,'display_date')).
 			__('Display date').
 			'</label></p>'.
-			'</div><div class="col">'.
-			'<p><label>'.
-			__('Format date :').
-			form::field($type.'_format_date',40,255,getSetting($type,'format_date')).
-			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_display_author',1,getSetting($type,'display_author')).
+			form::checkbox($type.'_display_author',1,multiTocUi::getSetting($type,'display_author')).
 			__('Display author').
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_display_cat',1,getSetting($type,'display_cat')).
+			form::checkbox($type.'_display_cat',1,multiTocUi::getSetting($type,'display_cat')).
 			__('Display category').
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_display_nb_com',1,getSetting($type,'display_nb_com')).
+			form::checkbox($type.'_display_nb_com',1,multiTocUi::getSetting($type,'display_nb_com')).
 			__('Display comment number').
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_display_nb_tb',1,getSetting($type,'display_nb_tb')).
+			form::checkbox($type.'_display_nb_tb',1,multiTocUi::getSetting($type,'display_nb_tb')).
 			__('Display trackback number').
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_display_tag',1,getSetting($type,'display_tag')).
+			form::checkbox($type.'_display_tag',1,multiTocUi::getSetting($type,'display_tag')).
 			__('Display tags').
+			'</label></p>'.
+			'</div><div class="col">'.
+			'<p><label>'.
+			$order_group.
+			form::combo(array($type.'_order_group'),$order_group_data,multiTocUi::getSetting($type,'order_group')).
+			'</label></p>'.
+			'<p><label>'.
+			$order_entry.
+			form::combo(array($type.'_order_entry'),$order_entry_data,multiTocUi::getSetting($type,'order_entry')).
+			'</label></p>'.
+			'<p><label>'.
+			__('Format date').
+			form::field($type.'_format_date',40,255,multiTocUi::getSetting($type,'format_date')).
 			'</label></p>'.
 			'</div></div>'.
 			'</fieldset>' ;
@@ -270,10 +270,10 @@ class multiTocUi
 			'<fieldset>'.
 			'<legend>'.$legend.'</legend>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_enable',1,getSetting($type,'enable'),null,null,!$core->plugins->moduleExists('stacker')).$enable.
+			form::checkbox($type.'_enable',1,multiTocUi::getSetting($type,'enable'),null,null,!$core->plugins->moduleExists('stacker')).$enable.
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_numbering',1,getSetting($type,'numbering'),null,null,!$core->plugins->moduleExists('stacker')).$numbering.
+			form::checkbox($type.'_numbering',1,multiTocUi::getSetting($type,'numbering'),null,null,!$core->plugins->moduleExists('stacker')).$numbering.
 			'</label></p>'.
 			'<p class="form-note">'.__('Those options require stacker plugin').'</p>'.
 			'</fieldset>';
@@ -281,6 +281,15 @@ class multiTocUi
 		}
 		
 		return $res;
+	}
+	
+	public static function getSetting($type,$value)
+	{
+		global $core;
+		
+		$settings	= unserialize($core->blog->settings->multiToc->multitoc_settings);
+		
+		return isset($settings[$type][$value]) ? $settings[$type][$value] : '';
 	}
 }
 

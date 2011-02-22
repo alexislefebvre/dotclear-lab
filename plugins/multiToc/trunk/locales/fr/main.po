@@ -1,22 +1,22 @@
 # Language: Français
-# Module: multiToc - 1.6.1
-# Date: 2011-01-10 13:17:44
+# Module: multiToc - 1.6.2
+# Date: 2011-02-22 14:47:21
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: multiToc 1.6.1\n"
+"Project-Id-Version: multiToc 1.6.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-01-10T13:17:44+00:00\n"
+"PO-Revision-Date: 2011-02-22T14:47:21+00:00\n"
 "Last-Translator: Tomtom\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: _admin.php:19
-#: index.php:49
-#: index.php:52
+#: index.php:42
+#: index.php:45
 msgid "Tables of content"
 msgstr "Tables des matières"
 
@@ -176,43 +176,43 @@ msgstr "Ordre des catégories"
 msgid "No option"
 msgstr "Aucune option"
 
-#: inc/class.multi.toc.php:230
+#: inc/class.multi.toc.php:226
 msgid "Display entry number of each group"
 msgstr "Afficher le nombre de billets pour chaque groupe"
 
-#: inc/class.multi.toc.php:238
+#: inc/class.multi.toc.php:230
 msgid "Display date"
 msgstr "Afficher la date"
 
-#: inc/class.multi.toc.php:242
-msgid "Format date :"
-msgstr "Format de la date"
-
-#: inc/class.multi.toc.php:247
+#: inc/class.multi.toc.php:234
 msgid "Display author"
 msgstr "Afficher l'auteur"
 
-#: inc/class.multi.toc.php:251
+#: inc/class.multi.toc.php:238
 msgid "Display category"
 msgstr "Afficher la catégorie"
 
-#: inc/class.multi.toc.php:255
+#: inc/class.multi.toc.php:242
 msgid "Display comment number"
 msgstr "Afficher le nombre de commentaires"
 
-#: inc/class.multi.toc.php:259
+#: inc/class.multi.toc.php:246
 msgid "Display trackback number"
 msgstr "Afficher le nombre de rétroliens"
 
-#: inc/class.multi.toc.php:263
+#: inc/class.multi.toc.php:250
 msgid "Display tags"
 msgstr "Afficher les tags"
+
+#: inc/class.multi.toc.php:262
+msgid "Format date"
+msgstr "Format de la date"
 
 #: inc/class.multi.toc.php:278
 msgid "Those options require stacker plugin"
 msgstr "Ces options requièrent le plugin stacker"
 
-#: index.php:58
+#: index.php:51
 msgid "Configuration has been saved successfully"
 msgstr "La configuration a été enregistrée avec succès"
 

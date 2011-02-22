@@ -14,7 +14,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $m_version = $core->plugins->moduleInfo('multiToc','version');
 $i_version = $core->getVersion('multiToc');
-if (version_compare($i_version,$m_version,'<=')) {
+if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
