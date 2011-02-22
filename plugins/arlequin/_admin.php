@@ -15,23 +15,15 @@
 \***************************************************************/
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+require dirname(__FILE__).'/_widgets.php';
+
 $_menu['Plugins']->addItem(__('Theme switcher'),'plugin.php?p=arlequin',
 	'index.php?pf=arlequin/icon.png',
 	preg_match('/plugin.php\?p=arlequin(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('contentadmin',$core->blog->id));
 
-$core->addBehavior('initWidgets',array('adminArlequin','widget'));
-
 class adminArlequin
 {
-	public static function widget(&$w)
-	{
-		$w->create('arlequin',__('Theme switcher'),
-			array('publicArlequinInterface','widget'));
-		$w->arlequin->setting('title',__('Title:'),
-			__('Choose a theme'));
-	}
-	
 	public static function getDefaults()
 	{
 		return array(
