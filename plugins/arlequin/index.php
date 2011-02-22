@@ -25,20 +25,20 @@ try
 	/* Initialisation
 	--------------------------------------------------- */
 	
-	$core->blog->settings->setnamespace('multitheme');
-	list($mt_cfg,$mt_exclude) =
-		adminArlequin::loadSettings($core->blog->settings,$initialized);
+	$s = &$core->blog->settings->arlequin;
+	
+	list($config,$exclude) = adminArlequin::loadSettings($s,$initialized);
 	
 	/* Enregistrement des données depuis les formulaires
 	--------------------------------------------------- */
 	
 	if (isset($_POST['mt_action_config']))
 	{
-		$mt_cfg['e_html'] = $_POST['e_html'];
-		$mt_cfg['a_html'] = $_POST['a_html'];
-		$mt_cfg['s_html'] = $_POST['s_html'];
-		$mt_cfg['homeonly'] = (bool) $_POST['mt_homeonly'];
-		$mt_exclude = $_POST['mt_exclude'];
+		$config['e_html'] = $_POST['e_html'];
+		$config['a_html'] = $_POST['a_html'];
+		$config['s_html'] = $_POST['s_html'];
+		$config['homeonly'] = (bool) $_POST['mt_homeonly'];
+		$exclude = $_POST['mt_exclude'];
 	}
 	
 	/* Traitement des requêtes
@@ -46,15 +46,15 @@ try
 	
 	if (isset($_POST['mt_action_config']))
 	{
-		$core->blog->settings->put('mt_cfg',serialize($mt_cfg));
-		$core->blog->settings->put('mt_exclude',$mt_exclude);
+		$s->put('config',serialize($config));
+		$s->put('exclude',$exclude);
 		$messages[] = __('Settings have been successfully updated.');
 		$core->blog->triggerBlog();
 	}
 	if (isset($_POST['mt_action_restore']))
 	{
-		$core->blog->settings->drop('mt_cfg');
-		$core->blog->settings->drop('mt_exclude');
+		$s->drop('config');
+		$s->drop('exclude');
 		$core->blog->triggerBlog();
 		http::redirect($p_url);
 	}

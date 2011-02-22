@@ -64,13 +64,13 @@ class publicArlequinEngine
 	
 	public static function switchTheme(&$blog,$theme)
 	{
-		if ($blog->settings->mt_exclude) {
-			if (in_array($theme,explode('/',$blog->settings->mt_exclude))) {
+		if ($blog->settings->arlequin->exclude) {
+			if (in_array($theme,explode('/',$blog->settings->arlequin->exclude))) {
 				return;
 			}
 		}
 		
-		$GLOBALS['__theme'] = $blog->settings->theme = $theme;
+		$GLOBALS['__theme'] = $blog->settings->system->theme = $theme;
 	}
 }
 
@@ -90,7 +90,7 @@ class publicArlequinInterface
 	{
 		global $core;
 		
-		$cfg = @unserialize($core->blog->settings->get('mt_cfg'));
+		$cfg = @unserialize($core->blog->settings->arlequin->config);
 		
 		if ($cfg === false ||
 			($cfg['homeonly'] && $core->url->type != 'default') ||
@@ -162,11 +162,8 @@ class publicArlequinInterface
 	{
 		global $core;
 		
-		$mt_exclude = $core->blog->settings->mt_exclude;
-		$exclude = array();
-		if (!empty($mt_exclude)) {
-			$exclude = array_flip(explode('/',$core->blog->settings->mt_exclude));
-		}
+		$exclude = $core->blog->settings->arlequin->exclude;
+		$exclude = $exclude ? array_flip(explode('/',$exclude)) : array();
 		
 		$names = array_diff_key($core->themes->getModules(),$exclude);
 		

@@ -38,26 +38,25 @@ class adminArlequin
 		global $core;
 		
 		$initialized = false;
-		$mt_cfg = @unserialize($settings->get('mt_cfg'));
-		$mt_exclude = $settings->get('mt_exclude');
+		$config = @unserialize($settings->config);
+		$exclude = $settings->get('exclude');
 	
 		// Paramètres corrompus ou inexistants
-		if ($mt_cfg === false ||
-			$mt_exclude === null ||
-			!(isset($mt_cfg['e_html']) &&
-			isset($mt_cfg['a_html']) &&
-			isset($mt_cfg['s_html']) &&
-			isset($mt_cfg['homeonly'])))
+		if ($config === false ||
+			$exclude === null ||
+			!(isset($config['e_html']) &&
+			isset($config['a_html']) &&
+			isset($config['s_html']) &&
+			isset($config['homeonly'])))
 		{
-			$mt_cfg = adminArlequin::getDefaults();
-			$settings->setnamespace('multitheme');
-			$settings->put('mt_cfg',serialize($mt_cfg),'string','Arlequin configuration');
-			$settings->put('mt_exclude','customCSS','string','Excluded themes');
+			$config = adminArlequin::getDefaults();
+			$settings->put('config',serialize($config),'string','Arlequin configuration');
+			$settings->put('exclude','customCSS','string','Excluded themes');
 			$initialized = true;
 			$core->blog->triggerBlog();
 		}
 		
-		return array($mt_cfg,$mt_exclude);
+		return array($config,$exclude);
 	}
 }
 ?>

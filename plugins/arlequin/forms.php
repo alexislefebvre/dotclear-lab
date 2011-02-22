@@ -22,18 +22,18 @@ $mt_forms['admin_cfg'] = '
 <fieldset class="two-cols"><legend>'.__('Switcher display format').'</legend>
 <div id="models"></div>
 <p class="col"><label for="s_html">'.__('Switcher HTML code:').'</label> '.
-	form::textArea('s_html',50,10,html::escapeHTML($mt_cfg['s_html'])).'</p>
+	form::textArea('s_html',50,10,html::escapeHTML($config['s_html'])).'</p>
 <div class="col">
 <p><label>'.__('Item HTML code:').' '.
-	form::field('e_html',35,'',html::escapeHTML($mt_cfg['e_html'])).'</label></p>
+	form::field('e_html',35,'',html::escapeHTML($config['e_html'])).'</label></p>
 <p><label>'.__('Active item HTML code:').' '.
-	form::field('a_html',35,'',html::escapeHTML($mt_cfg['a_html'])).'</label></p>
+	form::field('a_html',35,'',html::escapeHTML($config['a_html'])).'</label></p>
 </div><br class="clear" />
 <p><label class="classic">'.
-	form::checkbox(array('mt_homeonly'),1,$mt_cfg['homeonly']).
+	form::checkbox(array('mt_homeonly'),1,$config['homeonly']).
 	__('Home page only').'</label></p>
 <p><label>'.__('Excluded themes (separated by slashs \'/\'):').
-	form::field(array('mt_exclude'),40,'',html::escapeHTML($mt_exclude)).'</label></p>
+	form::field(array('mt_exclude'),40,'',html::escapeHTML($exclude)).'</label></p>
 </fieldset>
 <p><input type="submit" name="mt_action_config" value="'.__('Update').'" />
 	<input type="submit" name="mt_action_restore" value="'.__('Restore defaults').'" />'.
