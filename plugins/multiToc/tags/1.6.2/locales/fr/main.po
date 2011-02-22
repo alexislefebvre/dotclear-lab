@@ -1,0 +1,218 @@
+# Language: Français
+# Module: multiToc - 1.6.2
+# Date: 2011-02-22 14:47:21
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: multiToc 1.6.2\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-02-22T14:47:21+00:00\n"
+"Last-Translator: Tomtom\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:19
+#: index.php:42
+#: index.php:45
+msgid "Tables of content"
+msgstr "Tables des matières"
+
+#: _prepend.php:45
+#: _public.php:343
+#: _widgets.php:21
+#: _widgets.php:22
+msgid "Table of content"
+msgstr "Table des matières"
+
+#: _prepend.php:59
+msgid "Add post TOC"
+msgstr "Ajouter une table des matières à un billet"
+
+#: _public.php:346
+#: _widgets.php:44
+msgid "By category"
+msgstr "Par catégorie"
+
+#: _public.php:348
+#: _widgets.php:48
+msgid "By tag"
+msgstr "Par tag"
+
+#: _public.php:350
+#: _widgets.php:52
+msgid "By alpha order"
+msgstr "Par ordre alphabétique"
+
+#: default-templates/multitoc.html:67
+msgid "Table of content by category"
+msgstr "Table des matières par catégorie"
+
+#: default-templates/multitoc.html:70
+msgid "Table of content by alpha list"
+msgstr "Table des matières par ordre alphabétique"
+
+#: default-templates/multitoc.html:73
+msgid "Table of content by tag"
+msgstr "Table des matières par tag"
+
+#: default-templates/multitoc.html:75
+msgid "Click on each group name to display or hide entries list"
+msgstr "Cliquez sur le nom de chacun des groupes pour afficher ou cacher la liste des billets"
+
+#: inc/class.multi.toc.php:166
+msgid "Title up"
+msgstr "Titres croissants"
+
+#: inc/class.multi.toc.php:167
+msgid "Title down"
+msgstr "Titres décroissants"
+
+#: inc/class.multi.toc.php:168
+msgid "Date up"
+msgstr "Dates croissantes"
+
+#: inc/class.multi.toc.php:169
+msgid "Date down"
+msgstr "Dates décroissantes"
+
+#: inc/class.multi.toc.php:170
+msgid "Author up"
+msgstr "Auteurs croissants"
+
+#: inc/class.multi.toc.php:171
+msgid "Author down"
+msgstr "Auteurs décroissants"
+
+#: inc/class.multi.toc.php:172
+msgid "Comments number up"
+msgstr "Nombre de commentaires croissant"
+
+#: inc/class.multi.toc.php:173
+msgid "Comments number down"
+msgstr "Nombre de commentaires décroissant"
+
+#: inc/class.multi.toc.php:174
+msgid "Trackbacks number up"
+msgstr "Nombre de rétroliens croissant"
+
+#: inc/class.multi.toc.php:175
+msgid "Trackbacks number down"
+msgstr "Nombre de rétroliens décroissant"
+
+#: inc/class.multi.toc.php:181
+msgid "TOC by tags"
+msgstr "Table des matières par tag"
+
+#: inc/class.multi.toc.php:182
+msgid "Enable TOC by tags"
+msgstr "Activer la table des matières par tag"
+
+#: inc/class.multi.toc.php:183
+msgid "Order of tags"
+msgstr "Ordre des tags"
+
+#: inc/class.multi.toc.php:184
+#: inc/class.multi.toc.php:194
+#: inc/class.multi.toc.php:209
+msgid "Order of entries"
+msgstr "Ordre des billets"
+
+#: inc/class.multi.toc.php:186
+msgid "Name up"
+msgstr "Noms croissants"
+
+#: inc/class.multi.toc.php:187
+msgid "Name down"
+msgstr "Noms décroissants"
+
+#: inc/class.multi.toc.php:191
+msgid "TOC by alpha list"
+msgstr "Tables des matières par lettre"
+
+#: inc/class.multi.toc.php:192
+msgid "Enable TOC by alpha list"
+msgstr "Activer la table des matières par lettre"
+
+#: inc/class.multi.toc.php:193
+msgid "Order of alpha list"
+msgstr "Ordre de la liste des lettres"
+
+#: inc/class.multi.toc.php:196
+msgid "Alpha up"
+msgstr "Lettres croissantes"
+
+#: inc/class.multi.toc.php:197
+msgid "Alpha down"
+msgstr "Lettres décroissantes"
+
+#: inc/class.multi.toc.php:201
+msgid "Post TOC"
+msgstr "Table des matières pour les billets"
+
+#: inc/class.multi.toc.php:202
+msgid "Enable post TOC"
+msgstr "Activer la table des matières pour les billets"
+
+#: inc/class.multi.toc.php:203
+msgid "Auto numbering"
+msgstr "Numérotation automatique"
+
+#: inc/class.multi.toc.php:206
+msgid "TOC by category"
+msgstr "Tables des matières par catégorie"
+
+#: inc/class.multi.toc.php:207
+msgid "Enable TOC by category"
+msgstr "Activer la table des matières par catégorie"
+
+#: inc/class.multi.toc.php:208
+msgid "Order of categories"
+msgstr "Ordre des catégories"
+
+#: inc/class.multi.toc.php:211
+msgid "No option"
+msgstr "Aucune option"
+
+#: inc/class.multi.toc.php:226
+msgid "Display entry number of each group"
+msgstr "Afficher le nombre de billets pour chaque groupe"
+
+#: inc/class.multi.toc.php:230
+msgid "Display date"
+msgstr "Afficher la date"
+
+#: inc/class.multi.toc.php:234
+msgid "Display author"
+msgstr "Afficher l'auteur"
+
+#: inc/class.multi.toc.php:238
+msgid "Display category"
+msgstr "Afficher la catégorie"
+
+#: inc/class.multi.toc.php:242
+msgid "Display comment number"
+msgstr "Afficher le nombre de commentaires"
+
+#: inc/class.multi.toc.php:246
+msgid "Display trackback number"
+msgstr "Afficher le nombre de rétroliens"
+
+#: inc/class.multi.toc.php:250
+msgid "Display tags"
+msgstr "Afficher les tags"
+
+#: inc/class.multi.toc.php:262
+msgid "Format date"
+msgstr "Format de la date"
+
+#: inc/class.multi.toc.php:278
+msgid "Those options require stacker plugin"
+msgstr "Ces options requièrent le plugin stacker"
+
+#: index.php:51
+msgid "Configuration has been saved successfully"
+msgstr "La configuration a été enregistrée avec succès"
+
