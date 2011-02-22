@@ -2,8 +2,8 @@
 /***************************************************************\
  *  This is 'Arlequin', a plugin for Dotclear 2                *
  *                                                             *
- *  Copyright (c) 2007                                         *
- *  Oleksandr Syenchuk and contributors.                       *
+ *  Copyright (c) 2007,2011                                    *
+ *  Alex Pirine and contributors.                              *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
  *  General Public License (version 2) terms and  conditions.  *
@@ -47,5 +47,4 @@ $mt_models[] = array(
 	'e_html'=>'<option value="%3$s">%4$s</option>',
 	'a_html'=>'<option value="%3$s" selected="selected" disabled="disabled">%4$s ('.__('active theme').')</option>'
 );
-
 ?>
