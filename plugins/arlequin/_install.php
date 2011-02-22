@@ -23,10 +23,8 @@ if (version_compare($core->getVersion('arlequin'),$version,'>=')) {
 
 $core->blog->settings->addNamespace('arlequin');
 $s = &$core->blog->settings->arlequin;
-if ($s->config === null) {
-	$s->put('config','','string','Arlequin configuration');
-	$s->put('exclude','','string','Excluded themes');
-}
+$s->put('config','','string','Arlequin configuration',false);
+$s->put('exclude','','string','Excluded themes',false);
 
 $core->setVersion('arlequin',$version);
 return true;
