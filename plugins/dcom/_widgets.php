@@ -16,41 +16,33 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-class commonDcom
+$core->addBehavior('initWidgets',array('widgetsDcom','initWidget'));
+
+class widgetsDcom
 {
-	public static function adjustDefaults(&$p)
+	public static function initWidget(&$w)
 	{
 		global $core;
 		
-		if (!is_array($p)) {
-			$r = array();
-		} else {
-			$r = $p;
-		}
+		commonDcom::adjustDefaults($p);
 		
-		$p = array();
-		$p['homeonly'] = empty($r['homeonly'])
-			? false
-			: true;
-		$p['c_limit'] = isset($r['c_limit'])
-			? abs((integer) $r['c_limit'])
-			: 10;
-		$p['t_limit'] = isset($r['t_limit'])
-			? abs((integer) $r['t_limit'])
-			: 20;
-		$p['co_limit'] = !empty($r['co_limit'])
-			? abs((integer) $r['co_limit'])
-			: 80;
-		$p['title'] = isset($r['title'])
-			? (string) $r['title']
-			: __('Last comments');
-		$p['stringformat'] = !empty($r['stringformat'])
-			? (string) $r['stringformat']
-			: '<a href="%5$s" title="%4$s">%2$s - %3$s<br/>%1$s</a>';
-		$p['dateformat'] = !empty($r['dateformat'])
-			? (string) $r['dateformat']
-			: $core->blog->settings->system->date_format.','.
-			  $core->blog->settings->system->time_format;
+		$w->create('lastcomments',__('Last comments'),
+			array('publicDcom','showWidget'));
+		$w->lastcomments->setting('title',
+			__('Title:'),$p['title']);
+		$w->lastcomments->setting('c_limit',
+			__('Comments limit:'),$p['c_limit']);
+		$w->lastcomments->setting('t_limit',
+			__('Title lenght limit:'),$p['t_limit']);
+		$w->lastcomments->setting('co_limit',
+			__('Comment lenght limit:'),$p['co_limit']);
+		$w->lastcomments->setting('dateformat',
+			__('Date format (leave empty to use default blog format):'),$p['dateformat']);
+		$w->lastcomments->setting('stringformat',
+			__('String format (%1$s = date; %2$s = title; %3$s = author; %4$s = content of the comment; %5$s = comment URL):'),
+			$p['stringformat']);
+		$w->lastcomments->setting('homeonly',
+			__('Home page only'),$p['homeonly'],'check');
 	}
 }
 ?>
