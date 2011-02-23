@@ -19,7 +19,7 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */		'Arlequin',
 	/* Description*/	'Allows visitors choose a theme',
-	/* Author */		'Oleksandr Syenchuk',
+	/* Author */		'Alex Pirine',
 	/* Version */		'2011.02',
 	/* Permissions */	'contentadmin'
 );
