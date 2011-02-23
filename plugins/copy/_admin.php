@@ -2,8 +2,8 @@
 /***************************************************************\
  *  This is 'Copy', a plugin for Dotclear 2                    *
  *                                                             *
- *  Copyright (c) 2010                                         *
- *  Alexandre Syenchuk and contributors.                       *
+ *  Copyright (c) 2010,2011                                    *
+ *  Alex Pirine and contributors.                              *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
  *  General Public License (version 2) terms and  conditions.  *
@@ -13,7 +13,8 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
-if (!defined('DC_RC_PATH')) { return; }
+
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 if (basename($_SERVER['PHP_SELF']) != 'post.php' || empty($_REQUEST['id'])) {
 	return;
@@ -56,7 +57,7 @@ class copyBehaviors
 		$cur->post_tz = $rs->post_tz;
 		$cur->post_type = $rs->post_type;
 		$cur->post_meta = $rs->post_meta;
-		$cur->blog_id = $blog_id;
+		$cur->blog_id = $rs->blog_id;
 	}
 	
 	public static function adminAfterPostCreate($cur,$return_id)
