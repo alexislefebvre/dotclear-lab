@@ -19,7 +19,7 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */		"Copy",
 	/* Description*/	"A button to copy posts",
-	/* Author */		"Alexandre Syenchuk",
+	/* Author */		"Alex Pirine",
 	/* Version */		"2011.02",
 	/* Permissions */	"contentadmin"
 );
