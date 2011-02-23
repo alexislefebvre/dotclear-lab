@@ -1,9 +1,9 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'Email Optionnel', a plugin for DotClear.          *
+ *  This is 'Email Optionnel', a plugin for Dotclear.          *
  *                                                             *
- *  Copyright (c) 2007,2008                                    *
- *  Oleksandr Syenchuk                                         *
+ *  Copyright (c) 2007,2008,2011                               *
+ *  Alex Pirine and contributors.                              *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
  *  General Public License (version 2) terms and  conditions.  *
@@ -18,42 +18,46 @@ class emailOptionnelBehaviors
 {
 	public static function adminBlogPreferencesForm(&$core)
 	{
-		$emailOptionnel = $core->blog->settings->get('emailoptionnel') ? true : false;
+		$core->blog->settings->addNamespace('emailoptionnel');
+		$emailOptionnel = $core->blog->settings->emailoptionnel->enabled ? true : false;
 		echo "<fieldset><legend>".__('Optional e-mail address')."</legend>\n".
 			"<p><label class=\"classic\">".form::checkbox('emailOptionnel','1',$emailOptionnel)."\n".
 			__('Make e-mail address optionnal in comments')."</label></p>\n".
 			"</fieldset>\n";
 	}
 	
-	public static function adminBeforeBlogSettingsUpdate(&$blog_settings)
+	public static function adminBeforeBlogSettingsUpdate($blog_settings)
 	{
 		$emailOptionnel = empty($_POST['emailOptionnel']) ? false : true;
 		
-		$blog_settings->setNamespace('emailoptionnel');
-		$blog_settings->put(
-			'emailoptionnel',
+		$blog_settings->addNamespace('emailoptionnel');
+		$blog_settings->emailoptionnel->put(
+			'enabled',
 			$emailOptionnel,
 			'boolean',
 			'Make e-mail address optionnal in comments');
-		$blog_settings->setNamespace('system');
 	}
 	
-	public static function publicPrepend(&$core)
+	public static function publicPrepend($core)
 	{
+		$core->blog->settings->addNamespace('emailoptionnel');
+		
 		if (!isset($_POST['c_content'])
 		|| !empty($_POST['preview'])
 		|| !empty($_POST['c_mail'])
-		|| !$core->blog->settings->get('emailoptionnel')) {
+		|| !$core->blog->settings->emailoptionnel->enabled) {
 			return;
 		}
 		$_POST['c_mail'] = 'invalid@invalid';
 	}
 
-	public static function publicBeforeCommentCreate(&$cur)
+	public static function publicBeforeCommentCreate($cur)
 	{
 		global $core;
 		
-		$emailOptionnel = $core->blog->settings->get('emailoptionnel') ? true : false;
+		$core->blog->settings->addNamespace('emailoptionnel');
+		
+		$emailOptionnel = $core->blog->settings->emailoptionnel->enabled ? true : false;
 		
 		if ($emailOptionnel && $cur->comment_email == 'invalid@invalid')
 		{
