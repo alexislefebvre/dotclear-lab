@@ -30,12 +30,6 @@ function empreinteCheckbox() {
 			'</p>'
 		);
 	
-	$('#no_empreinte')
-		.css('width',$('#c_remember').css('width'))
-		.css('margin',$('#c_remember').css('margin'))
-		.css('margin-left',$('#c_remember').css('margin-left'))
-		.css('margin-right',$('#c_remember').css('margin-right'));
-	
 	var cookie = readCookie($.cookie('comment_no_empreinte'));
 	
 	if (cookie != false) {
