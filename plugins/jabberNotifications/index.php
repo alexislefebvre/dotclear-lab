@@ -2,17 +2,18 @@
 /***************************************************************\
  *  This is Jabber Notifications, a plugin for Dotclear 2      *
  *                                                             *
- *  Copyright (c) 2007,2008                                    *
- *  Oleksandr Syenchuk, Olivier Tétard and contributors.       *
+ *  Copyright (c) 2007,2008,2011                               *
+ *  Alex Pirine, Olivier Tétard and contributors.              *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
  *  General Public License (version 2) terms and  conditions.  *
  *                                                             *
  *  You should have received a copy of the GNU General Public  *
- *  License along Jabber Notifications (see COPYING.txt);      *
+ *  License along with Jabber Notifications (see COPYING.txt); *
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 dcPage::checkSuper();
@@ -24,32 +25,32 @@ try
 	
 	/* Initialisation
 	--------------------------------------------------- */
-
-	$core->blog->settings->setNameSpace('jabbernotifications');
+	
+	$s = &$core->blog->settings->jabbernotifications;
 
 	// Vérification de l'installation
-	if ($core->blog->settings->jn_enab === null || isset($_GET['reset']))
+	if ($s->jn_enab === null || isset($_GET['reset']))
 	{
-		$core->blog->settings->put('jn_serv','','string','Host',true,true);
-		$core->blog->settings->put('jn_port',5222,'integer','Port',true,true);
-		$core->blog->settings->put('jn_con','','string','Secure connection protocol',true,true);
-		$core->blog->settings->put('jn_user','','string','Username used to connect to the jabber server',true,true);
-		$core->blog->settings->put('jn_pass','','string','Password used to connect to the jabber server',true,true);
-		$core->blog->settings->put('jn_enab',false,'boolean','Enable',true,true);
-		$core->blog->settings->put('jn_gateway','','string','HTTP Gateway',true,true);
+		$s->put('jn_serv','','string','Host',true,true);
+		$s->put('jn_port',5222,'integer','Port',true,true);
+		$s->put('jn_con','','string','Secure connection protocol',true,true);
+		$s->put('jn_user','','string','Username used to connect to the jabber server',true,true);
+		$s->put('jn_pass','','string','Password used to connect to the jabber server',true,true);
+		$s->put('jn_enab',false,'boolean','Enable',true,true);
+		$s->put('jn_gateway','','string','HTTP Gateway',true,true);
 		http::redirect($p_url.'&init=1');
 	}
 
 	// Récupération des paramètres
 	else
 	{
-		$jn_enab = $core->blog->settings->jn_enab;
-		$jn_user = $core->blog->settings->jn_user;
-		$jn_pass = @base64_decode($core->blog->settings->jn_pass);
-		$jn_serv = $core->blog->settings->jn_serv;
-		$jn_port = $core->blog->settings->jn_port;
-		$jn_con = $core->blog->settings->jn_con;
-		$jn_gateway = $core->blog->settings->jn_gateway;
+		$jn_enab = $s->jn_enab;
+		$jn_user = $s->jn_user;
+		$jn_pass = @base64_decode($s->jn_pass);
+		$jn_serv = $s->jn_serv;
+		$jn_port = $s->jn_port;
+		$jn_con = $s->jn_con;
+		$jn_gateway = $s->jn_gateway;
 		$jn_dest = '';
 	}
 
@@ -80,7 +81,7 @@ try
 	
 	if (isset($_POST['jn_action_config'])) {
 		if (!$jn_enab) {
-			$core->blog->settings->put('jn_enab',false,null,null,true,true);
+			$s->put('jn_enab',false,null,null,true,true);
 			$messages[] = __('Jabber notifications have been disabled.');
 		}
 		else {
@@ -101,13 +102,13 @@ try
 			}
 			
 			if (empty($errors)) {
-				$core->blog->settings->put('jn_user',$jn_user,null,null,true,true);
-				$core->blog->settings->put('jn_pass',base64_encode($jn_pass),null,null,true,true);
-				$core->blog->settings->put('jn_serv',$jn_serv,null,null,true,true);
-				$core->blog->settings->put('jn_port',$jn_port,null,null,true,true);
-				$core->blog->settings->put('jn_con',$jn_con,null,null,true,true);
-				$core->blog->settings->put('jn_enab',true,null,null,true,true);
-				$core->blog->settings->put('jn_gateway',$jn_gateway,'string','HTTP Gateway',true);
+				$s->put('jn_user',$jn_user,null,null,true,true);
+				$s->put('jn_pass',base64_encode($jn_pass),null,null,true,true);
+				$s->put('jn_serv',$jn_serv,null,null,true,true);
+				$s->put('jn_port',$jn_port,null,null,true,true);
+				$s->put('jn_con',$jn_con,null,null,true,true);
+				$s->put('jn_enab',true,null,null,true,true);
+				$s->put('jn_gateway',$jn_gateway,'string','HTTP Gateway',true);
 				$messages[] = __('Settings have been successfully updated.');
 			}
 			else {

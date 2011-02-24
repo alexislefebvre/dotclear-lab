@@ -2,17 +2,18 @@
 /***************************************************************\
  *  This is Jabber Notifications, a plugin for Dotclear 2      *
  *                                                             *
- *  Copyright (c) 2007,2008                                    *
- *  Oleksandr Syenchuk, Olivier Tétard and contributors.       *
+ *  Copyright (c) 2007,2008,2011                               *
+ *  Alex Pirine, Olivier Tétard and contributors.              *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
  *  General Public License (version 2) terms and  conditions.  *
  *                                                             *
  *  You should have received a copy of the GNU General Public  *
- *  License along Jabber Notifications (see COPYING.txt);      *
+ *  License along with Jabber Notifications (see COPYING.txt); *
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicAfterCommentCreate', array('publicJabberNotifications', 'sendNotifications'));
@@ -25,7 +26,7 @@ class publicJabberNotifications
 		global $core,$_ctx;
 		
 		# Spam or Jabber notifications not enabled
-		if ($cur->comment_status == -2 || !$core->blog->settings->jn_enab) {
+		if ($cur->comment_status == -2 || !$core->blog->settings->jabbernotifications->jn_enab) {
 			return;
 		}
 		
@@ -63,14 +64,16 @@ class publicJabberNotifications
 			return;
 		}
 		
+		$s = &$core->blog->settings->jabbernotifications;
+		
 		$settings = array(
-			'enab'=>$core->blog->settings->jn_enab,
-			'serv'=>$core->blog->settings->jn_serv,
-			'user'=>$core->blog->settings->jn_user,
-			'pass'=>@base64_decode($core->blog->settings->jn_pass),
-			'port'=>$core->blog->settings->jn_port,
-			'con'=>$core->blog->settings->jn_con,
-			'gateway'=>$core->blog->settings->jn_gateway
+			'enab'=>$s->jn_enab,
+			'serv'=>$s->jn_serv,
+			'user'=>$s->jn_user,
+			'pass'=>@base64_decode($s->jn_pass),
+			'port'=>$s->jn_port,
+			'con'=>$s->jn_con,
+			'gateway'=>$s->jn_gateway
 		);
 		$j = new jabberNotifier($settings['serv'],$settings['port'],$settings['user'],$settings['pass'],$settings['con']);
 		

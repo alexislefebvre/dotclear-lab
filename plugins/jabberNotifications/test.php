@@ -1,5 +1,5 @@
 <?php
-# Edit, than run this file from a shell !
+# Edit, then run this file from a shell:
 # $ php test.php
 
 $t1 = microtime(true);
