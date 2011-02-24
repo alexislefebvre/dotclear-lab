@@ -2,8 +2,8 @@
 /***************************************************************\
  *  This is 'HTTP Redirect', a plugin for Dotclear 2           *
  *                                                             *
- *  Copyright (c) 2007,2008                                    *
- *  Oleksandr Syenchuk and contributors.                       *
+ *  Copyright (c) 2007,2008,2011                               *
+ *  Alex Pirine and contributors.                              *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
  *  General Public License (version 2) terms and  conditions.  *
@@ -13,6 +13,7 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('adminPostHeaders',array('adminHttpRedirect','js'));
@@ -26,12 +27,12 @@ $core->addBehavior('adminPostsActions',array('adminHttpRedirect','adminPostsActi
 
 class adminHttpRedirect
 {
-	public static function adminPostsActionsCombo(&$args)
+	public static function adminPostsActionsCombo($args)
 	{
-		$args[0][__('Redirect by HTTP')] = 'httpredirect';
+		$args[0][__('Status')][__('Redirect by HTTP')] = 'httpredirect';
 	}
 	
-	public static function adminPostsActionsContent(&$core,$action,$hidden_fields)
+	public static function adminPostsActionsContent($core,$action,$hidden_fields)
 	{
 		global $__httpRedirectPosts;
 
@@ -83,7 +84,7 @@ class adminHttpRedirect
 				'<td>'.html::escapeHTML($v['post_title']).'</td>'.
 				'<td class="nowrap">'.
 				form::field(array('redirect_url['.$k.']'),40,255,html::escapeHTML($v['redirect_url']),'maximal').'</td>'.
-				'<td class="minimal">'.form::checkbox(array('posts_hide[]'),$k,$hided,'','',!$accessible).'</td>'.
+				'<td class="minimal" style="vertical-align:middle;">'.form::checkbox(array('posts_hide[]'),$k,$hided,'','',!$accessible).'</td>'.
 				'<td class="minimal status">'.$img_status.'</td></tr>';
 		}
 		
@@ -95,7 +96,7 @@ class adminHttpRedirect
 		'</form>';
 	}
 	
-	public static function adminPostsActions(&$core,$posts,$action,$redir)
+	public static function adminPostsActions($core,$posts,$action,$redir)
 	{
 		if (	empty($_POST['redirect_url'])
 		|| !is_array($_POST['redirect_url'])
@@ -144,7 +145,7 @@ class adminHttpRedirect
 		}
 	}
 	
-	public static function getPostsInfo(&$core,$entries,$table)
+	public static function getPostsInfo($core,$entries,$table)
 	{
 		$blog_id = $core->con->escape($core->blog->id);
 		$entries = implode(',',$entries);
@@ -181,7 +182,7 @@ class adminHttpRedirect
 		return dcPage::jsLoad('index.php?pf=httpredirect/js/post.js');
 	}
 
-	public static function form(&$post)
+	public static function form($post)
 	{
 		global $core;
 		
@@ -215,7 +216,7 @@ class adminHttpRedirect
 		'<p class="httpredirect form-note">'.__('Leave empty to cancel redirection.').'</p>';
 	}
 
-	public static function save(&$cur)
+	public static function save($cur)
 	{
 		global $core;
 		
