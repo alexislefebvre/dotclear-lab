@@ -27,7 +27,7 @@ class publicEmpreinte
 		global $core;
 		
 		if (!empty($_POST['no_empreinte'])
-		&& $core->blog->settings->empreinte_allow_disable) {
+		&& $core->blog->settings->empreinte->allow_disable) {
 			return;
 		}
 		
@@ -73,12 +73,12 @@ class publicEmpreinte
 	{	
 		if ($id == 'include' && isset($attr['src']) && $attr['src'] == '_head.html') {
 			return
-			'<?php if ($core->blog->settings->empreinte_allow_disable): ?>'.
+			'<?php if ($core->blog->settings->empreinte->allow_disable): ?>'.
 			'<script type="text/javascript" src="<?php echo $core->blog->getQmarkURL();?>pf=empreinte/js/post.js"></script>'."\n".
 			'<script type="text/javascript">'."\n".
 			'//<![CDATA['."\n".
 			"var post_no_empreinte_str ='<?php echo html::escapeJS(__('Do not save informations about my browser')); ?>';\n".
-			"var post_empreinte_checkbox_style_str = '<?php if (\$core->blog->settings->empreinte_checkbox_style) { echo html::escapeJS(' style=\"'.\$core->blog->settings->empreinte_checkbox_style.'\"'); } ?>';\n".
+			"var post_empreinte_checkbox_style_str = '<?php if (\$core->blog->settings->empreinte->checkbox_style) { echo html::escapeJS(' style=\"'.\$core->blog->settings->empreinte->checkbox_style.'\"'); } ?>';\n".
 			'//]]>'."\n".
 			'</script>'."\n".
 			'<?php endif; ?>';

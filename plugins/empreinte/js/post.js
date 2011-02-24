@@ -25,10 +25,16 @@ function empreinteCheckbox() {
 	$('#comment-form fieldset:has(input[type=submit][name=preview])').
 		prepend(
 			'<p><input type="checkbox" id="no_empreinte" name="no_empreinte"' +
-			post_empreinte_checkbox_style_str + ' />' +
+			post_empreinte_checkbox_style_str + ' /> ' +
 			'<label for="no_empreinte">' + post_no_empreinte_str + '</label>' +
 			'</p>'
 		);
+	
+	$('#no_empreinte')
+		.css('width',$('#c_remember').css('width'))
+		.css('margin',$('#c_remember').css('margin'))
+		.css('margin-left',$('#c_remember').css('margin-left'))
+		.css('margin-right',$('#c_remember').css('margin-right'));
 	
 	var cookie = readCookie($.cookie('comment_no_empreinte'));
 	

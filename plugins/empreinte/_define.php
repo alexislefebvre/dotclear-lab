@@ -20,7 +20,7 @@ $this->registerModule(
 	/* Name */		'Empreinte',
 	/* Description*/	'Save browser information in comments',
 	/* Author */		'Alex Pirine',
-	/* Version */		'2008.09',
+	/* Version */		'2011.02',
 	/* Permissions */	'admin'
 );
 ?>

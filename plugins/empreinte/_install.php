@@ -58,6 +58,5 @@ if (!files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
 	throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
 }
 
-unset($label,$i_version,$m_version,$s,$si);
 return true;
 ?>

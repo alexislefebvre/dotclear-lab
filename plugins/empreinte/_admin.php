@@ -24,6 +24,8 @@ $_menu['Plugins']->addItem(
 );
 $core->addBehavior('pluginsAfterDelete',array('adminEmpreinte','pluginsAfterDelete'));
 
+$core->blog->settings->addNamespace('empreinte');
+
 class adminEmpreinte
 {
 	public static function pluginsAfterDelete($plugin)

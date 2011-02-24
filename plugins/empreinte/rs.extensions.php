@@ -22,7 +22,7 @@ class rsExtCommentEmpreinte
 		
 		$res = rsExtComment::getAuthorLink($rs);
 		
-		if (!( $mask = $core->blog->settings->empreinte_authorlink_mask
+		if (!( $mask = $core->blog->settings->empreinte->authorlink_mask
 		and isset(publicEmpreinte::$c_info[$rs->comment_id]['browser'])
 		and isset(publicEmpreinte::$c_info[$rs->comment_id]['system']) ))
 		{

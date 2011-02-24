@@ -26,4 +26,6 @@ $core->tpl->addValue('CommentSystem',array('tplEmpreinte','CommentSystem'));
 $core->tpl->addValue('CommentBrowser',array('tplEmpreinte','CommentBrowser'));
 $core->tpl->addValue('CommentSystemImg',array('tplEmpreinte','CommentSystemImg'));
 $core->tpl->addValue('CommentBrowserImg',array('tplEmpreinte','CommentBrowserImg'));
+
+$core->blog->settings->addNamespace('empreinte');
 ?>

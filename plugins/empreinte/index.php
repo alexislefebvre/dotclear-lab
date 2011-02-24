@@ -24,9 +24,8 @@ try
 	/* Initialisation
 	--------------------------------------------------- */
 
-	$core->blog->settings->setnamespace('empreinte');
-	$authorlink_mask = $core->blog->settings->empreinte_authorlink_mask;
-	$allow_disable = $core->blog->settings->empreinte_allow_disable;
+	$authorlink_mask = $core->blog->settings->empreinte->authorlink_mask;
+	$allow_disable = $core->blog->settings->empreinte->allow_disable;
 	
 	/* Réception des données depuis les formulaires
 	--------------------------------------------------- */
@@ -34,7 +33,7 @@ try
 	if (isset($_POST['action_config']))
 	{
 		$authorlink_mask = $_POST['authorlink_mask'];
-		$allow_disable = (bool) $_POST['allow_disable'];
+		$allow_disable = !empty($_POST['allow_disable']);
 	}
 	
 	/* Traitement des requêtes
@@ -42,8 +41,8 @@ try
 	
 	if (isset($_POST['action_config']))
 	{
-		$core->blog->settings->put('empreinte_authorlink_mask',$authorlink_mask);
-		$core->blog->settings->put('empreinte_allow_disable',$allow_disable);
+		$core->blog->settings->empreinte->put('authorlink_mask',$authorlink_mask);
+		$core->blog->settings->empreinte->put('allow_disable',$allow_disable);
 		$core->blog->triggerBlog();
 		$messages[] = __('Settings have been successfully updated.');
 	}
