@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 jabberNotifications 2.5.1 module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-24 21:21+0100\n"
-"PO-Revision-Date: 2011-02-24 21:21+0100\n"
+"POT-Creation-Date: 2011-02-24 22:27+0100\n"
+"PO-Revision-Date: 2011-02-24 22:27+0100\n"
 "Last-Translator: Alex Pirine <alex pirine.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,199 +18,199 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _admin.php:19
-#: index.php:174
-#: index.php:195
-#: forms.php:96
+#: _admin.php:14
+#: index.php:169
+#: index.php:190
+#: forms.php:91
 msgid "Jabber notifications"
 msgstr "Notifications Jabber"
 
-#: _admin.php:86
+#: _admin.php:81
 msgid "Jabber ID is empty"
 msgstr "L'identifiant Jabber est vide"
 
-#: _admin.php:89
+#: _admin.php:84
 msgid "Invalid Jabber ID"
 msgstr "Identifiant Jabber invalide"
 
-#: _admin.php:92
+#: _admin.php:87
 msgid "Invalid notification status"
 msgstr "Statut de notification invalide"
 
-#: index.php:85
+#: index.php:80
 msgid "Jabber notifications have been disabled."
 msgstr "Les notifications Jabber ont été désactivées."
 
-#: index.php:89
+#: index.php:84
 msgid "Username was not set"
 msgstr "Nom d'utilisateur non spécifié"
 
-#: index.php:92
+#: index.php:87
 msgid "Password was not set"
 msgstr "Mot de passe non spécifié"
 
-#: index.php:95
+#: index.php:90
 msgid "Server was not set"
 msgstr "Serveur non spécifié"
 
-#: index.php:98
+#: index.php:93
 #, php-format
 msgid "Port was not set (default is %d)"
 msgstr "Numéro de port non spécifié (le port par défaut est %d)"
 
-#: index.php:101
+#: index.php:96
 #, php-format
 msgid "Port must be a number, e.g. %d"
 msgstr "Le numéro de port doit être un nombre, p.ex. %d"
 
-#: index.php:112
+#: index.php:107
 msgid "Settings have been successfully updated."
 msgstr "Paramètres enregistrés avec succès."
 
-#: index.php:142
+#: index.php:137
 msgid "Unknown status:"
 msgstr "Statut inconnu :"
 
-#: index.php:143
+#: index.php:138
 #, php-format
 msgid "Test result (in %.3f s):"
 msgstr "Résultat du test (en %.3f s) :"
 
-#: index.php:153
+#: index.php:148
 msgid "The following fields contain errors :"
 msgstr "Les champs suivants contiennent des erreurs :"
 
-#: index.php:156
+#: index.php:151
 #, php-format
 msgid "Unexpected error at line %d in %s"
 msgstr "Erreur inattendue à la ligne %d du fichier %s"
 
-#: index.php:164
+#: index.php:159
 msgid "Settings have been initialized."
 msgstr "Les paramètres ont été initialisés."
 
-#: index.php:218
+#: index.php:213
 msgid "Configuration"
 msgstr "Configuration"
 
-#: index.php:220
+#: index.php:215
 msgid "Help"
 msgstr "Aide"
 
-#: _public.php:82
+#: _public.php:77
 #, php-format
 msgid "Entry: %s <%s>"
 msgstr "Billet : %s <%s>"
 
-#: _public.php:83
+#: _public.php:78
 #, php-format
 msgid "Comment by: %s <%s>"
 msgstr "Commentaire de : %s <%s>"
 
-#: _public.php:84
+#: _public.php:79
 #, php-format
 msgid "Website: %s"
 msgstr "Site web : %s"
 
-#: _public.php:87
+#: _public.php:82
 #, php-format
 msgid "You received a new trackback on the blog '%s':"
 msgstr "Vous avez reçu un nouveau rétrolien sur le blog \"%s\" :"
 
-#: _public.php:88
+#: _public.php:83
 #, php-format
 msgid "You received a new comment on the blog '%s':"
 msgstr "Vous avez reçu un nouveau commentaire sur le blog \"%s\" :"
 
-#: forms.php:24
+#: forms.php:19
 msgid "never"
 msgstr "jamais"
 
-#: forms.php:25
+#: forms.php:20
 msgid "for my entries"
 msgstr "pour mes billets"
 
-#: forms.php:26
+#: forms.php:21
 msgid "for my default blog"
 msgstr "pour mon blog par défaut"
 
-#: forms.php:27
+#: forms.php:22
 msgid "for all my blogs"
 msgstr "pour tous mes blogs"
 
-#: forms.php:30
+#: forms.php:25
 msgid "all blogs"
 msgstr "pour tous les blogs"
 
-#: forms.php:39
+#: forms.php:34
 msgid "Jabber account setup"
 msgstr "Paramètres du compte Jabber"
 
-#: forms.php:41
+#: forms.php:36
 msgid "Enable Jabber notifications"
 msgstr "Activer les notifications Jabber"
 
-#: forms.php:45
+#: forms.php:40
 msgid "Username:"
 msgstr "Nom d'utilisateur :"
 
-#: forms.php:47
+#: forms.php:42
 msgid "Password:"
 msgstr "Mot de passe :"
 
-#: forms.php:49
+#: forms.php:44
 msgid "Server:"
 msgstr "Serveur :"
 
-#: forms.php:51
+#: forms.php:46
 msgid "Port:"
 msgstr "Port :"
 
-#: forms.php:53
+#: forms.php:48
 msgid "HTTP gateway (leave empty to disable):"
 msgstr "Passerelle HTTP (laissez vide pour désactiver) :"
 
-#: forms.php:56
+#: forms.php:51
 msgid "Secure connection:"
 msgstr "Connexion sécurisée :"
 
-#: forms.php:58
+#: forms.php:53
 msgid "None"
 msgstr "Aucune"
 
-#: forms.php:60
+#: forms.php:55
 msgid "SSL"
 msgstr "SSL"
 
-#: forms.php:62
+#: forms.php:57
 msgid "TLS"
 msgstr "TLS"
 
-#: forms.php:65
+#: forms.php:60
 msgid "save"
 msgstr "enregistrer"
 
-#: forms.php:68
+#: forms.php:63
 msgid "Setup test"
 msgstr "Test des paramètres"
 
-#: forms.php:69
+#: forms.php:64
 msgid "You can test this configuration without saving changes."
 msgstr "Vous pouvez tester cette configuration sans enregistrer les changements."
 
-#: forms.php:70
+#: forms.php:65
 msgid "Destination JabberID:"
 msgstr "Adresse jabber de destination :"
 
-#: forms.php:72
+#: forms.php:67
 msgid "test"
 msgstr "tester"
 
-#: forms.php:97
+#: forms.php:92
 msgid "Notify new comments using Jabber:"
 msgstr "Avertir de nouveaux commentaires par Jabber :"
 
-#: forms.php:99
+#: forms.php:94
 msgid "JabberID that should be notified:"
 msgstr "Identifiant Jabber à avertir :"
 
