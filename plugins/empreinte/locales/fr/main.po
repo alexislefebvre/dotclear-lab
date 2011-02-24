@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-24 18:20+0100\n"
+"POT-Creation-Date: 2011-02-24 18:27+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Alex Pirine <alex pirine.fr>\n"
 "Language-Team: \n"
@@ -14,51 +14,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-KeywordsList: __\n"
-"X-Poedit-Basepath: ./\n"
-"X-Poedit-SearchPath-0: ../..\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: ../../_admin.php:35
+#: _admin.php:35
 msgid "To complete plugin uninstall, please delete the whole cache/cbtpl directory."
 msgstr "Pour finir la désinstallation, veuillez supprimer le dossier cache/cbtpl."
 
-#: ../../index.php:47
+#: index.php:47
 msgid "Settings have been successfully updated."
 msgstr "Les paramètres ont été mis à jour avec succès."
 
-#: ../../index.php:61
+#: index.php:61
 msgid "Empreinte"
 msgstr "Empreinte"
 
-#: ../../index.php:65
+#: index.php:65
 msgid "Empreinte configuration"
 msgstr "Empreinte - configuration"
 
-#: ../../index.php:89
+#: index.php:89
 msgid "Configuration"
 msgstr "Configuration"
 
-#: ../../index.php:92
+#: index.php:92
 msgid "Help"
 msgstr "Aide"
 
-#: ../../_install.php:58
+#: _install.php:58
 msgid "To finish installation, please delete the whole cache/cbtpl directory."
 msgstr "Pour finir l'installation, veuillez supprimer le dossier cache/cbtpl."
 
-#: ../../rs.extensions.php:49
-#: ../../rs.extensions.php:64
+#: rs.extensions.php:49
+#: rs.extensions.php:64
 msgid "Unknown"
 msgstr "Inconnu"
 
-#: ../../forms.php:23
+#: forms.php:23
 msgid "HTML display code:"
 msgstr "Code HTML d'affichage :"
 
-#: ../../forms.php:28
+#: forms.php:28
 msgid "Allow visitors remain anonymous"
 msgstr "Permettre aux visiteurs de rester anonymes"
 
-#: ../../forms.php:29
+#: forms.php:29
 msgid "Update"
 msgstr "Mettre à jour"
 
