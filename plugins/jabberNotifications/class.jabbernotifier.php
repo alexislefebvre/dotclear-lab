@@ -118,7 +118,7 @@ class jabberNotifier
 	{
 		foreach ($this->dest as $dest)
 		{
-			if (!$this->j->message($dest,"chat",NULL,$this->message)) {
+			if (!$this->j->message($dest,"normal",NULL,$this->message)) {
 				$this->status = 'messageFailure';
 			}
 		}
