@@ -2,8 +2,8 @@
 /***************************************************************\
  *  This is 'Empreinte', a plugin for Dotclear 2               *
  *                                                             *
- *  Copyright (c) 2007,2008                                    *
- *  Oleksandr Syenchuk and contributors.                       *
+ *  Copyright (c) 2007,2008,2011                               *
+ *  Alex Pirine and contributors.                              *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
  *  General Public License (version 2) terms and  conditions.  *
