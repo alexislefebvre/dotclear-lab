@@ -1,18 +1,14 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-/***************************************************************\
- *  This is 'My Favicon', a plugin for Dotclear 2              *
- *                                                             *
- *  Copyright (c) 2008                                         *
- *  Oleksandr Syenchuk and contributors.                       *
- *                                                             *
- *  This is an open source software, distributed under the GNU *
- *  General Public License (version 2) terms and  conditions.  *
- *                                                             *
- *  You should have received a copy of the GNU General Public  *
- *  License along with 'My Favicon' (see COPYING.txt);         *
- *  if not, write to the Free Software Foundation, Inc.,       *
- *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
-\***************************************************************/
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of My Favicon, a plugin for Dotclear.
+# 
+# Copyright (c) 2008,2011 Alex Pirine <alex pirine.fr>
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) { return; }
 
 if (is_callable('dcTemplate','SysBehavior')) {
@@ -33,15 +29,15 @@ class myFavicon
 		'mng' => 'video/x-mng'
 	);
 	
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
-		$res = self::faviconHTML($core->blog->settings);
+		$res = self::faviconHTML($core->blog->settings->myfavicon);
 		if (!empty($res)) {
 			echo $res."\n";
 		}
 	}
 	
-	public static function templateBeforeValue(&$core,$id,$attr)
+	public static function templateBeforeValue($core,$id,$attr)
 	{
 		if ($id == 'include' && isset($attr['src']) && $attr['src'] == '_head.html') {
 			return
@@ -50,10 +46,10 @@ class myFavicon
 		}
 	}
 
-	private static function faviconHTML(&$settings)
+	private static function faviconHTML($settings)
 	{
-		$favicon_url = $settings->favicon_url;
-		$favicon_ie6 = $settings->favicon_ie6;
+		$favicon_url = $settings->url;
+		$favicon_ie6 = $settings->ie6;
 		
 		if (empty($favicon_url)) {
 			return;

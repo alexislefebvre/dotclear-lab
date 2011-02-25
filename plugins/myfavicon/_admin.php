@@ -1,18 +1,14 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-/***************************************************************\
- *  This is 'My Favicon', a plugin for Dotclear 2              *
- *                                                             *
- *  Copyright (c) 2008                                         *
- *  Oleksandr Syenchuk and contributors.                       *
- *                                                             *
- *  This is an open source software, distributed under the GNU *
- *  General Public License (version 2) terms and  conditions.  *
- *                                                             *
- *  You should have received a copy of the GNU General Public  *
- *  License along with 'My Favicon' (see COPYING.txt);         *
- *  if not, write to the Free Software Foundation, Inc.,       *
- *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
-\***************************************************************/
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of My Favicon, a plugin for Dotclear.
+# 
+# Copyright (c) 2008,2011 Alex Pirine <alex pirine.fr>
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('adminBlogPreferencesHeaders', array('myFavicon', 'adminBlogPreferencesHeaders'));
@@ -26,15 +22,18 @@ class myFavicon
 		return '<script type="text/javascript" src="index.php?pf=myfavicon/blog_pref.js"></script>';
 	}
 	
-	public static function adminBlogPreferencesForm(&$core,&$settings=false)
+	public static function adminBlogPreferencesForm($core,$settings=false)
 	{
 		# Dotclear <=2.0-beta7 compatibility
 		if ($settings === false) {
-			$settings = $core->blog->settings;
+			$s = &$core->blog->settings->myfavicon;
+		}
+		else {
+			$s = &$settings->myfavicon;
 		}
 		
-		$favicon_url = $settings->favicon_url;
-		$favicon_ie6 = $settings->favicon_ie6;
+		$favicon_url = $s->url;
+		$favicon_ie6 = $s->ie6;
 		
 		echo
 		'<fieldset><legend>Favicon</legend>'.
@@ -52,15 +51,15 @@ class myFavicon
 		'</div></fieldset>';
 	}
 	
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
 		$favicon_url = empty($_POST['favicon_enable']) ? '' : $_POST['favicon_url'];
 		$favicon_ie6 = !empty($_POST['favicon_ie6']);
 		
-		$settings->setNameSpace('myfavicon');
-		$settings->put('favicon_url',$favicon_url);
-		$settings->put('favicon_ie6',$favicon_ie6);
-		$settings->setNameSpace('system');
+		$s = &$settings->myfavicon;
+		
+		$s->put('url',$favicon_url);
+		$s->put('ie6',$favicon_ie6);
 	}
 }
 ?>

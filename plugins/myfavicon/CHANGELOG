@@ -1,3 +1,7 @@
+2011-02-25  Alex Pirine  <alex pirine.fr>
+
+ * Dotclear 2.2.2 compatibility
+
 2008-04-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
 
  * Show a warning in HTML code if favicon mimetype is bad
