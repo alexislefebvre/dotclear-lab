@@ -2,8 +2,8 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of My URL handlers, a plugin for Dotclear.
 # 
-# Copyright (c) 2007-2008 Oleksandr Syenchuk
-# <sacha@xn--phnix-csa.net>
+# Copyright (c) 2007,2008,2011 Alex Pirine
+# <alex pirine.fr>
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy is available in LICENSE file or at
@@ -44,7 +44,7 @@ class myUrlHandlers
 		}
 		
 		# Read user settings
-		$handlers = (array) @unserialize($core->blog->settings->url_handlers);
+		$handlers = (array) @unserialize($core->blog->settings->myurlhandlers->url_handlers);
 		foreach ($handlers as $name => $url)
 		{
 			self::overrideHandler($name,$url);

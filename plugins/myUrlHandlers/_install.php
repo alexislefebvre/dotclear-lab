@@ -2,8 +2,8 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of My URL handlers, a plugin for Dotclear.
 # 
-# Copyright (c) 2007-2008 Oleksandr Syenchuk
-# <sacha@xn--phnix-csa.net>
+# Copyright (c) 2007,2008,2011 Alex Pirine
+# <alex pirine.fr>
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy is available in LICENSE file or at
@@ -20,9 +20,9 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-$settings =& $core->blog->settings;
-$settings->setNamespace(strtolower($label));
-$settings->put('url_handlers','','string','Personalized URL handlers',false);
+$core->blog->settings->addNamespace('myurlhandlers');
+$s = &$core->blog->settings->myurlhandlers;
+$s->put('url_handlers','','string','Personalized URL handlers',false);
 
 $core->setVersion($label,$m_version);
 return true;

@@ -2,8 +2,8 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of My URL handlers, a plugin for Dotclear.
 # 
-# Copyright (c) 2007-2008 Oleksandr Syenchuk
-# <sacha@xn--phnix-csa.net>
+# Copyright (c) 2007,2008,2011 Alex Pirine
+# <alex pirine.fr>
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy is available in LICENSE file or at
@@ -18,7 +18,7 @@ try
 	$handlers = myUrlHandlers::getDefaults();
 	
 	# Overwrite with user settings
-	$settings = @unserialize($core->blog->settings->url_handlers);
+	$settings = @unserialize($core->blog->settings->myurlhandlers->url_handlers);
 	if (is_array($settings)) {
 		foreach ($settings as $name=>$url)
 		{
@@ -62,15 +62,13 @@ try
 	
 	if (isset($_POST['act_save']))
 	{
-		$core->blog->settings->setNamespace('myurlhandlers');
-		$core->blog->settings->put('url_handlers',serialize($handlers));
+		$core->blog->settings->myurlhandlers->put('url_handlers',serialize($handlers));
 		$core->blog->triggerBlog();
 		$msg = __('URL handlers have been successfully updated.');
 	}
 	elseif (isset($_POST['act_restore']))
 	{
-		$core->blog->settings->setNamespace('myurlhandlers');
-		$core->blog->settings->put('url_handlers',serialize(array()));
+		$core->blog->settings->myurlhandlers->put('url_handlers',serialize(array()));
 		$core->blog->triggerBlog();
 		$handlers = myUrlHandlers::getDefaults();
 		$msg = __('URL handlers have been successfully restored.');
