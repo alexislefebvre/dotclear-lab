@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */		"My Favicon",
 	/* Description*/	"Set up your own favicon!",
 	/* Author */		"Alex Pirine",
-	/* Version */		'2011.02',
+	/* Version */		'2011.02.1',
 	/* Permissions */	'contentadmin'
 );
 ?>

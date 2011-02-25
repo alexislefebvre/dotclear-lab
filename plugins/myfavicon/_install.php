@@ -26,6 +26,7 @@ $s = &$core->blog->settings->myfavicon;
 
 # New install / update
 $s->put('url','','string','Favicon URL',false);
+$s->put('iOS_url','','string','iOS icon URL');
 $s->put('ie6',false,'boolean','Internet Explorer 6 compatibility',false);
 
 if (version_compare(DC_VERSION,'2.0-rc1','<')

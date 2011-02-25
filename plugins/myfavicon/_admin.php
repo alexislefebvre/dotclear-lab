@@ -33,6 +33,7 @@ class myFavicon
 		}
 		
 		$favicon_url = $s->url;
+		$favicon_iOS_url = $s->iOS_url;
 		$favicon_ie6 = $s->ie6;
 		
 		echo
@@ -44,21 +45,25 @@ class myFavicon
 		'<p><label class="classic">'.
 			form::checkbox('favicon_ie6','1',$favicon_ie6).
 			__('Enable Internet Explorer 6 compatibility').'</label></p>'.
+		'<p id="favicon_warn" class="form-note warn">'
+			.__('Please note, IE6 compatibility works only with the “.ico” format.').'</p>'.
 		'<p><label>'.__('Favicon URL:').' '.
 			form::field('favicon_url',40,255,html::escapeHTML($favicon_url)).'</label></p>'.
-		'<p id="favicon_warn" class="form-note warn">'
-			.__('Please note, IE6 compatibility works only with ".ico" format.').'</p>'.
+		'<p><label>'.__('Apple iOS icon URL:').' '.
+			form::field('favicon_iOS_url',40,255,html::escapeHTML($favicon_iOS_url)).'</label></p>'.
 		'</div></fieldset>';
 	}
 	
 	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
 		$favicon_url = empty($_POST['favicon_enable']) ? '' : $_POST['favicon_url'];
+		$favicon_iOS_url = empty($_POST['favicon_enable']) ? '' : $_POST['favicon_iOS_url'];
 		$favicon_ie6 = !empty($_POST['favicon_ie6']);
 		
 		$s = &$settings->myfavicon;
 		
 		$s->put('url',$favicon_url);
+		$s->put('iOS_url',$favicon_iOS_url);
 		$s->put('ie6',$favicon_ie6);
 	}
 }

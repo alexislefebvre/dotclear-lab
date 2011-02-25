@@ -1,6 +1,6 @@
 # French translation of My Favicon
-# Copyright (c) 2008.
-# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2008.
+# Copyright (c) 2008,2011.
+# Alex Pirine <alex pirine.fr>, 2011.
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
@@ -15,7 +15,10 @@ msgid "Enable Internet Explorer 6 compatibility"
 msgstr "Activer la compatibilité avec Internet Explorer 6"
 
 msgid "Favicon URL:"
-msgstr "URL du favicon :"
+msgstr "URL du favicon :"
 
-msgid "Please note, IE6 compatibility works only with \".ico\" format."
-msgstr "Veuillez noter que la compatibilité IE6 fonctionne uniquement avec le format \".ico\"."
+msgid "Apple iOS icon URL:"
+msgstr "URL d'une icône Apple iOS :"
+
+msgid "Please note, IE6 compatibility works only with the “.ico” format."
+msgstr "Veuillez noter que la compatibilité IE6 fonctionne uniquement avec le format “.ico”."

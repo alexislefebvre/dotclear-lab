@@ -49,27 +49,47 @@ class myFavicon
 	private static function faviconHTML($settings)
 	{
 		$favicon_url = $settings->url;
+		$favicon_iOS_url = $settings->iOS_url;
 		$favicon_ie6 = $settings->ie6;
 		
-		if (empty($favicon_url)) {
+		if (empty($favicon_url) && empty($favicon_iOS_url)) {
 			return;
 		}
 		
-		$extension = files::getExtension($favicon_url);
+		$res = '';
 		
-		if (!isset(self::$allowed_mimetypes[$extension])) {
+		if (!empty($favicon_url)) {
+			$extension = files::getExtension($favicon_url);
 			$mimetype = files::getMimeType($favicon_url);
-			if (!in_array($mimetype,self::$allowed_mimetypes)) {
-				return '<!-- Bad favicon MIME type. -->'."\n";
+			
+			if (!isset(self::$allowed_mimetypes[$extension]) && !in_array($mimetype,self::$allowed_mimetypes)) {
+				$res .= '<!-- Bad favicon MIME type: must be an image -->'."\n";
 			}
-		}
-		else {
-			$mimetype = self::$allowed_mimetypes[$extension];
+			else {
+				$rel = ($favicon_ie6 ? 'shortcut ' : '').'icon';
+				$mimetype = self::$allowed_mimetypes[$extension];
+				$href = html::escapeHTML($favicon_url);
+				$res .= '<link rel="'.$rel.'" type="'.$mimetype.'" href="'.$href.'" />';
+			}
+			$res .= "\n";
 		}
 		
-		$rel = ($favicon_ie6 ? 'shortcut ' : '').'icon';
-		return '<link rel="'.$rel.'" type="'.$mimetype.
-			'" href="'.html::escapeHTML($favicon_url).'" />';
+		if (!empty($favicon_iOS_url)) {
+			$extension = files::getExtension($favicon_iOS_url);
+			$mimetype = files::getMimeType($favicon_iOS_url);
+			
+			if ($extension != 'png' && $mimetype != 'image/png') {
+				$res .= '<!-- Bad iOS MIME type: must be a PNG image -->'."\n";
+			}
+			else {
+				$rel = 'apple-touch-icon';
+				$href = html::escapeHTML($favicon_iOS_url);
+				$res .= '<link rel="'.$rel.'" href="'.$href.'" />';
+			}
+			$res .= "\n";
+		}
+		
+		return $res;
 	}
 }
 ?>
