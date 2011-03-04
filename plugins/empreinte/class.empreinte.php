@@ -30,8 +30,12 @@ class empreinte
 		'wget');
 	
 	private static $systems = array(
+		'Android',
 		'Blackberry',
 		'BSD',
+		'iPad',
+		'iPhone',
+		'iPod',
 		'Java',
 		'Linux',
 		'Macintosh',
