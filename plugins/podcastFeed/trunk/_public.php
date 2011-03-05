@@ -30,6 +30,9 @@ $core->url->register(
 	array('PodcastFeedUrlHandler', 'servePodcastFeed')
 );
 
+$core->tpl->addBlock('PodcastEntries', 
+	array('PodcastFeedTplTags', 'getPodcastEntries')
+);
 $core->tpl->addValue('ItunesKeywords', 
 	array('PodcastFeedTplTags', 'getItunesKeywordsForPost')
 );

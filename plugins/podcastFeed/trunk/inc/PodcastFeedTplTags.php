@@ -16,6 +16,31 @@ if (!defined('DC_RC_PATH')) { return; }
  * Classe d'implémentation des nouvelles balises nécessaires au plugin.
  */
 class PodcastFeedTplTags {
+	
+	public static function getPodcastEntries($attr, $content) {
+		
+		$p = '';
+		
+		if (isset($attr['category'])) {
+			$p .= "\$params['cat_url'] = '".addslashes($attr['category'])."';\n";
+			$p .= "context::categoryPostParam(\$params);\n";
+		}
+		
+		$p .= "\$params['order'] = 'post_dt desc';\n";
+		$p .= "\$params['from'] = ' INNER JOIN '.\$core->prefix.'post_media M ON M.post_id = P.post_id ';\n";
+		
+		$res = "<?php\n";
+		$res .= $p;
+		$res .= '$_ctx->post_params = $params;'."\n";
+		$res .= '$_ctx->posts = $core->blog->getPosts($params); unset($params);'."\n";
+		$res .= "?>\n";
+		
+		$res .=
+		'<?php while ($_ctx->posts->fetch()) : ?>'.$content.'<?php endwhile; '.
+		'$_ctx->posts = null; $_ctx->post_params = null; ?>';
+		
+		return $res;
+	}
 
 	public static function getItunesKeywordsForPost($post) {
 		$res =

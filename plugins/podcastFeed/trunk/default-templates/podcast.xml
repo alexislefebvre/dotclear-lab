@@ -33,7 +33,7 @@
   <pubDate>{{tpl:BlogUpdateDate rfc822="1"}}</pubDate>
   <atom:link href="{{tpl:SysSelfURI}}" rel="self" type="application/rss+xml"/>
   
-  <tpl:Entries category="podcast">
+  <tpl:PodcastEntries category="podcast">
   
   <item>
     <title>{{tpl:EntryTitle encode_xml="1"}}</title>
@@ -57,7 +57,7 @@
     <link>{{tpl:EntryURL}}</link>
 	<itunes:keywords>{{tpl:ItunesKeywords}}</itunes:keywords>
   </item>
-  </tpl:Entries>
+  </tpl:PodcastEntries>
   
 </channel>
 </rss>
