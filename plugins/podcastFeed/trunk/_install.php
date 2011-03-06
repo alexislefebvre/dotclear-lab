@@ -35,19 +35,7 @@ $settings = new dcSettings($core, null);
 // Le paramètre de setNamespace() ne doit contenir que des chiffres ou des lettres sans accent. 
 $settings->setNamespace('podcastFeed');
 
-function addSetting($id, $label, $defaultValue) {
-	global $settings;
-	/* Créer un paramètre avec la fonction put(), dont les paramètres sont :
-	* 1) le nom du paramètre (chaîne de caractères alphanumériques et _)
-	* 2) sa valeur
-	* 3) son type : 'string', 'integer', 'float' ou 'boolean'
-	* 4) son label (une chaîne de caractères)
-	* 5) un booléen : écraser l'ancienne valeur (valeur par défaut : oui)
-	* 6) un booléen : le paramètre est global (valeur par défaut : non) (facultatif)
-	*/
-	$settings->put($id, $defaultValue, 'string', $label, false);
-}
-
+$settings->put('podcastCategoryFilter', '', 'string', 'Catégories à prendre en comptre', false);
 $settings->put('podcastTitle', $core->blog->name, 'string', 'Titre du podcast', false);
 $settings->put('podcastSubTitle', '', 'string', 'Sous-titre du podcast', false);
 $settings->put('podcastLink', $core->blog->url, 'string', 'URL du podcast', false);

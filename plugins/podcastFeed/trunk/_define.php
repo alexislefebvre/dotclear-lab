@@ -20,6 +20,6 @@ $this->registerModule(
 	/* Name */			"Podcast Feed (iTunes support)",
 	/* Description*/	"New feed dedicated to podcasting, with specific iTunes tags.",
 	/* Author */		"Arnaud Jacquemin",
-	/* Version */		'0.1.0-alpha',
+	/* Version */		'0.2.0-alpha',
 	/* Permissions */	'admin' //restreindre ce plugin aux seuls administrateurs d'un blog donné
 );

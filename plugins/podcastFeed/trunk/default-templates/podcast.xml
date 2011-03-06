@@ -33,7 +33,7 @@
   <pubDate>{{tpl:BlogUpdateDate rfc822="1"}}</pubDate>
   <atom:link href="{{tpl:SysSelfURI}}" rel="self" type="application/rss+xml"/>
   
-  <tpl:PodcastEntries category="podcast">
+  <tpl:PodcastEntries>
   
   <item>
     <title>{{tpl:EntryTitle encode_xml="1"}}</title>
