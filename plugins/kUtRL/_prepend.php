@@ -58,33 +58,9 @@ $__autoload['trimKutrlService'] = dirname(__FILE__).'/inc/services/class.trim.se
 $core->addBehavior('kutrlService',create_function(null,'return array("trim","trimKutrlService");'));
 $__autoload['yourlsKutrlService'] = dirname(__FILE__).'/inc/services/class.yourls.service.php';
 $core->addBehavior('kutrlService',create_function(null,'return array("yourls","yourlsKutrlService");'));
+$__autoload['suprKutrlService'] = dirname(__FILE__).'/inc/services/class.supr.service.php';
+$core->addBehavior('kutrlService',create_function(null,'return array("supr","suprKutrlService");'));
 
-/*
-# Services
-if (!isset($core->kutrlServices)) { $core->kutrlServices = array(); }
-
-$__autoload['defaultKutrlService'] = dirname(__FILE__).'/inc/services/class.default.service.php';
-$__autoload['localKutrlService'] = dirname(__FILE__).'/inc/services/class.local.service.php';
-$__autoload['isgdKutrlService'] = dirname(__FILE__).'/inc/services/class.isgd.service.php';
-$__autoload['googlKutrlService'] = dirname(__FILE__).'/inc/services/class.googl.service.php';
-$__autoload['shorttoKutrlService'] = dirname(__FILE__).'/inc/services/class.shortto.service.php';
-$__autoload['trimKutrlService'] = dirname(__FILE__).'/inc/services/class.trim.service.php';
-$__autoload['bitlyKutrlService'] = dirname(__FILE__).'/inc/services/class.bitly.service.php';
-$__autoload['bilbolinksKutrlService'] = dirname(__FILE__).'/inc/services/class.bilbolinks.service.php';
-$__autoload['yourlsKutrlService'] = dirname(__FILE__).'/inc/services/class.yourls.service.php';
-$__autoload['customKutrlService'] = dirname(__FILE__).'/inc/services/class.custom.service.php';
-
-$core->kutrlServices['default'] = 'defaultKutrlService';
-$core->kutrlServices['local'] = 'localKutrlService';
-$core->kutrlServices['isgd'] = 'isgdKutrlService';
-$core->kutrlServices['googl'] = 'googlKutrlService';
-$core->kutrlServices['shortto'] = 'shorttoKutrlService';
-$core->kutrlServices['trim'] = 'trimKutrlService';
-$core->kutrlServices['bitly'] = 'bitlyKutrlService';
-$core->kutrlServices['bilbolinks'] = 'bilbolinksKutrlService';
-$core->kutrlServices['yourls'] = 'yourlsKutrlService';
-$core->kutrlServices['custom'] = 'customKutrlService';
-*/
 # Shorten url passed through wiki functions
 $__autoload['kutrlWiki'] = dirname(__FILE__).'/inc/lib.wiki.kutrl.php';
 $core->addBehavior('coreInitWikiPost',array('kutrlWiki','coreInitWiki'));

@@ -35,20 +35,6 @@ class kUtRL
 		return $services;
 	}
 	
-	# Get service for a place
-	public static function getPlace($core,$place='plugin')
-	{
-		$id = 'default';
-		if (in_array($place,array('tpl','wiki','admin','plugin'))) {
-			
-			$p_name = 'kutrl_'.$place.'_service';
-			if ($core->blog->settings->kUtRL->{$p_name}) {
-				$id = $core->blog->settings->kUtRL->{$p_name};
-			}
-		}
-		return $id;
-	}
-	
 	# Silently try to load a service according to its id
 	# Return null on error else service on success
 	public static function quickService($id='')
@@ -57,12 +43,17 @@ class kUtRL
 		
 		try
 		{
+			if (empty($id)) {
+				return null;
+			}
 			$services = self::getServices($core);
-			if (!isset($services[$id])) return null;
-			
-			return new $services[$id]($core);
+			if (isset($services[$id])) {
+				return new $services[$id]($core);
+			}
 		}
-		catch(Exception $e) { return null; }
+		catch(Exception $e) { }
+		
+		return null; 
 	}
 	
 	# Silently try to load a service according to its place
@@ -73,15 +64,17 @@ class kUtRL
 		
 		try
 		{
-			$id = self::getPlace($core,$place);
-			if (empty($id)) return null;
-			
-			$services = self::getServices($core);
-			if (!isset($services[$id])) return null;
-			
-			return new $services[$id]($core);
+			if (!in_array($place,array('tpl','wiki','admin','plugin'))) {
+				return null;
+			}
+			$id = $core->blog->settings->kUtRL->get('kutrl_'.$place.'_service');
+			if (!empty($id)) {
+				return self::quickService($id);
+			}
 		}
-		catch(Exception $e) { return null; }
+		catch(Exception $e) { }
+		
+		return null; 
 	}
 	
 	# Silently try to reduce url (using 'plugin' place)
@@ -93,14 +86,19 @@ class kUtRL
 		try
 		{
 			$srv = self::quickPlace($place);
-			if (empty($srv)) return $url;
-			
+			if (empty($srv)) {
+				return $url;
+			}
 			$rs = $srv->hash($url,$custom);
-			if (empty($rs)) return $url;
+			if (empty($rs)) {
+				return $url;
+			}
 			
 			return $srv->url_base.$rs->hash;
 		}
-		catch(Exception $e) { return $url; }
+		catch(Exception $e) { }
+		
+		return $url; 
 	}
 }
 ?>

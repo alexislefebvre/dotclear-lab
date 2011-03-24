@@ -1,7 +1,7 @@
 <?php
 // Language: Français 
-// Module: kUtRL - 1.0-alpha2
-// Date: 2011-02-01 18:11:44 
+// Module: kUtRL - 2011.03.24
+// Date: 2011-03-24 16:34:13 
 // Translated with dcTranslater - 1.5 
 
 #_admin.php:19
@@ -52,6 +52,7 @@ $GLOBALS['__l10n']['Failed to verify protected field.'] = 'Impossible de vérifi
 #inc/services/class.bilbolinks.service.php:61
 #inc/services/class.bitly.service.php:76
 #inc/services/class.local.service.php:108
+#inc/services/class.supr.service.php:67
 #inc/services/class.trim.service.php:69
 #inc/services/class.yourls.service.php:78
 $GLOBALS['__l10n']['Service is not well configured.'] = 'Le service n\'est pas correctement configuré.';
@@ -86,10 +87,10 @@ $GLOBALS['__l10n']['Failed to create short link.'] = 'Impossible de créer le li
 
 #_public.php:233
 #_public.php:337
-#_public.php:559
+#_public.php:557
 $GLOBALS['__l10n']['New public short URL'] = 'Nouvelle URL courte';
 
-#_public.php:431
+#_public.php:429
 #_widgets.php:106
 $GLOBALS['__l10n']['Rewrite "%s" in next field to show that you are not a robot:'] = 'Recopier "%s" dans le champs suivant pour montrer que vous n\'êtes pas une machine :';
 
@@ -160,7 +161,7 @@ $GLOBALS['__l10n']['This custom short url is already taken.'] = 'Ce lien court p
 $GLOBALS['__l10n']['Failed to create short link. This could be caused by a service failure.'] = 'Impossible de créé un lien court. Ceci peut être causé par un problème du service.';
 
 #inc/index.link.php:92
-#inc/lib.wiki.kutrl.php:74
+#inc/lib.wiki.kutrl.php:73
 $GLOBALS['__l10n']['New short URL'] = 'Nouvelle URL courte';
 
 #inc/index.link.php:109
@@ -192,7 +193,7 @@ $GLOBALS['__l10n']['Long link'] = 'Lien long';
 
 #inc/index.links.php:131
 #inc/index.setting.php:65
-$GLOBALS['__l10n']['disabled'] = 'Désactivé';
+$GLOBALS['__l10n']['Disabled'] = 'Désactiver';
 
 #inc/index.links.php:221
 $GLOBALS['__l10n']['Service:'] = 'Service :';
@@ -265,6 +266,9 @@ $GLOBALS['__l10n']['Administration:'] = 'Administration :';
 #inc/index.setting.php:120
 $GLOBALS['__l10n']['Service to use in this admin page and on edit page of an entry.'] = 'Service à utiliser sur cette page d\'administration ou sur la page d\'édition d\'un billet.';
 
+#inc/index.setting.php:127
+$GLOBALS['__l10n']['Extensions:'] = 'Extensions :';
+
 #inc/index.setting.php:130
 $GLOBALS['__l10n']['Service to use on third part plugins.'] = 'Service à utiliser par les plugins tiers';
 
@@ -293,7 +297,7 @@ $GLOBALS['__l10n']['New short link of type "%s" and hash "%s" was created.'] = '
 #inc/services/class.default.service.php:42
 $GLOBALS['__l10n']['There is nothing to configure for this service.'] = 'Il n\'y a rien à configurer pour ce service.';
 
-#inc/lib.wiki.kutrl.php:68
+#inc/lib.wiki.kutrl.php:67
 $GLOBALS['__l10n']['%s (Shorten with %s)'] = '% (réduit avec %s)';
 
 #inc/services/class.bilbolinks.service.php:49
@@ -324,18 +328,22 @@ $GLOBALS['__l10n']['Service is unavailable.'] = 'Le service n\'est pas disponibl
 $GLOBALS['__l10n']['Service rate limit exceeded.'] = 'La limitation d\'envoie au service est atteinte.';
 
 #inc/services/class.bitly.service.php:51
+#inc/services/class.supr.service.php:49
 #inc/services/class.trim.service.php:51
 #inc/services/class.yourls.service.php:60
 $GLOBALS['__l10n']['Login:'] = 'Identifiant :';
 
 #inc/services/class.bitly.service.php:55
-$GLOBALS['__l10n']['This is your login to sign up to bit.ly.'] = 'Ceci est votre login d\'inscription sur bit.ly.';
+#inc/services/class.supr.service.php:53
+$GLOBALS['__l10n']['This is your login to sign up to %s'] = 'C\'est votre identifiant pour vous connecter sur %s';
 
 #inc/services/class.bitly.service.php:57
+#inc/services/class.supr.service.php:55
 $GLOBALS['__l10n']['API Key:'] = 'Clé API :';
 
 #inc/services/class.bitly.service.php:61
-$GLOBALS['__l10n']['This is your personnal bit.ly API key. You can find it on your account page.'] = 'Ceci est votre clé personnelle pour l\'API bit.ly. Vous pouvez la trouver sur la page de vore compte.';
+#inc/services/class.supr.service.php:59
+$GLOBALS['__l10n']['This is your personnal %s API key. You can find it on your account page.'] = 'C\'est votre clé personnelle de l\'API %s. Vous pouvez la trouver sur la page de votre compte.';
 
 #inc/services/class.bitly.service.php:65
 $GLOBALS['__l10n']['Publish history'] = 'Publier l\'historique';
@@ -347,10 +355,14 @@ $GLOBALS['__l10n']['This publish all short links on your bit.ly public page.'] =
 #inc/services/class.bitly.service.php:106
 #inc/services/class.googl.service.php:40
 #inc/services/class.googl.service.php:61
+#inc/services/class.supr.service.php:75
+#inc/services/class.supr.service.php:98
 $GLOBALS['__l10n']['Failed to call service.'] = 'Impossible d\'appeler le service.';
 
 #inc/services/class.bitly.service.php:93
 #inc/services/class.bitly.service.php:115
+#inc/services/class.supr.service.php:85
+#inc/services/class.supr.service.php:108
 $GLOBALS['__l10n']['An error occured with code %s and message "%s"'] = 'Une erreur est survenu avec le code "%s" et le message "%s"';
 
 #inc/services/class.custom.service.php:65
@@ -400,7 +412,7 @@ $GLOBALS['__l10n']['Query param:'] = 'Paramètre de la requête:';
 $GLOBALS['__l10n']['Encode URL:'] = 'Encodage des URLs à raccourcir:';
 
 #inc/services/class.local.service.php:48
-$GLOBALS['__l10n']['Settings:'] = 'paramètre :';
+$GLOBALS['__l10n']['Settings:'] = 'Paramètres :';
 
 #inc/services/class.local.service.php:50
 $GLOBALS['__l10n']['Allowed protocols:'] = 'Protocoles autorisés :';
@@ -502,5 +514,9 @@ $GLOBALS['__l10n']['Link successfully shorten'] = 'Lien raccourcie avec succès'
 
 #index.php:55
 $GLOBALS['__l10n']['Links successfully deleted'] = 'Liens supprimés avec succès';
+
+$GLOBALS['__l10n']['This is your login to sign up to bit.ly.'] = 'Ceci est votre login d\'inscription sur bit.ly.';
+
+$GLOBALS['__l10n']['This is your personnal bit.ly API key. You can find it on your account page.'] = 'Ceci est votre clé personnelle pour l\'API bit.ly. Vous pouvez la trouver sur la page de vore compte.';
 
 ?>

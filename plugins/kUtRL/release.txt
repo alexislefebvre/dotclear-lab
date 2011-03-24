@@ -2,6 +2,11 @@ todo
  - Added public page of the list of know urls and in/visible status
  - Added passworded links
 
+2011.03.24
+ * Changed version numbering
+ * Added service su.pr (stumbleUpon)
+ * Fixed wiki settings (thanks @ploum )
+
 1.0 20110213
  * Added generic class to easlily access services
  * Changed generic service class (and class extend it)

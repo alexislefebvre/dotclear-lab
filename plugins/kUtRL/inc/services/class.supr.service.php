@@ -12,60 +12,51 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-class bitlyKutrlService extends kutrlService
+class suprKutrlService extends kutrlService
 {
 	protected $config = array(
-		'id' => 'bitly',
-		'name' => 'bit.ly',
-		'home' => 'http://bit.ly',
+		'id' => 'supr',
+		'name' => 'su.pr StumbleUpon',
+		'home' => 'http://su.pr',
 		
-		'url_api' => 'http://api.bit.ly/v3/',
-		'url_base' => 'http://bit.ly/',
-		'url_min_len' => 25
+		'url_api' => 'http://su.pr/api/',
+		'url_base' => 'http://su.pr/',
+		'url_min_len' => 23
 	);
 	
 	private $args = array(
+		'version' => '1.0',
 		'format' => 'xml',
 		'login' => '',
-		'apiKey' => '',
-		'history' => 0
+		'apiKey' => ''
 	);
 	
 	protected function init()
 	{
-		$this->args['login'] = $this->settings->kutrl_srv_bitly_login;
-		$this->args['apiKey'] = $this->settings->kutrl_srv_bitly_apikey;
-		$this->args['history'] = $this->settings->kutrl_srv_bitly_history ? 1 : 0;
+		$this->args['login'] = $this->settings->kutrl_srv_supr_login;
+		$this->args['apiKey'] = $this->settings->kutrl_srv_supr_apikey;
 	}
 	
 	public function saveSettings()
 	{
-		$this->settings->put('kutrl_srv_bitly_login',$_POST['kutrl_srv_bitly_login']);
-		$this->settings->put('kutrl_srv_bitly_apikey',$_POST['kutrl_srv_bitly_apikey']);
-		$this->settings->put('kutrl_srv_bitly_history',isset($_POST['kutrl_srv_bitly_history']));
+		$this->settings->put('kutrl_srv_supr_login',$_POST['kutrl_srv_supr_login']);
+		$this->settings->put('kutrl_srv_supr_apikey',$_POST['kutrl_srv_supr_apikey']);
 	}
 	
 	public function settingsForm()
 	{
 		echo 
 		'<p><label class="classic">'.__('Login:').'<br />'.
-		form::field(array('kutrl_srv_bitly_login'),50,255,$this->settings->kutrl_srv_bitly_login).
+		form::field(array('kutrl_srv_supr_login'),50,255,$this->settings->kutrl_srv_supr_login).
 		'</label></p>'.
 		'<p class="form-note">'.
 		sprintf(__('This is your login to sign up to %s'),$this->config['name']).
 		'</p>'.
 		'<p><label class="classic">'.__('API Key:').'<br />'.
-		form::field(array('kutrl_srv_bitly_apikey'),50,255,$this->settings->kutrl_srv_bitly_apikey).
+		form::field(array('kutrl_srv_supr_apikey'),50,255,$this->settings->kutrl_srv_supr_apikey).
 		'</label></p>'.
 		'<p class="form-note">'.
 		sprintf(__('This is your personnal %s API key. You can find it on your account page.'),$this->config['name']).
-		'</p>'.
-		'<p><label class="classic">'.
-		form::checkbox(array('kutrl_srv_bitly_history'),'1',$this->settings->kutrl_srv_bitly_history).' '.
-		__('Publish history').
-		'</label></p>'.
-		'<p class="form-note">'.
-		__('This publish all short links on your bit.ly public page.').
 		'</p>';
 	}
 	
@@ -78,8 +69,8 @@ class bitlyKutrlService extends kutrlService
 		}
 
 		$args = $this->args;
-		$args['hash'] = 'WP9vc';
-		if (!($response = self::post($this->url_api.'expand',$args,true)))
+		$arg['longUrl'] = $this->url_test;
+		if (!($response = self::post($this->url_api.'shorten',$args,true)))
 		{
 			$this->error->add(__('Failed to call service.'));
 			return false;
@@ -87,9 +78,10 @@ class bitlyKutrlService extends kutrlService
 		
 		$rsp = simplexml_load_string($response);
 		
-		$err_msg = (string) $rsp->status_txt;
-		if ($err_msg != 'OK') {
-			$err_no = (integer) $rsp->status_code;
+		$status = (string) $rsp->statusCode;
+		if ($status != 'OK') {
+			$err_no = (integer) $rsp->errorCode;
+			$err_msg = (integer) $rsp->errorMessage;
 			$this->error->add(sprintf(__('An error occured with code %s and message "%s"'),$err_no,$err_msg));
 			return false;
 		}
@@ -109,16 +101,17 @@ class bitlyKutrlService extends kutrlService
 		
 		$rsp = simplexml_load_string($response);
 		
-		$err_msg = (string) $rsp->status_txt;
-		if ($err_msg != 'OK') {
-			$err_no = (integer) $rsp->status_code;
+		$status = (string) $rsp->statusCode;
+		if ($status != 'OK') {
+			$err_no = (integer) $rsp->errorCode;
+			$err_msg = (integer) $rsp->errorMessage;
 			$this->error->add(sprintf(__('An error occured with code %s and message "%s"'),$err_no,$err_msg));
 			return false;
 		}
 		
 		$rs = new ArrayObject();
-		$rs->hash = (string) $rsp->data[0]->hash;
-		$rs->url = (string) $rsp->data[0]->long_url;
+		$rs->hash = (string) $rsp->results[0]->nodeKeyVal->hash;
+		$rs->url = (string) $rsp->results[0]->nodeKeyVal->nodeKey;
 		$rs->type = $this->id;
 		
 		return $rs;

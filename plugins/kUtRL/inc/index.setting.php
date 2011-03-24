@@ -62,7 +62,7 @@ foreach(kutrl::getServices($core) as $service_id => $service)
 	$o = new $service($core);
 	$services_combo[__($o->name)] = $o->id;
 }
-$ext_services_combo = array_merge(array(__('disabled')=>''),$services_combo);
+$ext_services_combo = array_merge(array(__('Disabled')=>''),$services_combo);
 $lst_services_combo = array_merge(array('-'=>''),$services_combo);
 
 echo '

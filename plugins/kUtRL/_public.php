@@ -347,8 +347,6 @@ class pubKutrl
 
 		# Passive : all kutrl tag return long url
 		$_ctx->kutrl_passive = (boolean) $s->kutrl_tpl_passive;
-		# Twitter feature when auto create short link on template
-		$_ctx->kutrl_twit_ontpl = (boolean) $s->kutrl_twit_ontpl;
 		
 		if (!$s->kutrl_active || !$s->kutrl_tpl_service) return;
 		

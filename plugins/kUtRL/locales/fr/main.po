@@ -1,14 +1,14 @@
 # Language: Français
-# Module: kUtRL - 1.0-alpha2
-# Date: 2011-02-01 18:11:45
+# Module: kUtRL - 2011.03.24
+# Date: 2011-03-24 16:34:14
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: kUtRL 1.0-alpha2\n"
+"Project-Id-Version: kUtRL 2011.03.24\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-02-01T18:11:45+00:00\n"
+"PO-Revision-Date: 2011-03-24T16:34:14+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -72,6 +72,7 @@ msgstr "Impossible de vérifier le champs de protection."
 #: inc/services/class.bilbolinks.service.php:61
 #: inc/services/class.bitly.service.php:76
 #: inc/services/class.local.service.php:108
+#: inc/services/class.supr.service.php:67
 #: inc/services/class.trim.service.php:69
 #: inc/services/class.yourls.service.php:78
 msgid "Service is not well configured."
@@ -114,11 +115,11 @@ msgstr "Impossible de créer le lien court."
 
 #: _public.php:233
 #: _public.php:337
-#: _public.php:559
+#: _public.php:557
 msgid "New public short URL"
 msgstr "Nouvelle URL courte"
 
-#: _public.php:431
+#: _public.php:429
 #: _widgets.php:106
 msgid "Rewrite \"%s\" in next field to show that you are not a robot:"
 msgstr "Recopier \"%s\" dans le champs suivant pour montrer que vous n'êtes pas une machine :"
@@ -211,7 +212,7 @@ msgid "Failed to create short link. This could be caused by a service failure."
 msgstr "Impossible de créé un lien court. Ceci peut être causé par un problème du service."
 
 #: inc/index.link.php:92
-#: inc/lib.wiki.kutrl.php:74
+#: inc/lib.wiki.kutrl.php:73
 msgid "New short URL"
 msgstr "Nouvelle URL courte"
 
@@ -252,8 +253,8 @@ msgstr "Lien long"
 
 #: inc/index.links.php:131
 #: inc/index.setting.php:65
-msgid "disabled"
-msgstr "Désactivé"
+msgid "Disabled"
+msgstr "Désactiver"
 
 #: inc/index.links.php:221
 msgid "Service:"
@@ -349,6 +350,10 @@ msgstr "Administration :"
 msgid "Service to use in this admin page and on edit page of an entry."
 msgstr "Service à utiliser sur cette page d'administration ou sur la page d'édition d'un billet."
 
+#: inc/index.setting.php:127
+msgid "Extensions:"
+msgstr "Extensions :"
+
 #: inc/index.setting.php:130
 msgid "Service to use on third part plugins."
 msgstr "Service à utiliser par les plugins tiers"
@@ -386,7 +391,7 @@ msgstr "Un nouveau lien court de type \"%s\" et de hash \"%s\" a été créé."
 msgid "There is nothing to configure for this service."
 msgstr "Il n'y a rien à configurer pour ce service."
 
-#: inc/lib.wiki.kutrl.php:68
+#: inc/lib.wiki.kutrl.php:67
 msgid "%s (Shorten with %s)"
 msgstr "% (réduit avec %s)"
 
@@ -422,22 +427,26 @@ msgid "Service rate limit exceeded."
 msgstr "La limitation d'envoie au service est atteinte."
 
 #: inc/services/class.bitly.service.php:51
+#: inc/services/class.supr.service.php:49
 #: inc/services/class.trim.service.php:51
 #: inc/services/class.yourls.service.php:60
 msgid "Login:"
 msgstr "Identifiant :"
 
 #: inc/services/class.bitly.service.php:55
-msgid "This is your login to sign up to bit.ly."
-msgstr "Ceci est votre login d'inscription sur bit.ly."
+#: inc/services/class.supr.service.php:53
+msgid "This is your login to sign up to %s"
+msgstr "C'est votre identifiant pour vous connecter sur %s"
 
 #: inc/services/class.bitly.service.php:57
+#: inc/services/class.supr.service.php:55
 msgid "API Key:"
 msgstr "Clé API :"
 
 #: inc/services/class.bitly.service.php:61
-msgid "This is your personnal bit.ly API key. You can find it on your account page."
-msgstr "Ceci est votre clé personnelle pour l'API bit.ly. Vous pouvez la trouver sur la page de vore compte."
+#: inc/services/class.supr.service.php:59
+msgid "This is your personnal %s API key. You can find it on your account page."
+msgstr "C'est votre clé personnelle de l'API %s. Vous pouvez la trouver sur la page de votre compte."
 
 #: inc/services/class.bitly.service.php:65
 msgid "Publish history"
@@ -451,11 +460,15 @@ msgstr "Ceci publie tous vos liens sur votre page public bit.ly"
 #: inc/services/class.bitly.service.php:106
 #: inc/services/class.googl.service.php:40
 #: inc/services/class.googl.service.php:61
+#: inc/services/class.supr.service.php:75
+#: inc/services/class.supr.service.php:98
 msgid "Failed to call service."
 msgstr "Impossible d'appeler le service."
 
 #: inc/services/class.bitly.service.php:93
 #: inc/services/class.bitly.service.php:115
+#: inc/services/class.supr.service.php:85
+#: inc/services/class.supr.service.php:108
 msgid "An error occured with code %s and message \"%s\""
 msgstr "Une erreur est survenu avec le code \"%s\" et le message \"%s\""
 
@@ -522,7 +535,7 @@ msgstr "Encodage des URLs à raccourcir:"
 
 #: inc/services/class.local.service.php:48
 msgid "Settings:"
-msgstr "paramètre :"
+msgstr "Paramètres :"
 
 #: inc/services/class.local.service.php:50
 msgid "Allowed protocols:"
@@ -657,4 +670,10 @@ msgstr "Lien raccourcie avec succès"
 #: index.php:55
 msgid "Links successfully deleted"
 msgstr "Liens supprimés avec succès"
+
+msgid "This is your login to sign up to bit.ly."
+msgstr "Ceci est votre login d'inscription sur bit.ly."
+
+msgid "This is your personnal bit.ly API key. You can find it on your account page."
+msgstr "Ceci est votre clé personnelle pour l'API bit.ly. Vous pouvez la trouver sur la page de vore compte."
 

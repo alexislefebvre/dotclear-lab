@@ -10,4 +10,4 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')){return;}
-$this->registerModule(	/* Name */			"kUtRL",	/* Description*/		"Use, create and serve short url on your blog",	/* Author */			"JC Denis",	/* Version */			'1.0',	/* Permissions */		'admin');	/* date */		#20110213?>
+$this->registerModule(	/* Name */			"kUtRL",	/* Description*/		"Use, create and serve short url on your blog",	/* Author */			"JC Denis",	/* Version */			'2011.03.24',	/* Permissions */		'admin');?>

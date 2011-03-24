@@ -23,11 +23,10 @@ class kutrlWiki
 
 		# Do nothing on comment preview and post preview
 		if (!empty($_POST['preview']) 
-		 || !empty($GLOBALS['_ctx']) && $GLOBALS['_ctx']->preview) return;
+		 || !empty($GLOBALS['_ctx']) && $GLOBALS['_ctx']->preview
+		 || !$s->kutrl_active) return;
 		
-		if (!$s->kutrl_active) return;
-		
-		if (null === ($kut = kutrl::quickPlace('admin'))) return;
+		if (null === ($kut = kutrl::quickPlace('wiki'))) return;
 		
 		foreach($kut->allow_protocols as $protocol)
 		{
@@ -45,7 +44,7 @@ class kutrlWiki
 		
 		if (!$s->kutrl_active) return;
 		
-		if (null === ($kut = kutrl::quickPlace('admin'))) return array();
+		if (null === ($kut = kutrl::quickPlace('wiki'))) return array();
 		
 		# Test if long url exists
 		$is_new = false;
