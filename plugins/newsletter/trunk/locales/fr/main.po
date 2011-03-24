@@ -772,6 +772,18 @@ msgstr "Suppression de toutes les informations concernant newsletter dans votre 
 msgid "<strong>Caution :</strong> please backup your database before use this option."
 msgstr "<strong>Attention :</strong> vous êtes priés de sauvegarder votre base de données avant d'utiliser cette option"
 
+msgid "Statistics subscribers"
+msgstr "Statistiques des abonnés"
+
+msgid "Statistics letters"
+msgstr "Statistiques des lettres"
+
+msgid "Statistics sending letters"
+msgstr "Statistiques des envois de lettres"
+
+msgid "Count"
+msgstr "Total"
+
 #: inc/class.newsletter.admin.php:1261
 #: inc/class.newsletter.admin.php:1262
 msgid "Erasing"
@@ -844,6 +856,10 @@ msgstr "L'adresse email existe déjà"
 #: inc/class.newsletter.core.php:1029
 msgid ", by"
 msgstr ", par"
+
+msgid "by"
+msgstr "par"
+
 
 #: inc/class.newsletter.core.php:1092
 #: inc/class.newsletter.core.php:1336
@@ -1376,6 +1392,9 @@ msgstr "%s abonnés trouvés"
 #: index.php:856
 msgid "Are you sure you want to delete selected letters?"
 msgstr "Êtes-vous sûr de vouloir supprimer les lettres sélectionnées?"
+
+msgid "Are you sure you want to delete selected subscribers?"
+msgstr "Êtes-vous sûr de vouloir supprimer les abonnés sélectionnés?"
 
 #: index.php:883
 msgid "Are you sure you want to delete all informations about newsletter in database?"

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Benoit de Marne.
+# Copyright (c) 2009-2011 Benoit de Marne.
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
@@ -19,25 +19,30 @@ $_menu['Plugins']->addItem('Newsletter',
 	'plugin.php?p=newsletter',
 	'index.php?pf=newsletter/icon.png',
 	preg_match('/plugin.php\?p='.newsletterPlugin::pname().'(&.*)?$/', $_SERVER['REQUEST_URI']),
-	$core->auth->check('usage,admin', $core->blog->id)
+	$core->auth->check('newsletter,contentadmin', $core->blog->id)
 	);
 
-// Adding behaviors
-$core->addBehavior('pluginsBeforeDelete', array('dcBehaviorsNewsletter', 'pluginsBeforeDelete'));
-$core->addBehavior('adminAfterPostCreate', array('dcBehaviorsNewsletter', 'adminAutosend'));
-$core->addBehavior('adminAfterPostUpdate', array('dcBehaviorsNewsletter', 'adminAutosendUpdate'));
+// Adding permission
+$core->auth->setPermissionType('newsletter',__('manage newsletter'));
 
-// Adding import/export behavior
-$core->addBehavior('exportFull',array('dcBehaviorsNewsletter','exportFull'));
-$core->addBehavior('exportSingle',array('dcBehaviorsNewsletter','exportSingle'));
-$core->addBehavior('importInit',array('dcBehaviorsNewsletter','importInit'));
-$core->addBehavior('importFull',array('dcBehaviorsNewsletter','importFull'));
-$core->addBehavior('importSingle',array('dcBehaviorsNewsletter','importSingle'));
-
-// Dynamic method
-$core->rest->addFunction('prepareALetter', array('newsletterRest','prepareALetter'));
-$core->rest->addFunction('sendLetterBySubscriber', array('newsletterRest','sendLetterBySubscriber'));
-
+if ($core->auth->check('newsletter,contentadmin',$core->blog->id)) {
+	// Adding behaviors
+	$core->addBehavior('pluginsBeforeDelete', array('dcBehaviorsNewsletter', 'pluginsBeforeDelete'));
+	$core->addBehavior('adminAfterPostCreate', array('dcBehaviorsNewsletter', 'adminAutosend'));
+	$core->addBehavior('adminAfterPostUpdate', array('dcBehaviorsNewsletter', 'adminAutosendUpdate'));
+	
+	// Adding import/export behavior
+	$core->addBehavior('exportFull',array('dcBehaviorsNewsletter','exportFull'));
+	$core->addBehavior('exportSingle',array('dcBehaviorsNewsletter','exportSingle'));
+	$core->addBehavior('importInit',array('dcBehaviorsNewsletter','importInit'));
+	$core->addBehavior('importFull',array('dcBehaviorsNewsletter','importFull'));
+	$core->addBehavior('importSingle',array('dcBehaviorsNewsletter','importSingle'));
+	
+	// Dynamic method
+	$core->rest->addFunction('prepareALetter', array('newsletterRest','prepareALetter'));
+	$core->rest->addFunction('sendLetterBySubscriber', array('newsletterRest','sendLetterBySubscriber'));
+}
+	
 // Loading widget
 require dirname(__FILE__).'/_widgets.php';
 require dirname(__FILE__).'/inc/class.newsletter.mail.php';
@@ -292,7 +297,7 @@ class newsletterRest
 			$letter_content .= newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
 			$letter_content .= $post['p_letter_footer'];
 			
-			$letter_content = newsletterLetter::mb_wordwrap($letter_content);
+			//$letter_content = newsletterLetter::mb_wordwrap($letter_content);
 		}
 			
 		// send letter to user

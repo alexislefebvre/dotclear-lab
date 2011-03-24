@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Benoit de Marne.
+# Copyright (c) 2009-2011 Benoit de Marne.
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
@@ -13,6 +13,53 @@
 
 class newsletterSubscribersList extends adminGenericList
 {
+	/**
+	 * Count subscribers
+	 */	
+	private static function countSubscribers($state = 'enabled')
+	{
+		$params['state'] = $state;
+		$counter = newsletterCore::getSubscribers($params,true);
+		return $counter->f(0);
+	}
+		
+	public static function fieldsetResumeSubscribers()
+	{
+		$state_combo = array(__('pending') => 'pending',
+						__('enabled') => 'enabled',
+						__('suspended') => 'suspended',
+						__('disabled') => 'disabled');
+							
+		$resume_content =
+				'<fieldset>'.
+				'<legend>'.__('Statistics subscribers').'</legend>'.
+				'<table summary="resume" class="minimal">'.
+				'<thead>'.
+					'<tr>'.
+			  			'<th>'.__('State').'</th>'.
+			  			'<th>'.__('Count').'</th>'.
+					'</tr>'.
+				'</thead>'.
+				'<tbody id="classes-list">';
+
+				foreach($state_combo as $k=>$v) {
+					$resume_content .= 
+						'<tr class="line">'.
+						'<td>'.$k.'</td>'.
+						'<td>'.self::countSubscribers($v).'</td>'.
+						'</tr>'.
+						'';
+				}
+
+		$resume_content .= 
+				'</tbody>'.
+				'</table>'.
+				'</fieldset>'.
+				'';
+		
+		return $resume_content;
+	}
+	
 	/**
 	 * Display data table for subscribers
 	 *
@@ -64,8 +111,6 @@ class newsletterSubscribersList extends adminGenericList
 			echo $blocks[1];
 			
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
-			
-			
 		}
 	}
 

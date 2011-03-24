@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Benoit de Marne.
+# Copyright (c) 2009-2011 Benoit de Marne.
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
@@ -12,7 +12,8 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')) exit;
-dcPage::check('usage,admin');
+//dcPage::check('usage,admin');
+dcPage::check('newsletter,contentadmin');
 
 # Settings compatibility test
 if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
@@ -726,6 +727,7 @@ switch ($action)
 	case 'pending':
 	case 'delete':
 	{
+		$letters_id = array();
 		if(!empty($_POST['letters_id'])) $letters_id = $_POST['letters_id'];
 		newsletterLettersList::lettersActions($letters_id);
 	}
@@ -842,6 +844,7 @@ echo
 			"dotclear.msg.to_user = '".html::escapeJS(__('to user'))."';\n".
 			"dotclear.msg.please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
 			"dotclear.msg.subscribers_found = '".html::escapeJS(__('%s subscribers found'))."';\n".
+			"dotclear.msg.confirm_delete_subscribers = '".html::escapeJS(__('Are you sure you want to delete selected subscribers?'))."';\n".
 			"\n//]]>\n".
 			"</script>\n";
 		
@@ -855,6 +858,7 @@ echo
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
 			"dotclear.msg.confirm_delete_letters = '".html::escapeJS(__('Are you sure you want to delete selected letters?'))."';\n".
+			"dotclear.msg.confirm_delete_subscribers = '".html::escapeJS(__('Are you sure you want to delete selected subscribers?'))."';\n".
 			"\n//]]>\n".
 			"</script>\n";
 			echo dcPage::jsPageTabs($plugin_tab);
@@ -926,6 +930,7 @@ if ( $newsletter_flag == 0) {
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
 		
@@ -941,6 +946,7 @@ if ( $newsletter_flag == 0) {
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
 		
@@ -960,6 +966,7 @@ if ( $newsletter_flag == 0) {
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
 			
@@ -978,6 +985,7 @@ if ( $newsletter_flag == 0) {
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
 	
@@ -995,6 +1003,7 @@ if ( $newsletter_flag == 0) {
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
 	
@@ -1011,6 +1020,7 @@ if ( $newsletter_flag == 0) {
 			echo '</div>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
 	
@@ -1026,6 +1036,7 @@ if ( $newsletter_flag == 0) {
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
 	
@@ -1041,6 +1052,7 @@ if ( $newsletter_flag == 0) {
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
 			
@@ -1056,6 +1068,7 @@ if ( $newsletter_flag == 0) {
 			tabsNewsletter::displayTabPlanning();
 			echo '</div>';
 			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
 	
@@ -1071,8 +1084,25 @@ if ( $newsletter_flag == 0) {
 			echo '<div class="multi-part" id="tab_maintenance" title="'.__('Maintenance').'">';
 			tabsNewsletter::displayTabMaintenance();
 			echo '</div>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=resume" class="multi-part">'.__('Resume').'</a></p>';
 		}
 		break;
+		
+		case 'tab_resume':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';		
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+			echo '<div class="multi-part" id="tab_resume" title="'.__('Resume').'">';
+			tabsNewsletter::displayTabResume();
+			echo '</div>';
+		}
+		break;		
 	
 		default:
 		break;	

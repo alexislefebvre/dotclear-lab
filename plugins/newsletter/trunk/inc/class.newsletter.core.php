@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Benoit de Marne.
+# Copyright (c) 2009-2011 Benoit de Marne.
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
@@ -898,9 +898,10 @@ class newsletterCore
 						$news_content = $news_content.' ... ';
 					} else {
 						$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
-						$news_content = newsletterTools::cutHtmlString($news_content,$newsletter_settings->getSizeContentPost());
+						//$news_content = newsletterTools::cutHtmlString($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = newsletterTools::truncateHtmlString($news_content,$newsletter_settings->getSizeContentPost(),'...',false,true);
 						$news_content = html::decodeEntities($news_content);
-						$news_content = preg_replace('/<\/p>$/',"...</p>",$news_content);						
+						//$news_content = preg_replace('/<\/p>$/',"...</p>",$news_content);						
 					}
 
 					// Affichage

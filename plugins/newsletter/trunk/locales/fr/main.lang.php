@@ -648,6 +648,7 @@ $GLOBALS['__l10n']['The email already exist'] = 'L\'adresse email existe déjà'
 
 #inc/class.newsletter.core.php:1029
 $GLOBALS['__l10n'][', by'] = ', par';
+$GLOBALS['__l10n']['by'] = 'par';
 
 #inc/class.newsletter.core.php:1092
 #inc/class.newsletter.core.php:1336
@@ -1059,6 +1060,7 @@ $GLOBALS['__l10n']['%s subscribers found'] = '%s abonnés trouvés';
 
 #index.php:856
 $GLOBALS['__l10n']['Are you sure you want to delete selected letters?'] = 'Êtes-vous sûr de vouloir supprimer les lettres sélectionnées?';
+$GLOBALS['__l10n']['Are you sure you want to delete selected subscribers?'] = 'Êtes-vous sûr de vouloir supprimer les abonnés sélectionnés?';
 
 #index.php:883
 $GLOBALS['__l10n']['Are you sure you want to delete all informations about newsletter in database?'] = 'Êtes-vous sûr de vouloir supprimer toutes les informations de newsletter dans la base de données ?';
@@ -1298,5 +1300,13 @@ $GLOBALS['__l10n']['Customizing the newsletter options'] = 'Personnalisation de 
 $GLOBALS['__l10n']['You must input a valid email!'] = 'Vous devez saisir un email valide !';
 
 $GLOBALS['__l10n']['Error deleting account!'] = 'Erreur lors de la suppression du compte !';
+
+$GLOBALS['__l10n']['Statistics subscribers'] = 'Statistiques des abonnés';
+
+$GLOBALS['__l10n']['Statistics letters'] = 'Statistiques des lettres';
+
+$GLOBALS['__l10n']['Statistics sending letters'] = 'Statistiques des envois de lettres';
+
+$GLOBALS['__l10n']['Count'] = 'Total';
 
 ?>

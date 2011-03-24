@@ -8,7 +8,7 @@ $(function() {
 	$('#subscribers_list').submit(function(){
 		var action=$(this).find('select[name="op"]').val();
 		if(action=='remove'){
-			return window.confirm(dotclear.msg.confirm_delete_user);
+			return window.confirm(dotclear.msg.confirm_delete_subscribers);
 		}
 		return true;
 	});

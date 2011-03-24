@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Benoit de Marne.
+# Copyright (c) 2009-2011 Benoit de Marne.
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
@@ -167,7 +167,7 @@ class newsletterMail
 				);
 			          
 				$subject = mail::B64Header($_subject);
-				$_body = (function_exists('imap_8bit') ? imap_8bit($_body) : $_body);				
+				$_body = (function_exists('imap_8bit') ? imap_8bit($_body) : $_body);
 				mail::sendMail($_email, $subject, $_body, $headers);
 				return true;
 			}

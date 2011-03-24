@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Benoit de Marne.
+# Copyright (c) 2009-2011 Benoit de Marne.
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
@@ -13,6 +13,60 @@
 
 class newsletterLettersList extends adminGenericList
 {
+	/**
+	 * Count letters
+	 */	
+	private static function countLetters($state = '1')
+	{
+		global $core;
+		
+		$params['post_type'] = 'newsletter';
+		$params['post_status'] = $state;
+		$params['no_content'] = true;
+
+		$counter = $core->blog->getPosts($params,true);
+		return $counter->f(0);
+	}
+		
+	public static function fieldsetResumeLetters()
+	{
+		$state_combo = array(
+					__('pending') => '-2',
+					__('scheduled') => '-1',
+					__('unpublish') => '0',
+					__('publish') => '1'
+				);			
+
+		$resume_content =
+				'<fieldset>'.
+				'<legend>'.__('Statistics letters').'</legend>'.
+				'<table summary="resume_letters" class="minimal">'.
+				'<thead>'.
+					'<tr>'.
+			  			'<th>'.__('State').'</th>'.
+			  			'<th>'.__('Count').'</th>'.
+					'</tr>'.
+				'</thead>'.
+				'<tbody id="classes-list">';
+
+				foreach($state_combo as $k=>$v) {
+					$resume_content .= 
+						'<tr class="line">'.
+						'<td>'.$k.'</td>'.
+						'<td>'.self::countLetters($v).'</td>'.
+						'</tr>'.
+						'';
+				}
+
+		$resume_content .= 
+				'</tbody>'.
+				'</table>'.
+				'</fieldset>'.
+				'';
+		
+		return $resume_content;
+	}	
+	
 	/**
 	 * Display list of newsletters
 	 *

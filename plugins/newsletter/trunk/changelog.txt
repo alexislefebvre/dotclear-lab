@@ -2,17 +2,21 @@
 * Ticket #544 : groupes d'abonnés
 * Ticket #545 : page récapitulative des newsletter
 * Ticket #599 : fonctionnement autonome du widget
-* Ticket #564 : vérification du by
-* Change le format des posts de la newsletter pour éviter un bug d'envoi sur la lettre auto 
-	� (post_url_format = {y}/{m}/{d}/{t}/{id})  
-* Ticket #588 : ajouter la possibilité de définir les permissions
-* Ticket #597 : bug avec Restreindre l'aper�u � l'extrait des billets
 --------- TODO -----------
 
 Newsletter 3.7.13 - 20xx-xx-xx
 ===========================================================
 * Ticket #600 : Statut confirmé � l'inscription
 * Changement des valeurs par défaut
+* Ticket #564 : vérification du by
+* Ticket #597 : bug avec Restreindre l'aper�u � l'extrait des billets
+* Ticket #650 : Newsletter : liens corrompus dans certains envois
+* Change le format des posts de la newsletter pour éviter un bug d'envoi sur la lettre auto 
+	(post_url_format = {y}/{m}/{d}/{t}/{id})
+	=> changement automatique non possible car l'url est fixée par Dotclear
+* Ticket #622 : (%s) dans le message de suppression d'un abonné 	
+* Ticket #588 : ajouter la possibilité de définir les permissions
+* Ajout d'un onglet avec le nombre d'abonnés
 
 Newsletter 3.7.12 - 2010-12-16
 ===========================================================

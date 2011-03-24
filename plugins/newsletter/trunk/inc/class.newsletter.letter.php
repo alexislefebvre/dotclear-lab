@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Benoit de Marne.
+# Copyright (c) 2009-2011 Benoit de Marne.
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
@@ -1117,7 +1117,7 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 				$replacements[0] .= '</h2>';
 
 				$replacements[0] .= '<p class="post-info">';
-				$replacements[0] .= '('.$rs_attach_posts->getDate($format).'&nbsp;'.__('by ').'&nbsp;'.$rs_attach_posts->getAuthorCN().')';
+				$replacements[0] .= '('.$rs_attach_posts->getDate($format).'&nbsp;'.__('by').'&nbsp;'.$rs_attach_posts->getAuthorCN().')';
 				$replacements[0] .= '</p>';
 			
 				// Affiche les miniatures
@@ -1213,9 +1213,10 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 						$news_content = $news_content.' ... ';
 					} else {
 						//$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
-						$news_content = newsletterTools::cutHtmlString($news_content,$newsletter_settings->getSizeContentPost());
+						//$news_content = newsletterTools::cutHtmlString($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = newsletterTools::truncateHtmlString($news_content,$newsletter_settings->getSizeContentPost(),'',false,true);
 						$news_content = html::decodeEntities($news_content);
-						$news_content = preg_replace('/<\/p>$/',"...</p>",$news_content);
+						//$news_content = preg_replace('/<\/p>$/',"...</p>",$news_content);
 					}
 
 					// Affichage
@@ -1285,7 +1286,7 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 			while ($rs_attach_posts->fetch())
 			{
 				$replacements[0] .= $rs_attach_posts->post_title.'<br/>';
-				$replacements[0] .= '('.$rs_attach_posts->getDate($format).' '.__('by ').' '.$rs_attach_posts->getAuthorCN().')<br/>';
+				$replacements[0] .= '('.$rs_attach_posts->getDate($format).' '.__('by').' '.$rs_attach_posts->getAuthorCN().')<br/>';
 			
 				// On n'affiche pas les miniatures en mode texte
 
