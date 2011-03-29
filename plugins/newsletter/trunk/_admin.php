@@ -317,6 +317,6 @@ class newsletterRest
 		
 		return $result;
 	}
-
+	
 } // end class newsletterRest
 ?>

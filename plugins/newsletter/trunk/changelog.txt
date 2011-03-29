@@ -1,7 +1,6 @@
 --------- TODO -----------
 * Ticket #544 : groupes d'abonnés
 * Ticket #545 : page récapitulative des newsletter
-* Ticket #599 : fonctionnement autonome du widget
 --------- TODO -----------
 
 Newsletter 3.7.13 - 20xx-xx-xx
@@ -17,6 +16,7 @@ Newsletter 3.7.13 - 20xx-xx-xx
 * Ticket #622 : (%s) dans le message de suppression d'un abonné 	
 * Ticket #588 : ajouter la possibilité de définir les permissions
 * Ajout d'un onglet avec le nombre d'abonnés
+* Ticket #599 : fonctionnement autonome du widget
 
 Newsletter 3.7.12 - 2010-12-16
 ===========================================================

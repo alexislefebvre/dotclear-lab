@@ -45,6 +45,10 @@ $core->addBehavior('publicHeadContent', array('dcBehaviorsNewsletterPublic', 'pu
 
 $core->addBehavior('publicAfterUserCreate', array('dcBehaviorsNewsletterPublic', 'newsletterUserCreate'));
 
+if($core->plugins->moduleExists('dotajax') && !isset($core->plugins->getDisabledModules['dotajax'])) {
+	$core->pubrest->register('newsletter','dcNewsletterWidgetRest');
+}
+
 class tplNewsletter
 {
 	/**
@@ -232,12 +236,11 @@ class tplNewsletter
 	{
 		global $core;
 		$newsletter_settings = new newsletterSettings($core);
-		//return __('Newsletter');
 		return $newsletter_settings->getFormTitlePage();
 	}	
 
 	/**
-	* indication à l'utilisateur que la page newsletter n'a pas été initialisée
+	* indicate to the user that the page newsletter has not been initialized
 	*/
 	public static function NewsletterTemplateNotSet()
 	{
@@ -418,9 +421,11 @@ class tplNewsletter
 class publicWidgetsNewsletter
 {
 	/**
-	* initialize widget
-	*/
-	public static function initWidgets($w)
+	 * initialize widget
+	 * @param $w
+	 * @return String
+	 */
+	public static function initWidgets($w)	
 	{
 		global $core;
 		
@@ -434,118 +439,174 @@ class publicWidgetsNewsletter
 		}
 		
 		try {
+			
 			$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 			
-			// prise en compte de l'état d'activation du plugin
+			// get state of plugin
 			if (!$newsletter_flag) 
 				return;
 
-			// prise en compte paramètre: uniquement sur la page d'accueil
+			// use only on homepage
 			$url = &$core->url;
 			if ($w->homeonly && $url->type != 'default')  {
 				return;
 			}
 
-			// paramétrage des variables
 			$plugin_name = __('Newsletter');
 			$title = ($w->title) ? html::escapeHTML($w->title) : $plugin_name;
 			$showTitle = ($w->showtitle) ? true : false;
 			$subscription_link = ($w->subscription_link) ? html::escapeHTML($w->subscription_link) : __('Subscription link');
-			
 			$text = '';
-
 			$newsletter_settings = new newsletterSettings($core);
-			
+
 			// mise en place du contenu du widget dans $text
 			if ($w->inwidget) {
-				$link = newsletterCore::url('submit');
-				$text .=
-				'<form action="'.$link.'" method="post" id="nl_form">'."\n".
-				"<p>\n".
-				$core->formNonce().
-				form::hidden(array('nl_random'),newsletterTools::getRandom()).
-				"</p>\n".
-				'<p>'.
-				'<label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
-				form::field(array('nl_email','nl_email'),15,255).
-				'</p>';
 				
-				if(!$newsletter_settings->getUseDefaultFormat()) {
-				$text .= '<p><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
-				'<select style="border:1px inset silver; width:140px;" name="nl_modesend" id="nl_modesend" size="1">'.
-					'<option value="html" selected="selected">'.__('html').'</option>'.
-					'<option value="text">'.__('text').'</option>'.
-				'</select></p>';
-				}
-
-				$text .= '<p><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
-				'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1">'.
-					'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
+				// if dotajax is installed
+				if($core->plugins->moduleExists('dotajax') && !isset($core->plugins->getDisabledModules['dotajax'])) {
 					
-				if(!$newsletter_settings->getUseDefaultFormat()) {
-					$text .= '<option value="changemode">'.__('Change format').'</option>';
-				}
-
-				if($newsletter_settings->getCheckUseSuspend()) {
-					$text .= '<option value=\"suspend\">'.__('Suspend').'</option>';
-				}
-
-				$text .= 
-					'<option value="resume">'.__('Resume').'</option>'.
-					'<option value="">---</option>'.
-					'<option value="unsubscribe">'.__('Unsubscribe').'</option>'.
-				'</select>'.
-				/*
-				'<li><label for="nl_submit">'.__('Actions').'</label>&nbsp;:<br />'.
-				form::radio(array('nl_option'),'subscribe', true).__('Subscribe').'<br />'.
-				form::radio(array('nl_option'),'unsubscribe').__('Unsubscribe').'<br />'.
-				//*/
-				'</p>';
-
-				if ($newsletter_settings->getCaptcha()) {
-					require_once dirname(__FILE__).'/inc/class.captcha.php';							
-					$as = new Captcha(80, 30, 5);
-					$as->generate();
-					$as->file();
-					$as->write();
-						
-					$text .=
-					//'<p>'.
-					'<p><label for="nl_captcha">'.__('Captcha').'</label>&nbsp;:<br />'.
-					'<img src="'.Captcha::www().'/captcha.img.png" alt="'.__('Captcha').'" /><br />'.
-					form::field(array('nl_captcha','nl_captcha'),9,30).
+					$link = '';
+					$text .= 
+					'<p>'.$newsletter_settings->getMsgPresentationForm().'</p>'.
+					'<form action ="" method="post" id="nl_form">'."\n".
+					"<p>\n".
+					$core->formNonce().
+					form::hidden(array('nl_random'),newsletterTools::getRandom()).
+					"</p>\n".
+					'<p>'.
+					'<label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
+					form::field(array('nl_email','nl_email'),15,255).
 					'</p>';
-					//'</p>'.
-				}
-				
-				$text .=
-				'<p><input class="submit" type="submit" name="nl_submit" id="nl_submit" value="'.__('Send').'" /></p>'.
+					
+					if(!$newsletter_settings->getUseDefaultFormat()) {
+					$text .= '<p><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
+					'<select style="border:1px inset silver; width:140px;" name="nl_modesend" id="nl_modesend" size="1">'.
+						'<option value="html" selected="selected">'.__('html').'</option>'.
+						'<option value="text">'.__('text').'</option>'.
+					'</select></p>';
+					}
+	
+					$text .= '<p><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
+					'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1">'.
+						'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
+						
+					if(!$newsletter_settings->getUseDefaultFormat()) {
+						$text .= '<option value="changemode">'.__('Change format').'</option>';
+					}
+	
+					if($newsletter_settings->getCheckUseSuspend()) {
+						$text .= '<option value=\"suspend\">'.__('Suspend').'</option>';
+					}
+	
+					$text .= 
+						'<option value="resume">'.__('Resume').'</option>'.
+						'<option value="">---</option>'.
+						'<option value="unsubscribe">'.__('Unsubscribe').'</option>'.
+					'</select>'.
+					'</p>';
+	
+					if ($newsletter_settings->getCaptcha()) {
+						require_once dirname(__FILE__).'/inc/class.captcha.php';							
+						$as = new Captcha(80, 30, 5);
+						$as->generate();
+						$as->file();
+						$as->write();
+							
+						$text .=
+						'<p><label for="nl_captcha">'.__('Captcha').'</label>&nbsp;:<br />'.
+						'<img src="'.Captcha::www().'/captcha.img.png" alt="'.__('Captcha').'" /><br />'.
+						form::field(array('nl_captcha','nl_captcha'),9,30).
+						'</p>';
+					}
+					
+					$text .=
+					'<p><input class="submit" type="submit" name="nl_submit" id="nl_submit" value="'.__('Send').'" /></p>'.
+					'</form>';
 
-				//'</ul>'.
-				//'</fieldset>'.
-				'</form>';
-				
+				} else {
+					
+					// todo : if dotajax is not installed
+					$link = newsletterCore::url('submit');
+					$text .=
+					'<p>'.$newsletter_settings->getMsgPresentationForm().'</p>'.
+					'<form action="'.$link.'" method="post" id="nl_form">'."\n".
+					"<p>\n".
+					$core->formNonce().
+					form::hidden(array('nl_random'),newsletterTools::getRandom()).
+					"</p>\n".
+					'<p>'.
+					'<label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
+					form::field(array('nl_email','nl_email'),15,255).
+					'</p>';
+					
+					if(!$newsletter_settings->getUseDefaultFormat()) {
+					$text .= '<p><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
+					'<select style="border:1px inset silver; width:140px;" name="nl_modesend" id="nl_modesend" size="1">'.
+						'<option value="html" selected="selected">'.__('html').'</option>'.
+						'<option value="text">'.__('text').'</option>'.
+					'</select></p>';
+					}
+	
+					$text .= '<p><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
+					'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1">'.
+						'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
+						
+					if(!$newsletter_settings->getUseDefaultFormat()) {
+						$text .= '<option value="changemode">'.__('Change format').'</option>';
+					}
+	
+					if($newsletter_settings->getCheckUseSuspend()) {
+						$text .= '<option value=\"suspend\">'.__('Suspend').'</option>';
+					}
+	
+					$text .= 
+						'<option value="resume">'.__('Resume').'</option>'.
+						'<option value="">---</option>'.
+						'<option value="unsubscribe">'.__('Unsubscribe').'</option>'.
+					'</select>'.
+					'</p>';
+	
+					if ($newsletter_settings->getCaptcha()) {
+						require_once dirname(__FILE__).'/inc/class.captcha.php';							
+						$as = new Captcha(80, 30, 5);
+						$as->generate();
+						$as->file();
+						$as->write();
+							
+						$text .=
+						'<p><label for="nl_captcha">'.__('Captcha').'</label>&nbsp;:<br />'.
+						'<img src="'.Captcha::www().'/captcha.img.png" alt="'.__('Captcha').'" /><br />'.
+						form::field(array('nl_captcha','nl_captcha'),9,30).
+						'</p>';
+					}
+					
+					$text .=
+					'<p><input class="submit" type="submit" name="nl_submit" id="nl_submit" value="'.__('Send').'" /></p>'.
+					'</form>';
+				}
+
 			} else {
-         			$link = newsletterCore::url('form');
+         		
+				$link = newsletterCore::url('form');
+				
 				if ($w->insublink) {
 					$title = str_replace('%I', '<img src="?pf=newsletter/icon.png" alt="" width="16" height="16" style="margin: 0 3px; vertical-align: middle;" />', $title);
 					$text = $w->text ? $w->text : '';
-
 					$text .= '<ul><li><a href="'.$link.'">'.$subscription_link.'</a></li></ul>';
 				} else {
-	         			$title = '<a href="'.$link.'">'.$title.'</a>';
-	            		$title = str_replace('%I', '</a><img src="?pf=newsletter/icon.png" alt="newsletter" width="16" height="16" style="margin:0 3px; vertical-align:middle;" /> <a href="'.$link.'">', $title);
+	         		$title = '<a href="'.$link.'">'.$title.'</a>';
+	            	$title = str_replace('%I', '</a><img src="?pf=newsletter/icon.png" alt="newsletter" width="16" height="16" style="margin:0 3px; vertical-align:middle;" /> <a href="'.$link.'">', $title);
 				}
 			}
 
-			// renvoi du code à afficher pour le widget
 			if ($showTitle === true) 
 				$title = '<h2>'.$title.'</h2>';
 			else 
 				$title = '';
 			
-			return "\n".'<div class="'.newsletterPlugin::pname().'">'.$title.$text.'</div>'."\n";
-			//return "\n".'<div class="categories">'.$title.$text.'</div>'."\n";
+			$text .= '<div id="message"></div>';
+				
+			return "\n".'<div class="'.newsletterPlugin::pname().'">'.$title.$text.'<p>&nbsp;</p></div>'."\n";
 
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -749,7 +810,7 @@ class urlNewsletter extends dcUrlHandlers
 				//self::serveDocument('subscribe.newsletter.html');
 			}
 		}
-	}    
+	}
 }
 
 // Define behaviors
@@ -757,12 +818,47 @@ class dcBehaviorsNewsletterPublic
 {
 	public static function publicHeadContent(dcCore $core,$_ctx)
 	{
-		if($core->url->type == "newsletter") {
-			$letter_css = new newsletterCSS($core);
-			$css_style = '<style type="text/css" media="screen">';
-			$css_style .= $letter_css->getLetterCSS();
-			$css_style .= '</style>';
-			echo $css_style;
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->newsletter;
+			$system_settings =& $core->blog->settings->system;
+		} else {
+			$blog_settings =& $core->blog->settings;
+			$system_settings =& $core->blog->settings;
+		}
+		
+		try {
+			$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
+			
+			// prise en compte de l'état d'activation du plugin
+			if (!$newsletter_flag) 
+				return;		
+		
+			if($core->url->type == "newsletter") {
+				$letter_css = new newsletterCSS($core);
+				$css_style = '<style type="text/css" media="screen">';
+				$css_style .= $letter_css->getLetterCSS();
+				$css_style .= '</style>';
+				echo $css_style;
+			}
+
+			// if dotajax is installed
+			if($core->plugins->moduleExists('dotajax') && !isset($core->plugins->getDisabledModules['dotajax'])) {
+				echo
+				"<script type=\"text/javascript\" src=\"".
+					'?pf=newsletter/js/_newsletter_pub.js">'.
+				"</script>\n";
+
+				echo 
+					'<script type="text/javascript">'."\n".
+					"//<![CDATA[\n".
+					"please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
+					"\n//]]>\n".
+					"</script>\n";				
+			}
+		
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
 	}
 
@@ -807,7 +903,84 @@ class dcBehaviorsNewsletterPublic
 			}
 		}
 		return;
-	}	
+	}
+}
+
+class dcNewsletterWidgetRest 
+{
+	public static function submitWidget(dcCore $core,$get,$post)
+	{
+		if (!isset($post['email']) || $post['email'] == '')
+			throw new Exception (__('No email specified.'));
+		else
+			$email = $post['email'];
+
+		if (!isset($post['option']) || $post['option'] == '')
+			throw new Exception (__('No option specified.'));
+		else
+			$option = $post['option'];
+		
+		$captcha = isset($post['captcha']) ? $post['captcha'] : null;
+		$modesend = isset($post['nl_modesend']) ? $post['nl_modesend'] : null;
+		
+		$check = true;
+		$newsletter_settings = new newsletterSettings($core);
+		if ($newsletter_settings->getCaptcha()) {
+
+			if (!isset($post['captcha']) || $post['captcha'] == '')
+				throw new Exception (__('No captcha specified.'));				
+			
+			$read = Captcha::read();
+			if ($read != $captcha) {
+				$check = false;
+				/* generate new code
+				$ca = new Captcha(80, 30, 5);
+				$ca->generate();
+				$ca->file();
+				$ca->write();
+				*/
+			}
+		}
+
+		if (!$check) {
+			throw new Exception (__('Bad captcha code'));
+		} else switch ($option) {
+			case 'subscribe':
+				$msg = newsletterCore::accountCreate($email,null,$modesend);
+				break;
+					
+			case 'unsubscribe':
+				$msg = newsletterCore::accountDelete($email);
+				break;
+
+			case 'suspend':
+				$msg = newsletterCore::accountSuspend($email);
+				break;
+
+			case 'resume':
+				$msg = newsletterCore::accountResume($email);
+				break;
+
+			case 'changemode':
+				$msg = newsletterCore::accountChangeMode($email,$modesend);
+				break;
+
+			default:
+				throw new Exception (__('Error in formular.').' option = '.$option);
+				break;
+		}
+		
+		$rsp = array();
+		
+		$subscriberTag = array();
+		$subscriberTag['email'] = $email;
+		$subscriberTag['option'] = $option;
+		$subscriberTag['result'] = $msg;
+		
+		$rsp[]=$subscriberTag;
+		
+		return $rsp;
+	}		
 }
 
 ?>

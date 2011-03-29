@@ -1819,9 +1819,9 @@ class newsletterCore
 				return __('Bad email !');
 			} else {
 				if (self::getemail($email) != null) {
-					return __('Email already exist !');
+					return __('Email already subscribed.');
 				} else if (!self::add($email, null, null, $modesend)) {
-					return __('Error creating account !');
+					return __('Error during account creation.');
 				} else {
 					$subscriber = self::getemail($email);
 					

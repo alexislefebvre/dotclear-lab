@@ -28,10 +28,11 @@ class newsletterWidgets
 			$w->create('newsletter', __('Newsletter'), array('publicWidgetsNewsletter', 'initWidgets'));
 
 			$w->newsletter->setting('title', __('Title').' : ', __('Newsletter'));
-			$w->newsletter->setting('showtitle', __('Show title'), 1, 'check');
-			$w->newsletter->setting('homeonly', __('Home page only'), 0, 'check');
-			$w->newsletter->setting('inwidget', __('In widget'), 0, 'check');
-			$w->newsletter->setting('insublink', __('In sublink'), 1, 'check');
+			$w->newsletter->setting('showtitle', __('Show title'), true, 'check');
+			$w->newsletter->setting('homeonly', __('Home page only'), false, 'check');
+			$w->newsletter->setting('inwidget', __('In widget').'<br />('.__('install plugin dotajax for activate the dynamics functions'), 
+				false, 'check');
+			$w->newsletter->setting('insublink', __('In sublink'), true, 'check');
 			$w->newsletter->setting('subscription_link',__('Title subscription link').' : ',__('Subscription link'));
 	      
 		} catch (Exception $e) { 
