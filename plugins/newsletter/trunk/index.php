@@ -843,7 +843,7 @@ echo
 			"dotclear.msg.subject = '".html::escapeJS(__('Subject'))."';\n".
 			"dotclear.msg.to_user = '".html::escapeJS(__('to user'))."';\n".
 			"dotclear.msg.please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
-			"dotclear.msg.subscribers_found = '".html::escapeJS(__('%s subscribers found'))."';\n".
+			"dotclear.msg.subscribers_found = '".html::escapeJS(__('%s subscriber(s) found'))."';\n".
 			"dotclear.msg.confirm_delete_subscribers = '".html::escapeJS(__('Are you sure you want to delete selected subscribers?'))."';\n".
 			"\n//]]>\n".
 			"</script>\n";

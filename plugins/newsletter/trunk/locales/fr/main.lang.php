@@ -1107,7 +1107,7 @@ $GLOBALS['__l10n']['Subject'] = 'Sujet';
 $GLOBALS['__l10n']['to user'] = 'pour l\'abonné';
 
 #index.php:846
-$GLOBALS['__l10n']['%s subscribers found'] = '%s abonnés trouvés';
+$GLOBALS['__l10n']['%s subscriber(s) found'] = '%s abonné(s) trouvé(s)';
 
 #index.php:847
 #index.php:861

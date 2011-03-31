@@ -296,8 +296,6 @@ class newsletterRest
 			$letter_content = $post['p_letter_header'];
 			$letter_content .= newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
 			$letter_content .= $post['p_letter_footer'];
-			
-			//$letter_content = newsletterLetter::mb_wordwrap($letter_content);
 		}
 			
 		// send letter to user

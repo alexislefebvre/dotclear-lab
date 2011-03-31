@@ -22,7 +22,7 @@ $(function(){
 			//$("#message").html('<img src="index.php?pf=newsletter/check-on.png" alt="OK" />');
 			$("#nl_form").empty();
 			$("#message").empty();
-			$("#message").append(json_val.data[0].email);
+			//$("#message").append(json_val.data[0].email);
 			//$("#message").append('<br />option='+json_val.data[0].option+'<br />');
 			$("#message").append('<br />'+json_val.data[0].result);
 		} else {

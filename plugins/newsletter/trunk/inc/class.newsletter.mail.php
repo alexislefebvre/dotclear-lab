@@ -156,7 +156,7 @@ class newsletterMail
 					'X-Sender:'.$this->email_from,
 					'MIME-Version: 1.0',
 					(($_type == 'html') ? 'Content-Type: text/html; charset=UTF-8;' : 'Content-Type: text/plain; charset=UTF-8;'),
-					'Content-Transfer-Encoding: quoted-printable',
+					(function_exists('imap_8bit') ? 'Content-Transfer-Encoding: quoted-printable' : 'Content-Transfer-Encoding: 8bit'),
 					'X-Mailer: Dotclear '.$this->x_mailer,
 					'X-Blog-Id: '.$this->x_blog_id,
 					'X-Blog-Name: '.$this->x_blog_name,
@@ -167,7 +167,8 @@ class newsletterMail
 				);
 			          
 				$subject = mail::B64Header($_subject);
-				$_body = (function_exists('imap_8bit') ? imap_8bit($_body) : $_body);
+				$_body = (function_exists('imap_8bit') ? imap_8bit($_body) : newsletterTools::mb_wordwrap($_body));
+				
 				mail::sendMail($_email, $subject, $_body, $headers);
 				return true;
 			}

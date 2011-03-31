@@ -1431,8 +1431,8 @@ msgid "to user"
 msgstr "pour l'abonné"
 
 #: index.php:846
-msgid "%s subscribers found"
-msgstr "%s abonnés trouvés"
+msgid "%s subscriber(s) found"
+msgstr "%s abonné(s) trouvé(s)"
 
 #: index.php:847
 #: index.php:861

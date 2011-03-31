@@ -97,7 +97,6 @@ class newsletterLetter
 		$this->post_selected = false;
 		$this->post_open_comment = false;
 		$this->post_open_tb = false;
-		
 		$this->post_media = array();
 		$this->post_meta = array();
 	}
@@ -867,81 +866,6 @@ class newsletterLetter
 	# FORMATTING LETTER FOR MAILING
 	###############################################
 
-/**
- * Multibyte capable wordwrap
- *
- * @param string $str
- * @param int $width
- * @param string $break
- * @return string
- */
-public static function mb_wordwrap($str, $width=74, $break="\r\n")
-{
-	// todo optimisation -- fonction trop lente si le post est long ...
-	//throw new Exception('point E - '.$str_width);
-	
-    // Return short or empty strings untouched
-    if(empty($str) || mb_strlen($str, 'UTF-8') <= $width)
-        return $str;
-  
-    $br_width  = mb_strlen($break, 'UTF-8');
-    $str_width = mb_strlen($str, 'UTF-8');
-    $return = '';
-    $last_space = false;
-    
-    for($i=0, $count=0; $i < $str_width; $i++, $count++)
-    {
-        // If we're at a break
-        if (mb_substr($str, $i, $br_width, 'UTF-8') == $break)
-        {
-            $count = 0;
-            $return .= mb_substr($str, $i, $br_width, 'UTF-8');
-            $i += $br_width - 1;
-            continue;
-        }
-
-        // Keep a track of the most recent possible break point
-        if(mb_substr($str, $i, 1, 'UTF-8') == " ")
-        {
-            $last_space = $i;
-        }
-
-        // It's time to wrap
-        if ($count > $width)
-        {
-            // There are no spaces to break on!  Going to truncate :(
-            if(!$last_space)
-            {
-                $return .= $break;
-                $count = 0;
-            }
-            else
-            {
-                // Work out how far back the last space was
-                $drop = $i - $last_space;
-
-                // Cutting zero chars results in an empty string, so don't do that
-                if($drop > 0)
-                {
-                    $return = mb_substr($return, 0, -$drop);
-                }
-               
-                // Add a break
-                $return .= $break;
-
-                // Update pointers
-                $i = $last_space + ($br_width - 1);
-                $last_space = false;
-                $count = 0;
-            }
-        }
-
-        // Add character from the input string to the output
-        $return .= mb_substr($str, $i, 1, 'UTF-8');
-    }
-    return $return;
-}		
-	
 	/**
 	 * Define the links content for a subscriber
 	 *
@@ -968,25 +892,14 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 			$replacements[0] .= html::escapeHTML($newsletter_settings->getTxtDisable()).'</a>';
 			$replacements[1] = '<a href='.newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($sub_email)).'" style="'.$style_link_suspend.'">';
 			$replacements[1] .= html::escapeHTML($newsletter_settings->getTxtSuspend()).'</a>';
-			/*
-			$replacements[0] = '<a href='.newsletterCore::url('disable/'.newsletterTools::base64_url_encode($sub_email)).'>';
-			$replacements[0] .= html::escapeHTML($newsletter_settings->getTxtDisable()).'</a>';
-			$replacements[1] = '<a href='.newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($sub_email)).'>';
-			$replacements[1] .= html::escapeHTML($newsletter_settings->getTxtSuspend()).'</a>';
-			//*/
 		}
 		
 		/* chaine initiale */
 		$count = 0;
 		$scontent = preg_replace($patterns, $replacements, $scontent, 1, $count);
-		//$scontent = newsletterLetter::mb_wordwrap($scontent);		
-
 		return $scontent;		
 	}
 	
-	
-
-
 	/**
 	 * define the style
 	 * @return String
