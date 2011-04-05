@@ -13,6 +13,15 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
+class rsExtNewsletter 
+{
+        public static function getURL($rs)
+        {
+                return $rs->core->blog->url.$rs->core->url->getBase('newsletter').'/'.
+                html::sanitizeURL($rs->post_url);
+        }
+}
+
 class dcNewsletter
 {
 	// Variables
@@ -128,6 +137,24 @@ class dcNewsletter
 	{
 		return sizeof($this->messages);
 	}
+	
+	/**
+	 * getNewsletters 
+	 * 
+	 * Retrieves newsletters from database.
+	 *
+	 * @param array $params  newsletter parameters (see dcBlog->getPosts for available parameters)
+	 * @param boolean $count_only  only count results
+	 * @access public
+	 * @return void
+	 */
+	public function getNewsletters ($params=array(), $count_only=false) {
+		$params['post_type']='newsletter';
+		$rs= $this->core->blog->getPosts($params,$count_only);
+		$rs->extend('rsExtNewsletter');
+		return $rs;
+	}	
+	
 
 } // end class dcNewsletter
 

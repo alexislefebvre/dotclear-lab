@@ -13,33 +13,38 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-// initialisation du widget
+// initialisation des widgets
 $core->addBehavior('initWidgets', array('newsletterWidgets', 'initWidgets'));
 
 class newsletterWidgets 
 {
-	/**
-	* initialisation du widget
-	*/
 	public static function initWidgets($w)
 	{
 		global $core, $plugin_name;
       	try {
-			$w->create('newsletter', __('Newsletter'), array('publicWidgetsNewsletter', 'initWidgets'));
-
+			$w->create('newsletter', 'Newsletter', array('publicWidgetsNewsletter', 'initWidgets'));
 			$w->newsletter->setting('title', __('Title').' : ', __('Newsletter'));
 			$w->newsletter->setting('showtitle', __('Show title'), true, 'check');
-			$w->newsletter->setting('homeonly', __('Home page only'), false, 'check');
 			$w->newsletter->setting('inwidget', __('In widget').'<br />('.__('install plugin dotajax for activate the dynamics functions'), 
 				false, 'check');
 			$w->newsletter->setting('insublink', __('In sublink'), true, 'check');
 			$w->newsletter->setting('subscription_link',__('Title subscription link').' : ',__('Subscription link'));
+			$w->newsletter->setting('homeonly', __('Home page only'), false, 'check');
+						
+			$w->create('listnsltr', 'Newsletters', array('publicWidgetsNewsletter', 'listnsltrWidget'));
+			$w->listnsltr->setting('title', __('Title').' : ', __('Newsletters'));
+			$w->listnsltr->setting('showtitle', __('Show title'), true, 'check');
+			$w->listnsltr->setting('limit',__('Limit (empty means no limit):'),'5');			
+			$w->listnsltr->setting('orderby',__('Order by'),'name','combo',
+			array(__('Newsletter name') => 'name', __('Newsletter date') => 'date'));
+			$w->listnsltr->setting('orderdir',__('Sort:'),'desc','combo',
+			array(__('Ascending') => 'asc', __('Descending') => 'desc'));			
+			$w->listnsltr->setting('homeonly', __('Home page only'), true, 'check');			
 	      
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
 	}
-
 }
 	
 ?>

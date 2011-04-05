@@ -129,6 +129,9 @@ msgstr "Erreur dans le formulaire."
 msgid "Captcha"
 msgstr "Code visuel"
 
+msgid "All newsletters"
+msgstr "Toutes les newsletters"
+
 #: _public.php:312
 #: _public.php:392
 #: _public.php:495
@@ -441,6 +444,12 @@ msgstr "Inclure les sous-catégories"
 #: inc/class.newsletter.admin.php:594
 msgid "Add the date in the title of the letter"
 msgstr "Ajoute la date dans le titre de la lettre d'information"
+
+msgid "Number per page"
+msgstr "Nombre par page"
+
+msgid "Sort by"
+msgstr "Trier par"
 
 #: inc/class.newsletter.admin.php:697
 #: inc/class.newsletter.admin.php:913
@@ -1024,8 +1033,8 @@ msgid "Remove"
 msgstr "Enlever"
 
 #: inc/class.newsletter.letters.php:42
-msgid "Statistics letters"
-msgstr "Statistiques des lettres"
+msgid "Statistics post type newsletter"
+msgstr "Statistiques des billets de type newsletter"
 
 #: inc/class.newsletter.letters.php:47
 #: inc/class.newsletter.subscribers.php:40

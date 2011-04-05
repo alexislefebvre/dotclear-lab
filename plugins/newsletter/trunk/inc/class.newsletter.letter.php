@@ -1125,8 +1125,6 @@ class newsletterLetter
 						$news_content = html::escapeHTML($news_content);
 						$news_content = $news_content.' ... ';
 					} else {
-						//$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
-						//$news_content = newsletterTools::cutHtmlString($news_content,$newsletter_settings->getSizeContentPost());
 						$news_content = newsletterTools::truncateHtmlString($news_content,$newsletter_settings->getSizeContentPost(),'',false,true);
 						$news_content = html::decodeEntities($news_content);
 						//$news_content = preg_replace('/<\/p>$/',"...</p>",$news_content);

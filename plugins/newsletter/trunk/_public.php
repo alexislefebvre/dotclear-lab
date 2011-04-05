@@ -39,6 +39,10 @@ $core->tpl->addValue('NewsletterFormFormatSelect', array('tplNewsletter', 'Newsl
 $core->tpl->addValue('NewsletterFormActionSelect', array('tplNewsletter', 'NewsletterFormActionSelect'));
 $core->tpl->addBlock('NewsletterIfUseCaptcha',array('tplNewsletter','NewsletterIfUseCaptcha'));
 
+$core->tpl->addBlock('NewsletterEntries',array('tplNewsletter','NewsletterEntries'));
+//$core->tpl->addBlock('NewsletterEntryNext',array('tplNewsletter','NewsletterEntryNext'));
+//$core->tpl->addBlock('NewsletterEntryPrevious',array('tplNewsletter','NewsletterEntryPrevious'));
+
 // adding behaviors
 $core->addBehavior('publicBeforeContentFilter', array('dcBehaviorsNewsletterPublic', 'translateKeywords'));
 $core->addBehavior('publicHeadContent', array('dcBehaviorsNewsletterPublic', 'publicHeadContent'));
@@ -416,6 +420,111 @@ class tplNewsletter
 		return ($newsletter_settings->getCaptcha()? $content : '');		
 	}
 
+	
+	/* NewslettersEntries -------------------------------------------- */
+	/*dtd
+	<!ELEMENT tpl:NewslettersEntries - - -- Blog NewslettersEntries loop -->
+	<!ATTLIST tpl:NewslettersEntries
+	lastn	CDATA	#IMPLIED	-- limit number of results to specified value
+	disabled -- author	CDATA	#IMPLIED	-- get entries for a given user id
+	disabled -- category	CDATA	#IMPLIED	-- get entries for specific categories only (multiple comma-separated categories can be specified. Use "!" as prefix to exclude a category)
+	disabled -- no_category	CDATA	#IMPLIED	-- get entries without category
+	disabled -- no_context (1|0)	#IMPLIED  -- Override context information
+	sortby	(title|selected|author|date|id)	#IMPLIED	-- specify entries sort criteria (default : date) (multiple comma-separated sortby can be specified. Use "?asc" or "?desc" as suffix to provide an order for each sorby)
+	order	(desc|asc)	#IMPLIED	-- specify entries order (default : desc)
+	disabled -- no_content	(0|1)	#IMPLIED	-- do not retrieve entries content
+	selected	(0|1)	#IMPLIED	-- retrieve posts marked as selected only (value: 1) or not selected only (value: 0)
+	disabled -- url		CDATA	#IMPLIED	-- retrieve post by its url
+	disabled -- type		CDATA	#IMPLIED	-- retrieve post with given post_type (there can be many ones separated by comma)
+	disabled -- age		CDATA	#IMPLIED	-- retrieve posts by maximum age (ex: -2 days, last month, last week)
+	ignore_pagination	(0|1)	#IMPLIED	-- ignore page number provided in URL (useful when using multiple tpl:Entries on the same page)
+	>
+	*/	
+	public static function NewsletterEntries($attr,$content)
+	{
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
+		
+		$lastn = 0;
+		if (isset($attr['lastn'])) {
+			$lastn = abs((integer) $attr['lastn'])+0;
+		}
+		
+		$p = 'if (!isset($_page_number)) { $_page_number = 1; }'."\n";
+
+		if ($lastn > 0) {
+			$p .= "\$params['limit'] = ".$lastn.";\n";
+		} else {
+			$p .= "\$params['limit'] = ".$newsletter_settings->getNbNewslettersPerPublicPage().";\n";
+		}
+		
+		if (!isset($attr['ignore_pagination']) || $attr['ignore_pagination'] == "0") {
+			$p .= "\$params['limit'] = array(((\$_page_number-1)*\$params['limit']),\$params['limit']);\n";
+		} else {
+			$p .= "\$params['limit'] = array(0, \$params['limit']);\n";
+		}
+
+		$p .= "\$params['post_type'] = 'newsletter';\n";
+
+		if (isset($attr['sortby'])) {
+			switch ($attr['sortby']) {
+				case 'title': $sortby = 'post_title'; break;
+				case 'selected' : $sortby = 'post_selected'; break;
+				case 'author' : $sortby = 'user_id'; break;
+				case 'date' : $sortby = 'post_dt'; break;
+			}
+		} else {
+			$sortby = $newsletter_settings->getNewslettersPublicPageSort();
+		}
+		
+		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order'])) {
+			$order = $attr['order'];
+		} else {
+			$order = $newsletter_settings->getNewslettersPublicPageOrder();
+		}
+
+		$p .= "\$params['order'] = '".$sortby." ".$order."';\n";
+
+		if (!empty($attr['url'])) {
+			$p .= "\$params['post_url'] = '".addslashes($attr['url'])."';\n";
+		}
+		
+		if (isset($attr['no_content']) && $attr['no_content']) {
+			$p .= "\$params['no_content'] = true;\n";
+		}
+		
+		if (isset($attr['selected'])) {
+			$p .= "\$params['post_selected'] = ".(integer) (boolean) $attr['selected'].";";
+		}
+
+		if (empty($attr['no_context']))
+		{
+			$p .=
+			'if ($_ctx->exists("categories")) { '.
+				"\$params['cat_id'] = \$_ctx->categories->cat_id; ".
+			"}\n";
+			
+			$p .=
+			'if ($_ctx->exists("langs")) { '.
+				"\$params['sql'] = \"AND P.post_lang = '\".\$core->blog->con->escape(\$_ctx->langs->post_lang).\"' \"; ".
+			"}\n";
+		}
+
+		$res = "<?php\n";
+		$res .= $p;
+		$res .= '$_ctx->post_params = $params;'."\n";
+		$res .= '$_ctx->posts = $core->blog->dcNewsletter->getNewsletters($params); unset($params);'."\n";
+		$res .= "?>\n";
+		
+		$res .=
+		'<?php while ($_ctx->posts->fetch()) : ?>'.$content.'<?php endwhile; '.
+		'$_ctx->posts = null; $_ctx->post_params = null; ?>';
+		
+		return $res;
+
+	}
+	
+	
 }
 
 class publicWidgetsNewsletter
@@ -452,7 +561,7 @@ class publicWidgetsNewsletter
 				return;
 			}
 
-			$plugin_name = __('Newsletter');
+			$plugin_name = 'Newsletter';
 			$title = ($w->title) ? html::escapeHTML($w->title) : $plugin_name;
 			$showTitle = ($w->showtitle) ? true : false;
 			$subscription_link = ($w->subscription_link) ? html::escapeHTML($w->subscription_link) : __('Subscription link');
@@ -467,26 +576,26 @@ class publicWidgetsNewsletter
 					
 					$link = '';
 					$text .= 
-					'<p>'.$newsletter_settings->getMsgPresentationForm().'</p>'.
 					'<form action ="" method="post" id="nl_form">'."\n".
-					"<p>\n".
 					$core->formNonce().
 					form::hidden(array('nl_random'),newsletterTools::getRandom()).
-					"</p>\n".
+					'<p>'.$newsletter_settings->getMsgPresentationForm().'</p>'.
+					
 					'<p>'.
 					'<label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
 					form::field(array('nl_email','nl_email'),15,255).
 					'</p>';
 					
 					if(!$newsletter_settings->getUseDefaultFormat()) {
-					$text .= '<p><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
+					$text .= '<p>'.
+					'<label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
 					'<select style="border:1px inset silver; width:140px;" name="nl_modesend" id="nl_modesend" size="1">'.
 						'<option value="html" selected="selected">'.__('html').'</option>'.
 						'<option value="text">'.__('text').'</option>'.
 					'</select></p>';
 					}
 	
-					$text .= '<p><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
+					$text .= '<p><label for="nl_option">'.__('Actions').'</label>&nbsp;:&nbsp;'.
 					'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1">'.
 						'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
 						
@@ -612,6 +721,54 @@ class publicWidgetsNewsletter
 			$core->error->add($e->getMessage()); 
 		}
 	}
+	
+	# List Newsletters Widget function
+	public static function listnsltrWidget($w)
+	{
+		global $core,$_ctx;
+
+		$orderby = $w->orderby;
+		$orderdir = $w->orderdir;
+		$order="";
+		
+		if ($orderby == 'date')
+			$order .= 'P.post_dt ';
+		else
+			$order .= 'P.post_title ';		
+		
+		$order .= ($orderdir == 'asc') ? 'asc':'desc';
+			
+		if (empty($core->blog->dcNewsletter)) $core->blog->dcNewsletter = new dcNewsletter($core);
+
+		if ($w->homeonly && $core->url->type != 'default') {
+			return;
+		}
+		
+		if (((integer)$w->limit) != 0) {
+			$rsnsltr = $core->blog->dcNewsletter->getNewsletters(array("order" => $order, "limit" => array(0,(integer)$w->limit), "no_content" => true));
+		} else {
+			$rsnsltr = $core->blog->dcNewsletter->getNewsletters(array("order" => $order, "no_content" => true));
+		}
+		
+		$title = $w->title ? html::escapeHTML($w->title) : 'Newsletters';
+		
+		$res =
+		'<div class="listnsltr"><h2>'.$title.'</h2>';
+
+		$res .= "<ul>";
+		while ($rsnsltr->fetch()) {
+			$nsltrLink = '<a href="'.$rsnsltr->getURL().'">'.html::escapeHTML($rsnsltr->post_title).'</a>';
+			$res .= '<li class="linsltr">'.$nsltrLink.'</li>';
+		}
+		$res .= '</ul>';
+		
+		$res .= '<p class="allnsltr"><a href="'.$core->blog->url.$core->url->getBase("newsletters").'">'.
+			__('All newsletters').'</a></p>';
+			
+		$res .= '</div>';
+		
+		return $res;
+	}	
 }
 
 // URL handler
@@ -811,6 +968,34 @@ class urlNewsletter extends dcUrlHandlers
 			}
 		}
 	}
+	
+    public static function newsletters($args)
+    {
+    	$_ctx =& $GLOBALS['_ctx'];
+    	$core =& $GLOBALS['core'];
+
+		$n = self::getPageNumber($args);
+		/*if (preg_match('#(^|/)category/(.+)$#',$args,$m)){
+			$params['cat_url']=$m[2];
+			$GLOBALS['_ctx']->categories = $GLOBALS['core']->blog->getCategories($params);
+		}
+		if (preg_match('#(^|/)nocat$#',$args,$m)){
+			$GLOBALS['_ctx']->nocat = true;
+		}*/
+		if ($n) {
+			$GLOBALS['_page_number'] = $n;
+			$GLOBALS['core']->url->type = $n > 1 ? 'newsletters-page' : 'newsletters';
+		}
+		/*
+		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
+		$GLOBALS['_ctx']->nb_entry_per_page= $GLOBALS['core']->blog->settings->gallery->gallery_nb_galleries_per_page;
+		*/
+    	
+    	$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+    	self::serveDocument('newsletters.html');    	
+    }
+	
+	
 }
 
 // Define behaviors

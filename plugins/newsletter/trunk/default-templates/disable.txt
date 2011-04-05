@@ -2,8 +2,4 @@
 {nl}{nl}
 {$txtDisabled}
 {nl}{nl}
-{$txt_intro_enable}
-{$txtEnable}
-{$urlEnable}
-{nl}{nl}
 {$footer}

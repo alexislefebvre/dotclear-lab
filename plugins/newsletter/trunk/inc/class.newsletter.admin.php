@@ -437,7 +437,27 @@ class tabsNewsletter
 				__('thumbnail') => 't', 
 				__('square') => 'sq',
 				__('original') => 'o');
-							
+
+			/*
+			$sortby_combo = array(
+				__('Date') => 'post_dt',
+				__('Title') => 'post_title',
+				__('Category') => 'cat_title',
+				__('Author') => 'user_id',
+				__('Status') => 'post_status',
+				__('Selected') => 'post_selected'
+				);
+			*/
+			$sortby_combo = array(
+				__('Date') => 'post_dt',
+				__('Title') => 'post_title',
+				__('Author') => 'user_id',
+				__('Selected') => 'post_selected'
+				);
+				
+			$order_combo = array(__('Ascending') => 'asc',
+				__('Descending') => 'desc' );
+
 			$newsletter_settings = new newsletterSettings($core);
 
 			# Settings compatibility test
@@ -470,7 +490,10 @@ class tabsNewsletter
 			$f_check_subject_with_date = $newsletter_settings->getCheckSubjectWithDate();
 			$f_date_format_post_info = $newsletter_settings->getDateFormatPostInfo();
 			$f_auto_confirm_subscription = $newsletter_settings->getAutoConfirmSubscription();
-
+			$f_nb_newsletters_per_public_page = $newsletter_settings->getNbNewslettersPerPublicPage();
+			$f_newsletters_public_page_sort = $newsletter_settings->getNewslettersPublicPageSort();
+			$f_newsletters_public_page_order = $newsletter_settings->getNewslettersPublicPageOrder();
+			
 			$rs = $core->blog->getCategories(array('post_type'=>'post'));
 			$categories = array('' => '', __('Uncategorized') => 'null');
 			while ($rs->fetch()) {
@@ -594,7 +617,22 @@ class tabsNewsletter
 							'<label for="f_check_subject_with_date" class="classic">'.__('Add the date in the title of the letter').'</label>'.
 							form::checkbox('f_check_subject_with_date',1,$f_check_subject_with_date).
 						'</p>'.							
-					'</fieldset>'.							
+					'</fieldset>'.
+					'<fieldset id="newsletters_public_page">'.
+						'<legend>'.__('Settings for the public page for a list of newsletters').'</legend>'.
+						'<p class="field">'.
+							'<label for="f_nb_newsletters_per_public_page" class="classic">'.__('Number per page').'</label>'.
+							form::field('f_nb_newsletters_per_public_page',4,4,$f_nb_newsletters_per_public_page).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_newsletters_public_page_sort" class="classic">'.__('Sort by').'</label>'.
+							form::combo('f_newsletters_public_page_sort',$sortby_combo,$f_newsletters_public_page_sort).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_newsletters_public_page_order" class="classic">'.__('Order').'</label>'.
+							form::combo('f_newsletters_public_page_order',$order_combo,$f_newsletters_public_page_order).
+						'</p>'.
+					'</fieldset>'.
 					// boutons du formulaire
 					'<p>'.
 						'<input type="submit" name="save" value="'.__('Save').'" /> '.

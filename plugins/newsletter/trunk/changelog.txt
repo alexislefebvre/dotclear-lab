@@ -1,6 +1,5 @@
 --------- TODO -----------
 * Ticket #544 : groupes d'abonnés
-* Ticket #545 : page récapitulative des newsletter
 * Idee : ajout nom / prenom
 * Idee : ajout de statistiques sur les envois
 * Idee : ajout des envois par lots avec gestion des files d'envoi
@@ -22,6 +21,8 @@ Newsletter 3.7.13 - 20xx-xx-xx
 * Ajout d'un onglet avec le nombre d'abonnés
 * Ticket #599 : fonctionnement autonome du widget
 * Traitement si la fonction imap_8bit n'existe pas
+* Ticket #545 : page récapitulative des newsletters
+* Ajout d'un widget avec la liste des newsletters
 
 Newsletter 3.7.12 - 2010-12-16
 ===========================================================

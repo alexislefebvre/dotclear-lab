@@ -21,6 +21,7 @@ class newsletterMail
 	protected $x_blog_name;
 	protected $x_blog_url;
 	protected $x_originating_ip;
+	protected $x_content_transfer_encoding;
 	protected $date;
 
 	protected $email_from;
@@ -58,13 +59,14 @@ class newsletterMail
 		else
 			$this->name_from = mail::B64Header($this->newsletter_settings->getEditorName());
 		
-		$this->x_mailer = mail::B64Header(newsletterPlugin::dbVersion());
+		$this->x_mailer = mail::B64Header(newsletterPlugin::dbVersion().' newsletter '.newsletterPlugin::dcVersion());
 		$this->x_blog_id = mail::B64Header($this->blog->id);
 		$this->x_blog_name = mail::B64Header($this->blog->name);
 		$this->x_blog_url = mail::B64Header($this->blog->url);		
 		//$this->x_originating_ip = http::realIP();
 		$this->x_originating_ip = (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : null);
-
+		$this->x_content_transfer_encoding = (function_exists('imap_8bit') ? 'quoted-printable' : '8bit');
+		
 		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 			$system_settings =& $core->blog->settings->system;
 		} else {
@@ -156,7 +158,7 @@ class newsletterMail
 					'X-Sender:'.$this->email_from,
 					'MIME-Version: 1.0',
 					(($_type == 'html') ? 'Content-Type: text/html; charset=UTF-8;' : 'Content-Type: text/plain; charset=UTF-8;'),
-					(function_exists('imap_8bit') ? 'Content-Transfer-Encoding: quoted-printable' : 'Content-Transfer-Encoding: 8bit'),
+					'Content-Transfer-Encoding: '.$this->x_content_transfer_encoding,
 					'X-Mailer: Dotclear '.$this->x_mailer,
 					'X-Blog-Id: '.$this->x_blog_id,
 					'X-Blog-Name: '.$this->x_blog_name,

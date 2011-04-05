@@ -34,7 +34,7 @@ require_once dirname(__FILE__).'/inc/class.newsletter.tools.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.letter.php';
 
 // setting variables
-$plugin_name	= __('Newsletter');
+$plugin_name	= 'Newsletter';
 $id 			= null;
 $p_url		= 'plugin.php?p=newsletter';
 
@@ -149,6 +149,9 @@ switch ($plugin_op)
 			(!empty($_POST['f_check_agora_link']) ? $newsletter_settings->setCheckAgoraLink($_POST['f_check_agora_link']) : $newsletter_settings->clearCheckAgoraLink());
 			(!empty($_POST['f_check_subject_with_date']) ? $newsletter_settings->setCheckSubjectWithDate($_POST['f_check_subject_with_date']) : $newsletter_settings->clearCheckSubjectWithDate());
 			(!empty($_POST['f_date_format_post_info']) ? $newsletter_settings->setDateFormatPostInfo($_POST['f_date_format_post_info']) : $newsletter_settings->clearDateFormatPostInfo());
+			(!empty($_POST['f_nb_newsletters_per_public_page']) ? $newsletter_settings->setNbNewslettersPerPublicPage($_POST['f_nb_newsletters_per_public_page']) : $newsletter_settings->clearNbNewslettersPerPublicPage());
+			(!empty($_POST['f_newsletters_public_page_order']) ? $newsletter_settings->setNewslettersPublicPageOrder($_POST['f_newsletters_public_page_order']) : $newsletter_settings->clearNewslettersPublicPageOrder());
+			(!empty($_POST['f_newsletters_public_page_sort']) ? $newsletter_settings->setNewslettersPublicPageSort($_POST['f_newsletters_public_page_sort']) : $newsletter_settings->clearNewslettersPublicPageSort());
 			
 			// notification of changes to blog
 			$newsletter_settings->save();

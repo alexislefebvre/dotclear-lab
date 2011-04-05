@@ -1596,6 +1596,60 @@ class newsletterSettings
 	{ 
 		$this->setAutoConfirmSubscription(false);
 	}
+
+	/*
+	* number of newsletter per public page 
+	*/
+	public function getNbNewslettersPerPublicPage() 
+	{ 
+		return (integer)$this->getParameter('nb_newsletters_per_public_page'); 
+	}
+	
+	public function setNbNewslettersPerPublicPage($value) 
+	{ 
+		$this->setParameter('nb_newsletters_per_public_page',(integer)$value);
+	}
+	
+	public function clearNbNewslettersPerPublicPage() 
+	{ 
+		$this->setNbNewslettersPerPublicPage(10); 
+	}
+	
+	/**
+	* --
+	*/
+	public function getNewslettersPublicPageOrder()
+	{
+		return (string)$this->getParameter('newsletters_public_page_order');
+	}
+
+	public function setNewslettersPublicPageOrder($value)
+	{
+		$this->setParameter('newsletters_public_page_order',(string)$value);
+	}
+	
+	public function clearNewslettersPublicPageOrder()
+	{
+		$this->setNewslettersPublicPageOrder('desc');
+	}	
+	
+	/**
+	* --
+	*/
+	public function getNewslettersPublicPageSort()
+	{
+		return (string)$this->getParameter('newsletters_public_page_sort');
+	}
+
+	public function setNewslettersPublicPageSort($value)
+	{
+		$this->setParameter('newsletters_public_page_sort',(string)$value);
+	}
+	
+	public function clearNewslettersPublicPageSort()
+	{
+		$this->setNewslettersPublicPageSort('date');
+	}		
 	
 	/**
 	* initialize settings
@@ -1692,7 +1746,12 @@ class newsletterSettings
 		// subscribe
 		if(!$this->getFormTitlePage()) $this->clearFormTitlePage();
 		if(!$this->getTxtSubscribedMsg()) $this->clearTxtSubscribedMsg();
-
+		
+		// public page
+		if(!$this->getNbNewslettersPerPublicPage()) $this->clearNbNewslettersPerPublicPage();
+		if(!$this->getNewslettersPublicPageOrder()) $this->clearNewslettersPublicPageOrder();
+		if(!$this->getNewslettersPublicPageSort()) $this->clearNewslettersPublicPageSort();
+		
 		$this->save();
 	}
 
@@ -1790,7 +1849,11 @@ class newsletterSettings
 						// subscribe
 						'form_title_page',
 						'txt_subscribed_msg',
-						'date_previous_send'
+						'date_previous_send',
+						//public page
+						'nb_newsletters_per_public_page',
+						'newsletters_public_page_order',
+						'newsletters_public_page_sort'
 						);
 
 		// reprise des paramètres

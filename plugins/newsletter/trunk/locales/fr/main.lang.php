@@ -98,6 +98,8 @@ $GLOBALS['__l10n']['Error in formular.'] = 'Erreur dans le formulaire.';
 #inc/class.newsletter.admin.php:502
 $GLOBALS['__l10n']['Captcha'] = 'Code visuel';
 
+$GLOBALS['__l10n']['All newsletters'] = 'Toutes les newsletters';
+
 #_public.php:312
 #_public.php:392
 #_public.php:495
@@ -346,6 +348,10 @@ $GLOBALS['__l10n']['Include sub-categories'] = 'Inclure les sous-catégories';
 
 #inc/class.newsletter.admin.php:594
 $GLOBALS['__l10n']['Add the date in the title of the letter'] = 'Ajoute la date dans le titre de la lettre d\'information';
+
+$GLOBALS['__l10n']['Number per page'] = 'Nombre par page';
+
+$GLOBALS['__l10n']['Sort by'] = 'Trier par';
 
 #inc/class.newsletter.admin.php:697
 #inc/class.newsletter.admin.php:913
@@ -793,7 +799,7 @@ $GLOBALS['__l10n']['associate'] = 'associer';
 $GLOBALS['__l10n']['Remove'] = 'Enlever';
 
 #inc/class.newsletter.letters.php:42
-$GLOBALS['__l10n']['Statistics letters'] = 'Statistiques des lettres';
+$GLOBALS['__l10n']['Statistics post type newsletter'] = 'Statistiques des billets de type newsletter';
 
 #inc/class.newsletter.letters.php:47
 #inc/class.newsletter.subscribers.php:40

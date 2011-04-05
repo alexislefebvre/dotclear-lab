@@ -33,13 +33,16 @@ if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 }
 
 if ($blog_settings->newsletter_flag) {
+	
 	// ajout de la gestion des url
 	$core->url->register('newsletter','newsletter','^newsletter/(.+)$',array('urlNewsletter','newsletter'));
 	$core->url->register('letterpreview','letterpreview','^letterpreview/(.+)$',array('urlNewsletter','letterpreview'));
 	$core->url->register('letter','letter','^letter/(.+)$',array('urlNewsletter','letter'));
-
+	
 	$core->blog->dcNewsletter = new dcNewsletter($core);
 	$core->setPostType('newsletter','plugin.php?p=newsletter&m=letter&id=%d',$core->url->getBase('newsletter').'/%s');
+	
+	$core->url->register('newsletters','newsletters','^newsletters(.*)$',array('urlNewsletter','newsletters'));	
 }
 
 ?>

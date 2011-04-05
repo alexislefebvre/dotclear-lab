@@ -39,7 +39,7 @@ class newsletterLettersList extends adminGenericList
 
 		$resume_content =
 				'<fieldset>'.
-				'<legend>'.__('Statistics letters').'</legend>'.
+				'<legend>'.__('Statistics post type newsletter').'</legend>'.
 				'<table summary="resume_letters" class="minimal">'.
 				'<thead>'.
 					'<tr>'.

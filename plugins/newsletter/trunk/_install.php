@@ -57,7 +57,6 @@ try {
 		
 		// activate plugin
 		$newsletter_flag = (boolean)$GLOBALS['newsletter_settings']->newsletter_flag;
-		//$GLOBALS['newsletter_settings']->put('newsletter_flag',true,'boolean','Newsletter plugin enabled');
 		$GLOBALS['newsletter_settings']->put('newsletter_flag',$newsletter_flag,'boolean','Newsletter plugin enabled');
 		
 		// Prise en compte de la nouvelle version
@@ -79,7 +78,7 @@ try {
 		
 		// activate plugin
 		$GLOBALS['newsletter_settings']->put('newsletter_flag',false,'boolean','Newsletter plugin enabled');
-		
+
 		// Prise en compte de la nouvelle version
 		$core->setVersion('newsletter', $this_version);
 				
