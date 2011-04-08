@@ -3,15 +3,16 @@
 * Idee : ajout nom / prenom
 * Idee : ajout de statistiques sur les envois
 * Idee : ajout des envois par lots avec gestion des files d'envoi
-* Idee : ajout des parametres d'envoi (mail par jour, delai entre chaque mail) 
+* Idee : ajout des parametres d'envoi (mail par jour, delai entre chaque mail)
+* bug Free : message d'erreur lors d'une action sur les comptes par mail chez Free 
 --------- TODO -----------
 
-Newsletter 3.7.13 - 20xx-xx-xx
+Newsletter 3.8.0 - 20xx-xx-xx
 ===========================================================
-* Ticket #600 : Statut confirmé � l'inscription
+* Ticket #600 : Statut confirmé à l'inscription
 * Changement des valeurs par défaut
 * Ticket #564 : vérification du by
-* Ticket #597 : bug avec Restreindre l'aper�u � l'extrait des billets
+* Ticket #597 : bug avec Restreindre l'aper�u à l'extrait des billets
 * Ticket #650 : Newsletter : liens corrompus dans certains envois
 * Change le format des posts de la newsletter pour éviter un bug d'envoi sur la lettre auto 
 	(post_url_format = {y}/{m}/{d}/{t}/{id})
@@ -23,6 +24,9 @@ Newsletter 3.7.13 - 20xx-xx-xx
 * Traitement si la fonction imap_8bit n'existe pas
 * Ticket #545 : page récapitulative des newsletters
 * Ajout d'un widget avec la liste des newsletters
+* Correction du bug sur la page paramètres rencontré chez Free
+* Mise en conformité de la nomenclature des fichiers de Dotclear
+* mise à niveau de l'aide en ligne 
 
 Newsletter 3.7.12 - 2010-12-16
 ===========================================================
@@ -79,7 +83,7 @@ Newsletter 3.7.8 - 2010-08-09
 Newsletter 3.7.7 - 2010-08-03
 ===========================================================
 * Ticket #527 : ajout d'un lien Read more / Lire la suite
-* Ticket #524 : restreindre l'aper�u uniquement � l'extrait des billets
+* Ticket #524 : restreindre l'aper�u uniquement à l'extrait des billets
 * Ajout des miniatures dans la lettre automatique
 * Améliore l'affichage de la page about
 
@@ -104,7 +108,7 @@ Newsletter 3.7.4 - 2010-07-22
 	� correction de l'option de suppression des données dans l'onglet maintenance
 	� correction sur la reprise des anciens paramètres depuis une version 3.5.x
 * corrige le fonctionnement lorsqu'on déselect le paramètre "Affiche le contenu des billets"
-* Ticket #452 : on supprime la relativit� des liens dans la newsletter pour la consultation hors ligne
+* Ticket #452 : on supprime la relativité des liens dans la newsletter pour la consultation hors ligne
 
 Newsletter 3.7.3 - 2010-07-19
 ===========================================================
@@ -126,7 +130,7 @@ Newsletter 3.7.2 - 2010-07-02
 
 Newsletter 3.7.1 - 2010-01-13
 ===========================================================
-* Ticket #395 : suppression des retours � la ligne suite au ?> de chaque source
+* Ticket #395 : suppression des retours à la ligne suite au ?> de chaque source
 
 Newsletter 3.7.0 - 2009-12-22
 ===========================================================
@@ -155,7 +159,7 @@ Newsletter 3.6.0 - 2009-10-07
 * Affichage du nom du fichier lors de l'export des abonnés
 * Amélioration de l'interface de gestion des abonnés
 * Refonte de la gestion des onglets
-* Changement de la gestion des paramètres - optimisation du nombre d'accès � la base de données
+* Changement de la gestion des paramètres - optimisation du nombre d'accès à la base de données
 * Correction du Ticket #233 : ajout d'un paramètre pour choisir la date du tri des billets
 * Changement du traducteur - utilisation du plugin translater (JC Denis)
 * Correction du Ticket #117 : retourne les billets des catégories filles (ajout d'un flag pour activer ou non l'option)

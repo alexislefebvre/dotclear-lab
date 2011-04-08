@@ -349,6 +349,8 @@ $GLOBALS['__l10n']['Include sub-categories'] = 'Inclure les sous-catégories';
 #inc/class.newsletter.admin.php:594
 $GLOBALS['__l10n']['Add the date in the title of the letter'] = 'Ajoute la date dans le titre de la lettre d\'information';
 
+$GLOBALS['__l10n']['Settings for the public page for a list of newsletters'] = 'Paramètres de la page publique contenant la liste des newsletters';
+
 $GLOBALS['__l10n']['Number per page'] = 'Nombre par page';
 
 $GLOBALS['__l10n']['Sort by'] = 'Trier par';
@@ -1368,5 +1370,9 @@ $GLOBALS['__l10n']['You must input a valid email!'] = 'Vous devez saisir un emai
 $GLOBALS['__l10n']['Error deleting account!'] = 'Erreur lors de la suppression du compte !';
 
 $GLOBALS['__l10n']['Statistics sending letters'] = 'Statistiques des envois de lettres';
+
+$GLOBALS['__l10n']['previous newsletters'] = 'newsletters précédentes';
+
+$GLOBALS['__l10n']['next newsletters'] = 'newsletters suivantes';
 
 ?>

@@ -14,7 +14,7 @@
 class newsletterTools
 {
 	/**
-	* encodage en base64 pour une url
+	* base64 encoding to a URL
 	*/
 	public static function base64_url_encode($val)
 	{
@@ -22,7 +22,7 @@ class newsletterTools
 	}
 
 	/**
-	* decodage en base64 pour une url
+	* base64 decoding to a URL
 	*/
 	public static function base64_url_decode($val)
 	{
@@ -30,14 +30,14 @@ class newsletterTools
 	}
 
 	/**
-	* génère un code d'enregistrement
+	* generates a registration code
 	*/
 	public static function regcode() 
 	{
 		return md5(date('Y-m-d H:i:s', strtotime("now")) ); 
 	}
 	
-	// use by : NewsletterFormRandom
+	# use by : NewsletterFormRandom
 	public static function getRandom()
 	{
 		list($usec, $sec) = explode(' ', microtime());
@@ -46,7 +46,7 @@ class newsletterTools
 		return mt_rand();
 	}	
 
-	// surcharge de la fonction cutString pour avoir un extrait d'un texte
+	# overload function cutString for an excerpt of a text
 	public static function cutString($str,$maxlength=false)
 	{
 		if (mb_strlen($str) > $maxlength && $maxlength) {
@@ -56,7 +56,7 @@ class newsletterTools
 		}
 	}
 
-	// redirection
+	# redirection
 	public static function redirection($module='subscribers',$msg='') 
 	{
 		$redir = 'plugin.php?p=newsletter';
@@ -78,7 +78,7 @@ class newsletterTools
 
 	}
 	
-	// recherche si le template existe dans le theme
+	# recherche si le template existe dans le theme
 	public static function requestTemplate(dcCore $core, $filename) 
 	{	
 		# Settings compatibility test
@@ -95,7 +95,7 @@ class newsletterTools
 		return $folder;
 	}
 
-	// recherche si le CSS existe dans le theme
+	# recherche si le CSS existe dans le theme
 	public static function requestPathFileCSS(dcCore $core, $filename) 
 	{	
 		# Settings compatibility test
@@ -248,10 +248,9 @@ class newsletterTools
 	 */
 	public static function mb_wordwrap($str, $width=74, $break="\r\n")
 	{
-		// todo optimisation -- fonction trop lente si le post est long ...
 		//throw new Exception('point E - '.$str_width);
 		
-	    // Return short or empty strings untouched
+	    # Return short or empty strings untouched
 	    if(empty($str) || mb_strlen($str, 'UTF-8') <= $width)
 	        return $str;
 	  
@@ -262,7 +261,7 @@ class newsletterTools
 	    
 	    for($i=0, $count=0; $i < $str_width; $i++, $count++)
 	    {
-	        // If we're at a break
+	        # If we're at a break
 	        if (mb_substr($str, $i, $br_width, 'UTF-8') == $break)
 	        {
 	            $count = 0;
@@ -271,16 +270,16 @@ class newsletterTools
 	            continue;
 	        }
 	
-	        // Keep a track of the most recent possible break point
+	        # Keep a track of the most recent possible break point
 	        if(mb_substr($str, $i, 1, 'UTF-8') == " ")
 	        {
 	            $last_space = $i;
 	        }
 	
-	        // It's time to wrap
+	        # It's time to wrap
 	        if ($count > $width)
 	        {
-	            // There are no spaces to break on!  Going to truncate :(
+	            # There are no spaces to break on!  Going to truncate :(
 	            if(!$last_space)
 	            {
 	                $return .= $break;
@@ -288,26 +287,26 @@ class newsletterTools
 	            }
 	            else
 	            {
-	                // Work out how far back the last space was
+	                # Work out how far back the last space was
 	                $drop = $i - $last_space;
 	
-	                // Cutting zero chars results in an empty string, so don't do that
+	                # Cutting zero chars results in an empty string, so don't do that
 	                if($drop > 0)
 	                {
 	                    $return = mb_substr($return, 0, -$drop);
 	                }
 	               
-	                // Add a break
+	                # Add a break
 	                $return .= $break;
 	
-	                // Update pointers
+	                # Update pointers
 	                $i = $last_space + ($br_width - 1);
 	                $last_space = false;
 	                $count = 0;
 	            }
 	        }
 	
-	        // Add character from the input string to the output
+	        # Add character from the input string to the output
 	        $return .= mb_substr($str, $i, 1, 'UTF-8');
 	    }
 	    return $return;

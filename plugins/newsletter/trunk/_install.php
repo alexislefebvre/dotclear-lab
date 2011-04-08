@@ -12,7 +12,8 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 // filtrage des droits
-if (!defined('DC_CONTEXT_ADMIN')) exit;
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
 global $core;
 
 // chargement des librairies

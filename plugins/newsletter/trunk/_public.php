@@ -11,17 +11,20 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_RC_PATH')) { return; }
+
 require dirname(__FILE__).'/_widgets.php';
 
-// loading librairies
+# loading librairies
 require_once dirname(__FILE__).'/inc/class.captcha.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.settings.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.tools.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.letter.php';
+require_once dirname(__FILE__).'/inc/class.newsletter.behaviors.public.php';
 
-// adding templates
+# adding templates
 $core->tpl->addValue('Newsletter', array('tplNewsletter', 'Newsletter'));
 $core->tpl->addValue('NewsletterPageTitle', array('tplNewsletter', 'NewsletterPageTitle'));
 $core->tpl->addValue('NewsletterTemplateNotSet', array('tplNewsletter', 'NewsletterTemplateNotSet'));
@@ -43,7 +46,7 @@ $core->tpl->addBlock('NewsletterEntries',array('tplNewsletter','NewsletterEntrie
 //$core->tpl->addBlock('NewsletterEntryNext',array('tplNewsletter','NewsletterEntryNext'));
 //$core->tpl->addBlock('NewsletterEntryPrevious',array('tplNewsletter','NewsletterEntryPrevious'));
 
-// adding behaviors
+# adding behaviors
 $core->addBehavior('publicBeforeContentFilter', array('dcBehaviorsNewsletterPublic', 'translateKeywords'));
 $core->addBehavior('publicHeadContent', array('dcBehaviorsNewsletterPublic', 'publicHeadContent'));
 
@@ -53,6 +56,11 @@ if($core->plugins->moduleExists('dotajax') && !isset($core->plugins->getDisabled
 	$core->pubrest->register('newsletter','dcNewsletterWidgetRest');
 }
 
+
+/**
+ * tplNewsletter
+ * define template
+ */
 class tplNewsletter
 {
 	/**
@@ -180,7 +188,6 @@ class tplNewsletter
 			case 'submit':
 				$email = (string)html::clean($_POST['nl_email']);
 				$option = (string)html::clean($_POST['nl_option']);
-				//$modesend = (string)html::clean($_POST['nl_modesend']);
 				$check = true;
 				$newsletter_settings = new newsletterSettings($core);
 				if ($newsletter_settings->getCaptcha()) {
@@ -220,7 +227,6 @@ class tplNewsletter
 
 					default:
 						$msg = __('Error in formular.').' option = '.$option;
-						//$msg = __('Error in formular.');
 						break;
 				}
 				break;
@@ -303,6 +309,12 @@ class tplNewsletter
 
 	public static function NewsletterFormLabel($attr, $content)
 	{
+		# adding for translate
+		# __('Suspend')
+		# __('Resume')
+		# __('text')
+		# __('Change format')		
+		
 		switch ($attr['id'])
 		{
 			case 'ok':
@@ -316,11 +328,9 @@ class tplNewsletter
 
 			case 'suspend':
 				return '<?php echo __(\'Suspend\') ?>';
-				// __('Suspend') 
 
 			case 'resume':
 				return '<?php echo __(\'Resume\') ?>';
-				// __('Resume') 
 
 			case 'nl_email':
 				return '<?php echo __(\'Email\') ?>';
@@ -339,14 +349,12 @@ class tplNewsletter
 
 			case 'text':
 				return '<?php echo __(\'text\') ?>';
-				// __('text') 
-
+ 
 			case 'nl_modesend':
 				return '<?php echo __(\'Format\') ?>';
 
 			case 'changemode':
 				return '<?php echo __(\'Change format\') ?>';
-				// __('Change format') 
 
 			case 'back':
 				return '<?php echo __(\'Back\') ?>';
@@ -429,12 +437,12 @@ class tplNewsletter
 	disabled -- author	CDATA	#IMPLIED	-- get entries for a given user id
 	disabled -- category	CDATA	#IMPLIED	-- get entries for specific categories only (multiple comma-separated categories can be specified. Use "!" as prefix to exclude a category)
 	disabled -- no_category	CDATA	#IMPLIED	-- get entries without category
-	disabled -- no_context (1|0)	#IMPLIED  -- Override context information
+	no_context (1|0)	#IMPLIED  -- Override context information
 	sortby	(title|selected|author|date|id)	#IMPLIED	-- specify entries sort criteria (default : date) (multiple comma-separated sortby can be specified. Use "?asc" or "?desc" as suffix to provide an order for each sorby)
 	order	(desc|asc)	#IMPLIED	-- specify entries order (default : desc)
 	disabled -- no_content	(0|1)	#IMPLIED	-- do not retrieve entries content
 	selected	(0|1)	#IMPLIED	-- retrieve posts marked as selected only (value: 1) or not selected only (value: 0)
-	disabled -- url		CDATA	#IMPLIED	-- retrieve post by its url
+	url		CDATA	#IMPLIED	-- retrieve post by its url
 	disabled -- type		CDATA	#IMPLIED	-- retrieve post with given post_type (there can be many ones separated by comma)
 	disabled -- age		CDATA	#IMPLIED	-- retrieve posts by maximum age (ex: -2 days, last month, last week)
 	ignore_pagination	(0|1)	#IMPLIED	-- ignore page number provided in URL (useful when using multiple tpl:Entries on the same page)
@@ -521,11 +529,10 @@ class tplNewsletter
 		'$_ctx->posts = null; $_ctx->post_params = null; ?>';
 		
 		return $res;
-
 	}
 	
-	
 }
+
 
 class publicWidgetsNewsletter
 {
@@ -551,11 +558,11 @@ class publicWidgetsNewsletter
 			
 			$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 			
-			// get state of plugin
+			# get state of plugin
 			if (!$newsletter_flag) 
 				return;
 
-			// use only on homepage
+			# use only on homepage
 			$url = &$core->url;
 			if ($w->homeonly && $url->type != 'default')  {
 				return;
@@ -568,10 +575,10 @@ class publicWidgetsNewsletter
 			$text = '';
 			$newsletter_settings = new newsletterSettings($core);
 
-			// mise en place du contenu du widget dans $text
+			# mise en place du contenu du widget dans $text
 			if ($w->inwidget) {
 				
-				// if dotajax is installed
+				# if dotajax is installed
 				if($core->plugins->moduleExists('dotajax') && !isset($core->plugins->getDisabledModules['dotajax'])) {
 					
 					$link = '';
@@ -634,7 +641,7 @@ class publicWidgetsNewsletter
 
 				} else {
 					
-					// todo : if dotajax is not installed
+					# if dotajax is not installed
 					$link = newsletterCore::url('submit');
 					$text .=
 					'<p>'.$newsletter_settings->getMsgPresentationForm().'</p>'.
@@ -770,6 +777,7 @@ class publicWidgetsNewsletter
 		return $res;
 	}	
 }
+
 
 // URL handler
 class urlNewsletter extends dcUrlHandlers
@@ -998,98 +1006,6 @@ class urlNewsletter extends dcUrlHandlers
 	
 }
 
-// Define behaviors
-class dcBehaviorsNewsletterPublic
-{
-	public static function publicHeadContent(dcCore $core,$_ctx)
-	{
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$blog_settings =& $core->blog->settings->newsletter;
-			$system_settings =& $core->blog->settings->system;
-		} else {
-			$blog_settings =& $core->blog->settings;
-			$system_settings =& $core->blog->settings;
-		}
-		
-		try {
-			$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
-			
-			// prise en compte de l'état d'activation du plugin
-			if (!$newsletter_flag) 
-				return;		
-		
-			if($core->url->type == "newsletter") {
-				$letter_css = new newsletterCSS($core);
-				$css_style = '<style type="text/css" media="screen">';
-				$css_style .= $letter_css->getLetterCSS();
-				$css_style .= '</style>';
-				echo $css_style;
-			}
-
-			// if dotajax is installed
-			if($core->plugins->moduleExists('dotajax') && !isset($core->plugins->getDisabledModules['dotajax'])) {
-				echo
-				"<script type=\"text/javascript\" src=\"".
-					'?pf=newsletter/js/_newsletter_pub.js">'.
-				"</script>\n";
-
-				echo 
-					'<script type="text/javascript">'."\n".
-					"//<![CDATA[\n".
-					"please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
-					"\n//]]>\n".
-					"</script>\n";				
-			}
-		
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-	}
-
-	//public static function translateKeywords(dcCore $core, $tag, $args, $attr,$content)
-	public static function translateKeywords(dcCore $core, $tag, $args)
-	{
-		global $_ctx;
-		if($tag != 'EntryContent' //tpl value
-		 || $args[0] == '' //content
-		 || $args[2] // remove html
-		 || $core->url->type != 'newsletter'
-		) return;
-
-		$nltr = new newsletterLetter($core,(integer)$_ctx->posts->post_id);
-		$body = $args[0];
-		
-		$body = $nltr->rendering($body, $_ctx->posts->getURL());
-		$args[0] = $nltr->renderingSubscriber($body, '');
-
-		return;
-	}
-	
-	/**
-	 * Add entry in newsletter when an user is added in the plugin "Agora" 
-	 * @param $cur
-	 * @param $user_id
-	 * @return unknown_type
-	 */
-	public static function newsletterUserCreate($cur,$user_id)
-	{
-		global $core;
-		$newsletter_settings = new newsletterSettings($core);
-
-		if($newsletter_settings->getCheckAgoraLink()) {
-			$email = $cur->user_email;
-			try {
-				if (!newsletterCore::accountCreate($email)) {
-					throw new Exception(__('Error adding subscriber.').' '.$email);
-				}
-			} catch (Exception $e) {
-				throw new Exception('Plugin Newsletter : '.$e->getMessage());
-			}
-		}
-		return;
-	}
-}
 
 class dcNewsletterWidgetRest 
 {

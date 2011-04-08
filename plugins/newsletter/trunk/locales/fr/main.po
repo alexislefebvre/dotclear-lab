@@ -445,6 +445,9 @@ msgstr "Inclure les sous-catégories"
 msgid "Add the date in the title of the letter"
 msgstr "Ajoute la date dans le titre de la lettre d'information"
 
+msgid "Settings for the public page for a list of newsletters"
+msgstr "Paramètres de la page publique contenant la liste des newsletters"
+
 msgid "Number per page"
 msgstr "Nombre par page"
 
@@ -1787,3 +1790,8 @@ msgstr "Erreur lors de la suppression du compte !"
 msgid "Statistics sending letters"
 msgstr "Statistiques des envois de lettres"
 
+msgid "previous newsletters"
+msgstr "newsletters précédentes"
+
+msgid "next newsletters"
+msgstr "newsletters suivantes"

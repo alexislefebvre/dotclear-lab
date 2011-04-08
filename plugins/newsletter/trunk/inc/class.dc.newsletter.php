@@ -24,7 +24,7 @@ class rsExtNewsletter
 
 class dcNewsletter
 {
-	// Variables
+	# Variables
 	protected $core;
 	protected $blog;
 	protected $blogname;
@@ -71,7 +71,7 @@ class dcNewsletter
 	# ERRORS
 	###############################################
 
-	// add an error
+	# add an error
 	public function addError($value)
 	{
 		if (array_key_exists($value,$this->errors)) {
@@ -81,7 +81,7 @@ class dcNewsletter
 		$this->save();
 	}
 
-	// remove an error
+	# remove an error
 	public function delError($value)
 	{
 		if (array_key_exists($value,$this->errors)) {
@@ -90,13 +90,13 @@ class dcNewsletter
 		$this->save();
 	}
 	
-	// retrieve all errors
+	# retrieve all errors
 	public function getErrors()
 	{
 		return $this->errors;
 	}
 
-	// count all errors
+	# count all errors
 	public function countErrors()
 	{
 		return sizeof($this->errors);
@@ -107,7 +107,7 @@ class dcNewsletter
 	# MESSAGES
 	###############################################
 
-	// add a message
+	# add a message
 	public function addMessage($value)
 	{
 		if (array_key_exists($value,$this->messages)) {
@@ -117,7 +117,7 @@ class dcNewsletter
 		$this->save();
 	}
 
-	// remove a message
+	# remove a message
 	public function delMessage($value)
 	{
 		if (array_key_exists($value,$this->messages)) {
@@ -126,13 +126,13 @@ class dcNewsletter
 		$this->save();
 	}
 	
-	// retrieve all messages
+	# retrieve all messages
 	public function getMessages()
 	{
 		return $this->messages;
 	}
 
-	// count all messages
+	# count all messages
 	public function countMessages()
 	{
 		return sizeof($this->messages);
@@ -148,14 +148,13 @@ class dcNewsletter
 	 * @access public
 	 * @return void
 	 */
-	public function getNewsletters ($params=array(), $count_only=false) {
+	public function getNewsletters($params=array(),$count_only=false) {
 		$params['post_type']='newsletter';
 		$rs= $this->core->blog->getPosts($params,$count_only);
 		$rs->extend('rsExtNewsletter');
 		return $rs;
 	}	
-	
 
-} // end class dcNewsletter
+} # end class dcNewsletter
 
 ?>

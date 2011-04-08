@@ -83,7 +83,7 @@ class newsletterSettings
 	}
 
 	/**
-	* renvoi le nom de l'éditeur du blog
+	* renvoi le nom de l'editeur du blog
 	*/
 	public function getEditorName() 
 	{ 
@@ -91,7 +91,7 @@ class newsletterSettings
 	}
 
 	/**
-	* renseigne le nom de l'éditeur
+	* renseigne le nom de l'editeur
 	*/
 	public function setEditorName($value) 
 	{ 
@@ -99,7 +99,7 @@ class newsletterSettings
 	}
 
 	/**
-	* efface/initialise le nom de l'éditeur
+	* efface/initialise le nom de l'editeur
 	*/
 	public function clearEditorName() 
 	{ 
@@ -107,7 +107,7 @@ class newsletterSettings
 	}
 
 	/**
-	* renvoi l'email de l'éditeur du blog
+	* renvoi l'email de l'editeur du blog
 	*/
 	public function getEditorEmail() 
 	{ 
@@ -115,7 +115,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* renseigne l'email de l'éditeur
+	* renseigne l'email de l'editeur
 	*/
 	public function setEditorEmail($value) 
 	{
@@ -123,7 +123,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* efface/initialise l'email de l'éditeur
+	* efface/initialise l'email de l'editeur
 	*/
 	public function clearEditorEmail() 
 	{ 
@@ -155,7 +155,7 @@ class newsletterSettings
 	}
 
 	/**
-	* utilisation du format d'envoi par utilisateur ou défaut
+	* utilisation du format d'envoi par utilisateur ou defaut
 	*/
 	public function getUseDefaultFormat() 
 	{ 
@@ -173,7 +173,7 @@ class newsletterSettings
 	}	
 	
 	/**
-	* nombre maximal de billet retournés
+	* nombre maximal de billet retournes
 	*/
 	public function getMaxPosts() 
 	{ 
@@ -181,7 +181,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* renseigne le nombre maximal de billet retournés
+	* renseigne le nombre maximal de billet retournes
 	*/
 	public function setMaxPosts($value) 
 	{ 
@@ -194,7 +194,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* efface/initialise le nombre maximal de billet retournés
+	* efface/initialise le nombre maximal de billet retournes
 	*/
 	public function clearMaxPosts() 
 	{ 
@@ -202,7 +202,7 @@ class newsletterSettings
 	}
 	
 	/*
-	* nombre minimum de billet retournés
+	* nombre minimum de billet retournes
 	*/
 	public function getMinPosts() 
 	{ 
@@ -210,7 +210,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* renseigne le nombre minimal de billet retournés
+	* renseigne le nombre minimal de billet retournes
 	*/
 	public function setMinPosts($value) 
 	{ 
@@ -218,7 +218,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* efface/initialise le nombre maximal de billet retournés
+	* efface/initialise le nombre maximal de billet retournes
 	*/
 	public function clearMinPosts() 
 	{ 
@@ -242,7 +242,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise l'indicateur d'envoi automatique
+	* reinitialise l'indicateur d'envoi automatique
 	*/
 	public function clearAutosend() 
 	{ 
@@ -266,7 +266,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise l'indicateur d'utilisation de captcha
+	* reinitialise l'indicateur d'utilisation de captcha
 	*/
 	public function clearCaptcha() 
 	{ 
@@ -314,7 +314,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise l'indicateur d'affichage du contenu du post
+	* reinitialise l'indicateur d'affichage du contenu du post
 	*/
 	public function clearViewContentPost() 
 	{ 
@@ -394,7 +394,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne le message de présentation du formulaire d'inscription
+	* retourne le message de presentation du formulaire d'inscription
 	*/
 	public function getMsgPresentationForm() 
 	{ 
@@ -402,7 +402,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* renseigne le message de présentation du formulaire d'inscription
+	* renseigne le message de presentation du formulaire d'inscription
 	*/
 	public function setMsgPresentationForm($value) 
 	{ 
@@ -410,7 +410,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* efface/initialise le message de présentation du formulaire d'inscription
+	* efface/initialise le message de presentation du formulaire d'inscription
 	*/
 	public function clearMsgPresentationForm() 
 	{ 
@@ -418,7 +418,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne le message de présentation
+	* retourne le message de presentation
 	*/
 	public function getPresentationMsg()
 	{ 
@@ -426,7 +426,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* renseigne le message de présentation
+	* renseigne le message de presentation
 	*/
 	public function setPresentationMsg($value) 
 	{ 
@@ -434,7 +434,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* efface/initialise le message de présentation
+	* efface/initialise le message de presentation
 	*/
 	public function clearPresentationMsg() 
 	{ 
@@ -442,7 +442,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne le message de présentation des billets
+	* retourne le message de presentation des billets
 	*/
 	public function getPresentationPostsMsg()
 	{ 
@@ -450,7 +450,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* renseigne le message de présentation des billets
+	* renseigne le message de presentation des billets
 	*/
 	public function setPresentationPostsMsg($value) 
 	{ 
@@ -458,7 +458,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* efface/initialise le message de présentation des billets
+	* efface/initialise le message de presentation des billets
 	*/
 	public function clearPresentationPostsMsg() 
 	{ 
@@ -628,7 +628,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne le filtre sur la catégorie
+	* retourne le filtre sur la categorie
 	*/
 	public function getCategory() 
 	{ 
@@ -636,7 +636,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* renseigne le filtre sur la catégorie
+	* renseigne le filtre sur la categorie
 	*/
 	public function setCategory($value) 
 	{ 
@@ -644,7 +644,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* efface/initialise le filtre sur la catégorie
+	* efface/initialise le filtre sur la categorie
 	*/
 	public function clearCategory() 
 	{ 
@@ -652,7 +652,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne si on inclut les billets des sous catégories
+	* retourne si on inclut les billets des sous categories
 	*/
 	public function getCheckSubCategories() 
 	{ 
@@ -660,7 +660,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* indique si on inclut les billets des sous catégories
+	* indique si on inclut les billets des sous categories
 	*/
 	public function setCheckSubCategories($value) 
 	{ 
@@ -668,7 +668,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise l'indicateur des sous-catégories
+	* reinitialise l'indicateur des sous-categories
 	*/
 	public function clearCheckSubCategories() 
 	{ 
@@ -677,7 +677,7 @@ class newsletterSettings
 	
 
 	/**
-	* retourne l'état de la planification
+	* retourne l'etat de la planification
 	*/
 	public function getCheckSchedule() 
 	{ 
@@ -693,7 +693,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise l'indicateur de planification
+	* reinitialise l'indicateur de planification
 	*/
 	public function clearCheckSchedule() 
 	{ 
@@ -701,7 +701,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne l'état de la notification
+	* retourne l'etat de la notification
 	*/
 	public function getCheckNotification() 
 	{ 
@@ -717,7 +717,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise l'indicateur de notification
+	* reinitialise l'indicateur de notification
 	*/
 	public function clearCheckNotification()
 	{ 
@@ -811,7 +811,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne le titre du mail de désactivation
+	* retourne le titre du mail de desactivation
 	*/
 	public function getDisableSubject()
 	{ 
@@ -829,7 +829,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne le titre du mail de résumé
+	* retourne le titre du mail de resume
 	*/
 	public function getResumeSubject()
 	{ 
@@ -881,7 +881,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise l'indicateur de notification
+	* reinitialise l'indicateur de notification
 	*/
 	public function clearCheckUseSuspend()
 	{ 
@@ -1033,7 +1033,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne le message de désactivation
+	* retourne le message de desactivation
 	*/
 	public function getDisableMsg()
 	{
@@ -1051,7 +1051,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne la conclusion du message de désactivation
+	* retourne la conclusion du message de desactivation
 	*/
 	public function getConcludingDisableMsg()
 	{
@@ -1069,7 +1069,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne le texte de la désactivation
+	* retourne le texte de la desactivation
 	*/
 	public function getTxtDisabledMsg()
 	{
@@ -1195,7 +1195,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* Sélection du type de date pour le tri des billets
+	* Selection du type de date pour le tri des billets
 	*/
 	public function getOrderDate() 
 	{ 
@@ -1235,7 +1235,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise l'indicateur si on doit envoyer la newsletter lors d'un update
+	* reinitialise l'indicateur si on doit envoyer la newsletter lors d'un update
 	*/
 	public function clearSendUpdatePost() 
 	{ 
@@ -1380,7 +1380,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise si on doit utiliser la liaison avec Agora
+	* reinitialise si on doit utiliser la liaison avec Agora
 	*/
 	public function clearCheckAgoraLink()
 	{ 
@@ -1656,7 +1656,7 @@ class newsletterSettings
 	*/
 	public function defaultsSettings()
 	{
-		// parameters
+		# settings
 		if(!$this->getEditorName()) $this->clearEditorName();
 		if(!$this->getEditorEmail()) $this->clearEditorEmail();
 		if(!$this->getSendMode()) $this->clearSendMode();
@@ -1684,12 +1684,12 @@ class newsletterSettings
 		if(!$this->getDateFormatPostInfo()) $this->clearDateFormatPostInfo();
 		if(!$this->getAutoConfirmSubscription()) $this->clearAutoConfirmSubscription();
 		
-		// en vrac
+		# en vrac
 		if(!$this->getTxtLinkVisuOnline()) $this->clearTxtLinkVisuOnline();
 		if(!$this->getStyleLinkVisuOnline()) $this->clearStyleLinkVisuOnline();
 		if(!$this->getStyleLinkReadIt()) $this->clearStyleLinkReadIt();
 		
-		// newsletter
+		# newsletter
 		if(!$this->getNewsletterSubject()) $this->clearNewsletterSubject();
 		if(!$this->getIntroductoryMsg()) $this->clearIntroductoryMsg();
 		if(!$this->getConcludingMsg()) $this->clearConcludingMsg();
@@ -1697,7 +1697,7 @@ class newsletterSettings
 		if(!$this->getPresentationMsg()) $this->clearPresentationMsg();
 		if(!$this->getPresentationPostsMsg()) $this->clearPresentationPostsMsg();
 				
-		// confirm
+		# confirm
 		if(!$this->getConfirmSubject()) $this->clearConfirmSubject();
 		if(!$this->getTxtIntroConfirm()) $this->clearTxtIntroConfirm();
 		if(!$this->getTxtConfirm()) $this->clearTxtConfirm();
@@ -1705,7 +1705,7 @@ class newsletterSettings
 		if(!$this->getConfirmMsg()) $this->clearConfirmMsg();
 		if(!$this->getConcludingConfirmMsg()) $this->clearConcludingConfirmMsg();
 
-		// disable
+		# disable
 		if(!$this->getDisableSubject()) $this->clearDisableSubject();
 		if(!$this->getTxtIntroDisable()) $this->clearTxtIntroDisable();
 		if(!$this->getTxtDisable()) $this->clearTxtDisable();
@@ -1714,7 +1714,7 @@ class newsletterSettings
 		if(!$this->getConcludingDisableMsg()) $this->clearConcludingDisableMsg();
 		if(!$this->getTxtDisabledMsg()) $this->clearTxtDisabledMsg();
 
-		// enable
+		# enable
 		if(!$this->getTxtIntroEnable()) $this->clearTxtIntroEnable();
 		if(!$this->getTxtEnable()) $this->clearTxtEnable();
 		if(!$this->getStyleLinkEnable()) $this->clearStyleLinkEnable();
@@ -1723,7 +1723,7 @@ class newsletterSettings
 		if(!$this->getConcludingEnableMsg()) $this->clearConcludingEnableMsg();
 		if(!$this->getTxtEnabledMsg()) $this->clearTxtEnabledMsg();
 
-		// suspend
+		# suspend
 		if(!$this->getSuspendSubject()) $this->clearSuspendSubject();
 		if(!$this->getSuspendMsg()) $this->clearSuspendMsg();
 		if(!$this->getTxtSuspendedMsg()) $this->clearTxtSuspendedMsg();
@@ -1732,22 +1732,22 @@ class newsletterSettings
 		if(!$this->getTxtSuspend()) $this->clearTxtSuspend();
 		if(!$this->getStyleLinkSuspend()) $this->clearStyleLinkSuspend();
 
-		// changemode
+		# changemode
 		if(!$this->getChangeModeSubject()) $this->clearChangeModeSubject();
 		if(!$this->getHeaderChangeModeMsg()) $this->clearHeaderChangeModeMsg();
 		if(!$this->getFooterChangeModeMsg()) $this->clearFooterChangeModeMsg();
 		if(!$this->getChangeModeMsg()) $this->clearChangeModeMsg();
 
-		// resume
+		# resume
 		if(!$this->getResumeSubject()) $this->clearResumeSubject();
 		if(!$this->getHeaderResumeMsg()) $this->clearHeaderResumeMsg();
 		if(!$this->getFooterResumeMsg()) $this->clearFooterResumeMsg();
 
-		// subscribe
+		# subscribe
 		if(!$this->getFormTitlePage()) $this->clearFormTitlePage();
 		if(!$this->getTxtSubscribedMsg()) $this->clearTxtSubscribedMsg();
 		
-		// public page
+		# public page
 		if(!$this->getNbNewslettersPerPublicPage()) $this->clearNbNewslettersPerPublicPage();
 		if(!$this->getNewslettersPublicPageOrder()) $this->clearNewslettersPublicPageOrder();
 		if(!$this->getNewslettersPublicPageSort()) $this->clearNewslettersPublicPageSort();
@@ -1856,7 +1856,7 @@ class newsletterSettings
 						'newsletters_public_page_sort'
 						);
 
-		// reprise des paramètres
+		// reprise des parametres
 		foreach ($old_parameters as $v) {
 			// get old parameter
 			$value = $this->blog_settings->get('newsletter_'.$v);
@@ -1866,7 +1866,7 @@ class newsletterSettings
 				$this->core->error->add('maj param : v='.$v.', value='.$value);
 			}
 			
-			// suppression de l'ancien paramètre
+			// suppression de l'ancien parametre
 			$this->blog_settings->drop('newsletter_'.$v);
 		}
 		unset($v);

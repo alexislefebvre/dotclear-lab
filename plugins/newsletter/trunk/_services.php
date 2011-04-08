@@ -11,17 +11,6 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */			"Newsletter",
-	/* Description*/	"Manage your newsletters in Dotclear 2",
-	/* Author */		"Benoit de Marne",
-	/* Version */		"3.8.0rc9",
-	/* Permissions */	"usage,contentadmin",
-	/* Priority */		null
-);
-
-/* Original Author (3.4.2) : Olivier Le Bris */
 
 ?>
