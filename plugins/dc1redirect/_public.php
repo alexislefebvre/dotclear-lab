@@ -11,14 +11,14 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-if (!$core->blog->settings->dc1_redirect) {
+if (!$core->blog->settings->dc1redirect->dc1_redirect) {
 	return;
 }
 
 $core->url->register('redir_post','','^(\d{4}/\d{2}/\d{2}/\d+.+)$',array('dcUrlRedirect','redir_post'));
 $core->url->register('redir_category','','^([A-Z]+[A-Za-z0-9_-]*)/?$',array('dcUrlRedirect','redir_category'));
 
-if ($core->plugins->moduleExists('dayMode') && $core->blog->settings->daymode_active) {
+if ($core->plugins->moduleExists('dayMode') && $core->blog->settings->system->daymode_active) {
 	$archive_pattern = '^(\d{4}/\d{2}(/\d{2})?)/?$';
 } else {
 	$archive_pattern = '^(\d{4}/\d{2})(?:/\d{2})?/?$';

@@ -15,7 +15,7 @@ $this->registerModule(
         /* Name */              "DC1 Redirect",
         /* Description*/        "Dotclear 1.x URLs redirection",
         /* Author */            "Pep and contributors",
-        /* Version */           '1.0.1',
+        /* Version */           '1.0.2',
         /* Permissions */       null,
         /* Priority */		  1001
 );

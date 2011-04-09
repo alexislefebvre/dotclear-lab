@@ -16,32 +16,31 @@ $core->addBehavior('adminBeforeBlogSettingsUpdate',array('dc1redirectBehaviors',
 
 class dc1redirectBehaviors
 {
-	public static function adminBlogPreferencesForm(&$core,&$settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		if ($core->auth->isSuperAdmin())
 		{
 			echo
 			'<fieldset><legend>'.__('Dotclear 1 URLs').'</legend>'.
 			'<p><label class="classic">'.
-			form::checkbox('dc1_redirect','1',$settings->dc1_redirect).
+			form::checkbox('dc1_redirect','1',$settings->dc1redirect->dc1_redirect).
 			__('Redirect Dotclear 1.x old URLs').'</label>'.
 			' - <a href="plugin.php?p=dc1redirect">'.__('Redirect your Atom and RSS feeds').'</a></p>'.
 			'</fieldset>';
 		}
 	}
 	
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
 		if ($GLOBALS['core']->auth->isSuperAdmin())
 		{
-			$settings->setNameSpace('dc1redirect');
+			$settings->addNameSpace('dc1redirect');
 			try {
-				$settings->put('dc1_redirect',!empty($_POST['dc1_redirect']),'boolean');
+				$settings->dc1redirect->put('dc1_redirect',!empty($_POST['dc1_redirect']),'boolean');
 			} catch (Exception $e) {
-				$settings->drop('dc1_redirect');
-				$settings->put('dc1_redirect',!empty($_POST['dc1_redirect']),'boolean');
+				$settings->dc1redirect->drop('dc1_redirect');
+				$settings->dc1redirect->put('dc1_redirect',!empty($_POST['dc1_redirect']),'boolean');
 			}
-			$settings->setNameSpace('system');
 		}
 	}
 }
