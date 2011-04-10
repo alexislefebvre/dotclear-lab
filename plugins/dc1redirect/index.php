@@ -44,7 +44,7 @@ EOD;
 echo '<h2>'.__('Dotclear 1 URLs').'</h2>';
 
 echo
-'<p>'.__('I order to avoid broken feeds, you should replace your old '.
+'<p>'.__('In order to avoid broken feeds, you should replace your old '.
 'Atom and RSS feeds by redirections to new ones. The following files replace '.
 'your Dotclear 1 atom.php and rss.php files.').'</p>';
 

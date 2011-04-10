@@ -24,6 +24,6 @@ msgstr "Rediriger les anciennes URLs Dotclear 1.x"
 msgid "Redirect your Atom and RSS feeds"
 msgstr "Redirigez vos flux Atom et RSS"
 
-msgid "I order to avoid broken feeds, you should replace your old Atom and RSS feeds by redirections to new ones. The following files replace your Dotclear 1 atom.php and rss.php files."
+msgid "In order to avoid broken feeds, you should replace your old Atom and RSS feeds by redirections to new ones. The following files replace your Dotclear 1 atom.php and rss.php files."
 msgstr "Afin d'éviter les flux brisés, vous devez remplacer vos anciens flux Atom et RSS par des redirections vers les nouveaux. Les fichiers suivants remplacent vos fichier atom.php et rss.php de Dotclear 1."
 
