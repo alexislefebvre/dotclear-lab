@@ -10,13 +10,17 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
+preg_match('|^([a-z]{3,}://).*?(/.*)$|',$core->blog->url,$matches);
+$proto = $matches[1];
+$path = $matches[2];
+
 $feed_tpl = <<<EOD
 <?php
 //
 // This file exists to redirect DotClear 1.x feeds URLs for DotClear 2.x
 // Created manually following plugin 'dc1redirect' instructions
 
-\$url = '%sfeed';
+\$url = '$proto'.\$_SERVER['HTTP_HOST'].'${path}feed';
 
 if (!empty(\$_GET['lang'])) {
 	\$url .= '/'.\$_GET['lang'];
@@ -58,9 +62,9 @@ echo
 
 echo
 '<h3>atom.php</h3>'.
-'<p>'.form::textarea('atom',60,24,html::escapeHTML(sprintf($feed_tpl,$core->blog->url,'atom')),'maximal').'</p>'.
+'<p>'.form::textarea('atom',60,24,html::escapeHTML(sprintf($feed_tpl,'atom')),'maximal').'</p>'.
 '<h3>rss.php</h3>'.
-'<p>'.form::textarea('rss2',60,24,html::escapeHTML(sprintf($feed_tpl,$core->blog->url,'rss2')),'maximal').'</p>';
+'<p>'.form::textarea('rss2',60,24,html::escapeHTML(sprintf($feed_tpl,'rss2')),'maximal').'</p>';
 
 ?>
 </body>
