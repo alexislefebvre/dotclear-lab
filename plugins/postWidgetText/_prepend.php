@@ -9,4 +9,4 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_RC_PATH')){return;}$core->blog->settings->addNamespace('postwidgettext');$__autoload['postWidgetText'] = dirname(__FILE__).'/inc/class.postwidgettext.php';?>
+if (!defined('DC_RC_PATH')){return;}$__autoload['postWidgetText'] = dirname(__FILE__).'/inc/class.postwidgettext.php';?>

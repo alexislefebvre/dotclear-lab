@@ -1,3 +1,8 @@
+2011.04.11
+ * Changed version numbering
+ * Fixed Dotclear 2.2.3 chage on plugin page (thks @tomek)
+ * Fixed call to $core->blog on prepend
+
 0.6.1 20101112
  * Fixed install on nightly build
 

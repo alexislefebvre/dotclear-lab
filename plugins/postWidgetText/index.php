@@ -268,10 +268,10 @@ else
 	'</h2>'.$msg.'
 	
 	<form method="post" action="'.$requests->p_url.'">
-	<p class="field"><label>'.
+	<p><label class="classic">'.
 	form::checkbox(array('s_active'),'1',$s_active).
 	__('Enable plugin').'</label></p>
-	<p class="field"><label>'.
+	<p><label class="classic">'.
 	form::checkbox(array('s_importexport_active'),'1',$s_importexport_active).
 	__('Enable import/export behaviors').'</label></p>
 	<div class="clear">
