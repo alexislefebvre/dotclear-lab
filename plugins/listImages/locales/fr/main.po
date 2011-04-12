@@ -70,3 +70,12 @@ msgstr "Lister les images des billets"
 
 msgid "Image title"
 msgstr "Titre de l'image"
+
+msgid "CSS Class"
+msgstr "Classe CSS"
+
+msgid "Alt attribute"
+msgstr "Attribut Alt"
+
+msgid "Includes width and height of image"
+msgstr "Inclure les dimensions de l'image"

@@ -10,7 +10,7 @@ Ce plugin crée une seule balise template {{tpl:EntryImages}} à utiliser dans v
 Par défaut,
 	{{tpl:EntryImages}}
 est équivalent à 
-	{{tpl:EntryImages size="t" html_tag="span" link="image" from="full" legend="none" start="1" length="0"}}
+	{{tpl:EntryImages size="t" html_tag="span" link="image" from="full" legend="none" start="1" length="0" bubble="image" alt="inherit" img_dim="0" class=""}}
 
 
 Attributs :
@@ -55,7 +55,16 @@ Valeurs possibles : 0 (toutes) à n
 	Si cette valeur est supérieure au nombre total d'images dans le billet, toutes les images sont extraites.
 	Si une image ne possède pas de miniature au format demandé elle ne sera pas décomptée.
 
+* class
+Ajout d'une classe à la balise <img />
 
+* alt
+Définition de l'attribut alt de la balise <img />
+Valeurs possibles : none (aucun), inherit (standard)
+
+* img_dim
+Inclusion des dimensions de l'image en pixel (il s'agit des dimensions de l'image affichée)
+Valeurs possibles : 0 (non), 1 (oui)
 
 ============================================================================================================
 

@@ -43,6 +43,12 @@ class EntryImagesBehaviors
 			array('none' => 'none', 'image' => 'image', 'entry' => 'entry'));
 		$w->EntryImages->setting('bubble',__('Image title'),1,'combo',
 			array('none' => 'none', 'image' => 'image', 'entry' => 'entry'));
+
+		$w->EntryImages->setting('class',__('CSS Class'),'','text');
+		$w->EntryImages->setting('alt',__('Alt attribute'),1,'combo',
+			array('inherit' => 'inherit', 'none' => 'none'));
+		$w->EntryImages->setting('img_dim',__('Includes width and height of image'),0,'check');
+
 		$w->EntryImages->setting('start',__('Start from'),'1');
 		$w->EntryImages->setting('length',__('Number (empty or 0 = all)'),'0');
 	}

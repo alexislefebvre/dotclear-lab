@@ -61,6 +61,9 @@ class widgetEntryImages
 		$from = $w->from;
 		$start = abs((integer) $w->start);
 		$length = abs((integer) $w->length);
+		$class = $w->class;
+		$alt = $w->alt;
+		$img_dim = $w->img_dim;
 
 		// Début d'affichage
 		$ret = '<div class="listimages-widget">';	// ex class="images"
@@ -69,7 +72,7 @@ class widgetEntryImages
 		
 		// Appel de la fonction de traitement pour chacun des billets
 		while ($rs->fetch()) {
-			$ret .= tplEntryImages::EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $bubble, $from, $start, $length, $rs);
+			$ret .= tplEntryImages::EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $bubble, $from, $start, $length, $class, $alt, $img_dim, $rs);
 		}
 		
 		// Fin d'affichage
@@ -92,6 +95,9 @@ class widgetEntryImages
 		bubble : none, image (défaut), entry
 		start : 1 (défaut) à n
 		length : 0 (défaut) à n, 0 = toutes
+		class : ajoutée à la balise <img />
+		alt : none, inherit
+		img_dim : ajoute les dimensions de l'image
 
 	Non développés (pour l'instant, peut-être, chépô, etc) :
 		exif : 0 (défaut), 1
@@ -118,6 +124,9 @@ class tplEntryImages
 			bubble : none, image (défaut), entry
 			start : 1 (défaut) à n
 			length : 0 (défaut) à n, 0 = toutes
+			class : ajoutée à la balise <img />
+			alt : none, inherit
+			img_dim : ajoute les dimensions de l'image
 	*/
 	public static function EntryImages($attr)
 	{
@@ -131,6 +140,9 @@ class tplEntryImages
 		$from = isset($attr['from']) ? trim($attr['from']) : '';
 		$start = isset($attr['start']) ? (int)$attr['start'] : 1;
 		$length = isset($attr['length']) ? (int)$attr['length'] : 0;
+		$class = isset($attr['class']) ? trim($attr['class']) : '';
+		$alt = isset($attr['alt']) ? trim($attr['alt']) : '';
+		$img_dim = isset($attr['img_dim']) ? trim($attr['img_dim']) : 'none';
 
 		return "<?php echo tplEntryImages::EntryImagesHelper(".
 			"'".addslashes($size)."', ".
@@ -141,7 +153,10 @@ class tplEntryImages
 			"'".addslashes($bubble)."', ".
 			"'".addslashes($from)."', ".
 			$start.", ".
-			$length."".
+			$length.", ".
+			"'".addslashes($class)."', ".
+			"'".addslashes($alt)."', ".
+			"'".addslashes($img_dim)."'".
 			"); ?>";
 	}
 
@@ -149,7 +164,8 @@ class tplEntryImages
 	// -----------------------------------
 
 	// Fonction de génération de la liste des images ciblées par la balise template
-	public static function EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $bubble, $from, $start, $length, $rs = null)
+	public static function EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $bubble, $from, $start, $length,
+		$class, $alt, $img_dim, $rs = null)
 	{
 		global $core, $_ctx;
 		
@@ -228,7 +244,8 @@ class tplEntryImages
 
 							// Recherche de l'image au format demandé
 							$sens = '';
-							if (($src_img = self::ContentImageLookup($p_root,$i,$size,$sens)) !== false) {
+							$dim = '';
+							if (($src_img = self::ContentImageLookup($p_root,$i,$size,$sens,$dim)) !== false) {
 
 								// L'image existe, on construit son URL
 								$src_img = $p_url.(dirname($i) != '/' ? dirname($i) : '').'/'.$src_img;
@@ -285,7 +302,7 @@ class tplEntryImages
 										// Si un lien est requis
 										if ($link == 'image') {
 											// Lien vers l'image originale
-											$href = self::ContentImageLookup($p_root,$i,"o",$sens);
+											$href = self::ContentImageLookup($p_root,$i,"o",$sens,$dim);
 											$href = $p_url.(dirname($i) != '/' ? dirname($i) : '').'/'.$href;
 											$href_title = $img_alt;
 										} else {
@@ -296,9 +313,22 @@ class tplEntryImages
 										$res .= '<a href="'.$href.'" title="'.$href_title.'">';
 									}
 								}
+								
+								// Gestion option alt : inherit / none
+								if ($alt != 'none') $img_alt = '';
 
 								// Mise en place de l'image
-								$res .= '<img src="'.$src_img.'" alt="'.$img_alt.'" '.($img_title == '' ? '' : 'title="'.$img_title.'" ').'/>';
+								$res .= '<img src="'.$src_img.'" ';
+
+								// Rajout de la classe si indiquée
+								if ($class != '') {
+									$res .= 'class="'.html::escapeHTML($class).'" ';
+								}
+								// Mise en place des dimensions de l'image si demandé
+								if ($img_dim <> 'none') {
+									$res .= 'width="'.$dim[0].'px" height="'.$dim[1].'px" ';
+								}
+								$res .= 'alt="'.$img_alt.'" '.($img_title == '' ? '' : 'title="'.$img_title.'" ').'/>';
 
 								if ($html_tag != 'none') {
 									// Fin de la balise englobante
@@ -354,11 +384,14 @@ class tplEntryImages
 	}
 
 	// Fonction utilitaire de recherche d'une image selon un format spécifié (indique aussi l'orientation)
-	private static function ContentImageLookup($root, $img, $size, &$sens)
+	private static function ContentImageLookup($root, $img, $size, &$sens, &$dim)
 	{
 		// Récupération du nom et de l'extension de l'image source
 		$info = path::info($img);
 		$base = $info['base'];
+
+		if (substr($info['dirname'],-1) != '/') $info['dirname'] .= '/';
+		if (substr($root,-1) != '/') $root .= '/';
 		
 		// Suppression du suffixe rajouté pour la création des miniatures s'il existe dans le nom de l'image
 		if (preg_match('/^\.(.+)_(sq|t|s|m)$/',$base,$m)) {
@@ -366,32 +399,42 @@ class tplEntryImages
 		}
 		
 		$res = false;
-		if ($size != 'o' && file_exists($root.'/'.$info['dirname'].'/.'.$base.'_'.$size.'.jpg')) {
+		if ($size != 'o' && file_exists($root.$info['dirname'].'.'.$base.'_'.$size.'.jpg')) {
 			// Une miniature au format demandé a été trouvée
 			$res = '.'.$base.'_'.$size.'.jpg';
+			//Récupération des dimensions de la miniature
+			$media_info = getimagesize($root.$info['dirname'].$res);
 		}
 		else {
 			// Recherche l'image originale
-			$f = $root.'/'.$info['dirname'].'/'.$base;
+			$f = $root.$info['dirname'].$base;
 			if (file_exists($f.'.'.$info['extension'])) {
 				$res = $base.'.'.$info['extension'];
 			} elseif (file_exists($f.'.jpg')) {
-				$res = $base.'.jpg';
+				$info['extension'] = 'jpg';
+				$res = $base.'.'.$info['extension'];
 			} elseif (file_exists($f.'.jpeg')) {
-				$res = $base.'.jpeg';
+				$info['extension'] = 'jpeg';
+				$res = $base.'.'.$info['extension'];
 			} elseif (file_exists($f.'.png')) {
-				$res = $base.'.png';
+				$info['extension'] = 'png';
+				$res = $base.'.'.$info['extension'];
 			} elseif (file_exists($f.'.gif')) {
-				$res = $base.'.gif';
+				$info['extension'] = 'gif';
+				$res = $base.'.'.$info['extension'];
+			}
+			// Récupération des dimensions de l'image originale
+			if (file_exists($root.$info['dirname'].$base.'.'.strtoupper($info['extension']))) {
+				$media_info = getimagesize($root.$info['dirname'].$base.'.'.strtoupper($info['extension']));
+			} else {
+				$media_info = getimagesize($root.$info['dirname'].$base.'.'.$info['extension']);
 			}
 		}
-		// Récupération des dimensions de l'image originale
-		if (file_exists($root.'/'.$info['dirname'].'/'.$base.'.'.strtoupper($info['extension']))) {
-			$media_info = getimagesize($root.'/'.$info['dirname'].'/'.$base.'.'.strtoupper($info['extension']));
-		} else {
-			$media_info = getimagesize($root.'/'.$info['dirname'].'/'.$base.'.'.$info['extension']);
-		}		// Détermination de l'orientation de l'image
+		// Détermination de l'orientation de l'image
 		$sens = ($media_info[0] > $media_info[1] ? "landscape" : "portrait");
+		if (!$dim) {
+			$dim = $media_info;
+		}
 		
 		if ($res) {
 			return $res;
