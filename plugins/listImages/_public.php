@@ -125,7 +125,7 @@ class tplEntryImages
 			start : 1 (défaut) à n
 			length : 0 (défaut) à n, 0 = toutes
 			class : ajoutée à la balise <img />
-			alt : none, inherit
+			alt : none, inherit (defaut)
 			img_dim : ajoute les dimensions de l'image
 	*/
 	public static function EntryImages($attr)
@@ -141,7 +141,7 @@ class tplEntryImages
 		$start = isset($attr['start']) ? (int)$attr['start'] : 1;
 		$length = isset($attr['length']) ? (int)$attr['length'] : 0;
 		$class = isset($attr['class']) ? trim($attr['class']) : '';
-		$alt = isset($attr['alt']) ? trim($attr['alt']) : '';
+		$alt = isset($attr['alt']) ? trim($attr['alt']) : 'inherit';
 		$img_dim = isset($attr['img_dim']) ? trim($attr['img_dim']) : 'none';
 
 		return "<?php echo tplEntryImages::EntryImagesHelper(".
@@ -318,7 +318,7 @@ class tplEntryImages
 								}
 								
 								// Gestion option alt : inherit / none
-								if ($alt != 'none') $img_alt = '';
+								if ($alt == 'none') $img_alt = '';
 
 								// Mise en place de l'image
 								$res .= '<img src="'.$src_img.'" ';
