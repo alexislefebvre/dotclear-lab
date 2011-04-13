@@ -189,6 +189,9 @@ class tplEntryImages
 		if (!preg_match('/^excerpt|content|full$/',$from)) {
 			$from = 'full';
 		}
+		if (!preg_match('/^none|inherit$/',$alt)) {
+			$alt = 'inherit';
+		}
 		$start = ((int)$start > 0 ? (int)$start - 1 : 0);
 		$length = ((int)$length > 0 ? (int)$length : 0);
 
@@ -251,8 +254,8 @@ class tplEntryImages
 								$src_img = $p_url.(dirname($i) != '/' ? dirname($i) : '').'/'.$src_img;
 
 								// Recherche alt et title
-								$img_alt = (!preg_match('/alt="(.*?)"/msu',$m[1][$idx],$alt) ? '' : $alt[1]);
-								$img_title = (!preg_match('/title="(.*?)"/msu',$m[1][$idx],$title) ? '' : $title[1]);
+								$img_alt = (!preg_match('/alt="(.*?)"/msu',$m[1][$idx],$alt_value) ? '' : $alt_value[1]);
+								$img_title = (!preg_match('/title="(.*?)"/msu',$m[1][$idx],$title_value) ? '' : $title_value[1]);
 
 								if ($legend != 'none') {
 									// Une légende est requise
