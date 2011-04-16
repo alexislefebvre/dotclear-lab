@@ -1,7 +1,7 @@
 <?php
 // Language: Français 
-// Module: info - 1.8-alpha1
-// Date: 2010-09-25 16:42:47 
+// Module: info - 1.8.1
+// Date: 2011-04-16 17:55:53 
 // Translated with dcTranslater - 1.5 
 
 #inc/lib.info.php:148
@@ -100,7 +100,7 @@ $GLOBALS['__l10n']['The entry\'s URL %s returned a 200 status code, the page was
 
 #index.php:95
 #index.php:99
-$GLOBALS['__l10n']['The entry\'s URL %s returned a 404 status code, the page was not found, it seems that the URL of the blog is not correctly configured.'] = 'L\'URL du billet %s a retourné le code 404, la page n\'a pas été trouvée, il semblerait que l\'URL du blog n\'est pas correctement configurée.';
+$GLOBALS['__l10n']['The entry\'s URL %s returned a 404 status code, the page was not found, it seems that the URL of the blog is not correctly configured.'] = 'L\'URL du billet %s a retourné le code 404, la page n\'a pas été trouvée, il semblerait que l\'URL du blog ne soit pas correctement configurée.';
 
 #index.php:105
 #index.php:109

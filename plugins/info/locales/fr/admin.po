@@ -1,14 +1,14 @@
 # Language: Français
-# Module: info - 1.8-alpha1
-# Date: 2010-09-25 16:42:47
+# Module: info - 1.8.1
+# Date: 2011-04-16 17:55:53
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: info 1.8-alpha1\n"
+"Project-Id-Version: info 1.8.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-09-25T16:42:47+00:00\n"
+"PO-Revision-Date: 2011-04-16T17:55:53+00:00\n"
 "Last-Translator: Ubuntu\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -142,7 +142,7 @@ msgstr "L'URL du billet %s a retourné le code 200, la page a été trouvée, il
 #: index.php:95
 #: index.php:99
 msgid "The entry's URL %s returned a 404 status code, the page was not found, it seems that the URL of the blog is not correctly configured."
-msgstr "L'URL du billet %s a retourné le code 404, la page n'a pas été trouvée, il semblerait que l'URL du blog n'est pas correctement configurée."
+msgstr "L'URL du billet %s a retourné le code 404, la page n'a pas été trouvée, il semblerait que l'URL du blog ne soit pas correctement configurée."
 
 #: index.php:105
 #: index.php:109
