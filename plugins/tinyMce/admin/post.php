@@ -1,14 +1,14 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
+# -- BEGIN LICENSE BLOCK ---------------------------------------
 #
 # This file is part of Dotclear 2.
 #
-# Copyright (c) 2003-2009 Olivier Meunier and contributors
+# Copyright (c) 2003-2010 Olivier Meunier & Association Dotclear
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
-# -- END LICENSE BLOCK ------------------------------------
+# -- END LICENSE BLOCK -----------------------------------------
 
 //require dirname(__FILE__).'/../inc/admin/prepend.php';
 
@@ -39,8 +39,8 @@ $post_content_xhtml = '';
 $post_notes = '';
 $post_status = $core->auth->getInfo('user_post_status');
 $post_selected = false;
-$post_open_comment = $core->blog->settings->allow_comments;
-$post_open_tb = $core->blog->settings->allow_trackbacks;
+$post_open_comment = $core->blog->settings->system->allow_comments;
+$post_open_tb = $core->blog->settings->system->allow_trackbacks;
 
 $post_media = array();
 
