@@ -25,7 +25,7 @@ $this->registerModule(
 	/* Name */					'TinyMCE',
 	/* Description */		'TinyMCE editor',
 	/* Author */				'Moe (http://gniark.net/)',
-	/* Version */				'0.2.3',
+	/* Version */				'0.2.6',
 	/* Permissions */		'usage,contentadmin'
 );
 

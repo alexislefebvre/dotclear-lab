@@ -1,14 +1,15 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
+# -- BEGIN LICENSE BLOCK ---------------------------------------
 #
 # This file is part of Dotclear 2.
 #
-# Copyright (c) 2003-2009 Olivier Meunier and contributors
+# Copyright (c) 2003-2010 Olivier Meunier & Association Dotclear
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
-# -- END LICENSE BLOCK ------------------------------------
+# -- END LICENSE BLOCK -----------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 dcPage::check('pages,contentadmin');
 
@@ -37,8 +38,8 @@ $post_media = array();
 $page_title = __('New page');
 
 $can_view_page = true;
-$can_edit_page = $core->auth->check('page,usage',$core->blog->id);
-$can_publish = $core->auth->check('page,publish,contentadmin',$core->blog->id);
+$can_edit_page = $core->auth->check('pages,usage',$core->blog->id);
+$can_publish = $core->auth->check('pages,publish,contentadmin',$core->blog->id);
 $can_delete = false;
 
 // link
@@ -175,10 +176,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_page)
 	$cur = $core->con->openCursor($core->prefix.'post');
 	
 	# Magic tweak :)
-	$core->blog->settings->setNameSpace('pages');
-	
-	$core->blog->settings->post_url_format = $page_url_format;
-	$core->blog->settings->setNameSpace('system');
+	$core->blog->settings->system->post_url_format = $page_url_format;
 	
 	$cur->post_type = 'page';
 	$cur->post_title = $post_title;
