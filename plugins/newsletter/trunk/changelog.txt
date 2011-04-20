@@ -1,13 +1,14 @@
 --------- TODO -----------
-* Ticket #544 : groupes d'abonnés
 * Idee : ajout nom / prenom
 * Idee : ajout de statistiques sur les envois
 * Idee : ajout des envois par lots avec gestion des files d'envoi
 * Idee : ajout des parametres d'envoi (mail par jour, delai entre chaque mail)
-* bug Free : message d'erreur lors d'une action sur les comptes par mail chez Free 
+* terminer l'aide en ligne pour les onglets Lettres / Lettre / CSS
+* Ticket #544 : groupes d'abonnés
+* Ticket #658 : pages en erreur 500 sur Free
 --------- TODO -----------
 
-Newsletter 3.8.0 - 20xx-xx-xx
+Newsletter 3.8.0 - 2011-04-19
 ===========================================================
 * Ticket #600 : Statut confirmé à l'inscription
 * Changement des valeurs par défaut
