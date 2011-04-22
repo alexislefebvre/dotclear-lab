@@ -1,0 +1,37 @@
+# French translation of DotClear
+# Copyright (C) 2006.
+# Olivier Meunier <olivier@dotclear.net>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-22 19:00+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: xave <xave@dotclear.net>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+
+msgid "External media"
+msgstr "Média externe"
+
+msgid "External media selector"
+msgstr "Sélecteur de médias externes"
+
+msgid "Supported media services"
+msgstr "Services de média supportés"
+
+msgid "Please enter the URL of the page containing the video you want to include in your post."
+msgstr "Entrez l'URL de la page contenant la video que vous voulez intégrer à votre billet."
+
+msgid "Page URL:"
+msgstr "URL de la page :"
+
+msgid "Media alignment"
+msgstr "Alignement du média"
+
+msgid "Media title"
+msgstr "Titre du média"
