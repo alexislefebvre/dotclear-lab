@@ -140,8 +140,9 @@ class AccessibleCaptcha {
     $query = 'delete from ' . $core->prefix . self::$table_hash . " where hash = '" . $con->escape($hash) . "'";
     
     // et on en profite pour enlever les anciens
-    $current_datetime = date('Y-m-d H:i:s');
-    $query .= " or timestamp + interval '" . self::$hash_ttl_min . " min' < '" . $con->escape($current_datetime) . "'";
+    $expired_timestamp = gmmktime(gmdate('H'), gmdate('i') - self::$hash_ttl_min);
+    $expired_datetime = gmdate('Y-m-d H:i:s', $expired_timestamp);
+    $query .= " or timestamp < '" . $con->escape($expired_datetime) . "'";
     $con->execute($query);
   }
   
@@ -180,7 +181,7 @@ class AccessibleCaptcha {
       $cur = $con->openCursor($core->prefix . self::$table_hash);
       $cur->captcha_id = $id;
       $cur->id = $new_id;
-      $cur->timestamp = date('Y-m-d H:i:s');
+      $cur->timestamp = gmdate('Y-m-d H:i:s');
       $cur->hash = $hash;
       
       $cur->insert();

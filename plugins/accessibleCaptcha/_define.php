@@ -5,7 +5,7 @@ $this->registerModule(
 	/* Name */			"Accessible Captcha",
 	/* Description*/		"This is an accessible captcha",
 	/* Author */			"Julien Wajsberg",
-	/* Version */			'1.0',
+	/* Version */			'1.1',
 	/* Permissions */		'usage,contentadmin',
 	/* Priority */			200
 );
