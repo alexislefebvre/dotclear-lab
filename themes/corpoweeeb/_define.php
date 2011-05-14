@@ -17,7 +17,7 @@ $this->registerModule(
 	/* Name */			"CorpoWeeeb",
 	/* Description*/		"Thème corporate",
 	/* Author */			"Weeeb (http://www.weeeb.fr) - Pierre Van Glabeke",
-	/* Version */			'1.2'
+	/* Version */			'1.2.1'
 	/* date 27092010 */
 );
 ?>
