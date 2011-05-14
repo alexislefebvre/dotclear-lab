@@ -68,21 +68,8 @@ class contributeDocument extends dcUrlHandlers
 		# selected tags
 		$_ctx->contribute->selected_tags = array();
 		
-		# Compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha1','>='))
-		{
-			$meta =& $core->meta;
-		} else {
-			# Metadata
-			if ($core->plugins->moduleExists('metadata'))
-			{
-				$meta = new dcMeta($core);
-			}
-			else
-			{
-				$meta = false;
-			}
-		}
+		# Metadata
+		$meta =& $core->meta;
 		
 		# My Meta
 		if ($core->plugins->moduleExists('mymeta')
@@ -102,37 +89,22 @@ class contributeDocument extends dcUrlHandlers
 				$mymeta = array();
 				$mymeta_sections = array();
 				
-				if (version_compare(DC_VERSION,'2.2-alpha1','>='))
+				foreach ($_ctx->contribute->mymeta->getAll() as $meta_tmp)
 				{
-					foreach ($_ctx->contribute->mymeta->getAll() as $meta_tmp)
+					# ignore sections
+					if ($meta_tmp instanceof myMetaSection)
 					{
-						# ignore sections
-						if ($meta_tmp instanceof myMetaSection)
-						{
-							$mymeta[] = $meta_tmp->id;
-							$mymeta_sections[] = $meta_tmp->id;
-						}
-						elseif (((bool) $meta_tmp->enabled)
-							&& in_array($meta_tmp->id,$mymeta_values))
-						{
-							$mymeta[] = $meta_tmp->id;
-						}
+						$mymeta[] = $meta_tmp->id;
+						$mymeta_sections[] = $meta_tmp->id;
 					}
-					
-					unset($meta_tmp,$mymeta_values);
-				}
-				else
-				{
-					foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+					elseif (((bool) $meta_tmp->enabled)
+						&& in_array($meta_tmp->id,$mymeta_values))
 					{
-						if (((bool) $v->enabled) && in_array($k,$mymeta_values))
-						{
-							$mymeta[] = $k;
-						}
+						$mymeta[] = $meta_tmp->id;
 					}
-					
-					unset($mymeta_values);
 				}
+				
+				unset($meta_tmp,$mymeta_values);
 			}
 			else
 			{

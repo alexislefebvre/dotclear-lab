@@ -285,13 +285,6 @@
 			</tpl:ContributeIf>
 			
 			<tpl:ContributeIf tags="1">
-				<p>
-					<label for="post_tags">{{tpl:lang Tags}} ({{tpl:lang separate tags by a comma}}) ({{tpl:lang optional}})&nbsp;:</label>
-					<!-- # avoid unnecessary spaces and line breaks -->
-					<input type="text" name="post_tags" id="post_tags"
-						value="<tpl:EntryTags>{{tpl:TagID}}<tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition></tpl:EntryTags>" />
-				</p>
-				
 		    <tpl:Tags type="tag">
 			    <tpl:LoopPosition start="1" length="1">
 			    	<div id="available-tags">
@@ -307,6 +300,13 @@
 			    	</div>
 			    </tpl:LoopPosition>
 		    </tpl:Tags>
+
+				<p>
+					<label for="post_tags">{{tpl:lang Tags}} ({{tpl:lang separate tags by a comma}}) ({{tpl:lang optional}})&nbsp;:</label>
+					<!-- # avoid unnecessary spaces and line breaks -->
+					<input type="text" name="post_tags" id="post_tags"
+						value="<tpl:EntryTags>{{tpl:TagID}}<tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition></tpl:EntryTags>" />
+				</p>
 		  </tpl:ContributeIf>
 	    
 			<tpl:ContributeIf mymeta="1">

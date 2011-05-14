@@ -44,7 +44,7 @@ try
 			'boolean', 'Enable antispam');
 		
 		$settings->put('contribute_help',
-			base64_encode($_POST['contribute_help']),'String','Help');
+			base64_encode($_POST['contribute_help']),'string','Help');
 		$settings->put('contribute_default_post',
 			$_POST['contribute_default_post'],'integer','Default post');
 		$settings->put('contribute_format',$_POST['contribute_format'],
@@ -345,23 +345,13 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php printf(__('Allow contributors to choose %s values.'),
 					__('My Meta'));
 					echo(' ');
-					if (version_compare(DC_VERSION,'2.2-alpha1','>='))
-					{
-						printf(__('It requires the %s plugin.'),__('My Meta'));
-					}
-					else
-					{
-						printf(__('It requires the %s and %s plugins.'),
-						__('Metadata'),__('My Meta'));
-					}
+					printf(__('It requires the %s plugin.'),__('My Meta'));
 				?>
 				</label>
 			</p>
 			
 			<?php
-				if (((version_compare(DC_VERSION,'2.2-alpha1','>='))
-					OR ($core->plugins->moduleExists('metadata')))
-					&& $core->plugins->moduleExists('mymeta'))
+				if ($core->plugins->moduleExists('mymeta'))
 				{
 					$mymeta = new myMeta($core);
 					$rs_values = contribute::getMyMeta($mymeta,true);
