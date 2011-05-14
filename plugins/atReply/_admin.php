@@ -90,7 +90,7 @@ class AtReplyAdmin
 			$core->formNonce().
 			'<p><strong>'.__('@ Reply:').'</strong> '.
 				'<input type="submit" name="add" value="'.
-				__('reply to this comment').'" /></p>'.
+				__('Reply to this comment').'" /></p>'.
 			'</form>'
 			# /from /dotclear/admin/post.php, modified
 		);

@@ -36,7 +36,9 @@ if (!$core->auth->check('admin',$core->blog->id))
 	return;
 }
 
-$settings =& $core->blog->settings;
+$core->blog->settings->addNameSpace('atReply');
+
+$settings =& $core->blog->settings->atreply;
 
 try
 {
@@ -46,7 +48,6 @@ try
 		
 		$color = trim($_POST['atreply_color']);
 		
-		$settings->setNameSpace('atreply');
 		$settings->put('atreply_active',!empty($_POST['atreply_active']),
 			'boolean','Enable @ Reply');
 		if (!empty($_POST['atreply_active']))
@@ -67,9 +68,6 @@ try
 		$settings->put('atreply_subscribe_replied_comment',
 			!empty($_POST['atreply_subscribe_replied_comment']),
 			'boolean','Subscribe replied comments to "Subscribe to comments"');
-		
-		# inspired by lightbox/admin.php
-		$settings->setNameSpace('system');
 		
 		# if there is a color
 		if (!empty($color))
@@ -154,23 +152,25 @@ if (isset($_GET['saveconfig']))
 
 $image_url = $core->blog->getQmarkURL().'pf=atReply/img/reply.png';
 
+$system = $core->blog->settings->system;
+
 # personalized image
-if (strlen($core->blog->settings->atreply_color) > 1)
+if (strlen($settings->atreply_color) > 1)
 {
-	$personalized_image = $core->blog->settings->public_url.
+	$personalized_image = $system->public_url.
 		'/atReply/reply.png';
 	
-	if (file_exists(path::fullFromRoot($settings->public_path,
+	if (file_exists(path::fullFromRoot($system->public_path,
 		DC_ROOT).'/atReply/reply.png'))
 	{
 		$image_url = $personalized_image;
 		
-		if (substr($settings->public_url,0,1) == '/')
+		if (substr($system->public_url,0,1) == '/')
 		{
 			# public_path is located at the root of the website
 			$image_url = $core->blog->host.'/'.$personalized_image;
 		}
-		elseif (substr($settings->public_url,0,4) == 'http')
+		elseif (substr($system->public_url,0,4) == 'http')
 		{
 			$image_url = $personalized_image;
 		} else {
@@ -237,7 +237,7 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 				$settings->atreply_subscribe_replied_comment)); ?>
 				<label class="classic" for="atreply_subscribe_replied_comment">
 					<?php printf(__('When clicking on the "%s" button in a comment list of the administration, subscribe to comments the email address of the replied comment with the %s plugin'),
-						__('reply to this comment'),__('Subscribe to comments')); ?>
+						__('Reply to this comment'),__('Subscribe to comments')); ?>
 				</label>
 			</p>
 			<p class="form-note">

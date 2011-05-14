@@ -14,10 +14,12 @@ function atReply() {
 	$('span.commentAuthor').each(function() {
 		/* duplicate the link to create an element on-the-fly,
 			because the element with its event can't be used twice */
+		
+		var commentAuthor = $(this).parent().children('.commentAuthor');
+		var id = commentAuthor.attr('id').replace('atreply_','c');
+		var name = commentAuthor.attr('title');
+				
 		var link = $(atReplyLink).click( function () {
-			var commentAuthor = $(this).parent().children('.commentAuthor');
-			var id = commentAuthor.attr('id').replace('atreply_','c');
-			var name = commentAuthor.attr('title');
 			$('#c_content').val($('#c_content').val()+
 				'@['+name+'|'+atReplyEntryURL+'#'+id+'] : ');
 			/* show comment form on Noviny theme and its derivatives */
@@ -31,14 +33,23 @@ function atReply() {
 		/* add the link */
 		$(this).parent().append(link);
 		
-		if (atReplyDisplayTitle != true) {return;}
-		/* add an hover effect */
-		$(this).parent().hover(
-		function () {
-			$(this).find('.at_reply_title').show();
-		},
-		function () {
-			$(this).find('.at_reply_title').hide();
-		});
+		var titleWithAuthor =
+			$(this).parent().find('a:last').attr('title').replace("{author}",name);
+		
+		$(this).parent().find('a').attr('title', titleWithAuthor);
+		$(this).parent().find('img').attr('alt', titleWithAuthor);
+		$(this).parent().find('.at_reply_title').html(titleWithAuthor);
+		
+		if (atReplyDisplayTitle)
+		{
+			/* add an hover effect */
+			$(this).parent().hover(
+			function () {
+				$(this).find('.at_reply_title').show();
+			},
+			function () {
+				$(this).find('.at_reply_title').hide();
+			});
+		}
 	});
 }

@@ -30,7 +30,9 @@ if (!defined('DC_RC_PATH')) {return;}
 $core->addBehavior('templateBeforeValue',array('AtReplyTpl','templateBeforeValue'));
 $core->addBehavior('templateAfterValue',array('AtReplyTpl','templateAfterValue'));
 
-if ($core->blog->settings->atreply_active)
+$core->blog->settings->addNamespace('atreply');
+
+if ($core->blog->settings->atreply->atreply_active)
 {
 	$core->addBehavior('publicHeadContent',array('AtReplyTpl','publicHeadContent'));
 	$core->addBehavior('publicCommentBeforeContent',array('AtReplyTpl','publicCommentBeforeContent'));
@@ -58,7 +60,7 @@ class AtReplyTpl
 	
 	public static function publicHeadContent($core)
 	{
-		$set = $core->blog->settings;
+		$set = $core->blog->settings->atreply;
 		
 		$QmarkURL = $core->blog->getQmarkURL();
 		
@@ -66,7 +68,8 @@ class AtReplyTpl
 		if ((strlen($set->atreply_color) > 1)
 			&& (file_exists($core->blog->public_path.'/atReply/reply.png')))
 		{
-			$image_url = $set->public_url.'/atReply/reply.png';
+			$image_url = $core->blog->settings->system->public_url.
+				'/atReply/reply.png';
 		}
 		else
 		{
@@ -75,6 +78,7 @@ class AtReplyTpl
 		}
 		
 		$entry_url = '';
+		
 		# simple and effective test on entry, from dcTemplate::SysIf())
 		if (($GLOBALS['_ctx']->posts !== null)
 			# avoid errors with Contribute
@@ -83,7 +87,7 @@ class AtReplyTpl
 			$entry_url = $GLOBALS['_ctx']->posts->getURL();
 		}
 		
-		$title = (($set->atreply_display_title) ? 'true' : 'false');
+		$title = (($set->atreply_display_title) ? '1' : '0');
 		
 		# Javascript
 		echo(
@@ -91,9 +95,9 @@ class AtReplyTpl
 			'//<![CDATA['."\n".
 			'var atReplyEntryURL = \''.
 				html::escapeHTML($entry_url).'\';'."\n".
-			'var atReplyDisplayTitle = new Boolean('.$title.');'."\n".
+			'var atReplyDisplayTitle = '.$title.';'."\n".
 			'var atReplyTitle = \''.
-				html::escapeHTML(__('Reply to this comment')).'\';'."\n".
+				html::escapeHTML(__('Reply to this comment by {author}')).'\';'."\n".
 			'var atReplyImage = \''.$image_url.'\';'."\n".
 			'var atReply_switch_text = \''.
 				html::escapeHTML(__('Threaded comments')).'\';'."\n".

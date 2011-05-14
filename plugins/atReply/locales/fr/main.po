@@ -1,38 +1,33 @@
 # Language: Français
-# Module: atReply - 1.6
-# Date: 2010-11-12 00:32:59
+# Module: atReply - 1.6.2
+# Date: 2011-05-14 19:23:45
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: atReply 1.6\n"
+"Project-Id-Version: atReply 1.6.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-11-12T00:32:59+00:00\n"
+"PO-Revision-Date: 2011-05-14T19:23:45+00:00\n"
 "Last-Translator: Ubuntu\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:40
-#: index.php:188
+#: _admin.php:41
+#: index.php:197
 msgid "@ Reply"
 msgstr "@ Reply"
 
-#: _admin.php:74
+#: _admin.php:75
 msgid "@%s:"
 msgstr "@%s&nbsp;:"
 
-#: _admin.php:92
-#: index.php:231
-msgid "reply to this comment"
-msgstr "répondre à ce commentaire"
+#: _public.php:100
+msgid "Reply to this comment by {author}"
+msgstr "Répondre à ce commentaire par {author}"
 
-#: _public.php:96
-msgid "Reply to this comment"
-msgstr "Répondre à ce commentaire"
-
-#: _public.php:99
+#: _public.php:103
 msgid "Threaded comments"
 msgstr "Fil de discussion"
 
