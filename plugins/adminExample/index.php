@@ -20,10 +20,10 @@ if (isset($_REQUEST['tab'])) {
 	$default_tab = $_REQUEST['tab'];
 }
 
-$settings =& $core->blog->settings;
- 
-$settings->setNameSpace('adminExample');
- 
+$core->blog->settings->addNameSpace('adminExample');
+
+$settings =& $core->blog->settings->adminExample;
+  
 if (!empty($_POST['saveconfig']))
 {
 	$settings->put('adminexample_active',
@@ -33,8 +33,6 @@ if (!empty($_POST['saveconfig']))
 	# redirect to the page, avoid conflicts with old settings
 	http::redirect($p_url.'&tab=settings&saveconfig=1');
 }
-
-$settings->setNameSpace('system');
 
 if (isset($_GET['saveconfig']))
 {
@@ -53,8 +51,7 @@ if (isset($_GET['saveconfig']))
 
 <?php if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';} ?>
 
-<div class="multi-part" id="tab-1"
-	title="<?php echo __('Tab 1'); ?>">
+<div class="multi-part" id="tab-1" title="<?php echo __('Tab 1'); ?>">
 	<?php
 	$combo_values = array(
 		# a group of values
@@ -82,6 +79,16 @@ if (isset($_GET['saveconfig']))
 		<p class="form-note">
 			<?php echo(__('Hello World!')); ?>
 		</p>
+
+		<?php
+			/*
+			For Dotclear 2.3
+			echo
+			'<p><label class="required" for="required_field_id"><abbr title="'.
+			__('Required field').'">*</abbr> '.__('A required field:').'</label> '.
+			form::field('required_field_id',30,32,
+				html::escapeHTML(__('Hello World!'))).'</p>';*/
+		?>
 	</fieldset>
 	
 	<fieldset>
@@ -106,8 +113,8 @@ if (isset($_GET['saveconfig']))
 	<form method="post" action="<?php echo($p_url); ?>">
 		<p><label class="classic"><?php echo(
 			form::checkbox('adminexample_active','1',
-			$settings->adminexample_active).
-			' '.__('Enable')); ?></label></p>
+				$settings->adminexample_active).
+				' '.__('Enable')); ?></label></p>
 		<p class="form-note">
 			<?php echo(__('Hello World!')); ?>
 		</p>
