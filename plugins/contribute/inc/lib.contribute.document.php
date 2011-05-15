@@ -143,9 +143,52 @@ class contributeDocument extends dcUrlHandlers
 		{
 			try
 			{
-				# default post
 				$default_post = $settings->contribute_default_post;
-				if (is_int($default_post) && ($default_post > 0))
+				
+				if (!empty($args))
+				{
+					# get the post by its URL
+					$params = array();
+					$params['meta_type'] = 'contribute_public_url';
+					$params['meta_id'] = $args;
+
+					# get unpublished entries
+					$_ctx->posts = $core->auth->sudo(array($meta,'getPostsByMeta'),$params);
+					
+					if ($_ctx->posts->isEmpty())
+					{
+						throw new InvalidEntryException();
+					}
+
+					# modify $_ctx->posts for preview
+					$post =& $_ctx->posts;
+					
+					# tags
+					# remove selected tags
+					$post_meta = unserialize($_ctx->posts->post_meta);
+					
+					if (isset($post_meta['tag']) && !empty($post_meta['tag']))
+					{
+						foreach ($post_meta['tag'] as $k => $tag)
+						{
+								$_ctx->contribute->selected_tags[] = $tag;
+						}
+					}
+					
+					# My Meta
+					$post->mymeta = array();
+					
+					if ($_ctx->contribute->mymeta !== false)
+					{
+						foreach ($mymeta as $k => $v)
+						{
+							$post->mymeta[$v] = $meta->getMetaStr($post->post_meta,$v);
+						}
+					}
+					# /My Meta
+				}
+				# default post
+				else if (is_int($default_post) && ($default_post > 0))
 				{
 					# get default post
 					$_ctx->posts = $core->auth->sudo(array($core->blog,'getPosts'),
@@ -690,6 +733,11 @@ class contributeDocument extends dcUrlHandlers
 						$core->url->getBase('contribute').'/sent');
 				}
 			}
+			catch(InvalidEntryException $e)
+			{
+				self::p404();
+				return;
+			}
 			catch (Exception $e)
 			{
 				$_ctx->form_error = $e->getMessage();
@@ -702,5 +750,7 @@ class contributeDocument extends dcUrlHandlers
 		self::serveDocument('contribute.html','text/html');
 	}
 }
+
+class InvalidEntryException extends Exception {}
 
 ?>

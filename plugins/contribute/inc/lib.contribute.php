@@ -39,18 +39,17 @@ class contribute
 	{
 		global $core;
 		
-		$strReq = 'SELECT meta_id, meta_type, COUNT(M.post_id) as count '.
-		'FROM '.$core->prefix.'meta M LEFT JOIN '.$core->prefix.'post P '.
-		'ON M.post_id = P.post_id '.
+		$strReq = 'SELECT meta_id, COUNT(M.post_id) as count '.
+		'FROM '.$core->prefix.'meta M '.
+		'LEFT JOIN '.$core->prefix.'post P ON M.post_id = P.post_id '.
 		"WHERE P.blog_id = '".$core->con->escape($core->blog->id)."' ";
 		
-		$strReq .= " AND meta_type = '".$core->con->escape('tag')."' ";
+		$strReq .= " AND meta_type = 'tag' ";
 		
 		$strReq .= 'AND ((post_status = 1) AND (post_password IS NULL)) ';
 		
 		$strReq .=
-		'GROUP BY meta_id,meta_type,P.blog_id '.
-		'ORDER BY count DESC';
+		'GROUP BY meta_id';
 		
 		$rs = $core->con->select($strReq);
 

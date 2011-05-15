@@ -390,6 +390,43 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 		<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
 	</form>
 	
+	<?php
+		$meta = new dcMeta($core);
+
+		# from dcMeta->getPostsByMeta()
+		$params = array();
+		$params['from'] = ', '.$core->prefix.'meta'.' META ';
+		$params['sql'] = 'AND META.post_id = P.post_id ';	
+		$params['sql'] .= "AND META.meta_type = '".
+				$core->con->escape('contribute_public_url')."' ";
+		
+		$rs = $core->blog->getPosts($params);
+
+		if ($rs->isEmpty())
+		{
+			print('<p>'.__("No Contribute entry.").'</p>');
+		}
+		else
+		{
+			while($rs->fetch())
+			{
+				if ($rs->isStart())
+				{
+					print('<h3>'.__("Contribute entries").'</h3>');
+					print('<ul>');
+				}
+				
+				print('<li><a href="'.
+					$core->getPostAdminURL($rs->post_type,$rs->post_id).'">'.
+					$rs->post_title.'</a></li>');
+				
+				if ($rs->isStart())
+				{
+					print('</ul>');
+				}
+			}
+		}
+	?>
 	<hr />
 	
 	<p>
