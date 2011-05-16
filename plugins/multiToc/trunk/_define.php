@@ -14,7 +14,7 @@ $this->registerModule(
 		/* Name */			"multiToc",
 		/* Description*/		"Makes posts or content's tables of content",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr), Kozlika, Franck Paul",
-		/* Version */			'1.6.2',
+		/* Version */			'1.6.3',
 		/* Permissions */		'usage,contentadmin'
 );
 

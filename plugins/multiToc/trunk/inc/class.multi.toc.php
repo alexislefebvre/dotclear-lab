@@ -218,47 +218,47 @@ class multiTocUi
 			'<fieldset>'.
 			'<legend>'.$legend.'</legend>'.
 			'<div class="two-cols"><div class="col">'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_enable" class="classic">'.
 			form::checkbox($type.'_enable',1,multiTocUi::getSetting($type,'enable')).$enable.
 			'</label></p>'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_display_nb_entry" class="classic">'.
 			form::checkbox($type.'_display_nb_entry',1,multiTocUi::getSetting($type,'display_nb_entry')).
 			__('Display entry number of each group').
 			'</label></p>'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_display_date" class="classic">'.
 			form::checkbox($type.'_display_date',1,multiTocUi::getSetting($type,'display_date')).
 			__('Display date').
 			'</label></p>'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_display_author" class="classic">'.
 			form::checkbox($type.'_display_author',1,multiTocUi::getSetting($type,'display_author')).
 			__('Display author').
 			'</label></p>'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_display_cat" class="classic">'.
 			form::checkbox($type.'_display_cat',1,multiTocUi::getSetting($type,'display_cat')).
 			__('Display category').
 			'</label></p>'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_display_nb_com" class="classic">'.
 			form::checkbox($type.'_display_nb_com',1,multiTocUi::getSetting($type,'display_nb_com')).
 			__('Display comment number').
 			'</label></p>'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_display_nb_tb" class="classic">'.
 			form::checkbox($type.'_display_nb_tb',1,multiTocUi::getSetting($type,'display_nb_tb')).
 			__('Display trackback number').
 			'</label></p>'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_display_tag" class="classic">'.
 			form::checkbox($type.'_display_tag',1,multiTocUi::getSetting($type,'display_tag')).
 			__('Display tags').
 			'</label></p>'.
 			'</div><div class="col">'.
-			'<p><label>'.
+			'<p><label for="'.$type.'_order_group">'.
 			$order_group.
 			form::combo(array($type.'_order_group'),$order_group_data,multiTocUi::getSetting($type,'order_group')).
 			'</label></p>'.
-			'<p><label>'.
+			'<p><label for="'.$type.'_order_entry">'.
 			$order_entry.
 			form::combo(array($type.'_order_entry'),$order_entry_data,multiTocUi::getSetting($type,'order_entry')).
 			'</label></p>'.
-			'<p><label>'.
+			'<p><label for="'.$type.'_format_date">'.
 			__('Format date').
 			form::field($type.'_format_date',40,255,multiTocUi::getSetting($type,'format_date')).
 			'</label></p>'.
@@ -269,10 +269,10 @@ class multiTocUi
 			$res = 
 			'<fieldset>'.
 			'<legend>'.$legend.'</legend>'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_enable" class="classic">'.
 			form::checkbox($type.'_enable',1,multiTocUi::getSetting($type,'enable'),null,null,!$core->plugins->moduleExists('stacker')).$enable.
 			'</label></p>'.
-			'<p><label class="classic">'.
+			'<p><label for="'.$type.'_numbering" class="classic">'.
 			form::checkbox($type.'_numbering',1,multiTocUi::getSetting($type,'numbering'),null,null,!$core->plugins->moduleExists('stacker')).$numbering.
 			'</label></p>'.
 			'<p class="form-note">'.__('Those options require stacker plugin').'</p>'.

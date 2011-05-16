@@ -53,13 +53,15 @@ class multiTocWidgets
 			$res .= sprintf($limask,'toc-alpha',$link);
 		}
 		
-		$res = !empty($res) ? '<ul>'.$res.'</ul>' : '';
-		
-		return
+		if (!empty($res)) {
+			$res = 
 			'<div id="info-blog">'.
 			$title.
-			$res.
+			'<ul>'.$res.'</ul>'.
 			'</div>';
+		}
+		
+		return $res;
 	}
 }
 

@@ -121,7 +121,8 @@ class multiTocTpl
 			$p .= "\$_ctx->multitoc_group = \$core->blog->getCategories();\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'tag') :\n";
 			$p .= "\$meta = new dcMeta(\$core);\n";
-			$p .= "\$_ctx->multitoc_group = \$meta->getMeta('tag');\n";
+			$p .= "\$meta_rs = \$meta->getMetadata(array('meta_type' => 'tag'));\n";
+			$p .= "\$_ctx->multitoc_group = \$meta->computeMetaStats(\$meta_rs);\n";
 			$p .= "\$_ctx->multitoc_group->sort('meta_id_lower',\$_ctx->multitoc_settings['tag']['order_group']);\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'alpha') :\n";
 			$p .= "if (\$core->con->driver() == 'pgsql') :\n";
