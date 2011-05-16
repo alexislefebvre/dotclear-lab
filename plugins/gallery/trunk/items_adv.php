@@ -13,7 +13,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-require DC_ROOT.'/inc/admin/lib.pager.php';
 require dirname(__FILE__).'/class.dc.gallerylists.php';
 
 $core->meta = new dcMeta($core);

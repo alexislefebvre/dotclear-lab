@@ -14,8 +14,6 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 
-require DC_ROOT.'/inc/admin/lib.pager.php';
-
 $post_id = '';
 $cat_id = '';
 $post_dt = '';
