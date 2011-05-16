@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="MSSmartTagsPreventParsing" content="TRUE" />
+	<meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+
+	<title>{{tpl:MultiTocPageTitle}} - {{tpl:BlogName encode_html="1"}}</title>
+	<meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+	<meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+	<meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+
+	<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+	<meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:MultiTocPageTitle}} - {{tpl:BlogName encode_html="1"}}" />
+	<meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+	<meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+	<meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+	<meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+	<meta name="dc.type" content="text" />
+	<meta name="dc.format" content="text/html" />
+	
+	<link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+	<tpl:Categories>
+		<link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+	</tpl:Categories>
+
+	<link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+
+	<link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
+	<link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  
+	{{tpl:include src="_head.html"}}
+	<!-- Start Jquery effect -->
+	<script type="text/javascript">
+	//<![CDATA[
+	$(document).ready(function() {
+		$('#multitoc').find('dd').hide().end().find('dt').click(function() {
+			var answer = $(this).next();
+			if (answer.is(':visible')) {
+				answer.slideUp("slow")
+			} else {
+				answer.slideDown("slow");
+			}
+		});
+	});
+	//]]>
+	</script>
+	<!-- End Jquery effect -->
+	
+	<!-- Add multiToc CSS stylesheet -->
+	{{tpl:MultiTocCss}}
+</head>
+
+<body class="dc-multitoc">
+	<div id="page">
+		{{tpl:include src="_top.html"}}
+
+		<div id="wrapper">
+
+			<div id="main">
+				<div id="content">
+
+					<div id="content-info">
+						<tpl:MultiTocIf type="cat">
+							<h2>{{tpl:lang Table of content by category}}</h2>
+						</tpl:MultiTocIf>
+						<tpl:MultiTocIf type="alpha">
+							<h2>{{tpl:lang Table of content by alpha list}}</h2>
+						</tpl:MultiTocIf>
+						<tpl:MultiTocIf type="tag">
+							<h2>{{tpl:lang Table of content by tag}}</h2>
+						</tpl:MultiTocIf>
+						<p class="note">{{tpl:lang Click on each group name to display or hide entries list}}</p>
+					</div>
+
+					<div class="content-inner">
+						<dl id="multitoc">
+						<tpl:MultiTocGroup>
+							<dt>{{tpl:MultiTocGroupTitle}} {{tpl:MultiTocGroupCount}}</dt>
+							<dd>
+								<div class="toc-group-desc">{{tpl:MultiTocGroupDesc}}</div>
+								<ul>
+								<tpl:MultiTocItem>
+									<li>
+										{{tpl:MultiTocItemDate}}
+										<a href="{{tpl:MultiTocItemUrl}}">{{tpl:MultiTocItemTitle}}</a>
+										{{tpl:MultiTocItemAuthor}}
+										{{tpl:MultiTocItemCategory}}
+										{{tpl:MultiTocItemNbComments}}
+										{{tpl:MultiTocItemNbTrackbacks}}
+										<tpl:MultiTocMetaData>
+										<tpl:TagsHeader> - <ul class="post-tags"></tpl:TagsHeader>
+										<li><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
+										<tpl:TagsFooter></ul></tpl:TagsFooter>
+										</tpl:MultiTocMetaData>
+									</li>
+								</tpl:MultiTocItem>
+								</ul>
+							</dd>
+						</tpl:MultiTocGroup>
+						</dl>
+					</div>
+
+				</div>
+			</div> <!-- End #main -->
+
+			<div id="sidebar">
+				<div id="blognav">
+					{{tpl:Widgets type="nav"}}
+				</div> <!-- End #blognav -->
+
+				<div id="blogextra">
+					{{tpl:Widgets type="extra"}}
+				</div> <!-- End #blogextra -->
+			</div>
+
+		</div> <!-- End #wrapper -->
+
+		{{tpl:include src="_footer.html"}}
+	</div> <!-- End #page -->
+</body>
+</html>
