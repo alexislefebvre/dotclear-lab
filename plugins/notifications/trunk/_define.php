@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of notifications, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Tomtom
+# Copyright (c) 2009-2011 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			'notifications',
 		/* Description */		'Displays few notifications on administration pages',
 		/* Author */			'Tomtom (http://blog.zenstyle.fr/)',
-		/* Version */			'1.2',
+		/* Version */			'1.2.1',
 		/* Permissions */		'usage',
 							null,
 		/* Priority */			100000
