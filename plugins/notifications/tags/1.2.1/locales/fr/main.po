@@ -1,0 +1,254 @@
+# Language: Français
+# Module: notifications - 1.2
+# Date: 2010-11-09 17:20:06
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: notifications 1.2\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-11-09T17:20:06+00:00\n"
+"Last-Translator: Tomtom\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:15
+#: inc/class.notifications.behaviors.php:17
+#: inc/class.notifications.behaviors.php:121
+#: index.php:98
+#: index.php:121
+#: index.php:121
+msgid "Notifications"
+msgstr "Notifications"
+
+#: _services.php:24
+msgid "%s at %s"
+msgstr "%s à %s"
+
+#: _services.php:66
+msgid "By %s on %s"
+msgstr "Par %s le %s"
+
+#: _services.php:108
+msgid "Last notification update"
+msgstr "Dernière mise à jour des notifications"
+
+#: inc/class.notifications.behaviors.php:47
+msgid "Impossible to push notification : \"%s\" because : \"%s\""
+msgstr "Impossible de pousser la notification : \"%s\" car : \"%s\""
+
+#: inc/class.notifications.behaviors.php:124
+#: index.php:138
+msgid "Enable notifications"
+msgstr "Activer les notifications"
+
+#: inc/class.notifications.behaviors.php:158
+#: inc/class.notifications.behaviors.php:194
+#: inc/class.notifications.behaviors.php:230
+#: inc/class.notifications.behaviors.php:255
+#: inc/class.notifications.behaviors.php:286
+msgid "%s created"
+msgstr "%s créé(e)"
+
+#: inc/class.notifications.behaviors.php:170
+#: inc/class.notifications.behaviors.php:206
+#: inc/class.notifications.behaviors.php:242
+#: inc/class.notifications.behaviors.php:274
+msgid "%s updated"
+msgstr "%s mis(e) à jour"
+
+#: inc/class.notifications.behaviors.php:170
+msgid "Entry"
+msgstr "Billet"
+
+#: inc/class.notifications.behaviors.php:182
+msgid "Entry deleted"
+msgstr "Billet supprimé"
+
+#: inc/class.notifications.behaviors.php:206
+msgid "Page"
+msgstr "Page"
+
+#: inc/class.notifications.behaviors.php:218
+msgid "Page deleted"
+msgstr "Page supprimée"
+
+#: inc/class.notifications.behaviors.php:255
+msgid "New comment"
+msgstr "Nouveau commentaire"
+
+#: inc/class.notifications.behaviors.php:261
+msgid "%s detected"
+msgstr "%s détecté"
+
+#: inc/class.notifications.behaviors.php:261
+msgid "New spam"
+msgstr "Nouveau spam"
+
+#: inc/class.notifications.behaviors.php:286
+msgid "New trackback"
+msgstr "Nouveau rétrolien"
+
+#: inc/class.notifications.behaviors.php:298
+msgid "Blog %s updated"
+msgstr "Blog %s mis à jour"
+
+#: inc/class.notifications.behaviors.php:310
+msgid "Theme %s deleted"
+msgstr "Thème %s supprimé"
+
+#: inc/class.notifications.behaviors.php:322
+msgid "Plugin %s deleted"
+msgstr "Plugin %s supprimé"
+
+#: inc/class.notifications.behaviors.php:334
+msgid "User %s created"
+msgstr "Utilisateur %s créé"
+
+#: inc/class.notifications.behaviors.php:346
+msgid "User %s updated"
+msgstr "Utilisateur %s mis à jour"
+
+#: inc/class.notifications.behaviors.php:358
+msgid "User %s deleted"
+msgstr "Utilisateur %s supprimé"
+
+#: inc/class.notifications.php:101
+#: inc/class.notifications.php:243
+msgid "No such component"
+msgstr "Aucun composant"
+
+#: inc/class.notifications.php:104
+msgid "No notification type"
+msgstr "Aucun type de notification"
+
+#: inc/class.notifications.php:107
+msgid "No notification message"
+msgstr "Aucun message de notification"
+
+#: inc/class.notifications.php:263
+msgid "No component registered"
+msgstr "Aucun composant enregistré"
+
+#: inc/class.notifications.php:270
+msgid "Enable selected component"
+msgstr "Activer les composants sélectionnés"
+
+#: inc/class.notifications.php:271
+msgid "Disable seleted component"
+msgstr "Désactiver les composants sélectionnés"
+
+#: inc/class.notifications.php:279
+msgid "Name"
+msgstr "Nom"
+
+#: inc/class.notifications.php:281
+msgid "Image"
+msgstr "Image"
+
+#: inc/class.notifications.php:328
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: inc/class.notifications.php:328
+msgid "Enabled"
+msgstr "Activé"
+
+#: inc/class.notifications.php:329
+msgid "Component %s disabled"
+msgstr "Composant %s désactivé"
+
+#: inc/class.notifications.php:329
+msgid "Component %s enabled"
+msgstr "Composant %s activé"
+
+#: inc/class.notifications.php:341
+msgid "Define"
+msgstr "Définir"
+
+#: inc/class.notifications.php:345
+msgid "Component %s"
+msgstr "Composant %s"
+
+#: index.php:80
+msgid "Top - Left"
+msgstr "Haut - Gauche"
+
+#: index.php:81
+msgid "Top - Right"
+msgstr "Haut - Droite"
+
+#: index.php:82
+msgid "Bottom - Left"
+msgstr "Bas - Gauche"
+
+#: index.php:83
+msgid "Bottom - Right"
+msgstr "Bas - Droite"
+
+#: index.php:108
+msgid "Components have been successfully updated"
+msgstr "Les composants ont été mis à jour avec succès"
+
+#: index.php:111
+msgid "Configuration has been successfully updated"
+msgstr "La configuration a été mise à jour avec succès"
+
+#: index.php:114
+msgid "Component permissions have been successfully updated"
+msgstr "Les permissions des composants ont été mise à jour avec succès"
+
+#: index.php:122
+msgid "Component permissions"
+msgstr "Permissions du composant"
+
+#: index.php:129
+msgid "Registered components"
+msgstr "Composants enregistrés"
+
+#: index.php:134
+msgid "Configuration"
+msgstr "Configuration"
+
+#: index.php:142
+msgid "Sticky notifications"
+msgstr "Coller les notifications"
+
+#: index.php:146
+msgid "Display all notifications of all blogs"
+msgstr "Afficher toutes les notifications de tous les blogs"
+
+#: index.php:150
+msgid "Position of notifications"
+msgstr "Position des notifications"
+
+#: index.php:154
+msgid "Time to display notifications (second)"
+msgstr "Temps d'affichage des notifications (en secondes)"
+
+#: index.php:158
+msgid "Time beetween each request (second)"
+msgstr "Temps entre chaque requête (en secondes)"
+
+#: index.php:162
+msgid "Auto clean notifications"
+msgstr "Nettoyer automatiquement les notifications"
+
+#: index.php:166
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+
+#: index.php:175
+msgid "Permissions for component: %s"
+msgstr "Permissions pour le composant: %s"
+
+#: index.php:184
+msgid "Required permission for type %s:"
+msgstr "Permission requise pour le type %s :"
+
+#: index.php:192
+msgid "Save permissions"
+msgstr "Enregistrer les permissions"
+

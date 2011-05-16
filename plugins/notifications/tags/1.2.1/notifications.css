@@ -1,0 +1,35 @@
+#jGrowl a {
+	color: #fff;
+}
+#jGrowl div.new {
+	background-color: #006633;
+}
+#jGrowl div.upd {
+	background-color: #206CFF;
+}
+#jGrowl div.del {
+	background-color: #660000;
+}
+#jGrowl div.msg {
+	background-color: #5A6986;
+}
+#jGrowl div.err {
+	background-color: #CC0000;
+}
+#jGrowl div.spm {
+	background-color: #EC7000;
+}
+#jGrowl div.close {
+	padding-left: 0.5em;
+}
+#jGrowl div.header span {
+	font-size: 1.2em;
+	padding: 0 0 10px 25px;
+	border: none;
+}
+#jGrowl div.message {
+	font-size: 0.8em;
+	background: none;
+	padding: 1em 0 0 0;
+	margin: 0;
+}

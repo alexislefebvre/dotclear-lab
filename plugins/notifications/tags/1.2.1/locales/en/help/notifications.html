@@ -1,0 +1,91 @@
+<html>
+<head>
+	<title>Notifications</title>
+</head>
+
+<body>
+	<p><strong><em>IMPORTANT: To be able to see notifications, plugin has to be activated
+	(see Configuration tab) and you have also to check the checkbox <q>Enable notifications</q>
+	in user preferences
+	</em></strong></p>
+	
+	<h3>Introduction</h3>
+	<dl>
+		<dd>Notifications plugin allow to display in admin interface notifications about any
+		Dotclear functions (entries/pages/comments/plugins/themes/etc...)</dd>
+	</dl>
+	
+	<h3><q>Registered components</q> tab</h3>
+	<dl>
+		<dt>Components list</dt>
+		<dd>Notifications works by components. It's a way to group each kind of notifications</dd>
+		<dd>Each line represent a component with:
+			<ul>
+				<li>his mane</li>
+				<li>the link to the his permissions definition. Those permissions define who can
+				see these notifications</li>
+				<li>Component icon: will be display on a top left corner of each notification</li>
+				<li>his status: <ul>
+					<li>enable: Each notifications related to this component are saved <strong>
+					and</strong> displayed</li>
+					<li>disable: All notifications related to this component <strong>are not saved
+					and displayed</strong></li>
+				</ul></li>
+			</ul>
+		</dd>
+		
+		<dt>Components actions</dt>
+		<dd>Each component can be enabld/disabled. To perfom those operations, select components
+		and the action to do on the combobox at the right bottom of the list and press <q>ok</q></dd>
+	</dl>
+		
+	<h3>Permissions definition</h3>
+	<dl>
+		<dt>Notifications types</dt>
+		<dd>For each notification, related to a component, a type is defined:<ul>
+			<li>new: for all actions creating content</li>
+			<li>upd: for all actions updating content</li>
+			<li>del: for all actions deleting content</li>
+			<li>msg: for all actions needing information message</li>
+			<li>err: for all actions needing error message</li>
+			<li>spm: for all actions considering as spam</li>
+		</ul></dd>
+		
+		<dt>Permission choice</dt>
+		<dd>For each of those types, it's possible to custom notifications display regarding
+		users permissions. Displayed permissions in the combobox are the same than one on
+		user permissions page.</dd>
+		<dd>For example, for component <q>Post</q>, type <q>new</q>, if you define the permission
+		to <q>administrator</q>, only users who have permissions equal of greater to this permission
+		will see this type of notifications</dd>
+	</dl>
+	
+	<h3><q>Configuration</q> tab</h3>
+	<dl>
+		<dt>Enable notifications</dt>
+		<dd>General plugin activation. Allow users to display or not notifications related to their
+		permissions</dd>
+		
+		<dt>Sticky notifications</dt>
+		<dd>A <q>sticky</q> notification means it stays displayed until user close it</dd>
+		
+		<dt>Display all notifications of all blogs</dt>
+		<dd>Display on the current blog all notifications related to all blogs of the farm.
+		<strong>This display is visible only for administrators and super administrators</strong></dd>
+		
+		<dt>Position of notifications</dt>
+		<dd>Defines position of notifications display</dd>
+		
+		<dt>Time to display notifications</dt>
+		<dd>Time for notification display. This time should be in second. <strong>This option is used
+		only if checkbox <q>Sticky notifications</q> is not checked</strong></dd>
+		
+		<dt>Time beetween each request </dt>
+		<dd>Time interval beetween two requests of new notifications check. This time should be in second.</dd>
+		
+		<dt>Auto clean notifications</dt>
+		<dd>Defines if notifications plugin should clean automatically notifications table of consummed
+		notifications</dd>
+	</dl>
+</body>
+</html>
