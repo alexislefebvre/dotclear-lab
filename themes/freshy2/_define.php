@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */			"Freshy v2",
 	/* Description*/		"Freshy v2 customizable theme",
 	/* Author */			"Bruno Hondelatte, Pierre Van Glabeke, Julien de Luca (original WP theme)",
-	/* Version */			'1.7.10'
-	/* date 07012011 */
+	/* Version */			'1.7.11'
+	/* date 18052011 */
 );
 ?>
