@@ -7,8 +7,7 @@
 # To Public License, Version 2, as published by Sam Hocevar. See
 # http://sam.zoy.org/wtfpl/COPYING for more details.
 # 
-# Icon (icon.png) is from Silk Icons :
-#  http://www.famfamfam.com/lab/icons/silk/
+# Icons by http://dryicons.com
 # 
 # ***** END LICENSE BLOCK *****
 
@@ -18,7 +17,7 @@ $this->registerModule(
 	/* Name */					'Admin Example',
 	/* Description */		'Admin Example',
 	/* Author */				'Dotclear Documentation',
-	/* Version */				'0.1.2',
+	/* Version */				'0.2',
 	/* Permissions */		'usage,contentadmin'
 );
 ?>

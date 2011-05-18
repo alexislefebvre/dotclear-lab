@@ -7,8 +7,7 @@
 # To Public License, Version 2, as published by Sam Hocevar. See
 # http://sam.zoy.org/wtfpl/COPYING for more details.
 # 
-# Icon (icon.png) is from Silk Icons :
-#  http://www.famfamfam.com/lab/icons/silk/
+# Icons by http://dryicons.com
 # 
 # ***** END LICENSE BLOCK *****
 
@@ -81,13 +80,11 @@ if (isset($_GET['saveconfig']))
 		</p>
 
 		<?php
-			/*
-			For Dotclear 2.3
 			echo
 			'<p><label class="required" for="required_field_id"><abbr title="'.
 			__('Required field').'">*</abbr> '.__('A required field:').'</label> '.
 			form::field('required_field_id',30,32,
-				html::escapeHTML(__('Hello World!'))).'</p>';*/
+				html::escapeHTML(__('Hello World'))).'</p>';
 		?>
 	</fieldset>
 	

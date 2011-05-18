@@ -7,8 +7,7 @@
 # To Public License, Version 2, as published by Sam Hocevar. See
 # http://sam.zoy.org/wtfpl/COPYING for more details.
 # 
-# Icon (icon.png) is from Silk Icons :
-#  http://www.famfamfam.com/lab/icons/silk/
+# Icons by http://dryicons.com
 # 
 # ***** END LICENSE BLOCK *****
 
@@ -31,4 +30,50 @@ $_menu['Plugins']->addItem(
 	# required permissions to show the link
 	# permissions nécessaires pour afficher le lien
 	$core->auth->check('usage,contentadmin',$core->blog->id));
+
+$core->addBehavior('adminDashboardFavs',
+	array('adminExampleBehaviors','adminDashboardFavs'));
+
+$core->addBehavior('adminDashboardFavsIcon',
+	array('adminExampleBehaviors','adminDashboardFavsIcon'));
+ 
+class adminExampleBehaviors
+{
+    public static function adminDashboardFavs($core,$favs)
+    {
+        $favs['adminExample'] = new ArrayObject(array(
+            'adminExample',
+            __('Admin example'),
+            'plugin.php?p=adminExample',
+            'index.php?pf=adminExample/icon.png',
+            'index.php?pf=adminExample/icon-big.png',
+            'usage,contentadmin',
+            null,
+            null));
+    }
+
+    public static function adminDashboardFavsIcon($core,$name,$icon)
+    {
+			if ($name == 'adminExample')
+			{
+				# this is an example to show how the icon, the URL and the URL
+				#  can be changed with a test
+				# ceci est un un exemple pour montrer comment l'icône, l'URL et
+				#  l'image peuvent être changées avec un test
+				if ($core->blog->settings->adminExample->adminexample_active)
+				{
+					$icon[0] = __('Admin example: active');
+					$icon[1] = 'plugin.php?p=adminExample&amp;tab=settings';
+					$icon[2] = 'index.php?pf=adminExample/icon-big.png';
+				}
+				else
+				{
+					$icon[0] = __('Admin example: inactive');
+					$icon[1] = 'plugin.php?p=adminExample';
+					$icon[2] = 'index.php?pf=adminExample/icon-block.png';
+				}
+			}
+    }
+}
+
 ?>

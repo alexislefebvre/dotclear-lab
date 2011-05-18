@@ -1,10 +1,13 @@
 <?php
-// Language: français 
-// Module: adminExample - 0.1
-// Date: 2009-10-25 11:24:03 
-// Translated with dcTranslater - 1.2 
+// Language: Français 
+// Module: adminExample - 0.1.2
+// Date: 2011-05-18 20:42:27 
+// Translated with dcTranslater - 1.5 
 
-#index.php:52
+#_admin.php:19
+#_admin.php:46
+#index.php:43
+#index.php:49
 $GLOBALS['__l10n']['Admin example'] = 'Example d\'administration';
 
 ?>
