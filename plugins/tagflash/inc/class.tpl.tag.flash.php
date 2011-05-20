@@ -66,7 +66,7 @@ class tplTagFlash
     $res .= '</object>'."\n";
     $res .= '<p><a href="'.$core->blog->url.$core->url->getBase('tags').'">'.__('All tags').'</a></p>';
 
-    return $res;
+    return '<div class="tagFlash">'.$res.'</div>';
   }
 
   public static function tagFlashParams($w) {

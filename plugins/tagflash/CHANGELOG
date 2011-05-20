@@ -1,3 +1,7 @@
+Tag Flash 1.1.1 - 2010-05-20
+=================================
+* Add div to encapsulate widget's content.
+
 Tag Flash 1.1.0 - 2010-11-28
 =================================
 * Sanitize code
