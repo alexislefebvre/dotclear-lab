@@ -30,7 +30,7 @@ if (!defined('DC_RC_PATH')) {return;}
 $core->addBehavior('templateBeforeValue',array('AtReplyTpl','templateBeforeValue'));
 $core->addBehavior('templateAfterValue',array('AtReplyTpl','templateAfterValue'));
 
-$core->blog->settings->addNamespace('atreply');
+$core->blog->settings->addNameSpace('atreply');
 
 if ($core->blog->settings->atreply->atreply_active)
 {

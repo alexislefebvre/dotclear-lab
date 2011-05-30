@@ -36,7 +36,7 @@ if (!$core->auth->check('admin',$core->blog->id))
 	return;
 }
 
-$core->blog->settings->addNameSpace('atReply');
+$core->blog->settings->addNameSpace('atreply');
 
 $settings =& $core->blog->settings->atreply;
 
@@ -53,7 +53,7 @@ try
 		if (!empty($_POST['atreply_active']))
 		{
 			# from commentsWikibar/index.php
-			$settings->put('wiki_comments',true,'boolean');
+			$core->blog->settings->system->put('wiki_comments',true,'boolean');
 		}
 		
 		$settings->put('atreply_display_title',!empty($_POST['atreply_display_title']),
