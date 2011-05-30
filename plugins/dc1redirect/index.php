@@ -116,9 +116,19 @@
 
 
 $url = $core->blog->url;
-preg_match('|^([a-z]{3,}://).*?(/.*)$|',$url,$matches);
+preg_match('|^([a-z]{3,}://)[^/]*(.*?)/?$|',$url,$matches);
 $proto = $matches[1];
-$path = $matches[2];
+$path_dc1 = $path_dc2 = $matches[2];
+if ($core->blog->settings->dc1redirect->dc1_old_url) {
+    $path_dc1 = $core->blog->settings->dc1redirect->dc1_old_url;
+}
+
+# The old DotClear directory where rss.php/atom.php and images were located
+$path_dc1_dc = $core->blog->settings->dc1redirect->dc1_old_dc_url;
+if (empty($path_dc1_dc)) {
+    $path_dc1_dc = dirname($core->blog->settings->system->public_url);
+}
+
 
 # Template for DC1 feeds PHP script replacement
 $feed_tpl = <<<EOD
@@ -127,7 +137,7 @@ $feed_tpl = <<<EOD
 // This file exists to redirect DotClear 1.x feeds URLs for DotClear 2.x
 // Created manually following plugin 'dc1redirect' instructions
 
-\$url = '$proto'.\$_SERVER['HTTP_HOST'].'${path}feed';
+\$url = '$proto'.\$_SERVER['HTTP_HOST'].'${path_dc2}/feed';
 
 if (!empty(\$_GET['lang'])) {
 	\$url .= '/'.\$_GET['lang'];
@@ -169,8 +179,8 @@ foreach ($tags as $t) {
 	# FIXME handle QueryString configs too
 	$t_dc1 = 'tag/'.str2url($t);
 
-	if ($t_dc2 != $t_dc1) {
-		$tags_htaccess[] = "RedirectPermanent $path$t_dc1 $url$t_dc2";
+	if ("$path_dc2/$t_dc2" != "$path_dc1/$t_dc1") {
+		$tags_htaccess[] = "RedirectPermanent $path_dc1/$t_dc1 $url$t_dc2";
 	} else {
 		$tags_htaccess[] = "# $t => $t_dc2";
 	}
@@ -178,6 +188,31 @@ foreach ($tags as $t) {
 
 $tags_htaccess = implode("\n", $tags_htaccess);
 
+# Prepare categories redirections
+$categories = $core->blog->getCategories(array('post_type' => 'post'))->rows();
+
+$categories = array_unique(
+		array_map(
+			create_function('$c', "return \$c['cat_url'];"),
+			$categories),
+		SORT_STRING);
+natcasesort($categories);
+
+$categories_url_base = $core->url->getBase('category').'/';
+
+foreach ($categories as $c) {
+	# URL path for DC2 (from the TagURL function in plugins/tags/_public.php)
+	$c_dc2 = $categories_url_base.$c;
+	$c_dc1 = $c;
+
+	if ("$path_dc2/$c_dc2" != "$path_dc1/$c_dc1") {
+		$categories_htaccess[] = "RedirectPermanent $path_dc1/$c_dc1 $url$c_dc2";
+	} else {
+		$categories_htaccess[] = "# $c => $c_dc2";
+	}
+}
+
+$categories_htaccess = implode("\n", $categories_htaccess);
 
 ?>
 <html>
@@ -196,9 +231,9 @@ echo
 echo '<h3>'.__('Feeds').'</h3>';
 
 echo
-'<p>'.__('In order to avoid broken feeds, you should replace your old '.
+'<p>'.sprintf(__('In order to avoid broken feeds, you should replace your old '.
 'Atom and RSS feeds by redirections to new ones. The following files replace '.
-'your Dotclear 1 atom.php and rss.php files.').'</p>';
+'your Dotclear 1 %s/atom.php and %s/rss.php files.'), $path_dc1_dc, $path_dc1_dc).'</p>';
 echo
 '<p>'.__('Note: The script content has been updated after dc1redirect-1.0.1 '.
 'to use HTTP status 301 instead of 302. So you should update those files if '.
@@ -219,8 +254,21 @@ echo
 'adding those lines to .htaccess:').'</p>';
 
 echo
-'<h4>.htaccess</h4>'.
-'<p>'.form::textarea('tags',60,50,html::escapeHTML($tags_htaccess),'maximal').'</p>';
+'<p><label class="classic">.htaccess:</label><br/>'.
+form::textarea('tags_htaccess',60,50,html::escapeHTML($tags_htaccess),'maximal').'</p>';
+
+/*
+# Categories are already handled by _public.php
+
+echo '<h3>'.__('Categories').'</h3>'.
+'<p>'.__('Add those lines to .htaccess to redirect category URLs:').'</p>'.
+'<p><label class="classic">.htaccess:</label><br/>'.
+form::textarea('categories_htaccess',60,10,html::escapeHTML($categories_htaccess),'maximal').'</p>';
+*/
+
+# Nothing to do for languages: URLs are the same in DC2 as in DC1
+
+# TODO images
 
 ?>
 </body>
