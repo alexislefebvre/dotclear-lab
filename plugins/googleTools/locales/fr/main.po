@@ -16,4 +16,3 @@ msgstr "Identifiant Google Analytics (UACCT)&nbsp;:"
 #: _admin.php:33
 msgid "Google Webmaster Tools verification:"
 msgstr "Code de vérification pour Google Webmaster Tools&nbsp;:"
-

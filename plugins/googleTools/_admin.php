@@ -19,7 +19,7 @@ $core->addBehavior('adminBeforeBlogSettingsUpdate',array('googlestuffAdminBehavi
 
 class googlestuffAdminBehaviours
 {
-	public static function adminBlogPreferencesForm(&$core,&$settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
 		'<fieldset><legend>Google Stuff</legend>'.
@@ -36,7 +36,7 @@ class googlestuffAdminBehaviours
 		'</div></div>'.
 		'</fieldset>';
 	}
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
 		$settings->setNameSpace('googlestuff');
 		$settings->put('googlestuff_uacct',empty($_POST['googlestuff_uacct'])?"":$_POST['googlestuff_uacct'],'string');

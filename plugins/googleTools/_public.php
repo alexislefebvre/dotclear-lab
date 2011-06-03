@@ -20,7 +20,7 @@
 
 class googlestuffPublicBehaviours
 {
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		$res = '';
 		
@@ -39,7 +39,7 @@ class googlestuffPublicBehaviours
 	echo $res;
 	}
 	
-	public static function publicFooterContent(&$core)
+	public static function publicFooterContent($core)
 	{
 		if ($core->blog->settings->googlestuff_uacct != "") {
 			$res = '<script type="text/javascript">'."\n".
