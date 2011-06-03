@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of enhancePostContent, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2008-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -15,6 +15,7 @@ __('Tag');__('Search');__('Acronym');__('Abbreviation');__('Definition');
 __('Citation');__('Link');__('Replace');__('Update');__('Twitter');
 __('entry excerpt');__('entry content');__('comment content');
 __('home page');__('post page');__('category page');__('search results page');
+__('atom feeds');__('RSS feeds');
 
 class libEPC
 {
@@ -70,7 +71,9 @@ class libEPC
 			'home page' => 'home.html',
 			'post page' => 'post.html',
 			'category page' => 'category.html',
-			'search results page' => 'search.html'
+			'search results page' => 'search.html',
+			'atom feeds' => 'atom.xml',
+			'RSS feeds' => 'rss2.xml'
 		);
 	}
 	
@@ -520,7 +523,7 @@ class libEPC
 	# Filters
 	#
 	
-	public static function publicContentFilterTag($core,$filter,&$tag,&$args)
+	public static function publicContentFilterTag($core,$filter,$tag,$args)
 	{
 		if (!$core->plugins->moduleExists('tags')) return;
 		

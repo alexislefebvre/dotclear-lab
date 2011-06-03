@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of enhancePostContent, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2008-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -20,9 +20,9 @@ if (version_compare($old_version,$new_version,'>=')) return;
 try
 {
 	# Check DC version
-	if (version_compare(DC_VERSION,'2.2-beta','<'))
+	if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','<'))
 	{
-		throw new Exception('translater requires Dotclear 2.2');
+		throw new Exception('enhancePostContent requires Dotclear 2.2');
 	}
 	
 	# Database

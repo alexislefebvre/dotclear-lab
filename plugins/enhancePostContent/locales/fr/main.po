@@ -1,14 +1,14 @@
-# Language: français
-# Module: enhancePostContent - 0.8.1
-# Date: 2010-03-31 21:59:45
-# Translated with translater 1.3
+# Language: Français
+# Module: enhancePostContent - 2011.06.03
+# Date: 2011-06-03 09:04:16
+# Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: enhancePostContent 0.8.1\n"
+"Project-Id-Version: enhancePostContent 2011.06.03\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-03-31T21:59:45+00:00\n"
+"PO-Revision-Date: 2011-06-03T09:04:16+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 
 #: _admin.php:19
 #: _widgets.php:23
-#: index.php:191
-#: index.php:202
+#: index.php:190
+#: index.php:201
 msgid "Enhance post content"
 msgstr "Amélioration du contenu"
 
@@ -93,57 +93,65 @@ msgstr "la page de catégorie"
 msgid "search results page"
 msgstr "la page des résultats de recherche"
 
-#: inc/lib.epc.php:94
+#: inc/lib.epc.php:18
+msgid "atom feeds"
+msgstr "les flux Atom"
+
+#: inc/lib.epc.php:18
+msgid "RSS feeds"
+msgstr "les flux RSS"
+
+#: inc/lib.epc.php:99
 msgid "Highlight tags of your blog."
 msgstr "Met en avant les Tags de votre blog"
 
-#: inc/lib.epc.php:113
+#: inc/lib.epc.php:118
 msgid "Highlight searched words."
 msgstr "Met en avant les mots recherchés"
 
-#: inc/lib.epc.php:132
+#: inc/lib.epc.php:137
 msgid "Explain some acronyms. First term of the list is the acornym and second term the explanation."
 msgstr "Explique des acronymes. Le premier terme de la liste est l'acronyme et les second terme l'explication."
 
-#: inc/lib.epc.php:152
+#: inc/lib.epc.php:157
 msgid "Explain some abbreviation. First term of the list is the abbreviation and second term the explanation."
 msgstr "Explique des abréviations. Le premier terme de la liste est l'abréviation et le second terme l'explication."
 
-#: inc/lib.epc.php:172
+#: inc/lib.epc.php:177
 msgid "Explain some definition. First term of the list is the sample to define and second term the explanation."
 msgstr "Explique des définitions. Le premier terme de la liste est la chaine à expliquer et le second terme est la définition."
 
-#: inc/lib.epc.php:192
+#: inc/lib.epc.php:197
 msgid "Highlight citation of people. First term of the list is the citation and second term the author."
-msgstr "Met en avant les citation des gens. Le premier terme est la citation et le seond terme est l'auteur."
+msgstr "Met en avant les citation des gens. Le premier terme est la citation et le second terme est l'auteur."
 
-#: inc/lib.epc.php:212
+#: inc/lib.epc.php:217
 msgid "Link some words. First term of the list is the term to link and second term the link."
-msgstr "Ajouter des liens. Le premier terme de la liste est le texte à lier et le seconde terme est l'adresse de lien."
+msgstr "Ajouter des liens. Le premier terme de la liste est le texte à lier et le second terme est l'adresse de lien."
 
-#: inc/lib.epc.php:231
+#: inc/lib.epc.php:236
 msgid "Replace some text. First term of the list is the text to replace and second term the replacement."
 msgstr "Remplace du texte. Le premier terme de la liste est le terme à remplacer et le second le nouveau terme."
 
-#: inc/lib.epc.php:249
+#: inc/lib.epc.php:254
 msgid "Update and show terms. First term of the list is the term to update and second term the new term."
 msgstr "Met à jour du contenu. Le premier terme de la liste est l'ancien texte et le second le nouveau texte."
 
-#: inc/lib.epc.php:267
+#: inc/lib.epc.php:272
 msgid "Add link to twitter user page. Every word started with \"@\" will be considered as twitter user."
 msgstr "Ajouter un lien vers une page Twitter. Chaque mot commençant par \"@\" sera considéré comme un nom de compte Twitter"
 
-#: inc/lib.epc.php:271
+#: inc/lib.epc.php:276
 msgid "View this user's twitter page"
 msgstr "Voir la page Twitter de cet utilisateur"
 
-#: index.php:44
-#: index.php:364
+#: index.php:48
+#: index.php:372
 msgid "Key"
 msgstr "Clé"
 
-#: index.php:225
-#: index.php:482
+#: index.php:224
+#: index.php:491
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -195,83 +203,83 @@ msgstr "Ceci est la liste des balises HTML dont le contenu sera ignoré."
 msgid "Tag \"%s\" always be ignored."
 msgstr "Les balises \"%s\" seront toujours ignorées."
 
-#: index.php:346
+#: index.php:351
 msgid "Records"
 msgstr "Enregistrements"
 
-#: index.php:349
+#: index.php:355
 msgid "Record successfully added"
 msgstr "Enregistrement ajouté avec succès"
 
-#: index.php:352
+#: index.php:359
 msgid "Records successfully updated"
 msgstr "Enregistrements mis à jour avec succès"
 
-#: index.php:356
+#: index.php:363
 msgid "No record"
 msgstr "Pas d'enregistrement"
 
-#: index.php:388
+#: index.php:396
 msgid "In order to remove a record, leave empty its key or value."
 msgstr "Pour retirer un enregistrement, laisser vide sa clé ou sa valeur."
 
-#: index.php:407
+#: index.php:414
 msgid "New record"
 msgstr "Nouvel enregistrement"
 
-#: index.php:409
+#: index.php:416
 msgid "Key:"
 msgstr "Clé :"
 
-#: index.php:412
+#: index.php:419
 msgid "Value:"
 msgstr "Valeur :"
 
-#: index.php:430
+#: index.php:438
 msgid "Settings of enhancePostContent"
 msgstr "Paramètres de enhancePostContent"
 
-#: index.php:434
+#: index.php:443
 msgid "Configuration successfully saved"
 msgstr "Configuration sauvegardée avec succès"
 
-#: index.php:440
+#: index.php:449
 msgid "Enable extension"
 msgstr "Activer l'extension"
 
-#: index.php:441
+#: index.php:450
 msgid "This also actives widget"
 msgstr "Ceci active également le widget"
 
-#: index.php:442
+#: index.php:451
 msgid "Records lists"
 msgstr "Listes des enregistrements"
 
-#: index.php:443
+#: index.php:452
 msgid "This is the default order of records lists."
 msgstr "Ceci est l'ordre de trie par défaut des listes d'enregistrements."
 
-#: index.php:448
+#: index.php:457
 msgid "Records per page:"
 msgstr "Enregistrements par page :"
 
-#: index.php:455
+#: index.php:464
 msgid "This is a special feature to edit list of allowed template values and public pages where this plugin works."
 msgstr "Ceci est une option spéciale pour modifier les listes des balises de template et des pages publiques ou le plugin sera actif."
 
-#: index.php:456
+#: index.php:465
 msgid "Allowed DC template values:"
 msgstr "Autoriser les balises de template :"
 
-#: index.php:459
+#: index.php:468
 msgid "Use \"readable_name1:template_value1;readable_name2:template_value2;\" like \"entry content:EntryContent;entry excerpt:EntryExcerpt;\"."
 msgstr "Utiliser \"titre1:valeur_de_template1;titre2:valeur_de_template2;\" exemple \"entry content:EntreyContent;entry excerpt:EntreyExcerpt;\"."
 
-#: index.php:460
+#: index.php:469
 msgid "Allowed public pages:"
 msgstr "Autoriser les pages publiques :"
 
-#: index.php:463
+#: index.php:472
 msgid "Use \"readable_name1:template_page1;readable_name2:template_page2;\" like \"post page:post.html;home page:home.html;\"."
 msgstr "Utiliser \"titre1:page_de_template1;titre2:page_de_template2;\" comme \"post page:post.html;home page:home.html;\"."
 

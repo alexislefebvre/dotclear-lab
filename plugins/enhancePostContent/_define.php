@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of enhancePostContent, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2008-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,8 +16,7 @@ $this->registerModule(
 	/* Name */			"Enhance post content",
 	/* Description*/		"Add features to words in post content",
 	/* Author */			"JC Denis",
-	/* Version */			'0.9',
+	/* Version */			'2011.06.03',
 	/* Permissions */		'content'
 );
-	/* date */		#20100606
 ?>

@@ -1,6 +1,11 @@
 x.x xxxxxxxx
- * Not added priority on filters
+ * Not added priority on filters for replacement order
+ * Not added priority on lists of filters for replacement order
  * Not added auto-find post title in content
+ * Fixed records list (more Dotclear compliant) (checkbox and action)
+
+2011.06.03
+ * Added 'feeds pages'
 
 0.9 20100606
  * Switched to DC 2.2
