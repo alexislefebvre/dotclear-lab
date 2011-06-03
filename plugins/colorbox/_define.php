@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */			"colorbox",
 	/* Description*/		"Lightbox like effect on images using jquery ColorBox plugin",
 	/* Author */			"Philippe aka amalgame and Tomtom",
-	/* Version */			'1.4.5',
+	/* Version */			'1.4.6',
 	/* Permissions */		'admin'
 );
 ?>
