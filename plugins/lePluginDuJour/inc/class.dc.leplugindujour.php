@@ -26,17 +26,17 @@ class dclePluginDuJour {
 			$author = $core->blog->settings->leplugindujour->author;
 			$details = $core->blog->settings->leplugindujour->details;
 			
-			$txt_plugin = 
-				'<div class="message" style="background:url(http://media.dotaddict.org/pda/dc2/'.$plugin.'/icon.png) 8px 6px no-repeat;">'.
-				'<h3 style="color:#cccccc;">'.$label.'</h3>'.
-				'<p><em>'.$desc.'</em></p>'.
-				'<p>'.__('by').' '.$author.'<br />'.
-				'( <a href="'.$details.'" class="learnmore modal">'.__('More details').'</a> )</p></div>';
-			
-
 			$doc_links = $icons->offsetGet(0);
+			$txt_plugin = clone $icons->offsetGet(0);
 			$news = $icons->offsetGet(1);
-			$icons->offsetSet(0, array($txt_plugin));
+			
+			$txt_plugin[0] ='<div class="message" style="background:url(http://media.dotaddict.org/pda/dc2/'.$plugin.'/icon.png) 8px 6px no-repeat;">'.
+					'<h3 style="color:#cccccc;">'.$label.'</h3>'.
+					'<p><em>'.$desc.'</em></p>'.
+					'<p>'.__('by').' '.$author.'<br />'.
+					'( <a href="'.$details.'" class="learnmore modal">'.__('More details').'</a> )</p></div>';
+			
+			$icons->offsetSet(0, $txt_plugin);
 			$icons->offsetSet(1, $doc_links);
 			$icons->offsetSet(2, $news);
 			
@@ -180,7 +180,7 @@ class dclePluginDuJour {
 			
 			uasort($raw_datas,array('self','sort'));
 			
-			# On se débarasse des plugins désactivés.
+			# On se dÃ©barasse des plugins dÃ©sactivÃ©s.
 			$skipped = array_keys($this->core->plugins->getDisabledModules());
 			foreach ($skipped as $p_id) {
 				if (isset($raw_datas[$p_id])) {
@@ -188,7 +188,7 @@ class dclePluginDuJour {
 				}
 			}
 			
-			# On vérifie les mises à jour
+			# On vÃ©rifie les mises Ã  jour
 			$updates = array();
 			$current = $this->core->plugins->getModules();
 			foreach ($current as $p_id => $p_infos) {
@@ -211,7 +211,7 @@ class dclePluginDuJour {
 			return true;
 		}
 		catch (Exception $e) {
-			# Probablement à compléter.
+			# Probablement Ã  complÃ©ter.
 			return false;
 		}
 	}
@@ -241,7 +241,7 @@ class dclePluginDuJour {
 			
 			uasort($raw_datas,array('self','sort'));
 			
-			# On vérifie les mises à jour
+			# On vÃ©rifie les mises Ã  jour
 			$updates = array();
 			$core_themes = new dcModules($this->core);
 			$core_themes->loadModules($this->core->blog->themes_path,null);
@@ -266,7 +266,7 @@ class dclePluginDuJour {
 			return true;
 		}
 		catch (Exception $e) {
-			# Probablement à compléter.
+			# Probablement Ã  complÃ©ter.
 			return false;
 		}
 	}
