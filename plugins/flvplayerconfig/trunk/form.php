@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of flvplayerconfig, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2010 lipki and contributors
+# Copyright (c) 2011 lipki and contributors
 # kevin@lepeltier.info
 # 
 # Licensed under the GPL version 2.0 license.
@@ -13,13 +13,12 @@
 $default_tab = 'generale';
 if (isset($_REQUEST['tab']))
 	$default_tab = $_REQUEST['tab'];
-	
+
 $popup = (integer) !empty($_GET['popup']);
 
 if( $popup )
 	$default_tab = '';
-	
-	
+
 $fileid = $_GET['id'];
 
 if( $fileid ) {
@@ -28,9 +27,6 @@ if( $fileid ) {
 	$flv = $f->file_url;
 } else
 	$flv = 'http://dotclear.toopi.info./public/3d_divers/D2D2_1.flv';
-	
-	
-	
 
 if (!empty($_POST['saveconfig'])) {
 
@@ -105,14 +101,11 @@ if (!empty($_POST['saveconfig'])) {
 
 $args = unserialize($core->blog->settings->themes->flvplayer_style);
 
-
 foreach( $args as $key => $val )
 	$FlashVars[] = $key.'='.$val;
 
 $FlashVars[] = 'flv='.$flv;
 $FlashVars = implode( '&', $FlashVars);
-
-
 
 if( !isset($args['title']) ) $args['title'] = "";
 if( !isset($args['startimage']) ) $args['startimage'] = "";
@@ -176,25 +169,22 @@ if( !isset($args['shortcut']) ) $args['shortcut'] = 0;
 if( !isset($args['netconnection']) ) $args['netconnection'] = "";
 if( !isset($args['showtitleandstartimage']) ) $args['showtitleandstartimage'] = 0;
 
-
-
 if (isset($_GET['saveconfig']))
 	$msg .= __('Configuration successfully updated.');
-
-
-
 
 ?>
 <html>
 <head>
-	<title><?php echo(__('FLV Player Config')); ?></title>
+	<title><?php echo __('FLV Player Config'); ?></title>
+	<link rel="stylesheet" media="screen" type="text/css" href="index.php?pf=flvplayerconfig/js/colorpicker/css/colorpicker.css" />
+	<link rel="stylesheet" media="screen" type="text/css" href="index.php?pf=flvplayerconfig/style.css" />
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
-	<?php echo dcPage::jsLoad('index.php?pf=flvplayerconfig/js/generator.js'); ?>
 	<?php if( $popup ) { echo dcPage::jsLoad('index.php?pf=flvplayerconfig/js/popup.js'); } ?>
-	<link rel="stylesheet" href="index.php?pf=flvplayerconfig/style.css" type="text/css" />
+	<?php echo dcPage::jsLoad('index.php?pf=flvplayerconfig/js/colorpicker/js/colorpicker.js'); ?>
+	<?php echo dcPage::jsLoad('index.php?pf=flvplayerconfig/js/form.js'); ?>
 </head>
 <body>
- 
+	
 	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.__('FLV Player Config'); ?></h2> 
 	
 	<?php if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';} ?>
@@ -207,372 +197,449 @@ if (isset($_GET['saveconfig']))
 			<param name="FlashVars" value="<?php echo $FlashVars; ?>">
 		</object>
 	</div>
-
-
-	<div id="generator">
-                
-                <form id="flvplayerconfig-insert-form"  method="post" action="<?php echo($p_url); ?>">
-			<?php echo $core->formNonce(); ?>
+	
+	<form id="flvplayerconfig-insert-form"  method="post" action="<?php echo($p_url); ?>">
+	
 			
-		<?php if( $popup ) { ?>
-			
-			<input id="flv" type="hidden" value="<?php echo $flv; ?>"/>
-			
-			<div class="multi-part" id="rapide" title="<?php echo __('Rapide'); ?>" >
-				
-				<h3><?php echo __('Video size'); ?></h3>
-				<table class="visible" summary="<?php echo __('Video size'); ?>">
-				    <tbody>
-					<tr><td class="name"><label for="width">width</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['width']; ?>" class="int" name="width" id="width"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la largeur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="height">height</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['height']; ?>" class="int" name="height" id="height"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la hauteur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				    </tbody>
-				</table>
-				
-				<h3><?php echo __('Video disposition'); ?></h3>
-				<table class="visible" summary="<?php echo __('Video disposition'); ?>">
-				    <tbody>
-					<tr><td class="name"><label for="align"></label></td>
-						<td class="value"><select id="align" name="align">
-						<option <?php echo $args['align']=="none"? 'selected="selected"':''; ?> value="none">None</option>
-						<option <?php echo $args['align']=="left"? 'selected="selected"':''; ?> value="left">Left</option>
-						<option <?php echo $args['align']=="right"? 'selected="selected"':''; ?> value="right">Right</option>
-						<option <?php echo $args['align']=="center"? 'selected="selected"':''; ?> value="center">Center</option>
-						</select><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'alignement de la video.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					</tbody>
-				</table>
-			</div>
-
-		<?php } ?>
-			
-			<div class="multi-part" id="generale" title="<?php echo __('Générale'); ?>" >
-				<table class="visible" summary="Générale">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="title">title</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['text']; ?>" class="text" name="text" id="text"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Le titre affiché avant le chargement de la vidéo')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="startimage">startimage</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['startimage']; ?>" class="url" name="startimage" id="startimage"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'URL du fichier JPEG (non progressif) à afficher avant le chargement de la vidéo')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-		
-
+			<p class="clear">
+				<?php echo $core->formNonce(); ?>
+				<input id="flv" type="hidden" value="<?php echo $flv; ?>"/>
 		<?php if( !$popup ) { ?>
-					<tr><td class="name"><label for="width">width</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['width']; ?>" class="int" name="width" id="width"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la largeur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="height">height</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['height']; ?>" class="int" name="height" id="height"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la hauteur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="align">Alignement</label></td>
-						<td class="value"><select id="align" name="align">
-						<option <?php echo $args['align']=="none"? 'selected="selected"':''; ?> value="none">None</option>
-						<option <?php echo $args['align']=="left"? 'selected="selected"':''; ?> value="left">Left</option>
-						<option <?php echo $args['align']=="right"? 'selected="selected"':''; ?> value="right">Right</option>
-						<option <?php echo $args['align']=="center"? 'selected="selected"':''; ?> value="center">Center</option>
-						</select><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'alignement de la video.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-		<?php } ?>
-		
-					<tr><td class="name"><label for="loop">loop</label></td>
-						<td class="value"><input name="loop" id="loop" type="checkbox" <?php echo $args['loop']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour boucler')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="autoplay">autoplay</label></td>
-						<td class="value"><input name="autoplay" id="autoplay" type="checkbox" <?php echo $args['autoplay']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour lire automatiquement')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="autoload">autoload</label></td>
-						<td class="value"><input name="autoload" id="autoload" type="checkbox" <?php echo $args['autoload']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour lancer le chargement et afficher la première image de la vidéo')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="volume">volume</label></td>
-						<td class="value"><select id="volume" name="volume">
-						<option <?php echo $args['volume']==0? 'selected="selected"':''; ?> value="0">0</option>
-						<option <?php echo $args['volume']==25? 'selected="selected"':''; ?> value="25">25</option>
-						<option <?php echo $args['volume']==50? 'selected="selected"':''; ?> value="50">50</option>
-						<option <?php echo $args['volume']==75? 'selected="selected"':''; ?> value="75">75</option>
-						<option <?php echo $args['volume']==100? 'selected="selected"':''; ?> value="100">100</option>
-						<option <?php echo $args['volume']==125? 'selected="selected"':''; ?> value="125">125</option>
-						<option <?php echo $args['volume']==150? 'selected="selected"':''; ?> value="150">150</option>
-						<option <?php echo $args['volume']==175? 'selected="selected"':''; ?> value="175">175</option>
-						<option <?php echo $args['volume']==200? 'selected="selected"':''; ?> value="200">200</option>
-						</select><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Le volume initial, entre &lt;code&gt;0&lt;/code&gt; et &lt;code&gt;200&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				    </tbody>
-				</table>
-				<br/>
-				<h3><?php echo __('Divers'); ?></h3>
-				<table class="visible" summary="Divers">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="showmouse">showmouse</label></td>
-						<td class="value"><select id="showmouse" name="showmouse">
-						<option <?php echo $args['showmouse']=='autohide'? 'selected="selected"':''; ?> value="autohide">autohide</option>
-						<option <?php echo $args['showmouse']=='always'? 'selected="selected"':''; ?> value="always">always</option>
-						<option <?php echo $args['showmouse']=='never'? 'selected="selected"':''; ?> value="never">never</option>
-						</select></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Affichage de la souris : &lt;code&gt;always&lt;/code&gt;, &lt;code&gt;autohide&lt;/code&gt;, &lt;code&gt;never&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="videobgcolor">videobgcolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['videobgcolor']; ?>" class="color" name="videobgcolor" id="videobgcolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'videobgcolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur du fond de la vidéo quand il n\'y a pas de vidéo.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="loadonstop">loadonstop</label></td>
-						<td class="value"><input name="loadonstop" id="loadonstop" type="checkbox" <?php echo $args['loadonstop']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;0&lt;/code&gt; pour arrêter le chargement de la vidéo au STOP')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="phpstream">phpstream</label></td>
-						<td class="value"><input name="phpstream" id="phpstream" type="checkbox" <?php echo $args['phpstream']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour utiliser un streaming php')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="shortcut">shortcut</label></td>
-						<td class="value"><input name="shortcut" id="shortcut" type="checkbox" <?php echo $args['shortcut']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;0&lt;/code&gt; pour désactiver les raccourcis clavier.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="netconnection">netconnection</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['netconnection']; ?>" class="text" name="netconnection" id="netconnection"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'URL du serveur RTMP')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="showtitleandstartimage">showtitleandstartimage</label></td>
-						<td class="value"><input name="showtitleandstartimage" id="showtitleandstartimage" type="checkbox" <?php echo $args['showtitleandstartimage']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour afficher le titre et l\'image de départ en même temps.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				    </tbody>
-				</table>
-			</div>
-			 
-			<div class="multi-part" id="bordure" title="<?php echo __('Bordure'); ?>" >
-				<table class="hidden" summary="Bordure">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="skin">skin</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['skin']; ?>" class="url" name="skin" id="skin"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'URL du fichier JPEG (non progressif) à charger')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="margin">margin</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['margin']; ?>" class="int" name="margin" id="margin"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La marge de la vidéo par rapport au Flash (utile pour les skins)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="bgcolor">bgcolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['bgcolor']; ?>" class="color" name="bgcolor" id="bgcolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'bgcolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur de fond')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="bgcolor1">bgcolor1</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['bgcolor1']; ?>" class="color" name="bgcolor1" id="bgcolor1"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'bgcolor1')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La première couleur du dégradé du fond')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="bgcolor2">bgcolor2</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['bgcolor2']; ?>" class="color" name="bgcolor2" id="bgcolor2"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'bgcolor2')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La seconde couleur du dégradé du fond')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				   </tbody>
-				</table>
-			</div>
-			 
-			<div class="multi-part" id="barredecontrole" title="<?php echo __('Barre de contrôle'); ?>" >
-				<table class="hidden" summary="Barre de contrôle">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="showstop">showstop</label></td>
-						<td class="value"><input name="showstop" id="showstop" type="checkbox" <?php echo $args['showstop']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour afficher le bouton STOP')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="showvolume">showvolume</label></td>
-						<td class="value"><input name="showvolume" id="showvolume" type="checkbox" <?php echo $args['showvolume']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour afficher le bouton VOLUME')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="showtime">showtime</label></td>
-						<td class="value"><select id="showtime" name="showtime">
-						<option <?php echo $args['showtime']==0? 'selected="selected"':''; ?> value="0">0</option>
-						<option <?php echo $args['showtime']==1? 'selected="selected"':''; ?> value="1">1</option>
-						<option <?php echo $args['showtime']==2? 'selected="selected"':''; ?> value="2">2</option>
-						</select></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour afficher le bouton TIME, &lt;code&gt;2&lt;/code&gt; pour l\'afficher avec le temps restant')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="showplayer">showplayer</label></td>
-						<td class="value"><select id="showplayer" name="showplayer">
-						<option <?php echo $args['showplayer']=='autohide'? 'selected="selected"':''; ?> value="autohide">autohide</option>
-						<option <?php echo $args['showplayer']=='always'? 'selected="selected"':''; ?> value="always">always</option>
-						<option <?php echo $args['showplayer']=='never'? 'selected="selected"':''; ?> value="never">never</option>
-						</select></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Affichage de la barre des boutons : &lt;code&gt;autohide&lt;/code&gt;, &lt;code&gt;always&lt;/code&gt; ou &lt;code&gt;never&lt;/code&gt;')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="showloading">showloading</label></td>
-						<td class="value"><select id="showloading" name="showloading">
-						<option <?php echo $args['showloading']=='autohide'? 'selected="selected"':''; ?> value="autohide">autohide</option>
-						<option <?php echo $args['showloading']=='always'? 'selected="selected"':''; ?> value="always">always</option>
-						<option <?php echo $args['showloading']=='never'? 'selected="selected"':''; ?> value="never">never</option>
-						</select></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Affichage du chargement : &lt;code&gt;autohide&lt;/code&gt;, &lt;code&gt;always&lt;/code&gt; ou &lt;code&gt;never&lt;/code&gt;')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="showfullscreen">showfullscreen</label></td>
-						<td class="value"><input name="showfullscreen" id="showfullscreen" type="checkbox" <?php echo $args['showfullscreen']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour afficher le bouton pour le plein écran (nécessite Flash Player 9.0.16.60 ou supérieur)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="showswitchsubtitles">showswitchsubtitles</label></td>
-						<td class="value"><input name="showswitchsubtitles" id="showswitchsubtitles" type="checkbox" <?php echo $args['showswitchsubtitles']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour afficher le bouton qui affiche/cache les sous-titres')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="playertimeout">playertimeout</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['playertimeout']; ?>" class="int" name="playertimeout" id="playertimeout"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Le délai en milliseconde avant que le lecteur se cache (quand il est en mode &lt;code&gt;autohide&lt;/code&gt; bien sûr. Par défaut à &lt;code&gt;1500&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				    </tbody>
-				</table>
-				<br/>
-				<h3><?php echo __('Couleurs'); ?></h3>
-				<table class="visible" summary="Couleurs">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="playercolor">playercolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['playercolor']; ?>" class="color" name="playercolor" id="playercolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'playercolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur du lecteur (pas du flash)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="playeralpha">playeralpha</label></td>
-						<td class="value"><select id="playeralpha" name="playeralpha">
-						<option <?php echo $args['playeralpha']==0? 'selected="selected"':''; ?> value="0">0</option>
-						<option <?php echo $args['playeralpha']==25? 'selected="selected"':''; ?> value="25">25</option>
-						<option <?php echo $args['playeralpha']==50? 'selected="selected"':''; ?> value="50">50</option>
-						<option <?php echo $args['playeralpha']==75? 'selected="selected"':''; ?> value="75">75</option>
-						<option <?php echo $args['playeralpha']==100? 'selected="selected"':''; ?> value="100">100</option>
-						</select></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La transparence du fond du lecteur entre &lt;code&gt;0&lt;/code&gt; et &lt;code&gt;100&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="loadingcolor">loadingcolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['loadingcolor']; ?>" class="color" name="loadingcolor" id="loadingcolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'loadingcolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur de la barre de chargement')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="buttoncolor">buttoncolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['buttoncolor']; ?>" class="color" name="buttoncolor" id="buttoncolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'buttoncolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur des boutons')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="buttonovercolor">buttonovercolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['buttonovercolor']; ?>" class="color" name="buttonovercolor" id="buttonovercolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'buttonovercolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur des boutons au survol')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="slidercolor1">slidercolor1</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['slidercolor1']; ?>" class="color" name="slidercolor1" id="slidercolor1"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'slidercolor1')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La première couleur du dégradé de la barre')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="slidercolor2">slidercolor2</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['slidercolor2']; ?>" class="color" name="slidercolor2" id="slidercolor2"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'slidercolor2')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La seconde couleur du dégradé de la barre')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="sliderovercolor">sliderovercolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['sliderovercolor']; ?>" class="color" name="sliderovercolor" id="sliderovercolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'sliderovercolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur de la barre au survol')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-
-				    </tbody>
-				</table>
-			</div>
-			 
-			<div class="multi-part" id="titre" title="<?php echo __('Titre'); ?>" >
-				<table class="hidden" summary="Titre">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="titlecolor">titlecolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['titlecolor']; ?>" class="color" name="titlecolor" id="titlecolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'titlecolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur du titre. Par défaut à &lt;code&gt;ffffff&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="titlesize">titlesize</label></td>
-						<td class="value"><select id="titlesize" name="titlesize">
-						<option <?php echo $args['titlesize']==8? 'selected="selected"':''; ?> value="8">8</option>
-						<option <?php echo $args['titlesize']==9? 'selected="selected"':''; ?> value="9">9</option>
-						<option <?php echo $args['titlesize']==10? 'selected="selected"':''; ?> value="10">10</option>
-						<option <?php echo $args['titlesize']==11? 'selected="selected"':''; ?> value="11">11</option>
-						<option <?php echo $args['titlesize']==12? 'selected="selected"':''; ?> value="12">12</option>
-						<option <?php echo $args['titlesize']==13? 'selected="selected"':''; ?> value="13">13</option>
-						<option <?php echo $args['titlesize']==14? 'selected="selected"':''; ?> value="14">14</option>
-						<option <?php echo $args['titlesize']==15? 'selected="selected"':''; ?> value="15">15</option>
-						<option <?php echo $args['titlesize']==16? 'selected="selected"':''; ?> value="16">16</option>
-						<option <?php echo $args['titlesize']==17? 'selected="selected"':''; ?> value="17">17</option>
-						<option <?php echo $args['titlesize']==18? 'selected="selected"':''; ?> value="18">18</option>
-						<option <?php echo $args['titlesize']==19? 'selected="selected"':''; ?> value="19">19</option>
-						<option <?php echo $args['titlesize']==20? 'selected="selected"':''; ?> value="20">20</option>
-						<option <?php echo $args['titlesize']==21? 'selected="selected"':''; ?> value="21">21</option>
-						<option <?php echo $args['titlesize']==22? 'selected="selected"':''; ?> value="22">22</option>
-						<option <?php echo $args['titlesize']==23? 'selected="selected"':''; ?> value="23">23</option>
-						<option <?php echo $args['titlesize']==24? 'selected="selected"':''; ?> value="24">24</option>
-						<option <?php echo $args['titlesize']==25? 'selected="selected"':''; ?> value="25">25</option>
-						<option <?php echo $args['titlesize']==26? 'selected="selected"':''; ?> value="26">26</option>
-						</select></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La taille de la police du titre. Par défaut à &lt;code&gt;20&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					    </tbody>
-				</table>
-				<br/>
-				<h3><?php echo __('Sous-titre'); ?></h3>
-				<table class="visible" summary="Sous-titre">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="srt">srt</label></td>
-						<td class="value"><input name="srt" id="srt" type="checkbox" <?php echo $args['srt']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour utiliser les sous-titres SRT (le fichier doit être au même endroit que la vidéo et avoir le même nom que le fichier vidéo mais avec l\'extension .srt)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="srtcolor">srtcolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['srtcolor']; ?>" class="color" name="srtcolor" id="srtcolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'srtcolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur du texte des sous-titres')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="srtbgcolor">srtbgcolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['srtbgcolor']; ?>" class="color" name="srtbgcolor" id="srtbgcolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'srtbgcolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur de fond des sous-titres')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="srtsize">srtsize</label></td>
-						<td class="value"><select id="srtsize" name="srtsize">
-						<option <?php echo $args['srtsize']==8? 'selected="selected"':''; ?> value="8">8</option>
-						<option <?php echo $args['srtsize']==9? 'selected="selected"':''; ?> value="9">9</option>
-						<option <?php echo $args['srtsize']==10? 'selected="selected"':''; ?> value="10">10</option>
-						<option <?php echo $args['srtsize']==11? 'selected="selected"':''; ?> value="11">11</option>
-						<option <?php echo $args['srtsize']==12? 'selected="selected"':''; ?> value="12">12</option>
-						<option <?php echo $args['srtsize']==13? 'selected="selected"':''; ?> value="13">13</option>
-						<option <?php echo $args['srtsize']==14? 'selected="selected"':''; ?> value="14">14</option>
-						<option <?php echo $args['srtsize']==15? 'selected="selected"':''; ?> value="15">15</option>
-						<option <?php echo $args['srtsize']==16? 'selected="selected"':''; ?> value="16">16</option>
-						</select></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La taille du texte des sous-titres. Par défaut à &lt;code&gt;11&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="srturl">srturl</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['srturl']; ?>" class="url" name="srturl" id="srturl"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'URL du fichier de sous-titres (si on ne veut pas de la détection automatique)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				    </tbody>
-				</table>
-			</div>
-			 
-			<div class="multi-part" id="technique" title="<?php echo __('Technique'); ?>" >
-			<h3><?php echo __('Affichage de la mémoire tampon'); ?></h3>
-				<table class="hidden" summary="Affichage de la mémoire tampon">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="buffer">buffer</label></td>
-					<td class="value"><select id="buffer" name="buffer">
-						<option <?php echo $args['buffer']==5? 'selected="selected"':''; ?> value="5">5</option>
-						<option <?php echo $args['buffer']==10? 'selected="selected"':''; ?> value="10">10</option>
-						<option <?php echo $args['buffer']==20? 'selected="selected"':''; ?> value="20">20</option>
-						<option <?php echo $args['buffer']==30? 'selected="selected"':''; ?> value="30">30</option>
-						<option <?php echo $args['buffer']==60? 'selected="selected"':''; ?> value="60">60</option>
-						</select></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Le nombre de secondes pour la mémoire tampon. Par défaut à &lt;code&gt;5&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="buffermessage">buffermessage</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['buffermessage']; ?>" class="text" name="buffermessage" id="buffermessage"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Le message de la mémoire tampon. Par défaut à &lt;code&gt;Buffering _n_&lt;/code&gt;, &lt;code&gt;_n_&lt;/code&gt; indiquant le pourcentage.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="buffercolor">buffercolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['buffercolor']; ?>" class="color" name="buffercolor" id="buffercolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'buffercolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur du texte du message tampon')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="bufferbgcolor">bufferbgcolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['bufferbgcolor']; ?>" class="color" name="bufferbgcolor" id="bufferbgcolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'bufferbgcolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur de fond du message tampon')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="buffershowbg">buffershowbg</label></td>
-						<td class="value"><input name="buffershowbg" id="buffershowbg" type="checkbox" <?php echo $args['buffershowbg']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;0&lt;/code&gt; pour ne pas afficher le fond du message tampon')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				    </tbody>
-				</table>
-				<br/>
-				<h3><?php echo __('Contrôles par la souris'); ?></h3>
-				<table class="hidden" summary="Contrôles par la souris">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="onclick">onclick</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['onclick']; ?>" class="text" name="onclick" id="onclick"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'URL de la destination au click sur la vidéo. Par défaut à &lt;code&gt;playpause&lt;/code&gt; qui signifie que la vidéo fait play ou pause au click. Pour ne rien faire, il faut mettre &lt;code&gt;none&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="onclicktarget">onclicktarget</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['onclicktarget']; ?>" class="text" name="onclicktarget" id="onclicktarget"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La cible de l\'URL au click sur la vidéo. Par défaut à &lt;code&gt;_self&lt;/code&gt;. Pour ouvrir une nouvelle fenêtre, mettez &lt;code&gt;_blank&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="ondoubleclick">ondoubleclick</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['ondoubleclick']; ?>" class="text" name="ondoubleclick" id="ondoubleclick"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Action sur le double click: &lt;code&gt;none&lt;/code&gt;, &lt;code&gt;fullscreen&lt;/code&gt;, &lt;code&gt;playpause&lt;/code&gt;, ou l\'url à ouvrir.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="ondoubleclicktarget">ondoubleclicktarget</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['ondoubleclicktarget']; ?>" class="text" name="ondoubleclicktarget" id="ondoubleclicktarget"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La cible de l\'URL au double click sur la vidéo. Par défaut à &lt;code&gt;_self&lt;/code&gt;. Pour ouvrir une nouvelle fenêtre, mettez &lt;code&gt;_blank&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				    </tbody>
-				</table>
-			</div>
-			 
-			<div class="multi-part" id="imagespardessuslavideo" title="<?php echo __('Images par dessus la vidéo'); ?>" >
-				<table class="hidden" summary="Images par dessus la vidéo">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="top1">top1</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['top1']; ?>" class="text" name="top1" id="top1"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Charger une image par dessus la vidéo et la placer à une coordonnée &lt;code&gt;x&lt;/code&gt; et &lt;code&gt;y&lt;/code&gt; (par exemple &lt;code&gt;url|x|y&lt;/code&gt;)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="top2">top2</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['top2']; ?>" class="text" name="top2" id="top2"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Charger une image par dessus la vidéo et la placer à une coordonnée &lt;code&gt;x&lt;/code&gt; et &lt;code&gt;y&lt;/code&gt; (par exemple &lt;code&gt;url|x|y&lt;/code&gt;)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="top3">top3</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['top3']; ?>" class="text" name="top3" id="top3"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Charger une image par dessus la vidéo et la placer à une coordonnée &lt;code&gt;x&lt;/code&gt; et &lt;code&gt;y&lt;/code&gt; (par exemple &lt;code&gt;url|x|y&lt;/code&gt;)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="top4">top4</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['top4']; ?>" class="text" name="top4" id="top4"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Charger une image par dessus la vidéo et la placer à une coordonnée &lt;code&gt;x&lt;/code&gt; et &lt;code&gt;y&lt;/code&gt; (par exemple &lt;code&gt;url|x|y&lt;/code&gt;)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="top5">top5</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['top5']; ?>" class="text" name="top5" id="top5"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Charger une image par dessus la vidéo et la placer à une coordonnée &lt;code&gt;x&lt;/code&gt; et &lt;code&gt;y&lt;/code&gt; (par exemple &lt;code&gt;url|x|y&lt;/code&gt;)')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				    </tbody>
-				</table>
-			</div>
-			 
-			<div class="multi-part" id="lesiconesdelavideo" title="<?php echo __('Les icones de la vidéo'); ?>" >
-				<table class="hidden" summary="Les icones de la vidéo">
-				    <thead>
-					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
-				    </thead>
-				    <tbody>
-					<tr><td class="name"><label for="showiconplay">showiconplay</label></td>
-						<td class="value"><input name="showiconplay" id="showiconplay" type="checkbox" <?php echo $args['showiconplay']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour afficher l\'icone PLAY au milieu de la vidéo.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="iconplaycolor">iconplaycolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['iconplaycolor']; ?>" class="color" name="iconplaycolor" id="iconplaycolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'iconplaycolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur de l\'icone PLAY.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="iconplaybgcolor">iconplaybgcolor</label></td>
-						<td class="value"><input type="text" value="<?php echo $args['iconplaybgcolor']; ?>" class="color" name="iconplaybgcolor" id="iconplaybgcolor"></td><td class="actions"><a href="javascript:void(0)" onclick="colorpicker.show(this, 'iconplaybgcolor')"><img src="index.php?pf=flvplayerconfig/color_wheel.png" alt="Colopicker"></a> <a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La couleur de fond de l\'icone PLAY.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-					<tr><td class="name"><label for="iconplaybgalpha">iconplaybgalpha</label></td>
-						<td class="value"><select id="iconplaybgalpha" name="iconplaybgalpha">
-						<option <?php echo $args['iconplaybgalpha']==0? 'selected="selected"':''; ?> value="0">0</option>
-						<option <?php echo $args['iconplaybgalpha']==25? 'selected="selected"':''; ?> value="25">25</option>
-						<option <?php echo $args['iconplaybgalpha']==50? 'selected="selected"':''; ?> value="50">50</option>
-						<option <?php echo $args['iconplaybgalpha']==75? 'selected="selected"':''; ?> value="75">75</option>
-						<option <?php echo $args['iconplaybgalpha']==100? 'selected="selected"':''; ?> value="100">100</option>
-						</select></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'La transparence du fond de l\'icone PLAY entre &lt;code&gt;0&lt;/code&gt; et &lt;code&gt;100&lt;/code&gt;.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				    </tbody>
-				</table>
-			</div>
-			
-		<?php if( !$popup ) { ?>
-			
-			<p><input type="submit" name="saveconfig" value="<?php echo __('Valider'); ?>" /></p>
-
+				<input type="submit" tabindex="33" name="saveconfig" accesskey="s" value="<?php echo __('OK'); ?>" />
 		<?php } else { ?>
-		
-			<a id="flvplayerconfig-ok" class="button" href="#"><?php echo __('Valider'); ?></a>
-
+					<a href="#" class="button" id="flvplayerconfig-cancel"><?php echo __('Undo'); ?></a> - 
+					<a href="#" class="button" id="flvplayerconfig-preview"><?php echo __('Preview'); ?></a> - 
+				<strong><a href="#" class="button" id="flvplayerconfig-ok"><?php echo __('OK'); ?></a></strong>
 		<?php } ?>
-                </form>
-            </div>
- 
+			</p>
+		
+		<?php if( $popup ) { ?>
+		
+			<div class="multi-part" id="rapide" title="<?php echo __('Fast'); ?>" >
+				<div class="two-cols">
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Video size'); ?></legend>
+							<p><label for="width"><?php echo __('Width'); ?> :
+								<input type="text" value="<?php echo $args['width']; ?>" class="int" name="width" id="width">
+							</label></p>
+							<p><label for="height"><?php echo __('Height'); ?> :
+								<input type="text" value="<?php echo $args['height']; ?>" class="int" name="height" id="height">
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Disposition'); ?></legend>
+							<p><label for="align"><?php echo __('Disposition'); ?> :
+								<select id="align" name="align">
+									<option <?php echo $args['align']=="none"? 'selected="selected"':''; ?> value="none"><?php echo __('None'); ?></option>
+									<option <?php echo $args['align']=="left"? 'selected="selected"':''; ?> value="left"><?php echo __('Left'); ?></option>
+									<option <?php echo $args['align']=="right"? 'selected="selected"':''; ?> value="right"><?php echo __('Right'); ?></option>
+									<option <?php echo $args['align']=="center"? 'selected="selected"':''; ?> value="center"><?php echo __('Center'); ?></option>
+								</select>
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			
+		<?php } ?>
+		
+			<div class="multi-part" id="generale" title="<?php echo __('General'); ?>" >
+				<div class="two-cols">
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('General'); ?></legend>
+							<p><label for="title"><?php echo __('Title'); ?> :
+								<input type="text" value="<?php echo $args['text']; ?>" class="text" name="text" id="text">
+							</label></p>
+							<p><label for="startimage"><?php echo __('Startimage'); ?> :
+								<input type="text" value="<?php echo $args['startimage']; ?>" class="url" name="startimage" id="startimage">
+							</label></p>
+							<p class="form-note">
+								<?php echo(__('Retrieves the URL of your image in the media manager.')); ?>
+							</p>
+							
+				<?php if( !$popup ) { ?>
+							<p><label for="width"><?php echo __('Width'); ?> :
+								<input type="text" value="<?php echo $args['width']; ?>" class="int" name="width" id="width">
+							</label></p>
+							<p><label for="height"><?php echo __('Height'); ?> :
+								<input type="text" value="<?php echo $args['height']; ?>" class="int" name="height" id="height">
+							</label></p>
+							<p><label for="align"><?php echo __('Disposition'); ?> :
+								<select id="align" name="align">
+									<option <?php echo $args['align']=="none"? 'selected="selected"':''; ?> value="none"><?php echo __('None'); ?></option>
+									<option <?php echo $args['align']=="left"? 'selected="selected"':''; ?> value="left"><?php echo __('Left'); ?></option>
+									<option <?php echo $args['align']=="right"? 'selected="selected"':''; ?> value="right"><?php echo __('Right'); ?></option>
+									<option <?php echo $args['align']=="center"? 'selected="selected"':''; ?> value="center"><?php echo __('Center'); ?></option>
+								</select>
+							</label></p>
+				<?php } ?>
+							<p><label for="loop" class="classic">
+								<input name="loop" id="loop" type="checkbox" <?php echo $args['loop']? 'checked="checked"':''; ?>/>
+								<?php echo __('Loop'); ?>
+							</label></p>
+							<p><label for="autoplay" class="classic">
+								<input name="autoplay" id="autoplay" type="checkbox" <?php echo $args['autoplay']? 'checked="checked"':''; ?>/>
+								<?php echo __('Autoplay'); ?>
+							</label></p>
+							<p><label for="autoload" class="classic">
+								<input name="autoload" id="autoload" type="checkbox" <?php echo $args['autoload']? 'checked="checked"':''; ?>/>
+								<?php echo __('Autoload'); ?>
+							</label></p>
+							<p><label for="volume"><?php echo __('Volume'); ?> :
+								<select id="volume" name="volume">
+									<option <?php echo $args['volume']==0? 'selected="selected"':''; ?> value="0">0</option>
+									<option <?php echo $args['volume']==25? 'selected="selected"':''; ?> value="25">25</option>
+									<option <?php echo $args['volume']==50? 'selected="selected"':''; ?> value="50">50</option>
+									<option <?php echo $args['volume']==75? 'selected="selected"':''; ?> value="75">75</option>
+									<option <?php echo $args['volume']==100? 'selected="selected"':''; ?> value="100">100</option>
+									<option <?php echo $args['volume']==125? 'selected="selected"':''; ?> value="125">125</option>
+									<option <?php echo $args['volume']==150? 'selected="selected"':''; ?> value="150">150</option>
+									<option <?php echo $args['volume']==175? 'selected="selected"':''; ?> value="175">175</option>
+									<option <?php echo $args['volume']==200? 'selected="selected"':''; ?> value="200">200</option>
+								</select>
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Miscellaneous'); ?></legend>
+							<p><label for="showmouse"><?php echo __('Show mouse'); ?> :
+								<select id="showmouse" name="showmouse">
+									<option <?php echo $args['showmouse']=='autohide'? 'selected="selected"':''; ?> value="autohide"><?php echo __('autohide'); ?></option>
+									<option <?php echo $args['showmouse']=='always'? 'selected="selected"':''; ?> value="always"><?php echo __('always'); ?></option>
+									<option <?php echo $args['showmouse']=='never'? 'selected="selected"':''; ?> value="never"><?php echo __('never'); ?></option>
+								</select>
+							</label></p>
+							<p><label for="videobgcolor"><?php echo __('Video background color'); ?> :
+								<input type="text" value="<?php echo $args['videobgcolor']; ?>" class="color" name="videobgcolor" id="videobgcolor">
+							</label></p>
+							<p><label for="loadonstop" class="classic">
+								<input name="loadonstop" id="loadonstop" type="checkbox" <?php echo $args['loadonstop']? 'checked="checked"':''; ?>/>
+								<?php echo __('Load on stop'); ?>
+							</label></p>
+							<p><label for="phpstream" class="classic">
+								<input name="phpstream" id="phpstream" type="checkbox" <?php echo $args['phpstream']? 'checked="checked"':''; ?>/>
+								<?php echo __('PHP stream'); ?>
+							</label></p>
+							<p><label for="shortcut" class="classic">
+								<input name="shortcut" id="shortcut" type="checkbox" <?php echo $args['shortcut']? 'checked="checked"':''; ?>/>
+								<?php echo __('Shortcut'); ?>
+							</label></p>
+							<p><label for="netconnection"><?php echo __('Net connection'); ?> :
+								<input type="text" value="<?php echo $args['netconnection']; ?>" class="text" name="netconnection" id="netconnection">
+							</label></p>
+							<p><label for="showtitleandstartimage" class="classic">
+								<input name="showtitleandstartimage" id="showtitleandstartimage" type="checkbox" <?php echo $args['showtitleandstartimage']? 'checked="checked"':''; ?>/>
+								<?php echo __('Show title and startimage'); ?>
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			
+			<div class="multi-part" id="bordure" title="<?php echo __('Border'); ?> & <?php echo __('Title'); ?>" >
+				<div class="two-cols">
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Border'); ?></legend>
+							<p><label for="skin"><?php echo __('Skin'); ?> :
+								<input type="text" value="<?php echo $args['skin']; ?>" class="url" name="skin" id="skin">
+							</label></p>
+							<p><label for="margin"><?php echo __('Margin'); ?> :
+								<input type="text" value="<?php echo $args['margin']; ?>" class="int" name="margin" id="margin">
+							</label></p>
+							<p><label for="bgcolor"><?php echo __('Background color'); ?> :
+								<input type="text" value="<?php echo $args['bgcolor']; ?>" class="color" name="bgcolor" id="bgcolor">
+							</label></p>
+							<p><label for="bgcolor1"><?php echo __('Background color 1'); ?> :
+								<input type="text" value="<?php echo $args['bgcolor1']; ?>" class="color" name="bgcolor1" id="bgcolor1">
+							</label></p>
+							<p><label for="bgcolor2"><?php echo __('Background color 2'); ?> :
+								<input type="text" value="<?php echo $args['bgcolor2']; ?>" class="color" name="bgcolor2" id="bgcolor2">
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Title'); ?></legend>
+							<p><label for="titlecolor"><?php echo __('Title color'); ?> :
+								<input type="text" value="<?php echo $args['titlecolor']; ?>" class="color" name="titlecolor" id="titlecolor">
+							</label></p>
+							<p><label for="titlesize"><?php echo __('Title size'); ?> :
+								<select id="titlesize" name="titlesize">
+									<option <?php echo $args['titlesize']==8? 'selected="selected"':''; ?> value="8">8</option>
+									<option <?php echo $args['titlesize']==9? 'selected="selected"':''; ?> value="9">9</option>
+									<option <?php echo $args['titlesize']==10? 'selected="selected"':''; ?> value="10">10</option>
+									<option <?php echo $args['titlesize']==11? 'selected="selected"':''; ?> value="11">11</option>
+									<option <?php echo $args['titlesize']==12? 'selected="selected"':''; ?> value="12">12</option>
+									<option <?php echo $args['titlesize']==13? 'selected="selected"':''; ?> value="13">13</option>
+									<option <?php echo $args['titlesize']==14? 'selected="selected"':''; ?> value="14">14</option>
+									<option <?php echo $args['titlesize']==15? 'selected="selected"':''; ?> value="15">15</option>
+									<option <?php echo $args['titlesize']==16? 'selected="selected"':''; ?> value="16">16</option>
+									<option <?php echo $args['titlesize']==17? 'selected="selected"':''; ?> value="17">17</option>
+									<option <?php echo $args['titlesize']==18? 'selected="selected"':''; ?> value="18">18</option>
+									<option <?php echo $args['titlesize']==19? 'selected="selected"':''; ?> value="19">19</option>
+									<option <?php echo $args['titlesize']==20? 'selected="selected"':''; ?> value="20">20</option>
+									<option <?php echo $args['titlesize']==21? 'selected="selected"':''; ?> value="21">21</option>
+									<option <?php echo $args['titlesize']==22? 'selected="selected"':''; ?> value="22">22</option>
+									<option <?php echo $args['titlesize']==23? 'selected="selected"':''; ?> value="23">23</option>
+									<option <?php echo $args['titlesize']==24? 'selected="selected"':''; ?> value="24">24</option>
+									<option <?php echo $args['titlesize']==25? 'selected="selected"':''; ?> value="25">25</option>
+									<option <?php echo $args['titlesize']==26? 'selected="selected"':''; ?> value="26">26</option>
+								</select>
+							</label></p>
+							<br class="clear">
+						</fieldset>
+						<fieldset>
+							<legend><?php echo __('Subtitle'); ?></legend>
+							<p><label for="srt" class="classic">
+								<input name="srt" id="srt" type="checkbox" <?php echo $args['srt']? 'checked="checked"':''; ?>/>
+								<?php echo __('Subtitle'); ?>
+							</label></p>
+							<p><label for="srtcolor"><?php echo __('Subtitle color'); ?> :
+								<input type="text" value="<?php echo $args['srtcolor']; ?>" class="color" name="srtcolor" id="srtcolor">
+							</label></p>
+							<p><label for="srtbgcolor"><?php echo __('Subtitle background color'); ?> :
+								<input type="text" value="<?php echo $args['srtbgcolor']; ?>" class="color" name="srtbgcolor" id="srtbgcolor">
+							</label></p>
+							<p><label for="srtsize"><?php echo __('Subtitle size'); ?> :
+								<select id="srtsize" name="srtsize">
+									<option <?php echo $args['srtsize']==8? 'selected="selected"':''; ?> value="8">8</option>
+									<option <?php echo $args['srtsize']==9? 'selected="selected"':''; ?> value="9">9</option>
+									<option <?php echo $args['srtsize']==10? 'selected="selected"':''; ?> value="10">10</option>
+									<option <?php echo $args['srtsize']==11? 'selected="selected"':''; ?> value="11">11</option>
+									<option <?php echo $args['srtsize']==12? 'selected="selected"':''; ?> value="12">12</option>
+									<option <?php echo $args['srtsize']==13? 'selected="selected"':''; ?> value="13">13</option>
+									<option <?php echo $args['srtsize']==14? 'selected="selected"':''; ?> value="14">14</option>
+									<option <?php echo $args['srtsize']==15? 'selected="selected"':''; ?> value="15">15</option>
+									<option <?php echo $args['srtsize']==16? 'selected="selected"':''; ?> value="16">16</option>
+								</select>
+							</label></p>
+							<p><label for="srturl"><?php echo __('Subtitle url'); ?> :
+								<input type="text" value="<?php echo $args['srturl']; ?>" class="url" name="srturl" id="srturl">
+							</label></p>
+							<p class="form-note">
+								<?php echo(__('Retrieves the URL of your file in the media manager.')); ?>
+							</p>
+							<br class="clear">
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			
+			<div class="multi-part" id="barredecontrole" title="<?php echo __('Control Bar'); ?>" >
+				<div class="two-cols">
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Control Bar'); ?></legend>
+							<p><label for="showstop" class="classic">
+								<input name="showstop" id="showstop" type="checkbox" <?php echo $args['showstop']? 'checked="checked"':''; ?>/>
+								<?php echo __('Show stop'); ?>
+							</label></p>
+							<p><label for="showvolume" class="classic">
+								<input name="showvolume" id="showvolume" type="checkbox" <?php echo $args['showvolume']? 'checked="checked"':''; ?>/>
+								<?php echo __('Show volume'); ?>
+							</label></p>
+							<p><label for="showtime"><?php echo __('Show time'); ?> :
+								<select id="showtime" name="showtime">
+									<option <?php echo $args['showtime']==0? 'selected="selected"':''; ?> value="0">0</option>
+									<option <?php echo $args['showtime']==1? 'selected="selected"':''; ?> value="1">1</option>
+									<option <?php echo $args['showtime']==2? 'selected="selected"':''; ?> value="2">2</option>
+								</select>
+							</label></p>
+							<p><label for="showplayer"><?php echo __('Show player'); ?> :
+								<select id="showplayer" name="showplayer">
+									<option <?php echo $args['showplayer']=='autohide'? 'selected="selected"':''; ?> value="autohide"><?php echo __('autohide'); ?></option>
+									<option <?php echo $args['showplayer']=='always'? 'selected="selected"':''; ?> value="always"><?php echo __('always'); ?></option>
+									<option <?php echo $args['showplayer']=='never'? 'selected="selected"':''; ?> value="never"><?php echo __('never'); ?></option>
+								</select>
+							</label></p>
+							<p><label for="showloading"><?php echo __('Show loading'); ?> :
+								<select id="showloading" name="showloading">
+									<option <?php echo $args['showloading']=='autohide'? 'selected="selected"':''; ?> value="autohide"><?php echo __('autohide'); ?></option>
+									<option <?php echo $args['showloading']=='always'? 'selected="selected"':''; ?> value="always"><?php echo __('always'); ?></option>
+									<option <?php echo $args['showloading']=='never'? 'selected="selected"':''; ?> value="never"><?php echo __('never'); ?></option>
+								</select>
+							</label></p>
+							<p><label for="showfullscreen" class="classic">
+								<input name="showfullscreen" id="showfullscreen" type="checkbox" <?php echo $args['showfullscreen']? 'checked="checked"':''; ?>/>
+								<?php echo __('Show full screen'); ?>
+							</label></p>
+							<p><label for="showswitchsubtitles" class="classic">
+								<input name="showswitchsubtitles" id="showswitchsubtitles" type="checkbox" <?php echo $args['showswitchsubtitles']? 'checked="checked"':''; ?>/>
+								<?php echo __('Show switch subtitles'); ?>
+							</label></p>
+							<p><label for="playertimeout"><?php echo __('Player time out'); ?> :
+								<input type="text" value="<?php echo $args['playertimeout']; ?>" class="int" name="playertimeout" id="playertimeout">
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Colors'); ?></legend>
+							<p><label for="playercolor"><?php echo __('Player color'); ?> :
+								<input type="text" value="<?php echo $args['playercolor']; ?>" class="color" name="playercolor" id="playercolor">
+							</label></p>
+							<p><label for="playeralpha"><?php echo __('Player alpha'); ?> :
+								<select id="playeralpha" name="playeralpha">
+									<option <?php echo $args['playeralpha']==0? 'selected="selected"':''; ?> value="0">0</option>
+									<option <?php echo $args['playeralpha']==25? 'selected="selected"':''; ?> value="25">25</option>
+									<option <?php echo $args['playeralpha']==50? 'selected="selected"':''; ?> value="50">50</option>
+									<option <?php echo $args['playeralpha']==75? 'selected="selected"':''; ?> value="75">75</option>
+									<option <?php echo $args['playeralpha']==100? 'selected="selected"':''; ?> value="100">100</option>
+								</select>
+							</label></p>
+							<p><label for="loadingcolor"><?php echo __('Loading color'); ?> :
+								<input type="text" value="<?php echo $args['loadingcolor']; ?>" class="color" name="loadingcolor" id="loadingcolor">
+							</label></p>
+							<p><label for="buttoncolor"><?php echo __('Button color'); ?> :
+								<input type="text" value="<?php echo $args['buttoncolor']; ?>" class="color" name="buttoncolor" id="buttoncolor">
+							</label></p>
+							<p><label for="buttonovercolor"><?php echo __('Button over color'); ?> :
+								<input type="text" value="<?php echo $args['buttonovercolor']; ?>" class="color" name="buttonovercolor" id="buttonovercolor">
+							</label></p>
+							<p><label for="slidercolor1"><?php echo __('Slider color 1'); ?> :
+								<input type="text" value="<?php echo $args['slidercolor1']; ?>" class="color" name="slidercolor1" id="slidercolor1">
+							</label></p>
+							<p><label for="slidercolor2"><?php echo __('Slider color 2'); ?> :
+								<input type="text" value="<?php echo $args['slidercolor2']; ?>" class="color" name="slidercolor2" id="slidercolor2">
+							</label></p>
+							<p><label for="sliderovercolor"><?php echo __('Slider over color'); ?> :
+								<input type="text" value="<?php echo $args['sliderovercolor']; ?>" class="color" name="sliderovercolor" id="sliderovercolor">
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			
+			<div class="multi-part" id="technique" title="<?php echo __('Technical '); ?>" >
+				<div class="two-cols">
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Display Buffer'); ?></legend>
+							<p><label for="buffer"><?php echo __('Buffer'); ?> :
+								<select id="buffer" name="buffer">
+									<option <?php echo $args['buffer']==5? 'selected="selected"':''; ?> value="5">5</option>
+									<option <?php echo $args['buffer']==10? 'selected="selected"':''; ?> value="10">10</option>
+									<option <?php echo $args['buffer']==20? 'selected="selected"':''; ?> value="20">20</option>
+									<option <?php echo $args['buffer']==30? 'selected="selected"':''; ?> value="30">30</option>
+									<option <?php echo $args['buffer']==60? 'selected="selected"':''; ?> value="60">60</option>
+								</select>
+							</label></p>
+							<p><label for="buffermessage"><?php echo __('Buffer message'); ?> :
+								<input type="text" value="<?php echo $args['buffermessage']; ?>" class="text" name="buffermessage" id="buffermessage">
+							</label></p>
+							<p><label for="buffercolor"><?php echo __('Buffer color'); ?> :
+								<input type="text" value="<?php echo $args['buffercolor']; ?>" class="color" name="buffercolor" id="buffercolor">
+							</label></p>
+							<p><label for="bufferbgcolor"><?php echo __('Buffer background color'); ?> :
+								<input type="text" value="<?php echo $args['bufferbgcolor']; ?>" class="color" name="bufferbgcolor" id="bufferbgcolor">
+							</label></p>
+							<p><label for="buffershowbg" class="classic">
+								<input name="buffershowbg" id="buffershowbg" type="checkbox" <?php echo $args['buffershowbg']? 'checked="checked"':''; ?>/>
+								<?php echo __('Buffer show background'); ?>
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Controls the mouse'); ?></legend>
+							<p><label for="onclick"><?php echo __('Onclick'); ?> :
+								<input type="text" value="<?php echo $args['onclick']; ?>" class="text" name="onclick" id="onclick">
+							</label></p>
+							<p><label for="onclicktarget"><?php echo __('Onclick target'); ?> :
+								<input type="text" value="<?php echo $args['onclicktarget']; ?>" class="text" name="onclicktarget" id="onclicktarget">
+							</label></p>
+							<p><label for="ondoubleclick"><?php echo __('Ondoubleclick'); ?> :
+								<input type="text" value="<?php echo $args['ondoubleclick']; ?>" class="text" name="ondoubleclick" id="ondoubleclick">
+							</label></p>
+							<p><label for="ondoubleclicktarget"><?php echo __('Ondoubleclick target'); ?> :
+								<input type="text" value="<?php echo $args['ondoubleclicktarget']; ?>" class="text" name="ondoubleclicktarget" id="ondoubleclicktarget">
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			
+			<div class="multi-part" id="imagespardessuslavideo" title="<?php echo __('Images on the video'); ?> & <?php echo __('The icons of the video'); ?>" >
+				<div class="two-cols">
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('Images on the video'); ?></legend>
+							<p><label for="top1"><?php echo __('Top 1'); ?> :
+								<input type="text" value="<?php echo $args['top1']; ?>" class="text" name="top1" id="top1">
+							</label></p>
+							<p><label for="top2"><?php echo __('Top 2'); ?> :
+								<input type="text" value="<?php echo $args['top2']; ?>" class="text" name="top2" id="top2">
+							</label></p>
+							<p><label for="top3"><?php echo __('Top 3'); ?> :
+								<input type="text" value="<?php echo $args['top3']; ?>" class="text" name="top3" id="top3">
+							</label></p>
+							<p><label for="top4"><?php echo __('Top 4'); ?> :
+								<input type="text" value="<?php echo $args['top4']; ?>" class="text" name="top4" id="top4">
+							</label></p>
+							<p><label for="top5"><?php echo __('Top 5'); ?> :
+								<input type="text" value="<?php echo $args['top5']; ?>" class="text" name="top5" id="top5">
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+					<div class="col">
+						<fieldset>
+							<legend><?php echo __('The icons of the video'); ?></legend>
+							<p><label for="showiconplay" class="classic">
+								<input name="showiconplay" id="showiconplay" type="checkbox" <?php echo $args['showiconplay']? 'checked="checked"':''; ?>/>
+								<?php echo __('Show icon play'); ?>
+							</label></p>
+							<p><label for="iconplaycolor"><?php echo __('Icon play color'); ?> :
+								<input type="text" value="<?php echo $args['iconplaycolor']; ?>" class="color" name="iconplaycolor" id="iconplaycolor">
+							</label></p>
+							<p><label for="iconplaybgcolor"><?php echo __('Icon play background color'); ?> :
+								<input type="text" value="<?php echo $args['iconplaybgcolor']; ?>" class="color" name="iconplaybgcolor" id="iconplaybgcolor">
+							</label></p>
+							<p><label for="iconplaybgalpha"><?php echo __('Icon play background alpha'); ?> :
+								<select id="iconplaybgalpha" name="iconplaybgalpha">
+									<option <?php echo $args['iconplaybgalpha']==0? 'selected="selected"':''; ?> value="0">0</option>
+									<option <?php echo $args['iconplaybgalpha']==25? 'selected="selected"':''; ?> value="25">25</option>
+									<option <?php echo $args['iconplaybgalpha']==50? 'selected="selected"':''; ?> value="50">50</option>
+									<option <?php echo $args['iconplaybgalpha']==75? 'selected="selected"':''; ?> value="75">75</option>
+									<option <?php echo $args['iconplaybgalpha']==100? 'selected="selected"':''; ?> value="100">100</option>
+								</select>
+							</label></p>
+							<br class="clear">
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			
+			<p class="clear">
+				<?php echo $core->formNonce(); ?>
+				<input id="flv" type="hidden" value="<?php echo $flv; ?>"/>
+		<?php if( !$popup ) { ?>
+				<input type="submit" tabindex="33" name="saveconfig" accesskey="s" value="<?php echo __('OK'); ?>" />
+		<?php } else { ?>
+					<a href="#" class="button" id="flvplayerconfig-cancel"><?php echo __('Undo'); ?></a> - 
+					<a href="#" class="button" id="flvplayerconfig-preview"><?php echo __('Preview'); ?></a> - 
+				<strong><a href="#" class="button" id="flvplayerconfig-ok"><?php echo __('OK'); ?></a></strong>
+		<?php } ?>
+			</p>
+		
+        </form>
+	
+	<?php dcPage::helpBlock('flvplayerconfig');?>
+	
 </body>
 </html>

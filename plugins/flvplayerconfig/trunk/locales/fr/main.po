@@ -1,0 +1,342 @@
+# Language: Français
+# Module: flvplayerconfig - 1.7
+# Date: 2011-06-05 14:27:11
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: flvplayerconfig 1.7\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-06-05T14:27:11+00:00\n"
+"Last-Translator: Kévin Lepeltier\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:18
+msgid "flvPlayer config"
+msgstr "FLV Player config"
+
+#: form.php:173
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour."
+
+#: form.php:178
+#: form.php:188
+msgid "FLV Player Config"
+msgstr "FLV Player Config"
+
+#: form.php:208
+#: form.php:212
+#: form.php:632
+#: form.php:636
+msgid "OK"
+msgstr "Valider"
+
+#: form.php:218
+msgid "Fast"
+msgstr "Rapide"
+
+#: form.php:222
+msgid "Video size"
+msgstr "Taille de la vidéo"
+
+#: form.php:223
+#: form.php:267
+msgid "Width"
+msgstr "Forcer la largeur de la vidéo"
+
+#: form.php:226
+#: form.php:270
+msgid "Height"
+msgstr "Forcer la hauteur de la vidéo"
+
+#: form.php:234
+#: form.php:235
+#: form.php:273
+msgid "Disposition"
+msgstr "Alignement de la vidéo"
+
+#: form.php:237
+#: form.php:275
+msgid "None"
+msgstr "Aucun"
+
+#: form.php:238
+#: form.php:276
+msgid "Left"
+msgstr "Gauche"
+
+#: form.php:239
+#: form.php:277
+msgid "Right"
+msgstr "Droite"
+
+#: form.php:240
+#: form.php:278
+msgid "Center"
+msgstr "Centre"
+
+#: form.php:251
+#: form.php:255
+msgid "General"
+msgstr "Général"
+
+#: form.php:256
+#: form.php:348
+#: form.php:373
+msgid "Title"
+msgstr "Titre"
+
+#: form.php:259
+msgid "Startimage"
+msgstr "URL de l'image afficher avant la vidéo"
+
+#: form.php:263
+msgid "Retrieves the URL of your image in the media manager."
+msgstr "Recuperer l'url de Votre Image Dans Le Gestionnaire de médias"
+
+#: form.php:284
+msgid "Loop"
+msgstr "Boucler"
+
+#: form.php:288
+msgid "Autoplay"
+msgstr "Lecture automatique"
+
+#: form.php:292
+msgid "Autoload"
+msgstr "Chargement automatique"
+
+#: form.php:312
+msgid "Miscellaneous"
+msgstr "Divers"
+
+#: form.php:313
+msgid "Show mouse"
+msgstr "Afficher la souris"
+
+#: form.php:315
+#: form.php:461
+#: form.php:468
+msgid "autohide"
+msgstr "Masquer automatiquement"
+
+#: form.php:316
+#: form.php:462
+#: form.php:469
+msgid "always"
+msgstr "Toujours"
+
+#: form.php:317
+#: form.php:463
+#: form.php:470
+msgid "never"
+msgstr "Jamais"
+
+#: form.php:320
+msgid "Video background color"
+msgstr "Couleur du fond de la vidéo quand il n'y a pas de vidéo"
+
+#: form.php:325
+msgid "Load on stop"
+msgstr "Arrêter le chargement de la vidéo au STOP"
+
+#: form.php:329
+msgid "PHP stream"
+msgstr "Utiliser un streaming php"
+
+#: form.php:333
+msgid "Shortcut"
+msgstr "Raccourcis"
+
+#: form.php:335
+msgid "Net connection"
+msgstr "URL du serveur RTMP"
+
+#: form.php:340
+msgid "Show title and startimage"
+msgstr "Afficher le titre et l'image de départ en même temps"
+
+#: form.php:348
+#: form.php:352
+msgid "Border"
+msgstr "Bordure"
+
+#: form.php:356
+msgid "Margin"
+msgstr "Marge"
+
+#: form.php:359
+msgid "Background color"
+msgstr "Couleur de fond"
+
+#: form.php:362
+msgid "Background color 1"
+msgstr "Couleur de fond 1"
+
+#: form.php:365
+msgid "Background color 2"
+msgstr "Couleur de fond 2"
+
+#: form.php:374
+msgid "Title color"
+msgstr "Couleur du titre"
+
+#: form.php:377
+msgid "Title size"
+msgstr "Taille du titre"
+
+#: form.php:403
+#: form.php:406
+msgid "Subtitle"
+msgstr "Sous-titres"
+
+#: form.php:408
+msgid "Subtitle color"
+msgstr "Couleur sous-titres"
+
+#: form.php:411
+msgid "Subtitle background color"
+msgstr "Couleur de fond de sous-titres"
+
+#: form.php:414
+msgid "Subtitle size"
+msgstr "Taille de sous-titres"
+
+#: form.php:427
+msgid "Subtitle url"
+msgstr "Url de sous-titres"
+
+#: form.php:431
+msgid "Retrieves the URL of your file in the media manager."
+msgstr "Récupèrer l'url de votre fichier dans le gestionnaire de média"
+
+#: form.php:439
+#: form.php:443
+msgid "Control Bar"
+msgstr "Barre de contrôle"
+
+#: form.php:446
+msgid "Show stop"
+msgstr "Afficher boutton stop"
+
+#: form.php:450
+msgid "Show volume"
+msgstr "Afficher boutton volume"
+
+#: form.php:452
+msgid "Show time"
+msgstr "Afficher l'heure"
+
+#: form.php:459
+msgid "Show player"
+msgstr "Afficher player"
+
+#: form.php:466
+msgid "Show loading"
+msgstr "Voir le chargement"
+
+#: form.php:475
+msgid "Show full screen"
+msgstr "Afficher en plein écran"
+
+#: form.php:489
+msgid "Colors"
+msgstr "Couleurs"
+
+#: form.php:490
+msgid "Player color"
+msgstr "La couleur du joueur"
+
+#: form.php:493
+msgid "Player alpha"
+msgstr "Transparence"
+
+#: form.php:502
+msgid "Loading color"
+msgstr "Couleur du loadeur"
+
+#: form.php:505
+msgid "Button color"
+msgstr "Couleur des boutons"
+
+#: form.php:508
+msgid "Button over color"
+msgstr "Couleur des boutons au survole"
+
+#: form.php:511
+msgid "Slider color 1"
+msgstr "Première couleur du Slider"
+
+#: form.php:514
+msgid "Slider color 2"
+msgstr "Deuxième couleur du Slider"
+
+#: form.php:517
+msgid "Slider over color"
+msgstr "Couleur du Slider au survole"
+
+#: form.php:526
+msgid "Technical"
+msgstr "Technique"
+
+#: form.php:530
+msgid "Display Buffer"
+msgstr "Buffer d'affichage"
+
+#: form.php:540
+msgid "Buffer message"
+msgstr "message pendant le Buffer"
+
+#: form.php:543
+msgid "Buffer color"
+msgstr "Couleur du Buffer"
+
+#: form.php:546
+msgid "Buffer background color"
+msgstr "Couleur de fond du Buffer"
+
+#: form.php:551
+msgid "Buffer show background"
+msgstr "Fond pendant le Buffer"
+
+#: form.php:558
+msgid "Controls the mouse"
+msgstr "Contrôles de la souris"
+
+#: form.php:577
+#: form.php:581
+msgid "Images on the video"
+msgstr "Images sur la vidéo"
+
+#: form.php:577
+#: form.php:602
+msgid "The icons of the video"
+msgstr "Les icônes de la vidéo"
+
+#: form.php:605
+msgid "Show icon play"
+msgstr "Afficher les icônes de la vidéo"
+
+#: form.php:607
+msgid "Icon play color"
+msgstr "Couleur de l'icône play"
+
+#: form.php:610
+msgid "Icon play background color"
+msgstr "Couleur du background de l'icône play"
+
+#: form.php:613
+msgid "Icon play background alpha"
+msgstr "transparence du background de l'icône play"
+
+#: inc/class.dc.flvplayerconfig.php:29
+msgid "Enable flvplayerconfig"
+msgstr "Activer FLV Player config"
+
+#: inc/class.lipki.utils.php:21
+msgid "Plugins Enable"
+msgstr "Activer les Plugins"
+

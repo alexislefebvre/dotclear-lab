@@ -1,0 +1,20 @@
+# Language: English
+# Module: flvplayerconfig - 1.6
+# Date: 2011-06-04 14:34:00
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: flvplayerconfig 1.6\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-06-04T14:34:00+00:00\n"
+"Last-Translator: Kévin Lepeltier\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:18
+msgid "flvPlayer config"
+msgstr "FLV Player config"
+

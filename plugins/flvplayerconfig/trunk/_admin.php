@@ -29,8 +29,9 @@ if ($core->blog->settings->flvplayerconfig->enabled) {
 	$core->addBehavior('adminPageHeaders',array('dcflvplayerconfig','jsLoad'));
 	$core->addBehavior('adminRelatedHeaders',array('dcflvplayerconfig','jsLoad'));
 	$core->addBehavior('adminDashboardHeaders',array('dcflvplayerconfig','jsLoad'));
-
-	$core->addBehavior('coreAfterPostContentFormat',array('dcflvplayerconfig','flvPlayerConfig'));
+	
+	# remplacement suite au passage dans le traducteur Wiki
+	$core->addBehavior('coreAfterPostContentFormat',array('dcflvplayerconfig','coreAfterPostContentFormat'));
 	
 }
 
