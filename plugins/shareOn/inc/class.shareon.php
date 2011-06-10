@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of shareOn, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -263,8 +263,8 @@ class fbloveButton extends shareOn
 	public $home = 'http://developers.facebook.com/docs/reference/plugins/like';
 	public $js_content = '$(\'<iframe src="http://www.facebook.com/plugins/like.php?href=%URL%&amp;layout=%STYLE%&amp;show_faces=%SHOWFACES%&amp;width=100%&amp;action=%ACTION%&amp;colorscheme=%COLORSCHEME%&amp;height=%HEIGHT%" width="%WIDTH%" height="%HEIGHT%" frameborder="0" scrolling="no" allowtransparency="true"> </iframe>\')';
 	public $size = array(
-		0 => array('style'=>'standard','width'=>450,'height'=>25),
-		1 => array('style'=>'button_count','width'=>80,'height'=>25)
+		0 => array('style'=>'standard','width'=>450,'height'=>21),
+		1 => array('style'=>'button_count','width'=>80,'height'=>21)
 	);
 	protected $preload = true;
 	
@@ -579,7 +579,7 @@ class gbuzzButton extends shareOn
 	public $nl_content = '<a href="http://www.google.com/buzz/post" class="google-buzz-button" title="Google Buzz" data-message="%TITLE%%DESC%" data-url="%URL%" data-locale="%LANG%" data-button-style="%STYLE%"></a><script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script>';
 	public $size = array(
 		0 => array('style'=>'normal-count','width'=>51,'height'=>82),
-		1 => array('style'=>'small-count','width'=>100,'height'=>0)
+		1 => array('style'=>'small-count','width'=>100,'height'=>18)
 	);
 	protected $preload = false;
 	protected $encode = false;
@@ -652,5 +652,26 @@ class gbuzzButton extends shareOn
 			return $str;
 		}
 	}
+}
+
+class gplusButton extends shareOn
+{
+	public $id = 'gplus';
+	public $name = 'Google +1';
+	public $home = 'http://www.google.com/+1/button/';
+	public $js_var = "var gplus = document.createElement('SCRIPT'), gplus1 = document.getElementsByTagName('SCRIPT')[0]; gplus.type = 'text/javascript'; gplus.async = true; gplus.src = 'http://apis.google.com/js/plusone.js'; gplus1.parentNode.insertBefore(gplus, gplus1); \n";
+	public $nl_content = '<div class="g-plusone" size="%STYLE%" href="%URL%" count="true"></div>';
+	public $size = array(
+		0 => array('style'=>'tall','width'=>52,'height'=>80), //50x60
+		//1 => array('style'=>'small','width'=>80,'height'=>18) //70x15
+		1 => array('style'=>'medium','width'=>70,'height'=>20) //70x15
+	);
+	protected $preload = true;
+	
+	public function __construct($core)
+	{
+		parent::__construct($core);
+	}
+	
 }
 ?>

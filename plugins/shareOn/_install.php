@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of shareOn, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -20,9 +20,9 @@ if (version_compare($old_version,$new_version,'>=')) return;
 try
 {
 	# Check DC version
-	if (version_compare(DC_VERSION,'2.2-alpha','<'))
+	if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','<'))
 	{
-		throw new Exception('Plugin called shareOn requires Dotclear 2.2 or higher.');
+		throw new Exception('shareOn requires Dotclear 2.2');
 	}
 	
 	# Setting
@@ -32,6 +32,7 @@ try
 	"#sidebar .shareonwidget ul { list-style: none; margin: 4px; padding: 0; border: none; } \n".
 	"#sidebar .shareonwidget ul li { margin: 4px; padding: 0; border: none; } \n";
 	
+	$core->blog->settings->addNamespace('shareOn');
 	$s = $core->blog->settings->shareOn;
 	$s->put('shareOn_active',false,'boolean','Enable shareOn',false,true);
 	$s->put('shareOn_style',$css,'string','Special ShareOn css',false,true);

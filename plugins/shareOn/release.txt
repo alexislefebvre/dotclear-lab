@@ -1,6 +1,14 @@
  * Added buttons order
  * Added CSS class to buttons box
+ * Added language support
+ * Moved JS to footer
  * Fixed buttons default size
+
+2011.06.10
+ * Fixed install on nightly build
+ * Removed core->blog reference from prepend
+ * Added google +1 button
+ * (c) 2011
 
 0.7 20100708
  * Added twitter.com button
