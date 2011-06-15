@@ -4,7 +4,7 @@ $core->addBehavior('publicHeadContent',array('publicTweet','publicHeadContent'))
 
 class publicTweet
 {
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
 		$count = abs((integer) $w->count);
@@ -18,7 +18,7 @@ class publicTweet
 		"</style>\n".
 		'<script type="text/javascript" src="'.$url.'/js/jquery.tweet.js"></script>'."\n";
 	}
-	public static function divTweet(&$w)
+	public static function divTweet($w)
 	{
 		global $core;
 		if ($w->homeonly && $core->url->type != 'default') {

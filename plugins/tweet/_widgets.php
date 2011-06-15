@@ -5,7 +5,7 @@ $core->addBehavior('initWidgets',
  
 class tweetWidgets
 {
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('Tweet','Tweet!',
 			array('publicTweet','divTweet'));

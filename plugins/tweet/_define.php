@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */			"Tweet!",
 	/* Description*/		"Publish tweets from various queries in a widget",
 	/* Author */			"Lomalarch",
-	/* Version */			'0.8',
+	/* Version */			'0.9',
 	/* Permissions */		'admin'
 );
 ?>
