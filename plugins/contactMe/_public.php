@@ -15,8 +15,6 @@ if (!defined('DC_RC_PATH')) { return; }
 __('Subject');
 __('Message');
 
-$core->url->register('contactme','contact','^contact(?:/(.+))?$',array('urlContactMe','contact'));
-
 $core->tpl->addValue('ContactMeURL',array('tplContactMe','ContactMeURL'));
 $core->tpl->addBlock('ContactMeIf',array('tplContactMe','ContactMeIf'));
 $core->tpl->addValue('ContactMePageTitle',array('tplContactMe','ContactMePageTitle'));
@@ -29,6 +27,17 @@ $core->tpl->addValue('ContactMeSite',array('tplContactMe','ContactMeSite'));
 $core->tpl->addValue('ContactMeSubject',array('tplContactMe','ContactMeSubject'));
 $core->tpl->addValue('ContactMeMessage',array('tplContactMe','ContactMeMessage'));
 
+$core->addBehavior('publicBreadcrumb',array('extContactMe','publicBreadcrumb'));
+
+class extContactMe
+{
+	public static function publicBreadcrumb($context,$separator)
+	{
+		if ($context == 'contactme') {
+			return __('Contact me');
+		}
+	}
+}
 
 class urlContactMe extends dcUrlHandlers
 {
