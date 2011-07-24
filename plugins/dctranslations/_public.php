@@ -442,7 +442,7 @@ class urlTranslation extends dcUrlHandlers
         } else {
             $newargs=$args;
         }
-        urlMetadata::tagFeed($newargs);
+        urlTags::tagFeed($newargs);
         return;
     }
     public static function feed($args)
