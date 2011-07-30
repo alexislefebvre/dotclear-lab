@@ -66,9 +66,9 @@ class widgetEntryImages
 		$img_dim = $w->img_dim;
 
 		// Début d'affichage
-		$ret = '<div class="listimages-widget">';	// ex class="images"
+		$ret = '<div class="listimages-widget">';
 		$ret .= ($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '');
-		$ret .= '<div class="listimages-wrapper">';	// ex class="wrapper"
+		$ret .= '<'.($html_tag == 'li' ? 'ul' : 'div').' class="listimages-wrapper">';
 		
 		// Appel de la fonction de traitement pour chacun des billets
 		while ($rs->fetch()) {
@@ -76,7 +76,7 @@ class widgetEntryImages
 		}
 		
 		// Fin d'affichage
-		$ret .= '</div>'."\n";
+		$ret .= '</'.($html_tag == 'li' ? 'ul' : 'div').'>'."\n";
 		$ret .= '</div>'."\n";
 
 		return $ret;
