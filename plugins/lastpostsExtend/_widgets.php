@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of lastpostsExtend, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -34,16 +34,27 @@ class lastpostsextendWidget
 			'text'
 		);
 		# type
+		$posttypes = array(
+			__('Post') => 'post',
+			__('Page') => 'page',
+			__('Gallery') => 'galitem'
+		);
+		# plugin muppet types
+		if ($core->plugins->moduleExists('muppet')) {
+			$muppet_types = muppet::getPostTypes();
+			if(is_array($muppet_types) && !empty($muppet_types)) {
+			
+				foreach($muppet_types as $k => $v) {
+					$posttypes[$v['name']] = $k;
+				}
+			}
+		}
 		$w->lastpostsextend->setting(
 			'posttype',
 			__('Type:'),
 			'post',
 			'combo',
-			array(
-				__('Post') => 'post',
-				__('Page') => 'page',
-				__('Gallery') => 'galitem'
-			)
+			$posttypes
 		);
 		# Category (post and page have same category)
 		$rs = $core->blog->getCategories(array('post_type'=>'post'));
@@ -232,9 +243,13 @@ class lastpostsextendWidget
 		if ($w->updatedonly)
 		{
 			$params['sql'] .= 
+			"AND post_creadt < post_upddt ".
+			"AND post_dt < post_upddt ";
+/*
+			$params['sql'] .= 
 			"AND TIMESTAMP(post_creadt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') ".
 			"AND TIMESTAMP(post_dt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') ";
-
+*/
 			$params['order'] = $w->sortby == 'date' ? 'post_upddt ' : $w->sortby.' ';
 		}
 		else

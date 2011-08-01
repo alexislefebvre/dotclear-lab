@@ -1,3 +1,7 @@
+2011.08.01
+ * Added support of plugin muppet (post types)
+ * Try to fix date compare on sql request
+
 0.10 20100819
  * Sort by comments (annso)
 
