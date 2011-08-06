@@ -131,10 +131,10 @@ class urlISC  extends dcUrlHandlers
 		$tpl = $type;
 		if ($comments) {
 			$tpl .= '-comments';
-			$_ctx->nb_comment_per_page = $core->blog->settings->nb_comment_per_feed;
+			$_ctx->nb_comment_per_page = $core->blog->settings->system->nb_comment_per_feed;
 		} else {
-			$_ctx->nb_entry_per_page = $core->blog->settings->nb_post_per_feed;
-			$_ctx->short_feed_items = $core->blog->settings->short_feed_items;
+			$_ctx->nb_entry_per_page = $core->blog->settings->system->nb_post_per_feed;
+			$_ctx->short_feed_items = $core->blog->settings->system->short_feed_items;
 		}
 		$tpl .= '.xml';
 		
@@ -144,7 +144,7 @@ class urlISC  extends dcUrlHandlers
 		
 		$_ctx->feed_subtitle = $subtitle;
 		
-		header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->robots_policy,''));
+		header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->system->robots_policy,''));
 		self::serveDocument($tpl,$mime);
 		if (!$comments && !$cat_url) {
 			$core->blog->publishScheduledEntries();
