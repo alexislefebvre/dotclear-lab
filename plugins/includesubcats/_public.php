@@ -11,7 +11,8 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-if ($core->blog->settings->incsubcat_enabled) {
+$core->blog->settings->addNamespace('incsubcat');
+if ($core->blog->settings->incsubcat->incsubcat_enabled)
 	$core->url->register('category','category','^category/(.+)$',array('urlISC','category'));
 	$core->url->register('feed','feed','^feed/(.+)$',array('urlISC','feed'));
 }
@@ -151,5 +152,4 @@ class urlISC  extends dcUrlHandlers
 		exit;
 	}
 }
-
 ?>

@@ -14,8 +14,7 @@ $this->registerModule(
 	/* Name */			"Include Subcats",
 	/* Description*/		"Include subcategories in category.html and category feeds",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'2.0',
+	/* Version */			'2.0.2',
 	/* Permissions */		'usage,contentadmin'
 );
-
 ?>
