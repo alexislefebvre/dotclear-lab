@@ -1,11 +1,15 @@
 #!/bin/bash
-plugin=dc1redirect
+[[ -d .svn ]] && plugin=$(LANG=C svn info | sed -n 's!^URL: http.*/!!p')
+[[ -z "$plugin" ]] && plugin=$(basename "$(pwd)")
 svnurl=https://svn.dotclear.net/lab/plugins/$plugin
 rev=$(LANG=C svn info "$svnurl" | sed -n 's/^Last Changed Rev: \([0-9]*\)$/\1/p')
-echo    "$plugin-r$rev"
-test -d "$plugin-r$rev" && rm -Rf "$plugin-r$rev"
-mkdir   "$plugin-r$rev"
-cd      "$plugin-r$rev"
-svn export -r "$rev" "$svnurl"
-test -f "$plugin/release.sh" && rm -f "$plugin/release.sh"
-zip -R "$plugin-r$rev.zip" $(find "$plugin")
+tmpdir="$plugin-r$rev"
+echo    "$tmpdir"
+test -d "$tmpdir" && rm -Rf "$tmpdir"
+mkdir   "$tmpdir"
+cd      "$tmpdir"
+svn export -r "$rev" "$svnurl" || exit $?
+output="../$plugin-r$rev.zip"
+rm -f "$output"
+find "$plugin" | zip "$output" -@ -x "$plugin/release.sh"
+rm -Rf "$tmpdir"
