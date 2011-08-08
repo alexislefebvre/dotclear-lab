@@ -165,8 +165,8 @@ $tags = $core->meta->getMetadata(array('type' => 'tag', 'order' => 'meta_id ASC'
 $tags = array_unique(
 		array_map(
 			create_function('$a', "return \$a['meta_id'];"),
-			$tags),
-		SORT_STRING);
+			$tags)
+		);
 natcasesort($tags);
 
 $tags_url_base = $core->url->getBase('tag').'/';
@@ -194,8 +194,8 @@ $categories = $core->blog->getCategories(array('post_type' => 'post'))->rows();
 $categories = array_unique(
 		array_map(
 			create_function('$c', "return \$c['cat_url'];"),
-			$categories),
-		SORT_STRING);
+			$categories)
+		);
 natcasesort($categories);
 
 $categories_url_base = $core->url->getBase('category').'/';
