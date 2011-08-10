@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -18,7 +18,8 @@ dcQRcode::defineCachePath($core);
 require dirname(__FILE__).'/_widgets.php';
 
 # Public behaviors
-$core->addBehavior('publicHeadContent',array('dcQRcodeUrl','publicBeforeDocument'));
+$core->addBehavior('publicBeforeDocument',array('dcQRcodeUrl','publicBeforeDocument'));
+$core->addBehavior('publicHeadContent',array('dcQRcodeUrl','publicHeadContent'));
 $core->addBehavior('publicEntryBeforeContent',array('dcQRcodeUrl','publicEntryBeforeContent'));
 $core->addBehavior('publicEntryAfterContent',array('dcQRcodeUrl','publicEntryAfterContent'));
 
@@ -26,64 +27,79 @@ $core->tpl->addValue('QRcode',array('dcQRcodeTpl','QRcode'));
 
 class dcQRcodeUrl extends dcUrlHandlers
 {
+	# Public URL to serve QR code previously encode
 	public static function image($args)
 	{
 		global $core;
-
+		
 		if (!$core->blog->settings->dcQRcode->qrc_active) {
 			self::p404();
 			return;
 		}
 
-		if (!preg_match('#^(.*?)\.png$#',$args,$m)) {
+		try {
+			$qrc = new dcQRcode($core,QRC_CACHE_PATH);
+		}
+		catch (Exception $e) {
 			self::p404();
 			return;
 		}
-
+		$prefix = $qrc->getParam('prefix');
+		
+		if (!preg_match('#^'.preg_quote($prefix).'(.*?)\.png$#',$args,$m)) {
+			self::p404();
+			return;
+		}
+		
 		if (empty($m[1])) {
 			self::p404();
 			return;
 		}
-
-		try
-		{
-			$qrc = new dcQRcode($core,QRC_CACHE_PATH);
-		}
-		catch (Exception $e)
-		{
+		
+		$id = urldecode($m[1]);
+		if (null === $qrc->decodeData($id)) {
 			self::p404();
 			return;
 		}
-
-		$str = urldecode($m[1]);
-		if (null === $qrc->decode($str)) {
-			self::p404();
-			return;
-		}
-
+		
 		$qrc->getImage();
-		return;
+		exit;
 	}
-
+	
+	# Put QRcode class to context
 	public static function publicBeforeDocument($core)
 	{
 		global $_ctx;
-
+		
 		$_ctx->qrcode = new dcQRcode($core,QRC_CACHE_PATH);
-		$_ctx->qrcode->setSize($core->blog->settings->dcQRcode->qrc_img_size);
-		$_ctx->qrcode->setParams('use_mebkm',$core->blog->settings->dcQRcode->qrc_use_mebkm);
 	}
-
+	
+	# Custom css
+	public static function publicHeadContent($core)
+	{
+		$css = $core->blog->settings->dcQRcode->qrc_custom_css;
+		if ($css) {
+			echo 
+			"\n<!-- CSS for dcQrCode --> \n".
+			"<style type=\"text/css\"> \n".
+			html::escapeHTML($css)."\n".
+			"</style>\n";
+		}
+	}
+	
+	# Place QRcode before entry content
 	public static function publicEntryBeforeContent($core,$_ctx)
 	{
 		self::publicEntryBehaviorContent($core,$_ctx,'before');
 	}
-
+	
+	# Place QR code after entry content
 	public static function publicEntryAfterContent($core,$_ctx)
 	{
 		self::publicEntryBehaviorContent($core,$_ctx,'after');
 	}
-
+	
+	# Generic place
 	public static function publicEntryBehaviorContent($core,$_ctx,$place)
 	{
 		if (!$core->blog->settings->dcQRcode->qrc_active 
@@ -96,38 +112,38 @@ class dcQRcodeUrl extends dcUrlHandlers
 		|| !$core->blog->settings->dcQRcode->qrc_bhv_entrytpltag && $_ctx->current_tpl == 'tag.html' 
 		|| !$core->blog->settings->dcQRcode->qrc_bhv_entrytplarchive && $_ctx->current_tpl == 'archive_month.html' 
 		) return;
-
+		
 		$url = $_ctx->posts->getURL();
 		$title = $core->blog->name.' - '.$_ctx->posts->post_title;
-
-		$id = $_ctx->qrcode->encode($url,$title);
-
+		
+		$_ctx->qrcode->setType('URL');
+		$id = $_ctx->qrcode->encodeData($url,$title);
+		
 		echo 
-		'<p class="qrcode"><img alt="QR code" src="'.
-		$core->blog->url.$core->url->getBase('dcQRcodeImage').'/'.$id.
-		'.png" /></p>';
+		'<div class="qrcode">'.
+		'<img alt="QR code" src="'.$_ctx->qrcode->getURL($id).'" />'.
+		'</div>';
 	}
 }
 
 class dcQRcodeTpl
 {
+	# Custom template tag to generate QR code
 	public static function QRcode($attr)
 	{
 		global $core, $_ctx;
-
+		
 		if (!$core->blog->settings->dcQRcode->qrc_active) return;
-
+		
 		$size = isset($attr['size']) ? (integer) $attr['size'] : 128;
 		$type = isset($attr['type']) ? html::escapeHTML($attr['type']) : 'URL';
-
+		
 		$res = 
 		"<?php \n".
 		"\$_ctx->qrcode->setSize(".$size."); ".
 		"\$_ctx->qrcode->setType('".$type."'); ".
 		"\$id = null; ".
 		"?>\n";
-
-		/* Related to context */
 		
 		# posts
 		if ($type == 'posts')
@@ -139,12 +155,11 @@ class dcQRcodeTpl
 			"\$_ctx->qrcode->setType('URL'); ".
 			"\$title = \$core->blog->name.' - '.\$_ctx->posts->post_title; \n".
 			"\$url = \$_ctx->posts->getURL(); \n".
-			"\$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
+			"\$id = \$_ctx->qrcode->encodeData(\$url,\$title); \n".
 			"} ?>\n";
 		}
-
 		# categories
-		if ($type == 'categories')
+		elseif ($type == 'categories')
 		{
 			$res .= 
 			"<?php if (\$_ctx->exists('categories')".
@@ -152,12 +167,11 @@ class dcQRcodeTpl
 			"\$_ctx->qrcode->setType('URL'); ".
 			"\$title = \$core->blog->name.' - '.\$_ctx->categories->cat_title; \n".
 			"\$url = \$core->blog->url.\$core->url->getBase('category').'/'.\$_ctx->categories->cat_url; \n".
-			"\$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
+			"\$id = \$_ctx->qrcode->encodeData(\$url,\$title); \n".
 			"} ?>\n";
 		}
-
 		# tags
-		if ($type == 'tags')
+		elseif ($type == 'tags')
 		{
 			$res .= 
 			"<?php if (\$_ctx->exists('meta')".
@@ -165,106 +179,20 @@ class dcQRcodeTpl
 			"\$_ctx->qrcode->setType('URL'); ".
 			"\$title = \$core->blog->name.' - '.\$_ctx->meta->meta_id; \n".
 			"\$url = \$core->blog->url.\$core->url->getBase('tag').'/'.\$_ctx->meta->meta_id; \n".
-			"\$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
+			"\$id = \$_ctx->qrcode->encodeData(\$url,\$title); \n".
 			"} ?>\n";
 		}
-
-		/* Related to QRtype */
-
-		# TXT
-		if ($type == 'TXT' && !empty($attr['str']))
-		{
-			$res .= 
-			"<?php \n".
-			"\$txt = '".html::escapeHTML($attr['str'])."'; \n".
-			"\$id = \$_ctx->qrcode->encode(\$str); \n".
-			"?>\n";
+		else {
+			$res .= $_ctx->qrcode->getTemplate($attr);
 		}
-
-		# URL
-		if ($type == 'URL' && isset($attr['url']))
-		{
-			$mebkm = '';
-			if (isset($attr['use_mebkm'])) {
-				$mebkm = " \$_ctx->qrcode->setParams('use_mebkm',".((boolean) $attr['use_mebkm'])."); \n";
-			}
-
-			$res .= 
-			"<?php \n".
-			$mebkm.
-			" \$title = '".(isset($attr['title']) ? html::escapeHTML($attr['title']) : '')."'; \n".
-			" \$url = '".html::escapeHTML($attr['url'])."'; \n".
-			" \$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
-			"?>\n";
-		}
-
-		# MECARD
-		if ($type == 'MECARD' && isset($attr['name']))
-		{
-			$res .= 
-			"<?php \n".
-			" \$name = '".html::escapeHTML($attr['name'])."'; \n".
-			" \$address = '".(isset($attr['address']) ? html::escapeHTML($attr['address']) : '')."'; \n".
-			" \$phone = '".(isset($attr['phone']) ? html::escapeHTML($attr['phone']) : '')."'; \n".
-			" \$email = '".(isset($attr['email']) ? html::escapeHTML($attr['email']) : '')."'; \n".
-			" \$id = \$_ctx->qrcode->encode(\$name,\$address,\$phone,\$email); \n".
-			"?>\n";
-		}
-
-		# GEO
-		if ($type == 'GEO' && isset($attr['latitude']) && isset($attr['longitude']))
-		{
-			$res .= 
-			"<?php \n".
-			" \$latitude = '".html::escapeHTML($attr['latitude'])."'; \n".
-			" \$longitude = '".html::escapeHTML($attr['longitude'])."'; \n".
-			" \$altitude = '".(isset($attr['altitude']) ? html::escapeHTML($attr['altitude']) : '0')."'; \n".
-			" \$id = \$_ctx->qrcode->encode(\$latitude,\$longitude,\$altitude); \n".
-			"?>\n";
-		}
-
-		# MARKET
-		if ($type == 'MARKET' && isset($attr['cat']) && isset($attr['search']))
-		{
-			$res .= 
-			"<?php \n".
-			" \$cat = '".html::escapeHTML($attr['cat'])."'; \n".
-			" \$search = '".html::escapeHTML($attr['search'])."'; \n".
-			" \$id = \$_ctx->qrcode->encode(\$cat,\$search); \n".
-			"?>\n";
-		}
-
-		# ICAL
-		if ($type == 'ICAL' && isset($attr['summary']) && isset($attr['start-date']) && isset($attr['end-date']))
-		{
-			$res .= 
-			"<?php \n".
-			" \$summary = '".html::escapeHTML($attr['summary'])."'; \n".
-			" \$start_date = '".html::escapeHTML($attr['start-date'])."'; \n".
-			" \$end_date = '".html::escapeHTML($attr['end-date'])."'; \n".
-			" \$id = \$_ctx->qrcode->encode(\$summary,\$start_date,\$end_date); \n".
-			"?>\n";
-		}
-
-
-		# --BEHAVIOR-- dcQRcodeTemplate
-		$res .= $core->callBehavior('dcQRcodeTemplate',$attr);
-
-
-		$res .=
+		
+		return 
 		"<?php if (\$id) { \n".
 		"echo '".
 		"<p class=\"qrcode\">".
-		"<img alt=\"QR code\" src=\"'.".
-		"\$core->blog->url.\$core->url->getBase('dcQRcodeImage').'/'.\$id.".
-		"'.png\" />".
+		"<img alt=\"QR code\" src=\"'.\$_ctx->qrcode->getURL(\$id).'\" />".
 		"</p>'; \n".
-		// regain standard settings
-		"\$_ctx->qrcode->setSize(\$core->blog->settings->dcQRcode->qrc_img_size); \n".
-		"\$_ctx->qrcode->setParams('use_mebkm',\$core->blog->settings->dcQRcode->qrc_use_mebkm); \n".
 		"unset(\$id); } ?> \n";
-
-		return $res;
 	}
 }
 
@@ -283,24 +211,23 @@ class dcQRcodePublicWidget
 			'tag.html' => 'tag'
 		)
 	);
-
+	
 	public static function posts($w)
 	{
 		global $core, $_ctx;
-
+		
 		# plugin active
 		if (!$core->blog->settings->dcQRcode->qrc_active) return;
-
+		
 		# qrc class
 		$qrc = new dcQRcode($core,QRC_CACHE_PATH);
 		$qrc->setSize($w->size);
 		$qrc->setType('URL');
-		$qrc->setParams('use_mebkm',$core->blog->settings->dcQRcode->qrc_use_mebkm);
-
+		
 		$url = $core->blog->url;
 		$title = $core->blog->name.' - ';
 		$id = null;
-
+		
 		# posts
 		if ($w->context == 'posts')
 		{
@@ -309,7 +236,7 @@ class dcQRcodePublicWidget
 
 			$url = $_ctx->posts->getURL();
 			$title .= $_ctx->posts->post_title;
-			$id = $qrc->encode($url,$title);
+			$id = $qrc->encodeData($url,$title);
 		}
 		# categories
 		if ($w->context == 'categories')
@@ -321,7 +248,7 @@ class dcQRcodePublicWidget
 				$core->url->getBase(self::$tpls['categories'][$_ctx->current_tpl]).
 				'/'.$_ctx->categories->cat_url;
 			$title .= $_ctx->categories->cat_title;
-			$id = $qrc->encode($url,$title);
+			$id = $qrc->encodeData($url,$title);
 		}
 		# tags
 		if ($w->context == 'tags')
@@ -333,21 +260,18 @@ class dcQRcodePublicWidget
 				$core->url->getBase(self::$tpls['tags'][$_ctx->current_tpl]).
 				'/'.$_ctx->meta->meta_id;
 			$title .= $_ctx->meta->meta_id;
-			$id = $qrc->encode($url,$title);
+			$id = $qrc->encodeData($url,$title);
 		}
-
+		
 		if (!$id) return;
-
+		
 		# Display
 		$res =
-		'<div class="qrc_posts">'.
+		'<div class="qrcode-widget">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		'<p class="qrcode">'.
-		'<img alt="QR code" src="'.
-			$core->blog->url.$core->url->getBase('dcQRcodeImage').'/'.$id.
-		'.png" />'.
-		'</p></div>';
-
+		'<img alt="QR code" src="'.$qrc->getURL($id).'" />'.
+		'</div>';
+		
 		return $res;
 	}
 }

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -20,9 +20,9 @@ if (version_compare($old_version,$new_version,'>=')) return;
 try
 {
 	# Check DC version
-	if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','<'))
+	if (version_compare(str_replace("-r","-p",DC_VERSION),'2.3','<'))
 	{
-		throw new Exception('dcQRcode requires Dotclear 2.2');
+		throw new Exception('dcQRcode requires Dotclear 2.3');
 	}
 	
 	# Database
@@ -46,9 +46,10 @@ try
 	$s = $core->blog->settings->dcQRcode;
 	$s->put('qrc_active',false,'boolean','Enable plugin',false,true);
 	$s->put('qrc_use_mebkm',true,'boolean','Use MEBKM anchor',false,true);
-	$s->put('qrc_img_size',128,'integer','Image size',false,true);
+	$s->put('qrc_img_size',196,'integer','Image size',false,true);
 	$s->put('qrc_cache_use',true,'boolean','qrc_cache_use',false,true);
 	$s->put('qrc_cache_path','','string','Custom cache path',false,true);
+	$s->put('qrc_custom_css','div.qrcode { float:right; }','string','Custom css',false,true);
 	$s->put('qrc_nb_per_page',10,'integer','Number of records per page in admin',false,true);
 	$s->put('qrc_api_url','http://chart.apis.google.com/chart?','string','',false,true);
 	$s->put('qrc_api_ec_level','L','string','',false,true);

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -24,4 +24,23 @@ $_menu['Plugins']->addItem(
 	preg_match('/plugin.php\?p=dcQRcode(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id)
 );
+
+$core->addBehavior('adminDashboardFavs',array('dcQRcodeAdminBehaviors','dashboardFavs'));
+ 
+class dcQRcodeAdminBehaviors
+{
+    public static function dashboardFavs($core,$favs)
+    {
+        $favs['qrcode'] = new ArrayObject(array(
+            'qrcode',
+            __('QR code'),
+            'plugin.php?p=dcQRcode&amp;tab=create',
+            'index.php?pf=dcQRcode/icon.png',
+            'index.php?pf=dcQRcode/icon-big.png',
+            'admin',
+            null,
+            null
+		));
+    }
+}
 ?>

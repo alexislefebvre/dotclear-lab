@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -14,90 +14,74 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 class dcQRcodeList extends adminGenericList
 {
-	public function display($page,$nb_per_page,$page_name,$base_url,$redir)
+	public function display($page,$nb_per_page,$enclose_block='')
 	{
 		if ($this->rs->isEmpty())
-			echo '<p><strong>'.__('No record').'</strong></p>';
-
-		else {
+		{
+			echo '<p><strong>'.__('No QR code').'</strong></p>';
+		}
+		else
+		{
 			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
-
-			$pager->base_url = $base_url;
-
-			echo
-			'<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>'.
-			'<form action="plugin.php?p=dcQRcode" method="post">'.
-			'<table class="clear">'.
-			'<thead>'.
-			'<tr>'.
-			'<th class="nowrap" colspan="2">'.__('ID').'</th>'.
-			'<th class="minimal">'.__('Img').'</th>'.
-			'<th class="maximal">'.__('Data').'</th>'.
-			'<th class="nowrap">'.__('Size').'</th>'.
-			'<th class="nowrap">'.__('Type').'</th>'.
-			'</tr>'.
-			'</thead>'.
-			'<tbody>';
-
-			$this->rs->index(((integer)$page - 1) * $nb_per_page);
-			$iter = 0;
-			while ($iter < $nb_per_page)
+			$pager->html_prev = $this->html_prev;
+			$pager->html_next = $this->html_next;
+			$pager->var_page = 'page';
+			
+			$html_block =
+			'<table class="clear"><tr>'.
+			'<th colspan="2">'.__('ID').'</th>'.
+			'<th>'.__('Image').'</th>'.
+			'<th>'.__('Content').'</th>'.
+			'<th>'.__('Size').'</th>'.
+			'<th>'.__('Type').'</th>'.
+			'</tr>%s</table>';
+			
+			if ($enclose_block)
 			{
-				echo $this->parseLine($iter);
-
-				if ($this->rs->isEnd())
-				{
-					break;
-				}
-				else
-				{
-					$this->rs->moveNext();
-				}
-				$iter++;
+				$html_block = sprintf($enclose_block,$html_block);
 			}
-
-			echo  
-			'</tbody>'.
-			'</table>'.
-			'<div class="two-cols">'.
-			'<p class="col checkboxes-helpers"></p><p>'.
-			'<input type="submit" name="delete_qrcode" value="'.__('Delete selected records').'" />'.
-			form::hidden(array($page_name),$page).
-			form::hidden(array('nb'),$nb_per_page).
-			form::hidden(array('redir'),$redir).
-			$this->core->formNonce().'</p>'.
-			'</div>'.
-			'</form>'.
-			'<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+			
+			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+			
+			$blocks = explode('%s',$html_block);
+			
+			echo $blocks[0];
+			
+			while ($this->rs->fetch())
+			{
+				echo $this->qrLine();
+			}
+			
+			echo $blocks[1];
+			
+			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 		}
 	}
-
-	private function parseLine($loop)
+	
+	private function qrLine()
 	{
 		return
-		'<tr class="line">'."\n".
+		'<tr class="line">'.
 		'<td class="nowrap">'.
-			form::checkbox(array('entries['.$loop.']'),$this->rs->qrcode_id,0).
+			form::checkbox(array('entries[]'),$this->rs->qrcode_id,0).
 		'</td>'.
 		'<td class="nowrap">'.
 		'<strong>'.
 			$this->rs->qrcode_id.
 		'</strong>'.
-		"</td>\n".
+		'</td>'.
 		'<td class="minimal">'.
-		'<img alt="QR code" src="'.$this->core->blog->url.
-			$this->core->url->getBase('dcQRcodeImage').'/'.
-			$this->rs->qrcode_id.'.png'.'" />'.
-		"</td>\n".
+		'<img alt="QR code" src="'.$this->rs->qrc->getURL($this->rs->qrcode_id).'" />'.
+		'</td>'.
 		'<td class="maximal">'.
-			html::escapeHTML(dcQRcode::unescape($this->rs->qrcode_data)).
-		"</td>\n".
+			html::escapeHTML(QRcodeCore::unescape($this->rs->qrcode_data)).
+		'</td>'.
 		'<td class="nowrap">'.
 			$this->rs->qrcode_size.'x'.$this->rs->qrcode_size.
-		"</td>\n".
+		'</td>'.
 		'<td class="nowrap">'.
 			html::escapeHTML($this->rs->qrcode_type).
-		"</td>\n".
+		'</td>'.
 		'</tr>'."\n";
 	}
 }

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -18,6 +18,15 @@ class dcQRcodeAdminWidget
 {
 	public static function posts($w)
 	{
+		global $core;
+		
+		$qrc = new dcQRcode($core,QRC_CACHE_PATH);
+		$combo_sizes = array();
+		foreach($qrc->getAccept('size') as $px)
+		{
+			$combo_sizes[sprintf(__('%sx%s pixels'),$px,$px)] = $px;
+		}
+		
 		# Create widget
 		$w->create(
 			'qrc_posts',
@@ -37,13 +46,7 @@ class dcQRcodeAdminWidget
 			__('Size:'),
 			128,
 			'combo',
-			array(
-				'64x64 pixels' => 64,
-				'92x92 pixels' => 92,
-				'128x128 pixels' => 128,
-				'256x256 pixels' => 256,
-				'512x512 pixels' => 512
-			)
+			$combo_sizes
 		);
 		# context
 		$w->qrc_posts->setting(

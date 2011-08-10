@@ -1,3 +1,14 @@
+todo:
+ - Add date selector on ICAL format
+ - Add check on forms form
+ - Add wiki synthax or something like that
+ - Add missing options on settings page (margin,prefix...)
+
+2011.08.10
+ * Added some formats
+ * Rewrited QR code library
+ * Rewrited admin page
+
 0.7.2 20110130
  * Fixed calls to core->blog in prepend.
 

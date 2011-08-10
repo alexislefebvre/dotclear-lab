@@ -1,197 +1,36 @@
-# Language: français
-# Module: dcQRcode - 0.6
-# Date: 2010-01-19 07:11:28
-# Translated with translater 1.3
+# Language: Français
+# Module: dcQRcode - 2011.08.10
+# Date: 2011-08-10 20:56:23
+# Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: dcQRcode 0.6\n"
+"Project-Id-Version: dcQRcode 2011.08.10\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-01-19T07:11:28+00:00\n"
+"PO-Revision-Date: 2011-08-10T20:56:23+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _widgets.php:37
+#: _widgets.php:46
+#: index.php:361
 msgid "Size:"
 msgstr "Taille :"
 
-#: inc/lib.dc.qr.code.index.php:28
-msgid "QRcode successfully created"
-msgstr "QRcode créé avec succès"
+#: inc/lib.dc.qr.code.list.php:21
+msgid "No QR code"
+msgstr "Aucun QR code"
 
-#: inc/lib.dc.qr.code.index.php:37
-msgid "Simple text"
-msgstr "Texte simple"
-
-#: inc/lib.dc.qr.code.index.php:60
-#: inc/lib.dc.qr.code.index.php:151
-#: inc/lib.dc.qr.code.index.php:258
-#: inc/lib.dc.qr.code.index.php:402
-#: inc/lib.dc.qr.code.index.php:501
-#: inc/lib.dc.qr.code.index.php:595
-#: inc/lib.dc.qr.code.index.php:703
-#: inc/lib.dc.qr.code.index.php:810
-msgid "Create a QR code"
-msgstr "Créer un QR code"
-
-#: inc/lib.dc.qr.code.index.php:74
-#: inc/lib.dc.qr.code.index.php:175
-#: inc/lib.dc.qr.code.index.php:327
-#: inc/lib.dc.qr.code.index.php:426
-#: inc/lib.dc.qr.code.index.php:521
-#: inc/lib.dc.qr.code.index.php:619
-#: inc/lib.dc.qr.code.index.php:736
-#: inc/lib.dc.qr.code.index.php:834
-msgid "Create"
-msgstr "Créer"
-
-#: inc/lib.dc.qr.code.index.php:85
-#: inc/lib.dc.qr.code.index.php:186
-#: inc/lib.dc.qr.code.index.php:338
-#: inc/lib.dc.qr.code.index.php:437
-#: inc/lib.dc.qr.code.index.php:531
-#: inc/lib.dc.qr.code.index.php:630
-#: inc/lib.dc.qr.code.index.php:746
-#: inc/lib.dc.qr.code.index.php:845
-msgid "List of records"
-msgstr "Liste des enregistrements"
-
-#: inc/lib.dc.qr.code.index.php:126
-msgid "Bookmark"
-msgstr "Favoris"
-
-#: inc/lib.dc.qr.code.index.php:155
-#: inc/lib.dc.qr.code.index.php:262
-#: inc/lib.dc.qr.code.index.php:406
-#: inc/lib.dc.qr.code.index.php:516
-#: inc/lib.dc.qr.code.index.php:614
-#: inc/lib.dc.qr.code.index.php:707
-#: inc/lib.dc.qr.code.index.php:829
-msgid "Image size"
-msgstr "Taille de l'image"
-
-#: inc/lib.dc.qr.code.index.php:171
-msgid "Use MEBKM anchor"
-msgstr "Utiliser la balise MEBKM"
-
-#: inc/lib.dc.qr.code.index.php:227
-msgid "Phonebook"
-msgstr "Contact"
-
-#: inc/lib.dc.qr.code.index.php:272
-msgid "Address:"
-msgstr "Adresse :"
-
-#: inc/lib.dc.qr.code.index.php:277
-msgid "Phone:"
-msgstr "Téléphone :"
-
-#: inc/lib.dc.qr.code.index.php:282
-msgid "Second phone:"
-msgstr "Second téléphone :"
-
-#: inc/lib.dc.qr.code.index.php:292
-msgid "Second email:"
-msgstr "Second email :"
-
-#: inc/lib.dc.qr.code.index.php:302
-msgid "Birthdate:"
-msgstr "Date de naissance :"
-
-#: inc/lib.dc.qr.code.index.php:307
-msgid "Memo:"
-msgstr "Mémo :"
-
-#: inc/lib.dc.qr.code.index.php:312
-msgid "Nickname:"
-msgstr "Pseudo :"
-
-#: inc/lib.dc.qr.code.index.php:317
-msgid "Video phone:"
-msgstr "Vidéophone :"
-
-#: inc/lib.dc.qr.code.index.php:322
-msgid "Sound:"
-msgstr "Son :"
-
-#: inc/lib.dc.qr.code.index.php:379
-msgid "Geographic"
-msgstr "Géographique"
-
-#: inc/lib.dc.qr.code.index.php:411
-msgid "Latitude:"
-msgstr "Latitude :"
-
-#: inc/lib.dc.qr.code.index.php:416
-msgid "Longitude:"
-msgstr "Longitude :"
-
-#: inc/lib.dc.qr.code.index.php:421
-msgid "Altitude:"
-msgstr "Altitude :"
-
-#: inc/lib.dc.qr.code.index.php:507
-msgid "Publisher"
-msgstr "Auteur"
-
-#: inc/lib.dc.qr.code.index.php:507
-msgid "Package"
-msgstr "Paquetage"
-
-#: inc/lib.dc.qr.code.index.php:599
-msgid "Summary"
-msgstr "Résumé"
-
-#: inc/lib.dc.qr.code.index.php:604
-msgid "Start date:"
-msgstr "Date de début :"
-
-#: inc/lib.dc.qr.code.index.php:609
-msgid "End date:"
-msgstr "Date de fin :"
-
-#: inc/lib.dc.qr.code.index.php:730
-msgid "Designates a text string to be set as the parameter sent to the i-appli to be activated. (1 to 255 bytes)"
-msgstr "Désigne une chaine de texte définissant un paramètre envoyé à l'i-appli pour être activé. (1 à 255 bytes)"
-
-#: inc/lib.dc.qr.code.index.php:731
-msgid "The \"name\" and \"value\" are separated by a comma (,)."
-msgstr "Les \"nom\" et \"valeur\" sont séparés par une virgule (,)."
-
-#: inc/lib.dc.qr.code.index.php:732
-msgid "16 parameters can be designated within a single LAPL: identifier."
-msgstr "16 paramètres peuvent être assignés avec un seul identifiant LAPL :"
-
-#: inc/lib.dc.qr.code.index.php:814
-msgid "Receiver:"
-msgstr "Destinataire :"
-
-#: inc/lib.dc.qr.code.index.php:819
-msgid "Subject:"
-msgstr "Sujet :"
-
-#: inc/lib.dc.qr.code.index.php:824
-msgid "Message:"
-msgstr "Message :"
-
-#: inc/lib.dc.qr.code.list.php:20
-msgid "No record"
-msgstr "Pas d'enregistrement"
+#: inc/lib.dc.qr.code.list.php:34
+msgid "Content"
+msgstr "Contenu"
 
 #: inc/lib.dc.qr.code.list.php:35
-msgid "Data"
-msgstr "Données"
-
-#: inc/lib.dc.qr.code.list.php:36
+#: index.php:264
 msgid "Size"
 msgstr "Taille"
-
-#: inc/lib.dc.qr.code.list.php:64
-msgid "Delete selected records"
-msgstr "Effacer les enregistrements sélectionnés"
 
 #: inc/lib.dcqrcode.activityreport.php:22
 msgid "QR code creation"
@@ -209,52 +48,244 @@ msgstr "Supression de code QR"
 msgid "QR code of id \"%s\" has been deleted by \"%s\""
 msgstr "Le code QR d'id \"%s\" a été supprimé par \"%s\""
 
-#: index.php:123
-#: index.php:129
+#: inc/lib.qrc.type.php:27
+msgid "QRcode successfully created"
+msgstr "QRcode créé avec succès"
+
+#: inc/libs/lib.qrc.type.bizcard.php:33
+#: inc/libs/lib.qrc.type.mecard.php:39
+msgid "Last name:"
+msgstr "Nom :"
+
+#: inc/libs/lib.qrc.type.bizcard.php:39
+#: inc/libs/lib.qrc.type.mecard.php:44
+msgid "First name:"
+msgstr "Prénom :"
+
+#: inc/libs/lib.qrc.type.bizcard.php:45
+msgid "Job:"
+msgstr "Métier :"
+
+#: inc/libs/lib.qrc.type.bizcard.php:50
+msgid "Company:"
+msgstr "Entreprise :"
+
+#: inc/libs/lib.qrc.type.bizcard.php:55
+#: inc/libs/lib.qrc.type.mecard.php:50
+msgid "Address:"
+msgstr "Adresse :"
+
+#: inc/libs/lib.qrc.type.bizcard.php:60
+#: inc/libs/lib.qrc.type.mecard.php:56
+msgid "Phone:"
+msgstr "Téléphone :"
+
+#: inc/libs/lib.qrc.type.geo.php:17
+msgid "Geographic"
+msgstr "Géographique"
+
+#: inc/libs/lib.qrc.type.geo.php:29
+msgid "Latitude:"
+msgstr "Latitude :"
+
+#: inc/libs/lib.qrc.type.geo.php:35
+msgid "Longitude:"
+msgstr "Longitude :"
+
+#: inc/libs/lib.qrc.type.geo.php:40
+msgid "Altitude:"
+msgstr "Altitude :"
+
+#: inc/libs/lib.qrc.type.iappli.php:39
+msgid "Command:"
+msgstr "Commande :"
+
+#: inc/libs/lib.qrc.type.iappli.php:54
+msgid "Designates a text string to be set as the parameter sent to the i-appli to be activated. (1 to 255 bytes)"
+msgstr "Désigne une chaine de texte définissant un paramètre envoyé à l'i-appli pour être activé. (1 à 255 bytes)"
+
+#: inc/libs/lib.qrc.type.iappli.php:55
+msgid "The \"name\" and \"value\" are separated by a comma (,)."
+msgstr "Les \"nom\" et \"valeur\" sont séparés par une virgule (,)."
+
+#: inc/libs/lib.qrc.type.iappli.php:56
+msgid "16 parameters can be designated within a single LAPL: identifier."
+msgstr "16 paramètres peuvent être assignés avec un seul identifiant LAPL :"
+
+#: inc/libs/lib.qrc.type.ical.php:17
+msgid "Calendar"
+msgstr "Calendrier"
+
+#: inc/libs/lib.qrc.type.ical.php:29
+msgid "Summary"
+msgstr "Résumé"
+
+#: inc/libs/lib.qrc.type.ical.php:35
+msgid "Start date:"
+msgstr "Date de début :"
+
+#: inc/libs/lib.qrc.type.ical.php:41
+msgid "End date:"
+msgstr "Date de fin :"
+
+#: inc/libs/lib.qrc.type.market.php:22
+#: inc/libs/lib.qrc.type.market.php:42
+msgid "Publisher"
+msgstr "Auteur"
+
+#: inc/libs/lib.qrc.type.market.php:22
+#: inc/libs/lib.qrc.type.market.php:42
+msgid "Package"
+msgstr "Paquetage"
+
+#: inc/libs/lib.qrc.type.matmsg.php:29
+msgid "Receiver:"
+msgstr "Destinataire :"
+
+#: inc/libs/lib.qrc.type.matmsg.php:34
+msgid "Subject:"
+msgstr "Sujet :"
+
+#: inc/libs/lib.qrc.type.matmsg.php:39
+#: inc/libs/lib.qrc.type.mmsto.php:33
+#: inc/libs/lib.qrc.type.smsto.php:33
+msgid "Message:"
+msgstr "Message :"
+
+#: inc/libs/lib.qrc.type.mecard.php:17
+msgid "Phonebook"
+msgstr "Contact"
+
+#: inc/libs/lib.qrc.type.mecard.php:61
+msgid "Second phone:"
+msgstr "Second téléphone :"
+
+#: inc/libs/lib.qrc.type.mecard.php:72
+msgid "Second email:"
+msgstr "Second email :"
+
+#: inc/libs/lib.qrc.type.mecard.php:82
+msgid "Birthdate:"
+msgstr "Date de naissance :"
+
+#: inc/libs/lib.qrc.type.mecard.php:87
+msgid "Memo:"
+msgstr "Mémo :"
+
+#: inc/libs/lib.qrc.type.mecard.php:92
+msgid "Nickname:"
+msgstr "Pseudo :"
+
+#: inc/libs/lib.qrc.type.mecard.php:97
+msgid "Video phone:"
+msgstr "Vidéophone :"
+
+#: inc/libs/lib.qrc.type.mecard.php:102
+msgid "Sound:"
+msgstr "Son :"
+
+#: inc/libs/lib.qrc.type.mecard.php:105
+msgid "Designates a text string to be set as the kana name in the phonebook."
+msgstr "Désigne un texte qui sera enregistré comme kana dans le carnet d'adresse."
+
+#: inc/libs/lib.qrc.type.mmsto.php:28
+#: inc/libs/lib.qrc.type.smsto.php:28
+#: inc/libs/lib.qrc.type.tel.php:27
+msgid "Phone number:"
+msgstr "NUméro de téléphone :"
+
+#: inc/libs/lib.qrc.type.tel.php:17
+msgid "Phone"
+msgstr "Téléphone"
+
+#: inc/libs/lib.qrc.type.txt.php:17
+msgid "Simple text"
+msgstr "Texte simple"
+
+#: inc/libs/lib.qrc.type.url.php:17
+msgid "Bookmark"
+msgstr "Favoris"
+
+#: index.php:36
+#: index.php:131
+#: index.php:342
+msgid "New image"
+msgstr "Nouvelle image"
+
+#: index.php:37
+#: index.php:127
+#: index.php:338
+msgid "Records"
+msgstr "Enregistrements"
+
+#: index.php:38
+#: index.php:126
+#: index.php:138
+#: index.php:346
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:134
+#: index.php:55
+msgid "Image size"
+msgstr "Taille de l'image"
+
+#: index.php:63
+msgid "Create"
+msgstr "Créer"
+
+#: index.php:142
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: index.php:140
+#: index.php:147
 msgid "Use MEBKM anchor for URL QR codes"
 msgstr "Utiliser la balise MEBKM pour les QR codes de type URL"
 
-#: index.php:143
+#: index.php:150
 msgid "MEBKM anchors made links as bookmarks with titles."
 msgstr "La balise MEBKM crée des liens sous forme de signets avec des titres."
 
-#: index.php:157
+#: index.php:162
 msgid "Use image cache"
 msgstr "Utiliser le cache pour les images"
 
-#: index.php:161
+#: index.php:166
 msgid "Custom path for cache:"
 msgstr "Répertoire personnalisé pour le cache :"
 
-#: index.php:166
+#: index.php:170
 msgid "Default is %s"
 msgstr "Répertoire par défaut : %s"
 
-#: index.php:169
+#: index.php:172
 msgid "Currently %s"
 msgstr "Répertoire courant : %s"
 
+#: index.php:177
+msgid "Theme"
+msgstr "Thème"
+
+#: index.php:179
+msgid "CSS:"
+msgstr "CSS :"
+
 #: index.php:182
+msgid "You can add here special cascading style sheet. QRcode images have HTML tag \"div\" of class \"qrcode\" and \"qrcode-widget\" for widgets."
+msgstr "Vous pouvez ajouter ici une feuille de style spéciale. Les images de code QR sont encapsulé dans une balise HTML \"div\" de class \"qrcode\" et \"qrcode-widget\" pour les widgets."
+
+#: index.php:186
 msgid "Include on entries on home page"
 msgstr "Inclure dans les billets de la page d'accueil"
 
-#: index.php:188
+#: index.php:191
 msgid "Include on entries on post page"
 msgstr "Inclure dans les billets de la page des billets"
 
-#: index.php:194
+#: index.php:196
 msgid "Include on entries on category page"
 msgstr "Inclure dans les billets de la page des catégories"
 
-#: index.php:200
+#: index.php:201
 msgid "Include on entries on tag page"
 msgstr "Inclure dans les billets de la page des tags"
 
@@ -266,19 +297,40 @@ msgstr "Inclure sans les billets de la page d'archive mensuelle"
 msgid "Place where to insert image:"
 msgstr "Lieu où insérer l'image :"
 
-#: index.php:212
+#: index.php:211
 msgid "before content"
 msgstr "Avant le contenu"
 
-#: index.php:212
+#: index.php:211
 msgid "after content"
 msgstr "Après le contenu"
 
-#: index.php:221
+#: index.php:215
 msgid "In order to use this, blog theme must have behaviors \"publicEntryBeforeContent\" and  \"publicEntryAfterContent\"."
 msgstr "Pour utiliser ceci, le thème du blog doit avoir les behaviors \"publicEntryBeforeContent\" et \"publicEntryAfterContent\"."
 
-#: index.php:222
+#: index.php:216
 msgid "A template value is also available, you can add {{tpl:QRcode}} anywhere inside &lt;tpl:Entries&gt; loop in templates."
 msgstr "Une balise de template est également disponible, vous pouvez ajouter { {tpl:qrCode}} n'importe où à l'intèrieur d'une boucle &lt;tpl:Entries&gt; dans les templates."
+
+#: index.php:372
+msgid "Image per page"
+msgstr "Images par page"
+
+#: index.php:374
+msgid "filter"
+msgstr "Filtre"
+
+#: index.php:391
+msgid "Delete selected QR codes"
+msgstr "Effacer les codes QR sélectionnés"
+
+msgid "Create a QR code"
+msgstr "Créer un QR code"
+
+msgid "List of records"
+msgstr "Liste des enregistrements"
+
+msgid "Use MEBKM anchor"
+msgstr "Utiliser la balise MEBKM"
 
