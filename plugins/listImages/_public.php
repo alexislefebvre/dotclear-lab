@@ -170,7 +170,9 @@ class tplEntryImages
 		global $core, $_ctx;
 		
 		// Contrôle des valeurs fournies et définition de la valeur par défaut pour les attributs
-		if (!preg_match('/^sq|t|s|m|o$/',$size)) {
+		$media = new dcMedia($core);
+		$sizes = implode('|',array_keys($media->thumb_sizes));
+		if (!preg_match('/^'.$sizes.'|o'.'$/',$size)) {
 			$size = 't';
 		}
 		if (!preg_match('/^span|li|div|none$/',$html_tag)) {
@@ -248,7 +250,7 @@ class tplEntryImages
 							// Recherche de l'image au format demandé
 							$sens = '';
 							$dim = '';
-							if (($src_img = self::ContentImageLookup($p_root,$i,$size,$sens,$dim)) !== false) {
+							if (($src_img = self::ContentImageLookup($p_root,$i,$size,$sens,$dim,$sizes)) !== false) {
 
 								// L'image existe, on construit son URL
 								$src_img = $p_url.(dirname($i) != '/' ? dirname($i) : '').'/'.$src_img;
@@ -305,7 +307,7 @@ class tplEntryImages
 										// Si un lien est requis
 										if ($link == 'image') {
 											// Lien vers l'image originale
-											$href = self::ContentImageLookup($p_root,$i,"o",$sens,$dim);
+											$href = self::ContentImageLookup($p_root,$i,"o",$sens,$dim,$sizes);
 											$href = $p_url.(dirname($i) != '/' ? dirname($i) : '').'/'.$href;
 											$href_title = $img_alt;
 										} else {
@@ -387,7 +389,7 @@ class tplEntryImages
 	}
 
 	// Fonction utilitaire de recherche d'une image selon un format spécifié (indique aussi l'orientation)
-	private static function ContentImageLookup($root, $img, $size, &$sens, &$dim)
+	private static function ContentImageLookup($root, $img, $size, &$sens, &$dim, $sizes)
 	{
 		// Récupération du nom et de l'extension de l'image source
 		$info = path::info($img);
@@ -397,7 +399,7 @@ class tplEntryImages
 		if (substr($root,-1) != '/') $root .= '/';
 		
 		// Suppression du suffixe rajouté pour la création des miniatures s'il existe dans le nom de l'image
-		if (preg_match('/^\.(.+)_(sq|t|s|m)$/',$base,$m)) {
+		if (preg_match('/^\.(.+)_('.$sizes.')$/',$base,$m)) {
 			$base = $m[1];
 		}
 		
