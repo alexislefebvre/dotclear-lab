@@ -30,24 +30,24 @@ if (version_compare($i_version, $m_version, '>=')) {
  
 // La procédure d'installation commence vraiment là
 // Création du setting (s'il existe, il ne sera pas écrasé)
-$settings = new dcSettings($core, null);
+$settings =& $core->blog->settings;
 
-// Le paramètre de setNamespace() ne doit contenir que des chiffres ou des lettres sans accent. 
-$settings->setNamespace('podcastFeed');
+// Le paramètre de setNamespace() ne doit contenir que des chiffres ou des lettres sans accent.
+$settings->addNameSpace('podcastFeed');
 
-$settings->put('podcastCategoryFilter', '', 'string', 'Catégories à prendre en comptre', false);
-$settings->put('podcastTitle', $core->blog->name, 'string', 'Titre du podcast', false);
-$settings->put('podcastSubTitle', '', 'string', 'Sous-titre du podcast', false);
-$settings->put('podcastLink', $core->blog->url, 'string', 'URL du podcast', false);
-$settings->put('podcastLanguage', $core->blog->settings->lang, 'string', 'Langue du podcast', false);
-$settings->put('podcastAuthor', $core->blog->settings->editor, 'string', 'Auteur du podcast', false);
-$settings->put('podcastDescription', $core->blog->desc, 'string', 'Description du podcast', false);
-$settings->put('podcastImage', '', 'string', 'Logo du podcast', false);
-$settings->put('podcastCategories', '', 'string', 'Categories du podcast (iTunes)', false);
-$settings->put('podcastExplicit', 'no', 'string', 'Langage "tout public" ? (iTunes)', false);
-$settings->put('podcastItunesSummary', '', 'string', 'Description spécifique iTunes', false);
-$settings->put('podcastItunesImage', '', 'string', 'Logo spécifique iTunes', false);
-$settings->put('podcastOwnerName', '', 'string', 'Nom du propriétaire du podcast', false);
-$settings->put('podcastOwnerEmail', '', 'string', 'E-mail du propriétaire du podcast', false);
+$settings->podcastFeed->put('podcastCategoryFilter', '', 'string', 'Catégories à prendre en comptre', false);
+$settings->podcastFeed->put('podcastTitle', $core->blog->name, 'string', 'Titre du podcast', false);
+$settings->podcastFeed->put('podcastSubTitle', '', 'string', 'Sous-titre du podcast', false);
+$settings->podcastFeed->put('podcastLink', $core->blog->url, 'string', 'URL du podcast', false);
+$settings->podcastFeed->put('podcastLanguage', $core->blog->settings->lang, 'string', 'Langue du podcast', false);
+$settings->podcastFeed->put('podcastAuthor', $core->blog->settings->editor, 'string', 'Auteur du podcast', false);
+$settings->podcastFeed->put('podcastDescription', $core->blog->desc, 'string', 'Description du podcast', false);
+$settings->podcastFeed->put('podcastImage', '', 'string', 'Logo du podcast', false);
+$settings->podcastFeed->put('podcastCategories', '', 'string', 'Categories du podcast (iTunes)', false);
+$settings->podcastFeed->put('podcastExplicit', 'no', 'string', 'Langage "tout public" ? (iTunes)', false);
+$settings->podcastFeed->put('podcastItunesSummary', '', 'string', 'Description spécifique iTunes', false);
+$settings->podcastFeed->put('podcastItunesImage', '', 'string', 'Logo spécifique iTunes', false);
+$settings->podcastFeed->put('podcastOwnerName', '', 'string', 'Nom du propriétaire du podcast', false);
+$settings->podcastFeed->put('podcastOwnerEmail', '', 'string', 'E-mail du propriétaire du podcast', false);
  
 $core->setVersion('podcastFeed', $m_version);

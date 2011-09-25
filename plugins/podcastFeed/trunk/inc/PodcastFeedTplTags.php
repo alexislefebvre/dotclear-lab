@@ -25,7 +25,7 @@ class PodcastFeedTplTags {
 			$p .= "\$params['cat_url'] = '".addslashes($attr['category'])."';\n";
 			$p .= "context::categoryPostParam(\$params);\n";
 		} else {
-			$p .= "\$params['cat_url'] = \$core->blog->settings->podcastCategoryFilter;\n";
+			$p .= "\$params['cat_url'] = \$core->blog->settings->podcastFeed->podcastCategoryFilter;\n";
 			$p .= "context::categoryPostParam(\$params);\n";
 		}
 		
