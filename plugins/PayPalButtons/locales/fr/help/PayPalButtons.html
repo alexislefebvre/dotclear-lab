@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Boutons PayPal</title>
+  </head>
+  <body>
+    <h3>À propos de l'aide</h3>
+	<p>Cette page d'aide ne contient pas d'informations sur l'utilisation d'un compte PayPal. 
+	Reportez-vous à l'abondante documentation du service en cas de doute sur sa configuration.</p>
+    
+	<h3>Configuration</h3>
+	<h4>Activer l'extension</h4>
+	<p>Si vous cochez cette case, l'extension sera activée sur ce blog.</p>
+	<h4>Utiliser la Sandbox PayPal pour les transactions</h4>
+	<p>Si vous cochez cette case, les transactions seront effectuées sur votre compte fictif de test dans la <a href="https://developer.paypal.com/">
+	Sandbox Paypal</a>. Utilisez cette option pour faire vos tests.</p>
+	<h4>Identifiant du compte de test</h4>
+	<p>Entrez dans ce champ l'adresse email associée à votre compte marchand dans la Sanbox PayPal. Les paiements seront effectués sur ce compte 
+	si vous avez activé l'utilisation de la Sandbox PayPal.</p>
+	<h4>Identifiant du compte marchand</h4>
+	<p>Entrez dans ce champ l'adresse email associée à votre compte PayPal ou votre ID marchand sécurisé. Les paiements seront effectués sur ce compte 
+	si vous avez désactivé l'utilisation de la Sandbox PayPal.</p>
+	<h4>Monnaie</h4>
+	<p>Choisissez la monnaie dans laquelle les paiements seront effectués sur votre compte.</p>
+	
+	<h3>Options avancées</h3>
+	<h4>Activer le cryptage SSL des boutons</h4>
+	<p>Si vous cochez cette case, les boutons seront cryptés. Toutefois, vous ne pourrez utiliser cette option que si vous pouvez accéder à votre serveur en SSH et générer vos certificats.</p>
+	<ol>
+		<li>rendez-vous dans le répertoire <em>/public/paypalbuttons/</em> et entrez la commande suivante pour générer votre clé privée :
+		<pre>openssl genrsa -out clepriv.pem 1024</pre></li>
+		<li>entrez la commande suivante pour générer votre certificat public :
+		<pre>openssl req -new -key clepriv.pem -x509 -days 365 -out certpub.pem</pre>
+		Remplissez les informations demandées.
+		</li>
+		
+		<li>téléchargez le certificat public de Paypal en vous rendant sur la page <em>Mon Compte =>  Préférences => Plus d’Options => Certificats de cryptage pour site marchand</em>. 
+		Renommer le fichier téléchargé en <em>paypal_cert.pem</em> et placez-le dans le répertoire <em>/public/paypalbuttons/</em> qui doit maintenant contenir 3 fichiers :
+			<ul>
+				<li>certpub.pem</li>
+				<li>clepriv.pem</li>
+				<li>paypal_cert.pem</li>
+			</ul>
+		</li> 
+	</ol>
+	<h4>Chemin vers OpenSSL sur votre serveur</h4>
+	<p>Entrez ici le chemin, depuis la racine du serveur, vers l'emplacement du programme OpenSSL</p>
+	<h4>ID de votre certificat PayPal</h4>
+	<p>Dans votre compte PayPal, sur la page des certificats, dans la partie « Vos certificats publics », cliquez sur le bouton « Ajouter » et sélectionnez le fichier 
+	<em>certpub.pem</em> que vous avez précédemment généré. Vous reviendrez ensuite sur la page de gestion des certificats et vous devriez voir apparaitre une ligne dans le tableau du bas 
+	avec comme informations l’ID du certificat, l’autorité de certification (correspondant aux informations saisies lors de la génération de votre certificat public), et la date d’expiration 
+	de celui-ci. Copiez l’ID du certificat et collez-le dans le champ.</p>
+	<h4>Notifications instantanées de paiement (IPN)</h4>
+	<h4>Transfert des données de paiement (PDT)</h4>
+	
+	<h3>Options des pages PayPal</h3>
+	
+	<h3>Insérer un bouton</h3>
+	<p><em>Note : avant toute chose, activez cette extension et remplissez au minimum le champ <strong>Identifiant du compte marchand</strong> de l'onglet de configuration. Il est toutefois vivement 
+	recommandé d'utiliser la Sandbox de PayPal pour les premiers tests...</em></p>
+	<p>Pour insérer un bouton dans un billet, rendez-vous sur la page d'édition dudit billet, et cliquez sur le lien 
+	<em>Bouton PayPal > Ajouter un bouton au billet</em>.</p>
+	<p>Consultez l'aide de la page d'ajout de bouton pour plus de précisions sur les caractéristiques du bouton.</p>
+  </body>
+</html>

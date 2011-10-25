@@ -1,0 +1,343 @@
+# Language: Français
+# Module: PayPalButtons - 0.3.3
+# Date: 2011-10-15 15:51:19
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: PayPalButtons 0.3.3\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-10-15T15:51:19+00:00\n"
+"Last-Translator: Philippe\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:20
+#: _admin.php:33
+msgid "PayPal Buttons"
+msgstr "Boutons PayPal"
+
+#: _admin.php:64
+msgid "Are you sure you want to remove this button?"
+msgstr "Êtes-vous certain de vouloir supprimer le bouton ?"
+
+#: _admin.php:130
+#: _admin.php:140
+msgid "PayPal button"
+msgstr "Bouton PayPal"
+
+#: _admin.php:132
+msgid "No button"
+msgstr "Pas de bouton"
+
+#: _admin.php:133
+#: addbutton.php:49
+msgid "Add a button to entry"
+msgstr "Ajouter un bouton au billet"
+
+#: _admin.php:144
+#: addbutton.php:41
+msgid "Edit button"
+msgstr "Modifier le bouton"
+
+#: _admin.php:145
+msgid "Delete button"
+msgstr "Supprimer le bouton"
+
+#: _install.php:37
+msgid "Directory for files repository needs to allow read and write access."
+msgstr "Le répertoire pour le dépôt des fichiers nécessite un accès en lecture et écriture."
+
+#: addbutton.php:136
+#: addbutton.php:149
+#: config.php:159
+msgid "PayPal buttons"
+msgstr "Boutons PayPal"
+
+#: addbutton.php:153
+msgid "Button type"
+msgstr "Type de bouton"
+
+#: addbutton.php:159
+msgid "Buy now"
+msgstr "Acheter"
+
+#: addbutton.php:162
+msgid "Donate"
+msgstr "Faire un don"
+
+#: addbutton.php:165
+msgid "Subscribe"
+msgstr "Souscrire"
+
+#: addbutton.php:168
+msgid "Buy gift certificate"
+msgstr "Offrir un chèque-cadeau"
+
+#: addbutton.php:171
+msgid "Add to cart"
+msgstr "Ajouter au panier"
+
+#: addbutton.php:174
+msgid "Button saved in your PayPal account"
+msgstr "Bouton enregistré dans votre compte PayPal"
+
+#: addbutton.php:175
+msgid "Button ID:"
+msgstr "ID du bouton :"
+
+#: addbutton.php:221
+msgid "Button options"
+msgstr "Options du bouton"
+
+#: config.php:104
+msgid "Customer is prompted to include a shipping address"
+msgstr "Le client peut indiquer une adresse de livraison"
+
+#: config.php:105
+msgid "Customer is not asked for a shipping address"
+msgstr "Le client ne peut pas indiquer d'adresse de livraison"
+
+#: config.php:106
+msgid "Customer must provide a shipping address"
+msgstr "Le client doit indiquer une adresse de livraison"
+
+#: config.php:112
+msgid "GET: Default or shopping cart transactions"
+msgstr "GET : par défaut ou transactions avec le panier"
+
+#: config.php:113
+msgid "GET and no transaction variables are posted"
+msgstr "GET et pas d'envoi des détails de la transaction"
+
+#: config.php:114
+msgid "POST and all transaction variables are posted"
+msgstr "POST et envoi de tous les détails de la transaction"
+
+#: config.php:124
+msgid "PayPalButtons"
+msgstr "PayPalButtons"
+
+#: config.php:145
+msgid "Configuration has been successfully saved."
+msgstr "La configuration a été enregistrée avec succès."
+
+#: config.php:146
+msgid "PayPal pages options have been successfully saved."
+msgstr "Les options des pages PayPal ont été enregistrés avec succès."
+
+#: config.php:147
+msgid "Advanced options have been successfully saved."
+msgstr "Les options avancées ont été enregistrés avec succès."
+
+#: config.php:165
+msgid "Configuration"
+msgstr "Configuration"
+
+#: config.php:168
+msgid "Activation"
+msgstr "Activation"
+
+#: config.php:171
+msgid "Enable plugin"
+msgstr "Activer l'extension"
+
+#: config.php:174
+msgid "Use PayPal Sandbox for transactions (testing)"
+msgstr "Utiliser la Sandbox PayPal pour les transactions (tests)"
+
+#: config.php:177
+msgid "PayPal account"
+msgstr "Compte PayPal"
+
+#: config.php:180
+msgid "Testing account login:"
+msgstr "Identifiant du compte de test :"
+
+#: config.php:183
+msgid "Your testing business account email in PayPal Sandbox"
+msgstr "L'adresse email de votre compte marchand de test dans la Sanbox PayPal"
+
+#: config.php:184
+msgid "Selling account login:"
+msgstr "Identifiant du compte marchand :"
+
+#: config.php:187
+msgid "Your PayPal account email address or your Paypal secure merchant account ID"
+msgstr "L'adresse email de votre compte Paypal ou votre ID marchand sécurisé Paypal"
+
+#: config.php:190
+msgid "Currency:"
+msgstr "Monnaie :"
+
+#: config.php:192
+msgid "Payments to your account will be made in this currency"
+msgstr "Les paiements seront effectués dans cette monnaie sur votre compte"
+
+#: config.php:207
+msgid "Advanced options"
+msgstr "Options avancées"
+
+#: config.php:209
+msgid "SSL buttons crypting"
+msgstr "Cryptage SSL des boutons"
+
+#: config.php:210
+msgid "Note : to use encrypted buttons, you must be able to connect to your server using SSH protocol, and generate your certificates."
+msgstr "Note : pour utiliser des boutons cryptés, vous devez pouvoir vous connecter à votre serveur avec le protocle SSH, et générer vos certificats."
+
+#: config.php:215
+msgid "Path to OpenSSL on your server:"
+msgstr "Chemin vers OpenSSL sur votre serveur :"
+
+#: config.php:218
+msgid "example: /usr/bin/openssl"
+msgstr "exemple: /usr/bin/openssl"
+
+#: config.php:219
+msgid "ID of your PayPal certificate:"
+msgstr "ID de votre certificat PayPal :"
+
+#: config.php:222
+msgid "This ID is displayed in your PayPal account once you have submitted your public certificate"
+msgstr "Cet ID est affiché dans votre compte PayPal après la soumission de votre certificat public"
+
+#: config.php:225
+msgid "Instant Payment Notifications"
+msgstr "Notifications instantanées de paiement (IPN)"
+
+#: config.php:229
+msgid "Notification URL:"
+msgstr "URL de notification :"
+
+#: config.php:232
+msgid "Payment Data Transfer"
+msgstr "Transfert des données de paiement (PDT)"
+
+#: config.php:236
+msgid "Your PayPal authorization token:"
+msgstr "Votre jeton d'identité Paypal :"
+
+#: config.php:239
+msgid "This token is displayed in your PayPal account once you have activated Payment Data Transfer"
+msgstr "Ce jeton est affiché dans votre compte PayPal quand vous avec activé le Transfert des données de paiement"
+
+#: config.php:250
+msgid "Options for PayPal pages"
+msgstr "Options des pages PayPal"
+
+#: config.php:252
+msgid "Display options"
+msgstr "Options d'affichage"
+
+#: config.php:255
+msgid "Note field label:"
+msgstr "Titre du champ Commentaire :"
+
+#: config.php:258
+msgid "Title for the Note field on the PayPal Payment page."
+msgstr "Titre du champ Commentaire dans la page de paiement PayPal."
+
+#: config.php:261
+msgid "Notes are not allowed"
+msgstr "Ne pas autoriser les commentaires"
+
+#: config.php:264
+msgid "Continue button text:"
+msgstr "Texte du bouton Continuer :"
+
+#: config.php:267
+msgid "Text for the Continue button on the PayPal Payment Complete page."
+msgstr "Texte du bouton Continuer sur la page PayPal quand la commande est terminée."
+
+#: config.php:268
+msgid "Shipping address options:"
+msgstr "Options pour l'adresse de livraison :"
+
+#: config.php:274
+msgid "Presentation options"
+msgstr "Options de présentation"
+
+#: config.php:275
+msgid "Note: other options will be ignored if a custom saved PayPal style is defined."
+msgstr "Note : les autres options seront ignorées si un style PayPal enregistré est défini."
+
+#: config.php:280
+msgid "Page style:"
+msgstr "Style de page :"
+
+#: config.php:283
+msgid "Custom PayPal style name"
+msgstr "Nom du style PayPal enregistré"
+
+#: config.php:284
+msgid "PayPal page background color:"
+msgstr "Couleur de fond de la page PayPal :"
+
+#: config.php:287
+msgid "White"
+msgstr "Blanc"
+
+#: config.php:290
+msgid "Black"
+msgstr "Noir"
+
+#: config.php:291
+msgid "Header border color:"
+msgstr "Couleur de bordure de l'en-tête :"
+
+#: config.php:294
+#: config.php:298
+msgid "Six-character HTML hexadecimal color code in ASCII"
+msgstr "Code ASCII de la couleur sur 6 caractères"
+
+#: config.php:295
+msgid "Payment zone background color:"
+msgstr "Couleur de fond de la zone de paiement :"
+
+#: config.php:301
+msgid "Logo:"
+msgstr "Logo :"
+
+#: config.php:304
+msgid "URL of custom logo image (150*50 px). Only secure server (https)."
+msgstr "URL de l'image du logo (150*50 px). Serveur sécurisé uniquement (https)."
+
+#: config.php:305
+msgid "Header image:"
+msgstr "Image d'en-tête :"
+
+#: config.php:308
+msgid "URL of custom header image (750*90 px). Only secure server (https)."
+msgstr "URL de l'image d'en-tête (750*90 px). Serveur sécurisé uniquement (https)."
+
+#: config.php:313
+msgid "Redirect options"
+msgstr "Options de redirection"
+
+#: config.php:314
+msgid "Note: these options will be ignored if you activate instant payment notification (IPN) in advanced options."
+msgstr "Note : ces options seront ignorées si vous activez la notification instantanée des paiements (IPN) dans les options avancées."
+
+#: config.php:317
+msgid "Return URL:"
+msgstr "URL de confirmation :"
+
+#: config.php:320
+msgid "The URL to which the customer is returned after completing the payment (default : PayPal website)"
+msgstr "L'URL vers laquelle le client est redirigé après avoir complété son paiement (par défaut : site PayPal)"
+
+#: config.php:321
+msgid "Cancel URL:"
+msgstr "URL d'annulation :"
+
+#: config.php:324
+msgid "The URL to which the customer is returned if payment is canceled (default : PayPal website)"
+msgstr "L'URL vers laquelle le client est redirigé si le paiement est annulé (par défaut : site PayPal)"
+
+#: config.php:327
+msgid "Form method used to send data to the URL specified by the return variable:"
+msgstr "Méthode utilisée par le formulaire pour envoyer les données à l'URL de confirmation :"
+

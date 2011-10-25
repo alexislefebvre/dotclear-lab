@@ -1,0 +1,28 @@
+# Language: Français
+# Module: PayPalButtons - 0.3.3
+# Date: 2011-10-15 15:51:19
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: PayPalButtons 0.3.3\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-10-15T15:51:19+00:00\n"
+"Last-Translator: Philippe\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _public.php:66
+msgid "Validation"
+msgstr "Validation"
+
+#: _public.php:68
+msgid "Cancelation"
+msgstr "Annulation"
+
+#: _public.php:70
+msgid "Notification"
+msgstr "Notification"
+
