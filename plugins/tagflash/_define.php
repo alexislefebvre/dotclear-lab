@@ -26,7 +26,7 @@ $this->registerModule(
     /* Name */          "Tag Flash",
     /* Description*/    "Flash based Tag Cloud for Dotclear",
     /* Author */        "Gwénaël Després (based on WordPress plugin by Roy Tanck)",
-    /* Version */       '1.1.1',
+    /* Version */       '1.1.2',
     /* Permissions */   'usage,contentadmin'
 );
 ?>

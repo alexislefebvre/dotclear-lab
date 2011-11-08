@@ -58,11 +58,7 @@ class tplTagFlash
     } else {
       $res .= '<param name="bgcolor" value="#'.$settings->bgcolor.'"/>'."\n";
     }
-    if ($w->with_seo_content) {
-      $res .= '<div id="tagFlashContent">'.self::getTags($w, false).'</div>'."\n";    
-    } else {
-      $res .= '<p>'. __('This will be shown to users with no Flash plugin.').'</p>';
-    }
+    $res .= '<div id="tagFlashContent">'.self::getTags($w, false).'</div>'."\n";    
     $res .= '</object>'."\n";
     $res .= '<p><a href="'.$core->blog->url.$core->url->getBase('tags').'">'.__('All tags').'</a></p>';
 
