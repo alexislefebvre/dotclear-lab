@@ -15,6 +15,6 @@ $this->registerModule(
 	/* Name */		"superUpdate",
 	/* Description*/	"Bypass checksum verification on Dotclear updates",
 	/* Author */		"Alexandre Syenchuk",
-	/* Version */		'0.1'
+	/* Version */		'0.2'
 );
 ?>

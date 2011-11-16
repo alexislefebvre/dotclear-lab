@@ -11,35 +11,28 @@
 # -- END LICENSE BLOCK -----------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-if (basename($_SERVER['SCRIPT_NAME']) != 'update.php') {
-	return;
-}
-
-if (empty($_GET['step']) || $_GET['step'] != 'check') {
-	return;
-}
-
-$core->addBehavior('adminPageHTMLHead',array('superUpdate','adminPageHTMLHead'));
+$core->addBehavior('adminDCUpdateException',array('superUpdate','adminDCUpdateException'));
 
 class superUpdate
 {
-	public static function adminPageHTMLHead()
+	public static function adminDCUpdateException($e)
 	{
-		$forced_update_warning =
+		global $core;
+		
+		if ($e->getCode() != dcUpdate::ERR_FILES_CHANGED) {
+			return;
+		}
+		
+		$msg =
 		__("Nonetheless, if you are absolutely sure that you never altered those ".
 		"files, or don't care about losing your modification, you can ignore ".
 		"this warning <strong>at your own risks</strong>. If you are unsure ".
-		"about what to do, please just cancel this upgrade.");
+		"about what to do, please just cancel this upgrade.").
+		'<p><a href="update.php?step=download">'.__('update anyway').'</a>'.
+		' - <a href="update.php?hide_msg=1">'.__('cancel this update').'</a>'.
+		'</p>';
 		
-		echo
-		'<script type="text/javascript" src="index.php?pf=superUpdate/update.js"></script>'."\n".
-		'<script type="text/javascript">'."\n".
-		"//<![CDATA[\n".
-		"dotclear.msg.forced_update_warning = '",addcslashes($forced_update_warning,"'")."';\n".
-		dcPage::jsVar('dotclear.msg.update_anyway',__('update anyway'))."\n".
-		dcPage::jsVar('dotclear.msg.cancel_update',__('cancel this update'))."\n".
-		"\n//]]>\n".
-		"</script>\n";
+		$core->error->add($msg);
 	}
 }
 ?>
