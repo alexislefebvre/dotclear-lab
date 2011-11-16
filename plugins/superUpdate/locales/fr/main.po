@@ -1,0 +1,15 @@
+# French translation of superUpdate
+# Copyright (C) 2011
+# Alexandre Syenchuk
+
+msgid ""
+msgstr ""
+
+msgid "Nonetheless, if you are absolutely sure that you never altered those files, or don't care about losing your modification, you can ignore this warning <strong>at your own risks</strong>. If you are unsure about what to do, please just cancel this upgrade."
+msgstr "Néanmoins, si tu vous êtes absolument certain de ne pas avoir altéré ces fichiers, ou si vous êtes prêts à perdre vos modifications, vous pouvez ignorer cet avertissement <strong>à vos risques et périls</strong>. Si vous ne savez pas quoi faire, contentez-vous simplement d'annuler cette mise à jour."
+
+msgid "update anyway"
+msgstr "mettre à jour malgré tout"
+
+msgid "cancel this update"
+msgstr "annuler cette mise à jour"
