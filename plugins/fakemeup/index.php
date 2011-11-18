@@ -86,7 +86,6 @@ function backup ($changes) {
 		foreach ($changes["changed"] as $k => $v) {
 			$name = substr($k,2);
 			$c_data .= sprintf(" * %s [expected: %s ; current: %s]\n",$k,$v['old'],$v['new']);
-			$c_data .= DC_ROOT.'/'.$name."\n";
 			try {
 				$b_zip->addFile(DC_ROOT.'/'.$name,$name);
 			} catch (Exception $e) {
