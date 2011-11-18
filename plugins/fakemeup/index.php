@@ -10,10 +10,10 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
-define(DC_DIGESTS,DC_ROOT.'/inc/digests');
-define(DC_DIGESTS_BACKUP,DC_ROOT.'/inc/digests.bak');
+//define('DC_DIGESTS',DC_ROOT.'/inc/digests');
+define('DC_DIGESTS_BACKUP',DC_ROOT.'/inc/digests.bak');
 
-function md5sum($root,$digests_file)
+function check_config($root,$digests_file)
 {
 	if (!is_readable($digests_file)) {
 		throw new Exception(__('Unable to read digests file.'));
@@ -57,34 +57,67 @@ function md5sum($root,$digests_file)
 	return array("same"=>$same,"changed"=>$changed,"removed" => $removed);
 }
 
+function backup ($changes) {
 
+	$public_root = $GLOBALS['core']->blog->settings->system->public_url;
+	$zip_name = sprintf("fmu_backup_%s.zip",date("YmdHis"));
+	$zip_file = sprintf("%s/%s",$GLOBALS['core']->blog->public_path,$zip_name);
+	$zip_uri = sprintf("%s/%s",$public_root,$zip_name);
+	$checksum_file= sprintf("%s/fmu_checksum_%s.txt",$GLOBALS['core']->blog->public_path,date("Ymd"));
 
-function fake_digest() {
-	if (!rename(DC_DIGESTS,DC_DIGESTS_BACKUPUP))
+	$c_data = 'Fake Me Up Checksum file - '.date("d/m/Y H:i:s")."\n\n".
+		'Dotclear version : '.DC_VERSION."\n\n";
+	if (count($changes["removed"])) {
+		$c_data .= "== Removed files ==\n";
+		foreach ($changes["removed"] as $k=>$v) {
+			$c_data .= sprintf(" * %s\n",$k);
+		}
+		$c_data .= "\n";
+	}
+	if (file_exists($zip_file))
+		@unlink($zip_file);
+	$b_fp = @fopen($zip_file,'wb');
+	if ($b_fp === false) {
 		return false;
-	$fmu_file = DC_ROOT.'/inc/prepend.php';
-	$fmu_md5 = md5_file($fmu_file);
-	
-	$mydigest = sprintf("%s  %s\n",$fmu_md5,$fmu_file);
-	if (file_put_contents(DC_DIGEST,$mydigest)===false)
-		return false;
-	else
-		return true;
+	}
+	$b_zip = new fileZip($b_fp);
+	if (count($changes["changed"])) {
+		$c_data .= "== Invalid checksum files ==\n";
+		foreach ($changes["changed"] as $k => $v) {
+			$name = substr($k,2);
+			$c_data .= sprintf(" * %s [expected: %s ; current: %s]\n",$k,$v['old'],$v['new']);
+			$c_data .= DC_ROOT.'/'.$name."\n";
+			try {
+				$b_zip->addFile(DC_ROOT.'/'.$name,$name);
+			} catch (Exception $e) {
+				$c_data .= $e->getMessage();
+			}
+
+		}
+	}
+	file_put_contents($checksum_file,$c_data);
+	$b_zip->addFile($checksum_file,basename($checksum_file));
+	$b_zip->write();
+	fclose($b_fp);
+	$b_zip->close();
+	@unlink($checksum_file);
+	return $zip_uri;
 }
+
 ?>
 <html>
 <head><title><?php echo __('Fake Me Up'); ?></title></head>
 <body>
 <?php
 	global $_lang;
-	$disclaimer = l10n::getFilePath(dirname(__FILE__).'/locales','disclaimer.html',$GLOBALS['_lang']);
 	
 	echo '<h2>'.__('Fake Me Up').'</h2>';
 	if (isset($_POST['erase_backup'])) {
 		@unlink(DC_DIGESTS_BACKUP);
 	}
 	if (isset($_POST['override'])) {
-		$changes = md5sum(DC_ROOT,DC_DIGESTS);
+		$helpus = l10n::getFilePath(dirname(__FILE__).'/locales','helpus.html',$GLOBALS['_lang']);
+		$changes = check_config(DC_ROOT,DC_DIGESTS);
 
 		$arr=$changes["same"];
 		foreach ($changes["changed"] as $k=>$v) {
@@ -97,15 +130,23 @@ function fake_digest() {
 		}
 		rename(DC_DIGESTS,DC_DIGESTS_BACKUP);
 		file_put_contents(DC_DIGESTS,$digest);
-		echo '<p class="message">'.__("The updates have been performed.").'</p>';
-	} elseif (isset($_POST['confirm'])) {
-		$changes = md5sum(DC_ROOT,DC_DIGESTS);
+		$uri = backup($changes);
+		echo '<div class="message">';
+		if ($uri !== false) {
+			printf(file_get_contents($helpus),$uri,"fakemeup@dotclear.org");
+		} else {
+			echo '<p>'.__("The updates have been performed.").'</p>';
+		}
+		echo '<p><a href="update.php">'.__('Update dotclear').'</p>'.
+			'</div>';
+	} elseif (isset($_POST['disclaimer_ok'])) {
+		$changes = check_config(DC_ROOT,DC_DIGESTS);
 		if (count($changes["changed"])==0 && count($changes["removed"])==0) {
 			echo '<p class="message">'.__('No changed filed have been found, nothing to do!').'</p>';
 		} else {
+			echo '<div class="message">';
 			if (count($changes["changed"]) != 0) {
-				echo '<div class="message">'.
-					'<p>'.__('The following files will have their checksum faked :').'</p>'.
+				echo '<p>'.__('The following files will have their checksum faked :').'</p>'.
 					'<ul>';
 				foreach ($changes["changed"] as $k => $v) {
 					printf('<li> %s [old:%s, new:%s]</li>',$k,$v['old'],$v['new']);
@@ -113,8 +154,7 @@ function fake_digest() {
 				echo '</ul>';
 			}
 			if (count($changes["removed"]) != 0) {
-				echo '<div class="message">'.
-					'<p>'.__('The following files digests will have their checksum cleaned :').'</p>'.
+				echo '<p>'.__('The following files digests will have their checksum cleaned :').'</p>'.
 					'<ul>';
 				foreach ($changes["removed"] as $k => $v) {
 					printf('<li> %s</li>',$k);
@@ -137,10 +177,11 @@ function fake_digest() {
 				'<p><input type="submit" name="confirm" value="'.__('Continue').'"/></p>'.
 				'</form></div>';
 		} else {
+			$disclaimer = l10n::getFilePath(dirname(__FILE__).'/locales','disclaimer.html',$GLOBALS['_lang']);
 			echo '<p class="error">'.__('Please read carefully the following disclaimer before proceeding !').'</p>';
 			echo '<div class="message">'.file_get_contents($disclaimer);
 			echo '<form action="'.$p_url.'" method="post">'.
-				'<p><input type="checkbox" name="confirm" id="confirm" />&nbsp;'.
+				'<p><input type="checkbox" name="disclaimer_ok" id="disclaimer_ok" />&nbsp;'.
 				'<label for="confirm" class="inline">'.__("I have read and understood the disclaimer and wish to continue anyway").'</label>'.
 				$core->formNonce().
 				'</p>'.

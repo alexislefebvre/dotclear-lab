@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 integrityCheck module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-17 10:08+0100\n"
+"POT-Creation-Date: 2011-11-18 10:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,9 @@ msgstr ""
 
 msgid "The updates have been performed."
 msgstr "Les mises à jour ont été faites."
+
+msgid "Update dotclear"
+msgstr "Mettre à jour dotclear"
 
 msgid "No changed filed have been found, nothing to do!"
 msgstr "Pas de fichier modifié trouvé. Rien à faire !"
@@ -47,3 +50,4 @@ msgstr "Merci de lire avec attention la mise en garde suivante avant de continue
 
 msgid "I have read and understood the disclaimer and wish to continue anyway"
 msgstr "J'ai lu et j'ai compris la mise en garde, je souhaite continuer quand même."
+
