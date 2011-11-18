@@ -60,9 +60,9 @@ function check_config($root,$digests_file)
 function backup ($changes) {
 	$core =& $GLOBALS['core'];
 	if (preg_match('#^http(s)?://#',$core->blog->settings->system->public_url)) {
-		$public_root = rawurldecode($core->blog->settings->system->public_url);
+		$public_root = $core->blog->settings->system->public_url;
 	} else {
-		$public_root = rawurldecode($core->blog->host.path::clean($core->blog->settings->system->public_url));
+		$public_root = $core->blog->host.path::clean($core->blog->settings->system->public_url);
 	}
 	$zip_name = sprintf("fmu_backup_%s.zip",date("YmdHis"));
 	$zip_file = sprintf("%s/%s",$GLOBALS['core']->blog->public_path,$zip_name);
