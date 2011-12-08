@@ -31,7 +31,7 @@ $core->addBehavior('coreInitWikiPost',array('supsub','wiki'));
 
 class supsub
 {
-	public static function wiki(&$wiki2xhtml)
+	public static function wiki($wiki2xhtml)
 	{	
 		$s = $GLOBALS['core']->blog->settings;
 		
