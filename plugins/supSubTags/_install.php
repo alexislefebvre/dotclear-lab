@@ -21,11 +21,14 @@
 #
 # ***** END LICENSE BLOCK *****
 
+if (!defined('DC_CONTEXT_ADMIN')) exit;
+global $core;
+
 # On lit la version du plugin
-$m_version = $core->plugins->moduleInfo('supsubTags','version');
+$m_version = $core->plugins->moduleInfo('supSubTags','version');
  
 # On lit la version du plugin dans la table des versions
-$i_version = $core->getVersion('supsubTags');
+$i_version = $core->getVersion('supSubTags');
  
 # La version dans la table est supérieure ou égale à
 # celle du module, on ne fait rien puisque celui-ci
@@ -33,6 +36,18 @@ $i_version = $core->getVersion('supsubTags');
 if (version_compare($i_version,$m_version,'>=')) {return;}
 
 # Création du setting
+if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','>=')) {
+	$core->blog->settings->addNamespace('supsubtags');
+	$core->blog->settings->supsubtags->put('supsub_tags_sup_open','**','string',
+		'Superscript open tag',false,true);
+	$core->blog->settings->supsubtags->put('supsub_tags_sup_close','**','string',
+		'Superscript close tag',false,true);
+	$core->blog->settings->supsubtags->put('supsub_tags_sub_open',',,','string',
+		'Subscript open tag',false,true);
+	$core->blog->settings->supsubtags->put('supsub_tags_sub_close',',,','string',
+		'Subscript close tag',false,true);
+} else {
+
 $settings = new dcSettings($core,$core->blog->id);
 $settings->setNamespace('supsubtags');
 $settings->put('supsub_tags_sup_open','**','string',
@@ -44,8 +59,8 @@ $settings->put('supsub_tags_sub_open',',,','string',
 $settings->put('supsub_tags_sub_close',',,','string',
 	'Subscript close tag',false,true);
 $settings->setNamespace('system');
- 
+} 
 # La procédure d'installation commence vraiment là
-$core->setVersion('supsubTags',$m_version);
+$core->setVersion('supSubTags',$m_version);
 return true;
 ?>

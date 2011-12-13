@@ -25,7 +25,7 @@ $this->registerModule(
         /* Name */                      "Sup Sub Tags",
         /* Description*/                "Add superscript and subscript tags to syntax",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.0.4',
+        /* Version */                   '1.0.5',
         /* Permissions */               'usage,contentadmin'
 );
 
