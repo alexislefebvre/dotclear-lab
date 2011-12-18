@@ -20,6 +20,9 @@
 # Icon (icon.png) and images are from Silk Icons :
 # <http://www.famfamfam.com/lab/icons/silk/>
 #
+# Big icon (icon-big.png) come from Dropline Neu! :
+# <http://art.gnome.org/themes/icon?sort=popularity>
+#
 # Inspired by @ Reply for WordPress :
 # <http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/>
 #
@@ -32,11 +35,23 @@ l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 $core->addBehavior('adminAfterCommentDesc',
 	array('AtReplyAdmin','adminAfterCommentDesc'));
 
+# from hum plugin
+# admin/comments.php Add actions on comments combo
+$core->addBehavior('adminCommentsActionsCombo',
+	array('AtReplyAdmin','adminCommentsActionsCombo'));
+# admin/comments_actions.php Save actions on comments
+$core->addBehavior('adminCommentsActions',
+	array('AtReplyAdmin','adminCommentsActions'));
+# /from hum plugin
+
 $core->addBehavior('adminBeforeCommentCreate',
 	array('AtReplyAdmin','adminBeforeCommentCreate'));
 
 $core->addBehavior('adminAfterCommentCreate',
 	array('AtReplyAdmin','adminAfterCommentCreate'));
+
+$core->addBehavior('adminDashboardFavs',
+	array('AtReplyAdmin','adminDashboardFavs'));
 
 $_menu['Plugins']->addItem(__('@ Reply'),'plugin.php?p=atReply',
 	'index.php?pf=atReply/icon.png',preg_match('/plugin.php\?p=atReply(&.*)?$/',
@@ -51,7 +66,7 @@ class AtReplyAdmin
 	@return	<b>string</b>	String
 	*/
 	public static function adminAfterCommentDesc($rs)
-	{	
+	{
 		# ignore trackbacks
 		if ($rs->comment_trackback == 1) {return;}
 		
@@ -65,73 +80,101 @@ class AtReplyAdmin
 				__('Please edit and publish it.').
 				'</p>');
 			}
-			# don't display the form on comment.php, it would break the <form>
-			return;
-		}
-		
-		global $core;
-		
-		$comment_content = '<p>'.
-			sprintf(__('@%s:'),'<a href="#c'.
-			html::escapeHTML($rs->comment_id).'">'.
-			html::escapeHTML($rs->comment_author).'</a>').' </p>';
-		
-		return(
-			# from /dotclear/admin/post.php, modified
-			'<form action="comment.php" method="post">'.
-			form::hidden(array('comment_author'),html::escapeHTML($core->auth->getInfo('user_cn'))).
-			form::hidden(array('comment_email'),html::escapeHTML($core->auth->getInfo('user_email'))).
-			form::hidden(array('comment_site'),html::escapeHTML($core->auth->getInfo('user_url'))).
-			form::hidden(array('comment_content'),html::escapeHTML($comment_content)).
-			form::hidden(array('comment_atreply_comment_status'),-1).
-			form::hidden(array('post_id'),$rs->post_id).
-			form::hidden(array('at_reply'),1).
-			form::hidden(array('at_reply_email_address'),html::escapeHTML($rs->comment_email)).
-			$core->formNonce().
-			'<p><strong>'.__('@ Reply:').'</strong> '.
-				'<input type="submit" name="add" value="'.
-				__('Reply to this comment').'" /></p>'.
-			'</form>'
-			# /from /dotclear/admin/post.php, modified
-		);
-	}
-	
-	/**
-	adminBeforeCommentCreate behavior
-	@param	cur	<b>cursor</b>	Cursor
-	*/
-	public static function adminBeforeCommentCreate($cur)
-	{
-		if (isset($_POST['comment_atreply_comment_status']))
-		{
-			$cur->comment_status = (integer) $_POST['comment_atreply_comment_status'];
 		}
 	}
 
-	/**
-	adminAfterCommentCreate behavior
-	directly edit the comment
-	@param	cur	<b>cursor</b>	Cursor
-	@param	comment_id	<b>integer</b>	Comment id
-	*/
-	public static function adminAfterCommentCreate($cur,$comment_id)
+	# from hum plugin
+	public static function adminCommentsActionsCombo($args)
 	{
-		global $core;
-
-		if (isset($_POST['at_reply']))
+		if ($GLOBALS['core']->auth->check('publish,contentadmin',
+			$GLOBALS['core']->blog->id))
 		{
-			if ($core->blog->settings->atreply_subscribe_replied_comment == true)
+			$args[0][__('Create a new comment in reply to this comment')] = 'atreply_reply';
+		}
+	}
+
+	public static function adminCommentsActions($core,$co,$action,$redir)
+	{
+		# ignore trackbacks
+		if ($co->comment_trackback == 1) {return;}
+		
+		if ($action == 'atreply_reply')
+		{
+			# reply to one comment, everything is alright
+			# Adding comment
+			if ($co->count() == 1)
 			{
-				if ($core->plugins->moduleExists('subscribeToComments'))
+				$post_id = $co->post_id;
+				
+				try
 				{
-					# subscribe the email address of the replied comment
-					$subscriber = new subscriber($_POST['at_reply_email_address']);
-					$subscriber->subscribe($cur->post_id);
+					$rs = $core->blog->getPosts(
+						array('post_id' => $post_id,
+							'post_type' => ''));
+					
+					if ($rs->isEmpty()) {
+						throw new Exception(__('Entry does not exist.'));
+					}
+					
+					$cur = $core->con->openCursor($core->prefix.'comment');
+					
+					$cur->comment_author = $core->auth->getInfo('user_cn');
+					$cur->comment_email = html::clean($core->auth->getInfo('user_email'));
+					$cur->comment_site = html::clean($core->auth->getInfo('user_url'));
+					$cur->comment_content = $core->HTMLfilter(
+						'<p>'.
+							sprintf(__('@%s:'),'<a href="'.
+							$rs->getURL().'#c'.
+							html::escapeHTML($co->comment_id).'">'.
+							html::escapeHTML($co->comment_author).'</a>').
+						' </p>'
+					);
+					
+					$cur->comment_status = -1;
+					
+					$cur->post_id = (integer) $post_id;
+					
+					# --BEHAVIOR-- adminBeforeCommentCreate
+					$core->callBehavior('adminBeforeCommentCreate',$cur);
+					
+					$comment_id = $core->blog->addComment($cur);
+					
+					# --BEHAVIOR-- adminAfterCommentCreate
+					$core->callBehavior('adminAfterCommentCreate',$cur,$comment_id);
+					
+					if (($core->blog->settings->atreply_subscribe_replied_comment == true)
+						&& ($core->plugins->moduleExists('subscribeToComments')))
+					{
+						# subscribe the email address of the replied comment
+						$subscriber = new subscriber($co->comment_email);
+						$subscriber->subscribe($cur->post_id);
+					}
+					
+					http::redirect('comment.php?id='.$comment_id.'&at_reply_creaco=1');
+				} catch (Exception $e) {
+					$core->error->add($e->getMessage());
 				}
 			}
 			
-			http::redirect('comment.php?id='.$comment_id.'&at_reply_creaco=1');
+			if (!$core->error->flag()) {
+				http::redirect($redir);
+			}
 		}
+	}
+	# /from hum plugin
+	
+	public static function adminDashboardFavs($core,$favs)
+	{
+		$favs['atReply'] = new ArrayObject(array(
+			'atReply',
+			__('@ Reply'),
+			'plugin.php?p=atReply',
+			'index.php?pf=atReply/icon.png',
+			'index.php?pf=atReply/icon-big.png',
+			'usage,contentadmin',
+			null,
+			null)
+		);
 	}
 }
 

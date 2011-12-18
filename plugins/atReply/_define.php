@@ -20,6 +20,9 @@
 # Icon (icon.png) and images are from Silk Icons :
 # <http://www.famfamfam.com/lab/icons/silk/>
 #
+# Big icon (icon-big.png) come from Dropline Neu! :
+# <http://art.gnome.org/themes/icon?sort=popularity>
+#
 # Inspired by @ Reply for WordPress :
 # <http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/>
 #
@@ -31,7 +34,7 @@ $this->registerModule(
   /* Name */				'@ Reply',
   /* Description*/	'Easily reply to comments',
   /* Author */			'Moe (http://gniark.net/) append extension by buns.fr',
-  /* Version */			'1.6.5',
+  /* Version */			'1.7',
   /* Permissions */	'usage,contentadmin'
 );
 ?>
