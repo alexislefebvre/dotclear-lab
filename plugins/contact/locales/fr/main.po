@@ -1,0 +1,285 @@
+# ***** BEGIN LICENSE BLOCK *****
+# This is Contact, a plugin for DotClear. 
+# Copyright (c) 2005 k-net. All rights reserved.
+#
+# DotClear is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# DotClear is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DotClear; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# ***** END LICENSE BLOCK *****
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins/contact/_admin.php
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Title: (Use %I for Contact icon)"
+msgstr "Titre: (Utilisez %I pour l'icône Contact)"
+
+msgid "Display the link in a subtitle"
+msgstr "Afficher le lien dans un sous-titre"
+
+msgid "If yes, subtitle :"
+msgstr "Si oui, sous-titre :"
+
+msgid "Contact me!"
+msgstr "Contactez-moi !"
+
+#: plugins/contact/_define.php
+msgid "A contact form"
+msgstr "Un formulaire de contact"
+
+#: plugins/contact/_public.php
+msgid "The contact page is not set up yet. Please wait the webmaster do it."
+msgstr "La page de contact n'a pas encore été configurée. Merci d'attendre que le webmaster s'en charge."
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Some needed fields are empty. Refresh the page by pressing the F5 key on your keyboard."
+msgstr "Certains champs obligatoires ne sont pas remplis. Réactualisez la page en appuyant sur la touche F5 de votre clavier."
+
+msgid "The anti-spam code is incorrect. Refresh the page by pressing the F5 key on your keyboard."
+msgstr "Le code anti-spam est incorrect. Réactualisez la page en appuyant sur la touche F5 de votre clavier."
+
+msgid "The given email is invalid."
+msgstr "L'email indiqué est invalide."
+
+msgid "Visitor"
+msgstr "Visiteur"
+
+msgid "Error with the attached file."
+msgstr "Erreur avec la pièce jointe."
+
+msgid "The email couldn't be sent."
+msgstr "L'email n'a pas pu être envoyé."
+
+msgid "Error"
+msgstr "Erreur"
+
+#: plugins/contact/index.php
+msgid "Configuration successfully updated"
+msgstr "Configuration mise à jour avec succès"
+
+msgid "Template adapted"
+msgstr "Template adapté"
+
+msgid "The plugin file <ins>contact.html</ins> is not writable"
+msgstr "Le fichier du plugin <ins>contact.html</ins> n'est pas accessible en écriture"
+
+msgid "The theme file <ins>post.html</ins> is not readable"
+msgstr "Le fichier du theme <ins>post.html</ins> n'est pas accessible en lecture"
+
+msgid "Cannot adapt page to this template"
+msgstr "Impossible d'adapter la page à ce template"
+
+msgid "Name :"
+msgstr "Nom :"
+
+msgid "Email :"
+msgstr "Email :"
+
+msgid "Are you sure you want to delete this recipient ?"
+msgstr "Êtes vous sur(e) de vouloir effacer ce destinataire ?"
+
+msgid "General"
+msgstr "Général"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Contact is a plugin to add and personalize easily a contact form to your blog."
+msgstr "Contact est un plugin pour ajouter et personnaliser facilement un formulaire de contact à votre blog."
+
+msgid "Use"
+msgstr "Utilisation"
+
+msgid "Your contact page is installed and available at :"
+msgstr "Votre page de contact est installée et est accessible à l'adresse :"
+
+msgid "To make it available for your visitors, you have to active the <em>Contact</em> widget by dragging it into the navigation sidebar from the"
+msgstr "Pour que vos visiteurs puissent accéder à cette page de contact, vous devez activer le widget <em>Contact</em> en le glissant dans le bandeau de navigation à partir de"
+
+msgid "the widget page"
+msgstr "la page des widgets"
+
+msgid "and click on the &quot;update sidebars&quot; button."
+msgstr "et cliquer sur le bouton &quot;mettre à jour les bandeaux&quot;."
+
+msgid "Restriction"
+msgstr "Restriction"
+
+msgid "Allow the plugin configuration to:"
+msgstr "Autoriser la configuration du plugin à :"
+
+msgid "All users"
+msgstr "Tous les utilisateurs"
+
+msgid "Only administrators"
+msgstr "Seulement les administrateurs"
+
+msgid "Only super administrators"
+msgstr "Seulement les super administrateurs"
+
+msgid "Recipients"
+msgstr "Destinataires"
+
+msgid "Recipient list"
+msgstr "Liste des destinataires"
+
+msgid "Define here who is(are) going to be the email recipient(s)."
+msgstr "Définissez ici quel(s) sera(ont) le(s) destinataire(s) de l'email."
+
+msgid "Please note that your visitors will not be able to see the email adresses."
+msgstr "Notez que vos visiteurs ne pourront pas voir les adresses email."
+
+msgid "There is no recipient yet."
+msgstr "Il n'y a pas encore de destinataire."
+
+msgid "Try to import recipients from the blog users list"
+msgstr "Essayer d'importer des destinataires depuis la liste des utilisateurs du blog"
+
+msgid "Add a recipient"
+msgstr "Ajouter un destinataire"
+
+msgid "If there are two or more recipients, a list will ask the visitor who he or she wants to send the email to."
+msgstr "S'il y a plus d'un destinataire, une liste proposera au visiteur à qui envoyer l'email."
+
+msgid "You can make a direct link to contact a specific recipient using an url such as:"
+msgstr "Vous pouvez faire un lien direct pour contacter un destinataire spécifique en utilisant une url de la sorte :"
+
+msgid "Displaying"
+msgstr "Affichage"
+
+msgid "Contact page appearance"
+msgstr "Apparence de la page de contact"
+
+msgid "You can personalize your contact page appearance by setting your own texts and by enabling or not some fields."
+msgstr "Vous pouvez personnaliser l'apparence de votre page de contact en mettant vos propres textes et en activant ou non certains champs."
+
+msgid "If needed, you can also edit the form code by editing the file"
+msgstr "Si besoin, vous pouvez aussi modifier le code du formulaire en éditant le fichier"
+
+msgid "You can use XHTML code."
+msgstr "Vous pouvez utiliser du code XHTML."
+
+msgid "Texts for your visitors"
+msgstr "Textes déstinés aux visiteurs"
+
+msgid "Page title &lt;title&gt;"
+msgstr "Titre de la page &lt;title&gt;"
+
+msgid "Use %N instead of your blog name."
+msgstr "Utilisez %N pour le nom de votre blog."
+
+msgid "Form title &lt;h2&gt;"
+msgstr "Titre du formulaire &lt;h2&gt;"
+
+msgid "Information text"
+msgstr "Texte d'information"
+
+msgid "Text after email is sent"
+msgstr "Texte une fois l'email envoyé"
+
+msgid "Enable/Disable field"
+msgstr "Activer/Désactiver le champ"
+
+msgid "Field caption"
+msgstr "Titre du champ"
+
+msgid "Recipient select list"
+msgstr "Liste de sélection du destinataire"
+
+msgid "Visitor name"
+msgstr "Nom du visiteur"
+
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+msgid "Visitor email"
+msgstr "Email du visiteur"
+
+msgid "Email subject"
+msgstr "Sujet de l'email"
+
+msgid "Email body"
+msgstr "Message"
+
+msgid "Email attached file"
+msgstr "Pièce jointe"
+
+msgid "Anti-spam code"
+msgstr "Code anti-spam"
+
+msgid "Requires GD 2 library or higher."
+msgstr "Nécessite la bibliothèque GD 2 ou supérieure."
+
+msgid "Preview button"
+msgstr "Bouton de prévisualisation"
+
+msgid "Send button"
+msgstr "Bouton d'envoi"
+
+msgid "Additionnal fields added to the form and sent in the email :"
+msgstr "Champs additionnels qui seront ajoutés au formulaire et inclus dans l'email envoyé :"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Initial value"
+msgstr "Valeur initiale"
+
+msgid "No additionnal field for the moment."
+msgstr "Pas de champ additionnel pour le moment."
+
+msgid "Text"
+msgstr "Texte"
+
+msgid "Select"
+msgstr "Select"
+
+msgid "Checkbox"
+msgstr "Coche"
+
+msgid "Add an additionnal field"
+msgstr "Ajouter un champ additionnel"
+
+msgid "Send MIME compliant emails"
+msgstr "Envoyer des emails compatibles MIME"
+
+msgid "This options allows more flexible emails and attached files. Disable it may fix some sending problems."
+msgstr "Cette option permet d'envoyer des mails plus flexibles et avec des pièces jointes. La désactiver peut régler certains problèmes avec l'envoi des emails."
+
+msgid "Template"
+msgstr "Template"
+
+msgid "Adaptation to the template"
+msgstr "Adaptation au template"
+
+msgid "The contact page is adapted to the DotClear default theme. If you are using another template, the contact page may seem different than other pages."
+msgstr "La page de contact est adaptée au template par défaut de DotClear. Si vous utilisez un autre template, la page de contact peut sembler différente des autres pages."
+
+msgid "Warning : this will cancel the possible changes you could have made on the code of the file"
+msgstr "Attention : ceci annulera les changements éventuels que vous auriez pu faire sur le code du fichier"
+
+msgid "Your template :"
+msgstr "Votre template :"
+
+msgid "Try to adapt"
+msgstr "Tenter d'adapter"
+

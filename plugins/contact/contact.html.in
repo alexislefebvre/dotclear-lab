@@ -1,0 +1,84 @@
+<tpl:Contact>
+
+<div class="post">
+  
+  <h2 id="contactform" class="post-title"><a href="{{tpl:ContactPageUrl}}#contactform">{{tpl:ContactH2Text}}</a></h2>
+  
+  <div class="post-content">
+    
+    {{tpl:ContactInfoText}}
+    
+    <tpl:ContactErrorBlock>
+    <p style="padding: 8px 10px; border: 1px dashed #FDD; font-size: 12px; line-height: 12px; color: #C33;">
+    {{tpl:ContactErrorText}}</p>
+    </tpl:ContactErrorBlock>
+    
+    <tpl:ContactPreviewBlock>
+    <p style="padding: 8px 10px; border: 1px dashed #EEE; font-family: 'Courier New', Courier, mono; font-size: 12px; line-height: 12px; color: #666;">
+    {{tpl:ContactPreviewText}}</p>
+    </tpl:ContactPreviewBlock>
+    
+  </div>
+  
+  <tpl:ContactForm>
+  <div id="comments">
+    
+    <form id="comment-form" action="{{tpl:ContactPageUrl}}#contactform" method="post" enctype="multipart/form-data">
+    <fieldset>
+      
+      <tpl:ContactFormInput type="recipient">
+      <p class="field"><label for="Contact_recipient">{{tpl:ContactFormInputValue type="recipient_c"}}</label>
+      <select id="Contact_recipient" name="contact[recipient]">{{tpl:ContactFormInputValue type="recipient_v"}}</select></p>				
+      </tpl:ContactFormInput>
+      
+      <tpl:ContactFormInput type="name">
+      <p class="field"><label for="Contact_name">{{tpl:ContactFormInputValue type="name_c"}}</label>
+      <input type="text" id="Contact_name" name="contact[name]" value="{{tpl:ContactFormInputValue type="name_v"}}" /></p>
+      </tpl:ContactFormInput>
+      
+      <tpl:ContactFormInput type="email">
+      <p class="field"><label for="Contact_email">{{tpl:ContactFormInputValue type="email_c"}}</label>
+      <input type="text" id="Contact_email" name="contact[email]" value="{{tpl:ContactFormInputValue type="email_v"}}" /></p>
+      </tpl:ContactFormInput>
+      
+      <tpl:ContactFormInput type="subject">
+      <p class="field"><label for="Contact_subject">{{tpl:ContactFormInputValue type="subject_c"}}</label>
+      <input type="text" id="Contact_subject" name="contact[subject]" value="{{tpl:ContactFormInputValue type="subject_v"}}" /></p>
+      </tpl:ContactFormInput>
+      
+      <tpl:ContactFormInput type="additionnal">
+      <p class="field"><label for="Contact_additionnal{{tpl:ContactFormInputValue type="additionnal_k"}}">{{tpl:ContactFormInputValue type="additionnal_c"}}</label>
+      {{tpl:ContactFormInputValue type="additionnal_v"}}</p>
+      </tpl:ContactFormInput>
+      
+      <p class="field"><label for="Contact_body">{{tpl:ContactFormInputValue type="body_c"}}</label>
+      <textarea id="Contact_body" name="contact[body]" cols="35" rows="7">{{tpl:ContactFormInputValue type="body_v"}}</textarea></p>
+      
+      <tpl:ContactFormInput type="file">
+      <p class="field"><label for="Contact_file">{{tpl:ContactFormInputValue type="file_c"}}</label>
+      <input type="file" id="Contact_file" name="contact_file" /></p>
+      </tpl:ContactFormInput>
+      
+      <tpl:ContactFormInput type="antispam">
+      <p class="field" style="padding:0 10px 10px;"><label for="Contact_antispam">{{tpl:ContactFormInputValue type="antispam_c"}}</label>
+      <img src="{{tpl:ContactFormInputValue type="antispam_v"}}" alt="Anti-spam" width="100" height="25" style="vertical-align: middle;" />
+      <input type="text" id="Contact_antispam" name="contact[antispam]" value="" style="width: 98px; height: 23px; background-color: #F9F9FF; border: 1px solid #B8B8EF; vertical-align: middle; font-size: 18px; color: #BBB;" /></p>
+      </tpl:ContactFormInput>
+      
+      <p class="field">
+        <tpl:ContactFormInput type="preview">
+        <input type="submit" id="Contact_preview" name="contact[preview]" value="{{tpl:ContactFormInputValue type="preview_c"}}" class="preview" />
+        </tpl:ContactFormInput>
+      
+        <input type="submit" id="Contact_send" name="contact[send]" value="{{tpl:ContactFormInputValue type="send_c"}}" class="submit" />
+      </p>
+      
+    </fieldset>
+    </form>
+    
+  </div>
+  </tpl:ContactForm>
+  
+</div>
+
+</tpl:Contact>
