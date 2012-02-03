@@ -401,7 +401,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				$core->con->escape('contribute_public_url')."' ";
 		
 		$rs = $core->blog->getPosts($params);
-
+		
 		if ($rs->isEmpty())
 		{
 			print('<p>'.__("No Contribute entry.").'</p>');
@@ -420,7 +420,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 					$core->getPostAdminURL($rs->post_type,$rs->post_id).'">'.
 					$rs->post_title.'</a></li>');
 				
-				if ($rs->isStart())
+				if ($rs->isEnd())
 				{
 					print('</ul>');
 				}

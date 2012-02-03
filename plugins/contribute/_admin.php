@@ -73,8 +73,12 @@ class contributeAdmin
 			if (isset($_POST['contribute_public_url']))
 			{
 				$meta->delPostMeta($post_id,'contribute_public_url');
-				$meta->setPostMeta($post_id,'contribute_public_url',
-					text::tidyURL($_POST['contribute_public_url']));
+				$public_url = text::tidyURL($_POST['contribute_public_url']);
+				if (!empty($public_url))
+				{
+					$meta->setPostMeta($post_id,'contribute_public_url',
+						$public_url);
+				}
 			}
 
 			if (isset($_POST['contribute_author']))
@@ -203,7 +207,8 @@ class contributeAdmin
 		
 		$meta = new dcMeta($core);
 		
-		$public_url = ($post) ? $meta->getMetaStr($post->post_meta,'contribute_public_url') : '';
+		$public_url = ($post) ? $meta->getMetaStr($post->post_meta,
+			'contribute_public_url') : '';
 		
 		echo('<div id="contribute-post-form">'.
 			'<h3>'.__('Contribute').'</h3>');
