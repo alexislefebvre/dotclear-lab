@@ -107,9 +107,6 @@ class contributeBehaviors
 {
 	public static function coreBlogGetPosts($rs)
 	{
-		global $core;
-		
-		$core->blog->settings->addNamespace('contribute');
 		if ($GLOBALS['core']->blog->settings->contribute->contribute_active)
 		{
 			$rs->extend('rsExtContributePosts');
@@ -162,7 +159,7 @@ class rsExtContributePosts extends rsExtPostPublic
 		else
 		{
 			$author_format = 
-				$GLOBALS['core']->blog->settings->contribute_author_format;
+				(string) $GLOBALS['core']->blog->settings->contribute->contribute_author_format;
 			
 			if (empty($author_format)) {$author_format = '%s';}
 			

@@ -27,7 +27,7 @@ $this->registerModule(
      /* Name */                      "Contribute",
      /* Description*/                "Allow visitors to write an entry for your blog",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.0-alpha33',
+     /* Version */                   '1.0-alpha34',
      /* Permissions */               'admin'
 );
 ?>
