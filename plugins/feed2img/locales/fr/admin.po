@@ -1,0 +1,76 @@
+# Language: Français
+# Module: feed2img - 1.0
+# Date: 2011-06-28 20:53:45
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: feed2img 1.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-06-28T20:53:45+00:00\n"
+"Last-Translator: Nicolas Frandeboeuf\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _install.php:8
+msgid "Print the blog's title"
+msgstr "Afficher le titre du blog"
+
+#: _install.php:9
+msgid "Number of Posts"
+msgstr "Nombre de billets"
+
+#: _install.php:10
+msgid "Maximum number of chars by line"
+msgstr "Nombre maximum de caractères par ligne"
+
+#: _install.php:11
+msgid "Title's font size"
+msgstr "Taille de la police du titre"
+
+#: _install.php:12
+msgid "Title's position in pixels from left"
+msgstr "Position du titre en pixels, depuis la gauche"
+
+#: _install.php:13
+msgid "Title's position in pixels from top"
+msgstr "Position du titre en pixels, depuis le haut"
+
+#: _install.php:14
+msgid "Title's color"
+msgstr "Couleur du titre (ex: #FF00FF)"
+
+#: _install.php:15
+msgid "Text's font size"
+msgstr "Taille de la police du texte"
+
+#: _install.php:16
+msgid "Text's color"
+msgstr "Couleur du texte (ex: #FF00FF)"
+
+#: _install.php:17
+msgid "Text's position in pixels from left"
+msgstr "Position du texte en pixels, depuis la gauche"
+
+#: _install.php:18
+msgid "Text's position in pixels from top"
+msgstr "Position du texte en pixels, depuis le haut"
+
+#: _install.php:19
+msgid "Line height"
+msgstr "Interlignage"
+
+#: _install.php:20
+msgid "Source image name in public directory. Let it empty to use the default image"
+msgstr "Image source dans le dossier public. Laissez vide pour utiliser l'image par défaut."
+
+#: _install.php:21
+msgid "Output image name in public directory"
+msgstr "Nom de l'image créée dans le dossier public"
+
+#: _install.php:22
+msgid "Font name (only .ttf) in public directory . Let it empty to use the default font"
+msgstr "Nom de la police (uniquement .ttf) dans le dossier public. Laissez vide pour utiliser la police par défaut."
+

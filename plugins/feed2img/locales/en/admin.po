@@ -1,0 +1,76 @@
+# Language: English
+# Module: feed2img - 1.0
+# Date: 2011-06-28 20:52:54
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: feed2img 1.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2011-06-28T20:52:54+00:00\n"
+"Last-Translator: Nicolas Frandeboeuf\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _install.php:8
+msgid "Print the blog's title"
+msgstr "Print the blog's title"
+
+#: _install.php:9
+msgid "Number of Posts"
+msgstr "Number of Posts"
+
+#: _install.php:10
+msgid "Maximum number of chars by line"
+msgstr "Maximum number of chars by line"
+
+#: _install.php:11
+msgid "Title's font size"
+msgstr "Title's font size (in pt)"
+
+#: _install.php:12
+msgid "Title's position in pixels from left"
+msgstr "Title's position in pixels from left (in px)"
+
+#: _install.php:13
+msgid "Title's position in pixels from top"
+msgstr "Title's position in pixels from top (in px)"
+
+#: _install.php:14
+msgid "Title's color"
+msgstr "Title's color (ex: #FF00FF)"
+
+#: _install.php:15
+msgid "Text's font size"
+msgstr "Text's font size (in pt)"
+
+#: _install.php:16
+msgid "Text's color"
+msgstr "Text's color (ex: #FF00FF)"
+
+#: _install.php:17
+msgid "Text's position in pixels from left"
+msgstr "Text's position in pixels from left (in px)"
+
+#: _install.php:18
+msgid "Text's position in pixels from top"
+msgstr "Text's position in pixels from top (in px)"
+
+#: _install.php:19
+msgid "Line height"
+msgstr "Line height (in px)"
+
+#: _install.php:20
+msgid "Source image name in public directory. Let it empty to use the default image"
+msgstr "Source image name in public directory. Let it empty to use the default image"
+
+#: _install.php:21
+msgid "Output image name in public directory"
+msgstr "Output image name in public directory"
+
+#: _install.php:22
+msgid "Font name (only .ttf) in public directory . Let it empty to use the default font"
+msgstr "Font name (only .ttf) in public directory . Let it empty to use the default font"
+
