@@ -1,0 +1,28 @@
+# Language: Français
+# Module: socialLogin - 1.0
+# Date: 2012-02-19 16:46:43
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: socialLogin 1.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2012-02-19T16:46:43+00:00\n"
+"Last-Translator: Nicolas Frandeboeuf\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _install.php:31
+msgid "SocialLogin: curl lib needed."
+msgstr "SocialLogin: la bibliothèque curl est nécessaire."
+
+#: inc/class.SocialLoginWidget.php:18
+msgid "Connexion text"
+msgstr "Texte de connexion"
+
+#: inc/class.SocialLoginWidget.php:19
+msgid "Deconnexion text"
+msgstr "Texte de déconnexion"
+
