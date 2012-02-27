@@ -85,7 +85,10 @@ class AtReplyTpl
 		# simple and efficient test on entry, from dcTemplate::SysIf())
 		if ($GLOBALS['_ctx']->posts !== null)
 		{
-			$entry_url = $GLOBALS['_ctx']->posts->getURL();
+			if (method_exists($GLOBALS['_ctx']->posts, 'getURL'))
+			{
+				$entry_url = $GLOBALS['_ctx']->posts->getURL();
+			}
 		}
 		
 		$title = (($set->atreply_display_title) ? '1' : '0');
