@@ -31,7 +31,7 @@ $core->rest->addFunction('updResources',array('grumphRest','updResources'));
 # BEHAVIORS
 class grumphBehaviors
 {
-	public static function setResources($cur,$post_id)
+	public static function setResources($cur,$post_id=null)
 	{
 		$grumph = new dcGrumph($GLOBALS['core']);
 		$cur->post_res = serialize($grumph->grabResources($cur));

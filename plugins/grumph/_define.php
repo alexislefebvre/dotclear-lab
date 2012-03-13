@@ -17,7 +17,7 @@ $this->registerModule(
 	/* Name */			"grumph",
 	/* Description*/		"Grab Resources and Urls to Manage Posts Handily",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			"1.0",
+	/* Version */			"1.1",
 	/* Permissions */		'usage,contentadmin'
 );
 ?>

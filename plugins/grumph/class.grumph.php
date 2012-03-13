@@ -22,7 +22,8 @@ class dcGrumph
 		'img' => 'image',
 		'audio' => 'audio',
 		'video' => 'video',
-		'object' => 'object'); 
+		'object' => 'object',
+		'embed' => 'embed'); 
 	
 	public static $scopes = array(
 		'excerpt' => 1,
