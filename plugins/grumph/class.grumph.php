@@ -92,7 +92,7 @@ class dcGrumph
 	public function updatePostResources($rs) {
 		$res = $this->grabResources($rs);
 		$strReq = 'UPDATE '.$this->core->prefix.'post '.
-			"SET post_res='".serialize($res)."' ".
+			"SET post_res='".$this->core->con->escape(serialize($res))."' ".
 			"WHERE post_id=".$rs->post_id." ";
 		return $this->core->con->execute($strReq);	
 	}
@@ -102,7 +102,7 @@ class dcGrumph
 			$res = unserialize($post->post_res);
 		} else {
 			$strReq = 'SELECT post_res FROM '.$this->core->prefix.'post '.
-				'WHERE post_id='.$post->post_id;
+				'WHERE post_id='.((integer)$post->post_id);
 			$res = @unserialize($this->core->con->select($strReq)->f(0));		
 		}
 		if (!is_array($res))
