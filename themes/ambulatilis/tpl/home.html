@@ -5,6 +5,8 @@
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription cut_string="180" encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
@@ -61,15 +63,12 @@
 
         <tpl:EntriesHeader>
             <div data-role="content">
-            <ul data-role="listview">
+              <ul data-role="listview" data-split-icon="arrow-r" data-split-theme="d">
         </tpl:EntriesHeader>
 
-        <li>
-            <h3><a data-transition="slide" href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h3>
-            <p>Écrit le {{tpl:EntryDate}}</p>
-            <span class="ui-li-count">{{tpl:EntryCommentCount}}</span>
-        </li>
-
+              <tpl:DateHeader><li data-role="list-divider" data-theme="d">{{tpl:EntryDate}}</li></tpl:DateHeader>
+              <li><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a> <span class="ui-li-count">{{tpl:EntryCommentCount}}</span></li>
+              
         <tpl:EntriesFooter>
             </ul>
             </div>
@@ -77,8 +76,8 @@
             <tpl:Pagination>
                 <div data-role="navbar">
                      <ul>
-                        <tpl:PaginationIf end="0"><li><a data-transition="none" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
-                        <tpl:PaginationIf start="0"><li><a data-transition="none" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
+                        <tpl:PaginationIf end="0"><li><a data-transition="slide" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
+                        <tpl:PaginationIf start="0"><li><a data-transition="slide" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
                         </tpl:PaginationIf>
                     </ul>
                 </div>

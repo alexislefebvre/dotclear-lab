@@ -5,6 +5,8 @@
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{{tpl:lang Archives}} - {{tpl:BlogName encode_html="1"}}</title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
@@ -36,6 +38,12 @@
 
     <div data-role="header">
       <h2>{{tpl:lang Archives}}</h2>
+    </div>
+
+    <div data-role="content">
+      <form action="{{tpl:BlogURL}}" method="get">
+        <input type="search" id="q" name="q" value="" />
+      </form>
     </div>
 
     <div data-role="content">

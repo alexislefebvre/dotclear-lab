@@ -5,6 +5,8 @@
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX"}}" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{{tpl:lang Archives}} - {{tpl:ArchiveDate}} - {{tpl:BlogName encode_html="1"}}</title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
@@ -39,12 +41,12 @@
 <body class="dc-archive-month">
 
 <div data-role="page">
-
+  
      <div data-role="navbar">
         <ul>
-            <tpl:ArchivePrevious><li><a href="{{tpl:ArchiveURL}}" data-transition="none" data-icon="arrow-l">{{tpl:ArchiveDate encode_html="1"}}</a></li></tpl:ArchivePrevious>
-            <li><a href="{{tpl:BlogArchiveURL}}" data-transition="none" data-icon="grid">{{tpl:lang Archives}}</a></li>
-            <tpl:ArchiveNext><li><a href="{{tpl:ArchiveURL}}" data-transition="none" data-icon="arrow-r">{{tpl:ArchiveDate encode_html="1"}}</a></li></tpl:ArchiveNext>
+            <tpl:ArchivePrevious><li><a href="{{tpl:ArchiveURL}}" data-transition="slide" data-icon="arrow-l">{{tpl:ArchiveDate encode_html="1"}}</a></li></tpl:ArchivePrevious>
+            <li><a href="{{tpl:BlogArchiveURL}}" data-transition="slide" data-icon="grid">{{tpl:lang Archives}}</a></li>
+            <tpl:ArchiveNext><li><a href="{{tpl:ArchiveURL}}" data-transition="slide" data-icon="arrow-r">{{tpl:ArchiveDate encode_html="1"}}</a></li></tpl:ArchiveNext>
         </ul>
     </div><!-- /navbar -->
 
@@ -74,8 +76,8 @@
             <tpl:Pagination>
                 <div data-role="navbar">
                      <ul>
-                        <tpl:PaginationIf end="0"><li><a data-transition="none" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
-                        <tpl:PaginationIf start="0"><li><a data-transition="none" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
+                        <tpl:PaginationIf end="0"><li><a data-transition="slide" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
+                        <tpl:PaginationIf start="0"><li><a data-transition="slide" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
                         </tpl:PaginationIf>
                     </ul>
                 </div>

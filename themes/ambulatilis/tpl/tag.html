@@ -5,6 +5,8 @@
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{{tpl:lang Tag}} - {{tpl:TagID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
@@ -72,8 +74,8 @@
             <tpl:Pagination>
                 <div data-role="navbar">
                      <ul>
-                        <tpl:PaginationIf end="0"><li><a data-transition="none" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
-                        <tpl:PaginationIf start="0"><li><a data-transition="none" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
+                        <tpl:PaginationIf end="0"><li><a data-transition="slide" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
+                        <tpl:PaginationIf start="0"><li><a data-transition="slide" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
                         </tpl:PaginationIf>
                     </ul>
                 </div>

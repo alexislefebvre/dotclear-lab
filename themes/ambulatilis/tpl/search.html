@@ -5,7 +5,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX,NOARCHIVE"}}" />
-  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{{tpl:lang Search}} - {{tpl:SysSearchString encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
@@ -45,109 +47,62 @@
 </head>
 
 <body class="dc-search">
-<div id="page">
-{{tpl:include src="_top.html"}}
 
-<div id="wrapper">
 
-<div id="main">
-  <div id="content">
-  
-  <div id="content-info">
-    <h2>{{tpl:lang Search}}</h2>
-    <tpl:SysIf search_count="==0">
-      <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned no result."}}</p>
-    </tpl:SysIf>
-    <tpl:SysIf search_count="==1">
-      <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned <strong>%2$s</strong> result."}}</p>
-    </tpl:SysIf>
-    <tpl:SysIf search_count="&gt;1">
-      <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned <strong>%2$s</strong> results."}}</p>
-    </tpl:SysIf>
-  </div>
-  
-  <tpl:Entries>
-    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
-    <!-- # New day date -->
-    <tpl:DateHeader><p class="day-date">{{tpl:EntryDate}}</p></tpl:DateHeader>
-    
-    <h2 class="post-title"><a
-    href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-    
-    <p class="post-info">{{tpl:lang By}} {{tpl:EntryAuthorLink}}
-    {{tpl:lang on}} {{tpl:EntryDate}}, {{tpl:EntryTime}}
-    <tpl:EntryIf has_category="1">
-    - <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
-    </tpl:EntryIf>
-    </p>
-    
-    <tpl:EntryTags>
-    <tpl:TagsHeader><ul class="post-tags"></tpl:TagsHeader>
-    <li><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
-    <tpl:TagsFooter></ul></tpl:TagsFooter>
-    </tpl:EntryTags>
-    
-    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
-    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
-    
-    <!-- # Entry with an excerpt -->
-    <tpl:EntryIf extended="1">
-      <div class="post-content">{{tpl:EntryExcerpt}}</div>
-      <p class="read-it"><a href="{{tpl:EntryURL}}"
-      title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue
-      reading}}</a>...</p>
-    </tpl:EntryIf>
-    
-    <!-- # Entry without excerpt -->
-    <tpl:EntryIf extended="0">
-      <div class="post-content">{{tpl:EntryContent}}</div>
-    </tpl:EntryIf>
-    
-    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
-    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
-    
-    <!-- # Number of comments, trackbacks and attachments -->
-    <tpl:EntryIf operator="or" show_comments="1" show_pings="1" has_attachment="1">
-      <p class="post-info-co">
-    </tpl:EntryIf>
-    <tpl:EntryIf show_comments="1">
-      <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a>
-    </tpl:EntryIf>
-    <tpl:EntryIf show_pings="1">
-      <a href="{{tpl:EntryURL}}#pings" class="ping_count">{{tpl:EntryPingCount}}</a></tpl:EntryIf>
-    <tpl:EntryIf has_attachment="1">
-      <a href="{{tpl:EntryURL}}#attachments" class="attach_count">{{tpl:EntryAttachmentCount}}</a></tpl:EntryIf>
-    <tpl:EntryIf operator="or" show_comments="1" show_pings="1" has_attachment="1">
-      </p>
-    </tpl:EntryIf>
+<div data-role="page">
+
+    <div data-role="header">
+      <h2>{{tpl:lang Search}}</h2>
+    </div>
+
+    <div data-role="content">
+      <form action="{{tpl:BlogURL}}" method="get">
+        <input type="search" id="q" name="q" value="" />
+      </form>
     </div>
     
-    <tpl:EntriesFooter>
-      <tpl:Pagination>
-        <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
-        {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
-        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
-        <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
-        &#187;</a></tpl:PaginationIf></p>
-      </tpl:Pagination>
-    </tpl:EntriesFooter>
-  </tpl:Entries>
-  </div>
-</div> <!-- End #main -->
+    <div data-role="content" data-theme="e">
+       <tpl:SysIf search_count="==0">
+        <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned no result."}}</p>
+      </tpl:SysIf>
+      <tpl:SysIf search_count="==1">
+        <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned <strong>%2$s</strong> result."}}</p>
+      </tpl:SysIf>
+      <tpl:SysIf search_count="&gt;1">
+        <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned <strong>%2$s</strong> results."}}</p>
+      </tpl:SysIf>
+    </div>
 
-<div id="sidebar">
-  <div id="blognav">
-    {{tpl:Widgets type="nav"}}
-  </div> <!-- End #blognav -->
-  
-  <div id="blogextra">
-    {{tpl:Widgets type="extra"}}
-  </div> <!-- End #blogextra -->
-</div>
+    <div data-role="content">
+        <ul data-role="listview" data-dividertheme="d">
 
-</div> <!-- End #wrapper -->
+        <tpl:Entries>
+          <tpl:DateHeader><li data-role="list-divider">{{tpl:EntryDate}}</li></tpl:DateHeader>
+          <li><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a> <span class="ui-li-count">{{tpl:EntryCommentCount}}</span></li>
 
-{{tpl:include src="_footer.html"}}
-</div> <!-- End #page -->
+
+
+          <tpl:EntriesFooter>
+        </ul>
+    </div>
+          <tpl:Pagination>
+            <div data-role="navbar">
+              <ul>
+                <tpl:PaginationIf end="0"><li><a data-transition="slide" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
+                <tpl:PaginationIf start="0"><li><a data-transition="slide" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
+                </tpl:PaginationIf>
+              </ul>
+        </div>
+          </tpl:Pagination>
+          </tpl:EntriesFooter>
+          
+        </tpl:Entries>
+        
+    
+
+    {{tpl:include src="_footer.html"}}
+
+</div><!-- /page -->
+
 </body>
 </html>

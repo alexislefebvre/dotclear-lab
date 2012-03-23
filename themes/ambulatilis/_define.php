@@ -12,9 +12,9 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-	/* Name */			"Amulatilis",
+	/* Name */			"Ambulatilis",
 	/* Description*/	"A mobile theme",
 	/* Author */		"annso",
-	/* Version */		'1.0'
+	/* Version */		'1.1'
 );
 ?>
