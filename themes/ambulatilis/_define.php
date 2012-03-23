@@ -1,7 +1,9 @@
 <?php
 # -- BEGIN LICENSE BLOCK ---------------------------------------
 #
-# This file is part of Dotclear 2.
+# This file is part of ambulatis, a theme for Dotclear.
+#
+# 2012 - annso - contact@as-i-am.fr
 #
 # Copyright (c) 2003-2010 Olivier Meunier & Association Dotclear
 # Licensed under the GPL version 2.0 license.
