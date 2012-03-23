@@ -20,7 +20,7 @@ $default_colors = array(
 	array('#C5D984', '#AFCF48', '#E69B32', '#F75823', '#FF0335'),
 	array('#213D44', '#7A2F4E', '#E5224D', '#F48429', '#E5E3B3'),
 	array('#0E0A1E', '#396482', '#A2BCBB', '#DF737C', '#E8DDC5'),
-	array('#322740', '#5E1E43', '#9E1C48', '#C43D3C', '#E06428'), //ok
+	array('#322740', '#5E1E43', '#9E1C48', '#C43D3C', '#E06428'), 
 	array('#69D2E7', '#ADD8C7', '#CDD7B6', '#CCFF00', '#666666'),
 	array('#EB9D8D', '#93865A', '#A8BB9A', '#C5CBA6', '#EFD8A9'),
 	array('#69D2E7', '#A7DBD8', '#E0E4CC', '#F3862F', '#FA6900'),
@@ -75,7 +75,14 @@ if ($core->blog->settings->palette_links) {
 // Mise à jour des settings
 if (!empty($_POST))
 {
-	
+
+	// Vidage du cache
+	try {
+		$core->emptyTemplatesCache();
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+
 	// Thème prédéfini
 	if($_POST['theme'] != 'p') {
 		$palette_colors = implode($separator, $default_colors[$_POST['theme']]);

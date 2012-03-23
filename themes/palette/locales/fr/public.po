@@ -1,1 +1,2 @@
-
+msgid "Theme by"
+msgstr "Thème par"

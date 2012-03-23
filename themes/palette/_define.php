@@ -14,8 +14,8 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			"Palette",
-	/* Description*/	"Un thème à la palette de couleur configurable",
+	/* Description*/	"Un thème à la palette configurable",
 	/* Author */		"annso",
-	/* Version */		'2.0'
+	/* Version */		'2.1'
 );
 ?>

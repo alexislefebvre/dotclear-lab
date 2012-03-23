@@ -19,7 +19,7 @@ $core->tpl->addValue('paletteTabs',array('tplPalette','paletteTabs'));
 
 class publicPalette
 {
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		$default_colors = array('#C5D984', '#AFCF48', '#E69B32', '#F75823', '#FF0335');
 		$colors[]= array();
@@ -81,7 +81,6 @@ class tplPalette
 			
 			}
 		}
-
 		return '<?php echo "'.$res.'"; ?>';
 	}
 }

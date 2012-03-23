@@ -1,6 +1,16 @@
+/* -----------------------------------------------------------------
+	1. STRUCTURE
+	a inscrire ici ou en important une css de structure placee dans
+	le meme repertoire et appelee grace a l'instruction ci-dessous
+------------------------------------------------------------------ */
+/* @import url(nom_du_fichier.css); */
+
+
+
 /* ------------------------------------------------------------
 	2. BALISES HTML PAR DEFAUT
 ------------------------------------------------------------- */
+
 body { 
 	color: #555555;
 	font-family: "Helvetica Neue", Helvetica, Geneva, Arial, clean, sans-serif;
@@ -11,7 +21,9 @@ body {
     background-color: #AFCF48;
     color: #FFF;
 }
-h1, h2 { 
+
+h1,
+h2 { 
 	font-size: 1.9em;
 	font-family: Georgia, Verdana, Arial;
 	font-weight: normal;
@@ -45,19 +57,25 @@ a {
 	text-decoration: none;
 }
 a:hover, a:focus { color: #E69B32; }
+a[hreflang]:after { }
 a img { border: none; }
+ 
  
 /* ------------------------------------------------------------
 	3. PAGE
 ------------------------------------------------------------- */
+ 
 #page { 
 	width: 940px;
 	margin-top: 40px;
 }
+
+
  
 /* ------------------------------------------------------------
 	4. HAUT DE PAGE
 ------------------------------------------------------------- */
+
 #top { 
 	position: absolute;
 	top: 0;
@@ -113,9 +131,12 @@ a img { border: none; }
 }
 #navigation ul li a:hover { text-decoration: underline; }
 
+
+
 /* ------------------------------------------------------------
 	5. WRAPPER MAIN CONTENT
 ------------------------------------------------------------- */
+
 #main { 
 	float: right;
 	width: 580px;
@@ -145,9 +166,12 @@ a img { border: none; }
 	background: #FF0335;
 }
 
+
+
 /* ------------------------------------------------------------
 	6. BILLETS
 ------------------------------------------------------------- */
+
 .day-date { 
 	margin: 5em 0 0 0;
 	padding:0;
@@ -181,17 +205,8 @@ a img { border: none; }
 	list-style-type: none;
 }
 
-.post-excerpt, .post-content { padding: 10px 0; }
-#content .post-excerpt a, #content .post-content a { 
-	background: #eee; 
-	color: #555; 
-	border-bottom:1px solid #aaa;
-}
-#content .post-excerpt a:hover, #content .post-content a:hover { 
-	background: #bbb; 
-	color: #555; 
-}
-
+.post-excerpt { padding: 10px 0; }
+.post-content { padding: 10px 0; }
 #content .post-content h3 { margin-top: 10px; }
 
 #content .read-it a { 
@@ -209,9 +224,11 @@ a img { border: none; }
 }
 #content .post-info-co a:hover { background: #FF0335; }
 
+
 /* ------------------------------------------------------------
 	7. COMMENTAIRES, PINGS
 ------------------------------------------------------------- */
+
 #comments dt .one,
 #comments dt .two,
 #comments dt .three,
@@ -266,14 +283,19 @@ a img { border: none; }
 	padding: 0;
 	margin: 0;
 }
-#search form, #search p, #search fieldset  { 
+#search form,
+#search p,
+#search fieldset  { 
 	padding: 0;
 	margin: 0;
 }
 
+
+
 /* ------------------------------------------------------------
 	9. FOOTER
 ------------------------------------------------------------- */
+
 #footer { 
 	padding-left: 365px;
 	padding-top: 10px;
@@ -284,11 +306,17 @@ a img { border: none; }
 	color: #969896;
 	border-bottom: 1px solid #969896; 
 }
-#footer-nav a { float: right; }
+#footer p { }
+#footer-nav a {
+	float: right;
+}
+
+
 
 /* ------------------------------------------------------------
 	10. CLASSES COMMUNES
 ------------------------------------------------------------- */
+
 /* tags dans le sidebar et dans la page les regroupant
 (exemple ici pour un nuage) */
 .dc-tags #content ul li, .dc-tags #content ul li a, 
@@ -315,6 +343,7 @@ a img { border: none; }
 .dc-tags .tag90, .tags .tag90 { font-size: 130%; }
 .dc-tags .tag100, .tags .tag100 { font-size: 135%; }
 
+/* messages d'erreur */
 .error {
 	border : 1px solid #C44;
 	background : #DF0;
@@ -323,6 +352,7 @@ a img { border: none; }
 .error ul { padding-left : 20px; }
 .error li { list-style : square; }
 	
+/* exemples de ceux que j'ajoute souvent */
 .left { float: left; margin-right : 1em; }
 .right { float: right; margin-left : 1em; }
 .center { margin-left : auto; margin-right : auto; }
@@ -332,9 +362,14 @@ a img { border: none; }
 .little-text { font-size : .8em;}
 .little-upper-text { font-size : .8em; text-transform : uppercase; }
 
+
+
 /* ------------------------------------------------------------
 	11. PAGES SPECIFIQUES
+	j'indique le marqueur du body, a completer pour cibler 
+	plus precisement (cf l'exemple ci-dessus pour les tags)
 ------------------------------------------------------------- */
+
 .dc-category #subcategories { 
 	margin: 0;
 	padding: 10px 0;
@@ -359,8 +394,11 @@ a img { border: none; }
 	padding: 0;
 }
 
+
+
 /* ---------------------------------------------------
   12. ET POUR FINIR NE PAS OUBLIER LES CLEARERS
+	ici ceux le plus souvent necessaires
 --------------------------------------------------- */
 .post, .post-content, .footnotes, .attachments, 
 .post-info-co, #comments, #footer {
