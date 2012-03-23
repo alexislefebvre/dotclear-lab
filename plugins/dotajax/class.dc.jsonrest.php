@@ -135,7 +135,7 @@ class jsonRestServer
 	
 	private function getJSON($encoding='UTF-8')
 	{
-		header('Content-Type: text/plain; charset='.$encoding);
+		header('Content-Type: application/json; charset='.$encoding);
 		echo myjson_encode($this->rsp);
 
 	}

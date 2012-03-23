@@ -182,12 +182,6 @@ class blogRest
 			$comment['author'] = $rs->comment_author;
 			$comment['site'] = $rs->comment_site;
 			$comment['post_title'] = $rs->post_title;
-			$comment['post_title'] = $rs->post_title;
-			$comment['post_title'] = $rs->post_title;
-			$comment['post_title'] = $rs->post_title;
-			$comment['post_title'] = $rs->post_title;
-			$comment['upddt'] = $rs->comment_upddt;
-			$comment['upddt'] = $rs->comment_upddt;
 			$comment['upddt'] = $rs->comment_upddt;
 
 			$comment['user'] = $rs->user_id;
