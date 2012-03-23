@@ -156,24 +156,36 @@
         </div>
       </tpl:EntryIf>
 
+      <!-- # Comments -->
+      <tpl:EntryIf show_comments="1">
+      <tpl:Comments>
+          <tpl:CommentsHeader>
+            <div data-role="collapsible" data-collapsed="true">
+              <h3>{{tpl:lang Comments}}</h3>
+              <ul data-role="listview" data-theme="d" data-divider-theme="d">
+          </tpl:CommentsHeader>
+                <li data-role="list-divider">{{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}}</li>
+                <li id="c{{tpl:CommentID}}">
+                    <h3>{{tpl:CommentAuthorLink}}</h3>
+                    <div>{{tpl:CommentContent}}</div>
+          <tpl:CommentsFooter>
+              </ul>
+            </div>
+          </tpl:CommentsFooter>
+      </tpl:Comments>
+      </tpl:EntryIf>
+
+    
       <!-- # Trackbacks -->
       <tpl:EntryIf show_pings="1">
-        <div data-role="collapsible" data-collapsed="true">
-
-            <h3>{{tpl:lang They posted on the same topic}}</h3>
-            <tpl:Pings>
-              <tpl:PingsHeader>
-              <dl>
-              </tpl:PingsHeader>
-                <dt id="c{{tpl:PingID}}"><a href="#c{{tpl:PingID}}">{{tpl:PingOrderNumber}}.</a>
-                {{tpl:lang On}} {{tpl:PingDate}}, {{tpl:PingTime}}
-                {{tpl:lang by}} {{tpl:PingBlogName encode_html="1"}}</dt>
-
-                <dd>
-                <p><a href="{{tpl:PingAuthorURL}}"
-                {{tpl:PingNoFollow}}>{{tpl:PingTitle encode_html="1"}}</a></p>
-                {{tpl:PingContent}}
-                </dd>
+        <tpl:Pings>
+          <tpl:PingsHeader>
+            <div data-role="collapsible" data-collapsed="true">
+              <h3>{{tpl:lang They posted on the same topic}}</h3>
+              <ul data-role="listview" data-theme="d" data-divider-theme="d">
+          </tpl:PingsHeader>
+                <li data-role="list-divider">{{tpl:lang On}} {{tpl:PingDate}}, {{tpl:PingTime}}</li>
+                <li><a href="{{tpl:PingAuthorURL}}" {{tpl:PingNoFollow}}>{{tpl:PingTitle encode_html="1"}}</a></li>
               <tpl:PingsFooter>
               </dl>
               </tpl:PingsFooter>
