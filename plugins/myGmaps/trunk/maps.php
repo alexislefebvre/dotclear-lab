@@ -298,7 +298,8 @@ $myGmaps_type = $s->myGmaps_type;
 
 if (!empty($_POST['saveconfig'])) {
   try {
-    $s->put('myGmaps_center',$_POST['myGmaps_center']);
+    $s->put('myGmaps_enabled',$_POST['myGmaps_enabled']);
+	$s->put('myGmaps_center',$_POST['myGmaps_center']);
 	$s->put('myGmaps_zoom',$_POST['myGmaps_zoom']);	
 	$s->put('myGmaps_type',$_POST['myGmaps_type']);
 	
@@ -351,11 +352,11 @@ if (isset($_GET['upd']))
 if (!$core->error->flag())
 {
 	
-	echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Google Maps').'</h2>';
+	echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; <span class="page-title">'.__('Google Maps').'</span></h2>';
 	
 	//
 	echo '<div class="multi-part" id="entries-list" title="'.__('Map elements').'">';
-	echo '<p><strong><a href="'.$p_url.'&amp;do=edit">'.__('New element').'</a></strong></p>';
+	echo '<p class="top-add"><strong><a class="button add" href="'.$p_url.'&amp;do=edit">'.__('New element').'</a></strong></p>';
 	if (!$show_filters) {
 		echo 
 		dcPage::jsLoad('js/filter-controls.js').
@@ -432,6 +433,11 @@ if (!$core->error->flag())
 	
 	echo '<div class="multi-part" id="settings" title="'.__('Settings').'">'.
 	'<form method="post" action="'.$p_url.'" id="settings-form">'.
+	'<fieldset><legend>'.__('Activation').'</legend>'.
+		'<p><label class="classic" for="myGmaps_enabled">'.
+		form::checkbox('myGmaps_enabled','1',$s->myGmaps_enabled).
+		__('Enable extension for this blog').'</label></p>'.
+	'</fieldset>'.
 	'<fieldset><legend>'.__('Default map options').'</legend>'.
 	'<p>'.__('Choose map center, zoom level and map type.').'</p>'.
 	'</fieldset>'.

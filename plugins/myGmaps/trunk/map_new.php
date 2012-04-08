@@ -433,7 +433,8 @@ if ($can_edit_post)
 	'</label></p>'.
 	
 	'<p class="maximal" style="margin-bottom:5px"><input id="delete_overlays" type="button" value="'.__('Initialize map').'"/>'.
-	'<span> </span><input id="use_kml_file" type="button" value="'.__('Include kml file').'"/>';
+	'<span> </span><input id="use_kml_file" type="button" value="'.__('Include kml file').'"/>'.
+	'<span> </span><a href="#" onClick="placeMarker()">'.__('Place marker').'</a>';
 	
 	
 	$meta =& $GLOBALS['core']->meta;

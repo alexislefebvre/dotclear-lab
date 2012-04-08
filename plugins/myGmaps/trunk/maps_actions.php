@@ -245,7 +245,7 @@ if ($action == 'category')
 }
 elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 {
-	echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Google Maps').' &rsaquo; '.__('Change author for map elements').'</h2>';
+	echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; <span class="page-title">'.__('Google Maps').' &rsaquo; '.__('Change author for map elements').'</span></h2>';
 	
 	echo
 	'<form action="'.$p_url.'" method="post">'.

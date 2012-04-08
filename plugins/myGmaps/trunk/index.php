@@ -15,7 +15,7 @@ if (!defined('DC_CONTEXT_ADMIN')) return;
 if ($_REQUEST['do'] == 'edit') {
 	$edit = 'map';
 	
-} elseif (isset($_GET['add_map_filters'])) {
+} elseif (isset($_GET['add_map_filters']) && $_REQUEST['do'] != 'list') {
 	require_once dirname(__FILE__).'/addmap.php';
 	
 } elseif ($_REQUEST['do'] == 'list' || isset($_POST['saveconfig']) || isset($_GET['maps_filters'])) {

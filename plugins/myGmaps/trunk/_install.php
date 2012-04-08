@@ -25,6 +25,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 $core->blog->settings->addNamespace('myGmaps');
 $s =& $core->blog->settings->myGmaps;
 
+$s->put('myGmaps_enabled',false,'boolean','Enable myGmaps plugin',false,true);
 $s->put('myGmaps_center','43.0395797336425, 6.126280043989323','string','Default maps center',false,true);
 $s->put('myGmaps_zoom','12','integer','Default maps zoom level',false,true);
 $s->put('myGmaps_type','roadmap','string','Default maps type',false,true);

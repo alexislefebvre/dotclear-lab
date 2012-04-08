@@ -40,6 +40,14 @@ class myGmapsPublic
 	}
 	public static function publicHeadContent($core,$_ctx)
 	{		
+			# Settings
+
+			$s =& $core->blog->settings->myGmaps;
+			
+			if (!$s->myGmaps_enabled) {
+				return;
+			}
+			
 			echo
 			'<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>'."\n".
 			'<style type="text/css">'."\n".
@@ -120,8 +128,16 @@ class myGmapsPublic
 									'content_'.$maps->post_id.' = "";'."\n".
 								'}'."\n".
 								
+								'var myRegExp = "marker";'."\n".
+								'var string = "'.$marker[2].'";'."\n".
+								'var match = string.search(myRegExp);'."\n".
+								'if(match != -1) {'."\n".
+									'var myicon = "'.$marker[2].'";'."\n". 
+								'} else {'."\n".
+									'var myicon = new google.maps.MarkerImage("'.$marker[2].'", null, null, new google.maps.Point(16, 16));'."\n".
+								'}'."\n".
 								'marker = new google.maps.Marker({'."\n".
-									'icon : "'.$marker[2].'",'."\n".
+									'icon : myicon,'."\n".
 									'position: new google.maps.LatLng('.$marker[0].','.$marker[1].'),'."\n".
 									'title: title_'.$maps->post_id.','."\n".
 									'map: map_'.$_ctx->posts->post_id."\n".

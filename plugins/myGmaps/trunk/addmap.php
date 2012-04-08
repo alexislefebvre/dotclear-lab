@@ -228,6 +228,7 @@ class adminGmapList extends adminGenericList
 {
 	public function display($page,$nb_per_page,$enclose_block='')
 	{
+		
 		global $core;
 		$meta =& $GLOBALS['core']->meta;
 		$my_params['post_id'] = $_GET['post_id'];
@@ -239,6 +240,8 @@ class adminGmapList extends adminGenericList
 					
 		if ($my_post_maps !='') {
 			$maps_array = explode(",",$my_post_maps);
+		} else {
+			$maps_array = array();
 		}
 		
 		if ($this->rs->isEmpty() || $this->rs_count == count($maps_array)) {
@@ -422,7 +425,7 @@ if (isset($_POST['addmap'])) {
 if (!$core->error->flag())
 {
 	
-	echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Google Maps').' &rsaquo; '.$page_title.'</h2>';
+	echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; <a href="'.$p_url.'&amp;do=list" >'.__('Google Maps').'</a> &rsaquo; <span class="page-title">'.$page_title.'</span></h2>';
 	//
 	echo '<div class="multi-part" id="entries-list" title="'.__('Add elements').'">';
 	

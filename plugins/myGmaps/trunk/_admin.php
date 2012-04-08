@@ -18,6 +18,24 @@ $_menu['Blog']->addItem(
 	'plugin.php?p=myGmaps&amp;do=list','index.php?pf=myGmaps/icon.png',
 	preg_match('/plugin.php\?p=myGmaps(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('usage,contentadmin',$core->blog->id));
+	
+$core->addBehavior('adminDashboardFavs',array('myGmapsBehaviors','dashboardFavs'));
+
+class myGmapsBehaviors
+{
+    public static function dashboardFavs($core,$favs)
+    {
+        $favs['myGmaps'] = new ArrayObject(array(
+            'myGmaps',
+            __('Google Maps'),
+            'plugin.php?p=myGmaps&amp;do=list',
+            'index.php?pf=myGmaps/icon.png',
+            'index.php?pf=myGmaps/icon-big.png',
+            'usage,contentadmin',
+            null,
+            null));
+    }
+}
 
 $p_url	= 'plugin.php?p='.basename(dirname(__FILE__));
 	
@@ -32,7 +50,7 @@ if (isset($_GET['remove']) && $_GET['remove'] == 'map') {
 	$meta =& $GLOBALS['core']->meta;
 	$meta->delPostMeta($post_id,'map');
 	$meta->delPostMeta($post_id,'map_options');
-	if ($_GET['post_type'] == 'page') {
+	if (isset($_GET['post_type']) && $_GET['post_type'] == 'page') {
 		http::redirect('plugin.php?p=pages&act=page&id='.$post_id);
 	} else {
 		http::redirect(DC_ADMIN_URL.'post.php?id='.$post_id);
@@ -44,10 +62,11 @@ if (isset($_GET['remove']) && $_GET['remove'] == 'map') {
 } elseif (!empty($_GET['remove']) && is_numeric($_GET['remove'])) {
 	try {
 	$post_id = $_GET['id'];
+	
 	$meta =& $GLOBALS['core']->meta;
 	$meta->delPostMeta($post_id,'map',(integer) $_GET['remove']);
 	
-	if ($_GET['post_type'] == 'page') {
+	if (isset($_GET['post_type']) && $_GET['post_type'] == 'page') {
 		http::redirect('plugin.php?p=pages&act=page&id='.$post_id);
 	} else {
 		http::redirect(DC_ADMIN_URL.'post.php?id='.$post_id);
@@ -65,6 +84,9 @@ class myGmapsPostBehaviors
 		return
 		'<script type="text/javascript">'."\n".
 		'$(document).ready(function() {'."\n".
+			'$(\'#gmap-area h3\').toggleWithLegend($(\'#post-gmap\'), {'."\n".
+				'cookie: \'dcx_gmap_detail\''."\n".
+			'});'."\n".
 			'$(\'a.map-remove\').click(function() {'."\n".
 			'msg = \''.__('Are you sure you want to remove this map?').'\';'."\n".
 			'if (!window.confirm(msg)) {'."\n".
@@ -93,6 +115,9 @@ class myGmapsPostBehaviors
 	public static function adminPostForm($post)
 	{
 		global $core;
+		if (is_null($post)) {
+			return;
+		}
 		$id = $post->post_id;
 		$type = $post->post_type;
 		$meta =& $GLOBALS['core']->meta;
@@ -100,7 +125,10 @@ class myGmapsPostBehaviors
 		if ($id) {
 			if (!$meta_rs) {
 				echo 
-					'<fieldset><legend>'.__('Google Map').'</legend>'.
+					'<div class="area" id="gmap-area">'.
+					'<h3>'.__('Google Map').'</h3>'.
+					'<div id="post-gmap" >'.
+					'<fieldset><legend>'.__('No map').'</legend>'.
 					'<p><a href="plugin.php?p=myGmaps&amp;post_id='.$id.'">'.__('Add a map to entry').'</a></p>'.
 					'</fieldset>';
 			} else {
@@ -109,18 +137,21 @@ class myGmapsPostBehaviors
 				$maps_array = explode(",",$meta->getMetaStr($post->post_meta,'map'));
 				$maps_options = explode(",",$meta->getMetaStr($post->post_meta,'map_options'));
 				
-				echo '<fieldset><legend>'.__('Google Map').'</legend>'.
-				'<h3>'.__('Map elements').'</h3>';
+				echo 
+					'<div class="area" id="gmap-area">'.
+					'<h3>'.__('Google Map').'</h3>'.
+					'<div id="post-gmap" >'.
+					'<fieldset><legend>'.__('This map elements').'</legend>';
 				if ($meta->getMetaStr($post->post_meta,'map') != '') {
 					echo
-						'<table class="clear"><tr>'.
-						'<th>'.__('Title').'</th>'.
-						'<th>'.__('Date').'</th>'.
-						'<th>'.__('Category').'</th>'.
-						'<th>'.__('Author').'</th>'.
-						'<th class="nowrap">'.__('Type').'</th>'.
-						'<th>&nbsp;</th>'.
-						'</tr>';
+					'<table class="clear"><tr>'.
+					'<th>'.__('Title').'</th>'.
+					'<th>'.__('Date').'</th>'.
+					'<th>'.__('Category').'</th>'.
+					'<th>'.__('Author').'</th>'.
+					'<th class="nowrap">'.__('Type').'</th>'.
+					'<th>&nbsp;</th>'.
+					'</tr>';
 					
 					$params['post_type'] = 'map';
 					$params['no_content'] = true;
@@ -165,6 +196,9 @@ class myGmapsPostBehaviors
 				'</fieldset>';
 				
 			}
+			echo
+			'</div>'.
+			'</div>';
 		}
 	}
 	public static function adminPageForm($post)
