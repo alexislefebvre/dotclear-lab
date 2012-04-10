@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="ROBOTS" content="NOARCHIVE,NOINDEX,NOFOLLOW" />
+  <meta name="GOOGLEBOT" content="NOSNIPPET" />
+    <title>{{tpl:lang Recover}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  
+  {{tpl:include src="_head.html"}}
+
+</head>
+
+<body class="dc-recover">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+<tpl:SysIfFormError>
+<p class="error">{{tpl:SysFormError}}</p>
+</tpl:SysIfFormError>
+
+<tpl:SysIfAgoraMessage>
+<p class="message">{{tpl:SysAgoraMessage}}</p>
+</tpl:SysIfAgoraMessage>
+
+<tpl:SysIfNoAgoraMessage>
+
+<form action="{{tpl:recoverURL}}" method="post" id="comment-form">
+<h3>{{tpl:lang Request a new password}}</h3>
+<fieldset>
+
+<!-- # --BEHAVIOR-- publicRegisterFormBefore -->
+{{tpl:SysBehavior behavior="publicRecoverFormBefore"}}
+
+<p class="field"><label for="ru_login">{{tpl:lang Username}}&nbsp;:</label>
+	<input name="ru_login" id="ru_login" type="text" size="30" maxlength="255"
+	value="{{tpl:RecoverLogin encode_html="1"}}" />
+</p>
+
+<p class="field"><label for="ru_email">{{tpl:lang Email address}}&nbsp;:</label>
+	<input name="ru_email" id="ru_email" type="text" size="30" maxlength="255"
+	value="{{tpl:RecoverEmail encode_html="1"}}" />
+</p>
+
+ <p style="display:none"><input name="email2" type="text" size="30"
+maxlength="255" value="" /></p>
+
+<!-- # --BEHAVIOR-- publicRegisterFormAfter -->
+{{tpl:SysBehavior behavior="publicRecoverFormAfter"}}
+</fieldset>
+
+<fieldset>
+<p><input type="submit" class="submit" value="{{tpl:lang recover}}" /></p>
+</fieldset>
+
+</form>
+</tpl:SysIfNoAgoraMessage>
+
+  </div>
+
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

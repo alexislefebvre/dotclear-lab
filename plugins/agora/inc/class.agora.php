@@ -3,48 +3,129 @@
 #
 # This file is part of agora, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 Osku ,Tomtom and contributors
-#
+# Copyright (c) 2009-2012 Osku and contributors
 # Licensed under the GPL version 2.0 license.
-# A copy of this license is available in LICENSE file or at
+# See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
+/**
+@ingroup DC_CORE
+@nosubgrouping
+@brief Dotclear agora class.
+
+Dotclear agora class instance is provided by dcCore $blog property.
+*/
 class agora 
 {
 	private $user_status = array();
 	private $message_status = array();
+	public $media_dir = 'agora-medias';
+
+	/**
+	Inits agora object
 	
-	public function __construct($core,$public=true)
+	@param	core		<b>dcCore</b>		Dotclear core reference
+	*/	
+	public function __construct($core)
 	{
 		$this->con =& $core->con;
 		$this->prefix =& $core->prefix;
 		$this->core =& $core;
 		
+		$this->user_status['-2'] = __('not verified');
 		$this->user_status['-1'] = __('pending');
 		$this->user_status['0'] = __('suspended');
 		$this->user_status['1'] = __('active');
 		
-		$this->message_status['-2'] = __('junk');
-		$this->message_status['-1'] = __('pending');
+		$this->message_status['-3'] =  __('junk');
+		$this->message_status['-2'] = __('pending');
+		$this->message_status['-1'] = __('scheduled');
 		$this->message_status['0'] = __('unpublished');
 		$this->message_status['1'] = __('published');
-		
-		if ($public)
-		{
-			$this->core->auth = new dcPublicAuth($core);
+
+		// Manage Medias
+		if ($this->withMedia()) {
+			$this->media = new dcMedia($this->core);
+			$this->media->chdir($this->media_dir);
 		}
-		//$this->core->log = new dcLog($core);
+		
+
+		# --BEHAVIOR-- AgoraConstruct
+		$this->core->callBehavior('AgoraConstruct',$this);
 	}
+
+	public function withMedia()
+	{
+		return mediaAgora::canWriteImages(true);
+	}
+
+	public function uploadFile($f,$filename,$user_id)
+	{
+		$target_dir = md5($user_id);
+		try
+		 {
+			files::uploadStatus($f);
+			if (!is_dir($target_dir)) {
+				$this->media->makeDir($target_dir);
+			}
+			$this->media->chdir($this->media_dir.'/'.$target_dir);
+			$this->media->uploadFile($f['tmp_name'],$filename,null,false,true);
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+	}
+
+	public function removeFile($filename,$user_id)
+	{
+		$target_dir = md5($user_id);
+		try
+		{
+			$this->media->chdir($this->media_dir.'/'.$target_dir);
+			$this->media->removeFile($filename);
+			$this->media->chdir($this->media_dir);
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+	}
+
+	//@}
 	
+	/// @name Users management methods
+	//@{
+	/**
+	Returns a user by its ID.
+	
+	@param	id		<b>string</b>		User ID
+	@return	<b>record</b>
+	*/
 	public function getUser($id)
 	{
 		$params['user_id'] = $id;
 		
 		return $this->getUsers($params);
 	}
+
+	/**
+	Returns a users list. <b>$params</b> is an array with the following
+	optionnal parameters:
 	
+	 - <var>q</var>: search string (on user_id, user_name, user_firstname)
+	 - <var>user_id</var>: user ID
+	 - <var>order</var>: ORDER BY clause (default: user_id ASC)
+	 - <var>limit</var>: LIMIT clause (should be an array ![limit,offset])
+	
+	@param	params		<b>array</b>		Parameters
+	@param	count_only	<b>boolean</b>		Only counts results
+	@param	perm	<b>string</b>		Permission (default: usage)
+	@return	<b>record</b>
+	*/
 	public function getUsers($params=array(),$count_only=false,$perm='member')
 	{
 		$perm = $this->con->escape('%|'.strtolower($perm).'|%');
@@ -55,23 +136,31 @@ class agora
 			'FROM '.$this->prefix.'user U '.
 				'LEFT JOIN '.$this->prefix."permissions PE ON '".$this->con->escape($this->core->blog->id)."' = PE.blog_id ".
 			"WHERE PE.user_id = U.user_id ".
-			"AND (permissions LIKE '".$perm."' OR permissions LIKE '%|admin|%')";
+			"AND (permissions LIKE '".$perm."' OR permissions LIKE '%|contentadmin|%' OR permissions LIKE '%|admin|%')";
 		}
 		else
 		{
 			$strReq =
-			'SELECT U.user_id,user_super,user_status,user_pwd,user_name,'.
+			'SELECT U.user_id,user_status,user_pwd,user_name,'.
 			'user_firstname,user_displayname,user_email,user_url,'.
 			'user_desc, user_lang,user_tz, user_post_status,user_options, '.
-			'user_creadt, user_upddt, '.
-			'count(P.post_id) AS nb_post '.
+			'user_creadt, user_upddt '.
+			//'count(DISTINCT(P.post_id)) AS nb_post, '.
+			//'count(DISTINCT(M.message_id)) AS nb_message '.
 			'FROM '.$this->prefix.'user U '.
-				'LEFT JOIN '.$this->prefix.'post P ON U.user_id = P.user_id '.
+				//'LEFT JOIN '.$this->prefix."post P ON U.user_id = P.user_id ".$posts_public.
+				//'LEFT JOIN '.$this->prefix.'message M ON U.user_id = M.user_id '.$messages_public.
 				'JOIN '.$this->prefix."permissions PE ON '".$this->con->escape($this->core->blog->id)."' = PE.blog_id ".
 			"WHERE PE.user_id = U.user_id ".
-			"AND (permissions LIKE '".$perm."' OR permissions LIKE '%|admin|%')";
+			//"AND '".$this->con->escape($this->core->blog->id)."' = P.blog_id ".
+			"AND (permissions LIKE '".$perm."' OR permissions LIKE '%|contentadmin|%' OR permissions LIKE '%|admin|%')";
 		}
 		
+		if (!empty($params['public'])) {
+			//$posts_public = " AND (P.post_status = 1 ) ";
+			//$messages_public = " AND (M.message_status = 1) ";
+		}
+	
 		if (!empty($params['q'])) {
 			$q = $this->con->escape(str_replace('*','%',strtolower($params['q'])));
 			$strReq .= 'AND ('.
@@ -81,12 +170,17 @@ class agora
 				') ';
 		}
 		
-		if (!empty($params['user_id'])) {
-			$strReq .= "AND U.user_id = '".$this->con->escape($params['user_id'])."' ";
+		if (isset($params['user_id']))
+		{
+			$strReq .= 'AND U.user_id '.$this->con->in($params['user_id']);
+		}
+		
+		if (isset($params['user_status'])) {
+			$strReq .= 'AND user_status = '.(integer) $params['user_status'].' ';
 		}
 		
 		if (!$count_only) {
-			$strReq .= 'GROUP BY U.user_id,user_super,user_status,user_pwd,user_name,'.
+			$strReq .= 'GROUP BY U.user_id,user_status,user_pwd,user_name,'.
 			'user_firstname,user_displayname,user_email,user_url,'.
 			'user_desc, user_lang,user_tz,user_post_status,user_options,'.
 			'user_creadt, user_upddt, '.
@@ -102,11 +196,12 @@ class agora
 		if (!$count_only && !empty($params['limit'])) {
 			$strReq .= $this->con->limit($params['limit']);
 		}
-		//print_r($strReq);exit;// end trace
+
 		$rs = $this->con->select($strReq);
-		$rs->user_creadt = strtotime($rs->user_creadt);
-		$rs->user_upddt = strtotime($rs->user_upddt);
 		$rs->extend('rsExtUser');
+		
+		# --BEHAVIOR-- agoraGetUsers
+		$this->core->callBehavior('agoraGetUsers',$rs);
 		return $rs;
 	}
 	
@@ -157,195 +252,113 @@ class agora
 		return array('user_status' => $rs->user_status, 'user_id' => $rs->user_id);
 	}
 	
-	public function userlogIn($login,$passwd,$key = '')
+	public function checkUserStatus($user_id)
+	{
+		$strReq = 'SELECT user_id, user_status '.
+		'FROM '.$this->prefix.'user U '.
+		"WHERE U.user_id = '".$this->con->escape($user_id)."' ";
+		
+		$rs = $this->con->select($strReq);
+		
+		if ($rs->isEmpty()) {
+			//throw new Exception(__('This is a wrong registration URL. Registration failed.'));
+			return false;
+		}
+		
+		return $rs->user_status;
+	}
+
+	public function moderateUser($user_id,$status,$post_status)
+	{
+		if (!$this->core->auth->check('admin',$this->core->blog->id)) {
+			throw new Exception(__('You need to be administrator to moderate users.'));
+		}
+		$warn_user = false;
+		
+		$cur = $this->core->con->openCursor($this->core->prefix.'user');
+		
+		if ($status == '' && $post_status =='') {
+			//throw new Exception(sprintf(__('User_id "%s" is unchanged.'),html::escapeHTML($user_id))); 
+			return;
+		}
+
+		$current_status = $this->checkUserStatus($user_id);
+		
+		if ((string) $current_status == -1) {
+			$warn_user = true;
+		}
+
+		if ($status != '') {
+			$cur->user_status = $status;
+		}
+		if ($post_status != '') {
+			$cur->user_post_status = $post_status;
+		}
+		
+		try 
+		{
+			$this->core->auth->sudo(array($this->core,'updUser'),$user_id,$cur);
+			if ($warn_user) {
+				mailAgora::sendWelcomeEmail($cur);
+			}
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+		
+		return true;
+	}
+	
+	public function userLogin($login,$passwd,$key = '')
 	{
 		$key = empty($key) ? null : $key;
 		
 		//if (!$this->core->auth->checkUser($login,$passwd,$key) || (!$this->isMember($login)))
 		// As dcAuth checkUser through findUserBlog need a 'usage' perm, we use dcPublicAuth::checkUser
-		if (empty($passwd))
+		if (empty($passwd) && empty($key))
 		{
-			throw new Exception(__('Cannot login. Empty password.'));
+			throw new Exception(__('Authentication failed.'));
 		}
+		if (!$this->isMember($login) || $this->checkUserStatus($login) != 1)
+		{
+			throw new Exception(__('This user is not allowed to log in.'));
+		}
+		if ($this->core->auth->checkUser($login,$passwd,$key,false) === false)
+		{
+			throw new Exception(__('Authentication failed.'));
+		}
+		$cookie_name = $this->core->blog->settings->agora->global_auth ? 'dc_agora_sess' : 'dc_agora_'.$this->core->blog->id;
 		
-		if ($this->core->auth->checkPublicUser($login,$passwd,$key) === false)
-		{
-			throw new Exception(__('Cannot login. Check.'));
+		if (!session_id()) {
+			$this->core->session->start();
 		}
-		//elseif (!$this->core->auth->check('member',$this->core->blog->id))
-		//elseif (!$this->getUser($login)->isEmpty())
-		// Weird ... need to explore why auth->check doesn't work.
-		elseif ($this->isMember($login) === false)
-		{
-			throw new Exception(__('User is not a member of forum'));
-		}
-		else
-		{
-			//$this->core->session->start();
-			//$this->session = new sessionDB($this->con,$this->prefix.'session',DC_SESSION_NAME,'',null,DC_ADMIN_SSL);
-			if (!session_id()) {
-				$this->core->session->start();
-			}
-			$_SESSION['sess_user_id'] = $login;
-			$_SESSION['sess_browser_uid'] = http::browserUID(DC_MASTER_KEY);
+		$_SESSION['sess_user_id'] = $login;
+		$_SESSION['sess_browser_uid'] = http::browserUID(DC_MASTER_KEY);
+		if ($this->core->blog->settings->agora->global_auth === false) {
 			$_SESSION['sess_blog_id'] = $this->core->blog->id;
-			$_SESSION['sess_user_lastseen'] = $this->getLastVisitUser($login);
-			$_SESSION['sess_agora'] = 1;
-			if (isset($_POST['li_remember'])) {
-				$cookie_forum =
-				http::browserUID(DC_MASTER_KEY.$login.crypt::hmac(DC_MASTER_KEY,$passwd)).
-				bin2hex(pack('a32',$login));
-				setcookie('dc_agora_'.$this->core->blog->id,$cookie_forum,strtotime('+15 days'));
-			}
-			
-			// later, we may set the cookie for comments...
-			//$name = (string)dcUtils::getUserCN($this->core->auth->userID(),$this->core->auth->getInfo('user_name'),$this->core->auth->getInfo('user_firstname'),$this->core->auth->getInfo('user_displayname'));
-			//$mail = $this->core->auth->getInfo('user_email');
-			//$site = $this->core->auth->getInfo('user_url');
-			//setrawcookie('comment_info',rawurlencode($name."\n".$mail."\n".$site),strtotime('+30 days'));
-
-			return $login;
+		}
+		//$_SESSION['sess_user_lastseen'] = $this->getLastVisitUser($login);
+		$_SESSION['sess_type'] = 'agora';
+		if (isset($_POST['user_remember'])) {
+			$cookie_agora =
+			http::browserUID(DC_MASTER_KEY.$login.crypt::hmac(DC_MASTER_KEY,$passwd)).
+			bin2hex(pack('a32',$login));
+			setcookie('dc_agora_auto_'.$this->core->blog->id,$cookie_agora,strtotime('+15 days'));
 		}
 		
+		// Tweak for comment cookie
+		$name = (string)dcUtils::getUserCN($this->core->auth->userID(),$this->core->auth->getInfo('user_name'),$this->core->auth->getInfo('user_firstname'),$this->core->auth->getInfo('user_displayname'));
+		$mail = $this->core->auth->getInfo('user_email');
+		$site = $this->core->auth->getInfo('user_url');
+		setrawcookie('comment_info',rawurlencode($name."\n".$mail."\n".$site),strtotime('+30 days'));
+
+		return $login;
 	}
 
-	public function sendActivationEmail($mail,$user_id,$pwd)
-	{
-		$key = $this->core->auth->setRecoverKey($user_id,$mail);
-		$link = $this->core->blog->url.$this->core->url->getBase('register');
-		$link .= strpos($link,'?') !== false ? '&' : '?';
-		$url_forum = $this->core->blog->url.$this->core->url->getBase('agora');
-		$url_login = $this->core->blog->url.$this->core->url->getBase('login');
-		$sub = __('Account confirmation request on Agora');
-		$msg = 
-		sprintf(__('Welcome to the agora of %s'),$this->core->blog->name)."\n".
-		__('To activate your account and verify your e-mail address, please click on the following link:').
-		"\n\n".
-		$link.'key='.$key.
-		"\n\n".
-		__('Your indormations:')."\n".
-		sprintf(__('Login: %s'),$user_id)."\n".
-		sprintf(__('Password: %s'),$pwd)."\n\n".
-		sprintf(__('Agora connection: %s'),$url_login)."\n".
-		"\n\n".
-		__('If you have received this mail in error, you do not need to take any action to cancel the account.').
-		__('The account will not be activated, and you will not receive any further emails.').
-		__('If clicking the link above does not work, copy and paste the URL in a new browser window instead.').
-		"\n\n".
-		__('Thank you for particape to our agora.').
-		"\n\n".
-		__('This is a post-only mailing. Replies to this message are not monitored or answered.').
-		"\n\n";   
-
-		$this->sendEmail($mail,$sub,$msg);
-	}
-
-	public function sendRecoveryEmail($mail,$user_id,$key)
-	{
-		$sub =__('Password reset');
-		$recover_url = $this->core->blog->url.$this->core->url->getBase('recover').'/';
-		$msg =
-		__('Someone has requested to reset the password for the following agora and username.')."\n\n".
-		$this->core->blog->url.$this->core->url->getBase('agora')."\n".__('Username:').' '.$user_id."\n\n".
-		__('To reset your password visit the following address, otherwise just ignore this email and nothing will happen.')."\n".
-		$recover_url.$key;
-		$this->sendEmail($mail,$sub,$msg);
-	}
-	
-	public function sendNewPasswordEmail($mail,$user_id,$pwd)
-	{
-		$sub = __('Your new password');
-		$msg =
-		__('Username:').' '.$user_id."\n".
-		__('Password:').' '.$pwd."\n\n";
-
-		$this->sendEmail($mail,$sub,$msg);
-	}
-	
-	protected function sendEmail($dest,$sub,$msg)
-	{
-		$headers = array(
-		'From: '.mail::B64Header($this->core->blog->name).' '.$this->core->blog->settings->agora->agora_title.
-			'<no-reply@'.str_replace('http://','',http::getHost()).' >',
-		'Content-Type: text/plain; charset=UTF-8;',
-		'X-Originating-IP: '.http::realIP(),
-		'X-Mailer: Dotclear',
-		'X-Blog-Id: '.mail::B64Header($this->core->blog->id),
-		'X-Blog-Name: '.mail::B64Header($this->core->blog->name),
-		'X-Blog-Url: '.mail::B64Header($this->core->blog->url)
-		);
-		
-		$sub = '['.$this->core->blog->name.'] '.$sub;
-		$sub = mail::B64Header($sub);
-		//echo $msg; // trace
-		mail::sendMail($dest,$sub,$msg,$headers);
-	}
-
-	private function getPostsCategoryFilter($arr,$field='cat_id')
-	{
-		$field = $field == 'cat_id' ? 'cat_id' : 'cat_url';
-		
-		$sub = array();
-		$not = array();
-		$queries = array();
-		
-		foreach ($arr as $v)
-		{
-			$v = trim($v);
-			$args = preg_split('/\s*[?]\s*/',$v,-1,PREG_SPLIT_NO_EMPTY);
-			$id = array_shift($args);
-			$args = array_flip($args);
-			
-			if (isset($args['not'])) { $not[$id] = 1; }
-			if (isset($args['sub'])) { $sub[$id] = 1; }
-			if ($field == 'cat_id') {
-				$queries[$id] = 'P.cat_id = '.(integer) $id;
-			} else {
-				$queries[$id] = "C.cat_url = '".$this->con->escape($id)."' ";
-			}
-		}
-		
-		if (!empty($sub)) {
-			$rs = $this->con->select(
-				'SELECT cat_id, cat_url, cat_lft, cat_rgt FROM '.$this->prefix.'category '.
-				"WHERE blog_id = '".$this->con->escape($this->id)."' ".
-				'AND '.$field.' '.$this->con->in(array_keys($sub))
-			);
-			
-			while ($rs->fetch()) {
-				$queries[$rs->f($field)] = '(C.cat_lft BETWEEN '.$rs->cat_lft.' AND '.$rs->cat_rgt.')';
-			}
-		}
-		
-		# Create queries
-		$sql = array(
-			0 => array(), # wanted categories
-			1 => array()  # excluded categories
-		);
-		
-		foreach ($queries as $id => $q) {
-			$sql[(integer) isset($not[$id])][] = $q;
-		}
-		
-		$sql[0] = implode(' OR ',$sql[0]);
-		$sql[1] = implode(' OR ',$sql[1]);
-		
-		if ($sql[0]) {
-			$sql[0] = '('.$sql[0].')';
-		} else {
-			unset($sql[0]);
-		}
-		
-		if ($sql[1]) {
-			$sql[1] = '(P.cat_id IS NULL OR NOT('.$sql[1].'))';
-		} else {
-			unset($sql[1]);
-		}
-		
-		return implode(' AND ',$sql);
-	}
-
-	public function triggerThread($id)
+	// Update published date of post
+	// Needed for forum usage.
+	public function triggerPost($id)
 	{
 		$cur = $this->con->openCursor($this->prefix.'post');
 		$offset = dt::getTimeOffset($this->core->blog->settings->system->blog_timezone);
@@ -353,11 +366,14 @@ class agora
 		$cur->update('WHERE post_id = '.(integer) $id);
 	}
 
-	public function updPostClosed($id,$closed)
+	public function updPostCloseComments($id,$closed)
 	{
 		if (!$this->core->auth->check('usage,contentadmin',$this->core->blog->id)) {
-			throw new Exception(__('You are not allowed to close this thread'));
+			throw new Exception(__('You are not allowed to close this entry'));
 		}
+		/*if (!$this->checkPermission($core->auth->userID(),'usage,contentadmin')) {
+			throw new Exception(__('You are not allowed to close this entry'));
+		}*/
 		
 		$id = (integer) $id;
 		$closed = (boolean) $closed;
@@ -392,32 +408,43 @@ class agora
 
 	public function isMember($user_id)
 	{
-		return $this->check($user_id,'member');
+		return ($this->checkPermission($user_id,'member') || $this->core->auth->isSuperAdmin());
 	}
 	
 	public function isModerator($user_id)
 	{
-		return $this->check($user_id,'moderator');
+		return ($this->checkPermission($user_id,'contentadmin,admin') || $this->core->auth->isSuperAdmin());
 	}
 
-	public function check($user_id,$perm)
+	
+	public function checkPermission($user_id,$perm)
 	{
-		if ($this->core->auth->isSuperAdmin()) {
-			return true;
-		}
+		$p = explode(',',$perm);
+
 		$res = $this->core->getUserPermissions($user_id);
 		$blog_id = $this->core->blog->id;
 		
-		if (!empty($res) && is_array($res[$blog_id]['p']))
+		if (!empty($res) && array_key_exists($blog_id,$res) && is_array($res[$blog_id]['p']))
 		{
-			if (array_key_exists('admin',$res[$blog_id]['p'])) {
-				return true;
-			}
-			if (array_key_exists($perm,$res[$blog_id]['p'])) {
-				return true;
+			foreach ($p as $v)
+			{
+				if (array_key_exists('admin',$res[$blog_id]['p'])) {
+					return true;
+				}
+				if (array_key_exists($v,$res[$blog_id]['p'])) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	public function getMessageStatus($s)
+	{
+		if (isset($this->message_status[$s])) {
+			return $this->message_status[$s];
+		}
+		return $this->message_status['0'];
 	}
 	
 	public function getAllMessageStatus()
@@ -427,7 +454,6 @@ class agora
 	
 	public function triggerMessage($id,$del=false)
 	{
-		global $core;
 		$id = (integer) $id;
 		
 		$strReq = 'SELECT post_id '.
@@ -441,7 +467,12 @@ class agora
 		}
 		
 		$post_id = $rs->post_id;
-		$core->meta->delPostMeta($post_id,'thread_nbmessages');
+		// Need sudo as we are not always post owner :
+		$this->core->auth->sudo(
+			array($this->core->meta,'delPostMeta'),
+			$post_id,
+			'nb_message'
+			);
 		
 		$strReq = 'SELECT COUNT(post_id) '.
 				'FROM '.$this->prefix.'message '.
@@ -458,8 +489,12 @@ class agora
 			return;
 		}
 		else {
-			//$cur->nb_comment = (integer) $rs->f(0);
-			$core->meta->setPostMeta($post_id,'thread_nbmessages',$rs->f(0) + 1);
+			$this->core->auth->sudo(
+				array($this->core->meta,'setPostMeta'),
+				$post_id,
+				'nb_message',
+				$rs->f(0) + 1
+				);
 		}
 	}
 	
@@ -467,7 +502,7 @@ class agora
 	{
 		global $core;
 		
-		$core->meta->delPostMeta($post_id,'thread_nbmessages');
+		$core->meta->delPostMeta($post_id,'nb_message');
 		
 		$strReq = 'SELECT COUNT(post_id) '.
 				'FROM '.$this->prefix.'message '.
@@ -477,10 +512,24 @@ class agora
 		$rs = $this->con->select($strReq);
 		
 		if ($rs->isEmpty()) {
-			$core->meta->setPostMeta($post_id,'thread_nbmessages',1);
+			$core->meta->setPostMeta($post_id,'nb_message',1);
 		}
 		else {
-			$core->meta->setPostMeta($post_id,'thread_nbmessages',$rs->f(0) + 1);
+			$core->meta->setPostMeta($post_id,'nb_message',$rs->f(0) + 1);
+		}
+	}
+	
+	public function allowMessages($post_id,$open=true)
+	{
+		global $core;
+		
+		$core->meta->delPostMeta($post_id,'post_open_message');
+		
+		if ($open) {
+			$core->meta->setPostMeta($post_id,'post_open_message',2);
+		}
+		else {
+			$core->meta->setPostMeta($post_id,'post_open_message',1);
 		}
 	}
 	
@@ -496,7 +545,7 @@ class agora
 				$content_req = '';
 			} else {
 				$content_req =
-				'message_content, message_content_xhtml, message_notes, ';
+				'message_content, message_content_xhtml, message_notes, message_words, ';
 			}
 			
 			if (!empty($params['columns']) && is_array($params['columns'])) {
@@ -506,10 +555,8 @@ class agora
 			$strReq =
 			'SELECT message_id,M.post_id, M.user_id, message_dt, '.
 			'message_tz, message_creadt, message_upddt, message_format, '.
-			$content_req.' message_status, '.
+			$content_req.' message_status, P.post_status, '.
 			'P.post_title, P.post_url, P.post_type, P.post_dt, P.user_id AS post_user_id, '.
-			//'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
-			//'U.user_url, '.
 			'V.user_name, V.user_firstname, V.user_displayname, V.user_email, '.
 			'V.user_url, '.
 			'C.cat_title, C.cat_url, C.cat_desc ';
@@ -519,7 +566,6 @@ class agora
 		$strReq .=
 		'FROM '.$this->prefix.'message M '.
 		'INNER JOIN '.$this->prefix.'post P ON P.post_id = M.post_id '.
-		//'INNER JOIN '.$this->prefix.'user U ON U.user_id = M.user_id '.
 		'LEFT OUTER JOIN '.$this->prefix.'category C ON P.cat_id = C.cat_id '.
 		'LEFT OUTER JOIN '.$this->prefix.'user V ON M.user_id = V.user_id ';
 		
@@ -531,12 +577,12 @@ class agora
 		"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
 		
 		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
-			$strReq .= 'AND ((message_status = 1 AND P.post_status = 1 ';
+			$strReq .= 'AND ((message_status = 1 AND post_status = 1 ';
 			
 			$strReq .= ') ';
 			
 			if ($this->core->auth->userID()) {
-				$strReq .= "OR P.user_id = '".$this->con->escape($this->core->auth->userID())."')";
+				$strReq .= "OR M.user_id = '".$this->con->escape($this->core->auth->userID())."')";
 			} else {
 				$strReq .= ') ';
 			}
@@ -544,11 +590,7 @@ class agora
 		
 		if (!empty($params['post_type']))
 		{
-			if (is_array($params['post_type']) && !empty($params['post_type'])) {
-				$strReq .= 'AND post_type '.$this->con->in($params['post_type']);
-			} else {
-				$strReq .= "AND post_type = '".$this->con->escape($params['post_type'])."' ";
-			}
+			$strReq .= 'AND post_type '.$this->con->in($params['post_type']);
 		}
 
 		if (!empty($params['user_id'])) {
@@ -565,6 +607,10 @@ class agora
 		
 		if (!empty($params['message_id'])) {
 			$strReq .= 'AND message_id = '.(integer) $params['message_id'].' ';
+		}
+
+		if (isset($params['post_status'])) {
+			$strReq .= 'AND post_status = '.(integer) $params['post_status'].' ';
 		}
 		
 		if (isset($params['message_status'])) {
@@ -588,9 +634,9 @@ class agora
 			
 			if (!empty($words))
 			{
-				# --BEHAVIOR coreCommentSearch
-				if ($this->core->hasBehavior('coreMessageSearch')) {
-					$this->core->callBehavior('coreMessageSearch',$this->core,array(&$words,&$strReq,&$params));
+				# --BEHAVIOR coreMessageSearch
+				if ($this->core->hasBehavior('agoraMessageSearch')) {
+					$this->core->callBehavior('agoraMessageSearch',$this->core,array(&$words,&$strReq,&$params));
 				}
 				
 				if ($words)
@@ -612,7 +658,7 @@ class agora
 			if (!empty($params['order'])) {
 				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
 			} else {
-				$strReq .= 'ORDER BY message_dt DESC ';
+				$strReq .= 'ORDER BY message_dt ASC ';
 			}
 		}
 		
@@ -633,7 +679,7 @@ class agora
 	public function addMessage($cur)
 	{
 		if (!$this->core->auth->check('usage,contentadmin',$this->core->blog->id)) {
-			throw new Exception(__('You are not allowed to create an message'));
+			throw new Exception(__('You are not allowed to create a message'));
 		}
 		
 		$this->con->writeLock($this->prefix.'message');
@@ -656,10 +702,10 @@ class agora
 			
 			$this->getMessageCursor($cur);
 			
-			if (!$this->core->auth->check('publish,contentadmin',$this->core->blog->id)) {
+			/*if (!$this->core->auth->check('publish,contentadmin',$this->core->blog->id)) {
 				$cur->message_status = -2;
-			}
-			//die(var_dump($cur->message_words));
+			}*/
+			
 			$cur->insert();
 			$this->con->unlock();
 		}
@@ -677,7 +723,7 @@ class agora
 	public function updMessage($id,$cur)
 	{
 		if (!$this->core->auth->check('usage,contentadmin',$this->core->blog->id)) {
-			throw new Exception(__('You are not allowed to update comments'));
+			throw new Exception(__('You are not allowed to update messages'));
 		}
 		
 		$id = (integer) $id;
@@ -706,16 +752,16 @@ class agora
 		
 		$cur->message_upddt = date('Y-m-d H:i:s');
 		
-		if (!$this->core->auth->check('publish,contentadmin',$this->core->blog->id)) {
+		if (!$this->checkPermission($this->core->auth->userID(),'publish,contentadmin')) {
 			$cur->unsetField('message_status');
 		}
 		
-		# --BEHAVIOR-- coreBeforeCommentUpdate
+		# --BEHAVIOR-- coreBeforeMessageUpdate
 		$this->core->callBehavior('coreBeforeMessageUpdate',$this,$cur,$rs);
 		
 		$cur->update('WHERE message_id = '.$id.' ');
 		
-		# --BEHAVIOR-- coreAfterCommentUpdate
+		# --BEHAVIOR-- coreAfterMessageUpdate
 		$this->core->callBehavior('coreAfterMessageUpdate',$this,$cur,$rs);
 		
 		$this->triggerMessage($id);
@@ -725,29 +771,20 @@ class agora
 	public function updMessageStatus($id,$status)
 	{
 		if (!$this->core->auth->check('publish,contentadmin',$this->core->blog->id)) {
-			throw new Exception(__("You are not allowed to change this message's status"));
+			throw new Exception(__("You are not allowed to change this message status"));
 		}
 		
-		/*$cur = $this->con->openCursor($this->prefix.'message');
-		$cur->message_status = (integer) $status;
-		$this->updMessage($id,$cur);
-
-		$id = (integer) $id;
-		$status = (integer) $status;*/
-		
-		#If user can only publish, we need to check the post's owner
 		if (!$this->core->auth->check('contentadmin',$this->core->blog->id))
 		{
 			$strReq = 'SELECT message_id '.
 					'FROM '.$this->prefix.'message '.
 					'WHERE message_id = '.$id.' '.
-					//"AND blog_id = '".$this->con->escape($this->core->blog->id)."' ".
 					"AND user_id = '".$this->con->escape($this->core->auth->userID())."' ";
 			
 			$rs = $this->con->select($strReq);
 			
 			if ($rs->isEmpty()) {
-				throw new Exception(__('You are not allowed to change this entry status'));
+				throw new Exception(__('You are not allowed to change this message status'));
 			}
 		}
 		
@@ -758,8 +795,8 @@ class agora
 		
 		$cur->update(
 			'WHERE message_id = '.$id.' '
-			//"AND blog_id = '".$this->con->escape($this->core->blog->id)."' "
 			);
+		$this->triggerMessage($id);
 		$this->core->blog->triggerBlog();
 	}
 	
@@ -779,16 +816,16 @@ class agora
 		if (!$this->core->auth->check('contentadmin',$this->core->blog->id))
 		{
 			$strReq = 'SELECT P.post_id '.
-					'FROM '.$this->prefix.'post P, '.$this->prefix.'message M '.
-					'WHERE P.post_id = M.post_id '.
-					"AND P.blog_id = '".$this->con->escape($this->core->blog->id)."' ".
-					'AND message_id = '.$id.' '.
-					"AND user_id = '".$this->con->escape($this->core->auth->userID())."' ";
+				'FROM '.$this->prefix.'post P, '.$this->prefix.'message M '.
+				'WHERE P.post_id = M.post_id '.
+				"AND P.blog_id = '".$this->con->escape($this->core->blog->id)."' ".
+				'AND message_id = '.$id.' '.
+				"AND user_id = '".$this->con->escape($this->core->auth->userID())."' ";
 			
 			$rs = $this->con->select($strReq);
 			
 			if ($rs->isEmpty()) {
-				throw new Exception(__('You are not allowed to delete this comment'));
+				throw new Exception(__('You are not allowed to delete this message'));
 			}
 		}
 		
@@ -832,13 +869,11 @@ class agora
 	{
 		$message_content = $cur->message_content;
 		$message_content_xhtml = $cur->message_content_xhtml;
-				//die(var_dump('error'.$message_content));
 
 		$this->setMessageContent(
 			$message_id,$cur->message_format,
 			$message_content,$message_content_xhtml
 		);
-//die(var_dump('errorse&nbsp;:'.$message_content_xhtml));
 
 		$cur->message_content = $message_content;
 		$cur->message_content_xhtml = $message_content_xhtml;
@@ -846,18 +881,61 @@ class agora
 
 	public function setMessageContent($message_id,$format,&$content,&$content_xhtml)
 	{
+		if ($format == 'wiki')
+		{
+			$this->core->initWikiComment();
+		}
 		if ($content) {
 			$content_xhtml = $this->core->callFormater($format,$content);
 			$content_xhtml = $this->core->HTMLfilter($content_xhtml);
 		} else {
 			$content_xhtml = '';
 		}
-		# --BEHAVIOR-- coreAfterPostContentFormat
+		# --BEHAVIOR-- coreAfterMessageContentFormat
 		$this->core->callBehavior('coreAfterMessageContentFormat',array(
 			'content' => &$content,
 			'content_xhtml' => &$content_xhtml
 		));
+	}
 
+	public function getConnectedUsers()
+	{
+		$strReq = 'SELECT ses_value '.
+			'FROM '.$this->prefix.'session '.
+			'WHERE NULL IS NULL ';
+			
+		$rs = $this->con->select($strReq);
+		$res = $users = array();
+		while ($rs->fetch()) 
+		{
+			$datas = explode(';',$rs->ses_value,-1);
+
+			foreach ($datas as $data) 
+			{
+				$v = explode('|',trim($data));
+				$res[$rs->index()][$v[0]] = @unserialize($v[1]);
+			}
+			
+			$test = ($this->core->blog->settings->agora->global_auth === true) ? true : 
+				$res[$rs->index()]['sess_blog_id'] == $this->core->blog->id ; 
+			
+			if (isset($res[$rs->index()]['sess_type'])) 
+			{
+				if (($res[$rs->index()]['sess_type'] == 'agora') && $test)
+				{
+					$users['user_id'][] = $res[$rs->index()]['sess_user_id'];
+				} 
+				else
+				{
+					unset($res[$rs->index()]);
+				}
+			}
+			else 
+			{
+				unset($res[$rs->index()]);
+			}
+		}
+		return $users;
 	}
 }
 ?>

@@ -1,0 +1,63 @@
+/* -------------------------------------------------------------------
+// markItUp!
+// By Jay Salvat - http://markitup.jaysalvat.com/
+// ------------------------------------------------------------------*/
+.markItUp .title a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-heading.png); 
+}
+.markItUp .h2 a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-heading-2.png); 
+}
+.markItUp .h3 a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-heading-3.png); 
+}
+.markItUp .h4 a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-heading-4.png); 
+}
+.markItUp .h5 a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-heading-5.png); 
+}
+.markItUp .text a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit.png); 
+}
+.markItUp .bold a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-bold.png); 
+}
+.markItUp .italic a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-italic.png); 
+}
+.markItUp .underline a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-underline.png); 
+}
+.markItUp .stroke a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-strike.png); 
+}
+.markItUp .list a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-list.png); 
+}
+.markItUp .ulist a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-list.png); 
+}
+.markItUp .olist a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-list-order.png); 
+}
+
+.markItUp .pre a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-number.png); 
+}
+
+.markItUp .cite a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-quotation.png); 
+}
+
+.markItUp .code a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/edit-code.png); 
+}
+
+.markItUp .link a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/chain.png); 
+}
+
+.markItUp .quote a {
+	background-image:url(?pf=agora/js/markitup/sets/dotclear/images/balloon-quotation.png); 
+}

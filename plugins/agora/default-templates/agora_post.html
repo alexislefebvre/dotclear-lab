@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+
+  <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
+  <meta name="description" lang="{{tpl:EntryLang}}" content="{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="180"}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:EntryAuthorCommonName encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:EntryDate iso8601="1"}}" />
+  
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" content="{{tpl:EntryTitle encode_html="1"}}" />
+  <meta name="dc.description" lang="{{tpl:EntryLang}}" content="{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="180"}}" />
+  <meta name="dc.creator" content="{{tpl:EntryAuthorCommonName encode_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:EntryLang}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:EntryDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  
+  <tpl:EntryNext><link rel="next" href="{{tpl:EntryURL}}"
+  title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryNext>
+  
+  <tpl:EntryPrevious><link rel="prev" href="{{tpl:EntryURL}}"
+  title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryPrevious>
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  
+  {{tpl:include src="_head.html"}}
+
+</head>
+
+<body class="dc-post">
+<div id="page">
+{{tpl:EntryPingData}}
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+  <p id="navlinks">
+  <tpl:EntryPrevious><a href="{{tpl:EntryURL}}"
+  title="{{tpl:EntryTitle encode_html="1"}}" class="prev">&#171; {{tpl:EntryTitle encode_html="1"
+  cut_string="50"}}</a></tpl:EntryPrevious>
+  <tpl:EntryNext> <span>-</span> <a href="{{tpl:EntryURL}}"
+  title="{{tpl:EntryTitle encode_html="1"}}" class="next">{{tpl:EntryTitle encode_html="1"
+  cut_string="50"}} &#187;</a></tpl:EntryNext>
+  </p>
+
+<div id="p{{tpl:EntryID}}" class="post">
+    <h2 class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
+    
+    <p class="post-info">{{tpl:lang By}} {{tpl:EntryAuthorLink}}
+    {{tpl:lang on}} {{tpl:EntryDate}}, {{tpl:EntryTime}}
+    <tpl:EntryIf has_category="1">
+    - <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
+    </tpl:EntryIf>
+    - <a href="{{tpl:EntryURL}}">{{tpl:lang Permalink}}</a>
+    </p>
+    
+    <tpl:EntryTags>
+    <tpl:TagsHeader><ul class="post-tags"></tpl:TagsHeader>
+    <li><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
+    <tpl:TagsFooter></ul></tpl:TagsFooter>
+    </tpl:EntryTags>
+    
+    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+    
+    <!-- # Entry with an excerpt -->
+    <tpl:EntryIf extended="1">
+      <div class="post-excerpt">{{tpl:EntryExcerpt}}</div>
+    </tpl:EntryIf>
+    
+    <div class="post-content">{{tpl:EntryContent}}</div>
+    
+    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+  </div>
+
+  <!-- # Attachments -->
+  <tpl:Attachments>
+    <tpl:AttachmentsHeader>
+      <div id="attachments">
+      <h3>{{tpl:lang Attachments}}</h3>
+      <ul>
+    </tpl:AttachmentsHeader>
+      <li class="{{tpl:AttachmentType}}">
+        <tpl:AttachmentIf is_mp3="1">
+          {{tpl:include src="_mp3_player.html"/}} - 
+        </tpl:AttachmentIf>
+        <tpl:AttachmentIf is_flv="1">
+	     {{tpl:include src="_flv_player.html"/}}
+	   </tpl:AttachmentIf>
+	   <tpl:AttachmentIf is_flv="0">
+	   	<a href="{{tpl:AttachmentURL}}"
+		title="{{tpl:AttachmentFileName}} ({{tpl:AttachmentSize}})">{{tpl:AttachmentTitle}}</a>
+        </tpl:AttachmentIf>
+      </li>
+    <tpl:AttachmentsFooter>
+      </ul>
+      </div>
+    </tpl:AttachmentsFooter>
+  </tpl:Attachments>
+ 
+<tpl:EntryIf show_messages="1">
+<tpl:Messages>
+    <tpl:MessagesHeader>
+      <div id="comments">
+    <h3>{{tpl:lang Messages}}</h3>
+      <dl>
+    </tpl:MessagesHeader>
+
+      <dt id="m{{tpl:MessageID}}" class="{{tpl:MessageIfOdd}} {{tpl:MessageIfFirst}} {{tpl:MessageIfMe}}"><a
+      href="#m{{tpl:MessageID}}" class="comment-number">{{tpl:MessageOrderNumber}}.</a>
+      {{tpl:lang On}} {{tpl:MessageDate}}, {{tpl:MessageTime}}
+      {{tpl:lang by}} {{tpl:MessageAuthorLink}}</dt>
+      
+      <dd class="{{tpl:MessageIfOdd}} {{tpl:MessageIfFirst}} {{tpl:MessageIfMe}}">
+      <!-- # --BEHAVIOR-- publicMessageBeforeContent -->
+      {{tpl:SysBehavior behavior="publicMessageBeforeContent"}}
+      
+      {{tpl:MessageContent}}
+      
+      <!-- # --BEHAVIOR-- publicMessageAfterContent-->
+      {{tpl:SysBehavior behavior="publicMessageAfterContent"}}
+      </dd>
+
+        <tpl:MessagesFooter>
+      </dl>
+      </div>     <!--#comments -->
+    </tpl:MessagesFooter>
+
+  </tpl:Messages>
+  </tpl:EntryIf>
+
+  <tpl:EntryIf messages_active="1">
+<tpl:SysIf is_auth="1">
+<tpl:SysIfAgoraMessage>
+<p class="message">{{tpl:SysAgoraMessage}}</p>
+</tpl:SysIfAgoraMessage>
+
+  <!-- # Comments -->
+
+    <tpl:SysIfFormError>
+      <p class="error" id="pr">{{tpl:SysFormError}}</p>
+    </tpl:SysIfFormError>
+
+     <tpl:SysIfEntryPublished>
+      <p class="message" id="pr">{{tpl:lang Your entry has been published.}}</p>
+    </tpl:SysIfEntryPublished>
+    
+    <tpl:SysIfEntryPending>
+      <p class="message" id="pr">{{tpl:lang Your entry has been submitted and will be reviewed for publication.}}</p>
+    </tpl:SysIfEntryPending>
+
+    <tpl:SysIfEntryUpdated>
+      <p class="message" id="pr">{{tpl:lang Entry has been successfully updated.}}</p>
+    </tpl:SysIfEntryUpdated>
+
+    <tpl:SysIfMessagePublished>
+      <p class="message" id="pr">{{tpl:lang Your message has been published.}}</p>
+    </tpl:SysIfMessagePublished>
+    
+    <tpl:SysIfMessagePending>
+      <p class="message" id="pr">{{tpl:lang Your message has been submitted and will be reviewed for publication.}}</p>
+    </tpl:SysIfMessagePending>
+
+    <tpl:SysIfMessageUpdated>
+      <p class="message" id="pr">{{tpl:lang Message has been successfully updated.}}</p>
+    </tpl:SysIfMessageUpdated>
+    <!-- # Message form -->
+  <form action="{{tpl:EntryURL}}#pr" method="post" id="comment-form">
+
+   <tpl:IfMessagePreview>
+      <div id="pr">
+        <h3>{{tpl:lang Your message}}</h3>
+        <dl>
+          <dd class="comment-preview">{{tpl:MessagePreviewContent}}</dd>
+       </dl>
+         <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
+    </div>
+  </tpl:IfMessagePreview>
+
+      <h3>{{tpl:lang Add a message}}</h3>
+      <fieldset>
+        <!-- # --BEHAVIOR-- publicAnswerFormBeforeContent -->
+        {{tpl:SysBehavior behavior="publicAnswerFormBeforeContent"}}
+            
+        <p class="field"><label for="c_content">{{tpl:lang Message}}&nbsp;:</label>
+        <textarea name="c_content" id="c_content" cols="35"
+        rows="7">{{tpl:MessagePreviewContent raw="1" encode_html="1"}}</textarea>
+        </p>
+        
+        <!-- # --BEHAVIOR-- publicAnswerFormAfterContent -->
+        {{tpl:SysBehavior behavior="publicAnswerFormAfterContent"}}
+
+      </fieldset>
+      
+      <fieldset>
+        <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
+        <tpl:IfMessagePreview><input type="submit" class="submit" value="{{tpl:lang send}}" /></tpl:IfMessagePreview></p>
+      </fieldset>
+    </form>
+
+</tpl:SysIf>
+<tpl:SysIf is_auth="0">
+     <p class="notice">{{tpl:lang You should be authenticated to post an message.}}</p>
+</tpl:SysIf>
+</tpl:EntryIf>
+  <!-- # Trackbacks -->
+  <tpl:EntryIf show_pings="1">
+    <div id="pings">
+    <h3>{{tpl:lang They posted on the same topic}}</h3>
+    <tpl:Pings>
+      <tpl:PingsHeader>
+      <dl>
+      </tpl:PingsHeader>
+        <dt id="c{{tpl:PingID}}" class="{{tpl:PingIfOdd}} {{tpl:PingIfFirst}}"><a href="#c{{tpl:PingID}}"
+        class="ping-number">{{tpl:PingOrderNumber}}.</a>
+        {{tpl:lang On}} {{tpl:PingDate}}, {{tpl:PingTime}}
+        {{tpl:lang by}} {{tpl:PingBlogName encode_html="1"}}</dt>
+        
+        <dd class="{{tpl:PingIfOdd}} {{tpl:PingIfFirst}}">
+        <!-- # --BEHAVIOR-- publicPingBeforeContent -->
+        {{tpl:SysBehavior behavior="publicPingBeforeContent"}}
+        
+        <p><a href="{{tpl:PingAuthorURL}}"
+        {{tpl:PingNoFollow}}>{{tpl:PingTitle encode_html="1"}}</a></p>
+        {{tpl:PingContent}}
+        
+        <!-- # --BEHAVIOR-- publicPingAfterContent -->
+        {{tpl:SysBehavior behavior="publicPingAfterContent"}}
+        </dd>
+      <tpl:PingsFooter>
+      </dl>
+      </tpl:PingsFooter>
+    </tpl:Pings>
+    </div>
+  </tpl:EntryIf>
+  
+  <tpl:EntryIf pings_active="1">
+    <p id="ping-url">{{tpl:lang Trackback URL}}&nbsp;: {{tpl:EntryPingLink}}</p>
+  </tpl:EntryIf>
+
+  <tpl:EntryIf operator="or" messages_active="1" pings_active="1">
+  <p id="comments-feed"><a class="feed" href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}"
+  title="{{tpl:lang This post's comments Atom feed}}">{{tpl:lang This post's comments feed}}</a></p>
+  </tpl:EntryIf>
+  </div>
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div> <!-- End #sidebar -->
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

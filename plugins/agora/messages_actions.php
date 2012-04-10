@@ -16,7 +16,7 @@ dcPage::check('usage,contentadmin');
 $redir_url = $p_url.'&act=messages';
 $params = array();
 
-if (!empty($_POST['action']) && !empty($_POST['messages']))
+if ((!empty($_POST['action']) ))//&& !empty($_POST['messages']))
 {
 	$messages = $_POST['messages'];
 	$action = $_POST['action'];
@@ -42,23 +42,26 @@ if (!empty($_POST['action']) && !empty($_POST['messages']))
 	}
 	
 	$params['sql'] = 'AND M.message_id IN('.implode(',',$messages).') ';
-	$params['no_content'] = true;
+	if (!isset($_POST['full_content']) || empty($_POST['full_content'])) {
+		//$params['no_content'] = true;
+	}
 	
-	$mes = $core->blog->agora->getMessages($params);
+	$mes = $core->agora->getMessages($params);
 	
-	if (preg_match('/^(publish|unpublish|pending|junk)$/',$action))
+	if (preg_match('/^(publish|unpublish|scheduled|pending|junk)$/',$action))
 	{
 		switch ($action) {
 			case 'unpublish' : $status = 0; break;
-			case 'pending' : $status = -1; break;
-			case 'junk' : $status = -2; break;
+			case 'pending' : $status = -2; break;
+			case 'scheduled' : $status = -1; break;
+			case 'junk' : $status = -3; break;
 			default : $status = 1; break;
 		}
 		
 		while ($mes->fetch())
 		{
 			try {
-				$core->blog->agora->updMessageStatus($mes->message_id,$status);
+				$core->agora->updMessageStatus($mes->message_id,$status);
 			} catch (Exception $e) {
 				$core->error->add($e->getMessage().'....'.$mes->message_content);
 				break;
@@ -66,7 +69,7 @@ if (!empty($_POST['action']) && !empty($_POST['messages']))
 		}
 		
 		if (!$core->error->flag()) {
-			http::redirect($redir);
+			//http::redirect($redir);
 		}
 	}
 	elseif ($action == 'delete')
@@ -74,7 +77,7 @@ if (!empty($_POST['action']) && !empty($_POST['messages']))
 		while ($mes->fetch())
 		{
 			try {
-				$core->blog->agora->delMessage($mes->message_id);
+				$core->agora->delMessage($mes->message_id);
 			} catch (Exception $e) {
 				$core->error->add($e->getMessage());
 			}

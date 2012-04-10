@@ -1,1355 +1,1203 @@
 # Language: Français
-# Module: agora - 0.7beta6
-# Date: 2011-01-28 14:28:31
+# Module: agora - 1.0RC2
+# Date: 2012-04-10 21:35:43
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: agora 0.7beta6\n"
+"Project-Id-Version: agora 1.0RC2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-01-28T14:28:31+00:00\n"
+"PO-Revision-Date: 2012-04-10T21:35:43+00:00\n"
 "Last-Translator: Osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:20
-#: index.php:383
-#: index.php:397
-#: thread.php:294
-#: thread.php:343
-msgid "Threads"
-msgstr "Discussions"
-
-#: _admin.php:27
-#: default-templates/thread.html:106
-#: index.php:63
-#: message.php:240
-#: messages.php:124
-#: messages.php:145
-#: thread.php:540
-#: thread.php:547
+#: _admin.php:17
+#: default-templates/agora_post.html:119
+#: inc/class.agora.behaviors.php:18
+#: lib/agora.pager.php:40
+#: message.php:204
+#: message.php:245
+#: messages.php:135
+#: messages.php:156
 msgid "Messages"
 msgstr "Messages"
 
-#: _admin.php:38
-#: inc/class.agora.template.php:210
-msgid "%d threads"
-msgstr "%d discussions"
+#: _admin.php:26
+msgid "Public users <br/>(%s pending)"
+msgstr "Utilisateurs publics<br/>(%s en attente)"
 
-#: _admin.php:38
-msgid "%d thread"
-msgstr "%d discussion"
+#: _admin.php:28
+#: inc/class.agora.behaviors.php:21
+#: index.php:181
+#: index.php:194
+msgid "Public users"
+msgstr "Utilisateurs publics"
 
-#: _admin.php:41
-msgid "%d messages"
-msgstr "%d messages"
-
-#: _admin.php:41
-msgid "%d message"
-msgstr "%d message"
-
-#: _admin.php:46
+#: _admin.php:39
+#: options.php:133
+#: options.php:143
 msgid "agora:config"
 msgstr "agora:config"
 
-#: _admin.php:54
+#: _admin.php:45
 msgid "is an agora member"
 msgstr "est membre de l'agora"
 
-#: _admin.php:55
-msgid "can moderate the agora"
-msgstr "peut modérer l'agora"
+#: _install.php:21
+msgid "Dotclear version 2.4.1.2 minimum is required. Agora is deactivated"
+msgstr "La version 2.4.1.2 minimum de Dotclear est requise. Agora est désactivée"
 
-#: _install.php:23
-msgid "PHP version is %s (5.3 or earlier needed)."
-msgstr "La version de PHP est %s (5.3 au minium est nécessaire)"
-
-#: _install.php:61
-msgid "agora"
-msgstr "agora"
-
-#: _install.php:63
-msgid "<p class=\"message\">Welcome to the Agora.</p>"
-msgstr "<p class=\"message\">Bienvenue dans l'agora.</p>"
-
-#: _widgets.php:28
-msgid "Agora: navigation"
-msgstr "Agora : navigation"
-
-#: _widgets.php:29
-#: _widgets.php:35
-#: _widgets.php:40
-#: _widgets.php:46
-#: _widgets.php:53
-#: _widgets.php:68
-#: _widgets.php:84
-#: thread.php:469
-msgid "Title:"
-msgstr "Titre :"
-
-#: _widgets.php:29
-msgid "Agora - navigation"
-msgstr "Agora - navigation"
-
-#: _widgets.php:34
-msgid "Agora: moderation"
-msgstr "Agora : modération"
-
-#: _widgets.php:35
-msgid "Agora moderation"
-msgstr "Modération de l'agora"
+#: _widgets.php:38
+msgid "Agora › User navigation"
+msgstr "Agora › Navigation utilisateur"
 
 #: _widgets.php:39
-msgid "Agora: categories list"
-msgstr "Agora : liste des catégories"
+#: _widgets.php:54
+#: _widgets.php:62
+#: _widgets.php:99
+#: _widgets.php:121
+#: _widgets.php:136
+#: _widgets.php:145
+#: _widgets.php:163
+msgid "Title:"
+msgstr "Titre :"
+
+#: _widgets.php:39
+msgid "Agora - navigation"
+msgstr "Agora - Navigation"
 
 #: _widgets.php:40
-msgid "Agora's sections"
-msgstr "Sections de l'agora"
+msgid "Display avatar"
+msgstr "Afficher l'avatar"
 
 #: _widgets.php:41
-msgid "With entries counts"
-msgstr "Afficher le nombre de billets"
+msgid "Login label:"
+msgstr "Libellé du login&nbsp;:"
 
-#: _widgets.php:45
-msgid "Agora: selected threads"
-msgstr "Agora : discussions sélectionnées"
-
-#: _widgets.php:46
-msgid "Selected threads"
-msgstr "Discussions à retenir"
-
-#: _widgets.php:47
-#: _widgets.php:62
-#: _widgets.php:77
-#: _widgets.php:86
-msgid "Home page only"
-msgstr "Page d'accueil uniquement"
-
-#: _widgets.php:52
-msgid "Agora: last threads"
-msgstr "Agora : dernières discussions"
-
-#: _widgets.php:53
-msgid "Last threads"
-msgstr "Dernières discussions"
-
-#: _widgets.php:55
-#: _widgets.php:70
-msgid "Uncategorized"
-msgstr "Non catégorisé"
-
-#: _widgets.php:59
-#: _widgets.php:74
-#: index.php:414
-#: thread.php:387
-msgid "Category:"
-msgstr "Catégorie :"
-
-#: _widgets.php:61
-msgid "Entries limit:"
-msgstr "Nombre de discussions maximum :"
-
-#: _widgets.php:67
-msgid "Agora: last messages"
-msgstr "Agora : derniers messages"
-
-#: _widgets.php:68
-msgid "Last messages"
-msgstr "Derniers messages"
-
-#: _widgets.php:76
-msgid "Messages limit:"
-msgstr "Nombre de messages maximum :"
-
-#: _widgets.php:83
-msgid "Agora: subscribe links"
-msgstr "Agora : liens d'abonnement"
-
-#: _widgets.php:84
-msgid "Subscribe"
-msgstr "S'abonner"
-
-#: _widgets.php:85
-msgid "Feeds type:"
-msgstr "Types de fil :"
-
-#: default-templates/agora.html:9
-#: default-templates/agora.html:11
-#: default-templates/agora.html:17
-#: default-templates/editmessage.html:9
-#: default-templates/editmessage.html:11
-#: default-templates/editmessage.html:17
-#: default-templates/editthread.html:9
-#: default-templates/editthread.html:11
-#: default-templates/editthread.html:17
-#: default-templates/login.html:9
-#: default-templates/login.html:11
-#: default-templates/login.html:17
-#: default-templates/newthread.html:9
-#: default-templates/newthread.html:11
-#: default-templates/newthread.html:17
-#: default-templates/place.html:9
-#: default-templates/place.html:11
-#: default-templates/place.html:17
-#: default-templates/profile.html:9
-#: default-templates/profile.html:11
-#: default-templates/profile.html:17
-#: default-templates/profile_me.html:9
-#: default-templates/profile_me.html:11
-#: default-templates/profile_me.html:17
-#: default-templates/recover.html:9
-#: default-templates/recover.html:11
-#: default-templates/recover.html:17
-#: default-templates/register.html:9
-#: default-templates/register.html:11
-#: default-templates/register.html:17
-#: default-templates/thread.html:9
-#: default-templates/thread.html:11
-#: default-templates/thread.html:17
-#: options.php:55
-#: options.php:63
-msgid "Agora"
-msgstr "Agora"
-
-#: default-templates/agora.html:9
-#: default-templates/agora.html:17
-#: default-templates/agora.html:74
-#: default-templates/newthread.html:9
-#: default-templates/newthread.html:17
-#: default-templates/place.html:9
-#: default-templates/place.html:17
-#: default-templates/place.html:99
-msgid "page"
-msgstr "page"
-
-#: default-templates/agora.html:26
-#: default-templates/editmessage.html:26
-#: default-templates/editthread.html:26
-#: default-templates/login.html:26
-#: default-templates/newthread.html:26
-#: default-templates/place.html:26
-#: default-templates/profile.html:26
-#: default-templates/profile_me.html:26
-#: default-templates/recover.html:26
-#: default-templates/register.html:26
-#: default-templates/thread.html:26
-#: inc/class.agora.widgets.php:28
-msgid "Home"
-msgstr "Accueil"
-
-#: default-templates/agora.html:27
-#: default-templates/editmessage.html:27
-#: default-templates/editthread.html:27
-#: default-templates/newthread.html:27
-#: default-templates/place.html:27
-#: default-templates/thread.html:27
-msgid "Archives"
-msgstr "Archives"
-
-#: default-templates/agora.html:61
-#: default-templates/place.html:84
-#: default-templates/thread.html:53
-msgid "on"
-msgstr "le"
-
-#: default-templates/agora.html:73
-#: default-templates/place.html:98
-msgid "previous entries"
-msgstr "billets précédents"
-
-#: default-templates/agora.html:74
-#: default-templates/place.html:99
-msgid "of"
-msgstr "de"
-
-#: default-templates/agora.html:75
-#: default-templates/place.html:100
-msgid "next entries"
-msgstr "billets suivants"
-
-#: default-templates/editmessage.html:9
-#: message.php:75
-#: message.php:255
-msgid "Edit message"
-msgstr "Editer le message"
-
-#: default-templates/editmessage.html:64
-#: default-templates/editthread.html:57
-#: default-templates/profile_me.html:101
-#: message.php:293
-#: thread.php:492
-msgid "save"
-msgstr "enregistrer"
-
-#: default-templates/editmessage.html:65
-msgid "delete the message"
-msgstr "supprimer le message"
-
-#: default-templates/editmessage.html:65
-#: default-templates/editthread.html:58
-#: message.php:295
-#: messages.php:105
-#: thread.php:494
-#: thread.php:534
-msgid "delete"
-msgstr "supprimer"
-
-#: default-templates/editmessage.html:69
-msgid "Edit a message"
-msgstr "Modifier le message"
-
-#: default-templates/editmessage.html:75
-#: default-templates/editthread.html:94
-#: default-templates/newthread.html:104
-#: default-templates/thread.html:166
-#: message.php:199
-msgid "Message"
-msgstr "Message"
-
-#: default-templates/editmessage.html:85
-#: default-templates/editthread.html:104
-#: default-templates/newthread.html:114
-#: default-templates/register.html:89
-#: default-templates/thread.html:176
-msgid "preview"
-msgstr "prévisualiser"
-
-#: default-templates/editthread.html:9
-#: thread.php:127
-#: thread.php:382
-msgid "Edit thread"
-msgstr "Modifier la discussion"
-
-#: default-templates/editthread.html:58
-msgid "delete the thread"
-msgstr "supprimer la discussion"
-
-#: default-templates/editthread.html:62
-msgid "Edit the thread"
-msgstr "Modifier la discussion"
-
-#: default-templates/editthread.html:69
-#: default-templates/newthread.html:99
-msgid "Subject"
-msgstr "Sujet"
-
-#: default-templates/editthread.html:77
-#: default-templates/newthread.html:83
-#: index.php:61
-#: index.php:241
-msgid "Category"
-msgstr "Catégorie"
-
-#: default-templates/login.html:9
-#: default-templates/login.html:48
-#: inc/class.agora.widgets.php:34
+#: _widgets.php:41
+#: default-templates/agora_login.html:8
+#: default-templates/agora_login.html:16
+#: default-templates/agora_login.html:47
+#: inc/class.agora.widgets.php:23
 msgid "Login"
 msgstr "Connexion"
 
-#: default-templates/login.html:54
-#: default-templates/recover.html:58
-#: default-templates/register.html:55
-#: default-templates/register.html:69
-msgid "Username"
-msgstr "Identifiant"
-
-#: default-templates/login.html:59
-msgid "Password"
-msgstr "Mot de passe"
-
-#: default-templates/login.html:68
-msgid "login"
-msgstr "login"
-
-#: default-templates/newthread.html:9
-#: index.php:398
-#: thread.php:40
-msgid "New thread"
-msgstr "Nouvelle discussion"
-
-#: default-templates/newthread.html:71
-#: default-templates/newthread.html:115
-msgid "create"
-msgstr "créer"
-
-#: default-templates/newthread.html:75
-msgid "Add a thread"
-msgstr "Ajouter une discussion"
-
-#: default-templates/place.html:55
-msgid "This categorie's threads Atom feed"
-msgstr "Fil des discussions de cette catégorie"
-
-#: default-templates/place.html:55
-#: inc/class.agora.widgets.php:277
-msgid "Threads feed"
-msgstr "Fil des discussions"
-
-#: default-templates/place.html:58
-msgid "This category's messages Atom feed"
-msgstr "Fil des messages de cette catégorie"
-
-#: default-templates/place.html:58
-#: inc/class.agora.widgets.php:281
-msgid "Messages feed"
-msgstr "Fil des messages"
-
-#: default-templates/place.html:66
-msgid "Subcategories"
-msgstr "Sous-catégories"
-
-#: default-templates/profile.html:9
-#: default-templates/profile_me.html:9
-msgid "Profile"
-msgstr "Profil"
-
-#: default-templates/profile.html:51
-#: default-templates/profile_me.html:62
-msgid "Name or nickname"
-msgstr "Nom ou pseudo"
-
-#: default-templates/profile.html:54
-#: default-templates/profile_me.html:72
-msgid "Website"
-msgstr "Site web"
-
-#: default-templates/profile.html:57
-#: default-templates/profile_me.html:87
-msgid "Creation date"
-msgstr "Date de création"
-
-#: default-templates/profile.html:60
-#: default-templates/profile_me.html:91
-msgid "Update date"
-msgstr "Date de mise à jour"
-
-#: default-templates/profile_me.html:56
-msgid "My informations"
-msgstr "Mes informations"
-
-#: default-templates/profile_me.html:67
-#: default-templates/recover.html:63
-#: default-templates/register.html:57
-#: default-templates/register.html:74
-msgid "Email address"
-msgstr "Adresse email"
-
-#: default-templates/profile_me.html:77
-msgid "New password"
-msgstr "Nouveau mot de passe"
-
-#: default-templates/profile_me.html:82
-msgid "Confirm password"
-msgstr "Confirmer le mot de passe"
-
-#: default-templates/recover.html:9
-msgid "Recover"
-msgstr "Récupérer"
-
-#: default-templates/recover.html:52
-msgid "Request a new password"
-msgstr "Demander un nouveau mot de passe"
-
-#: default-templates/recover.html:76
-msgid "recover"
-msgstr "récupérer"
-
-#: default-templates/register.html:9
-msgid "Register"
-msgstr "S'enregistrer"
-
-#: default-templates/register.html:53
-msgid "Your infos"
-msgstr "Vos infos"
-
-#: default-templates/register.html:59
-#: default-templates/register.html:90
-#: default-templates/thread.html:157
-#: default-templates/thread.html:177
-msgid "send"
-msgstr "envoyer"
-
-#: default-templates/register.html:63
-msgid "Register an account"
-msgstr "Enregister un compte"
-
-#: default-templates/register.html:82
-msgid "Username must contain at least 2 characters using letters, numbers or symbols."
-msgstr "L'identifiant doit contenir au moins 2 caractères parmi lettres, chiffres et symbôles."
-
-#: default-templates/thread.html:53
-#: default-templates/thread.html:113
-msgid "by"
-msgstr "par"
-
-#: default-templates/thread.html:57
-msgid "Permalink"
-msgstr "Lien permanent"
-
-#: default-templates/thread.html:59
-#: default-templates/thread.html:115
-msgid "edit"
-msgstr "modifier"
-
-#: default-templates/thread.html:76
-#: thread.php:427
-msgid "Attachments"
-msgstr "Annexes"
-
-#: default-templates/thread.html:101
-msgid "Thread closed"
-msgstr "Discussion close"
-
-#: default-templates/thread.html:112
-msgid "On"
-msgstr "Le"
-
-#: default-templates/thread.html:138
-msgid "Status of thread has been modified."
-msgstr "Le status des messages a été modifié"
-
-#: default-templates/thread.html:153
-msgid "Your answer"
-msgstr "Votre réponse"
-
-#: default-templates/thread.html:161
-msgid "Add a message"
-msgstr "Ajouter un message"
-
-#: default-templates/thread.html:183
-msgid "This thread's messages Atom feed"
-msgstr "Fil Atom des messages de cette dicussion"
-
-#: default-templates/thread.html:183
-msgid "This thread's messages feed"
-msgstr "Fil des messages de cette discussion"
-
-#: inc/class.agora.log.php:106
-#: inc/class.agora.log.php:112
-#: inc/class.agora.log.php:134
-msgid "No such log ID"
-msgstr "Aucun log ID"
-
-#: inc/class.agora.log.php:146
-msgid "No log message"
-msgstr "Pas de message dans le journal"
-
-#: inc/class.agora.php:25
-#: inc/class.agora.php:30
-#: index.php:108
-#: lib/admin.messages.pager.php:86
-#: message.php:342
-#: thread.php:597
-msgid "pending"
-msgstr "en attente"
-
-#: inc/class.agora.php:26
-msgid "suspended"
-msgstr "suspendu"
-
-#: inc/class.agora.php:27
-msgid "active"
-msgstr "actif"
-
-#: inc/class.agora.php:29
-#: lib/admin.messages.pager.php:89
-#: message.php:345
-#: thread.php:600
-msgid "junk"
-msgstr "indésirable"
-
-#: inc/class.agora.php:31
-#: index.php:102
-#: lib/admin.messages.pager.php:83
-#: message.php:339
-#: thread.php:594
-msgid "unpublished"
-msgstr "non publié"
-
-#: inc/class.agora.php:32
-#: index.php:99
-#: lib/admin.messages.pager.php:80
-#: message.php:336
-#: thread.php:591
-msgid "published"
-msgstr "publié"
-
-#: inc/class.agora.php:149
-#: inc/class.agora.urlhandlers.php:205
-msgid "This is a wrong registration URL. Registration failed."
-msgstr "Ceci est une mauvaise URL de confirmation. L'enregistrement a échoué."
-
-#: inc/class.agora.php:168
-msgid "Cannot login. Empty password."
-msgstr "Connexion impossible. Mot de passe vide."
-
-#: inc/class.agora.php:173
-msgid "Cannot login. Check."
-msgstr "Connexion impossible. Vérifiez."
-
-#: inc/class.agora.php:180
-msgid "User is not a member of forum"
-msgstr "L'utilisateur n'est pas membre de l'agora"
-
-#: inc/class.agora.php:219
-msgid "Account confirmation request on Agora"
-msgstr "Confirmation de création compte pour l'Agora"
-
-#: inc/class.agora.php:221
-msgid "Welcome to the agora of %s"
-msgstr "Bienvenue dans l'agora de %s"
-
-#: inc/class.agora.php:222
-msgid "To activate your account and verify your e-mail address, please click on the following link:"
-msgstr "Pour activer le compte, vérifiez votre adresse email, cliquez sur le lien suivant :"
-
-#: inc/class.agora.php:226
-msgid "Your indormations:"
-msgstr "Vos informations :"
-
-#: inc/class.agora.php:227
-msgid "Login: %s"
-msgstr "Identifiant : %s"
-
-#: inc/class.agora.php:228
-msgid "Password: %s"
-msgstr "Mot de passe : %s"
-
-#: inc/class.agora.php:229
-msgid "Agora connection: %s"
-msgstr "Connexion à l'agora :"
-
-#: inc/class.agora.php:231
-msgid "If you have received this mail in error, you do not need to take any action to cancel the account."
-msgstr "SI vous avez reçu cet email par erreur, il n'est pas nécessaire d'annuler le compte."
-
-#: inc/class.agora.php:232
-msgid "The account will not be activated, and you will not receive any further emails."
-msgstr "Le compte ne sera pas activé et vous ne recevrez pas d'autre emails."
-
-#: inc/class.agora.php:233
-msgid "If clicking the link above does not work, copy and paste the URL in a new browser window instead."
-msgstr "Si le clic sur le lien ci-dessous ne fonctionne pas, copier et coller l'URL dans un navigateur."
-
-#: inc/class.agora.php:235
-msgid "Thank you for particape to our agora."
-msgstr "Merci de participer à notre agora."
-
-#: inc/class.agora.php:237
-msgid "This is a post-only mailing. Replies to this message are not monitored or answered."
-msgstr "Ce message est issu d'une boite email générique. Les réponses ne sont ni regardées ni répondues."
-
-#: inc/class.agora.php:245
-msgid "Password reset"
-msgstr "Réinitialisation du mot de passe"
-
-#: inc/class.agora.php:248
-msgid "Someone has requested to reset the password for the following agora and username."
-msgstr "Quelqu'un a demandé la réinitialisation du mot de passe de l'utilisateur dans l'agora suivante."
-
-#: inc/class.agora.php:249
-#: inc/class.agora.php:259
-msgid "Username:"
-msgstr "Nom d'utilisateur :"
-
-#: inc/class.agora.php:250
-msgid "To reset your password visit the following address, otherwise just ignore this email and nothing will happen."
-msgstr "Pour réinitialiser votre mot de passe, rendez-vous à l'adresse suivante. Sinon ignorez simplement ce message et rien ne se passera."
-
-#: inc/class.agora.php:257
-msgid "Your new password"
-msgstr "Votre nouveau mot de passe"
-
-#: inc/class.agora.php:260
-msgid "Password:"
-msgstr "Mot de passe :"
-
-#: inc/class.agora.php:359
-msgid "You are not allowed to close this thread"
-msgstr "Vous n'êtes pas autorisé à clôre la discussion."
-
-#: inc/class.agora.php:377
-msgid "You are not allowed to mark this entry as closed"
-msgstr "Vous n'êtes pas autorisé à marquer la discussion comme close"
-
-#: inc/class.agora.php:636
-msgid "You are not allowed to create an message"
-msgstr "Vous n'êtes pas autorisé à créer un message"
-
-#: inc/class.agora.php:680
-msgid "You are not allowed to update comments"
-msgstr "Vous n'êtes pas autorisé à modifier des commentaires"
-
-#: inc/class.agora.php:686
-#: inc/class.agora.php:692
-#: inc/class.agora.php:775
-msgid "No such message ID"
-msgstr "Aucun message avec cet ID"
-
-#: inc/class.agora.php:699
-msgid "You are not allowed to update this message"
-msgstr "Vous n'êtes pas autorisé à mettre à jour ce message"
-
-#: inc/class.agora.php:728
-msgid "You are not allowed to change this message's status"
-msgstr "Vous n'êtes pas autorisé à changer l'état des messages"
-
-#: inc/class.agora.php:750
-msgid "You are not allowed to change this entry status"
-msgstr "Vous n'êtes pas autorisé à modifier l'état de cette discussion"
-
-#: inc/class.agora.php:769
-msgid "You are not allowed to delete messages"
-msgstr "Vous n'êtes pas autorisé à supprimer ce message"
-
-#: inc/class.agora.php:791
-msgid "You are not allowed to delete this comment"
-msgstr "Vous n'êtes pas autorisé à supprimer ce message"
-
-#: inc/class.agora.php:806
-msgid "No message content"
-msgstr "Aucun contenu pour le message"
-
-#: inc/class.agora.php:818
-msgid "No message content xhtml"
-msgstr "Aucun contenu xhtml pour le message"
-
-#: inc/class.agora.public.behaviors.php:45
-msgid "I forgot my password"
-msgstr "J'ai oublié mon mot de passe"
-
-#: inc/class.agora.public.behaviors.php:46
-msgid "Register a new account"
-msgstr "Enregistrer un nouveau compte"
-
-#: inc/class.agora.template.php:208
-msgid "no thread"
-msgstr "aucune discussion"
-
-#: inc/class.agora.template.php:209
-msgid "one thread"
-msgstr "une discussion"
-
-#: inc/class.agora.template.php:241
-msgid "no answer"
-msgstr "aucune réponse"
-
-#: inc/class.agora.template.php:242
-msgid "one answer"
-msgstr "une réponse"
-
-#: inc/class.agora.template.php:243
-msgid "%d answers"
-msgstr "%d réponses"
-
-#: inc/class.agora.urlhandlers.php:44
-msgid "The e-mail was sent successfully to %s."
-msgstr "Le message a été envoyé avec succès à %s."
-
-#: inc/class.agora.urlhandlers.php:59
-msgid "Your new password is in your mailbox."
-msgstr "Votre nouveau mot de passe est dans votre boîte à lettres."
-
-#: inc/class.agora.urlhandlers.php:135
-#: inc/class.agora.urlhandlers.php:358
-msgid "You must provide a valid email"
-msgstr "Vous devez fournir une adresse email valide"
-
-#: inc/class.agora.urlhandlers.php:140
-msgid "User \"%s\" already exists."
-msgstr "L'utilisateur \"%s\" existe déjà."
-
-#: inc/class.agora.urlhandlers.php:155
-msgid "User %s successfully created. You will receive an email to activate your account."
-msgstr "L'utilisateur %s a été créé avec succès. Vous allez recevoir un email pour activer votre compte."
-
-#: inc/class.agora.urlhandlers.php:186
-msgid "User %s is already registred. You can log in."
-msgstr "L'utilisateur %s est déjà enregistré. Vous pouvez vous connecter."
-
-#: inc/class.agora.urlhandlers.php:194
-msgid "User %s is now registred. You can now log in."
-msgstr "L'utilisateur %s est maintenant enregistré. Vous pouvez désormais vous connecter."
-
-#: inc/class.agora.urlhandlers.php:344
-msgid "You must confirm your password"
-msgstr "Vous devez confirmer votre mot de passe"
-
-#: inc/class.agora.urlhandlers.php:348
-msgid "Please, check your password. Passwords don't match"
-msgstr "Veuillez vérifier vos mots de passe. Ils ne correspondent pas"
-
-#: inc/class.agora.urlhandlers.php:375
-msgid "User %s successfully updated."
-msgstr "L'utilsateur %s a été mis à jour avec succès"
-
-#: inc/class.agora.widgets.php:32
+#: _widgets.php:42
+msgid "My preferences label:"
+msgstr "Libellé des préférences&nbsp;:"
+
+#: _widgets.php:42
+#: inc/class.agora.widgets.php:25
+msgid "My preferences"
+msgstr "Mes préférences"
+
+#: _widgets.php:43
+msgid "Logout label:"
+msgstr "Libellé du logout&nbsp;:"
+
+#: _widgets.php:43
+#: inc/class.agora.widgets.php:24
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: inc/class.agora.widgets.php:33
-msgid "Create a new thread"
-msgstr "Créer une nouvelle discussion"
+#: _widgets.php:47
+msgid "New post label:"
+msgstr "Libellé du nouveau post&nbsp;:"
 
-#: inc/class.agora.widgets.php:56
-msgid "Close the thread"
-msgstr "Fermer la discussion"
+#: _widgets.php:47
+msgid "New post"
+msgstr "Nouveau billet"
 
-#: inc/class.agora.widgets.php:57
-msgid "Open the thread"
-msgstr "Ouvrir la discussion"
+#: _widgets.php:53
+msgid "Agora › New entry"
+msgstr "Agora › Nouveau billet"
 
-#: inc/class.agora.widgets.php:60
-msgid "Unpin the thread"
-msgstr "Dépingler la discussion"
-
+#: _widgets.php:54
+#: _widgets.php:55
+#: default-templates/agora_newpost.html:8
+#: default-templates/agora_newpost.html:16
+#: default-templates/agora_newpost.html:63
 #: inc/class.agora.widgets.php:61
-msgid "Pin the thread"
-msgstr "Épingler la discussion"
+msgid "New entry"
+msgstr "Nouveau billet"
 
-#: inc/class.agora.widgets.php:265
-msgid "This agora's threads %s feed"
-msgstr "Fil des discussions de l'agora"
+#: _widgets.php:55
+msgid "New entry label:"
+msgstr "Libellé du nouveau billet&nbsp;:"
 
-#: inc/class.agora.widgets.php:266
-msgid "This agora's messages %s feed"
-msgstr "Fil des messages de l'agora"
+#: _widgets.php:61
+msgid "Agora › Last entries"
+msgstr "Agora › Derniers billets"
 
-#: inc/class.rs.public.agora.php:27
-msgid "Read"
-msgstr "Lire"
+#: _widgets.php:72
+msgid "With comments/messages counts"
+msgstr "Avec le nombre de commentaires/messages"
 
-#: index.php:48
-msgid "No thread"
-msgstr "Aucune discussion"
+#: _widgets.php:73
+msgid "Display author"
+msgstr "Affiche l'auteur"
 
-#: index.php:59
-#: index.php:240
-#: lib/admin.messages.pager.php:30
-msgid "Title"
-msgstr "Titre"
+#: _widgets.php:75
+#: default-templates/agora_people.html:65
+#: default-templates/agora_search.html:72
+msgid "Creation date"
+msgstr "Date de création"
 
-#: index.php:60
-#: index.php:239
-#: lib/admin.messages.pager.php:31
-#: message.php:323
-#: messages.php:33
-#: thread.php:578
-msgid "Date"
-msgstr "Date"
+#: _widgets.php:76
+msgid "Update date"
+msgstr "Date de mise à jour"
 
-#: index.php:62
-#: index.php:242
-#: lib/admin.messages.pager.php:32
-#: message.php:322
-#: messages.php:35
-#: thread.php:577
-msgid "Author"
-msgstr "Auteur"
-
-#: index.php:64
-#: index.php:243
-#: index.php:257
-#: lib/admin.messages.pager.php:33
-#: message.php:325
-#: messages.php:36
-#: thread.php:580
-msgid "Status"
-msgstr "État"
-
-#: index.php:71
-#: index.php:84
-#: lib/admin.messages.pager.php:41
-#: lib/admin.messages.pager.php:54
-msgid "Page(s)"
-msgstr "Page(s)"
-
-#: index.php:105
-msgid "scheduled"
-msgstr "programmé"
-
-#: index.php:115
-msgid "None"
-msgstr "Aucun"
-
-#: index.php:120
-msgid "protected"
-msgstr "protégé"
-
-#: index.php:125
-#: index.php:223
-msgid "selected"
-msgstr "sélectionné"
-
-#: index.php:131
-msgid "%d attachment"
-msgstr "%d annexe"
-
-#: index.php:131
-msgid "%d attachments"
-msgstr "%d annexes"
-
-#: index.php:145
-#: lib/admin.messages.pager.php:103
-#: message.php:356
-#: thread.php:611
-msgid "%Y-%m-%d %H:%M"
-msgstr "%Y-%m-%d %H:%M"
-
-#: index.php:224
-msgid "not selected"
-msgstr "non sélectionné"
-
-#: index.php:244
-msgid "Selected"
-msgstr "Sélectionné"
-
-#: index.php:248
-#: messages.php:40
+#: _widgets.php:79
+#: index.php:43
+#: messages.php:39
 msgid "Descending"
 msgstr "Décroissant"
 
-#: index.php:249
-#: messages.php:41
+#: _widgets.php:80
+#: index.php:44
+#: messages.php:40
 msgid "Ascending"
 msgstr "Croissant"
 
-#: index.php:258
-msgid "Publish"
-msgstr "Publier"
+#: _widgets.php:82
+msgid "Sort by:"
+msgstr "Filtrer par&nbsp;:"
 
-#: index.php:259
-msgid "Unpublish"
-msgstr "Hors ligne"
+#: _widgets.php:85
+#: _widgets.php:110
+#: _widgets.php:125
+#: _widgets.php:145
+#: _widgets.php:152
+msgid "Connected users"
+msgstr "Utilisateurs connectés"
 
-#: index.php:260
-msgid "Schedule"
-msgstr "Programmer"
+#: _widgets.php:86
+#: _widgets.php:111
+#: _widgets.php:126
+#: _widgets.php:153
+msgid "Non connected users"
+msgstr "Utilisateurs non connectés"
 
-#: index.php:261
-msgid "Mark as pending"
-msgstr "En attente"
+#: _widgets.php:88
+#: _widgets.php:113
+#: _widgets.php:128
+#: _widgets.php:155
+msgid "Display:"
+msgstr "Affichage :"
 
-#: index.php:264
-msgid "Mark"
-msgstr "Marquer"
+#: _widgets.php:89
+msgid "Order:"
+msgstr "Ordre&nbsp;:"
 
-#: index.php:265
-msgid "Mark as selected"
-msgstr "Sélectionné"
+#: _widgets.php:98
+msgid "Agora › Last messages"
+msgstr "Agora › Derniers messages"
 
-#: index.php:266
-msgid "Mark as unselected"
-msgstr "Non sélectionné"
+#: _widgets.php:99
+msgid "Last messages"
+msgstr "Derniers messages"
 
-#: index.php:268
-#: index.php:271
-#: index.php:271
-msgid "Change"
-msgstr "Changer"
+#: _widgets.php:107
+msgid "Messages limit:"
+msgstr "Limite de messages&nbsp;:"
 
-#: index.php:268
-msgid "Change category"
-msgstr "Changer la catégorie"
+#: _widgets.php:120
+msgid "Agora › Text"
+msgstr "Agora › Texte"
 
-#: index.php:272
-msgid "Change author"
-msgstr "Changer l'auteur"
+#: _widgets.php:122
+msgid "Text:"
+msgstr "Texte :"
 
-#: index.php:276
-#: index.php:276
-msgid "Delete"
-msgstr "Supprimer"
+#: _widgets.php:135
+msgid "Agora › Subscribe links"
+msgstr "Agora › Liens d'abonnement"
 
-#: index.php:281
-msgid "Reset"
-msgstr "Réinitialiser"
+#: _widgets.php:136
+msgid "Subscribe"
+msgstr "S'abonner"
 
-#: index.php:282
-msgid "Reset messages count"
-msgstr "Réinitialiser le nombre de messages"
+#: _widgets.php:137
+msgid "Feeds type:"
+msgstr "Types de fil :"
 
-#: index.php:391
-msgid "Are you sure you want to delete selected threads?"
-msgstr "Êtes-vous sûr de vouloir supprimer les discussions sélectionnées ?"
+#: _widgets.php:144
+msgid "Agora › Connected users"
+msgstr "Agora › Utilisateurs connectés"
 
-#: index.php:404
-#: index.php:409
-#: messages.php:152
-#: messages.php:157
-msgid "Filters"
-msgstr "Filtres"
+#: _widgets.php:146
+msgid "Link to all users:"
+msgstr "Lien vers tous les utilisateurs&nbsp;:"
 
-#: index.php:412
-#: messages.php:177
-msgid "Author:"
-msgstr "Auteur :"
+#: _widgets.php:146
+msgid "All users"
+msgstr "Tous les utilisateurs"
 
-#: index.php:416
-#: messages.php:160
-msgid "Status:"
-msgstr "État :"
+#: _widgets.php:147
+msgid "Message if nobody connected:"
+msgstr "Message si personne de connecté&nbsp;:"
 
-#: index.php:421
-msgid "Selected:"
-msgstr "Sélectionné :"
+#: _widgets.php:147
+msgid "Nobody is connected."
+msgstr "Personne n'est connecté."
 
-#: index.php:423
-msgid "Month:"
-msgstr "Mois :"
+#: default-templates/agora_401.html:8
+#: default-templates/agora_401.html:13
+#: default-templates/agora_401.html:35
+msgid "Authentication required"
+msgstr "Authentification nécessaire"
 
-#: index.php:425
-msgid "Lang:"
-msgstr "Langue :"
+#: default-templates/agora_401.html:20
+#: default-templates/agora_editmessage.html:26
+#: default-templates/agora_editpost.html:26
+#: default-templates/agora_login.html:25
+#: default-templates/agora_newpost.html:25
+#: default-templates/agora_people.html:24
+#: default-templates/agora_post.html:25
+#: default-templates/agora_preferences.html:24
+#: default-templates/agora_profile.html:24
+#: default-templates/agora_recover.html:25
+#: default-templates/agora_register.html:25
+#: default-templates/agora_search.html:24
+#: inc/class.agora.widgets.php:30
+msgid "Home"
+msgstr "Accueil"
 
-#: index.php:430
-#: messages.php:168
-msgid "Order by:"
-msgstr "Trier par :"
+#: default-templates/agora_401.html:39
+#: inc/class.agora.urlhandlers.php:1452
+msgid "The document you are looking for need an authentication."
+msgstr "Le document que vous recherchez nécessite une authentification."
 
-#: index.php:432
-#: messages.php:171
-msgid "Sort:"
-msgstr "Trier :"
+#: default-templates/agora_editmessage.html:9
+#: default-templates/agora_editmessage.html:64
+msgid "Edit a message"
+msgstr "Modifier un message"
 
-#: index.php:435
-msgid "Entries per page"
-msgstr "Billets par page"
+#: default-templates/agora_editmessage.html:17
+#: default-templates/agora_login.html:10
+#: default-templates/agora_preferences.html:15
+#: default-templates/agora_recover.html:10
+#: default-templates/agora_recover.html:16
+#: default-templates/agora_register.html:10
+#: inc/class.agora.behaviors.php:236
+msgid "Agora"
+msgstr "Agora"
 
-#: index.php:437
-#: messages.php:182
-msgid "filter"
-msgstr "filtre"
+#: default-templates/agora_editmessage.html:27
+#: default-templates/agora_editpost.html:27
+#: default-templates/agora_newpost.html:26
+#: default-templates/agora_post.html:26
+msgid "Archives"
+msgstr "Archives"
 
-#: index.php:453
-msgid "Selected threads action:"
-msgstr "Action sur les discussions sélectionnées :"
+#: default-templates/agora_editmessage.html:46
+#: default-templates/agora_editpost.html:46
+#: default-templates/agora_editpost.html:46
+msgid "Back to the entry"
+msgstr "Retour au billet"
 
-#: index.php:455
-#: messages.php:213
-#: thread.php:563
-msgid "ok"
-msgstr "ok"
+#: default-templates/agora_editmessage.html:49
+#: default-templates/agora_editpost.html:56
+#: default-templates/agora_preferences.html:50
+#: default-templates/agora_profile.html:52
+msgid "Last update:"
+msgstr "Dernière mise à jour&nbsp;:"
 
-#: lib/admin.messages.pager.php:19
-#: thread.php:551
+#: default-templates/agora_editmessage.html:58
+#: default-templates/agora_editpost.html:64
+#: default-templates/agora_preferences.html:90
+msgid "save"
+msgstr "enregistrer"
+
+#: default-templates/agora_editmessage.html:70
+#: default-templates/agora_post.html:199
+msgid "Message"
+msgstr "Message"
+
+#: default-templates/agora_editmessage.html:80
+#: default-templates/agora_editpost.html:87
+#: default-templates/agora_newpost.html:83
+#: default-templates/agora_post.html:210
+msgid "preview"
+msgstr "prévisualiser"
+
+#: default-templates/agora_editpost.html:9
+#: default-templates/agora_editpost.html:17
+msgid "Edit entry"
+msgstr "Modifier le billet"
+
+#: default-templates/agora_editpost.html:67
+msgid "Edit the entry"
+msgstr "Modifier le billet"
+
+#: default-templates/agora_editpost.html:70
+#: default-templates/agora_newpost.html:65
+msgid "Title"
+msgstr "Titre"
+
+#: default-templates/agora_editpost.html:77
+#: default-templates/agora_newpost.html:73
+#: index.php:51
+msgid "Content"
+msgstr "Contenu"
+
+#: default-templates/agora_login.html:54
+#: default-templates/agora_recover.html:57
+#: default-templates/agora_register.html:56
+#: index.php:35
+#: lib/agora.pager.php:35
+msgid "Username"
+msgstr "Identifiant"
+
+#: default-templates/agora_login.html:59
+msgid "Password"
+msgstr "Mot de passe"
+
+#: default-templates/agora_login.html:64
+msgid "Remember my ID on this computer"
+msgstr "Se souvenir de mon identifiant sur cet ordinateur"
+
+#: default-templates/agora_login.html:71
+msgid "login"
+msgstr "se connecter"
+
+#: default-templates/agora_newpost.html:59
+#: default-templates/agora_newpost.html:84
+#: default-templates/agora_post.html:190
+#: default-templates/agora_post.html:211
+#: default-templates/agora_register.html:74
+msgid "send"
+msgstr "envoyer"
+
+#: default-templates/agora_people.html:8
+#: default-templates/agora_people.html:10
+#: default-templates/agora_people.html:16
+#: default-templates/agora_people.html:47
+#: default-templates/agora_people.html:49
+#: default-templates/agora_search.html:8
+#: default-templates/agora_search.html:10
+#: default-templates/agora_search.html:16
+#: default-templates/agora_search.html:54
+#: default-templates/agora_search.html:56
+msgid "Userlist"
+msgstr "Liste des utilisateurs"
+
+#: default-templates/agora_people.html:41
+msgid "members"
+msgstr "membres"
+
+#: default-templates/agora_people.html:55
+#: default-templates/agora_people.html:63
+#: default-templates/agora_preferences.html:79
+#: default-templates/agora_search.html:62
+#: default-templates/agora_search.html:70
+msgid "Website"
+msgstr "Site web"
+
+#: default-templates/agora_people.html:56
+#: default-templates/agora_search.html:63
+msgid "Subscription date"
+msgstr "Date d'inscription"
+
+#: default-templates/agora_people.html:62
+#: default-templates/agora_preferences.html:69
+#: default-templates/agora_search.html:69
+msgid "Name or nickname"
+msgstr "Nom ou pseudo"
+
+#: default-templates/agora_post.html:159
+msgid "Your entry has been published."
+msgstr "Votre billet a été publié."
+
+#: default-templates/agora_post.html:163
+msgid "Your entry has been submitted and will be reviewed for publication."
+msgstr "Votre billet a été enregistré et sera publié après validation."
+
+#: default-templates/agora_post.html:167
+msgid "Entry has been successfully updated."
+msgstr "Billet mis à jour avec succès."
+
+#: default-templates/agora_post.html:171
+msgid "Your message has been published."
+msgstr "Votre message a été publié."
+
+#: default-templates/agora_post.html:175
+msgid "Your message has been submitted and will be reviewed for publication."
+msgstr "Votre message a été enregistré et sera publié après validation."
+
+#: default-templates/agora_post.html:179
+#: message.php:229
+msgid "Message has been successfully updated."
+msgstr "Message mis à jour avec succès."
+
+#: default-templates/agora_post.html:186
+msgid "Your message"
+msgstr "Votre message"
+
+#: default-templates/agora_post.html:194
+msgid "Add a message"
+msgstr "Ajouter un message"
+
+#: default-templates/agora_post.html:217
+msgid "You should be authenticated to post an message."
+msgstr "Vous devez être authentifié pour écrire un message."
+
+#: default-templates/agora_preferences.html:8
+msgid "Preferences"
+msgstr "Préférences"
+
+#: default-templates/agora_preferences.html:58
+msgid "Personal information has been successfully updated."
+msgstr "Informations personnelles mises à jour avec succès."
+
+#: default-templates/agora_preferences.html:63
+msgid "My informations"
+msgstr "Mes informations"
+
+#: default-templates/agora_preferences.html:74
+#: default-templates/agora_recover.html:62
+#: default-templates/agora_register.html:61
+msgid "Email address"
+msgstr "Adresse email"
+
+#: default-templates/agora_recover.html:8
+msgid "Recover"
+msgstr "Récupérer"
+
+#: default-templates/agora_recover.html:51
+msgid "Request a new password"
+msgstr "Demander un nouveau mot de passe"
+
+#: default-templates/agora_recover.html:75
+msgid "recover"
+msgstr "récupérer"
+
+#: default-templates/agora_register.html:8
+#: default-templates/agora_register.html:16
+#: inc/class.agora.public.behaviors.php:153
+msgid "Register"
+msgstr "S'enregistrer"
+
+#: default-templates/agora_register.html:51
+msgid "Register an account"
+msgstr "Enregister un compte"
+
+#: inc/class.agora.behaviors.php:117
+#: lib/agora.pager.php:143
 msgid "No message"
 msgstr "Aucun message"
 
-#: lib/admin.messages.pager.php:107
-#: message.php:360
-#: thread.php:615
-msgid "Edit this message"
-msgstr "Modifier ce message"
+#: inc/class.agora.behaviors.php:119
+msgid "One message"
+msgstr "Un message"
 
-#: message.php:26
-msgid "New message"
-msgstr "Nouveau message"
+#: inc/class.agora.behaviors.php:121
+msgid "%d messages"
+msgstr "%d messages"
 
-#: message.php:62
-msgid "This message does not exist."
-msgstr "Ce message n'existe pas."
+#: inc/class.agora.behaviors.php:127
+msgid "Messages:"
+msgstr "Messages&nbsp;:"
 
-#: message.php:202
-msgid "Are you sure you want to delete this message?"
-msgstr "Êtes-vous sûr de vouloir supprimer les messages sélectionnés"
-
-#: message.php:224
-msgid "Message has been successfully updated."
-msgstr "Le message a été mis à jour avec succès."
-
-#: message.php:227
-msgid "Message has been successfully created."
-msgstr "Le message a été créé avec succès."
-
-#: message.php:236
-msgid "Don't forget to validate your XHTML conversion by saving your message."
-msgstr "Enregistrez votre message pour valider la transformation en XHTML."
-
-#: message.php:260
-msgid "Message status:"
-msgstr "État du message :"
-
-#: message.php:264
-#: thread.php:395
-msgid "Published on:"
-msgstr "Publié le :"
-
-#: message.php:267
-#: thread.php:398
-msgid "Text formating:"
-msgstr "Format du texte :"
-
-#: message.php:269
-#: thread.php:400
-msgid "Convert to XHTML"
-msgstr "Convertir en XHTML"
-
-#: message.php:282
-#: options.php:86
-#: thread.php:469
-#: thread.php:477
-msgid "Required field"
-msgstr "Champ obligatoire"
-
-#: message.php:283
-#: thread.php:478
-msgid "Content:"
-msgstr "Contenu :"
-
-#: message.php:324
-#: thread.php:579
-msgid "IP address"
-msgstr "Adresse IP"
-
-#: messages.php:34
-msgid "Entry title"
-msgstr "Titre du billet"
-
-#: messages.php:98
-#: thread.php:526
-msgid "publish"
-msgstr "publier"
-
-#: messages.php:99
-#: thread.php:527
-msgid "unpublish"
-msgstr "hors ligne"
-
-#: messages.php:100
-#: thread.php:528
-msgid "mark as pending"
-msgstr "en attente"
-
-#: messages.php:101
-#: thread.php:529
-msgid "mark as junk"
-msgstr "indésirable"
-
-#: messages.php:139
-msgid "Are you sure you want to delete these messages?"
-msgstr "Êtes-vous sûr de vouloir supprimer les messages sélectionnés ?"
-
-#: messages.php:164
-msgid "Messages per page"
-msgstr "Messages par page"
-
-#: messages.php:193
-msgid "You have one spam message."
-msgstr "Vous avez un message spam."
-
-#: messages.php:194
-msgid "Show it."
-msgstr "L'afficher"
-
-#: messages.php:196
-msgid "You have %s spam messages."
-msgstr "Vous avez %s messages spam."
-
-#: messages.php:197
-msgid "Show them."
-msgstr "Les afficher."
-
-#: messages.php:210
-#: thread.php:559
-msgid "Selected messages action:"
-msgstr "Action pour les messages sélectionnés"
-
-#: messages_actions.php:91
-msgid "Comments"
-msgstr "Commentaires"
-
-#: messages_actions.php:93
-msgid "back"
-msgstr "retour"
-
-#: options.php:30
-msgid "No agora announce."
-msgstr "Aucune annonce pour l'agora"
-
-#: options.php:50
-msgid "Configuration successfully updated."
-msgstr "Configuration mise à jour avec succès."
-
-#: options.php:72
-msgid "Plugin activation"
-msgstr "Activation de l'extension"
-
-#: options.php:77
-msgid "Enable Agora"
-msgstr "Activer Agora"
-
-#: options.php:84
-msgid "Presentation options"
-msgstr "Options de présentation"
-
-#: options.php:87
-msgid "Agora announce:"
-msgstr "Annonce de l'Agora"
-
-#: options.php:97
-msgid "Display %s messages per feed"
-msgstr "Afficher %s messages par fil"
-
-#: options.php:108
-msgid "Save configuration"
-msgstr "Enregistrer la configuration"
-
-#: thread.php:82
-#: thread.php:85
-#: thread.php:88
-msgid "Most used"
-msgstr "Plus utilisées"
-
-#: thread.php:82
-#: thread.php:86
-msgid "Available"
-msgstr "Disponible"
-
-#: thread.php:105
-msgid "This thread does not exist."
-msgstr "Cette discussion n'existe pas."
-
-#: thread.php:137
-msgid "next thread"
-msgstr "discussion suivante"
-
-#: thread.php:144
-msgid "previous thread"
-msgstr "discussion précédente"
-
-#: thread.php:297
-msgid "Are you sure you want to delete this thread?"
-msgstr "Êtes-vous sûr de vouloir supprimer cette discussion ?"
-
-#: thread.php:320
-msgid "Thread has been successfully updated."
-msgstr "La discusssion a été mise à jour avec succès."
-
-#: thread.php:323
-msgid "Thread has been successfully created."
-msgstr "La discussion a été créée avec succès."
-
-#: thread.php:326
-msgid "File has been successfully attached."
-msgstr "Fichier attaché avec succès."
-
-#: thread.php:329
-msgid "Attachment has been successfully removed."
-msgstr "Pièce jointe retirée avec succès."
-
-#: thread.php:339
-msgid "Don't forget to validate your XHTML conversion by saving your post."
-msgstr "Enregistrez votre billet pour valider la transformation en XHTML."
-
-#: thread.php:346
-msgid "View thread"
-msgstr "Visualiser la discussion"
-
-#: thread.php:353
-msgid "Preview thread"
-msgstr "Prévisualier la discussion"
-
-#: thread.php:391
-msgid "Thread status:"
-msgstr "État de la discussion :"
-
-#: thread.php:404
+#: inc/class.agora.behaviors.php:130
 msgid "Accept messages"
 msgstr "Accepter les messages"
 
-#: thread.php:406
-msgid "Selected thread"
-msgstr "Discussion sélectionnée"
+#: inc/class.agora.behaviors.php:236
+msgid "Count messages"
+msgstr "Compter les messages"
 
-#: thread.php:408
-msgid "Thread lang:"
-msgstr "Langue de la discussion :"
+#: inc/class.agora.behaviors.php:237
+msgid "Allow messages"
+msgstr "Accepter les messages"
 
-#: thread.php:411
-msgid "Thread password:"
-msgstr "Mot de passe de la discussion :"
+#: inc/class.agora.behaviors.php:238
+msgid "Disallow messages"
+msgstr "Refuser les messages"
 
-#: thread.php:416
-msgid "Basename:"
-msgstr "URL spécifique :"
+#: inc/class.agora.behaviors.php:338
+msgid "The backup file does not appear to be well formed."
+msgstr "Le fichier de sauvegarde ne semble pas être correctement formaté"
 
-#: thread.php:420
-msgid "Warning: If you set the URL manually, it may conflict with another thread."
-msgstr "Attention : si vous indiquez l'URL manuellement, celle-ci peut entrer en conflit avec une autre discussion."
+#: inc/class.agora.mail.php:24
+msgid "Account confirmation request"
+msgstr "Demande de confirmation de compte"
 
-#: thread.php:443
-msgid "open"
-msgstr "ouvrir"
+#: inc/class.agora.mail.php:26
+msgid "Welcome to %s"
+msgstr "Bienvenue sur %s"
 
-#: thread.php:447
-msgid "remove"
-msgstr "supprimer"
+#: inc/class.agora.mail.php:27
+msgid "To verify your e-mail address, please click on the following link:"
+msgstr "Pour vérifier votre adresse e-mail, cliquez sur le lien suivant"
 
-#: thread.php:456
-msgid "No attachment."
-msgstr "Aucune pièce jointe"
+#: inc/class.agora.mail.php:31
+msgid "Your informations:"
+msgstr "Vos informations&nbsp;:"
 
-#: thread.php:458
-msgid "Add files to this page"
-msgstr "Ajouter un fichier à la page"
+#: inc/class.agora.mail.php:32
+msgid "User: %s"
+msgstr "Utilisateur&nbsp;: %s"
 
-#: thread.php:473
-msgid "Excerpt:"
-msgstr "Extrait :"
+#: inc/class.agora.mail.php:33
+msgid "Password: %s"
+msgstr "Mot de passe&nbsp;: %s"
 
-#: thread.php:482
-msgid "Notes:"
-msgstr "Notes :"
+#: inc/class.agora.mail.php:34
+#: inc/class.agora.mail.php:49
+msgid "Connection URL: %s"
+msgstr "URL de connexion&nbsp;: %s"
 
-msgid "finish"
-msgstr "terminer"
+#: inc/class.agora.mail.php:42
+msgid "Account validation"
+msgstr "Validation du compte"
 
-msgid "profile"
-msgstr "profil"
+#: inc/class.agora.mail.php:45
+msgid "Hello %s"
+msgstr "Bonjour %s"
 
-msgid "Text:"
-msgstr "Texte :"
+#: inc/class.agora.mail.php:46
+msgid "Your account has been validated by the administrators. You can participate to %s."
+msgstr "Votre compte a été validé par les administrateurs. Vous pouvez participer à %s."
 
-msgid "Button:"
-msgstr "Bouton :"
+#: inc/class.agora.mail.php:48
+msgid "Reminder:"
+msgstr "Rappel&nbsp;:"
 
-msgid "Disconnect"
-msgstr "Se déconnecter"
+#: inc/class.agora.mail.php:57
+msgid "Password reset"
+msgstr "Réinitialisation du mot de passe"
 
-msgid "Last thread:"
-msgstr "Dernière discussion :"
+#: inc/class.agora.mail.php:60
+msgid "Someone has requested to reset the password for the following website and username."
+msgstr "Quelqu'un a demandé à réinitialiser le mot de passe pour le site suivant et l'utilisateur."
 
-msgid "Last message:"
-msgstr "Dernier message :"
+#: inc/class.agora.mail.php:61
+#: inc/class.agora.mail.php:71
+msgid "Username:"
+msgstr "Nom d'utilisateur :"
 
-msgid "Edit the post"
-msgstr "Modifier la discussion"
+#: inc/class.agora.mail.php:62
+msgid "To reset your password visit the following address, otherwise just ignore this email and nothing will happen."
+msgstr "Pour réinitialiser votre mot de passe, rendez-vous à l'adresse suivante. Sinon ignorez simplement ce message et rien ne se passera."
 
-msgid "Edit a post"
-msgstr "Modifier la discussion"
+#: inc/class.agora.mail.php:69
+msgid "Your new password"
+msgstr "Votre nouveau mot de passe"
 
-msgid "Your new thread"
-msgstr "Votre nouvelle discussion"
+#: inc/class.agora.mail.php:72
+msgid "Password:"
+msgstr "Mot de passe :"
 
-msgid "Announcements"
-msgstr "Annonces"
+#: inc/class.agora.mail.php:95
+msgid "This is a post-only mailing. Replies to this message are not monitored or answered."
+msgstr "Il s'agit d'un envoi automatique. Les réponses à ce message ne sont pas prises en compte."
 
-msgid "Welcome to the forum of %s"
-msgstr "Bienvenue sur le forum de %s"
+#: inc/class.agora.media.php:97
+msgid "The 'public' directory does not exist."
+msgstr "Le répertoire 'public' n'existe pas."
 
-msgid "Forum"
-msgstr "Forum"
+#: inc/class.agora.media.php:103
+#: inc/class.agora.media.php:113
+msgid "The '%s' directory cannot be modified."
+msgstr "Le répertoire '%s' ne peut pas être modifié."
 
-msgid "Agora connection:"
-msgstr "Connexion à l'Agora :"
+#: inc/class.agora.media.php:123
+msgid "Unable to create images."
+msgstr "Impossible de créer les images."
+
+#: inc/class.agora.media.php:130
+msgid "Invalid file type."
+msgstr "Type de fichier non valide."
+
+#: inc/class.agora.media.php:136
+msgid "An error occurred while writing the file."
+msgstr "Une erreur est survenue pendant l'écriture du fichier."
+
+#: inc/class.agora.media.php:141
+msgid "Uploaded image is not 800 pixels wide."
+msgstr "L'image fournie de fait pas 800 pixels de large."
+
+#: inc/class.agora.php:38
+#: lib/agora.pager.php:93
+msgid "not verified"
+msgstr "non vérifié"
+
+#: inc/class.agora.php:39
+#: inc/class.agora.php:44
+#: inc/class.agora.template.php:290
+#: lib/agora.pager.php:89
+#: lib/agora.pager.php:109
+#: lib/agora.pager.php:213
+msgid "pending"
+msgstr "en attente"
+
+#: inc/class.agora.php:40
+#: lib/agora.pager.php:86
+msgid "suspended"
+msgstr "suspendu"
+
+#: inc/class.agora.php:41
+#: lib/agora.pager.php:83
+msgid "active"
+msgstr "actif"
+
+#: inc/class.agora.php:43
+#: inc/class.agora.template.php:289
+#: lib/agora.pager.php:216
+msgid "junk"
+msgstr "indésirable"
+
+#: inc/class.agora.php:45
+#: inc/class.agora.template.php:291
+#: lib/agora.pager.php:106
+#: lib/agora.pager.php:210
+msgid "scheduled"
+msgstr "programmé"
+
+#: inc/class.agora.php:46
+#: inc/class.agora.template.php:292
+#: lib/agora.pager.php:103
+#: lib/agora.pager.php:207
+msgid "unpublished"
+msgstr "non publié"
+
+#: inc/class.agora.php:47
+#: inc/class.agora.template.php:293
+#: lib/agora.pager.php:100
+#: lib/agora.pager.php:204
+msgid "published"
+msgstr "publié"
+
+#: inc/class.agora.php:244
+#: inc/class.agora.php:264
+#: inc/class.agora.urlhandlers.php:250
+msgid "This is a wrong registration URL. Registration failed."
+msgstr "C'est une mauvaise URL d'inscription. L'inscription a échoué."
+
+#: inc/class.agora.php:274
+msgid "You need to be administrator to moderate users."
+msgstr "Vous devez être administrateur pour modérer les utilisateurs."
+
+#: inc/class.agora.php:281
+msgid "User_id \"%s\" is unchanged."
+msgstr "L'identifiant \"%s\" est inchangé."
+
+#: inc/class.agora.php:321
+#: inc/class.agora.php:329
+msgid "Authentication failed."
+msgstr "L'authentification a échoué."
+
+#: inc/class.agora.php:325
+msgid "This user is not allowed to log in."
+msgstr "Cet utlisateur n'est pas autorisé à se connecter."
+
+#: inc/class.agora.php:372
+#: inc/class.agora.php:375
+msgid "You are not allowed to close this entry"
+msgstr "Vous n'êtes pas autorisé à fermer ce billet"
+
+#: inc/class.agora.php:393
+msgid "You are not allowed to mark this entry as closed"
+msgstr "Vous n'êtes pas autorisé à marquer ce billet comme fermé"
+
+#: inc/class.agora.php:682
+msgid "You are not allowed to create a message"
+msgstr "Vous n'êtes pas autorisé à créer des messages"
+
+#: inc/class.agora.php:726
+msgid "You are not allowed to update messages"
+msgstr "Vous n'êtes pas autorisé à modifier les messages"
+
+#: inc/class.agora.php:732
+#: inc/class.agora.php:738
+#: inc/class.agora.php:812
+msgid "No such message ID"
+msgstr "Identifiant du message inconnu"
+
+#: inc/class.agora.php:745
+msgid "You are not allowed to update this message"
+msgstr "Vous n'êtes pas autorisé à modifier ce message"
+
+#: inc/class.agora.php:774
+#: inc/class.agora.php:787
+msgid "You are not allowed to change this message status"
+msgstr "Vous n'êtes pas autorisé à modifier l'état de ce billet"
+
+#: inc/class.agora.php:806
+msgid "You are not allowed to delete messages"
+msgstr "Vous n'êtes pas autorisé à supprimer des billets"
+
+#: inc/class.agora.php:828
+msgid "You are not allowed to delete this message"
+msgstr "Vous n'êtes pas autorisé à supprimer ce message"
+
+#: inc/class.agora.php:843
+msgid "No message content"
+msgstr "Aucun contenu du message"
+
+#: inc/class.agora.php:855
+msgid "No message content xhtml"
+msgstr "Aucun contenu xhtml du message"
+
+#: inc/class.agora.public.behaviors.php:150
+msgid "I forgot my password"
+msgstr "J'ai oublié mon mot de passe"
+
+#: inc/class.agora.public.behaviors.php:183
+msgid "Category"
+msgstr "Catégorie"
+
+#: inc/class.agora.public.behaviors.php:189
+msgid "Excerpt (optional)"
+msgstr "Extrait (facultatif)"
+
+#: inc/class.agora.public.behaviors.php:275
+msgid "Name or nickname:"
+msgstr "Nom ou pseudonyme&nbsp;:"
+
+#: inc/class.agora.public.behaviors.php:288
+msgid "New password:"
+msgstr "Nouveau mot de passe :"
+
+#: inc/class.agora.public.behaviors.php:290
+msgid "Confirm password:"
+msgstr "Confirmez le mot de passe :"
+
+#: inc/class.agora.public.behaviors.php:296
+msgid "Informations:"
+msgstr "Informations&nbsp;:"
+
+#: inc/class.agora.public.behaviors.php:302
+msgid "Avatar:"
+msgstr "Avatar&nbsp;:"
+
+#: inc/class.agora.public.behaviors.php:345
+msgid "publish this entry"
+msgstr "publier ce billet"
+
+#: inc/class.agora.public.behaviors.php:345
+#: inc/class.agora.public.behaviors.php:385
+#: messages.php:109
+msgid "publish"
+msgstr "publier"
+
+#: inc/class.agora.public.behaviors.php:350
+msgid "unpublish this entry"
+msgstr "mettre hors ligne ce billet"
+
+#: inc/class.agora.public.behaviors.php:350
+#: inc/class.agora.public.behaviors.php:390
+#: messages.php:110
+msgid "unpublish"
+msgstr "mettre hors ligne"
+
+#: inc/class.agora.public.behaviors.php:367
+msgid "edit this entry"
+msgstr "modifier ce billet"
+
+#: inc/class.agora.public.behaviors.php:367
+#: inc/class.agora.public.behaviors.php:402
+msgid "edit"
+msgstr "modifier"
+
+#: inc/class.agora.public.behaviors.php:385
+msgid "publish this message"
+msgstr "publier ce message"
+
+#: inc/class.agora.public.behaviors.php:390
+msgid "unpublish this message"
+msgstr "mettre en hors ligne ce message"
+
+#: inc/class.agora.public.behaviors.php:402
+msgid "edit this message"
+msgstr "modifier ce message"
+
+#: inc/class.agora.urlhandlers.php:85
+msgid "The e-mail was sent successfully to %s."
+msgstr "Le message a été envoyé avec succès à %s."
+
+#: inc/class.agora.urlhandlers.php:100
+msgid "Your new password is in your mailbox."
+msgstr "Votre nouveau mot de passe est dans votre boîte à lettres."
+
+#: inc/class.agora.urlhandlers.php:177
+#: inc/class.agora.urlhandlers.php:457
+msgid "You must provide a valid email"
+msgstr "Vous devez fournir une adresse e-mail valide."
+
+#: inc/class.agora.urlhandlers.php:182
+msgid "User \"%s\" already exists."
+msgstr "L'utilisateur \"%s\" existe déjà."
+
+#: inc/class.agora.urlhandlers.php:187
+msgid "User ID must contain at least 2 characters using letters, numbers or symbols."
+msgstr "L'identifiant utilisateur doit contenir au moins 2 caractères composés de lettres, chiffres ou symboles."
+
+#: inc/class.agora.urlhandlers.php:200
+msgid "Your account %s is almost ready. You will receive an email with further information."
+msgstr "Votre compte %s est presque prêt. Vous allez recevoir un e-mail contenant les informations nécessaires."
+
+#: inc/class.agora.urlhandlers.php:222
+msgid "log in"
+msgstr "vous connecter"
+
+#: inc/class.agora.urlhandlers.php:229
+msgid "User %s is already registred. You can %s."
+msgstr "L'utilisateur %s est déjà inscrit. Vous pouvez vous %s."
+
+#: inc/class.agora.urlhandlers.php:235
+msgid "Your account (%s) is now awaiting validation. Be patient."
+msgstr "Votre compte (%s) est en attente de validation. Soyez patient."
+
+#: inc/class.agora.urlhandlers.php:239
+msgid "Your account (%s) is now registred. You can %s."
+msgstr "Votre compte (%s) est maintenant enregistré. Vous pouvez vous %s."
+
+#: inc/class.agora.urlhandlers.php:443
+msgid "You must confirm your password"
+msgstr "Vous devez confirmer votre mot de passe."
+
+#: inc/class.agora.urlhandlers.php:447
+msgid "Please, check your password. Passwords don't match"
+msgstr "Merci de vérifier vos mots de passe. Les mots de passe ne correspondent pas."
+
+#: inc/class.agora.urlhandlers.php:474
+msgid "User %s successfully updated."
+msgstr "L'utilisateur %s a été mis à jour avec succès."
+
+#: inc/class.agora.urlhandlers.php:610
+msgid "No title."
+msgstr "Aucun titre."
+
+#: inc/class.agora.urlhandlers.php:614
+msgid "No content."
+msgstr "Aucun contenu."
+
+#: inc/class.agora.widgets.php:234
+msgid "Nobody."
+msgstr "Personne."
+
+#: inc/class.agora.widgets.php:240
+msgid "Moderator"
+msgstr "Modérateur"
+
+#: inc/class.rs.public.agora.php:28
+msgid "Read"
+msgstr "Lire"
+
+#: index.php:36
+#: index.php:48
+#: lib/agora.pager.php:41
+#: lib/agora.pager.php:157
+#: messages.php:35
+msgid "Status"
+msgstr "État"
+
+#: index.php:37
+#: lib/agora.pager.php:37
+msgid "Display name"
+msgstr "Pseudonyme"
+
+#: index.php:38
+msgid "Number of entries"
+msgstr "Nombre de billets"
+
+#: index.php:39
+msgid "Number of messages"
+msgstr "Nombre de messages"
+
+#: index.php:49
+msgid "Active"
+msgstr "Activer"
+
+#: index.php:50
+msgid "Ban"
+msgstr "Bannir"
+
+#: index.php:52
+msgid "Moderate"
+msgstr "Modérer"
+
+#: index.php:53
+msgid "Not moderate"
+msgstr "Ne pas modérer"
+
+#: index.php:157
+msgid "Selected user(s) is (are) now active."
+msgstr "Les utlisateurs sélectionnés sont maintenant actifs."
+
+#: index.php:158
+msgid "Selected sers(s) is (are) now banned."
+msgstr "Les utlisateurs sélectionnés sont maintenant bannis."
+
+#: index.php:159
+msgid "Selected user(s) is (are) now moderated."
+msgstr "Les utlisateurs sélectionnés sont maintenant modérés."
+
+#: index.php:160
+msgid "Selected users(s) is (are) not moderated anymore."
+msgstr "Les utlisateurs sélectionnés ne sont plus modérés."
+
+#: lib/agora.pager.php:36
+msgid "Email"
+msgstr "E-mail"
+
+#: lib/agora.pager.php:38
+msgid "Content status"
+msgstr "État du contenu"
+
+#: lib/agora.pager.php:74
+msgid "moderator"
+msgstr "modérateur"
+
+#: lib/agora.pager.php:234
+msgid "Edit this message"
+msgstr "Modifier ce message"
+
+#: message.php:27
+msgid "New message"
+msgstr "Nouveau message"
+
+#: message.php:63
+msgid "This message does not exist."
+msgstr "Ce message n'existe pas."
+
+#: message.php:77
+#: message.php:260
+msgid "Edit message"
+msgstr "Modifier le message"
+
+#: message.php:207
+msgid "Are you sure you want to delete this message?"
+msgstr "Êtes vous sûr de vouloir supprimer ce message ?"
+
+#: message.php:232
+msgid "Message has been successfully created."
+msgstr "Le message a été créé avec succès."
+
+#: message.php:241
+msgid "Don't forget to validate your XHTML conversion by saving your message."
+msgstr "N'oubliez pas de valider votre conversion XHTML en enregistrant votre message"
+
+#: message.php:265
+msgid "Message status:"
+msgstr "État du message&nbsp;:"
+
+#: messages.php:150
+msgid "Are you sure you want to delete these messages?"
+msgstr "Êtes vous sûr de vouloir supprimer ces messages ?"
+
+#: messages.php:177
+msgid "Entry ID:"
+msgstr "Identifiant du billet&nbsp;:"
+
+#: messages.php:194
+msgid "Messages per page"
+msgstr "Messages par page"
+
+#: messages.php:208
+msgid "You have one spam message."
+msgstr "Vous avez un message spam."
+
+#: messages.php:211
+msgid "You have %s spam messages."
+msgstr "Vous avez %s messages spam."
+
+#: messages.php:225
+msgid "Selected messages action:"
+msgstr "Action pour les messages sélectionnés&nbsp;:"
+
+#: messages_actions.php:94
+msgid "Comments"
+msgstr "Commentaires"
+
+#: messages_actions.php:96
+msgid "back"
+msgstr "retour"
+
+#: options.php:51
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: options.php:51
+msgid "Manual display"
+msgstr "Affichage manuel"
+
+#: options.php:51
+msgid "Automatic display"
+msgstr "Affichage automatique"
+
+#: options.php:128
+msgid "Configuration successfully updated."
+msgstr "La configuration a été mis à jour avec succès."
+
+#: options.php:148
+msgid "Main settings"
+msgstr "Paramètres principaux"
+
+#: options.php:151
+msgid "Enable agora:"
+msgstr "Activer agora&nbsp;:"
+
+#: options.php:153
+msgid "When you activate agora, you enable new widgets and all options below."
+msgstr "Une fois agora activée, de nouveaux widgets et les options ci-dessous seront disponibles."
+
+#: options.php:156
+msgid "Messages system:"
+msgstr "Système de messages&nbsp;:"
+
+#: options.php:158
+msgid "Messages system replaces comments system for answering entries. It requires user authentication."
+msgstr "Le système de messages remplace le système des commentaires pour répondre aux billets. Il requiert l'authentification utlisateur."
+
+#: options.php:161
+msgid "Registration:"
+msgstr "Inscription&nbsp;:"
+
+#: options.php:165
+msgid "Registration moderation:"
+msgstr "Inscription modérée&nbsp;:"
+
+#: options.php:167
+msgid "A confirmation by administrators is required for new subscriptions."
+msgstr "Une confirmation des administrateurs est requise pour les nouvelles inscriptions."
+
+#: options.php:170
+msgid "New entry:"
+msgstr "Nouveau billet&nbsp;:"
+
+#: options.php:171
+msgid "Users can can post."
+msgstr "Les utilisateurs peuvent écrire des billets."
+
+#: options.php:175
+msgid "User settings"
+msgstr "Paramètres utilisateur"
+
+#: options.php:179
+msgid "Password recovery:"
+msgstr "Récupération de mot de passe&nbsp;:"
+
+#: options.php:184
+msgid "Nickname edition:"
+msgstr "Modification du pseudonyme&nbsp;:"
+
+#: options.php:188
+msgid "Description edition:"
+msgstr "Modification de la description&nbsp;:"
+
+#: options.php:194
+msgid "Avatars:"
+msgstr "Avatars&nbsp;:"
+
+#: options.php:196
+msgid "Default avatar:"
+msgstr "Avatar par défaut&nbsp;:"
+
+#: options.php:202
+#: options.php:203
+msgid "Default avatar"
+msgstr "Avatar par défaut"
+
+#: options.php:209
+msgid "Miscellaneous settings"
+msgstr "Paramètres divers"
+
+#: options.php:213
+msgid "Entry excerpt:"
+msgstr "Extrait de billet&nbsp;:"
+
+#: options.php:221
+msgid "New content status:"
+msgstr "État du nouveau contenu&nbsp;:"
+
+#: options.php:223
+msgid "Does not apply to comments. It is default status of the entries and messages posted by new users. You can change for each y user later."
+msgstr "C'est l'état par défaut des messages postés par les nouveaux utilisateurs.Vous pourrez le changer pour chaque utilisateur plus tard."
+
+#: options.php:226
+msgid "Global authentication:"
+msgstr "Authentification globale&nbsp;:"
+
+#: options.php:228
+msgid "Global authentication forces visitors to log in to read the blog."
+msgstr "L'authentification globale force les visiteurs à se connecter pour lire le blog."
+
+#: options.php:232
+msgid "Uncategorized entries:"
+msgstr "Billets non catégorisés"
+
+#: options.php:237
+msgid "Community mode:"
+msgstr "Mode communauté&nbsp;:"
+
+#: options.php:239
+msgid "It enables 'Connected users' widget, member list and profile URLs."
+msgstr "Cela active le widget 'utilisateurs connectés' et les URLs des profils et la liste des utilisateurs."
+
+#: options.php:242
+msgid "Forum mode:"
+msgstr "Mode forum&nbsp;:"
+
+#: options.php:244
+msgid "When a published message is added to an entry, its published date is updated."
+msgstr "Quand un message publié est ajouté à un billet, sa date de publication est mis à jour."
+
+#: options.php:247
+msgid "Wiki mode:"
+msgstr "Mode wiki&nbsp;:"
+
+#: options.php:249
+msgid "Every authenticated user can edit any entry."
+msgstr "Tout utilisateur authentifié peut modifier tout billet."
+
+#: options.php:250
+msgid "Display %s messages per feed"
+msgstr "Afficher %s messages par fil"
+
+#: options.php:255
+msgid "Moderations links:"
+msgstr "Liens de modération&nbsp;"
+
+#: options.php:257
+msgid "It displays automatically moderation links on your blog."
+msgstr "Cela permet d'afficher automatiquement les liens de modération sur votre blog."
+
+msgid "Display link to userlist"
+msgstr "Affiche le lien vers la liste des utitlisateurs"
+
+msgid "This message has been published."
+msgstr "Ce message a été publié."
+
+msgid "This message has been unpublished."
+msgstr "Ce message n'est plus publié."
+
+msgid "No log message"
+msgstr "Pas de message dans le journal"
+
+msgid "Entries feed"
+msgstr "Fil des billets"
+
+msgid "Comments feed"
+msgstr "Fil des commentaires"
 
 msgid "no message"
 msgstr "aucun message"
 
 msgid "one message"
 msgstr "un message"
+
+msgid "no entry"
+msgstr "aucun billet"
+
+msgid "one entry"
+msgstr "un billet"
+
+msgid "%d entries"
+msgstr "%d billets"
 

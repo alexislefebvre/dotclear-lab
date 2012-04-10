@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="ROBOTS" content="NOARCHIVE,NOINDEX,NOFOLLOW" />
+  <meta name="GOOGLEBOT" content="NOSNIPPET" />
+
+  <title>{{tpl:lang Edit a message}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription cut_string="180" encode_html="1"}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
+  
+  {{tpl:include src="_head.html"}}
+
+</head>
+
+<body class="dc-editmessage">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+    <p id="navlinks">&#171; <a class="back" href="{{tpl:MessageEntryURL}}" title="{{tpl:lang Back to the entry}}">{{tpl:MessageEntryTitle}}</a>
+    </p>
+
+<p class="post-info">{{tpl:lang Last update:}} {{tpl:MessageDate upddt="1"}}, {{tpl:MessageTime upddt="1"}}</p>
+
+  <tpl:SysIfFormError>
+<p class="error">{{tpl:SysFormError}}</p>
+</tpl:SysIfFormError>
+
+<form action="{{tpl:SysSelfURI}}" method="post" id="comment-form">
+<div id="pr">
+<div class="post-content">{{tpl:MessageEditContent}}</div>
+<p class="buttons"><input type="submit" class="submit" value="{{tpl:lang save}}" />
+ {{tpl:SysBehavior behavior="publicEditMessageLinksAfter"}}
+ </p>
+</div>
+
+
+<h3>{{tpl:lang Edit a message}}</h3>
+<fieldset>
+
+<!-- # --BEHAVIOR-- publicEditFormBefore -->
+{{tpl:SysBehavior behavior="publicEditFormBefore"}}
+
+<p class="field"><label for="c_content">{{tpl:lang Message}}&nbsp;:</label>
+	<textarea name="c_content" id="c_content" cols="35"
+	rows="7">{{tpl:MessageEditContent raw="1" encode_html="1"}}</textarea>
+</p>
+
+<!-- # --BEHAVIOR-- publicEditFormAfter -->
+{{tpl:SysBehavior behavior="publicEditFormAfter"}}
+</fieldset>
+
+<fieldset>
+<p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
+</fieldset>
+
+</form>
+
+  </div>
+
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

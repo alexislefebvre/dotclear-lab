@@ -3,111 +3,68 @@
 #
 # This file is part of agora, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 Osku ,Tomtom and contributors
+# Copyright (c) 2009-2012 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 if ($core->blog->settings->agora->agora_flag)
 {
-	$core->addBehavior('adminDashboardIcons','agora_dashboard');
-
-	$_menu['Blog']->addItem(__('Threads'),
-		'plugin.php?p=agora',
-		'index.php?pf=agora/icon-small.png',
-		(preg_match('/plugin.php\?p=agora(&.*)?$/',$_SERVER['REQUEST_URI']))
-			&& (!preg_match('/(options|messages)/',$_SERVER['REQUEST_URI'])),
-		$core->auth->check('admin',$core->blog->id));
-
 	$_menu['Blog']->addItem(__('Messages'),
 		'plugin.php?p=agora&amp;act=messages',
-		'index.php?pf=agora/icon-other.png',
+		'index.php?pf=agora/icon-messages-16.png',
 		(preg_match('/plugin.php\?p=agora&act=messages(.*)?$/',$_SERVER['REQUEST_URI'])),
+		$core->auth->check('ussage,contentadmin',$core->blog->id));
+
+	$p = array('user_status' => -1);
+	$count = $core->agora->getUsers($p,true)->f(0);
+	 if ($count > 0 ) {
+		$label = sprintf(__('Public users <br/>(%s pending)'),$count);
+	} else {
+		$label = __('Public users');
+	}
+
+	$_menu['Blog']->addItem($label,
+		'plugin.php?p=agora',
+		'index.php?pf=agora/icon-users-16.png',
+		preg_match('/plugin.php\?p=agora(.*)?$/',$_SERVER['REQUEST_URI'])
+		&& (!preg_match('/(options|messages)/',$_SERVER['REQUEST_URI'])),
 		$core->auth->check('admin',$core->blog->id));
-}
-
-function agora_dashboard($core,$icons)
-{
-	$agora = new agora($core,false);
-	$thread_count = $core->blog->getPosts(array('post_type'=>'thread'),true)->f(0);
-	$str_threads = ($thread_count > 1) ? __('%d threads') : __('%d thread');
-
-	$message_count = $agora->getMessages(array(),true)->f(0);
-	$str_messages = ($message_count > 1) ? __('%d messages') : __('%d message');
-	$icons['agora'] = new ArrayObject(array(sprintf($str_threads,$thread_count),'plugin.php?p=agora','index.php?pf=agora/icon.png'));
-	$icons['agora'][0] .= '</a> <br /><a href="plugin.php?p=agora&amp;act=messages">'.sprintf($str_messages,$message_count);
 }
 
 $_menu['Plugins']->addItem(__('agora:config'),
 	'plugin.php?p=agora&amp;act=options',
-	'index.php?pf=agora/icon-small.png',
+	'index.php?pf=agora/icon-16.png',
 	preg_match('/plugin.php\?p=agora&act=options(.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
 
-$core->blog->agora = new agora($core,false);
-
 $core->auth->setPermissionType('member',__('is an agora member'));
-$core->auth->setPermissionType('moderator',__('can moderate the agora'));
+
+$core->addBehavior('adminDashboardFavs',array('agoraBehaviors','dashboardFavs'));
 
 # Admin behaviors
+$core->addBehavior('adminPostHeaders',array('agoraBehaviors','adminPostHeaders'));
+$core->addBehavior('adminPostFormSidebar',array('agoraBehaviors','adminPostFormSidebar'));
+//$core->addBehavior('adminPageForm',array('dcRevisionsBehaviors','adminPostForm'));
 $core->addBehavior('adminPostsActions',array('agoraBehaviors','adminPostsActions'));
+$core->addBehavior('adminPostsActionsCombo',array('agoraBehaviors','adminPostsActionsCombo'));
+
+$core->addBehavior('adminAfterPostCreate',array('agoraBehaviors','adminBeforePostUpdate'));
+$core->addBehavior('adminBeforePostUpdate',array('agoraBehaviors','adminBeforePostUpdate'));
+$core->addBehavior('adminAfterPageCreate',array('agoraBehaviors','adminBeforePostUpdate'));
+$core->addBehavior('adminBeforePageUpdate',array('agoraBehaviors','adminBeforePostUpdate'));
+
+# Import/Export behaviors : message table
+ $core->addBehavior('exportFull',array('agoraBehaviors','exportFull'));
+ $core->addBehavior('exportSingle',array('agoraBehaviors','exportSingle'));
+ $core->addBehavior('importInit',array('agoraBehaviors','importInit'));
+ $core->addBehavior('importFull',array('agoraBehaviors','importFull'));
+ $core->addBehavior('importSingle',array('agoraBehaviors','importSingle'));
 
 # Rest methods
 $core->rest->addFunction('getMessageById',array('agoraRestMethods','getMessageById'));
-
-class agoraRestMethods
-{
-	public static function getMessageById($core,$get)
-	{
-		//global $core;
-
-		if (empty($get['id'])) {
-			throw new Exception('No message ID');
-		}
-		
-		$rs = $core->blog->agora->getMessages(array('message_id' => (integer) $get['id']));
-		
-		if ($rs->isEmpty()) {
-			throw new Exception('No message for this ID');
-		}
-		
-		$rsp = new xmlTag('post');
-		$rsp->id = $rs->message_id;
-		
-		$rsp->message_dt($rs->message_dt);
-		$rsp->message_creadt($rs->message_creadt);
-		$rsp->message_upddt($rs->message_upddt);
-		$rsp->user_id($rs->user_id);
-
-		$rsp->message_content($rs->message_content);
-
-		$rsp->message_status($rs->message_status);
-		$rsp->post_title($rs->post_title);
-		$rsp->post_url($rs->post_url);
-		$rsp->post_id($rs->post_id);
-		$rsp->post_dt($rs->post_dt);
-		$rsp->user_id($rs->user_id);
-		$rsp->user_name($rs->user_name);
-		$rsp->user_firstname($rs->user_firstname);
-		$rsp->user_displayname($rs->user_displayname);
-		$rsp->user_email($rs->user_email);
-		$rsp->user_url($rs->user_url);
-		$rsp->cat_title($rs->cat_title);
-		$rsp->cat_url($rs->cat_url);
-		
-		$rsp->message_display_content($rs->getContent(true));
-		
-		if ($core->auth->userID()) {
-			# --BEHAVIOR-- adminAfterCommentDesc
-			$rsp->message_spam_disp($core->callBehavior('adminAfterMessageDesc', $rs));
-		}
-		
-		return $rsp;
-	}
-}
 ?>

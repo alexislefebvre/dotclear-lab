@@ -1,0 +1,5 @@
+/* Admin css for agora*/
+tr.pending-user { background-color : #EEA; color : #555; }
+tr.junk-user { background-color : #E0E3E4 ; color : #BBB; }
+
+

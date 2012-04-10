@@ -3,7 +3,7 @@
 #
 # This file is part of agora, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 Osku ,Tomtom and contributors
+# Copyright (c) 2009-2012 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -22,6 +22,7 @@ $message_format = $core->auth->getOption('post_format');
 $message_content = '';
 $message_content_xhtml = '';
 $message_status = $core->auth->getInfo('user_post_status');
+$message_notes = '';
 
 $page_title = __('New message');
 
@@ -41,7 +42,7 @@ if (!$can_publish) {
 }
 
 # Status combo
-foreach ($core->blog->agora->getAllMessageStatus() as $k => $v) {
+foreach ($core->agora->getAllMessageStatus() as $k => $v) {
 	$status_combo[$v] = (string) $k;
 }
 
@@ -55,7 +56,7 @@ if (!empty($_REQUEST['id']))
 {
 	$params['message_id'] = $_REQUEST['id'];
 	
-	$message = $core->blog->agora->getMessages($params);
+	$message = $core->agora->getMessages($params);
 	
 	if ($message->isEmpty())
 	{
@@ -71,6 +72,7 @@ if (!empty($_REQUEST['id']))
 		$message_content = $message->message_content;
 		$message_content_xhtml = $message->message_content_xhtml;
 		$message_status = $message->message_status;
+		$message_notes = $message->message_notes;
 		
 		$page_title = __('Edit message');
 		
@@ -101,6 +103,8 @@ if (!empty($_POST) && $can_edit_page)
 		$message_status = (integer) $_POST['message_status'];
 	}
 	
+	$message_notes = $_POST['message_notes'];
+	
 	if (empty($_POST['message_dt'])) {
 		$message_dt = '';
 	} else {
@@ -108,7 +112,7 @@ if (!empty($_POST) && $can_edit_page)
 		$message_dt = date('Y-m-d H:i',$message_dt);
 	}
 	
-	$core->blog->agora->setMessageContent(
+	$core->agora->setMessageContent(
 		$message_id,$message_format,
 		$message_content,$message_content_xhtml
 	);
@@ -127,6 +131,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_page)
 	$cur->message_content = $message_content;
 	$cur->message_content_xhtml = $message_content_xhtml;
 	$cur->message_status = $message_status;
+	$cur->message_notes = $message_notes;
 
 	# Update message
 	if ($message_id)
@@ -136,7 +141,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_page)
 			# --BEHAVIOR-- adminBeforeMessageUpdate
 			$core->callBehavior('adminBeforeMessageUpdate',$cur,$message_id);
 			
-			$core->blog->agora->updMessage($message_id,$cur);
+			$core->agora->updMessage($message_id,$cur);
 			
 			# --BEHAVIOR-- adminAfterMessageUpdate
 			$core->callBehavior('adminAfterMessageUpdate',$cur,$message_id);
@@ -157,7 +162,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_page)
 			# --BEHAVIOR-- adminBeforeMessageCreate
 			$core->callBehavior('adminBeforeMessageCreate',$cur);
 			
-			$return_id = $core->blog->agora->addMessage($cur);
+			$return_id = $core->agora->addMessage($cur);
 			
 			# --BEHAVIOR-- adminAfterMessageCreate
 			$core->callBehavior('adminAfterMessageCreate',$cur,$return_id);
@@ -176,7 +181,7 @@ if (!empty($_POST['delete']) && $can_delete)
 	try {
 		# --BEHAVIOR-- adminBeforePageDelete
 		$core->callBehavior('adminBeforeMessageDelete',$message_id);
-		$core->blog->agora->delMessage($message_id);
+		$core->agora->delMessage($message_id);
 		http::redirect($redir_url);
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -196,7 +201,7 @@ if (!empty($_GET['me'])) {
 ?>
 <html>
 <head>
-  <title><?php echo $page_title.' - '.__('Message'); ?></title>
+  <title><?php echo $page_title.' - '.__('Messages'); ?></title>
   <script type="text/javascript">
   //<![CDATA[
   <?php echo dcPage::jsVar('dotclear.msg.confirm_delete_message',__("Are you sure you want to delete this message?")); ?>
@@ -206,8 +211,8 @@ if (!empty($_GET['me'])) {
   dcPage::jsDatePicker().
   dcPage::jsToolBar().
   dcPage::jsModal().
-  dcPage::jsLoad('js/_post.js').
-  dcPage::jsLoad('index.php?pf=agora/js/_messages.js').
+  //dcPage::jsLoad('js/_post.js').
+  dcPage::jsLoad('index.php?pf=agora/js/messages.js').
   dcPage::jsConfirmClose('entry-form','message-form').
   # --BEHAVIOR-- adminMessageHeaders
   $core->callBehavior('adminMessageHeaders').
@@ -237,7 +242,7 @@ if (!empty($_GET['xconv']))
 }
 
 echo '<h2>'.html::escapeHTML($core->blog->name).
-' &rsaquo; <a href="'.$redir_url.'">'.__('Messages').'</a> &rsaquo; '.$page_title;
+' &rsaquo; <a href="'.$redir_url.'">'.__('Messages').'</a> &rsaquo; <span class="page-title">'.$page_title.'<span>';
 
 echo '</h2>';
 
@@ -279,20 +284,23 @@ if ($can_edit_page)
 	
 	echo
 	
-	'<p class="area"><label class="required" title="'.__('Required field').'" '.
-	'for="post_content">'.__('Content:').'</label> '.
+	'<p class="area"><label class="required" '.
+	'for="message_content"><abbr title="'.__('Required field').'">*</abbr>'.__('Content:').'</label> '.
 	form::textarea('message_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($message_content),'',2).
 	'</p>'.
-	
+
+	'<p class="area" id="notes-area"><label for="post_notes">'.__('Notes:').'</label>'.
+	form::textarea('message_notes',50,5,html::escapeHTML($message_notes)).
+	'</p>';
 	# --BEHAVIOR-- adminMessageForm
 	$core->callBehavior('adminMessageForm',isset($message) ? $message : null);
 	
 	echo
 	'<p>'.
 	($message_id ? form::hidden('id',$message_id) : '').
-	'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
+	'<input type="submit" value="'.__('Save').' (s)" tabindex="4" '.
 	'accesskey="s" name="save" /> '.
-	($can_delete ? '<input type="submit" value="'.__('delete').'" name="delete" />' : '').
+	($can_delete ? '<input type="submit" class="delete" value="'.__('delete').'" name="delete" />' : '').
 	$core->formNonce().
 	'</p>';
 	
@@ -309,60 +317,6 @@ if ($can_edit_page)
 		form::hidden(array('remove'),1).
 		$core->formNonce().'</div></form>';
 	}
-}
-
-
-
-
-# Show messages
-function showMessages($rs,$has_action)
-{
-	echo
-	'<table class="messages-list"><tr>'.
-	'<th colspan="2">'.__('Author').'</th>'.
-	'<th>'.__('Date').'</th>'.
-	//'<th class="nowrap">'.__('IP address').'</th>'.
-	'<th>'.__('Status').'</th>'.
-	'<th>&nbsp;</th>'.
-	'</tr>';
-	
-	while($rs->fetch())
-	{
-		$message_url = 'plugin.php?p=agora&amp;act=messages&amp;id='.$rs->message_id;
-		
-		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
-		switch ($rs->message_status) {
-			case 1:
-				$img_status = sprintf($img,__('published'),'check-on.png');
-				break;
-			case 0:
-				$img_status = sprintf($img,__('unpublished'),'check-off.png');
-				break;
-			case -1:
-				$img_status = sprintf($img,__('pending'),'check-wrn.png');
-				break;
-			case -2:
-				$img_status = sprintf($img,__('junk'),'junk.png');
-				break;
-		}
-		
-		echo
-		'<tr class="line'.($rs->message_status != 1 ? ' offline' : '').'"'.
-		' id="c'.$rs->message_id.'">'.
-		
-		'<td class="nowrap">'.
-		($has_action ? form::checkbox(array('messages[]'),$rs->message_id,'','','',0) : '').'</td>'.
-		'<td class="maximal">'.$rs->user_id.'</td>'.
-		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rs->message_dt).'</td>'.
-		//'<td class="nowrap"><a href="comments.php?ip='.$rs->comment_ip.'">'.$rs->comment_ip.'</a></td>'.
-		'<td class="nowrap status">'.$img_status.'</td>'.
-		'<td class="nowrap status"><a href="'.$message_url.'">'.
-		'<img src="images/edit-mini.png" alt="" title="'.__('Edit this message').'" /></a></td>'.
-		
-		'</tr>';
-	}
-	
-	echo '</table>';
 }
 dcPage::helpBlock('core_wiki');
 ?>

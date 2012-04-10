@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="ROBOTS" content="NOARCHIVE,NOINDEX,NOFOLLOW" />
+  <meta name="GOOGLEBOT" content="NOSNIPPET" />
+  <title>{{tpl:lang Userlist}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Userlist}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Userlist}} - {{tpl:BlogName encode_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:agoraURL}}" title="{{tpl:lang Home}}" />
+
+  {{tpl:include src="_head.html"}}
+
+</head>
+
+<body class="dc-people">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+  <div id="content-info">
+    <h2>{{tpl:lang Search}}</h2>
+    <tpl:SysIf user_search_count="==0">
+      <p>{{tpl:SysUserSearchString encode_html="1" string="Your search for <em>%1$s</em> returned no result."}}</p>
+    </tpl:SysIf>
+    <tpl:SysIf user_search_count="==1">
+      <p>{{tpl:SysUserSearchString encode_html="1" string="Your search for <em>%1$s</em> returned <strong>%2$s</strong> result."}}</p>
+    </tpl:SysIf>
+    <tpl:SysIf user_search_count="&gt;1">
+      <p>{{tpl:SysUserSearchString encode_html="1" string="Your search for <em>%1$s</em> returned <strong>%2$s</strong> results."}}</p>
+    </tpl:SysIf>
+  </div>
+
+<tpl:Users>
+<tpl:UsersHeader>
+<table summary="{{tpl:lang Userlist}}">
+<caption>
+{{tpl:lang Userlist}}
+</caption>
+
+  <thead>
+    <tr>
+     <th></th>
+     <th>{{tpl:lang Website}}</th>
+     <th>{{tpl:lang Subscription date}}</th>
+    </tr>
+  </thead>
+
+  <!--tfoot>
+     <th></th>
+     <th>{{tpl:lang Name or nickname}}</th>
+     <th>{{tpl:lang Website}}</th>
+
+     <th>{{tpl:lang Creation date}}</th>
+    </tr>
+  </tfoot-->
+</tpl:UsersHeader>
+  <tbody>
+    <tr>
+     <td>{{tpl:UserProfileURL}}{{tpl:UserIfModerator}}</td>
+     <td><tpl:UserIf has_url="1"><a href="{{tpl:UserURL raw="1"}}">{{tpl:UserURL raw="1"}}</a></tpl:UserIf></td>
+     <td>{{tpl:UserDate}}, {{tpl:UserTime}}</td>
+    </tr>
+  </tbody>
+
+<tpl:UsersFooter>
+</table>
+</tpl:UsersFooter>
+</tpl:Users>
+
+</div> <!-- End #content -->
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

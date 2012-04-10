@@ -1,1062 +1,934 @@
 <?php
 // Language: Français 
-// Module: agora - 0.7beta6
-// Date: 2011-01-28 14:28:31 
+// Module: agora - 1.0RC2
+// Date: 2012-04-10 21:35:43 
 // Translated with dcTranslater - 1.5 
 
-#_admin.php:20
-#index.php:383
-#index.php:397
-#thread.php:294
-#thread.php:343
-$GLOBALS['__l10n']['Threads'] = 'Discussions';
-
-#_admin.php:27
-#default-templates/thread.html:106
-#index.php:63
-#message.php:240
-#messages.php:124
-#messages.php:145
-#thread.php:540
-#thread.php:547
+#_admin.php:17
+#default-templates/agora_post.html:119
+#inc/class.agora.behaviors.php:18
+#lib/agora.pager.php:40
+#message.php:204
+#message.php:245
+#messages.php:135
+#messages.php:156
 $GLOBALS['__l10n']['Messages'] = 'Messages';
 
-#_admin.php:38
-#inc/class.agora.template.php:210
-$GLOBALS['__l10n']['%d threads'] = '%d discussions';
+#_admin.php:26
+$GLOBALS['__l10n']['Public users <br/>(%s pending)'] = 'Utilisateurs publics<br/>(%s en attente)';
 
-#_admin.php:38
-$GLOBALS['__l10n']['%d thread'] = '%d discussion';
+#_admin.php:28
+#inc/class.agora.behaviors.php:21
+#index.php:181
+#index.php:194
+$GLOBALS['__l10n']['Public users'] = 'Utilisateurs publics';
 
-#_admin.php:41
-$GLOBALS['__l10n']['%d messages'] = '%d messages';
-
-#_admin.php:41
-$GLOBALS['__l10n']['%d message'] = '%d message';
-
-#_admin.php:46
+#_admin.php:39
+#options.php:133
+#options.php:143
 $GLOBALS['__l10n']['agora:config'] = 'agora:config';
 
-#_admin.php:54
+#_admin.php:45
 $GLOBALS['__l10n']['is an agora member'] = 'est membre de l\'agora';
 
-#_admin.php:55
-$GLOBALS['__l10n']['can moderate the agora'] = 'peut modérer l\'agora';
+#_install.php:21
+$GLOBALS['__l10n']['Dotclear version 2.4.1.2 minimum is required. Agora is deactivated'] = 'La version 2.4.1.2 minimum de Dotclear est requise. Agora est désactivée';
 
-#_install.php:23
-$GLOBALS['__l10n']['PHP version is %s (5.3 or earlier needed).'] = 'La version de PHP est %s (5.3 au minium est nécessaire)';
-
-#_install.php:61
-$GLOBALS['__l10n']['agora'] = 'agora';
-
-#_install.php:63
-$GLOBALS['__l10n']['<p class="message">Welcome to the Agora.</p>'] = '<p class="message">Bienvenue dans l\'agora.</p>';
-
-#_widgets.php:28
-$GLOBALS['__l10n']['Agora: navigation'] = 'Agora : navigation';
-
-#_widgets.php:29
-#_widgets.php:35
-#_widgets.php:40
-#_widgets.php:46
-#_widgets.php:53
-#_widgets.php:68
-#_widgets.php:84
-#thread.php:469
-$GLOBALS['__l10n']['Title:'] = 'Titre :';
-
-#_widgets.php:29
-$GLOBALS['__l10n']['Agora - navigation'] = 'Agora - navigation';
-
-#_widgets.php:34
-$GLOBALS['__l10n']['Agora: moderation'] = 'Agora : modération';
-
-#_widgets.php:35
-$GLOBALS['__l10n']['Agora moderation'] = 'Modération de l\'agora';
+#_widgets.php:38
+$GLOBALS['__l10n']['Agora › User navigation'] = 'Agora › Navigation utilisateur';
 
 #_widgets.php:39
-$GLOBALS['__l10n']['Agora: categories list'] = 'Agora : liste des catégories';
+#_widgets.php:54
+#_widgets.php:62
+#_widgets.php:99
+#_widgets.php:121
+#_widgets.php:136
+#_widgets.php:145
+#_widgets.php:163
+$GLOBALS['__l10n']['Title:'] = 'Titre :';
+
+#_widgets.php:39
+$GLOBALS['__l10n']['Agora - navigation'] = 'Agora - Navigation';
 
 #_widgets.php:40
-$GLOBALS['__l10n']['Agora\'s sections'] = 'Sections de l\'agora';
+$GLOBALS['__l10n']['Display avatar'] = 'Afficher l\'avatar';
 
 #_widgets.php:41
-$GLOBALS['__l10n']['With entries counts'] = 'Afficher le nombre de billets';
+$GLOBALS['__l10n']['Login label:'] = 'Libellé du login&nbsp;:';
 
-#_widgets.php:45
-$GLOBALS['__l10n']['Agora: selected threads'] = 'Agora : discussions sélectionnées';
-
-#_widgets.php:46
-$GLOBALS['__l10n']['Selected threads'] = 'Discussions à retenir';
-
-#_widgets.php:47
-#_widgets.php:62
-#_widgets.php:77
-#_widgets.php:86
-$GLOBALS['__l10n']['Home page only'] = 'Page d\'accueil uniquement';
-
-#_widgets.php:52
-$GLOBALS['__l10n']['Agora: last threads'] = 'Agora : dernières discussions';
-
-#_widgets.php:53
-$GLOBALS['__l10n']['Last threads'] = 'Dernières discussions';
-
-#_widgets.php:55
-#_widgets.php:70
-$GLOBALS['__l10n']['Uncategorized'] = 'Non catégorisé';
-
-#_widgets.php:59
-#_widgets.php:74
-#index.php:414
-#thread.php:387
-$GLOBALS['__l10n']['Category:'] = 'Catégorie :';
-
-#_widgets.php:61
-$GLOBALS['__l10n']['Entries limit:'] = 'Nombre de discussions maximum :';
-
-#_widgets.php:67
-$GLOBALS['__l10n']['Agora: last messages'] = 'Agora : derniers messages';
-
-#_widgets.php:68
-$GLOBALS['__l10n']['Last messages'] = 'Derniers messages';
-
-#_widgets.php:76
-$GLOBALS['__l10n']['Messages limit:'] = 'Nombre de messages maximum :';
-
-#_widgets.php:83
-$GLOBALS['__l10n']['Agora: subscribe links'] = 'Agora : liens d\'abonnement';
-
-#_widgets.php:84
-$GLOBALS['__l10n']['Subscribe'] = 'S\'abonner';
-
-#_widgets.php:85
-$GLOBALS['__l10n']['Feeds type:'] = 'Types de fil :';
-
-#default-templates/agora.html:9
-#default-templates/agora.html:11
-#default-templates/agora.html:17
-#default-templates/editmessage.html:9
-#default-templates/editmessage.html:11
-#default-templates/editmessage.html:17
-#default-templates/editthread.html:9
-#default-templates/editthread.html:11
-#default-templates/editthread.html:17
-#default-templates/login.html:9
-#default-templates/login.html:11
-#default-templates/login.html:17
-#default-templates/newthread.html:9
-#default-templates/newthread.html:11
-#default-templates/newthread.html:17
-#default-templates/place.html:9
-#default-templates/place.html:11
-#default-templates/place.html:17
-#default-templates/profile.html:9
-#default-templates/profile.html:11
-#default-templates/profile.html:17
-#default-templates/profile_me.html:9
-#default-templates/profile_me.html:11
-#default-templates/profile_me.html:17
-#default-templates/recover.html:9
-#default-templates/recover.html:11
-#default-templates/recover.html:17
-#default-templates/register.html:9
-#default-templates/register.html:11
-#default-templates/register.html:17
-#default-templates/thread.html:9
-#default-templates/thread.html:11
-#default-templates/thread.html:17
-#options.php:55
-#options.php:63
-$GLOBALS['__l10n']['Agora'] = 'Agora';
-
-#default-templates/agora.html:9
-#default-templates/agora.html:17
-#default-templates/agora.html:74
-#default-templates/newthread.html:9
-#default-templates/newthread.html:17
-#default-templates/place.html:9
-#default-templates/place.html:17
-#default-templates/place.html:99
-$GLOBALS['__l10n']['page'] = 'page';
-
-#default-templates/agora.html:26
-#default-templates/editmessage.html:26
-#default-templates/editthread.html:26
-#default-templates/login.html:26
-#default-templates/newthread.html:26
-#default-templates/place.html:26
-#default-templates/profile.html:26
-#default-templates/profile_me.html:26
-#default-templates/recover.html:26
-#default-templates/register.html:26
-#default-templates/thread.html:26
-#inc/class.agora.widgets.php:28
-$GLOBALS['__l10n']['Home'] = 'Accueil';
-
-#default-templates/agora.html:27
-#default-templates/editmessage.html:27
-#default-templates/editthread.html:27
-#default-templates/newthread.html:27
-#default-templates/place.html:27
-#default-templates/thread.html:27
-$GLOBALS['__l10n']['Archives'] = 'Archives';
-
-#default-templates/agora.html:61
-#default-templates/place.html:84
-#default-templates/thread.html:53
-$GLOBALS['__l10n']['on'] = 'le';
-
-#default-templates/agora.html:73
-#default-templates/place.html:98
-$GLOBALS['__l10n']['previous entries'] = 'billets précédents';
-
-#default-templates/agora.html:74
-#default-templates/place.html:99
-$GLOBALS['__l10n']['of'] = 'de';
-
-#default-templates/agora.html:75
-#default-templates/place.html:100
-$GLOBALS['__l10n']['next entries'] = 'billets suivants';
-
-#default-templates/editmessage.html:9
-#message.php:75
-#message.php:255
-$GLOBALS['__l10n']['Edit message'] = 'Editer le message';
-
-#default-templates/editmessage.html:64
-#default-templates/editthread.html:57
-#default-templates/profile_me.html:101
-#message.php:293
-#thread.php:492
-$GLOBALS['__l10n']['save'] = 'enregistrer';
-
-#default-templates/editmessage.html:65
-$GLOBALS['__l10n']['delete the message'] = 'supprimer le message';
-
-#default-templates/editmessage.html:65
-#default-templates/editthread.html:58
-#message.php:295
-#messages.php:105
-#thread.php:494
-#thread.php:534
-$GLOBALS['__l10n']['delete'] = 'supprimer';
-
-#default-templates/editmessage.html:69
-$GLOBALS['__l10n']['Edit a message'] = 'Modifier le message';
-
-#default-templates/editmessage.html:75
-#default-templates/editthread.html:94
-#default-templates/newthread.html:104
-#default-templates/thread.html:166
-#message.php:199
-$GLOBALS['__l10n']['Message'] = 'Message';
-
-#default-templates/editmessage.html:85
-#default-templates/editthread.html:104
-#default-templates/newthread.html:114
-#default-templates/register.html:89
-#default-templates/thread.html:176
-$GLOBALS['__l10n']['preview'] = 'prévisualiser';
-
-#default-templates/editthread.html:9
-#thread.php:127
-#thread.php:382
-$GLOBALS['__l10n']['Edit thread'] = 'Modifier la discussion';
-
-#default-templates/editthread.html:58
-$GLOBALS['__l10n']['delete the thread'] = 'supprimer la discussion';
-
-#default-templates/editthread.html:62
-$GLOBALS['__l10n']['Edit the thread'] = 'Modifier la discussion';
-
-#default-templates/editthread.html:69
-#default-templates/newthread.html:99
-$GLOBALS['__l10n']['Subject'] = 'Sujet';
-
-#default-templates/editthread.html:77
-#default-templates/newthread.html:83
-#index.php:61
-#index.php:241
-$GLOBALS['__l10n']['Category'] = 'Catégorie';
-
-#default-templates/login.html:9
-#default-templates/login.html:48
-#inc/class.agora.widgets.php:34
+#_widgets.php:41
+#default-templates/agora_login.html:8
+#default-templates/agora_login.html:16
+#default-templates/agora_login.html:47
+#inc/class.agora.widgets.php:23
 $GLOBALS['__l10n']['Login'] = 'Connexion';
 
-#default-templates/login.html:54
-#default-templates/recover.html:58
-#default-templates/register.html:55
-#default-templates/register.html:69
-$GLOBALS['__l10n']['Username'] = 'Identifiant';
+#_widgets.php:42
+$GLOBALS['__l10n']['My preferences label:'] = 'Libellé des préférences&nbsp;:';
 
-#default-templates/login.html:59
-$GLOBALS['__l10n']['Password'] = 'Mot de passe';
+#_widgets.php:42
+#inc/class.agora.widgets.php:25
+$GLOBALS['__l10n']['My preferences'] = 'Mes préférences';
 
-#default-templates/login.html:68
-$GLOBALS['__l10n']['login'] = 'login';
+#_widgets.php:43
+$GLOBALS['__l10n']['Logout label:'] = 'Libellé du logout&nbsp;:';
 
-#default-templates/newthread.html:9
-#index.php:398
-#thread.php:40
-$GLOBALS['__l10n']['New thread'] = 'Nouvelle discussion';
-
-#default-templates/newthread.html:71
-#default-templates/newthread.html:115
-$GLOBALS['__l10n']['create'] = 'créer';
-
-#default-templates/newthread.html:75
-$GLOBALS['__l10n']['Add a thread'] = 'Ajouter une discussion';
-
-#default-templates/place.html:55
-$GLOBALS['__l10n']['This categorie\'s threads Atom feed'] = 'Fil des discussions de cette catégorie';
-
-#default-templates/place.html:55
-#inc/class.agora.widgets.php:277
-$GLOBALS['__l10n']['Threads feed'] = 'Fil des discussions';
-
-#default-templates/place.html:58
-$GLOBALS['__l10n']['This category\'s messages Atom feed'] = 'Fil des messages de cette catégorie';
-
-#default-templates/place.html:58
-#inc/class.agora.widgets.php:281
-$GLOBALS['__l10n']['Messages feed'] = 'Fil des messages';
-
-#default-templates/place.html:66
-$GLOBALS['__l10n']['Subcategories'] = 'Sous-catégories';
-
-#default-templates/profile.html:9
-#default-templates/profile_me.html:9
-$GLOBALS['__l10n']['Profile'] = 'Profil';
-
-#default-templates/profile.html:51
-#default-templates/profile_me.html:62
-$GLOBALS['__l10n']['Name or nickname'] = 'Nom ou pseudo';
-
-#default-templates/profile.html:54
-#default-templates/profile_me.html:72
-$GLOBALS['__l10n']['Website'] = 'Site web';
-
-#default-templates/profile.html:57
-#default-templates/profile_me.html:87
-$GLOBALS['__l10n']['Creation date'] = 'Date de création';
-
-#default-templates/profile.html:60
-#default-templates/profile_me.html:91
-$GLOBALS['__l10n']['Update date'] = 'Date de mise à jour';
-
-#default-templates/profile_me.html:56
-$GLOBALS['__l10n']['My informations'] = 'Mes informations';
-
-#default-templates/profile_me.html:67
-#default-templates/recover.html:63
-#default-templates/register.html:57
-#default-templates/register.html:74
-$GLOBALS['__l10n']['Email address'] = 'Adresse email';
-
-#default-templates/profile_me.html:77
-$GLOBALS['__l10n']['New password'] = 'Nouveau mot de passe';
-
-#default-templates/profile_me.html:82
-$GLOBALS['__l10n']['Confirm password'] = 'Confirmer le mot de passe';
-
-#default-templates/recover.html:9
-$GLOBALS['__l10n']['Recover'] = 'Récupérer';
-
-#default-templates/recover.html:52
-$GLOBALS['__l10n']['Request a new password'] = 'Demander un nouveau mot de passe';
-
-#default-templates/recover.html:76
-$GLOBALS['__l10n']['recover'] = 'récupérer';
-
-#default-templates/register.html:9
-$GLOBALS['__l10n']['Register'] = 'S\'enregistrer';
-
-#default-templates/register.html:53
-$GLOBALS['__l10n']['Your infos'] = 'Vos infos';
-
-#default-templates/register.html:59
-#default-templates/register.html:90
-#default-templates/thread.html:157
-#default-templates/thread.html:177
-$GLOBALS['__l10n']['send'] = 'envoyer';
-
-#default-templates/register.html:63
-$GLOBALS['__l10n']['Register an account'] = 'Enregister un compte';
-
-#default-templates/register.html:82
-$GLOBALS['__l10n']['Username must contain at least 2 characters using letters, numbers or symbols.'] = 'L\'identifiant doit contenir au moins 2 caractères parmi lettres, chiffres et symbôles.';
-
-#default-templates/thread.html:53
-#default-templates/thread.html:113
-$GLOBALS['__l10n']['by'] = 'par';
-
-#default-templates/thread.html:57
-$GLOBALS['__l10n']['Permalink'] = 'Lien permanent';
-
-#default-templates/thread.html:59
-#default-templates/thread.html:115
-$GLOBALS['__l10n']['edit'] = 'modifier';
-
-#default-templates/thread.html:76
-#thread.php:427
-$GLOBALS['__l10n']['Attachments'] = 'Annexes';
-
-#default-templates/thread.html:101
-$GLOBALS['__l10n']['Thread closed'] = 'Discussion close';
-
-#default-templates/thread.html:112
-$GLOBALS['__l10n']['On'] = 'Le';
-
-#default-templates/thread.html:138
-$GLOBALS['__l10n']['Status of thread has been modified.'] = 'Le status des messages a été modifié';
-
-#default-templates/thread.html:153
-$GLOBALS['__l10n']['Your answer'] = 'Votre réponse';
-
-#default-templates/thread.html:161
-$GLOBALS['__l10n']['Add a message'] = 'Ajouter un message';
-
-#default-templates/thread.html:183
-$GLOBALS['__l10n']['This thread\'s messages Atom feed'] = 'Fil Atom des messages de cette dicussion';
-
-#default-templates/thread.html:183
-$GLOBALS['__l10n']['This thread\'s messages feed'] = 'Fil des messages de cette discussion';
-
-#inc/class.agora.log.php:106
-#inc/class.agora.log.php:112
-#inc/class.agora.log.php:134
-$GLOBALS['__l10n']['No such log ID'] = 'Aucun log ID';
-
-#inc/class.agora.log.php:146
-$GLOBALS['__l10n']['No log message'] = 'Pas de message dans le journal';
-
-#inc/class.agora.php:25
-#inc/class.agora.php:30
-#index.php:108
-#lib/admin.messages.pager.php:86
-#message.php:342
-#thread.php:597
-$GLOBALS['__l10n']['pending'] = 'en attente';
-
-#inc/class.agora.php:26
-$GLOBALS['__l10n']['suspended'] = 'suspendu';
-
-#inc/class.agora.php:27
-$GLOBALS['__l10n']['active'] = 'actif';
-
-#inc/class.agora.php:29
-#lib/admin.messages.pager.php:89
-#message.php:345
-#thread.php:600
-$GLOBALS['__l10n']['junk'] = 'indésirable';
-
-#inc/class.agora.php:31
-#index.php:102
-#lib/admin.messages.pager.php:83
-#message.php:339
-#thread.php:594
-$GLOBALS['__l10n']['unpublished'] = 'non publié';
-
-#inc/class.agora.php:32
-#index.php:99
-#lib/admin.messages.pager.php:80
-#message.php:336
-#thread.php:591
-$GLOBALS['__l10n']['published'] = 'publié';
-
-#inc/class.agora.php:149
-#inc/class.agora.urlhandlers.php:205
-$GLOBALS['__l10n']['This is a wrong registration URL. Registration failed.'] = 'Ceci est une mauvaise URL de confirmation. L\'enregistrement a échoué.';
-
-#inc/class.agora.php:168
-$GLOBALS['__l10n']['Cannot login. Empty password.'] = 'Connexion impossible. Mot de passe vide.';
-
-#inc/class.agora.php:173
-$GLOBALS['__l10n']['Cannot login. Check.'] = 'Connexion impossible. Vérifiez.';
-
-#inc/class.agora.php:180
-$GLOBALS['__l10n']['User is not a member of forum'] = 'L\'utilisateur n\'est pas membre de l\'agora';
-
-#inc/class.agora.php:219
-$GLOBALS['__l10n']['Account confirmation request on Agora'] = 'Confirmation de création compte pour l\'Agora';
-
-#inc/class.agora.php:221
-$GLOBALS['__l10n']['Welcome to the agora of %s'] = 'Bienvenue dans l\'agora de %s';
-
-#inc/class.agora.php:222
-$GLOBALS['__l10n']['To activate your account and verify your e-mail address, please click on the following link:'] = 'Pour activer le compte, vérifiez votre adresse email, cliquez sur le lien suivant :';
-
-#inc/class.agora.php:226
-$GLOBALS['__l10n']['Your indormations:'] = 'Vos informations :';
-
-#inc/class.agora.php:227
-$GLOBALS['__l10n']['Login: %s'] = 'Identifiant : %s';
-
-#inc/class.agora.php:228
-$GLOBALS['__l10n']['Password: %s'] = 'Mot de passe : %s';
-
-#inc/class.agora.php:229
-$GLOBALS['__l10n']['Agora connection: %s'] = 'Connexion à l\'agora :';
-
-#inc/class.agora.php:231
-$GLOBALS['__l10n']['If you have received this mail in error, you do not need to take any action to cancel the account.'] = 'SI vous avez reçu cet email par erreur, il n\'est pas nécessaire d\'annuler le compte.';
-
-#inc/class.agora.php:232
-$GLOBALS['__l10n']['The account will not be activated, and you will not receive any further emails.'] = 'Le compte ne sera pas activé et vous ne recevrez pas d\'autre emails.';
-
-#inc/class.agora.php:233
-$GLOBALS['__l10n']['If clicking the link above does not work, copy and paste the URL in a new browser window instead.'] = 'Si le clic sur le lien ci-dessous ne fonctionne pas, copier et coller l\'URL dans un navigateur.';
-
-#inc/class.agora.php:235
-$GLOBALS['__l10n']['Thank you for particape to our agora.'] = 'Merci de participer à notre agora.';
-
-#inc/class.agora.php:237
-$GLOBALS['__l10n']['This is a post-only mailing. Replies to this message are not monitored or answered.'] = 'Ce message est issu d\'une boite email générique. Les réponses ne sont ni regardées ni répondues.';
-
-#inc/class.agora.php:245
-$GLOBALS['__l10n']['Password reset'] = 'Réinitialisation du mot de passe';
-
-#inc/class.agora.php:248
-$GLOBALS['__l10n']['Someone has requested to reset the password for the following agora and username.'] = 'Quelqu\'un a demandé la réinitialisation du mot de passe de l\'utilisateur dans l\'agora suivante.';
-
-#inc/class.agora.php:249
-#inc/class.agora.php:259
-$GLOBALS['__l10n']['Username:'] = 'Nom d\'utilisateur :';
-
-#inc/class.agora.php:250
-$GLOBALS['__l10n']['To reset your password visit the following address, otherwise just ignore this email and nothing will happen.'] = 'Pour réinitialiser votre mot de passe, rendez-vous à l\'adresse suivante. Sinon ignorez simplement ce message et rien ne se passera.';
-
-#inc/class.agora.php:257
-$GLOBALS['__l10n']['Your new password'] = 'Votre nouveau mot de passe';
-
-#inc/class.agora.php:260
-$GLOBALS['__l10n']['Password:'] = 'Mot de passe :';
-
-#inc/class.agora.php:359
-$GLOBALS['__l10n']['You are not allowed to close this thread'] = 'Vous n\'êtes pas autorisé à clôre la discussion.';
-
-#inc/class.agora.php:377
-$GLOBALS['__l10n']['You are not allowed to mark this entry as closed'] = 'Vous n\'êtes pas autorisé à marquer la discussion comme close';
-
-#inc/class.agora.php:636
-$GLOBALS['__l10n']['You are not allowed to create an message'] = 'Vous n\'êtes pas autorisé à créer un message';
-
-#inc/class.agora.php:680
-$GLOBALS['__l10n']['You are not allowed to update comments'] = 'Vous n\'êtes pas autorisé à modifier des commentaires';
-
-#inc/class.agora.php:686
-#inc/class.agora.php:692
-#inc/class.agora.php:775
-$GLOBALS['__l10n']['No such message ID'] = 'Aucun message avec cet ID';
-
-#inc/class.agora.php:699
-$GLOBALS['__l10n']['You are not allowed to update this message'] = 'Vous n\'êtes pas autorisé à mettre à jour ce message';
-
-#inc/class.agora.php:728
-$GLOBALS['__l10n']['You are not allowed to change this message\'s status'] = 'Vous n\'êtes pas autorisé à changer l\'état des messages';
-
-#inc/class.agora.php:750
-$GLOBALS['__l10n']['You are not allowed to change this entry status'] = 'Vous n\'êtes pas autorisé à modifier l\'état de cette discussion';
-
-#inc/class.agora.php:769
-$GLOBALS['__l10n']['You are not allowed to delete messages'] = 'Vous n\'êtes pas autorisé à supprimer ce message';
-
-#inc/class.agora.php:791
-$GLOBALS['__l10n']['You are not allowed to delete this comment'] = 'Vous n\'êtes pas autorisé à supprimer ce message';
-
-#inc/class.agora.php:806
-$GLOBALS['__l10n']['No message content'] = 'Aucun contenu pour le message';
-
-#inc/class.agora.php:818
-$GLOBALS['__l10n']['No message content xhtml'] = 'Aucun contenu xhtml pour le message';
-
-#inc/class.agora.public.behaviors.php:45
-$GLOBALS['__l10n']['I forgot my password'] = 'J\'ai oublié mon mot de passe';
-
-#inc/class.agora.public.behaviors.php:46
-$GLOBALS['__l10n']['Register a new account'] = 'Enregistrer un nouveau compte';
-
-#inc/class.agora.template.php:208
-$GLOBALS['__l10n']['no thread'] = 'aucune discussion';
-
-#inc/class.agora.template.php:209
-$GLOBALS['__l10n']['one thread'] = 'une discussion';
-
-#inc/class.agora.template.php:241
-$GLOBALS['__l10n']['no answer'] = 'aucune réponse';
-
-#inc/class.agora.template.php:242
-$GLOBALS['__l10n']['one answer'] = 'une réponse';
-
-#inc/class.agora.template.php:243
-$GLOBALS['__l10n']['%d answers'] = '%d réponses';
-
-#inc/class.agora.urlhandlers.php:44
-$GLOBALS['__l10n']['The e-mail was sent successfully to %s.'] = 'Le message a été envoyé avec succès à %s.';
-
-#inc/class.agora.urlhandlers.php:59
-$GLOBALS['__l10n']['Your new password is in your mailbox.'] = 'Votre nouveau mot de passe est dans votre boîte à lettres.';
-
-#inc/class.agora.urlhandlers.php:135
-#inc/class.agora.urlhandlers.php:358
-$GLOBALS['__l10n']['You must provide a valid email'] = 'Vous devez fournir une adresse email valide';
-
-#inc/class.agora.urlhandlers.php:140
-$GLOBALS['__l10n']['User "%s" already exists.'] = 'L\'utilisateur "%s" existe déjà.';
-
-#inc/class.agora.urlhandlers.php:155
-$GLOBALS['__l10n']['User %s successfully created. You will receive an email to activate your account.'] = 'L\'utilisateur %s a été créé avec succès. Vous allez recevoir un email pour activer votre compte.';
-
-#inc/class.agora.urlhandlers.php:186
-$GLOBALS['__l10n']['User %s is already registred. You can log in.'] = 'L\'utilisateur %s est déjà enregistré. Vous pouvez vous connecter.';
-
-#inc/class.agora.urlhandlers.php:194
-$GLOBALS['__l10n']['User %s is now registred. You can now log in.'] = 'L\'utilisateur %s est maintenant enregistré. Vous pouvez désormais vous connecter.';
-
-#inc/class.agora.urlhandlers.php:344
-$GLOBALS['__l10n']['You must confirm your password'] = 'Vous devez confirmer votre mot de passe';
-
-#inc/class.agora.urlhandlers.php:348
-$GLOBALS['__l10n']['Please, check your password. Passwords don\'t match'] = 'Veuillez vérifier vos mots de passe. Ils ne correspondent pas';
-
-#inc/class.agora.urlhandlers.php:375
-$GLOBALS['__l10n']['User %s successfully updated.'] = 'L\'utilsateur %s a été mis à jour avec succès';
-
-#inc/class.agora.widgets.php:32
+#_widgets.php:43
+#inc/class.agora.widgets.php:24
 $GLOBALS['__l10n']['Logout'] = 'Déconnexion';
 
-#inc/class.agora.widgets.php:33
-$GLOBALS['__l10n']['Create a new thread'] = 'Créer une nouvelle discussion';
+#_widgets.php:47
+$GLOBALS['__l10n']['New post label:'] = 'Libellé du nouveau post&nbsp;:';
 
-#inc/class.agora.widgets.php:56
-$GLOBALS['__l10n']['Close the thread'] = 'Fermer la discussion';
+#_widgets.php:47
+$GLOBALS['__l10n']['New post'] = 'Nouveau billet';
 
-#inc/class.agora.widgets.php:57
-$GLOBALS['__l10n']['Open the thread'] = 'Ouvrir la discussion';
+#_widgets.php:53
+$GLOBALS['__l10n']['Agora › New entry'] = 'Agora › Nouveau billet';
 
-#inc/class.agora.widgets.php:60
-$GLOBALS['__l10n']['Unpin the thread'] = 'Dépingler la discussion';
-
+#_widgets.php:54
+#_widgets.php:55
+#default-templates/agora_newpost.html:8
+#default-templates/agora_newpost.html:16
+#default-templates/agora_newpost.html:63
 #inc/class.agora.widgets.php:61
-$GLOBALS['__l10n']['Pin the thread'] = 'Épingler la discussion';
+$GLOBALS['__l10n']['New entry'] = 'Nouveau billet';
 
-#inc/class.agora.widgets.php:265
-$GLOBALS['__l10n']['This agora\'s threads %s feed'] = 'Fil des discussions de l\'agora';
+#_widgets.php:55
+$GLOBALS['__l10n']['New entry label:'] = 'Libellé du nouveau billet&nbsp;:';
 
-#inc/class.agora.widgets.php:266
-$GLOBALS['__l10n']['This agora\'s messages %s feed'] = 'Fil des messages de l\'agora';
+#_widgets.php:61
+$GLOBALS['__l10n']['Agora › Last entries'] = 'Agora › Derniers billets';
 
-#inc/class.rs.public.agora.php:27
-$GLOBALS['__l10n']['Read'] = 'Lire';
+#_widgets.php:72
+$GLOBALS['__l10n']['With comments/messages counts'] = 'Avec le nombre de commentaires/messages';
 
-#index.php:48
-$GLOBALS['__l10n']['No thread'] = 'Aucune discussion';
+#_widgets.php:73
+$GLOBALS['__l10n']['Display author'] = 'Affiche l\'auteur';
 
-#index.php:59
-#index.php:240
-#lib/admin.messages.pager.php:30
-$GLOBALS['__l10n']['Title'] = 'Titre';
+#_widgets.php:75
+#default-templates/agora_people.html:65
+#default-templates/agora_search.html:72
+$GLOBALS['__l10n']['Creation date'] = 'Date de création';
 
-#index.php:60
-#index.php:239
-#lib/admin.messages.pager.php:31
-#message.php:323
-#messages.php:33
-#thread.php:578
-$GLOBALS['__l10n']['Date'] = 'Date';
+#_widgets.php:76
+$GLOBALS['__l10n']['Update date'] = 'Date de mise à jour';
 
-#index.php:62
-#index.php:242
-#lib/admin.messages.pager.php:32
-#message.php:322
-#messages.php:35
-#thread.php:577
-$GLOBALS['__l10n']['Author'] = 'Auteur';
-
-#index.php:64
-#index.php:243
-#index.php:257
-#lib/admin.messages.pager.php:33
-#message.php:325
-#messages.php:36
-#thread.php:580
-$GLOBALS['__l10n']['Status'] = 'État';
-
-#index.php:71
-#index.php:84
-#lib/admin.messages.pager.php:41
-#lib/admin.messages.pager.php:54
-$GLOBALS['__l10n']['Page(s)'] = 'Page(s)';
-
-#index.php:105
-$GLOBALS['__l10n']['scheduled'] = 'programmé';
-
-#index.php:115
-$GLOBALS['__l10n']['None'] = 'Aucun';
-
-#index.php:120
-$GLOBALS['__l10n']['protected'] = 'protégé';
-
-#index.php:125
-#index.php:223
-$GLOBALS['__l10n']['selected'] = 'sélectionné';
-
-#index.php:131
-$GLOBALS['__l10n']['%d attachment'] = '%d annexe';
-
-#index.php:131
-$GLOBALS['__l10n']['%d attachments'] = '%d annexes';
-
-#index.php:145
-#lib/admin.messages.pager.php:103
-#message.php:356
-#thread.php:611
-$GLOBALS['__l10n']['%Y-%m-%d %H:%M'] = '%Y-%m-%d %H:%M';
-
-#index.php:224
-$GLOBALS['__l10n']['not selected'] = 'non sélectionné';
-
-#index.php:244
-$GLOBALS['__l10n']['Selected'] = 'Sélectionné';
-
-#index.php:248
-#messages.php:40
+#_widgets.php:79
+#index.php:43
+#messages.php:39
 $GLOBALS['__l10n']['Descending'] = 'Décroissant';
 
-#index.php:249
-#messages.php:41
+#_widgets.php:80
+#index.php:44
+#messages.php:40
 $GLOBALS['__l10n']['Ascending'] = 'Croissant';
 
-#index.php:258
-$GLOBALS['__l10n']['Publish'] = 'Publier';
+#_widgets.php:82
+$GLOBALS['__l10n']['Sort by:'] = 'Filtrer par&nbsp;:';
 
-#index.php:259
-$GLOBALS['__l10n']['Unpublish'] = 'Hors ligne';
+#_widgets.php:85
+#_widgets.php:110
+#_widgets.php:125
+#_widgets.php:145
+#_widgets.php:152
+$GLOBALS['__l10n']['Connected users'] = 'Utilisateurs connectés';
 
-#index.php:260
-$GLOBALS['__l10n']['Schedule'] = 'Programmer';
+#_widgets.php:86
+#_widgets.php:111
+#_widgets.php:126
+#_widgets.php:153
+$GLOBALS['__l10n']['Non connected users'] = 'Utilisateurs non connectés';
 
-#index.php:261
-$GLOBALS['__l10n']['Mark as pending'] = 'En attente';
+#_widgets.php:88
+#_widgets.php:113
+#_widgets.php:128
+#_widgets.php:155
+$GLOBALS['__l10n']['Display:'] = 'Affichage :';
 
-#index.php:264
-$GLOBALS['__l10n']['Mark'] = 'Marquer';
+#_widgets.php:89
+$GLOBALS['__l10n']['Order:'] = 'Ordre&nbsp;:';
 
-#index.php:265
-$GLOBALS['__l10n']['Mark as selected'] = 'Sélectionné';
+#_widgets.php:98
+$GLOBALS['__l10n']['Agora › Last messages'] = 'Agora › Derniers messages';
 
-#index.php:266
-$GLOBALS['__l10n']['Mark as unselected'] = 'Non sélectionné';
+#_widgets.php:99
+$GLOBALS['__l10n']['Last messages'] = 'Derniers messages';
 
-#index.php:268
-#index.php:271
-#index.php:271
-$GLOBALS['__l10n']['Change'] = 'Changer';
+#_widgets.php:107
+$GLOBALS['__l10n']['Messages limit:'] = 'Limite de messages&nbsp;:';
 
-#index.php:268
-$GLOBALS['__l10n']['Change category'] = 'Changer la catégorie';
+#_widgets.php:120
+$GLOBALS['__l10n']['Agora › Text'] = 'Agora › Texte';
 
-#index.php:272
-$GLOBALS['__l10n']['Change author'] = 'Changer l\'auteur';
+#_widgets.php:122
+$GLOBALS['__l10n']['Text:'] = 'Texte :';
 
-#index.php:276
-#index.php:276
-$GLOBALS['__l10n']['Delete'] = 'Supprimer';
+#_widgets.php:135
+$GLOBALS['__l10n']['Agora › Subscribe links'] = 'Agora › Liens d\'abonnement';
 
-#index.php:281
-$GLOBALS['__l10n']['Reset'] = 'Réinitialiser';
+#_widgets.php:136
+$GLOBALS['__l10n']['Subscribe'] = 'S\'abonner';
 
-#index.php:282
-$GLOBALS['__l10n']['Reset messages count'] = 'Réinitialiser le nombre de messages';
+#_widgets.php:137
+$GLOBALS['__l10n']['Feeds type:'] = 'Types de fil :';
 
-#index.php:391
-$GLOBALS['__l10n']['Are you sure you want to delete selected threads?'] = 'Êtes-vous sûr de vouloir supprimer les discussions sélectionnées ?';
+#_widgets.php:144
+$GLOBALS['__l10n']['Agora › Connected users'] = 'Agora › Utilisateurs connectés';
 
-#index.php:404
-#index.php:409
-#messages.php:152
-#messages.php:157
-$GLOBALS['__l10n']['Filters'] = 'Filtres';
+#_widgets.php:146
+$GLOBALS['__l10n']['Link to all users:'] = 'Lien vers tous les utilisateurs&nbsp;:';
 
-#index.php:412
-#messages.php:177
-$GLOBALS['__l10n']['Author:'] = 'Auteur :';
+#_widgets.php:146
+$GLOBALS['__l10n']['All users'] = 'Tous les utilisateurs';
 
-#index.php:416
-#messages.php:160
-$GLOBALS['__l10n']['Status:'] = 'État :';
+#_widgets.php:147
+$GLOBALS['__l10n']['Message if nobody connected:'] = 'Message si personne de connecté&nbsp;:';
 
-#index.php:421
-$GLOBALS['__l10n']['Selected:'] = 'Sélectionné :';
+#_widgets.php:147
+$GLOBALS['__l10n']['Nobody is connected.'] = 'Personne n\'est connecté.';
 
-#index.php:423
-$GLOBALS['__l10n']['Month:'] = 'Mois :';
+#default-templates/agora_401.html:8
+#default-templates/agora_401.html:13
+#default-templates/agora_401.html:35
+$GLOBALS['__l10n']['Authentication required'] = 'Authentification nécessaire';
 
-#index.php:425
-$GLOBALS['__l10n']['Lang:'] = 'Langue :';
+#default-templates/agora_401.html:20
+#default-templates/agora_editmessage.html:26
+#default-templates/agora_editpost.html:26
+#default-templates/agora_login.html:25
+#default-templates/agora_newpost.html:25
+#default-templates/agora_people.html:24
+#default-templates/agora_post.html:25
+#default-templates/agora_preferences.html:24
+#default-templates/agora_profile.html:24
+#default-templates/agora_recover.html:25
+#default-templates/agora_register.html:25
+#default-templates/agora_search.html:24
+#inc/class.agora.widgets.php:30
+$GLOBALS['__l10n']['Home'] = 'Accueil';
 
-#index.php:430
-#messages.php:168
-$GLOBALS['__l10n']['Order by:'] = 'Trier par :';
+#default-templates/agora_401.html:39
+#inc/class.agora.urlhandlers.php:1452
+$GLOBALS['__l10n']['The document you are looking for need an authentication.'] = 'Le document que vous recherchez nécessite une authentification.';
 
-#index.php:432
-#messages.php:171
-$GLOBALS['__l10n']['Sort:'] = 'Trier :';
+#default-templates/agora_editmessage.html:9
+#default-templates/agora_editmessage.html:64
+$GLOBALS['__l10n']['Edit a message'] = 'Modifier un message';
 
-#index.php:435
-$GLOBALS['__l10n']['Entries per page'] = 'Billets par page';
+#default-templates/agora_editmessage.html:17
+#default-templates/agora_login.html:10
+#default-templates/agora_preferences.html:15
+#default-templates/agora_recover.html:10
+#default-templates/agora_recover.html:16
+#default-templates/agora_register.html:10
+#inc/class.agora.behaviors.php:236
+$GLOBALS['__l10n']['Agora'] = 'Agora';
 
-#index.php:437
-#messages.php:182
-$GLOBALS['__l10n']['filter'] = 'filtre';
+#default-templates/agora_editmessage.html:27
+#default-templates/agora_editpost.html:27
+#default-templates/agora_newpost.html:26
+#default-templates/agora_post.html:26
+$GLOBALS['__l10n']['Archives'] = 'Archives';
 
-#index.php:453
-$GLOBALS['__l10n']['Selected threads action:'] = 'Action sur les discussions sélectionnées :';
+#default-templates/agora_editmessage.html:46
+#default-templates/agora_editpost.html:46
+#default-templates/agora_editpost.html:46
+$GLOBALS['__l10n']['Back to the entry'] = 'Retour au billet';
 
-#index.php:455
-#messages.php:213
-#thread.php:563
-$GLOBALS['__l10n']['ok'] = 'ok';
+#default-templates/agora_editmessage.html:49
+#default-templates/agora_editpost.html:56
+#default-templates/agora_preferences.html:50
+#default-templates/agora_profile.html:52
+$GLOBALS['__l10n']['Last update:'] = 'Dernière mise à jour&nbsp;:';
 
-#lib/admin.messages.pager.php:19
-#thread.php:551
+#default-templates/agora_editmessage.html:58
+#default-templates/agora_editpost.html:64
+#default-templates/agora_preferences.html:90
+$GLOBALS['__l10n']['save'] = 'enregistrer';
+
+#default-templates/agora_editmessage.html:70
+#default-templates/agora_post.html:199
+$GLOBALS['__l10n']['Message'] = 'Message';
+
+#default-templates/agora_editmessage.html:80
+#default-templates/agora_editpost.html:87
+#default-templates/agora_newpost.html:83
+#default-templates/agora_post.html:210
+$GLOBALS['__l10n']['preview'] = 'prévisualiser';
+
+#default-templates/agora_editpost.html:9
+#default-templates/agora_editpost.html:17
+$GLOBALS['__l10n']['Edit entry'] = 'Modifier le billet';
+
+#default-templates/agora_editpost.html:67
+$GLOBALS['__l10n']['Edit the entry'] = 'Modifier le billet';
+
+#default-templates/agora_editpost.html:70
+#default-templates/agora_newpost.html:65
+$GLOBALS['__l10n']['Title'] = 'Titre';
+
+#default-templates/agora_editpost.html:77
+#default-templates/agora_newpost.html:73
+#index.php:51
+$GLOBALS['__l10n']['Content'] = 'Contenu';
+
+#default-templates/agora_login.html:54
+#default-templates/agora_recover.html:57
+#default-templates/agora_register.html:56
+#index.php:35
+#lib/agora.pager.php:35
+$GLOBALS['__l10n']['Username'] = 'Identifiant';
+
+#default-templates/agora_login.html:59
+$GLOBALS['__l10n']['Password'] = 'Mot de passe';
+
+#default-templates/agora_login.html:64
+$GLOBALS['__l10n']['Remember my ID on this computer'] = 'Se souvenir de mon identifiant sur cet ordinateur';
+
+#default-templates/agora_login.html:71
+$GLOBALS['__l10n']['login'] = 'se connecter';
+
+#default-templates/agora_newpost.html:59
+#default-templates/agora_newpost.html:84
+#default-templates/agora_post.html:190
+#default-templates/agora_post.html:211
+#default-templates/agora_register.html:74
+$GLOBALS['__l10n']['send'] = 'envoyer';
+
+#default-templates/agora_people.html:8
+#default-templates/agora_people.html:10
+#default-templates/agora_people.html:16
+#default-templates/agora_people.html:47
+#default-templates/agora_people.html:49
+#default-templates/agora_search.html:8
+#default-templates/agora_search.html:10
+#default-templates/agora_search.html:16
+#default-templates/agora_search.html:54
+#default-templates/agora_search.html:56
+$GLOBALS['__l10n']['Userlist'] = 'Liste des utilisateurs';
+
+#default-templates/agora_people.html:41
+$GLOBALS['__l10n']['members'] = 'membres';
+
+#default-templates/agora_people.html:55
+#default-templates/agora_people.html:63
+#default-templates/agora_preferences.html:79
+#default-templates/agora_search.html:62
+#default-templates/agora_search.html:70
+$GLOBALS['__l10n']['Website'] = 'Site web';
+
+#default-templates/agora_people.html:56
+#default-templates/agora_search.html:63
+$GLOBALS['__l10n']['Subscription date'] = 'Date d\'inscription';
+
+#default-templates/agora_people.html:62
+#default-templates/agora_preferences.html:69
+#default-templates/agora_search.html:69
+$GLOBALS['__l10n']['Name or nickname'] = 'Nom ou pseudo';
+
+#default-templates/agora_post.html:159
+$GLOBALS['__l10n']['Your entry has been published.'] = 'Votre billet a été publié.';
+
+#default-templates/agora_post.html:163
+$GLOBALS['__l10n']['Your entry has been submitted and will be reviewed for publication.'] = 'Votre billet a été enregistré et sera publié après validation.';
+
+#default-templates/agora_post.html:167
+$GLOBALS['__l10n']['Entry has been successfully updated.'] = 'Billet mis à jour avec succès.';
+
+#default-templates/agora_post.html:171
+$GLOBALS['__l10n']['Your message has been published.'] = 'Votre message a été publié.';
+
+#default-templates/agora_post.html:175
+$GLOBALS['__l10n']['Your message has been submitted and will be reviewed for publication.'] = 'Votre message a été enregistré et sera publié après validation.';
+
+#default-templates/agora_post.html:179
+#message.php:229
+$GLOBALS['__l10n']['Message has been successfully updated.'] = 'Message mis à jour avec succès.';
+
+#default-templates/agora_post.html:186
+$GLOBALS['__l10n']['Your message'] = 'Votre message';
+
+#default-templates/agora_post.html:194
+$GLOBALS['__l10n']['Add a message'] = 'Ajouter un message';
+
+#default-templates/agora_post.html:217
+$GLOBALS['__l10n']['You should be authenticated to post an message.'] = 'Vous devez être authentifié pour écrire un message.';
+
+#default-templates/agora_preferences.html:8
+$GLOBALS['__l10n']['Preferences'] = 'Préférences';
+
+#default-templates/agora_preferences.html:58
+$GLOBALS['__l10n']['Personal information has been successfully updated.'] = 'Informations personnelles mises à jour avec succès.';
+
+#default-templates/agora_preferences.html:63
+$GLOBALS['__l10n']['My informations'] = 'Mes informations';
+
+#default-templates/agora_preferences.html:74
+#default-templates/agora_recover.html:62
+#default-templates/agora_register.html:61
+$GLOBALS['__l10n']['Email address'] = 'Adresse email';
+
+#default-templates/agora_recover.html:8
+$GLOBALS['__l10n']['Recover'] = 'Récupérer';
+
+#default-templates/agora_recover.html:51
+$GLOBALS['__l10n']['Request a new password'] = 'Demander un nouveau mot de passe';
+
+#default-templates/agora_recover.html:75
+$GLOBALS['__l10n']['recover'] = 'récupérer';
+
+#default-templates/agora_register.html:8
+#default-templates/agora_register.html:16
+#inc/class.agora.public.behaviors.php:153
+$GLOBALS['__l10n']['Register'] = 'S\'enregistrer';
+
+#default-templates/agora_register.html:51
+$GLOBALS['__l10n']['Register an account'] = 'Enregister un compte';
+
+#inc/class.agora.behaviors.php:117
+#lib/agora.pager.php:143
 $GLOBALS['__l10n']['No message'] = 'Aucun message';
 
-#lib/admin.messages.pager.php:107
-#message.php:360
-#thread.php:615
-$GLOBALS['__l10n']['Edit this message'] = 'Modifier ce message';
+#inc/class.agora.behaviors.php:119
+$GLOBALS['__l10n']['One message'] = 'Un message';
 
-#message.php:26
-$GLOBALS['__l10n']['New message'] = 'Nouveau message';
+#inc/class.agora.behaviors.php:121
+$GLOBALS['__l10n']['%d messages'] = '%d messages';
 
-#message.php:62
-$GLOBALS['__l10n']['This message does not exist.'] = 'Ce message n\'existe pas.';
+#inc/class.agora.behaviors.php:127
+$GLOBALS['__l10n']['Messages:'] = 'Messages&nbsp;:';
 
-#message.php:202
-$GLOBALS['__l10n']['Are you sure you want to delete this message?'] = 'Êtes-vous sûr de vouloir supprimer les messages sélectionnés';
-
-#message.php:224
-$GLOBALS['__l10n']['Message has been successfully updated.'] = 'Le message a été mis à jour avec succès.';
-
-#message.php:227
-$GLOBALS['__l10n']['Message has been successfully created.'] = 'Le message a été créé avec succès.';
-
-#message.php:236
-$GLOBALS['__l10n']['Don\'t forget to validate your XHTML conversion by saving your message.'] = 'Enregistrez votre message pour valider la transformation en XHTML.';
-
-#message.php:260
-$GLOBALS['__l10n']['Message status:'] = 'État du message :';
-
-#message.php:264
-#thread.php:395
-$GLOBALS['__l10n']['Published on:'] = 'Publié le :';
-
-#message.php:267
-#thread.php:398
-$GLOBALS['__l10n']['Text formating:'] = 'Format du texte :';
-
-#message.php:269
-#thread.php:400
-$GLOBALS['__l10n']['Convert to XHTML'] = 'Convertir en XHTML';
-
-#message.php:282
-#options.php:86
-#thread.php:469
-#thread.php:477
-$GLOBALS['__l10n']['Required field'] = 'Champ obligatoire';
-
-#message.php:283
-#thread.php:478
-$GLOBALS['__l10n']['Content:'] = 'Contenu :';
-
-#message.php:324
-#thread.php:579
-$GLOBALS['__l10n']['IP address'] = 'Adresse IP';
-
-#messages.php:34
-$GLOBALS['__l10n']['Entry title'] = 'Titre du billet';
-
-#messages.php:98
-#thread.php:526
-$GLOBALS['__l10n']['publish'] = 'publier';
-
-#messages.php:99
-#thread.php:527
-$GLOBALS['__l10n']['unpublish'] = 'hors ligne';
-
-#messages.php:100
-#thread.php:528
-$GLOBALS['__l10n']['mark as pending'] = 'en attente';
-
-#messages.php:101
-#thread.php:529
-$GLOBALS['__l10n']['mark as junk'] = 'indésirable';
-
-#messages.php:139
-$GLOBALS['__l10n']['Are you sure you want to delete these messages?'] = 'Êtes-vous sûr de vouloir supprimer les messages sélectionnés ?';
-
-#messages.php:164
-$GLOBALS['__l10n']['Messages per page'] = 'Messages par page';
-
-#messages.php:193
-$GLOBALS['__l10n']['You have one spam message.'] = 'Vous avez un message spam.';
-
-#messages.php:194
-$GLOBALS['__l10n']['Show it.'] = 'L\'afficher';
-
-#messages.php:196
-$GLOBALS['__l10n']['You have %s spam messages.'] = 'Vous avez %s messages spam.';
-
-#messages.php:197
-$GLOBALS['__l10n']['Show them.'] = 'Les afficher.';
-
-#messages.php:210
-#thread.php:559
-$GLOBALS['__l10n']['Selected messages action:'] = 'Action pour les messages sélectionnés';
-
-#messages_actions.php:91
-$GLOBALS['__l10n']['Comments'] = 'Commentaires';
-
-#messages_actions.php:93
-$GLOBALS['__l10n']['back'] = 'retour';
-
-#options.php:30
-$GLOBALS['__l10n']['No agora announce.'] = 'Aucune annonce pour l\'agora';
-
-#options.php:50
-$GLOBALS['__l10n']['Configuration successfully updated.'] = 'Configuration mise à jour avec succès.';
-
-#options.php:72
-$GLOBALS['__l10n']['Plugin activation'] = 'Activation de l\'extension';
-
-#options.php:77
-$GLOBALS['__l10n']['Enable Agora'] = 'Activer Agora';
-
-#options.php:84
-$GLOBALS['__l10n']['Presentation options'] = 'Options de présentation';
-
-#options.php:87
-$GLOBALS['__l10n']['Agora announce:'] = 'Annonce de l\'Agora';
-
-#options.php:97
-$GLOBALS['__l10n']['Display %s messages per feed'] = 'Afficher %s messages par fil';
-
-#options.php:108
-$GLOBALS['__l10n']['Save configuration'] = 'Enregistrer la configuration';
-
-#thread.php:82
-#thread.php:85
-#thread.php:88
-$GLOBALS['__l10n']['Most used'] = 'Plus utilisées';
-
-#thread.php:82
-#thread.php:86
-$GLOBALS['__l10n']['Available'] = 'Disponible';
-
-#thread.php:105
-$GLOBALS['__l10n']['This thread does not exist.'] = 'Cette discussion n\'existe pas.';
-
-#thread.php:137
-$GLOBALS['__l10n']['next thread'] = 'discussion suivante';
-
-#thread.php:144
-$GLOBALS['__l10n']['previous thread'] = 'discussion précédente';
-
-#thread.php:297
-$GLOBALS['__l10n']['Are you sure you want to delete this thread?'] = 'Êtes-vous sûr de vouloir supprimer cette discussion ?';
-
-#thread.php:320
-$GLOBALS['__l10n']['Thread has been successfully updated.'] = 'La discusssion a été mise à jour avec succès.';
-
-#thread.php:323
-$GLOBALS['__l10n']['Thread has been successfully created.'] = 'La discussion a été créée avec succès.';
-
-#thread.php:326
-$GLOBALS['__l10n']['File has been successfully attached.'] = 'Fichier attaché avec succès.';
-
-#thread.php:329
-$GLOBALS['__l10n']['Attachment has been successfully removed.'] = 'Pièce jointe retirée avec succès.';
-
-#thread.php:339
-$GLOBALS['__l10n']['Don\'t forget to validate your XHTML conversion by saving your post.'] = 'Enregistrez votre billet pour valider la transformation en XHTML.';
-
-#thread.php:346
-$GLOBALS['__l10n']['View thread'] = 'Visualiser la discussion';
-
-#thread.php:353
-$GLOBALS['__l10n']['Preview thread'] = 'Prévisualier la discussion';
-
-#thread.php:391
-$GLOBALS['__l10n']['Thread status:'] = 'État de la discussion :';
-
-#thread.php:404
+#inc/class.agora.behaviors.php:130
 $GLOBALS['__l10n']['Accept messages'] = 'Accepter les messages';
 
-#thread.php:406
-$GLOBALS['__l10n']['Selected thread'] = 'Discussion sélectionnée';
+#inc/class.agora.behaviors.php:236
+$GLOBALS['__l10n']['Count messages'] = 'Compter les messages';
 
-#thread.php:408
-$GLOBALS['__l10n']['Thread lang:'] = 'Langue de la discussion :';
+#inc/class.agora.behaviors.php:237
+$GLOBALS['__l10n']['Allow messages'] = 'Accepter les messages';
 
-#thread.php:411
-$GLOBALS['__l10n']['Thread password:'] = 'Mot de passe de la discussion :';
+#inc/class.agora.behaviors.php:238
+$GLOBALS['__l10n']['Disallow messages'] = 'Refuser les messages';
 
-#thread.php:416
-$GLOBALS['__l10n']['Basename:'] = 'URL spécifique :';
+#inc/class.agora.behaviors.php:338
+$GLOBALS['__l10n']['The backup file does not appear to be well formed.'] = 'Le fichier de sauvegarde ne semble pas être correctement formaté';
 
-#thread.php:420
-$GLOBALS['__l10n']['Warning: If you set the URL manually, it may conflict with another thread.'] = 'Attention : si vous indiquez l\'URL manuellement, celle-ci peut entrer en conflit avec une autre discussion.';
+#inc/class.agora.mail.php:24
+$GLOBALS['__l10n']['Account confirmation request'] = 'Demande de confirmation de compte';
 
-#thread.php:443
-$GLOBALS['__l10n']['open'] = 'ouvrir';
+#inc/class.agora.mail.php:26
+$GLOBALS['__l10n']['Welcome to %s'] = 'Bienvenue sur %s';
 
-#thread.php:447
-$GLOBALS['__l10n']['remove'] = 'supprimer';
+#inc/class.agora.mail.php:27
+$GLOBALS['__l10n']['To verify your e-mail address, please click on the following link:'] = 'Pour vérifier votre adresse e-mail, cliquez sur le lien suivant';
 
-#thread.php:456
-$GLOBALS['__l10n']['No attachment.'] = 'Aucune pièce jointe';
+#inc/class.agora.mail.php:31
+$GLOBALS['__l10n']['Your informations:'] = 'Vos informations&nbsp;:';
 
-#thread.php:458
-$GLOBALS['__l10n']['Add files to this page'] = 'Ajouter un fichier à la page';
+#inc/class.agora.mail.php:32
+$GLOBALS['__l10n']['User: %s'] = 'Utilisateur&nbsp;: %s';
 
-#thread.php:473
-$GLOBALS['__l10n']['Excerpt:'] = 'Extrait :';
+#inc/class.agora.mail.php:33
+$GLOBALS['__l10n']['Password: %s'] = 'Mot de passe&nbsp;: %s';
 
-#thread.php:482
-$GLOBALS['__l10n']['Notes:'] = 'Notes :';
+#inc/class.agora.mail.php:34
+#inc/class.agora.mail.php:49
+$GLOBALS['__l10n']['Connection URL: %s'] = 'URL de connexion&nbsp;: %s';
 
-$GLOBALS['__l10n']['finish'] = 'terminer';
+#inc/class.agora.mail.php:42
+$GLOBALS['__l10n']['Account validation'] = 'Validation du compte';
 
-$GLOBALS['__l10n']['profile'] = 'profil';
+#inc/class.agora.mail.php:45
+$GLOBALS['__l10n']['Hello %s'] = 'Bonjour %s';
 
-$GLOBALS['__l10n']['Text:'] = 'Texte :';
+#inc/class.agora.mail.php:46
+$GLOBALS['__l10n']['Your account has been validated by the administrators. You can participate to %s.'] = 'Votre compte a été validé par les administrateurs. Vous pouvez participer à %s.';
 
-$GLOBALS['__l10n']['Button:'] = 'Bouton :';
+#inc/class.agora.mail.php:48
+$GLOBALS['__l10n']['Reminder:'] = 'Rappel&nbsp;:';
 
-$GLOBALS['__l10n']['Disconnect'] = 'Se déconnecter';
+#inc/class.agora.mail.php:57
+$GLOBALS['__l10n']['Password reset'] = 'Réinitialisation du mot de passe';
 
-$GLOBALS['__l10n']['Last thread:'] = 'Dernière discussion :';
+#inc/class.agora.mail.php:60
+$GLOBALS['__l10n']['Someone has requested to reset the password for the following website and username.'] = 'Quelqu\'un a demandé à réinitialiser le mot de passe pour le site suivant et l\'utilisateur.';
 
-$GLOBALS['__l10n']['Last message:'] = 'Dernier message :';
+#inc/class.agora.mail.php:61
+#inc/class.agora.mail.php:71
+$GLOBALS['__l10n']['Username:'] = 'Nom d\'utilisateur :';
 
-$GLOBALS['__l10n']['Edit the post'] = 'Modifier la discussion';
+#inc/class.agora.mail.php:62
+$GLOBALS['__l10n']['To reset your password visit the following address, otherwise just ignore this email and nothing will happen.'] = 'Pour réinitialiser votre mot de passe, rendez-vous à l\'adresse suivante. Sinon ignorez simplement ce message et rien ne se passera.';
 
-$GLOBALS['__l10n']['Edit a post'] = 'Modifier la discussion';
+#inc/class.agora.mail.php:69
+$GLOBALS['__l10n']['Your new password'] = 'Votre nouveau mot de passe';
 
-$GLOBALS['__l10n']['Your new thread'] = 'Votre nouvelle discussion';
+#inc/class.agora.mail.php:72
+$GLOBALS['__l10n']['Password:'] = 'Mot de passe :';
 
-$GLOBALS['__l10n']['Announcements'] = 'Annonces';
+#inc/class.agora.mail.php:95
+$GLOBALS['__l10n']['This is a post-only mailing. Replies to this message are not monitored or answered.'] = 'Il s\'agit d\'un envoi automatique. Les réponses à ce message ne sont pas prises en compte.';
 
-$GLOBALS['__l10n']['Welcome to the forum of %s'] = 'Bienvenue sur le forum de %s';
+#inc/class.agora.media.php:97
+$GLOBALS['__l10n']['The \'public\' directory does not exist.'] = 'Le répertoire \'public\' n\'existe pas.';
 
-$GLOBALS['__l10n']['Forum'] = 'Forum';
+#inc/class.agora.media.php:103
+#inc/class.agora.media.php:113
+$GLOBALS['__l10n']['The \'%s\' directory cannot be modified.'] = 'Le répertoire \'%s\' ne peut pas être modifié.';
 
-$GLOBALS['__l10n']['Agora connection:'] = 'Connexion à l\'Agora :';
+#inc/class.agora.media.php:123
+$GLOBALS['__l10n']['Unable to create images.'] = 'Impossible de créer les images.';
+
+#inc/class.agora.media.php:130
+$GLOBALS['__l10n']['Invalid file type.'] = 'Type de fichier non valide.';
+
+#inc/class.agora.media.php:136
+$GLOBALS['__l10n']['An error occurred while writing the file.'] = 'Une erreur est survenue pendant l\'écriture du fichier.';
+
+#inc/class.agora.media.php:141
+$GLOBALS['__l10n']['Uploaded image is not 800 pixels wide.'] = 'L\'image fournie de fait pas 800 pixels de large.';
+
+#inc/class.agora.php:38
+#lib/agora.pager.php:93
+$GLOBALS['__l10n']['not verified'] = 'non vérifié';
+
+#inc/class.agora.php:39
+#inc/class.agora.php:44
+#inc/class.agora.template.php:290
+#lib/agora.pager.php:89
+#lib/agora.pager.php:109
+#lib/agora.pager.php:213
+$GLOBALS['__l10n']['pending'] = 'en attente';
+
+#inc/class.agora.php:40
+#lib/agora.pager.php:86
+$GLOBALS['__l10n']['suspended'] = 'suspendu';
+
+#inc/class.agora.php:41
+#lib/agora.pager.php:83
+$GLOBALS['__l10n']['active'] = 'actif';
+
+#inc/class.agora.php:43
+#inc/class.agora.template.php:289
+#lib/agora.pager.php:216
+$GLOBALS['__l10n']['junk'] = 'indésirable';
+
+#inc/class.agora.php:45
+#inc/class.agora.template.php:291
+#lib/agora.pager.php:106
+#lib/agora.pager.php:210
+$GLOBALS['__l10n']['scheduled'] = 'programmé';
+
+#inc/class.agora.php:46
+#inc/class.agora.template.php:292
+#lib/agora.pager.php:103
+#lib/agora.pager.php:207
+$GLOBALS['__l10n']['unpublished'] = 'non publié';
+
+#inc/class.agora.php:47
+#inc/class.agora.template.php:293
+#lib/agora.pager.php:100
+#lib/agora.pager.php:204
+$GLOBALS['__l10n']['published'] = 'publié';
+
+#inc/class.agora.php:244
+#inc/class.agora.php:264
+#inc/class.agora.urlhandlers.php:250
+$GLOBALS['__l10n']['This is a wrong registration URL. Registration failed.'] = 'C\'est une mauvaise URL d\'inscription. L\'inscription a échoué.';
+
+#inc/class.agora.php:274
+$GLOBALS['__l10n']['You need to be administrator to moderate users.'] = 'Vous devez être administrateur pour modérer les utilisateurs.';
+
+#inc/class.agora.php:281
+$GLOBALS['__l10n']['User_id "%s" is unchanged.'] = 'L\'identifiant "%s" est inchangé.';
+
+#inc/class.agora.php:321
+#inc/class.agora.php:329
+$GLOBALS['__l10n']['Authentication failed.'] = 'L\'authentification a échoué.';
+
+#inc/class.agora.php:325
+$GLOBALS['__l10n']['This user is not allowed to log in.'] = 'Cet utlisateur n\'est pas autorisé à se connecter.';
+
+#inc/class.agora.php:372
+#inc/class.agora.php:375
+$GLOBALS['__l10n']['You are not allowed to close this entry'] = 'Vous n\'êtes pas autorisé à fermer ce billet';
+
+#inc/class.agora.php:393
+$GLOBALS['__l10n']['You are not allowed to mark this entry as closed'] = 'Vous n\'êtes pas autorisé à marquer ce billet comme fermé';
+
+#inc/class.agora.php:682
+$GLOBALS['__l10n']['You are not allowed to create a message'] = 'Vous n\'êtes pas autorisé à créer des messages';
+
+#inc/class.agora.php:726
+$GLOBALS['__l10n']['You are not allowed to update messages'] = 'Vous n\'êtes pas autorisé à modifier les messages';
+
+#inc/class.agora.php:732
+#inc/class.agora.php:738
+#inc/class.agora.php:812
+$GLOBALS['__l10n']['No such message ID'] = 'Identifiant du message inconnu';
+
+#inc/class.agora.php:745
+$GLOBALS['__l10n']['You are not allowed to update this message'] = 'Vous n\'êtes pas autorisé à modifier ce message';
+
+#inc/class.agora.php:774
+#inc/class.agora.php:787
+$GLOBALS['__l10n']['You are not allowed to change this message status'] = 'Vous n\'êtes pas autorisé à modifier l\'état de ce billet';
+
+#inc/class.agora.php:806
+$GLOBALS['__l10n']['You are not allowed to delete messages'] = 'Vous n\'êtes pas autorisé à supprimer des billets';
+
+#inc/class.agora.php:828
+$GLOBALS['__l10n']['You are not allowed to delete this message'] = 'Vous n\'êtes pas autorisé à supprimer ce message';
+
+#inc/class.agora.php:843
+$GLOBALS['__l10n']['No message content'] = 'Aucun contenu du message';
+
+#inc/class.agora.php:855
+$GLOBALS['__l10n']['No message content xhtml'] = 'Aucun contenu xhtml du message';
+
+#inc/class.agora.public.behaviors.php:150
+$GLOBALS['__l10n']['I forgot my password'] = 'J\'ai oublié mon mot de passe';
+
+#inc/class.agora.public.behaviors.php:183
+$GLOBALS['__l10n']['Category'] = 'Catégorie';
+
+#inc/class.agora.public.behaviors.php:189
+$GLOBALS['__l10n']['Excerpt (optional)'] = 'Extrait (facultatif)';
+
+#inc/class.agora.public.behaviors.php:275
+$GLOBALS['__l10n']['Name or nickname:'] = 'Nom ou pseudonyme&nbsp;:';
+
+#inc/class.agora.public.behaviors.php:288
+$GLOBALS['__l10n']['New password:'] = 'Nouveau mot de passe :';
+
+#inc/class.agora.public.behaviors.php:290
+$GLOBALS['__l10n']['Confirm password:'] = 'Confirmez le mot de passe :';
+
+#inc/class.agora.public.behaviors.php:296
+$GLOBALS['__l10n']['Informations:'] = 'Informations&nbsp;:';
+
+#inc/class.agora.public.behaviors.php:302
+$GLOBALS['__l10n']['Avatar:'] = 'Avatar&nbsp;:';
+
+#inc/class.agora.public.behaviors.php:345
+$GLOBALS['__l10n']['publish this entry'] = 'publier ce billet';
+
+#inc/class.agora.public.behaviors.php:345
+#inc/class.agora.public.behaviors.php:385
+#messages.php:109
+$GLOBALS['__l10n']['publish'] = 'publier';
+
+#inc/class.agora.public.behaviors.php:350
+$GLOBALS['__l10n']['unpublish this entry'] = 'mettre hors ligne ce billet';
+
+#inc/class.agora.public.behaviors.php:350
+#inc/class.agora.public.behaviors.php:390
+#messages.php:110
+$GLOBALS['__l10n']['unpublish'] = 'mettre hors ligne';
+
+#inc/class.agora.public.behaviors.php:367
+$GLOBALS['__l10n']['edit this entry'] = 'modifier ce billet';
+
+#inc/class.agora.public.behaviors.php:367
+#inc/class.agora.public.behaviors.php:402
+$GLOBALS['__l10n']['edit'] = 'modifier';
+
+#inc/class.agora.public.behaviors.php:385
+$GLOBALS['__l10n']['publish this message'] = 'publier ce message';
+
+#inc/class.agora.public.behaviors.php:390
+$GLOBALS['__l10n']['unpublish this message'] = 'mettre en hors ligne ce message';
+
+#inc/class.agora.public.behaviors.php:402
+$GLOBALS['__l10n']['edit this message'] = 'modifier ce message';
+
+#inc/class.agora.urlhandlers.php:85
+$GLOBALS['__l10n']['The e-mail was sent successfully to %s.'] = 'Le message a été envoyé avec succès à %s.';
+
+#inc/class.agora.urlhandlers.php:100
+$GLOBALS['__l10n']['Your new password is in your mailbox.'] = 'Votre nouveau mot de passe est dans votre boîte à lettres.';
+
+#inc/class.agora.urlhandlers.php:177
+#inc/class.agora.urlhandlers.php:457
+$GLOBALS['__l10n']['You must provide a valid email'] = 'Vous devez fournir une adresse e-mail valide.';
+
+#inc/class.agora.urlhandlers.php:182
+$GLOBALS['__l10n']['User "%s" already exists.'] = 'L\'utilisateur "%s" existe déjà.';
+
+#inc/class.agora.urlhandlers.php:187
+$GLOBALS['__l10n']['User ID must contain at least 2 characters using letters, numbers or symbols.'] = 'L\'identifiant utilisateur doit contenir au moins 2 caractères composés de lettres, chiffres ou symboles.';
+
+#inc/class.agora.urlhandlers.php:200
+$GLOBALS['__l10n']['Your account %s is almost ready. You will receive an email with further information.'] = 'Votre compte %s est presque prêt. Vous allez recevoir un e-mail contenant les informations nécessaires.';
+
+#inc/class.agora.urlhandlers.php:222
+$GLOBALS['__l10n']['log in'] = 'vous connecter';
+
+#inc/class.agora.urlhandlers.php:229
+$GLOBALS['__l10n']['User %s is already registred. You can %s.'] = 'L\'utilisateur %s est déjà inscrit. Vous pouvez vous %s.';
+
+#inc/class.agora.urlhandlers.php:235
+$GLOBALS['__l10n']['Your account (%s) is now awaiting validation. Be patient.'] = 'Votre compte (%s) est en attente de validation. Soyez patient.';
+
+#inc/class.agora.urlhandlers.php:239
+$GLOBALS['__l10n']['Your account (%s) is now registred. You can %s.'] = 'Votre compte (%s) est maintenant enregistré. Vous pouvez vous %s.';
+
+#inc/class.agora.urlhandlers.php:443
+$GLOBALS['__l10n']['You must confirm your password'] = 'Vous devez confirmer votre mot de passe.';
+
+#inc/class.agora.urlhandlers.php:447
+$GLOBALS['__l10n']['Please, check your password. Passwords don\'t match'] = 'Merci de vérifier vos mots de passe. Les mots de passe ne correspondent pas.';
+
+#inc/class.agora.urlhandlers.php:474
+$GLOBALS['__l10n']['User %s successfully updated.'] = 'L\'utilisateur %s a été mis à jour avec succès.';
+
+#inc/class.agora.urlhandlers.php:610
+$GLOBALS['__l10n']['No title.'] = 'Aucun titre.';
+
+#inc/class.agora.urlhandlers.php:614
+$GLOBALS['__l10n']['No content.'] = 'Aucun contenu.';
+
+#inc/class.agora.widgets.php:234
+$GLOBALS['__l10n']['Nobody.'] = 'Personne.';
+
+#inc/class.agora.widgets.php:240
+$GLOBALS['__l10n']['Moderator'] = 'Modérateur';
+
+#inc/class.rs.public.agora.php:28
+$GLOBALS['__l10n']['Read'] = 'Lire';
+
+#index.php:36
+#index.php:48
+#lib/agora.pager.php:41
+#lib/agora.pager.php:157
+#messages.php:35
+$GLOBALS['__l10n']['Status'] = 'État';
+
+#index.php:37
+#lib/agora.pager.php:37
+$GLOBALS['__l10n']['Display name'] = 'Pseudonyme';
+
+#index.php:38
+$GLOBALS['__l10n']['Number of entries'] = 'Nombre de billets';
+
+#index.php:39
+$GLOBALS['__l10n']['Number of messages'] = 'Nombre de messages';
+
+#index.php:49
+$GLOBALS['__l10n']['Active'] = 'Activer';
+
+#index.php:50
+$GLOBALS['__l10n']['Ban'] = 'Bannir';
+
+#index.php:52
+$GLOBALS['__l10n']['Moderate'] = 'Modérer';
+
+#index.php:53
+$GLOBALS['__l10n']['Not moderate'] = 'Ne pas modérer';
+
+#index.php:157
+$GLOBALS['__l10n']['Selected user(s) is (are) now active.'] = 'Les utlisateurs sélectionnés sont maintenant actifs.';
+
+#index.php:158
+$GLOBALS['__l10n']['Selected sers(s) is (are) now banned.'] = 'Les utlisateurs sélectionnés sont maintenant bannis.';
+
+#index.php:159
+$GLOBALS['__l10n']['Selected user(s) is (are) now moderated.'] = 'Les utlisateurs sélectionnés sont maintenant modérés.';
+
+#index.php:160
+$GLOBALS['__l10n']['Selected users(s) is (are) not moderated anymore.'] = 'Les utlisateurs sélectionnés ne sont plus modérés.';
+
+#lib/agora.pager.php:36
+$GLOBALS['__l10n']['Email'] = 'E-mail';
+
+#lib/agora.pager.php:38
+$GLOBALS['__l10n']['Content status'] = 'État du contenu';
+
+#lib/agora.pager.php:74
+$GLOBALS['__l10n']['moderator'] = 'modérateur';
+
+#lib/agora.pager.php:234
+$GLOBALS['__l10n']['Edit this message'] = 'Modifier ce message';
+
+#message.php:27
+$GLOBALS['__l10n']['New message'] = 'Nouveau message';
+
+#message.php:63
+$GLOBALS['__l10n']['This message does not exist.'] = 'Ce message n\'existe pas.';
+
+#message.php:77
+#message.php:260
+$GLOBALS['__l10n']['Edit message'] = 'Modifier le message';
+
+#message.php:207
+$GLOBALS['__l10n']['Are you sure you want to delete this message?'] = 'Êtes vous sûr de vouloir supprimer ce message ?';
+
+#message.php:232
+$GLOBALS['__l10n']['Message has been successfully created.'] = 'Le message a été créé avec succès.';
+
+#message.php:241
+$GLOBALS['__l10n']['Don\'t forget to validate your XHTML conversion by saving your message.'] = 'N\'oubliez pas de valider votre conversion XHTML en enregistrant votre message';
+
+#message.php:265
+$GLOBALS['__l10n']['Message status:'] = 'État du message&nbsp;:';
+
+#messages.php:150
+$GLOBALS['__l10n']['Are you sure you want to delete these messages?'] = 'Êtes vous sûr de vouloir supprimer ces messages ?';
+
+#messages.php:177
+$GLOBALS['__l10n']['Entry ID:'] = 'Identifiant du billet&nbsp;:';
+
+#messages.php:194
+$GLOBALS['__l10n']['Messages per page'] = 'Messages par page';
+
+#messages.php:208
+$GLOBALS['__l10n']['You have one spam message.'] = 'Vous avez un message spam.';
+
+#messages.php:211
+$GLOBALS['__l10n']['You have %s spam messages.'] = 'Vous avez %s messages spam.';
+
+#messages.php:225
+$GLOBALS['__l10n']['Selected messages action:'] = 'Action pour les messages sélectionnés&nbsp;:';
+
+#messages_actions.php:94
+$GLOBALS['__l10n']['Comments'] = 'Commentaires';
+
+#messages_actions.php:96
+$GLOBALS['__l10n']['back'] = 'retour';
+
+#options.php:51
+$GLOBALS['__l10n']['Disabled'] = 'Désactivé';
+
+#options.php:51
+$GLOBALS['__l10n']['Manual display'] = 'Affichage manuel';
+
+#options.php:51
+$GLOBALS['__l10n']['Automatic display'] = 'Affichage automatique';
+
+#options.php:128
+$GLOBALS['__l10n']['Configuration successfully updated.'] = 'La configuration a été mis à jour avec succès.';
+
+#options.php:148
+$GLOBALS['__l10n']['Main settings'] = 'Paramètres principaux';
+
+#options.php:151
+$GLOBALS['__l10n']['Enable agora:'] = 'Activer agora&nbsp;:';
+
+#options.php:153
+$GLOBALS['__l10n']['When you activate agora, you enable new widgets and all options below.'] = 'Une fois agora activée, de nouveaux widgets et les options ci-dessous seront disponibles.';
+
+#options.php:156
+$GLOBALS['__l10n']['Messages system:'] = 'Système de messages&nbsp;:';
+
+#options.php:158
+$GLOBALS['__l10n']['Messages system replaces comments system for answering entries. It requires user authentication.'] = 'Le système de messages remplace le système des commentaires pour répondre aux billets. Il requiert l\'authentification utlisateur.';
+
+#options.php:161
+$GLOBALS['__l10n']['Registration:'] = 'Inscription&nbsp;:';
+
+#options.php:165
+$GLOBALS['__l10n']['Registration moderation:'] = 'Inscription modérée&nbsp;:';
+
+#options.php:167
+$GLOBALS['__l10n']['A confirmation by administrators is required for new subscriptions.'] = 'Une confirmation des administrateurs est requise pour les nouvelles inscriptions.';
+
+#options.php:170
+$GLOBALS['__l10n']['New entry:'] = 'Nouveau billet&nbsp;:';
+
+#options.php:171
+$GLOBALS['__l10n']['Users can can post.'] = 'Les utilisateurs peuvent écrire des billets.';
+
+#options.php:175
+$GLOBALS['__l10n']['User settings'] = 'Paramètres utilisateur';
+
+#options.php:179
+$GLOBALS['__l10n']['Password recovery:'] = 'Récupération de mot de passe&nbsp;:';
+
+#options.php:184
+$GLOBALS['__l10n']['Nickname edition:'] = 'Modification du pseudonyme&nbsp;:';
+
+#options.php:188
+$GLOBALS['__l10n']['Description edition:'] = 'Modification de la description&nbsp;:';
+
+#options.php:194
+$GLOBALS['__l10n']['Avatars:'] = 'Avatars&nbsp;:';
+
+#options.php:196
+$GLOBALS['__l10n']['Default avatar:'] = 'Avatar par défaut&nbsp;:';
+
+#options.php:202
+#options.php:203
+$GLOBALS['__l10n']['Default avatar'] = 'Avatar par défaut';
+
+#options.php:209
+$GLOBALS['__l10n']['Miscellaneous settings'] = 'Paramètres divers';
+
+#options.php:213
+$GLOBALS['__l10n']['Entry excerpt:'] = 'Extrait de billet&nbsp;:';
+
+#options.php:221
+$GLOBALS['__l10n']['New content status:'] = 'État du nouveau contenu&nbsp;:';
+
+#options.php:223
+$GLOBALS['__l10n']['Does not apply to comments. It is default status of the entries and messages posted by new users. You can change for each y user later.'] = 'C\'est l\'état par défaut des messages postés par les nouveaux utilisateurs.Vous pourrez le changer pour chaque utilisateur plus tard.';
+
+#options.php:226
+$GLOBALS['__l10n']['Global authentication:'] = 'Authentification globale&nbsp;:';
+
+#options.php:228
+$GLOBALS['__l10n']['Global authentication forces visitors to log in to read the blog.'] = 'L\'authentification globale force les visiteurs à se connecter pour lire le blog.';
+
+#options.php:232
+$GLOBALS['__l10n']['Uncategorized entries:'] = 'Billets non catégorisés';
+
+#options.php:237
+$GLOBALS['__l10n']['Community mode:'] = 'Mode communauté&nbsp;:';
+
+#options.php:239
+$GLOBALS['__l10n']['It enables \'Connected users\' widget, member list and profile URLs.'] = 'Cela active le widget \'utilisateurs connectés\' et les URLs des profils et la liste des utilisateurs.';
+
+#options.php:242
+$GLOBALS['__l10n']['Forum mode:'] = 'Mode forum&nbsp;:';
+
+#options.php:244
+$GLOBALS['__l10n']['When a published message is added to an entry, its published date is updated.'] = 'Quand un message publié est ajouté à un billet, sa date de publication est mis à jour.';
+
+#options.php:247
+$GLOBALS['__l10n']['Wiki mode:'] = 'Mode wiki&nbsp;:';
+
+#options.php:249
+$GLOBALS['__l10n']['Every authenticated user can edit any entry.'] = 'Tout utilisateur authentifié peut modifier tout billet.';
+
+#options.php:250
+$GLOBALS['__l10n']['Display %s messages per feed'] = 'Afficher %s messages par fil';
+
+#options.php:255
+$GLOBALS['__l10n']['Moderations links:'] = 'Liens de modération&nbsp;';
+
+#options.php:257
+$GLOBALS['__l10n']['It displays automatically moderation links on your blog.'] = 'Cela permet d\'afficher automatiquement les liens de modération sur votre blog.';
+
+$GLOBALS['__l10n']['Display link to userlist'] = 'Affiche le lien vers la liste des utitlisateurs';
+
+$GLOBALS['__l10n']['This message has been published.'] = 'Ce message a été publié.';
+
+$GLOBALS['__l10n']['This message has been unpublished.'] = 'Ce message n\'est plus publié.';
+
+$GLOBALS['__l10n']['No log message'] = 'Pas de message dans le journal';
+
+$GLOBALS['__l10n']['Entries feed'] = 'Fil des billets';
+
+$GLOBALS['__l10n']['Comments feed'] = 'Fil des commentaires';
 
 $GLOBALS['__l10n']['no message'] = 'aucun message';
 
 $GLOBALS['__l10n']['one message'] = 'un message';
+
+$GLOBALS['__l10n']['no entry'] = 'aucun billet';
+
+$GLOBALS['__l10n']['one entry'] = 'un billet';
+
+$GLOBALS['__l10n']['%d entries'] = '%d billets';
 
 ?>

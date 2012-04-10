@@ -3,7 +3,7 @@
 #
 # This file is part of agora, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 Osku ,Tomtom and contributors
+# Copyright (c) 2009-2012 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -15,39 +15,44 @@ if (!empty($_REQUEST['id'])) {
 	return;
 } 
 
-require dirname(__FILE__).'/lib/admin.messages.pager.php';
-
 dcPage::check('usage,contentadmin');
 
 # Creating filter combo boxes
-# Filter form we'll put in html_block
-$status_combo = array(
-'-' => ''
-);
-foreach ($core->blog->agora->getAllMessageStatus() as $k => $v) {
-	$status_combo[$v] = (string) $k;
+if (!$core->error->flag())
+{
+	$status_combo = array(
+	'-' => ''
+	);
+	foreach ($core->agora->getAllMessageStatus() as $k => $v) {
+		$status_combo[$v] = (string) $k;
+	}
+
+
+	$sortby_combo = array(
+	__('Date') => 'message_dt',
+	__('Entry title') => 'post_title',
+	__('Author') => 'user_id',
+	__('Status') => 'message_status'
+	);
+
+	$order_combo = array(
+	__('Descending') => 'desc',
+	__('Ascending') => 'asc'
+	);
 }
 
-
-$sortby_combo = array(
-__('Date') => 'message_dt',
-__('Entry title') => 'post_title',
-__('Author') => 'user_id',
-__('Status') => 'message_status'
-);
-
-$order_combo = array(
-__('Descending') => 'desc',
-__('Ascending') => 'asc'
-);
+# Creating filter combo boxes
+# Filter form we'll put in html_block
 
 
-/* Get comments
+
+/* Get Messages
 -------------------------------------------------------- */
-$author = isset($_GET['author']) ?	$_GET['author'] : '';
-$status = isset($_GET['status']) ?		$_GET['status'] : '';
+$user_id = isset($_GET['user_id']) ?	$_GET['user_id'] : '';
+$post_id = isset($_GET['post_id']) ?	$_GET['post_id'] : '';
+$status = isset($_GET['status']) ?	$_GET['status'] : '';
 $sortby = !empty($_GET['sortby']) ?	$_GET['sortby'] : 'message_dt';
-$order = !empty($_GET['order']) ?		$_GET['order'] : 'desc';
+$order = !empty($_GET['order']) ?	$_GET['order'] : 'desc';
 
 $with_spam = $author || $status || $sortby != 'message_dt' || $order != 'desc' ;
 
@@ -67,8 +72,14 @@ $params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
 $params['no_content'] = true;
 
 # Author filter
-if ($author !== '') {
-	$params['q_author'] = $author;
+if ($user_id !== '') {
+	$params['q_author'] = $user_id;
+	$show_filters = true;
+}
+
+# Entry filter
+if ($post_id !== '') {
+	$params['post_id'] = $post_id;
 	$show_filters = true;
 }
 
@@ -77,7 +88,7 @@ if ($status !== '' && in_array($status,$status_combo)) {
 	$params['message_status'] = $status;
 	$show_filters = true;
 } elseif (!$with_spam) {
-	$params['message_status_not'] = -2;
+	$params['message_status_not'] = -3;
 }
 
 # Sortby and order filter
@@ -106,11 +117,11 @@ if ($core->auth->check('delete,contentadmin',$core->blog->id))
 }
 
 
-/* Get comments
+/* Get messages
 -------------------------------------------------------- */
 try {
-	$messages = $core->blog->agora->getMessages($params);
-	$counter = $core->blog->agora->getMessages($params,true);
+	$messages = $core->agora->getMessages($params);
+	$counter = $core->agora->getMessages($params,true);
 	$message_list = new adminMessageList($core,$messages,$counter->f(0));
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
@@ -126,7 +137,7 @@ try {
   dcPage::jsDatePicker().
   dcPage::jsToolBar().
   dcPage::jsModal().
-  dcPage::jsLoad('index.php?pf=agora/js/_messages.js').
+  dcPage::jsLoad('index.php?pf=agora/js/messages.js').
   dcPage::jsConfirmClose('message-form').
   # --BEHAVIOR-- adminPageHeaders
   $core->callBehavior('adminMessageHeaders').
@@ -142,7 +153,7 @@ try {
 </head>
 <body>
 <?php
-echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Messages').'</h2>';
+echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; <span class="page-title">'.__('Messages').'</span></h2>';
 
 if (!$core->error->flag())
 {
@@ -160,9 +171,13 @@ if (!$core->error->flag())
 	'<label>'.__('Status:').' '.
 	form::combo('status',$status_combo,$status).
 	'</label>'.
-	'<br /><p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
-	__('Messages per page').'</label></p>'.
-	'</div>'.
+	'<p><label>'.__('Author:').' '.
+	form::field('user_id',10,30,$user_id).
+	'</label></p>';
+	if ($post_id != '') { echo '<p><label>'.__('Entry ID:').' '.
+	form::field('post_id',10,30,$post_id);}
+	echo '</label></p>'.
+	 '</div>'.
 	
 	'<div class="col">'.
 	'<p><label>'.__('Order by:').' '.
@@ -174,12 +189,12 @@ if (!$core->error->flag())
 	'</div>'.
 	
 	'<div class="col">'.
-	'<p><label>'.__('Author:').' '.
-	form::field('author',20,255,html::escapeHTML($author)).
-	'</label></p>'.
+	'<br />'.
+	'<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
+	__('Messages per page').'</label></p>'.
 	'<p><input type="hidden" name="p" value="agora" />'.
 	'<input type="hidden" name="act" value="messages" />'.
-	'<input type="submit" value="'.__('filter').'" /></p>'.
+	'<input type="submit" value="'.__('Apply filters').'" /></p>'.
 	'</div>'.
 	
 	'</div>'.
@@ -188,19 +203,19 @@ if (!$core->error->flag())
 	'</form>';
 	
 	if (!$with_spam) {
-		$spam_count = $core->blog->agora->getMessages(array('message_status'=>-2),true)->f(0);
+		$spam_count = $core->agora->getMessages(array('message_status'=>-3),true)->f(0);
 		if ($spam_count == 1) {
 			echo '<p>'.sprintf(__('You have one spam message.'),'<strong>'.$spam_count.'</strong>').' '.
-			'<a href="plugin.php?p=agora&act=messages?status=-2">'.__('Show it.').'</a></p>';
+			'<a href="plugin.php?p=agora&act=messages&status=-3">'.__('Show it.').'</a></p>';
 		} elseif ($spam_count > 1) {
 			echo '<p>'.sprintf(__('You have %s spam messages.'),'<strong>'.$spam_count.'</strong>').' '.
-			'<a href="plugin.php?p=agora&act=messages?status=-2">'.__('Show them.').'</a></p>';
+			'<a href="plugin.php?p=agora&act=messages&status=-3">'.__('Show them.').'</a></p>';
 		}
 	}
 	
 	# Show messages
 	$message_list->display($page,$nb_per_page,
-	'<form action="plugin?p=agora&amp;act=messages-actions" method="post" id="form-messages">'.
+	'<form action="plugin.php?p=agora&amp;act=messages-actions" method="post" id="form-messages">'.
 	
 	'%s'.
 	
@@ -213,7 +228,8 @@ if (!$core->error->flag())
 	'<input type="submit" value="'.__('ok').'" /></p>'.
 	form::hidden(array('sortby'),$sortby).
 	form::hidden(array('order'),$order).
-	form::hidden(array('author'),preg_replace('/%/','%%',$author)).
+	form::hidden(array('user_id'),preg_replace('/%/','%%',$user_id)).
+	form::hidden(array('post_id'),$post_id).
 	form::hidden(array('status'),$status).
 	form::hidden(array('page'),$page).
 	form::hidden(array('nb'),$nb_per_page).
