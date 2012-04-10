@@ -537,7 +537,7 @@ class agoraTemplate
 	public static function Users($attr,$content)
 	{
 		global $core, $_ctx;
-		$lastn = -1;
+		/*$lastn = -1;
 		if (isset($attr['lastn'])) {
 			$lastn = abs((integer) $attr['lastn'])+0;
 		}
@@ -564,7 +564,7 @@ class agoraTemplate
 			'if (isset($_user_search)) { '.
 				"\$params['q'] = \$_user_search; ".
 			"}\n";
-		}
+		}*/
 
 		$p .= "\$params['public'] = 1;\n";
 		

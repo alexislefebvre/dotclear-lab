@@ -87,6 +87,18 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
   </div>
 
+    <tpl:SysIfEntryPublished>
+      <p class="message" id="pr">{{tpl:lang Your entry has been published.}}</p>
+    </tpl:SysIfEntryPublished>
+    
+    <tpl:SysIfEntryPending>
+      <p class="message" id="pr">{{tpl:lang Your entry has been submitted and will be reviewed for publication.}}</p>
+    </tpl:SysIfEntryPending>
+
+    <tpl:SysIfEntryUpdated>
+      <p class="message" id="pr">{{tpl:lang Entry has been successfully updated.}}</p>
+    </tpl:SysIfEntryUpdated>
+
   <!-- # Attachments -->
   <tpl:Attachments>
     <tpl:AttachmentsHeader>
@@ -154,18 +166,6 @@
     <tpl:SysIfFormError>
       <p class="error" id="pr">{{tpl:SysFormError}}</p>
     </tpl:SysIfFormError>
-
-     <tpl:SysIfEntryPublished>
-      <p class="message" id="pr">{{tpl:lang Your entry has been published.}}</p>
-    </tpl:SysIfEntryPublished>
-    
-    <tpl:SysIfEntryPending>
-      <p class="message" id="pr">{{tpl:lang Your entry has been submitted and will be reviewed for publication.}}</p>
-    </tpl:SysIfEntryPending>
-
-    <tpl:SysIfEntryUpdated>
-      <p class="message" id="pr">{{tpl:lang Entry has been successfully updated.}}</p>
-    </tpl:SysIfEntryUpdated>
 
     <tpl:SysIfMessagePublished>
       <p class="message" id="pr">{{tpl:lang Your message has been published.}}</p>
