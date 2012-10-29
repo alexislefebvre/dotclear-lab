@@ -1,0 +1,502 @@
+--------- TODO -----------
+* Idee : ajout nom / prenom
+* Idee : ajout de statistiques sur les envois
+* Idee : ajout des envois par lots avec gestion des files d'envoi
+* Idee : ajout des parametres d'envoi (mail par jour, delai entre chaque mail)
+* terminer l'aide en ligne pour les onglets Lettres / Lettre / CSS
+* Ticket #544 : groupes d'abonnés
+* Ticket #658 : pages en erreur 500 sur Free
+--------- TODO -----------
+Newsletter 3.8.1 - 2012-xx-xx
+===========================================================
+* Ticket #718 : bug on http::concatUrl (don't work on 2.4.3, 2.4.4)
+
+Newsletter 3.8.0 - 2011-04-19
+===========================================================
+* Ticket #600 : Statut confirmé à l'inscription
+* Changement des valeurs par défaut
+* Ticket #564 : vérification du by
+* Ticket #597 : bug avec Restreindre l'aper�u à l'extrait des billets
+* Ticket #650 : Newsletter : liens corrompus dans certains envois
+* Change le format des posts de la newsletter pour éviter un bug d'envoi sur la lettre auto 
+	(post_url_format = {y}/{m}/{d}/{t}/{id})
+	=> changement automatique non possible car l'url est fixée par Dotclear
+* Ticket #622 : (%s) dans le message de suppression d'un abonné 	
+* Ticket #588 : ajouter la possibilité de définir les permissions
+* Ajout d'un onglet avec le nombre d'abonnés
+* Ticket #599 : fonctionnement autonome du widget
+* Traitement si la fonction imap_8bit n'existe pas
+* Ticket #545 : page récapitulative des newsletters
+* Ajout d'un widget avec la liste des newsletters
+* Correction du bug sur la page paramètres rencontré chez Free
+* Mise en conformité de la nomenclature des fichiers de Dotclear
+* mise à niveau de l'aide en ligne 
+
+Newsletter 3.7.12 - 2010-12-16
+===========================================================
+* Ajout d'une option pour afficher la date dans les newsletters automatiques
+* Ajout du choix du format de la date du post.info
+* Mettre le style.css dans la balise body
+* Ajout des options pour définir les styles des liens (enable, online, ...)
+* correction de la mise en majuscule des balises h1-h2-h3 lors de la transformation en texte
+* Ticket #616 : contenu erroné des mails lors des opérations d'état
+* Ticket #606 : boucle infini (idem #597) -- correction "tomamplius"
+* Ticket #610 : Bug sur lien aléatoire
+
+Newsletter 3.7.11 - 2010-11-10
+===========================================================
+* Ticket #578 : conformité rfc2822
+* Ticket #583 : export contact list as a csv file or a txt file
+* Ticket #595 : La recherche des billets ne fonctionne plus avec PostgreSQL
+* Suppression de l'utilisation du fichier newsletter.txt au profit de newsletter.html
+* Uniformise les mots-clés de la newsletter
+* Correction des différents modules d'envoi
+* correction format html de la newsletter
+* Ticket #587 : correction format texte de la newsletter
+* Ticket #565 : problème des liens en mode semi-auto
+
+Newsletter 3.7.10 - 2010-09-30
+===========================================================
+* Ticket #562 : Relier Agora avec Newsletter
+* le lien supprimer efface l'abonné de la base
+
+Newsletter 3.7.9 - 2010-09-14
+===========================================================
+* utilisation de la fonction cut_html_string pour extraire le code html
+* correction de l'affichage du ... en fin d'extrait des billets
+* correction de l'affichage en cas d'erreur sur la récupération d'arguments sur l'url 
+* modification de l'affichage du lien de visu online + utilisation via la lettre auto
+* modification de la CSS pour les liens de la lettre
+* Ticket #538 : ajout d'un paramètre général qui indique la date de dernier envoi de la newsletter
+* suppression du filtre des billets par utilisateur
+* correction inversion dans l'utilisation du tri des dates
+* bug de création de plus d'une newsletter par jour => cancel car il suffit d'ajouter le {i} dans post_url_format
+* modification du comportement de l'option "Envoi automatique" lorsque le min est 1
+* remise en place du nombre minimum et maximum de billets pour l'envoi
+* changement pour une meilleure prise en compte des styles
+* modification du template newsletter.html
+
+Newsletter 3.7.8 - 2010-08-09
+===========================================================
+* ajout de la liste des mots clés pour aider à la saisie des lettres
+* Ticket #531, #534 : personnalisation du lien de visu online
+* Ticket #532, #533 : fini le rendu txt
+* mise à niveau des traductions
+* changement du test d'existence de dcCron
+
+Newsletter 3.7.7 - 2010-08-03
+===========================================================
+* Ticket #527 : ajout d'un lien Read more / Lire la suite
+* Ticket #524 : restreindre l'aper�u uniquement à l'extrait des billets
+* Ajout des miniatures dans la lettre automatique
+* Améliore l'affichage de la page about
+
+Newsletter 3.7.6 - 2010-07-28
+===========================================================
+* Ticket #521 : correction sur l'ouverture du fichier CSS
+* Ticket #497 : possibilité d'ajouter EntryFirstImage pour les billets de la newsletter
+* Ajout des paramètres pour le réglage de l'affichage des thumbnails
+* mise à niveau des traductions
+
+Newsletter 3.7.5 - 2010-07-23
+===========================================================
+* correction du style.css pour se rapprocher de la charte graphique de Dotclear
+* quelques corrections pour la compatibilité Dotclear 2.2
+	� validation de la planification en fonctionnement avec dcCron 1.1.8
+	� quelques corrections pour la compatibilité et rétro-compatibilité DC 2.2
+
+Newsletter 3.7.4 - 2010-07-22
+===========================================================
+* quelques corrections pour la compatibilité Dotclear 2.2
+	� correction de l'adaptation du template dans l'onglet maintenance
+	� correction de l'option de suppression des données dans l'onglet maintenance
+	� correction sur la reprise des anciens paramètres depuis une version 3.5.x
+* corrige le fonctionnement lorsqu'on déselect le paramètre "Affiche le contenu des billets"
+* Ticket #452 : on supprime la relativité des liens dans la newsletter pour la consultation hors ligne
+
+Newsletter 3.7.3 - 2010-07-19
+===========================================================
+* correction et amélioration de la fonction d'import d'un fichier de sauvegarde
+
+Newsletter 3.7.2 - 2010-07-02
+===========================================================
+* mise à niveau pour la rétro compatibilité Dotclear 2.1.x
+* corrige le fonctionnement de l'ajout automatique de la date
+* mise à niveau pour la compatibilité Dotclear 2.2-RC
+* Ticket #481 : amélioration de la procédure d'import en masse des emails
+* mise à niveau de la licence de l'extension
+* Ticket #480 : continue l'import meme si une adresse est invalide
+* Ticket #382 : avec le mot clé LINK_VISU_ONLINE le lien n'apparait pas si aucun post n'est sélectionné 
+* Suppression du choix du format dans le widget si on utilise le mode par défaut
+* Ticket #460 : Problème d'installation en multiblog
+* mise à niveau pour la compatibilité php 5.3.0
+* nettoyage des fonctions non utilisées
+
+Newsletter 3.7.1 - 2010-01-13
+===========================================================
+* Ticket #395 : suppression des retours à la ligne suite au ?> de chaque source
+
+Newsletter 3.7.0 - 2009-12-22
+===========================================================
+* révision de la traduction
+* création de balises pour les sous-posts de la letter
+* permettre le remplacement des mots-clés dans l'affichage en ligne
+* utilisation des styles définis dans le CSS
+* ajout d'un onglet pour l'édition du CSS de la newsletter 
+* Ticket #103 : création d'une interface de saisie améliorée de la newsletter
+* Gestion des newsletter dans la table post de type newsletter
+* Gestion d'un historique des newsletters
+* Ticket #163 : permettre la selection des billets dans une lettre
+* Prise en compte des modifications proposées par Kozlika
+* Ticket #127, #198 : parcours de la liste des abonnés en Ajax pour les envois manuels
+* Ajout d'une nouvelle librairie pour l'envoi des mails par Ajax
+* Permettre le remplacement de balises dans la newsletter
+* Mise en conformité avec l'ancien système d'envoi des lettres
+* Ticket #274 : envoi automatique de la lettre que si le billet est à l'état publié
+* ajout d'une option pour ne pas envoyer les billets mis à jour
+
+Newsletter 3.6.0 - 2009-10-07
+===========================================================
+* Mise en conformité pour la version 2.1.6 de Dotclear
+* Correction du Ticket #156 : prise en compte de la table newsletter pendant l'import/export du blog
+* Affiche s'il y a une erreur lors de l'import d'un fichier
+* Affichage du nom du fichier lors de l'export des abonnés
+* Amélioration de l'interface de gestion des abonnés
+* Refonte de la gestion des onglets
+* Changement de la gestion des paramètres - optimisation du nombre d'accès à la base de données
+* Correction du Ticket #233 : ajout d'un paramètre pour choisir la date du tri des billets
+* Changement du traducteur - utilisation du plugin translater (JC Denis)
+* Correction du Ticket #117 : retourne les billets des catégories filles (ajout d'un flag pour activer ou non l'option)
+* Changement de la gestion des erreurs / retourne les erreurs lors des envois planifiés
+* Modification de la procédure d'install / update / delete de l'extension
+* mise à niveau de l'aide en ligne
+* Correction du Ticket #251 : planification impossible pour profil admin en multi-blog
+* Validation des droits en tant qu'admin ou superadmin
+* Prise en compte des fichiers templates du thème pour l'envoi des mails (par exemple newsletter.html)
+* Traitement particulier pour l'adaptation du thème Hybrid
+
+Newsletter 3.5.13 - 2009-09-18
+===========================================================
+* Correction du Ticket #231 : Fatal error avec les sous catégories
+* Correction du Ticket #234 : utilise l'adresse IP du serveur plutôt que celle du client dans l'envoi des mails
+
+Newsletter 3.5.12 - 2009-09-12
+===========================================================
+* mise à jour de l'aide en ligne
+* Ticket #218, #227 : tri sur post_upddt des billets séelectionnées pour l'envoi de la newsletter
+
+Newsletter 3.5.11 - 2009-09-09
+===========================================================
+* Ticket #224 : import d'adresses emails depuis un fichier texte 
+* ajout des extraits dans la newsletter (GaD)
+* correction du Ticket #219 : Lors de la validation du formulaire, l'affichage de la page d'information n'est pas bien formatée.
+* correction dans l'exemple de l'estimation du temps pour la planification
+
+Newsletter 3.5.10 - 2009-06-05
+===========================================================
+* correction de la page de modification d'un abonné
+
+Newsletter 3.5.9 - 2009-05-05
+===========================================================
+* amélioration de la mise en page
+* séparation des paramètres par type de message
+* validation du code en mode DEBUG
+* validation xhtml du formulaire d’inscription (widget) et de la page d’admin (Lomalarch)
+
+Newsletter 3.5.8 - 2009-04-22
+===========================================================
+* correction du Ticket #121 : possibilité de modifier le contenu des mails de gestion d'abonnements (part 2)
+* correction du Ticket #162 : messages d'erreur lors de la création d'un billet et de l'envoi automatique
+
+Newsletter 3.5.7 - 2009-04-21
+===========================================================
+* correction du Ticket #121 : possibilité de modifier le contenu des mails de gestion d'abonnements
+* correction du Ticket #139 : suppression des balises HTML en mode texte
+* optimisation du code sur l'envoi des mails
+* correction du Ticket #125 : Possibilité de modifier le nom "Lettre d'informations" dans le titre du formulaire côté public. 
+* correction du Ticket #123 : Remplacer la mention "by nom de l'auteur" par "par nom de l'auteur"
+* correction d'un bug sur le template NewsletterMessageBlock
+
+Newsletter 3.5.6 - 2009-03-23
+===========================================================
+* mise à jour de l'aide en ligne
+* modification de la gestion des valeurs lors d'une mise à jour
+* correction du Ticket #116 : Ajout d'un nombre minimum de billets à envoyer
+* correction du Ticket #111 : possibilité de personnaliser l'intitulé de tous les mails envoyés
+* correction du Ticket #109 : possibilité de ne pas afficher l'option suspendre
+* correction du Ticket #108 : correction du bug sur la gestion des URL, remplace la rustine du Ticket #61
+* correction du Ticket #107 : possibilité de désactiver le champ format de newsletter (coté public)
+* correction du Ticket #106 : problème accent dans le nom de l'éditeur
+* correction du Ticket #102 : possibilité de personnaliser le nom de la newsletter
+* correction du Ticket #101 : erreur de vérification avec le captcha (part 2)
+
+Newsletter 3.5.5 - 2009-03-18
+===========================================================
+* passage en licence GPL v2.0
+* correction du Ticket #101 sur un problème du captcha
+* corrections pour s'aligner avec la structure de référence des plugins Dotclear
+* correction bug dans la fonction Sendmail
+* correction bug dans la fonction Maintenance
+
+Newsletter 3.5.4 - 2009-03-16
+===========================================================
+* correction d'un problème sur l'initialisation des paramètres en multi-blog
+* correction du ticket #100 sur un problème de duplicate key lors de l'ajout d'un user en multi-blog
+* gestion des opérations d'import/export pour du fonctionnement en multi-blog
+
+Newsletter 3.5.3 - 2009-03-15
+===========================================================
+* correction d'un bug sur le captcha introduit par la 3.5.2
+* correction de la structure la table newsletter pour permettre le multi-blog
+* correction de la fonction d'import de la liste des utilisateurs sauvegardés
+
+Newsletter 3.5.2 - 2009-03-13
+===========================================================
+* réorganisation du code
+* amélioration de la fonction d'envoi du résumé
+* correction du Ticket #73 : ajout d'un bouton retour qui réinitialise le formulaire (évite le retour arrière du navigateur)
+* ajout l'affichage du titre h2 lors de l'adaptation
+* correction d'un bug sur la prise en compte des textes des liens et des introductions au liens
+* correction du Ticket #66 : la possibilité de filtrer par catégorie
+* Ticket #96 : possibilité de choisir le format d'envoi par utilisateur ou par l'administrateur
+* Ticket #71 : ajout d'une planification de l'envoi de la newsletter via l'extension dcCron
+* affichage d'un message de confirmation lors de la suppression des utilisateurs
+* affichage d'un message de confirmation lors de la suppression des informations de la base
+* modification de la fonction d'envoi des mails
+* ajout de la possibilité d'avoir un accusé de réception des envois
+
+Newsletter 3.5.1 - 2009-03-03
+===========================================================
+* correction de la licence pour faire référence à Dotclear 2
+* correction du Ticket #83 : problème d'affichage de posts.content dans la newsletter
+* correction du Ticket #80 : modification et activation de la fonction d'adaptation des templates
+* Ajout d'un champ de présentation dans la page de souscription
+* correction du Ticket #79 : la fonction resume retourne un mail avec l'état du compte
+* ne supprime plus le paramétrage lors d'une mise à jour
+
+Newsletter 3.5.0 - 2009-02-26
+===========================================================
+* correction de la compatibilité avec dotclear 2.1.x
+* changement de la gestion de l'aide de la partie admin
+* remaniement de l'interface d'administration
+* paramétrage des textes de la newsletter depuis l'interface d'administration
+* possibilité de définir les différents textes de la newsletter depuis l'admin
+* désactivation de la fonction de mise à jour pour éviter la redondance avec dotaddict
+* remaniement du code
+* correction du Ticket #47 : bug d'affichage d'une page vide lors du submit
+* resolution du Ticket #61 : bug avec le caratère '=' dans l'URL
+* resolution du Ticket #62 : bug dans l'envoi automatique
+* résolution du Ticket #65 : création de templates spécifiques
+* résolution du Ticket #67 : définir l'intitulé du bouton "S'abonner" 
+* correction de la mise en page du widget
+* résolution du Ticket #69 : inclure une partie du contenu du post dans le mail
+* correction de la fonction suspend en mode page
+* remplacement de la méthode de traduction
+* correction du message d'erreur lors de l'installation
+* résolution du Ticket #70 : choix du format de la newsletter par l'utilisateur
+* ajout d'une fonction de nettoyage pour les debuggeurs
+
+Newsletter 3.4.2 - 2009-01-02
+===========================================================
+* passage en licence GPL
+* don à la communauté Dotclear
+
+Newsletter 3.4.1 - 2008-03-14
+===========================================================
+* compatibilité avec le nouveau système d'installation
+* corrections pour la validation w3c
+* correction de la mise à jour 'dernier envoi' lors de l'envoi de la newsletter (merci Yann)
+* correction récupération liste abonnés lors de l'envoi automatique
+
+3.4
+* remaniement du code
+* optimisation technique
+* amélioration de l'interface d'administration
+* simplification de la sélection des billets à envoyer
+  ne seront pris en compte que les billets écris après la date d'inscription (et publiés)
+
+3.3
+* correction d'un problème technique lors de l'édition
+* ajout d'une gestion d'erreurs
+* obligation d'avoir dotclear 2 beta 7
+
+3.2
+* modification du widget pour afficher sous forme de liste
+* ajout d'un paramètre pour afficher le titre du widget ou pas
+
+3.1
+* mise en conformité avec Dotclear 2.0 beta 7
+* prise en comtpe de la possibilité de générer une image pour le captcha
+
+3.0
+* réorganisation du code
+
+3.0 beta 13
+* correction de la gestion de Dotclear svn ou pas
+* modification de la gestion des droits utilisateurs (multiblog)
+
+3.0 beta 12
+* correction des méthodes pour les templates
+
+3.0 beta 11
+* déport de code pour gestion des version dotclear
+* correction du bouton default pour la réinitialisation des paramètres par défaut
+* système de détection de mise à jour du plugin
+* correction de la sécurité sur les fichiers d'administration
+* correction de la notification de mise à jour du blog lors de la modification des paramètres
+* la suppression du plugin via le gestionnaire du plugin supprime aussi les paramètres du plugin (mais conserve la table des abonnés)
+* correction de l'affichage de la date avec les bases PostgreSQL
+* correction de la possibilité de s'abonner sur plusieurs blogs dans le cas d'un multiblog
+* ajout d'une fonction d'export de la liste des abonnés
+
+3.0 beta 10
+* correction de la validation W3C
+* correction des paramètres d'installation pour les timestamp
+* rajout de la possibilité de s'inscrire par le widget
+* modification de la recherche de billets, rajout d'une option permettant de choisir de prendre en compte les billets modifiés
+
+3.0 beta 9
+* utilisation des behaviors pour la gestion de l'envoi automatique
+* préparation de l'utilisation de l'UDBS pour la gestion des schémas de table
+* modifications dans la gestion des paramètres
+* changement de libellé: Antispam -> Captcha
+* correction de la récupération de la liste des utilisateurs pour le multiblog
+* correction du test du captcha
+* rajout de la gestion temporaire des schémas 2.0beta6 et SVN
+
+3.0 beta 8
+* rajout d'une liste d'utilisateurs du blog ayant un email pour paramétrer l'emetteur des mails
+* message indiquant à l'utilisateur si la page de newsletter n'a pas été initialisée
+* correction d'un bug dans l'envoi automatique
+* compatibilité multiblog
+* correction du paramètre 'uniquement sur la page d'accueil'
+* modification du template de newsletter.html.in en template.newsletter.html
+* modification du fonctionnement du widget (le formulaire est affiché dans la page newsletter)
+* ajout d'un module antispam
+* ajout d'une vérification du MX pour les mails
+* ajout d'une vérification de la présence de la boite mail
+* ajout d'un paramètre de nettoyage de la liste des utilisateurs (tentative d'inscription depuis plus de x jours)
+
+3.0 beta 6
+* correction de la gestion de l'activation/désactivation dans le widget
+* rajout de la possibilité de paramétrer le widget
+* adaptation du template de page newsletter aux thèmes
+* ajout d'un mode about pour tester le template de la newsletter
+* ajout du paramètre d'envoi automatique
+
+3.0 beta 5
+* correction pour utilisation avec PostgreSQL
+* correction de la boucle de récupération des messages s'il n'y a qu'un message
+* correction de la classe d'envoi de mail si le gestionnaire du blog n'a pas renseigné son nom
+
+3.0 beta 4
+* utilisation de namespace pour les paramètres
+* prise en compte des types de bases pour la création des tables
+
+3.0 beta 3
+* supression de Smarty et remplacement par un moteur de template simplifié
+* correction dans la fonction d'envoi automatique d'une abscence d'abonnés
+* réarrangement du code dans les fichiers
+* pas d'affichage du widget si plugin désactivé
+* correction de l'encodage des fichiers
+
+3.0 beta 2
+* mise à jour de l'encodage des fichiers
+* mise à jour du fichier de langue (utilisation des caractères spéciaux html)
+* rajout du template tpl:Newsletter (oublis...)
+* en mode envoi automatique, ne prend plus que la liste des utilisateurs actifs
+* modification des caractères accentués dans le fichier de langue
+* corrections de la récupération des informations abonné
+* notification par email d'une désinscription
+
+3.0 beta 1
+* portage et réécriture pour Dotclear 2
+* suppression de PHPmailer
+* mise à jour de Smarty
+* utilisation de class.html2text.php pour convertir le contenu des billets (html) en contenu texte simple
+* modification du format des templates de mail
+* utilisation de urlhandler pour gérer les url propres à Newsletter (fonctionnalité Dotclear 2)
+* intégration au thème par la gestion des widgets (fonctionnalité Dotclear 2)
+* ajout de la possibilité d'envoi de mail au format texte ou html
+* utilisation des informations du blog (nom du blog, url, nom et email du gestionnaire du blog)
+* ajout du mode newsletter html
+* activation / désactivation de Newsletter par l'interface de paramétrage
+
+2.0.5
+* suppression de l'utilisation de realpath()
+* rajout de test afin de prévenir les inclusions multiples de PHPmailer et Smarty
+* utilisation de Spamplemousse et SpamClear désactivée par défaut
+* mise à jour de Smarty en 2.6.14
+* modifications de la notice
+
+2.0.4
+* correction de getAccountId()
+* modifications des traitements de getNewsletterEmails() et getBlogArticles() pour la gestion des codes de retours
+* affichage d'un message de notification d'opération effectués avec succès pour les opérations de l'interface d'administration (delete, resume, suspend)
+* modification de la logique de traitement pour l'"Envoi" de la newsletter
+* corrections des messages d'erreurs liés à des problèmes d'encodage des fichiers lors de leur enregistrement
+* rajout d'une option de désinstallation (table et related) avec confirmation
+* corrections du fichier de langue
+
+2.0.3
+* désactivation de l'enregistrement des erreurs lors de l'envoi automatique
+* affichage du lien de retour à l'accueil du blog dans toutes les pages related
+* suppression de la création de l'objet Newsletter dans le fichier de la classe et rajout dans index.php
+* rajout de l'utilisation de Spamplemousse et Spamclear, si installés, pour filtrer les inscriptions
+* correction de la méthode d'installation pour avoir toujours le dernier newsletter.php de mis en place
+* rajout du fichier postcon.php pour l'instantiation de Newsletter
+* corrections sur la méthode errors_off()
+* corrections orhtographiques et grammaticales
+* correction sur la gestion du plugin Related
+* rajout d'un lien sur la page de téléchargement des plugins de Dotclear
+* rajout de la gestion des groupes d'abonnés
+* amélioration de la partie de gestion des actions groupées au sein de l'administration
+* analyse du contenu de newsletter.php pour savoir s'il est nécessaire de copier le nouveau
+
+2.0.2
+* share/related/newsletter.php (l. 75) correction de l'affectation
+* share/related/newsletter.php (l. 178) rajout du test de condition: if (empty($email))
+* dans class.newsletter.php, fonction errors() rajout de l'appel de resetErrors() pour vider la liste des erreurs une fois affichée
+* suppression du fichier postcon.php car il n'est plus nécessaire
+
+2.0.1
+* correction pour l'envoi automatique (oublis de mettre en fonction)
+
+2.0
+* réécriture complète de Newsletter
+* suppression des fichiers globals.php et blog.php
+* rendu indépendant des modifications de paramétrages du blog
+* plugin Related obligatoire
+
+1.9.4.5
+* corrections de constantes dotclear (empÃªchait l'envoi de la newsletter)
+
+1.9.4.4
+* corrections orthographiques et grammaticales
+* quelques petites modifications de la présentation
+* correction de la détection de Spamplemousse
+
+1.9.4.3
+* corrections pour l'affichage du chapô
+* possibilité de tenir compte du 'Petit Dotcleat Illustré' (déplacer le index.php à la racine)
+
+1.9.4.2
+* détection et gestion de l'état d'activation du plugin
+* possibilité d'activer / suspendre la newsletter
+* correction du test de mail inconnu lors de la désinscription
+* correction des bugs d'affichage des pages blanches
+
+1.9.4.1
+* suppression de la variable nl_fullemail
+* corrections des textes pour l'utf-8
+
+1.9.4
+* formulaire de configuration
+* limitation du nombre de billets lors de l'envoi de la newsletter
+* rajout du lien pour la désinscription dans le mail de la newsletter
+* reformater le chapo pour enlever tous les caractères php, html et remettre les caractères accentués
+* détection de Spamplemousse et utilisation pour filtrer les emails
+* corriger la gestion utf-8
+
+antérieur 1.9.4
+* je n'ai pas tenu d'historisation
