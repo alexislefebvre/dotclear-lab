@@ -312,6 +312,22 @@ class newsletterTools
 	    return $return;
 	}		
 	
+	/**
+	 * Define concatURL : Correction Ticket #718
+	 * use solution by illisible (http://forum.dotclear.org/viewtopic.php?id=46007)
+	 */
+	public static function concatURL($url,$path)
+	{
+		if ((substr($url,-1,1) != '/') &&(substr($url,-1,1) != '?')) {
+			$url .= '/';
+		}
+
+		if (substr($path,0,1) != '/') {
+			return $url.$path;
+		}
+		
+		return preg_replace('#^(.+?//.+?)/(.*)$#','$1'.$path,$url);
+	}	
 }
 
 ?>

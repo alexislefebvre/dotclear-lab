@@ -758,7 +758,7 @@ class newsletterTabs
 			$auth = &$core->auth;
 			$url = &$core->url;
 			$blogurl = &$blog->url;
-			$urlBase = http::concatURL($blogurl, $url->getBase('newsletter'));			
+			$urlBase = newsletterTools::concatURL($blogurl, $url->getBase('newsletter'));			
 			
 			$export_format_combo = array(__('text file') => 'txt',
 				__('data file') => 'dat');

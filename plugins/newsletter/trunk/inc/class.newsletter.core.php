@@ -969,9 +969,9 @@ class newsletterCore
 			$blogurl = &$blog->url;
 
 			if ($cmd == '') 
-				return http::concatURL($blogurl, $url->getBase('newsletter'));
+				return newsletterTools::concatURL($blogurl, $url->getBase('newsletter'));
 			else 
-				return http::concatURL($blogurl, $url->getBase('newsletter')).'/'.$cmd;
+				return newsletterTools::concatURL($blogurl, $url->getBase('newsletter')).'/'.$cmd;
 		} catch (Exception $e) { 
 			$core->blog->dcNewsletter->addError($e->getMessage());
 		}
@@ -990,7 +990,7 @@ class newsletterCore
 			$blogname = &$blog->name;
 			$blogdesc = &$blog->desc;
 			$blogurl = &$blog->url;
-			$urlBase = http::concatURL($blogurl, $url->getBase('newsletter'));
+			$urlBase = newsletterTools::concatURL($blogurl, $url->getBase('newsletter'));
 			$newsletter_settings = new newsletterSettings($core);
 
 			nlTemplate::clear();
