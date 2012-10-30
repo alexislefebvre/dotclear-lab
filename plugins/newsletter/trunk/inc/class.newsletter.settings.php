@@ -40,7 +40,14 @@ class newsletterSettings
 			$this->system_settings =& $core->blog->settings;
 		}	
 		
-		$this->parameters = $this->blog_settings->newsletter_parameters != '' ? unserialize($this->blog_settings->newsletter_parameters) : array();
+		/* correction pour eviter de planter */
+		//$this->parameters = $this->blog_settings->newsletter_parameters != '' ? unserialize($this->blog_settings->newsletter_parameters) : array();
+		if($this->blog_settings->newsletter_parameters != '') {
+			$this->parameters = unserialize($this->blog_settings->newsletter_parameters); 
+		} 
+		if(!is_array($this->parameters)) {
+			$this->parameters = array();
+		}
 	}
 
 	/**

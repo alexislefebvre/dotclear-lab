@@ -204,7 +204,7 @@ class newsletterLettersList extends adminGenericList
 			{
 				
 				$combo_action[__('Newsletter')]=array(
-					__('send') => 'send'
+					__('Send') => 'send'
 				);
 			
 				$combo_action[__('Changing state')] = array(
@@ -258,15 +258,18 @@ class newsletterLettersList extends adminGenericList
 			$counter = $core->blog->getPosts($params,true);
 			$letters_list = new newsletterLettersList($core,$rs,$counter->f(0));
 
-			echo '<p><a class="button" href="plugin.php?p=newsletter&amp;m=letter">'.__('New newsletter').'</a></p>';
-
 			if (!$core->error->flag())
 			{
+				//echo '<p><a class="button" href="plugin.php?p=newsletter&amp;m=letter">'.__('New newsletter').'</a></p>';
+				echo '<p class="top-add"><a class="button add" href="plugin.php?p=newsletter&amp;m=letter">'.__('New newsletter').'</a></p>';
+				
 				echo '<p><a id="filter-control" class="form-control" href="#">'.__('Filters').'</a></p>';
+				
 				echo
 				'<form action="plugin.php" method="get" id="filters-form">'.
-				'<fieldset class="two-cols"><legend>'.__('Filters').'</legend>'.
+				'<fieldset><legend>'.__('Filters').'</legend>'.
 				
+				'<div class="three-cols">'.
 				'<div class="col">'.
 				'<p><label>'.__('Order by:').' '.
 				form::combo('sortby',$sortby_combo,html::escapeHTML($sortby)).
@@ -279,13 +282,13 @@ class newsletterLettersList extends adminGenericList
 				'<div class="col">'.
 				'<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 				__('Letters per page').'</label> '.
-				
 				'<p>'.
 				'<input type="hidden" name="p" value="'.newsletterPlugin::pname().'" />'.
 				'<input type="hidden" name="m" value="letters" />'.
-				'<input type="submit" value="'.__('filter').'" /></p>'.
+				'<input type="submit" value="'.__('Apply filters').'" /></p>'.
 				'</div>'.
 				
+				'</div>'.
 				'<br class="clear" />'. //Opera sucks
 				'</fieldset>'.
 				'</form>';

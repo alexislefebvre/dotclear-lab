@@ -23,7 +23,12 @@ input.delete:hover {
 }
 
 #content input[type=submit], input[type=reset], input[type=button], input[type=delete]
+{ margin-right:3px; }
+
+/*
+#content input[type=submit], input[type=reset], input[type=button], input[type=delete]
 { width:100px; margin-right:3px; }
+*/
 
 #f_txt_link_visu_online, #f_style_link_visu_online, #f_style_link_read_it, #f_newsletter_subject, #f_presentation_msg, #f_introductory_msg, #f_presentation_posts_msg, #f_concluding_msg {
 	left: 18ex; width: 74ex;
@@ -75,4 +80,14 @@ input.delete:hover {
 
 #advanced, p.field input, p.field select {
 	left:25em;
+}
+
+.part-tabs li.part-tabs-link a {
+	background: #dfdfdf;
+}
+
+li.part-tabs-link a:hover, li.part-tabs-link a:focus {
+	color: #000;
+	background: #fff;
+	border-bottom-color: #fff;
 }

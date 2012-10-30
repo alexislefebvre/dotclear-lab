@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2012 Benoit de Marne.
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 

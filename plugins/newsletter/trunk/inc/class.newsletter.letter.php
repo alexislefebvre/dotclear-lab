@@ -470,18 +470,6 @@ class newsletterLetter
 			echo '<p class="message">'.__('Don\'t forget to validate your XHTML conversion by saving your post.').'</p>';
 		}
 
-		# Preview page
-		if ($post_id && $post->post_status == 1) {
-			echo '<p><a id="post-preview" href="'.$post->getURL().'" class="button">'.__('View letter').'</a></p>';
-		} elseif ($post_id) {
-			$preview_url =
-			$core->blog->url.$core->url->getBase('letterpreview').'/'.
-			$core->auth->userID().'/'.
-			http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
-			'/'.$post->post_url;
-			echo '<p><a id="post-preview" href="'.$preview_url.'" class="button">'.__('Preview letter').'</a></p>';
-		}
-		
 		# Exit if we cannot view page
 		if (!$can_view_page) {
 			exit;
@@ -609,9 +597,21 @@ class newsletterLetter
 			echo
 			'<p>'.
 			($post_id ? form::hidden('id',$post_id) : '').
-			'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
-			'accesskey="s" name="save" /> '.
-			($can_delete ? '<input type="submit" value="'.__('delete').'" name="delete" />' : '').
+			'<input type="submit" value="'.__('Save').' (s)" tabindex="4" '.
+			'accesskey="s" name="save" /> ';
+			
+			if ($post_id && $post->post_status == 1) {
+				echo '<a id="post-preview" href="'.$post->getURL().'" class="button">'.__('View letter').'</a>';
+			} elseif ($post_id) {
+				$preview_url =
+				$core->blog->url.$core->url->getBase('letterpreview').'/'.
+				$core->auth->userID().'/'.
+				http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
+				'/'.$post->post_url;
+				echo '<a id="post-preview" href="'.$preview_url.'" class="button">'.__('Preview letter').'</a>';
+			}			
+			echo
+			($can_delete ? '<input type="submit" class="delete" value="'.__('Delete').'" name="delete" />' : '').
 			$core->formNonce().
 			'</p>';
 			

@@ -7,7 +7,12 @@
 * Ticket #544 : groupes d'abonnés
 * Ticket #658 : pages en erreur 500 sur Free
 --------- TODO -----------
-Newsletter 3.8.1 - 2012-xx-xx
+Newsletter 3.8.2 - 2012-xx-xx
+===========================================================
+* Modifications pour s'adapter aux évolutions graphiques jusqu'à Dotclear 2.4.4
+* Ticket #706 : Ajout du ":" dans le champ code visuel
+
+Newsletter 3.8.1 - 2012-10-29
 ===========================================================
 * Ticket #718 : bug on http::concatUrl (don't work on 2.4.3, 2.4.4)
 

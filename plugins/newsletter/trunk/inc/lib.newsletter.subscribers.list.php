@@ -283,6 +283,7 @@ class newsletterSubscribersList extends adminGenericList
 				'<form action="plugin.php" method="get" id="filters-form">'.
 				'<fieldset class="two-cols"><legend>'.__('Filters').'</legend>'.
 				
+				'<div class="three-cols">'.
 				'<div class="col">'.
 				'<p><label>'.__('Order by:').' '.
 				form::combo('sortby',$sortby_combo,html::escapeHTML($sortby)).
@@ -297,7 +298,8 @@ class newsletterSubscribersList extends adminGenericList
 				__('Subscribers per page').'</label> '.
 				
 				'<p><input type="hidden" name="p" value="'.newsletterPlugin::pname().'" />'.
-				'<input type="submit" value="'.__('filter').'" /></p>'.
+				'<input type="submit" value="'.__('Apply filters').'" /></p>'.
+				'</div>'.
 				'</div>'.
 				
 				'<br class="clear" />'. //Opera sucks

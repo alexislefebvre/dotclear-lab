@@ -339,7 +339,7 @@ class tplNewsletter
 				return '<?php echo __(\'Action\') ?>';
 
 			case 'nl_captcha':
-				return '<?php echo  \'<label for="nl_captcha">\'. __(\'Captcha\') .\'</label>\' ?>';
+				return '<?php echo  \'<label for="nl_captcha">\'. __(\'Captcha\') .\'&nbsp;:</label>\' ?>';
 
 			case 'nl_submit':
 				return '';
@@ -389,6 +389,15 @@ class tplNewsletter
 		return $text;
 	}
 
+	/*
+	// pour afficher uniquement l'option subscribe, remplacer la fonction NewsletterFormActionSelect 
+	public static function NewsletterFormActionSelect($attr,$content)
+    {
+        $text = form::hidden(array('nl_option'),'subscribe');       
+        return $text;
+    }
+    //*/	
+	
 	public static function NewsletterFormActionSelect($attr,$content)
 	{
 		global $core;
