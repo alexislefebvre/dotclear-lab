@@ -31,7 +31,8 @@ $_menu['Plugins']->addItem(__('Subscribe to comments'),
 	preg_match('/plugin.php\?p=subscribeToComments(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
 
-if ($core->blog->settings->subscribetocomments_active)
+$core->blog->settings->addNamespace('subscribetocomments');
+if ($core->blog->settings->subscribetocomments->subscribetocomments_active)
 {
 	$core->addBehavior('coreAfterCommentCreate',array('subscribeToComments',
 		'coreAfterCommentCreate'));
@@ -65,7 +66,7 @@ class subscribeToCommentsAdmin
 	protected static $delete = true;
 	
 	/**
-	display informations on the admin comment form
+	display information on the admin comment form
 	@param	rs <b>recordset</b> Recordset
 	@return	<b>string</b>	String
 	*/

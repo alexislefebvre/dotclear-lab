@@ -23,7 +23,7 @@ msgid "Your account on [blogname]"
 msgstr "Votre compte sur [blogname]"
 
 msgid "here are some informations about your account on [blogname]:"
-msgstr "voici quelques informations à propos de votre compte sur [blogname]:"
+msgstr "voici quelques informations à propos de votre compte sur [blogname] :"
 
 msgid "Email address: [email]"
 msgstr "Adresse email : [email]"

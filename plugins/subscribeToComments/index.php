@@ -107,7 +107,8 @@ $tags_email = array(
 		__('URL to confirm the change of email address'),'tag'=>'%6$s')
 );
 
-$settings =& $core->blog->settings;
+$core->blog->settings->addNamespace('subscribetocomments');
+$settings =& $core->blog->settings->subscribetocomments;
 
 # get languages list to restore settings
 $lang_combo = array();
@@ -133,8 +134,6 @@ $msg = '';
 $default_tab = 'settings';
 
 $available_tags = array();
-
-$settings->setNameSpace('subscribetocomments');
 
 try
 {
@@ -248,6 +247,8 @@ try
 			(!empty($_POST['subscribetocomments_tpl_link'])),'boolean',
 			'Link to Subscribe to comments page');
 
+		$core->blog->triggerBlog();
+		
 		http::redirect($p_url.'&saveconfig=1&tab=display');
 	}
 }

@@ -40,7 +40,7 @@ class subscribeToCommentsDocument extends dcUrlHandlers
 	{
 		global $core;
 
-		if (!$core->blog->settings->subscribetocomments_active)
+		if (!$core->blog->settings->subscribetocomments->subscribetocomments_active)
 		{
 			self::p404();
 			return;

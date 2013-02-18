@@ -67,7 +67,7 @@ class subscribeToComments
 		global $core;
 
 		if ($_SERVER['REQUEST_TIME'] <= 
-			$core->blog->settings->subscribetocomments_clean_keys) {return;}
+			$core->blog->settings->subscribetocomments->subscribetocomments_clean_keys) {return;}
 
 		$core->blog->settings->setNameSpace('subscribetocomments');
 		$core->blog->settings->put('subscribetocomments_clean_keys',strtotime('+1 hour'),
@@ -101,7 +101,7 @@ class subscribeToComments
 	{
 		global $core;
 		
-		$setting = $core->blog->settings->{'subscribetocomments_'.$setting};
+		$setting = $core->blog->settings->subscribetocomments->{'subscribetocomments_'.$setting};
 		
 		if (strlen($setting) == 0) {return '';}
 		# else		
@@ -149,12 +149,10 @@ class subscribeToComments
 		global $tags_global, $tags_account, $tags_subscribe, $tags_comment,
 			$tags_email;
 		
-		$settings =& $core->blog->settings;
+		$settings =& $core->blog->settings->subscribetocomments;
 		
 		# load locales for the blog language
 		l10n::set(dirname(__FILE__).'/../locales/'.$lang.'/admin');
-		
-		$settings->setNameSpace('subscribetocomments');
 		
 		# Change From: header of outbound emails
 		$settings->put('subscribetocomments_email_from',
@@ -322,7 +320,7 @@ class subscribeToComments
 		global $core;
 
 		$post_types = @unserialize(
-			$core->blog->settings->subscribetocomments_post_types);
+			$core->blog->settings->subscribetocomments->subscribetocomments_post_types);
 
 		if (empty($post_types))
 		{
@@ -370,9 +368,10 @@ class subscribeToComments
 	{
 		# We don't want notification for spam and trackbacks
 		# from emailNotification (modified)
-		if (($cur->comment_status != 1) OR ($cur->comment_trackback == 1))  {
+		if ($cur->comment_status == 1)  {
 			return;
 		}
+		
 		# /from emailNotification
 
 		global $core;
@@ -450,7 +449,7 @@ class subscribeToComments
 		global $core;
 
 		$headers = array(
-			'From: '.$core->blog->settings->subscribetocomments_email_from,
+			'From: '.$core->blog->settings->subscribetocomments->subscribetocomments_email_from,
 			'MIME-Version: 1.0',
 			'Content-Type: text/plain; charset=UTF-8;',
 			'X-Mailer: Dotclear'

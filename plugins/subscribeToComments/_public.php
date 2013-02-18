@@ -39,7 +39,8 @@ function subscribeToCommentsIsActive($attr,$content)
 		'<?php endif; ?>';
 }
 
-if ($core->blog->settings->subscribetocomments_active)
+$core->blog->settings->addNamespace('subscribetocomments');
+if ($core->blog->settings->subscribetocomments->subscribetocomments_active)
 {
 	# behaviors
 	$core->addBehavior('coreAfterCommentCreate',array('subscribeToComments',
@@ -91,17 +92,17 @@ if ($core->blog->settings->subscribetocomments_active)
 		array('subscribeToCommentsTpl','subscribeBlock'));
 
 	# add code to post.html
-	if ($core->blog->settings->subscribetocomments_tpl_checkbox === true)
+	if ($core->blog->settings->subscribetocomments->subscribetocomments_tpl_checkbox === true)
 	{
 		$core->addBehavior('publicCommentFormAfterContent',
 			array('subscribeToCommentsTpl','publicCommentFormAfterContent'));
 	}
-	if ($core->blog->settings->subscribetocomments_tpl_css === true)
+	if ($core->blog->settings->subscribetocomments->subscribetocomments_tpl_css === true)
 	{
 		$core->addBehavior('publicHeadContent',
 			array('subscribeToCommentsTpl','publicHeadContent'));
 	}
-	if ($core->blog->settings->subscribetocomments_tpl_link === true)
+	if ($core->blog->settings->subscribetocomments->subscribetocomments_tpl_link === true)
 	{
 		$core->addBehavior('templateAfterBlock',
 			array('subscribeToCommentsTpl','templateAfterBlock'));

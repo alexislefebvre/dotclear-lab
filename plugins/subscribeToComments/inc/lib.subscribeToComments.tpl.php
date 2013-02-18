@@ -54,10 +54,10 @@ class subscribeToCommentsTpl
 	{
 		global $core;
 
-		if ($core->blog->settings->subscribetocomments_active)
+		if ($core->blog->settings->subscribetocomments->subscribetocomments_active)
 		{
 			return("<?php echo(subscribeToComments::url().".
-			"((\$core->blog->settings->url_scan == 'query_string') ? '&amp;' : '?').".
+			"((\$core->blog->settings->system->url_scan == 'query_string') ? '&amp;' : '?').".
 			"'post_id='.\$_ctx->posts->post_id); ?>");
 		}
 	}
@@ -286,13 +286,13 @@ class subscribeToCommentsTpl
 			}
 			# else
 			return 
-			'<?php if (($core->blog->settings->subscribetocomments_active) &&
+			'<?php if (($core->blog->settings->subscribetocomments->subscribetocomments_active) &&
 				$_ctx->posts->commentsActive()) : ?>
 				<div id="subscribetocomments_block">
 					<h3><?php echo __("Subscribe to comments"); ?></h3>
 					<p>
 						<a href="<?php echo(subscribeToComments::url().
-						(($core->blog->settings->url_scan == "query_string") ? "&amp;" : "?").
+						(($core->blog->settings->system->url_scan == "query_string") ? "&amp;" : "?").
 						"post_id=".$_ctx->posts->post_id); ?>">
 							<!-- # If the subscriber is logged in -->
 							<?php if (subscriber::checkCookie()) : ?>
@@ -326,13 +326,13 @@ class subscribeToCommentsTpl
 		}
 		
 		return 
-		'<?php if (($core->blog->settings->subscribetocomments_active) &&
+		'<?php if (($core->blog->settings->subscribetocomments->subscribetocomments_active) &&
 			$_ctx->posts->commentsActive()) : ?>
 			<div'.$id.''.$class.'>
 				<h3><?php echo __("Subscribe to comments"); ?></h3>
 				<p>
 					<a href="<?php echo(subscribeToComments::url().
-					(($core->blog->settings->url_scan == "query_string") ? "&amp;" : "?").
+					(($core->blog->settings->system->url_scan == "query_string") ? "&amp;" : "?").
 					"post_id=".$_ctx->posts->post_id); ?>">
 						<!-- # If the subscriber is logged in -->
 						<?php if (subscriber::checkCookie()) : ?>

@@ -171,7 +171,7 @@ class subscriber
 			$cur->meta_id = $this->id;
 			$cur->insert();
 
-			if ($core->blog->settings->subscribetocomments_subscribe_active)
+			if ($core->blog->settings->subscribetocomments->subscribetocomments_subscribe_active)
 			{
 				# email
 				$subject = sprintf(
@@ -213,7 +213,7 @@ class subscriber
 		'AND (user_key = \''.$core->con->escape($this->key).'\');');
 
 		$url = subscribeToComments::url().
-		(($core->blog->settings->url_scan == 'query_string') ? '&' : '?').
+		(($core->blog->settings->system->url_scan == 'query_string') ? '&' : '?').
 		'new_email='.urlencode($new_email).'&temp_key='.$key;
 
 		$subject = sprintf(subscribeToComments::getSetting('email_subject'),
@@ -433,7 +433,7 @@ class subscriber
 		global $core;
 		
 		return(subscribeToComments::url().
-		(($core->blog->settings->url_scan == 'query_string') ? '&' : '?').'email='.
+		(($core->blog->settings->system->url_scan == 'query_string') ? '&' : '?').'email='.
 		urlencode($email).'&key='.$key);
 	}
 
