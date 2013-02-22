@@ -27,9 +27,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-// une erreur dans @Reply a fait passer cette version à 1.6.4
-// il faudrait ramener cette valeur à un niveau "normal"
-
 # On lit la version du plugin
 $m_version = $core->plugins->moduleInfo('subscribeToComments','version');
  

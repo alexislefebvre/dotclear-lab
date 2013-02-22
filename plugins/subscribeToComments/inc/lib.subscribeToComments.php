@@ -338,6 +338,11 @@ class subscribeToComments
 	*/
 	public static function coreAfterCommentCreate($core,$cur)
 	{
+		# ignore comments marked as spam
+		if ($cur->comment_status != 1)  {
+			return;
+		}
+		
 		if (isset($_POST['subscribeToComments']))
 		{
 			$subscriber = new subscriber($cur->comment_email);
@@ -368,7 +373,7 @@ class subscribeToComments
 	{
 		# We don't want notification for spam and trackbacks
 		# from emailNotification (modified)
-		if ($cur->comment_status == 1)  {
+		if ($cur->comment_status != 1)  {
 			return;
 		}
 		
