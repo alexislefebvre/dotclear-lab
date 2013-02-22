@@ -69,7 +69,7 @@ class subscribeToComments
 		if ($_SERVER['REQUEST_TIME'] <= 
 			$core->blog->settings->subscribetocomments->subscribetocomments_clean_keys) {return;}
 
-		$core->blog->settings->setNameSpace('subscribetocomments');
+		$core->blog->settings->addameSpace('subscribetocomments');
 		$core->blog->settings->put('subscribetocomments_clean_keys',strtotime('+1 hour'),
 		'integer','Clean temporary keys');
 

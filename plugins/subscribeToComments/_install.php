@@ -40,18 +40,19 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
+$core->blog->settings->addNamespace('subscribetocomments');
+
 # only update if the plugin has already been installed
 if ($i_version !== null)
 {
 	# replace old tag with new tag
 	if (version_compare($i_version,'1.0-RC4','<'))
 	{
-		$core->blog->settings->setNameSpace('subscribetocomments');
-		$core->blog->settings->put('subscribetocomments_email_subject',
-		str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments_email_subject),
+		$core->blog->settings->subscribetocomments->put('subscribetocomments_email_subject',
+		str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments->subscribetocomments_email_subject),
 		'text','Email subject',true);
-		$core->blog->settings->put('subscribetocomments_email_content',
-		str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments_email_content),
+		$core->blog->settings->subscribetocomments->put('subscribetocomments_email_content',
+		str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments->subscribetocomments_email_content),
 		'text','Email subject',true);
 	}
 	
@@ -104,15 +105,13 @@ if ($i_version !== null)
 }
 
 # add post types
-$core->blog->settings->setNameSpace('subscribetocomments');
 # Allowed post types
-$core->blog->settings->put('subscribetocomments_post_types',
+$core->blog->settings->subscribetocomments->put('subscribetocomments_post_types',
 	serialize(subscribeToComments::getPostTypes()),
 	'string','Allowed post types',false,true);
 
 # Define From: header of outbound emails
-$core->blog->settings->setNameSpace('subscribetocomments');
-$core->blog->settings->put('subscribetocomments_email_from',
+$core->blog->settings->subscribetocomments->put('subscribetocomments_email_from',
 	'dotclear@'.$_SERVER['HTTP_HOST'],
 	'string','Define From: header of outbound emails',false,true);
 
