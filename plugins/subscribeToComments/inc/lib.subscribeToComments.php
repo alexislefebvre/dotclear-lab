@@ -69,8 +69,8 @@ class subscribeToComments
 		if ($_SERVER['REQUEST_TIME'] <= 
 			$core->blog->settings->subscribetocomments->subscribetocomments_clean_keys) {return;}
 
-		$core->blog->settings->addameSpace('subscribetocomments');
-		$core->blog->settings->put('subscribetocomments_clean_keys',strtotime('+1 hour'),
+		$core->blog->settings->addNameSpace('subscribetocomments');
+		$core->blog->settings->subscribetocomments->put('subscribetocomments_clean_keys',strtotime('+1 hour'),
 		'integer','Clean temporary keys');
 
 		# delete old temporary keys
@@ -338,7 +338,7 @@ class subscribeToComments
 	*/
 	public static function coreAfterCommentCreate($core,$cur)
 	{
-		# ignore comments marked as spam
+		# ignore comments marked as spam or pending comments
 		if ($cur->comment_status != 1)  {
 			return;
 		}
@@ -373,6 +373,7 @@ class subscribeToComments
 	{
 		# We don't want notification for spam and trackbacks
 		# from emailNotification (modified)
+		# and pending comments
 		if ($cur->comment_status != 1)  {
 			return;
 		}
