@@ -79,5 +79,6 @@ $GLOBALS['__l10n']['Subscribe to comments for WordPress'] = 'Subscribe to commen
 $GLOBALS['__l10n']['URL of the %s page:'] = 'URL de la page %s&nbsp;:';
 $GLOBALS['__l10n']['View the %s page'] = 'Voir la page %s';
 $GLOBALS['__l10n']['Delete subscribers'] = 'Supprimer les abonnés';
+$GLOBALS['__l10n']['Delete selected subscribers?'] = 'Supprimer les abonnés sélectionnés ?';
 $GLOBALS['__l10n']['Subscribers deleted successfully.'] = 'Abonnés supprimés avec succès.';
 ?>

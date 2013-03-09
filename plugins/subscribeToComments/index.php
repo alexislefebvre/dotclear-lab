@@ -260,9 +260,13 @@ try
 				$subscriber = new subscriber($email);
 				$subscriber->deleteAccount();
 			}
+			
+			http::redirect($p_url.'&subscribers_deleted=1&tab=subscribers');
 		}
-		
-		http::redirect($p_url.'&subscribers_deleted=1&tab=subscribers');
+		else
+		{
+			http::redirect($p_url.'&tab=subscribers');
+		}
 	}
 }
 catch (Exception $e)
@@ -339,6 +343,10 @@ if (isset($_GET['tab']))
 			});
 			$('#restore_button').click(function() {
 				return(window.confirm('<?php echo __('Restore default settings? The old settings will be deleted.'); ?>'));
+			});
+			
+			$('input[name="delete_subscribers"]').click(function() {
+				return window.confirm('Delete selected subscribers?');
 			});
 		});
 	//]]>
