@@ -251,6 +251,19 @@ try
 		
 		http::redirect($p_url.'&saveconfig=1&tab=display');
 	}
+	elseif (!empty($_POST['delete_subscribers']))
+	{
+		if (isset($_POST['subscribers']))
+		{
+			foreach ($_POST['subscribers'] as $email)
+			{
+				$subscriber = new subscriber($email);
+				$subscriber->deleteAccount();
+			}
+		}
+		
+		http::redirect($p_url.'&subscribers_deleted=1&tab=subscribers');
+	}
 }
 catch (Exception $e)
 {
@@ -268,6 +281,10 @@ elseif (isset($_GET['restore']))
 elseif (isset($_GET['saveconfig']))
 {
 	$msg = __('Configuration successfully updated.');
+}
+elseif (isset($_GET['subscribers_deleted']))
+{
+	$msg = __('Subscribers deleted successfully.');
 }
 
 if (isset($_GET['tab']))
@@ -646,14 +663,25 @@ if (isset($_GET['tab']))
 			}
 			else
 			{
-				echo('<ul>');
+				echo('<form method="post" action="'.http::getSelfURI().'">'.
+					'<fieldset>'.
+					'<legend>'.__('Delete subscribers').'</legend>'.
+					'<ul>');
 				while ($rs->fetch())
 				{
-					echo('<li><a href="'.
-						subscriber::pageLink($rs->email,$rs->user_key).'">'.
+					echo('<li>'.
+						form::checkbox('subscribers[]',
+						html::escapeHTML($rs->email)).
+				'<a href="'.
+						subscriber::pageLink($rs->email, $rs->user_key).'">'.
 						$rs->email.'</a></li>');
 				}
-				echo('</ul>');
+				echo('</ul>'.
+					'<p>'.$core->formNonce().'</p>'.
+					'<p><input type="submit" name="delete_subscribers" value="'.
+						__('Delete subscribers').'" /></p>'.
+					'</fieldset>'.
+					'</form>');
 			}
 		?>
 	</div>

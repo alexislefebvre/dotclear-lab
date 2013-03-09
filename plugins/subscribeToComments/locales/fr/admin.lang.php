@@ -78,4 +78,6 @@ $GLOBALS['__l10n']['Inspired by <a href="%1$s">%2$s</a>'] = 'Inspiré par <a hre
 $GLOBALS['__l10n']['Subscribe to comments for WordPress'] = 'Subscribe to comments pour WordPress';
 $GLOBALS['__l10n']['URL of the %s page:'] = 'URL de la page %s&nbsp;:';
 $GLOBALS['__l10n']['View the %s page'] = 'Voir la page %s';
+$GLOBALS['__l10n']['Delete subscribers'] = 'Supprimer les abonnés';
+$GLOBALS['__l10n']['Subscribers deleted successfully.'] = 'Abonnés supprimés avec succès.';
 ?>
