@@ -81,4 +81,9 @@ $GLOBALS['__l10n']['View the %s page'] = 'Voir la page %s';
 $GLOBALS['__l10n']['Delete subscribers'] = 'Supprimer les abonnés';
 $GLOBALS['__l10n']['Delete selected subscribers?'] = 'Supprimer les abonnés sélectionnés ?';
 $GLOBALS['__l10n']['Subscribers deleted successfully.'] = 'Abonnés supprimés avec succès.';
+$GLOBALS['__l10n']['Subscriber'] = 'Abonné';
+$GLOBALS['__l10n']['Click on a subscriber in order to manage its subscriptions.'] = 'Cliquer sur un abonné pour modifier ses abonnements';
+$GLOBALS['__l10n']['First comment date'] = 'Date du premier commentaire';
+$GLOBALS['__l10n']['Subscribers with at least one comment marked as spam:'] = 'Abonnés avec au moins un commentaire marqué comme indésirable&nbsp;:';
+$GLOBALS['__l10n']['Subscribers with no comments:'] = 'Abonnés sans commentaires&nbsp;:';
 ?>

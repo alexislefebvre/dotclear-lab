@@ -646,8 +646,13 @@ if (isset($_GET['tab']))
 	<div class="multi-part" id="subscribers" title="<?php echo __('Subscribers'); ?>">
 		<h3><?php echo(__('Subscribers')); ?></h3>
 		<?php
-			$query = 'SELECT DISTINCT S.id, S.email, S.user_key FROM '.
-				$core->prefix.'comment_subscriber S '.
+			$query = 'SELECT DISTINCT S.id, S.email, S.user_key, '.
+				' COUNT(C.comment_id) AS comments_count, '.
+				' MIN(C.comment_status) AS lowest_comment_status, '.
+				' MIN(C.comment_dt) AS first_comment_dt '.
+				'FROM '.$core->prefix.'comment_subscriber S '.
+				' LEFT OUTER JOIN '.$core->prefix.'comment C '.
+					'ON (S.email = C.comment_email) '.
 				'INNER JOIN '.$core->prefix.'meta M ON '.
 				(($core->con->driver() == 'pgsql') ?
 				# CAST = PostgreSQL compatibility :
@@ -661,7 +666,12 @@ if (isset($_GET['tab']))
 				'(M.post_id = CAST(P.post_id AS integer))': 
 				'(M.post_id = P.post_id)').
 				' AND (M.meta_type = \'subscriber\') '.
-				' AND P.blog_id = \''.$core->con->escape($core->blog->id).'\'';
+				' AND P.blog_id = \''.$core->con->escape($core->blog->id).'\''.
+				' GROUP BY S.id'.
+				' ORDER BY lowest_comment_status DESC, '.
+					'comments_count DESC, '.
+					'first_comment_dt ASC';
+			
 			
 			$rs = $core->con->select($query);
 			
@@ -671,20 +681,62 @@ if (isset($_GET['tab']))
 			}
 			else
 			{
+				# display subscribers with at least one comment marked as spam
+				$lowest_comment_status = -1;
+				# display subscribers with no comments
+				$comments_count = 1;
+				
+				echo('<p>'.__('Click on a subscriber in order to manage its subscriptions.').'</p>');
+				
 				echo('<form method="post" action="'.http::getSelfURI().'">'.
 					'<fieldset>'.
 					'<legend>'.__('Delete subscribers').'</legend>'.
-					'<ul>');
+					'<table>'.
+					'<thead>'.
+						'<tr>'.
+							'<th colspan="2">'.__('Subscriber').'</th>'.
+							'<th>'.__('Comments').'</th>'.
+							'<th>'.__('First comment date').'</th>'.
+						'</tr>'.
+					'</thead>'.
+					'<tbody>');
 				while ($rs->fetch())
 				{
-					echo('<li>'.
-						form::checkbox('subscribers[]',
-						html::escapeHTML($rs->email)).
-				'<a href="'.
+					if ((is_numeric($rs->lowest_comment_status ))
+						&& ($rs->lowest_comment_status < $lowest_comment_status))
+					{
+						echo('<tr>'.
+							'<th colspan="4">'.
+							__('Subscribers with at least one comment marked as spam:').
+							'</th>'.
+							'</tr>');
+						
+						$lowest_comment_status = $rs->lowest_comment_status;
+					}
+					else if ($rs->comments_count < $comments_count)
+					{
+						echo('<tr>'.
+							'<th colspan="4">'.
+							__('Subscribers with no comments:').
+							'</th>'.
+							'</tr>');
+						
+						$comments_count = $rs->comments_count;
+					}
+					
+					echo('<tr class="line">'.
+						'<td>'.form::checkbox('subscribers[]',
+							html::escapeHTML($rs->email)).'</td>'.
+						'<td>'.'<a href="'.
 						subscriber::pageLink($rs->email, $rs->user_key).'">'.
-						$rs->email.'</a></li>');
+						$rs->email.'</a> '.'</td>'.
+						'<td>'.$rs->comments_count.'</td>'.
+						'<td>'.(strlen($rs->first_comment_dt > 0)
+							? $rs->first_comment_dt : '&nbsp;').'</td>'.
+						'</tr>');
 				}
-				echo('</ul>'.
+				echo('</tbody>'.
+					'</table>'.
 					'<p>'.$core->formNonce().'</p>'.
 					'<p><input type="submit" name="delete_subscribers" value="'.
 						__('Delete subscribers').'" /></p>'.
