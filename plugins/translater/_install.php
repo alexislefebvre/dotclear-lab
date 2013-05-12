@@ -1,17 +1,20 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of translater, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
+$rdc_version = '2.5-alpha';
 $new_version = $core->plugins->moduleInfo('translater','version');
 $old_version = $core->getVersion('translater');
 
@@ -19,9 +22,8 @@ if (version_compare($old_version,$new_version,'>=')) return;
 
 try
 {
-	if (version_compare(DC_VERSION,'2.2-beta','<'))
-	{
-		throw new Exception('translater requires Dotclear 2.2');
+	if (version_compare(str_replace("-r","-p",DC_VERSION),$rdc_version,'<')) {
+		throw new Exception(sprintf('%s requires Dotclear %s','translater',$rdc_version));
 	}
 	
 	$core->blog->settings->addNamespace('translater');
@@ -31,7 +33,7 @@ try
 	$core->blog->settings->translater->put('translater_backup_auto',1,'boolean','Make a backup of languages old files when there are modified',false,true);
 	$core->blog->settings->translater->put('translater_backup_limit',20,'string','Maximum backups per module',false,true);
 	$core->blog->settings->translater->put('translater_backup_folder','module','string','In which folder to store backups',false,true);
-	$core->blog->settings->translater->put('translater_start_tab','setting,','string','Tab to start on',false,true);
+	$core->blog->settings->translater->put('translater_start_page','setting,','string','Page to start on',false,true);
 	$core->blog->settings->translater->put('translater_write_po',1,'boolean','Write .po languages files',false,true);
 	$core->blog->settings->translater->put('translater_write_langphp',1,'boolean','Write .lang.php languages files',false,true);
 	$core->blog->settings->translater->put('translater_scan_tpl',0,'boolean','Translate strings of templates files',false,true);

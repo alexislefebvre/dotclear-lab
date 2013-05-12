@@ -1,50 +1,44 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of translater, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-# Additionals locales
-__('translater');
-__('Translate your Dotclear plugins and themes');
-
-# Add auth perm
-$core->auth->setPermissionType('translater',__('manage translations'));
-
-# Admin menu
-$_menu['Plugins']->addItem(
-	__('Translater'),
-	'plugin.php?p=translater','index.php?pf=translater/icon.png',
-	preg_match('/plugin.php\?p=translater(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin,translater',$core->blog->id)
-);
 $core->blog->settings->addNamespace('translater');
-# Plugins tab
-if ($core->blog->settings->translater->translater_plugin_menu)
-	$core->addBehavior('pluginsToolsTabs',array('translaterBehaviors','pluginsToolsTabs')
-);
-
-#  Themes menu	
-if ($core->blog->settings->translater->translater_theme_menu)
-	$core->addBehavior('adminCurrentThemeDetails',array('translaterBehaviors','adminCurrentThemeDetails')
-);
-
-# Admin rest for getting translation
+$core->addBehavior('pluginsToolsTabs',array('translaterAdminBehaviors','pluginsToolsTabs'));
+$core->addBehavior('adminCurrentThemeDetails',array('translaterAdminBehaviors','adminCurrentThemeDetails'));
+$core->addBehavior('addTranslaterProposalTool',array('translaterAdminBehaviors','addGoogleProposalTool'));
+$core->addBehavior('addTranslaterProposalTool',array('translaterAdminBehaviors','addYahooProposalTool'));
+$core->addBehavior('addTranslaterProposalTool',array('translaterAdminBehaviors','addMicrosoftProposalTool'));
 $core->rest->addFunction('getProposal',array('translaterRest','getProposal'));
 
-# Behaviors
-class translaterBehaviors
+$_menu['Plugins']->addItem(
+	__('Translater'),
+	'plugin.php?p=translater',
+	'index.php?pf=translater/icon.png',
+	preg_match('/plugin.php\?p=translater(&.*)?$/',$_SERVER['REQUEST_URI']),
+	$core->auth->isSuperAdmin()
+);
+
+class translaterAdminBehaviors
 {
+	# Plugins tab
 	public static function pluginsToolsTabs($core)
 	{
+		if (!$core->blog->settings->translater->translater_plugin_menu || !$core->auth->isSuperAdmin()) {
+			return;
+		}
+		
 		echo 
 		'<div class="multi-part" id="translater" title="'.
 		__('Translate extensions').
@@ -75,16 +69,39 @@ class translaterBehaviors
 		echo '</table></div>';
 	}
 	
+	# Themes menu
 	public static function adminCurrentThemeDetails($core,$id,$infos)
 	{
+		if (!$core->blog->settings->translater->translater_theme_menu || !$core->auth->isSuperAdmin()) {
+			return;
+		}
+		
 		$root = path::real($infos['root']);
 		
-		if ($id != 'default' && is_dir($root.'/locales') && $core->auth->check('translater,admin',$core->blog->id))
+		if ($id != 'default' && is_dir($root.'/locales'))
 		{
 			return 
 			'<p><a href="plugin.php?p=translater&amp;part=module&amp;type=theme&amp;module='.$id.'"'.
 			' class="button">'.__('Translate this theme').'</a></p>';
 		}
+	}
+	
+	# Google Translater tools
+	public static function addGoogleProposalTool($proposal)
+	{
+		$proposal->addTool('googleProposalTool');
+	}
+	
+	# Yahoo Babelfish tools
+	public static function addYahooProposalTool($proposal)
+	{
+		$proposal->addTool('yahooProposalTool');
+	}
+	
+	# Microsoft Bing tools
+	public static function addMicrosoftProposalTool($proposal)
+	{
+		$proposal->addTool('microsoftProposalTool');
 	}
 }
 ?>

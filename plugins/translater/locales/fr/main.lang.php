@@ -1,420 +1,402 @@
 <?php
 // Language: Français 
-// Module: translater - 1.2
-// Date: 2010-09-01 12:34:55 
-// Translated with dcTranslater - 1.2 
+// Module: translater - 2013.05.11
+// Date: 2013-05-12 23:35:00 
+// Translated with dcTranslater - 2013.05.11 
 
-#_admin.php:16
-$GLOBALS['__l10n']['translater'] = 'Traducteur';
-
-#_admin.php:17
-$GLOBALS['__l10n']['Translate your Dotclear plugins and themes'] = 'Traduire vos extensions et thèmes pour Dotclear';
-
-#_admin.php:20
-$GLOBALS['__l10n']['manage translations'] = 'Gérer les traductions';
-
-#_admin.php:24
-#inc/index.lang.php:72
-#inc/index.module.php:217
-#inc/index.modules.php:19
-#inc/index.pack.php:56
-#inc/index.setting.php:50
-#index.php:79
-#index.php:89
+#_admin.php:26
+#index.php:537
+#index.php:570
+#index.php:1384
 $GLOBALS['__l10n']['Translater'] = 'Traducteur';
 
-#_admin.php:50
+#_admin.php:44
 $GLOBALS['__l10n']['Translate extensions'] = 'Traduire les extensions';
 
-#_admin.php:54
-#inc/index.module.php:240
+#_admin.php:48
+#index.php:670
 $GLOBALS['__l10n']['Name'] = 'Nom';
 
-#_admin.php:68
+#_admin.php:62
 $GLOBALS['__l10n']['Translate this plugin'] = 'Traduire cette extension';
 
-#_admin.php:86
+#_admin.php:85
 $GLOBALS['__l10n']['Translate this theme'] = 'Traduire ce thème';
 
-#inc/class.dc.translater.php:331
-$GLOBALS['__l10n']['Cannot work with module of type %s'] = 'Impossible de travailler avec un module de type %s';
-
-#inc/class.dc.translater.php:339
-$GLOBALS['__l10n']['Cannot find module %s of type %s'] = 'Impossible de trouver le module %s de type %s';
-
-#inc/class.dc.translater.php:419
+#inc/class.dc.translater.php:434
 $GLOBALS['__l10n']['Cannot find backups folder for module %s'] = 'Impossible de trouver le dossier de sauvegarde du module %s';
 
-#inc/class.dc.translater.php:435
+#inc/class.dc.translater.php:450
 $GLOBALS['__l10n']['Cannot find languages folder for module %s'] = 'Impossible de trouver le dossier de langue du module %s';
 
-#inc/class.dc.translater.php:455
+#inc/class.dc.translater.php:470
 $GLOBALS['__l10n']['Cannot find root folder for module %s'] = 'Impossible de trouver le dossier racine du module %s';
 
-#inc/class.dc.translater.php:484
+#inc/class.dc.translater.php:499
 $GLOBALS['__l10n']['Limit of %s backups for module %s exceed'] = 'La limite de %s sauvegardes pour le module % est dépassée';
 
-#inc/class.dc.translater.php:546
-#inc/class.dc.translater.php:936
-#inc/class.dc.translater.php:1013
+#inc/class.dc.translater.php:561
+#inc/class.dc.translater.php:951
+#inc/class.dc.translater.php:1028
 $GLOBALS['__l10n']['Cannot find language folder %s for module %s'] = 'Impossible de trouver le dossier de langue %s pour le module %s';
 
-#inc/class.dc.translater.php:601
+#inc/class.dc.translater.php:616
 $GLOBALS['__l10n']['Cannot delete backup file %s'] = 'Impossible d\'effacer le fichier de sauvegarde %s';
 
-#inc/class.dc.translater.php:619
+#inc/class.dc.translater.php:634
 $GLOBALS['__l10n']['Cannot find backup file %s'] = 'Impossible de trouver le fichier de sauvegarde %s';
 
-#inc/class.dc.translater.php:645
+#inc/class.dc.translater.php:660
 $GLOBALS['__l10n']['Wrong export query'] = 'Mauvaise requète d\'exportation';
 
-#inc/class.dc.translater.php:656
+#inc/class.dc.translater.php:671
 $GLOBALS['__l10n']['Cannot use export mask %s'] = 'Impossible d\'utiliser le masque d\'exportation %s';
 
-#inc/class.dc.translater.php:744
+#inc/class.dc.translater.php:759
 $GLOBALS['__l10n']['Wrong import query'] = 'Mauvaise requète d\'importation';
 
-#inc/class.dc.translater.php:793
+#inc/class.dc.translater.php:808
 $GLOBALS['__l10n']['Nothing to import for these modules in pack %s'] = 'Rien à importer pour ces modules dans le paquetage %s';
 
-#inc/class.dc.translater.php:822
+#inc/class.dc.translater.php:837
 $GLOBALS['__l10n']['Zip file %s is not in translater format'] = 'Le fichier zip n\'est pas au format de translater';
 
-#inc/class.dc.translater.php:882
+#inc/class.dc.translater.php:897
 $GLOBALS['__l10n']['Language %s already exists for module %s'] = 'La langue %s existe dèjà pour le module %s';
 
-#inc/class.dc.translater.php:893
+#inc/class.dc.translater.php:908
 $GLOBALS['__l10n']['Cannot copy file from language %s for module %s'] = 'Impossible de copier le fichier depuis le langage %s pour le module %s';
 
-#inc/class.dc.translater.php:985
+#inc/class.dc.translater.php:1000
 $GLOBALS['__l10n']['No string to write, language %s deleted for module %s'] = 'Aucune chaine à écrire, la langue %s a été effacée pour le module %s';
 
-#inc/class.dc.translater.php:1249
+#inc/class.dc.translater.php:1264
 $GLOBALS['__l10n']['Cannot grant write acces on lang file %s'] = 'Impossible d\'avoir les droits en écriture sur le fichier de langue %s';
 
-#inc/class.dc.translater.php:1260
+#inc/class.dc.translater.php:1275
 $GLOBALS['__l10n']['Cannot write lang file %s'] = 'Impossible d\'écrire le fichier de langue %s';
 
-#inc/class.dc.translater.php:1569
+#inc/class.dc.translater.php:1579
 $GLOBALS['__l10n']['Cannot find language for code %s'] = 'Impossible de trouver de langue pour le code %s';
 
-#inc/class.translater.rest.php:35
+#inc/class.translater.rest.php:42
 $GLOBALS['__l10n']['Missing params'] = 'Paramètres manquants';
 
-#inc/class.translater.rest.php:42
-$GLOBALS['__l10n']['Failed to init translation tool'] = 'Impossible d\'initialiser l\'outil de traduction';
+#inc/class.translater.rest.php:51
+$GLOBALS['__l10n']['Failed to get translation tool'] = 'Impossible de trouver l\'outil de traduction';
 
-#inc/index.lang.php:22
-$GLOBALS['__l10n']['No language to update'] = 'Pas de langue à mettre à jour';
+#inc/class.translater.rest.php:55
+$GLOBALS['__l10n']['Translation tool is not configured'] = 'L\'outil de traduction n\'est pas configuré';
 
-#inc/index.lang.php:59
-#inc/index.module.php:195
-$GLOBALS['__l10n']['Failed to launch translater: %s'] = 'Impossible de démarrer translater : %s';
+#inc/lib.translater.google.php:44
+$GLOBALS['__l10n']['You must have on Google API console:'] = 'Vous devez avoir sur la console des API Google :';
 
-#inc/index.lang.php:162
-$GLOBALS['__l10n']['Group'] = 'Groupe';
+#inc/lib.translater.google.php:80
+$GLOBALS['__l10n']['Failed to query service.'] = 'Impossible d\'interoger le service.';
 
-#inc/index.lang.php:164
-$GLOBALS['__l10n']['String'] = 'Chaîne';
+#inc/lib.translater.microsoft.php:49
+$GLOBALS['__l10n']['You must have:'] = 'Vous devez avoir :';
 
-#inc/index.lang.php:166
-#inc/index.setting.php:64
-$GLOBALS['__l10n']['Translation'] = 'Traduction';
-
-#inc/index.lang.php:167
-$GLOBALS['__l10n']['Existing'] = 'Existant';
-
-#inc/index.lang.php:169
-#inc/index.module.php:431
-$GLOBALS['__l10n']['File'] = 'Fichier';
-
-#inc/index.lang.php:229
-$GLOBALS['__l10n']['%s occurrences'] = '%s occurrences';
-
-#inc/index.lang.php:256
-$GLOBALS['__l10n']['Total of %s strings.'] = 'Total de %s chaînes.';
-
-#inc/index.lang.php:258
-$GLOBALS['__l10n']['Change the group of the selected entries to:'] = 'Changer le groupe des entrées sélectionnées vers :';
-
-#inc/index.module.php:22
-$GLOBALS['__l10n']['No lang to create'] = 'Pas de langue à créer';
-
-#inc/index.module.php:40
-$GLOBALS['__l10n']['No lang to delete'] = 'Pas de langue à effacer';
-
-#inc/index.module.php:58
-$GLOBALS['__l10n']['No lang to backup'] = 'Pas de langue à sauvegarder';
-
-#inc/index.module.php:87
-$GLOBALS['__l10n']['No blackup to restore'] = 'Pas de langue à restaurer';
-
-#inc/index.module.php:106
-$GLOBALS['__l10n']['No bakcup to to restore'] = 'Pas de sauvegarde à restaurer';
-
-#inc/index.module.php:123
-#inc/index.module.php:141
-$GLOBALS['__l10n']['No backup to delete'] = 'Pas de sauvegarde à effacer';
-
-#inc/index.module.php:176
-#inc/index.pack.php:42
-$GLOBALS['__l10n']['Nothing to export'] = 'Rien à exporter';
-
-#inc/index.module.php:217
-#inc/index.module.php:236
-$GLOBALS['__l10n']['Module'] = 'Module';
-
-#inc/index.module.php:235
-$GLOBALS['__l10n']['Summary'] = 'Résumé';
-
-#inc/index.module.php:238
-$GLOBALS['__l10n']['About'] = 'À propos';
-
-#inc/index.module.php:248
-$GLOBALS['__l10n']['Root'] = 'Racine';
-
-#inc/index.module.php:250
-#inc/index.module.php:264
-#inc/index.module.php:382
-#inc/index.setting.php:106
-$GLOBALS['__l10n']['Backups'] = 'Sauvegardes';
-
-#inc/index.module.php:265
-$GLOBALS['__l10n']['Last backup'] = 'Dernière sauvegarde';
-
-#inc/index.module.php:292
-$GLOBALS['__l10n']['no backup'] = 'Aucune sauvegarde';
-
-#inc/index.module.php:301
-$GLOBALS['__l10n']['Translations'] = 'Traductions';
-
-#inc/index.module.php:308
-$GLOBALS['__l10n']['Edit language'] = 'Modifier une langue';
-
-#inc/index.module.php:310
-#inc/index.module.php:330
-#inc/index.module.php:363
-$GLOBALS['__l10n']['Select language:'] = 'Sélectionner une langue :';
-
-#inc/index.module.php:312
-#inc/index.modules.php:68
-$GLOBALS['__l10n']['Edit translation'] = 'Modifier la traduction';
-
-#inc/index.module.php:328
-$GLOBALS['__l10n']['Add language'] = 'Ajouter une langue';
-
-#inc/index.module.php:335
-$GLOBALS['__l10n']['Copy from language:'] = 'Copier depuis la langue :';
-
-#inc/index.module.php:337
-$GLOBALS['__l10n']['Optionnal'] = 'Optionnel';
-
-#inc/index.module.php:344
-$GLOBALS['__l10n']['Add translation'] = 'Ajouter la traduction';
-
-#inc/index.module.php:361
-$GLOBALS['__l10n']['Delete language'] = 'Effacer une langue';
-
-#inc/index.module.php:365
-$GLOBALS['__l10n']['Delete translation'] = 'Effacer la traduction';
-
-#inc/index.module.php:387
-$GLOBALS['__l10n']['Create backups'] = 'Créer une sauvegarde';
-
-#inc/index.module.php:389
-$GLOBALS['__l10n']['Choose languages to backup'] = 'Choisir la langue à sauvegarder';
-
-#inc/index.module.php:410
-$GLOBALS['__l10n']['Backup'] = 'Sauvegarde';
-
-#inc/index.module.php:427
-$GLOBALS['__l10n']['List of backups'] = 'Liste des sauvegardes';
-
-#inc/index.module.php:434
-$GLOBALS['__l10n']['Size'] = 'Taille';
-
-#inc/index.module.php:458
-$GLOBALS['__l10n']['Selected backups action:'] = 'Action sur les sauvegardes sélectionnées :';
-
-#inc/index.module.php:460
-$GLOBALS['__l10n']['Restore backups'] = 'Restaurer les sauvegardes';
-
-#inc/index.module.php:461
-$GLOBALS['__l10n']['Delete backups'] = 'Effacer les sauvegardes';
-
-#inc/index.module.php:487
-#inc/index.pack.php:73
-$GLOBALS['__l10n']['Choose language package to import'] = 'Choisir le paquetage de langue à importer';
-
-#inc/index.module.php:509
-#inc/index.pack.php:130
-$GLOBALS['__l10n']['Choose languages to export'] = 'Choisir les langues à exporter';
-
-#inc/index.modules.php:19
-$GLOBALS['__l10n']['Extensions'] = 'Extensions';
-
-#inc/index.modules.php:47
-$GLOBALS['__l10n']['Translate theme "%s" (by %s)'] = 'Traduire le thème "%s" (de %s)';
-
-#inc/index.modules.php:48
-$GLOBALS['__l10n']['Translate plugin "%s" (by %s)'] = 'Traduire l\'extension "%s" (de %s)';
-
-#inc/index.modules.php:80
-$GLOBALS['__l10n']['Id'] = 'Id';
-
-#inc/index.modules.php:90
-$GLOBALS['__l10n']['There is no editable modules'] = 'Il n\'y a pas de modules modifiables.';
-
-#inc/index.pack.php:102
-$GLOBALS['__l10n']['Choose modules to export'] = 'Choisir les modules à exporter';
-
-#inc/index.pack.php:104
-$GLOBALS['__l10n']['Modules'] = 'Modules';
-
-#inc/index.setting.php:25
-$GLOBALS['__l10n']['No setting update'] = 'Pas de paramètre à mettre à jour';
-
-#inc/index.setting.php:50
-#inc/index.setting.php:57
-#inc/index.setting.php:121
-#index.php:85
+#index.php:26
+#index.php:526
+#index.php:1382
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#inc/index.setting.php:67
-$GLOBALS['__l10n']['Write .po files'] = 'Écrire les fichier .po';
-
-#inc/index.setting.php:70
-$GLOBALS['__l10n']['Write .lang.php files'] = 'Écrire les fichier .lang.php';
-
-#inc/index.setting.php:73
-$GLOBALS['__l10n']['Translate also strings of template files'] = 'Traduire également les chaînes des fichiers de template';
-
-#inc/index.setting.php:76
-$GLOBALS['__l10n']['Translate only unknow strings'] = 'Traduire uniquement les chaînes inconnues';
-
-#inc/index.setting.php:79
-$GLOBALS['__l10n']['Hide default modules of Dotclear'] = 'Cacher les modules d\'origine de Dotclear';
-
-#inc/index.setting.php:82
-$GLOBALS['__l10n']['Write comments in files'] = 'Écrire les commentaires dans les fichiers';
-
-#inc/index.setting.php:85
-$GLOBALS['__l10n']['Write informations about author in files'] = 'Écrire les informations à propos de l\'auteur dans les fichiers';
-
-#inc/index.setting.php:89
-$GLOBALS['__l10n']['Tools'] = 'Outils';
-
-#inc/index.setting.php:90
-$GLOBALS['__l10n']['Use an help tool for translation:'] = 'Utiliser un outil d\'aide à la traduction :';
-
-#inc/index.setting.php:93
-$GLOBALS['__l10n']['Default language of l10n source:'] = 'Langue par défaut des sources l10n :';
-
-#inc/index.setting.php:101
-$GLOBALS['__l10n']['Overwrite existing languages'] = 'Écraser les langages existants';
-
-#inc/index.setting.php:102
-$GLOBALS['__l10n']['Name of exported package'] = 'Nom du paquetage exporté';
-
-#inc/index.setting.php:109
-$GLOBALS['__l10n']['Make backups when changes are made'] = 'Faire des sauvegardes lors des modifications';
-
-#inc/index.setting.php:110
-$GLOBALS['__l10n']['Limit backups to %s files per module'] = 'Limiter les sauvegardes à %s fichiers par module';
-
-#inc/index.setting.php:113
-$GLOBALS['__l10n']['Store backups in %s'] = 'Stocker les sauvegardes dans %s';
-
-#inc/index.setting.php:118
-$GLOBALS['__l10n']['Behaviors'] = 'Comportements';
-
-#inc/index.setting.php:119
-$GLOBALS['__l10n']['Default start menu:'] = 'Menu de départ par défaut :';
-
-#inc/index.setting.php:124
-$GLOBALS['__l10n']['Enable menu on extensions page'] = 'Activer le menu sur la page des extensions';
-
-#inc/index.setting.php:127
-$GLOBALS['__l10n']['Enable menu on themes page'] = 'Activer le menu sur la page des thèmes';
-
-#index.php:50
-$GLOBALS['__l10n']['Please wait'] = 'Veulliez patienter';
-
-#index.php:68
-$GLOBALS['__l10n']['Use this %s translation:'] = 'Utiliser la traduction de %s :';
-
-#index.php:69
-$GLOBALS['__l10n']['Translate this text with %s'] = 'Traduire ce texte avec %s';
-
-#index.php:70
-$GLOBALS['__l10n']['Use this text'] = 'Utiliser ce texte';
-
-#index.php:101
+#index.php:42
 $GLOBALS['__l10n']['locales folders of each module'] = 'le répertoire locales de chaque module';
 
-#index.php:102
+#index.php:43
 $GLOBALS['__l10n']['plugins folder root'] = 'le répertoire racine des extensions';
 
-#index.php:103
+#index.php:44
 $GLOBALS['__l10n']['public folder root'] = 'le répertoire public du blog';
 
-#index.php:104
+#index.php:45
 $GLOBALS['__l10n']['cache folder of Dotclear'] = 'le répertoire cache de Dotclear';
 
-#index.php:105
+#index.php:46
 $GLOBALS['__l10n']['locales folder of translater'] = 'le répertoire locales de l\'extension translater';
 
-#index.php:111
+#index.php:51
 $GLOBALS['__l10n']['Translation successfully updated'] = 'Traduction mise à jour avec succès';
 
-#index.php:112
+#index.php:52
 $GLOBALS['__l10n']['Translation successfully created'] = 'Traduction crée avec succès';
 
-#index.php:113
+#index.php:53
 $GLOBALS['__l10n']['Translation successfully deleted'] = 'Traduction effacée avec succès';
 
-#index.php:114
+#index.php:54
 $GLOBALS['__l10n']['Backups successfully create'] = 'Sauvegardes crées avec succès';
 
-#index.php:115
+#index.php:55
 $GLOBALS['__l10n']['Backups successfully restored'] = 'Sauvegardes effectuées avec succès';
 
-#index.php:116
+#index.php:56
 $GLOBALS['__l10n']['Backups successfully deleted'] = 'Sauvegardes effacées avec succès';
 
-#index.php:117
+#index.php:57
 $GLOBALS['__l10n']['Package successfully imported'] = 'Paquetage importé avec succès';
 
-#index.php:118
+#index.php:58
 $GLOBALS['__l10n']['Package successfully exported'] = 'Paquetage exporté avec succès';
 
-#index.php:123
+#index.php:62
 $GLOBALS['__l10n']['Failed to update settings: %s'] = 'Impossible de mettre à jour les paramètres : %s';
 
-#index.php:124
+#index.php:63
 $GLOBALS['__l10n']['Failed to update translation: %s'] = 'Impossible de mettre à jour la traduction : %s';
 
-#index.php:125
+#index.php:64
 $GLOBALS['__l10n']['Failed to create translation: %s'] = 'Impossible de créer la traduction : %s';
 
-#index.php:126
+#index.php:65
 $GLOBALS['__l10n']['Failed to delete translation: %s'] = 'Impossible d\'effacer la traduction : %s';
 
-#index.php:127
+#index.php:66
 $GLOBALS['__l10n']['Failed to create backups: %s'] = 'Impossible de créer les sauvegardes : %s';
 
-#index.php:128
+#index.php:67
 $GLOBALS['__l10n']['Failed to restore backups: %s'] = 'Impossible de restaurer les sauvegardes : %s';
 
-#index.php:129
+#index.php:68
 $GLOBALS['__l10n']['Failed to delete backups: %s'] = 'Impossible d\'effacer les sauvegardes : %s';
 
-#index.php:130
+#index.php:69
 $GLOBALS['__l10n']['Failed to import package: %s'] = 'Impossible d\'importer le paquetage : %s';
 
-#index.php:131
+#index.php:70
 $GLOBALS['__l10n']['Failed to export package: %s'] = 'Impossible d\'exporter le paquetage : %s';
 
-$GLOBALS['__l10n']['%s files'] = '%s fichiers';
+#index.php:112
+$GLOBALS['__l10n']['No lang to create'] = 'Pas de langue à créer';
+
+#index.php:134
+$GLOBALS['__l10n']['No lang to delete'] = 'Pas de langue à effacer';
+
+#index.php:156
+$GLOBALS['__l10n']['No lang to backup'] = 'Pas de langue à sauvegarder';
+
+#index.php:189
+$GLOBALS['__l10n']['No blackup to restore'] = 'Pas de langue à restaurer';
+
+#index.php:208
+$GLOBALS['__l10n']['No bakcup to to restore'] = 'Pas de sauvegarde à restaurer';
+
+#index.php:229
+#index.php:247
+$GLOBALS['__l10n']['No backup to delete'] = 'Pas de sauvegarde à effacer';
+
+#index.php:290
+#index.php:364
+$GLOBALS['__l10n']['Nothing to export'] = 'Rien à exporter';
+
+#index.php:312
+$GLOBALS['__l10n']['No language to update'] = 'Pas de langue à mettre à jour';
+
+#index.php:443
+#index.php:490
+$GLOBALS['__l10n']['Failed to launch translater: %s'] = 'Impossible de démarrer translater : %s';
+
+#index.php:556
+$GLOBALS['__l10n']['Use this %s translation:'] = 'Utiliser la traduction de %s :';
+
+#index.php:557
+$GLOBALS['__l10n']['Translate this text with %s'] = 'Traduire ce texte avec %s';
+
+#index.php:558
+$GLOBALS['__l10n']['Use this text'] = 'Utiliser ce texte';
+
+#index.php:606
+$GLOBALS['__l10n']['Translate theme "%s" (by %s)'] = 'Traduire le thème "%s" (de %s)';
+
+#index.php:607
+$GLOBALS['__l10n']['Translate plugin "%s" (by %s)'] = 'Traduire l\'extension "%s" (de %s)';
+
+#index.php:627
+#index.php:741
+$GLOBALS['__l10n']['Edit translation'] = 'Modifier la traduction';
+
+#index.php:639
+$GLOBALS['__l10n']['Id'] = 'Id';
+
+#index.php:649
+$GLOBALS['__l10n']['There is no editable modules'] = 'Il n\'y a pas de modules modifiables.';
+
+#index.php:665
+$GLOBALS['__l10n']['Summary'] = 'Résumé';
+
+#index.php:666
+$GLOBALS['__l10n']['Module'] = 'Module';
+
+#index.php:668
+$GLOBALS['__l10n']['About'] = 'À propos';
+
+#index.php:678
+$GLOBALS['__l10n']['Root'] = 'Racine';
+
+#index.php:680
+#index.php:694
+#index.php:811
+#index.php:1342
+$GLOBALS['__l10n']['Backups'] = 'Sauvegardes';
+
+#index.php:695
+$GLOBALS['__l10n']['Last backup'] = 'Dernière sauvegarde';
+
+#index.php:722
+$GLOBALS['__l10n']['no backup'] = 'Aucune sauvegarde';
+
+#index.php:731
+$GLOBALS['__l10n']['Translations'] = 'Traductions';
+
+#index.php:737
+$GLOBALS['__l10n']['Edit language'] = 'Modifier une langue';
+
+#index.php:757
+$GLOBALS['__l10n']['Add language'] = 'Ajouter une langue';
+
+#index.php:764
+$GLOBALS['__l10n']['Copy from language:'] = 'Copier depuis la langue :';
+
+#index.php:766
+$GLOBALS['__l10n']['Optionnal'] = 'Optionnel';
+
+#index.php:773
+$GLOBALS['__l10n']['Add translation'] = 'Ajouter la traduction';
+
+#index.php:790
+$GLOBALS['__l10n']['Delete language'] = 'Effacer une langue';
+
+#index.php:794
+$GLOBALS['__l10n']['Delete translation'] = 'Effacer la traduction';
+
+#index.php:816
+$GLOBALS['__l10n']['Create backups'] = 'Créer une sauvegarde';
+
+#index.php:818
+$GLOBALS['__l10n']['Choose languages to backup'] = 'Choisir la langue à sauvegarder';
+
+#index.php:839
+$GLOBALS['__l10n']['Backup'] = 'Sauvegarde';
+
+#index.php:856
+$GLOBALS['__l10n']['List of backups'] = 'Liste des sauvegardes';
+
+#index.php:860
+#index.php:1066
+$GLOBALS['__l10n']['File'] = 'Fichier';
+
+#index.php:863
+$GLOBALS['__l10n']['Size'] = 'Taille';
+
+#index.php:887
+$GLOBALS['__l10n']['Selected backups action:'] = 'Action sur les sauvegardes sélectionnées :';
+
+#index.php:889
+$GLOBALS['__l10n']['Restore backups'] = 'Restaurer les sauvegardes';
+
+#index.php:890
+$GLOBALS['__l10n']['Delete backups'] = 'Effacer les sauvegardes';
+
+#index.php:916
+#index.php:1183
+$GLOBALS['__l10n']['Choose language package to import'] = 'Choisir le paquetage de langue à importer';
+
+#index.php:938
+#index.php:1240
+$GLOBALS['__l10n']['Choose languages to export'] = 'Choisir les langues à exporter';
+
+#index.php:1059
+$GLOBALS['__l10n']['Group'] = 'Groupe';
+
+#index.php:1061
+$GLOBALS['__l10n']['String'] = 'Chaîne';
+
+#index.php:1063
+#index.php:1284
+$GLOBALS['__l10n']['Translation'] = 'Traduction';
+
+#index.php:1064
+$GLOBALS['__l10n']['Existing'] = 'Existant';
+
+#index.php:1127
+$GLOBALS['__l10n']['%s occurrences'] = '%s occurrences';
+
+#index.php:1153
+$GLOBALS['__l10n']['Total of %s strings.'] = 'Total de %s chaînes.';
+
+#index.php:1155
+$GLOBALS['__l10n']['Change the group of the selected entries to:'] = 'Changer le groupe des entrées sélectionnées vers :';
+
+#index.php:1212
+$GLOBALS['__l10n']['Choose modules to export'] = 'Choisir les modules à exporter';
+
+#index.php:1214
+$GLOBALS['__l10n']['Modules'] = 'Modules';
+
+#index.php:1287
+$GLOBALS['__l10n']['Write .po files'] = 'Écrire les fichier .po';
+
+#index.php:1290
+$GLOBALS['__l10n']['Write .lang.php files'] = 'Écrire les fichier .lang.php';
+
+#index.php:1293
+$GLOBALS['__l10n']['Translate also strings of template files'] = 'Traduire également les chaînes des fichiers de template';
+
+#index.php:1296
+$GLOBALS['__l10n']['Translate only unknow strings'] = 'Traduire uniquement les chaînes inconnues';
+
+#index.php:1299
+$GLOBALS['__l10n']['Hide default modules of Dotclear'] = 'Cacher les modules d\'origine de Dotclear';
+
+#index.php:1302
+$GLOBALS['__l10n']['Write comments in files'] = 'Écrire les commentaires dans les fichiers';
+
+#index.php:1305
+$GLOBALS['__l10n']['Write informations about author in files'] = 'Écrire les informations à propos de l\'auteur dans les fichiers';
+
+#index.php:1309
+$GLOBALS['__l10n']['Tools'] = 'Outils';
+
+#index.php:1310
+$GLOBALS['__l10n']['Default language of l10n source:'] = 'Langue par défaut des sources l10n :';
+
+#index.php:1314
+$GLOBALS['__l10n']['Select and configure the tool to use to translate strings:'] = 'Sélectionner et configurer un outil de traduction :';
+
+#index.php:1326
+$GLOBALS['__l10n']['Nothing to configure for %s tool.'] = 'Rien à configurer pour l\'outil %s.';
+
+#index.php:1337
+$GLOBALS['__l10n']['Overwrite existing languages'] = 'Écraser les langages existants';
+
+#index.php:1338
+$GLOBALS['__l10n']['Name of exported package'] = 'Nom du paquetage exporté';
+
+#index.php:1345
+$GLOBALS['__l10n']['Make backups when changes are made'] = 'Faire des sauvegardes lors des modifications';
+
+#index.php:1346
+$GLOBALS['__l10n']['Limit backups to %s files per module'] = 'Limiter les sauvegardes à %s fichiers par module';
+
+#index.php:1349
+$GLOBALS['__l10n']['Store backups in %s'] = 'Stocker les sauvegardes dans %s';
+
+#index.php:1354
+$GLOBALS['__l10n']['Behaviors'] = 'Comportements';
+
+#index.php:1355
+$GLOBALS['__l10n']['Default start menu:'] = 'Menu de départ par défaut :';
+
+#index.php:1360
+$GLOBALS['__l10n']['Enable menu on extensions page'] = 'Activer le menu sur la page des extensions';
+
+#index.php:1363
+$GLOBALS['__l10n']['Enable menu on themes page'] = 'Activer le menu sur la page des thèmes';
+
+$GLOBALS['__l10n']['translater'] = 'Traducteur';
+
+$GLOBALS['__l10n']['Translate your Dotclear plugins and themes'] = 'Traduire vos extensions et thèmes pour Dotclear';
 
 ?>

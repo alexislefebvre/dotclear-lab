@@ -2,6 +2,14 @@ x.x xxxxxxxx
  - help translation
  - source translation
 
+2013.05.11
+ * Rewrited proposal tools
+ * Added Microsoft translation tool
+ * Updated Google translation tool
+ * Removed permissions, now required superadmin
+ * Fixed page title and messages and contents
+ * Moved all sub-pages into one page
+
 1.5 20100901
  * Added option to set defaut tab (closes #552)
  * Fixed occurrences count (closes #551)

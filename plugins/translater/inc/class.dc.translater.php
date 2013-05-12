@@ -1,17 +1,22 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of translater, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
+/**
+ * Translater tools.
+ */
 class dcTranslater
 {
 	public $core;
@@ -76,11 +81,11 @@ class dcTranslater
 			'type' => 'string',
 			'label' => 'In which folder to store backups'
 		),
-		'start_tab' => array(
-			'id' => 'translater_start_tab',
+		'start_page' => array(
+			'id' => 'translater_start_page',
 			'value' => 'setting',
 			'type' => 'string',
-			'label' => 'Tab to start on'
+			'label' => 'Page to start on'
 		),
 		'write_po' => array(
 			'id' => 'translater_write_po',
@@ -163,20 +168,24 @@ class dcTranslater
 			'antispam',
 			'blogroll',
 			'blowupConfig',
+			'daInstaller',
 			'externalMedia',
 			'fairTrackbacks',
 			'importExport',
 			'maintenance',
 			'pages',
 			'pings',
+			'simpleMenu',
 			'tags',
 			'themeEditor',
+			'userPref',
 			'widgets'
 		),
 		'theme' => array(
 			'default',
 			'blueSilence',
-			'customCSS'
+			'customCSS',
+			'ductile'
 		)
 	);
 	
@@ -189,11 +198,9 @@ class dcTranslater
 	function __construct($core)
 	{
 		$this->core =& $core;
+		$core->blog->settings->addNamespace('translater');
 		$this->loadModules();
-		$this->proposal = new dcTranslaterProposal($core);
-		
-		# --BEHAVIOR-- dcTranslaterAddProposal
-		$core->callBehavior('dcTranslaterAddProposal',$core,$this->proposal);
+		$this->proposal = new translaterProposals($core);
 	}
 	
 	# Return array of default settings
@@ -203,7 +210,7 @@ class dcTranslater
 	}
 	
 	# Get settings for current blog
-	public function getSettings($id='')
+	public function getSettings($id=null)
 	{		
 		$res = array();
 		foreach($this->default_settings AS $k => $v)
@@ -211,11 +218,11 @@ class dcTranslater
 			if ($k == $id)
 			{
 				return $this->core->blog->settings->translater->get(
-					$this->default_settings[$id]['id']
+					$this->default_settings[$k]['id']
 				);
 			}
-			$res[$id] = $this->core->blog->settings->translater->get(
-				$this->default_settings[$id]['id']
+			$res[$k] = $this->core->blog->settings->translater->get(
+				$this->default_settings[$k]['id']
 			);
 		}
 		return $res;
@@ -244,13 +251,13 @@ class dcTranslater
 	{
 		if (!isset($this->default_settings[$k])) return false;
 
-		$this->core->blog->settings->addNamespace('translater');
+		$this->dropOldSettings($this->default_settings[$k]['id']);
 		$this->core->blog->settings->translater->put(
 			$this->default_settings[$k]['id'],
 			$v,
 			$this->default_settings[$k]['type'],
 			$this->default_settings[$k]['label'],
-			true,false
+			true,true
 		);
 		return true;
 	}
@@ -259,6 +266,12 @@ class dcTranslater
 	public function __set($k,$v)
 	{
 		return $this->set($k,$v);
+	}
+	
+	# Drop old "per blog" settings (as of version 2013.05.11)
+	private function dropOldSettings($id)
+	{
+		$this->core->blog->settings->translater->drop($id);
 	}
 	
 	# Retrieve a particular info for a given module
@@ -297,6 +310,8 @@ class dcTranslater
 		{
 			if (!$v['root_writable']) continue;
 			$this->modules['theme'][$k] = $v;
+			$this->modules['theme'][$k]['id'] = $k;
+			$this->modules['theme'][$k]['type'] = 'theme';
 		}
 		
 		$m = $this->core->plugins->getModules();
@@ -304,6 +319,8 @@ class dcTranslater
 		{
 			if (!$v['root_writable']) continue;
 			$this->modules['plugin'][$k] = $v;
+			$this->modules['plugin'][$k]['id'] = $k;
+			$this->modules['plugin'][$k]['type'] = 'plugin';
 		}
 	}
 
@@ -319,30 +336,30 @@ class dcTranslater
 	public function getModule($module='',$type='')
 	{
 		$o = new ArrayObject();
+		
 		# Load nothing?
-		if (empty($type) && empty($module))
-		{
+		if (empty($module)) {
 			return false;
 		}
+		
 		# Unknow type?
-		elseif (!in_array($type,array('plugin','theme')))
-		{
-			throw new Exception(sprintf(
-				__('Cannot work with module of type %s'),$type)
-			);
-			return false;
+		if (!in_array($type,array('plugin','theme'))) {
+			$modules = array_merge($this->modules['theme'],$this->modules['plugin']);
 		}
+		else {
+			$modules = $this->modules[$type];
+		}
+		
 		# Unknow module?
-		elseif (!isset($this->modules[$type][$module]))
-		{
+		if (!isset($modules[$module])) {
 			throw new Exception(sprintf(
-				__('Cannot find module %s of type %s'),$module,$type)
+				__('Cannot find module %s'),$module)
 			);
 			return false;
 		}
+		
 		# Module info
-		foreach($this->modules[$type][$module] as $a => $b)
-		{
+		foreach($modules[$module] as $a => $b) {
 			$o->{$a} = $b;
 		}
 		$o->root = path::real($o->root);
@@ -350,8 +367,6 @@ class dcTranslater
 		$o->locales = $o->root.'/locales';
 		# Module exists
 		$o->exists = true;
-		# Module type
-		$o->type = $type;
 		# Module Basename
 		$i = path::info($o->root);
 		$o->basename = $i['basename'];
@@ -1565,58 +1580,6 @@ class dcTranslater
 			);
 		}
 		return $code;
-	}
-}
-
-# Added tools to provide a translation
-class dcTranslaterProposal
-{
-	public $core;
-	
-	private $tool;
-	private $tools = array();
-	
-	public function __construct($core)
-	{
-		$this->core = $core;
-	}
-	
-	public function addTool($id,$name,$func)
-	{
-		if (is_callable($func))
-		{
-			$this->tools[$id] = array('name'=>$name,'func'=>$func);
-		}
-	}
-	
-	public function getTools($id='')
-	{
-		if (empty($id))
-		{
-			return $this->tools;
-		}
-		return isset($this->tool[$id]) ? $this->tools[$id] : array();
-	}
-	
-	public function initTool($id,$from,$to)
-	{
-		if (!empty($this->tools[$id]['func'])
-		 && is_callable($this->tools[$id]['func']))
-		{
-			$this->tool = call_user_func($this->tools[$id]['func'],$this->core,$from,$to);
-			return true;
-		}
-		return false;
-	}
-	
-	public function get($str='')
-	{
-		return $this->tool->get($str);
-	}
-	
-	public function __get($str)
-	{
-		return $this->get($str);
 	}
 }
 ?>
