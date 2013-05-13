@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of pacKman, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -26,6 +28,11 @@ class libPackman
 	public static function tab($modules,$type=null,$redir=null,$extern=true)
 	{
 		$type = $type == 'themes' ? 'themes' : 'plugins';
+
+		if (isset($_REQUEST['packupdone']))
+		{
+			dcPage::message(__('Package successfully created'));
+		}
 		
 		if ($extern)
 		{
@@ -35,13 +42,7 @@ class libPackman
 		}
 		else
 		{
-			echo '<div id="packman-'.$type.'">'.
-			'<h3>'.sprintf(__('Pack up %s'),__($type)).'</h3>';
-		}
-
-		if (isset($_REQUEST['packupdone']))
-		{
-			echo '<p class="message">'.__('Package successfully created').'</p>';
+			echo '<div id="packman-'.$type.'">';
 		}
 		
 		if (!empty($modules) && is_array($modules))
@@ -96,8 +97,7 @@ class libPackman
 	{
 		if (!in_array($type,array('plugins','themes','repository'))) return;
 
-		echo '<fieldset id="repo-'.$type.'">'.
-		'<legend>'.sprintf(__('Package available in %s directory'),__($type)).'</legend>';
+		echo '<div id="repo-'.$type.'">';
 
 		if (isset($_REQUEST['deletedone']) && $_REQUEST['deletedone'] == $type)
 		{
@@ -191,7 +191,7 @@ class libPackman
 			'</div>'.
 			'</form>';
 		}
-		echo '</fieldset>';
+		echo '</div>';
 	}
 }
 ?>

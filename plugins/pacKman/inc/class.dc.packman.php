@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of pacKman, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -77,7 +79,7 @@ class dcPackman
 		return $res;
 	}
 	
-	public static function pack($info,$root,$files,$overwrite=false,$exclude=array())
+	public static function pack($info,$root,$files,$overwrite=false,$exclude=array(),$nocomment=false)
 	{
 		if (!($info = self::getInfo($info))) return false;
 		if (!($root = self::getRoot($root))) return false;
@@ -90,7 +92,8 @@ class dcPackman
 			
 			@set_time_limit(300);
 			$fp = fopen($dest,'wb');
-			$zip = new fileZip($fp);
+			
+			$zip = $nocomment ? new packmanFileZip($fp) : new fileZip($fp);
 			
 			foreach($exclude AS $e)
 			{
@@ -105,7 +108,7 @@ class dcPackman
 		return true;
 	}
 	
-	private function getRoot($root)
+	private static function getRoot($root)
 	{
 		$root = path::real($root);
 		if (!is_dir($root) || !is_writable($root))
@@ -116,7 +119,7 @@ class dcPackman
 		return $root;
 	}
 	
-	private function getInfo($info)
+	private static function getInfo($info)
 	{
 		if (!isset($info['root']) || !isset($info['id']) || !is_dir($info['root']))
 		{
@@ -126,13 +129,13 @@ class dcPackman
 		return $info;
 	}
 	
-	private function getExclude($exclude)
+	private static function getExclude($exclude)
 	{
 		$exclude = array_merge(self::$exclude,$exclude);
 		return self::quote_exclude($exclude);
 	}
 	
-	private function getFile($file,$info)
+	private static function getFile($file,$info)
 	{
 		if (empty($file) || empty($info)) return null;
 		
@@ -161,7 +164,7 @@ class dcPackman
 		return implode('/',$parts).'.zip';
 	}
 	
-	private function getOverwrite($overwrite,$root,$file)
+	private static function getOverwrite($overwrite,$root,$file)
 	{
 		$path = $root.'/'.$file;
 		if (file_exists($path) && !$overwrite)

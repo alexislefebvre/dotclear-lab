@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of pacKman, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -24,14 +26,12 @@ $type = isset($_POST['type']) && in_array($_POST['type'],
 # Settings
 $core->blog->settings->addNamespace('pacKman');
 $packman_menu_plugins = $core->blog->settings->pacKman->packman_menu_plugins;
+$packman_pack_nocomment = $core->blog->settings->pacKman->packman_pack_nocomment;
 $packman_pack_overwrite = $core->blog->settings->pacKman->packman_pack_overwrite;
 $packman_pack_filename = $core->blog->settings->pacKman->packman_pack_filename;
 $packman_secondpack_filename = $core->blog->settings->pacKman->packman_secondpack_filename;
 $packman_pack_repository = $core->blog->settings->pacKman->packman_pack_repository;
 $packman_pack_excludefiles = $core->blog->settings->pacKman->packman_pack_excludefiles;
-
-# Load class
-$O = new dcPackman($core);
 
 # List plugins and themes
 $themes = new dcModules($core);
@@ -104,6 +104,7 @@ try
 	if (isset($_POST['reset_settings']))
 	{
 		$core->blog->settings->pacKman->put('packman_menu_plugins',false);
+		$core->blog->settings->pacKman->put('packman_pack_nocomment',false);
 		$core->blog->settings->pacKman->put('packman_pack_overwrite',false);
 		$core->blog->settings->pacKman->put('packman_pack_filename','%type%-%id%-%version%');
 		$core->blog->settings->pacKman->put('packman_secondpack_filename','%type%-%id%');
@@ -137,6 +138,7 @@ try
 		}
 		
 		$packman_menu_plugins = !empty($_POST['packman_menu_plugins']);
+		$packman_pack_nocomment = !empty($_POST['packman_pack_nocomment']);
 		$packman_pack_overwrite = !empty($_POST['packman_pack_overwrite']);
 		$packman_pack_filename = $_POST['packman_pack_filename'];
 		$packman_secondpack_filename = $_POST['packman_secondpack_filename'];
@@ -144,6 +146,7 @@ try
 		$packman_pack_excludefiles = $_POST['packman_pack_excludefiles'];
 		
 		$core->blog->settings->pacKman->put('packman_menu_plugins',$packman_menu_plugins);
+		$core->blog->settings->pacKman->put('packman_pack_nocomment',$packman_pack_nocomment);
 		$core->blog->settings->pacKman->put('packman_pack_overwrite',$packman_pack_overwrite);
 		$core->blog->settings->pacKman->put('packman_pack_filename',$packman_pack_filename);
 		$core->blog->settings->pacKman->put('packman_secondpack_filename',$packman_secondpack_filename);
@@ -176,16 +179,17 @@ try
 			
 			$root = $packman_pack_repository;
 			$files = array($packman_pack_filename,$packman_secondpack_filename);
+			$nocomment = $packman_pack_nocomment;
 			$overwrite = $packman_pack_overwrite;
 			$exclude = explode(',',$packman_pack_excludefiles);
 			
 			# --BEHAVIOR-- packmanBeforeCreatePackage
-			$core->callBehavior('packmanBeforeCreatePackage',$info,$root,$files,$overwrite,$exclude);
+			$core->callBehavior('packmanBeforeCreatePackage',$info,$root,$files,$overwrite,$exclude,$nocomment);
 			
-			dcPackman::pack($info,$root,$files,$overwrite,$exclude);
+			dcPackman::pack($info,$root,$files,$overwrite,$exclude,$nocomment);
 			
 			# --BEHAVIOR-- packmanAfterCreatePackage
-			$core->callBehavior('packmanAfterCreatePackage',$info,$root,$files,$overwrite,$exclude);
+			$core->callBehavior('packmanAfterCreatePackage',$info,$root,$files,$overwrite,$exclude,$nocomment);
 			
 		}
 		
@@ -331,13 +335,31 @@ catch(Exception $e)
 $iswritable = libPackman::is_writable($packman_pack_repository,$packman_pack_filename);
 if ($default_tab == '')
 {
-	$default_tab = $iswritable ? 'repository' : 'settings';
+	$default_tab = $iswritable ? 'repository' : 'setting';
 }
-
+$title = '';
+if ($default_tab == 'packman-plugins') {
+	$title = sprintf(__('Pack up %s'),__('plugins'));
+}
+elseif ($default_tab == 'packman-themes') {
+	$title = sprintf(__('Pack up %s'),__('themes'));
+}
+elseif ($default_tab == 'repository') {
+	$title = __('Repositories of packages');
+}
+elseif ($default_tab == 'setting') {
+	$title = __('Settings');
+}
+$title = html::escapeHTML($title);
 
 # Display
 echo '
-<html><head><title>'.__('pacKman').'</title>
+<html><head><title>'.__('pacKman');
+if (!empty($title)) {
+	echo ' - '.$title;
+}
+echo 
+'</title>
 '.dcPage::jsLoad('js/_posts_list.js').
 '<link rel="stylesheet" type="text/css" href="index.php?pf=pacKman/style.css" />';
 
@@ -346,15 +368,18 @@ $core->callBehavior('packmanAdminHeader',$core,$default_tab);
 
 echo '
 </head><body>
-<h2>pac<img alt="'.__('pacKman').'" src="index.php?pf=pacKman/icon.png" />man'.
+<h2>pac<img alt="'.__('pacKman').'" src="index.php?pf=pacKman/icon.png" />man';
+if (!empty($title)) {
+	echo ' &rsaquo; <span class="page-title">'.$title.'</span>';
+}
+echo 
 ' - <a class="button" href="'.$p_url.'&amp;tab=packman-plugins">'.__('Plugins').'</a>'.
 ' - <a class="button" href="'.$p_url.'&amp;tab=packman-themes">'.__('Themes').'</a>';
-if ($iswritable)
-{
+if ($iswritable) {
 	echo ' - <a class="button" href="'.$p_url.'&amp;tab=repository">'.__('Repositories').'</a>';
 }
 echo 
-'</h2><hr class="clear" />';
+'</h2>';
 
 if ($default_tab == 'packman-plugins' && $iswritable)
 {
@@ -373,7 +398,7 @@ elseif ($default_tab == 'repository' && $iswritable)
 	$plugins_path_modules = dcPackman::getPackages($core,$plugins_path);
 	$themes_path_modules = dcPackman::getPackages($core,$themes_path);
 	
-	echo '<div id="repository"><h3>'. __('Repositories of packages').'</h3>';
+	echo '<div id="repository">';
 	
 	if (empty($plugins_path_modules) && empty($themes_path_modules) && empty($repo_path_modules))
 	{
@@ -396,22 +421,26 @@ elseif ($default_tab == 'repository' && $iswritable)
 }
 else
 {
-	echo '<div id="settings"><h3>'. __('Settings').'</h3>';
+	if (isset($_REQUEST['setupdone']))
+	{
+		dcPage::message(__('Configuration successfully saved'));
+	}
+	
+	echo '<div id="settings">';
 	
 	if (!is_writable(DC_TPL_CACHE))
 	{
 		echo '<p class="error">'.__('Cache directory is not writable, packman repository functions are unavailable').'</p>';
 	}
-	if (isset($_REQUEST['setupdone']))
-	{
-		echo '<p class="message">'.__('Configuration successfully saved').'</p>';
-	}
 	echo '
-	<form method="post" action="'.$p_url.'">
+	<form class="dtbfieldsettomenu" method="post" action="'.$p_url.'">
 	<fieldset id="setting-behavior"><legend>'.__('Behaviors').'</legend>
 	<p><label class="classic">'.
 	form::checkbox(array('packman_menu_plugins'),'1',$packman_menu_plugins).' '.
 	__('Enable menu on extensions page').'</label></p>
+	<p><label class="classic">'.
+	form::checkbox(array('packman_pack_nocomment'),'1',$packman_pack_nocomment).' '.
+	__('Remove comments from files').'</label></p>
 	<p><label class="classic">'.
 	form::checkbox(array('packman_pack_overwrite'),'1',$packman_pack_overwrite).' '.
 	__('Overwrite existing package').'</label></p>
