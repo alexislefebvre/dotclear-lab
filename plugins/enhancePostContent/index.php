@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of enhancePostContent, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2008-2011 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -186,6 +188,20 @@ if ($action == 'saveupdaterecords' && isset($filters_id[$default_part])
 	}
 }
 
+$title = '';
+foreach($filters_id as $id => $name)
+{
+	if ($id == $default_part)
+	{
+		$title = '<span class="page-title">'.__($name).'</span>';
+	}
+}
+if (empty($title))
+{
+	$title = '<span class="page-title">'.__('Settings').'</span>';
+}
+
+
 echo '
 <html><head><title>'.__('Enhance post content').'</title>'.
 dcPage::jsLoad('js/_posts_list.js').
@@ -198,7 +214,7 @@ $core->callBehavior('enhancePostContentAdminHeader',$core);
 echo '
 </head><body>
 <h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.
-__('Enhance post content').'</h2>';
+__('Enhance post content').' &rsaquo; '.$title.'</h2>';
 
 # Filters menu
 echo '<p>';
