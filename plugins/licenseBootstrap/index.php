@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of licenseBootstrap, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -105,19 +107,34 @@ catch(Exception $e)
 	$core->error->add($e->getMessage());
 }
 
+$title = '';
+if ($default_tab == 'plugin') {
+	$title = __('Plugins');
+}
+elseif ($default_tab == 'theme') {
+	$title = __('Theme');
+}
+elseif ($default_tab == 'setting') {
+	$title = __('Settings');
+}
+$title = html::escapeHTML($title);
+
 # Display
 echo 
-'<html><head><title>'.__('License bootstrap').'</title>'.
-dcPage::jsLoad('index.php?pf=licenseBootstrap/js/main.js').
-'<script type="text/javascript">'."\n//<![CDATA[\n".
-dcPage::jsVar('jcToolsBox.prototype.text_wait',__('Please wait')).
-dcPage::jsVar('jcToolsBox.prototype.section',$section).
-"\n//]]>\n</script>\n".
-'</head><body>'.
-'<h2>'.__('License bootstrap').
+'<html><head><title>'.__('License bootstrap');
+if (!empty($title)) {
+	echo ' - '.$title;
+}
+echo 
+'</title></head><body>'.
+'<h2>'.__('License bootstrap');
+if (!empty($title)) {
+	echo ' &rsaquo; <span class="page-title">'.$title.'</span>';
+}
+echo 
 ' - <a class="button" href="'.$p_url.'&amp;tab=plugin">'.__('Plugins').'</a>'.
 ' - <a class="button" href="'.$p_url.'&amp;tab=theme">'.__('Themes').'</a>'.
-'</h2><hr class="clear" />';
+'</h2>';
 
 if ($default_tab == 'plugin')
 {
@@ -131,14 +148,34 @@ elseif ($default_tab == 'theme')
 }
 elseif ($default_tab == 'setting')
 {
-	echo '<div><h3>'. __('Settings').'</h3>';
-	
 	if (isset($_REQUEST['done']))
 	{
-		echo '<p class="message">'.__('Configuration successfully saved').'</p>';
+		dcPage::message(__('Configuration successfully saved'));
 	}
+	echo '<form id="setting-form" method="post" action="'.$p_url.'">';
+	
+	if ($core->plugins->moduleExists('pacKman') || $core->plugins->moduleExists('translater'))
+	{
+		echo '<fieldset id="settingbehavior"><legend>'.__('Behaviors').'</legend>';
+		
+		if ($core->plugins->moduleExists('pacKman'))
+		{
+			echo '
+			<p><label class="classic">'.
+			form::checkbox(array('packman_behavior'),'1',$packman_behavior).' '.
+			__('Add license before create package with plugin pacKman').'</label></p>';
+		}
+		if ($core->plugins->moduleExists('translater'))
+		{
+			echo '
+			<p><label class="classic">'.
+			form::checkbox(array('translater_behavior'),'1',$translater_behavior).' '.
+			__('Add license after create lang file with plugin translater').'</label></p>';
+		}
+		echo '</fieldset>';
+	}
+	
 	echo '
-	<form id="setting-form" method="post" action="'.$p_url.'">
 	<fieldset id="settingfile"><legend>'.__('Files').'</legend>
 	<p><label class="classic">'.
 	form::checkbox(array('overwrite'),'1',$overwrite).' '.
@@ -176,27 +213,6 @@ elseif ($default_tab == 'setting')
 		</p>';
 	}
 	echo '</fieldset>';
-	
-	if ($core->plugins->moduleExists('pacKman') || $core->plugins->moduleExists('translater'))
-	{
-		echo '<fieldset id="settingbehavior"><legend>'.__('Behaviors').'</legend>';
-		
-		if ($core->plugins->moduleExists('pacKman'))
-		{
-			echo '
-			<p><label class="classic">'.
-			form::checkbox(array('packman_behavior'),'1',$packman_behavior).' '.
-			__('Add license before create package with plugin pacKman').'</label></p>';
-		}
-		if ($core->plugins->moduleExists('translater'))
-		{
-			echo '
-			<p><label class="classic">'.
-			form::checkbox(array('translater_behavior'),'1',$translater_behavior).' '.
-			__('Add license after create lang file with plugin translater').'</label></p>';
-		}
-		echo '</fieldset>';
-	}
 	
 	echo '
 	<p class="clear">

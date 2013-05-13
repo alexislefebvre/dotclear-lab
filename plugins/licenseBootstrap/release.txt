@@ -1,3 +1,6 @@
+2013.05.11
+ * Fixed page title and messages and contents
+
 0.3 20100605
  * Switched to DC 2.2
  * Changed admin interface (easy, light, fast)

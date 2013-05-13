@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of licenseBootstrap, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -240,7 +242,9 @@ class licenseBootstrap
 	{
 		global $core;
 		
-		$core->blog->settings->addNamespace('licenseBootstrap');
+		if (!$core->blog->settings->licenseBootstrap->licensebootstrap_packman_behavior) {
+			return;
+		}
 		
 		$addfull = (boolean) $core->blog->settings->licenseBootstrap->licensebootstrap_addfull;
 		$overwrite = (boolean) $core->blog->settings->licenseBootstrap->licensebootstrap_overwrite;
@@ -264,6 +268,10 @@ class licenseBootstrap
 		if (!$f) return;
 		
 		global $core;
+		
+		if (!$core->blog->settings->licenseBootstrap->licensebootstrap_translater_behavior) {
+			return;
+		}
 		
 		$id = '';
 		$type = 'theme';
@@ -345,7 +353,9 @@ class filesLicenseBootstrap
 
 		$block = 
 		"\r\n# -- BEGIN LICENSE BLOCK ----------------------------------\r\n".
+		"#\r\n".
 		'# '.str_replace("\n","\n# ",$license).
+		"\r\n#".
 		"\r\n# -- END LICENSE BLOCK ------------------------------------\r\n";
 
 		$content = preg_replace('/(\<\?php)/','<?php'.$block,$content,1);
@@ -361,7 +371,9 @@ class filesLicenseBootstrap
 
 		$block = 
 		"/* -- BEGIN LICENSE BLOCK ----------------------------------\r\n".
+		" *\r\n".
 		' * '.str_replace("\n","\n * ",$license).
+		"\r\n *".
 		"\r\n * -- END LICENSE BLOCK ------------------------------------*/\r\n\r\n";
 
 		$content = $block.$content;
