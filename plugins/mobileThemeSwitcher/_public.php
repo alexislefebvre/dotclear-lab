@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicPrepend',array('mobileThemeSwitcherBehaviors','changeTheme'));
 $core->tpl->addValue('FullVersion', array('tplMobileThemeSwitcher', 'linkToFullVersion'));
@@ -59,7 +60,7 @@ class mobileThemeSwitcherBehaviors
   protected static function isMobileDevice()
   {
     $patterns = array(
-      '#Mobile/.+Safari#i', // iPhone UA
+      '#iPhone#i', // iPhone UA
       '#Opera Mobi#i', // AT&T phone
       '#BlackBerry#i', // Blackberry
       '#Windows CE#i', // Windows CE phone: HP iPAQ, HTC, Palm

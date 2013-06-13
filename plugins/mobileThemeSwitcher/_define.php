@@ -25,8 +25,8 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */			"Mobile Theme Switcher",
 	/* Description*/	"Mobile Theme Switcher",
-	/* Author */		"Noel GUILBERT",
-	/* Version */		'0.2.1-brol',
+	/* Author */		"Noel GUILBERT, Pierre Van Glabeke",
+	/* Version */		'0.2.2',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>

@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 */
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('adminBlogPreferencesForm',array('mobileThemeSwitcherAdminBehaviours','adminBlogPreferencesForm'));
 $core->addBehavior('adminBeforeBlogSettingsUpdate',array('mobileThemeSwitcherAdminBehaviours','adminBeforeBlogSettingsUpdate'));
