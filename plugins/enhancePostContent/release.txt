@@ -4,6 +4,9 @@ x.x xxxxxxxx
  * Not added auto-find post title in content
  * Fixed records list (more Dotclear compliant) (checkbox and action)
 
+2013.06.25
+ * Fixed widget compatibility for php 5.4
+
 2013.05.11
  * Fixed bug with Twitter replacement and wiki synthax of blockquote
  * Fixed page title

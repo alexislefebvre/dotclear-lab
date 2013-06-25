@@ -544,7 +544,7 @@ class libEPC
 		return;
 	}
 	
-	public static function widgetListTag($core,$filter,$content,$w,$list)
+	public static function widgetListTag($core,$filter,$content,$w,&$list)
 	{
 		if (!$core->plugins->moduleExists('tags')) return;
 
@@ -598,7 +598,7 @@ class libEPC
 		return;
 	}
 	
-	public static function widgetListAcronym($core,$filter,$content,$w,$list)
+	public static function widgetListAcronym($core,$filter,$content,$w,&$list)
 	{
 		while($filter['list']->fetch())
 		{
@@ -632,7 +632,7 @@ class libEPC
 		return;
 	}
 	
-	public static function widgetListAbbreviation($core,$filter,$content,$w,$list)
+	public static function widgetListAbbreviation($core,$filter,$content,$w,&$list)
 	{
 		while($filter['list']->fetch())
 		{
@@ -666,7 +666,7 @@ class libEPC
 		return;
 	}
 	
-	public static function widgetListDefinition($core,$filter,$content,$w,$list)
+	public static function widgetListDefinition($core,$filter,$content,$w,&$list)
 	{
 		while($filter['list']->fetch())
 		{
@@ -700,7 +700,7 @@ class libEPC
 		return;
 	}
 	
-	public static function widgetListCitation($core,$filter,$content,$w,$list)
+	public static function widgetListCitation($core,$filter,$content,$w,&$list)
 	{
 		while($filter['list']->fetch())
 		{
@@ -734,7 +734,7 @@ class libEPC
 		return;
 	}
 	
-	public static function widgetListLink($core,$filter,$content,$w,$list)
+	public static function widgetListLink($core,$filter,$content,$w,&$list)
 	{
 		while($filter['list']->fetch())
 		{
