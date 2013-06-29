@@ -1,45 +1,55 @@
 <?php
 // Language: Français 
-// Module: myBlogNumbers - 0.2
-// Date: 2010-06-06 00:00:21 
-// Translated with dcTranslater - 1.4 
+// Module: myBlogNumbers - 2013.06.29
+// Date: 2013-06-29 01:52:45 
+// Translated with dcTranslater - 2013.05.11 
 
-#_public.php:36
-#_public.php:60
-#_public.php:89
-#_public.php:118
-#_public.php:148
-#_public.php:172
-$GLOBALS['__l10n']['none'] = 'aucun';
+#_public.php:41
+$GLOBALS['__l10n']['no entries'] = 'aucun billet';
 
-#_public.php:40
+#_public.php:45
 $GLOBALS['__l10n']['one entry'] = 'un billet';
 
-#_public.php:44
+#_public.php:49
 $GLOBALS['__l10n']['%s entries'] = '%s billets';
 
-#_public.php:64
+#_public.php:65
+$GLOBALS['__l10n']['no categories'] = 'aucune catégorie';
+
+#_public.php:69
 $GLOBALS['__l10n']['one category'] = 'une catégorie';
 
-#_public.php:68
+#_public.php:73
 $GLOBALS['__l10n']['%s categories'] = '%s catégories';
 
-#_public.php:97
+#_public.php:94
+$GLOBALS['__l10n']['no comments'] = 'aucun commentaire';
+
+#_public.php:102
 $GLOBALS['__l10n']['%s comments'] = '%s commentaires';
 
-#_public.php:126
+#_public.php:123
+$GLOBALS['__l10n']['no trackbacks'] = 'aucun rétrolien';
+
+#_public.php:131
 $GLOBALS['__l10n']['%s trackbacks'] = '%s rétroliens';
 
-#_public.php:152
-$GLOBALS['__l10n']['one tag'] = 'un tag';
+#_public.php:153
+$GLOBALS['__l10n']['no tags'] = 'aucun mot clé';
 
-#_public.php:156
-$GLOBALS['__l10n']['%s tags'] = '%s tags';
+#_public.php:157
+$GLOBALS['__l10n']['one tag'] = 'un mot clé';
 
-#_public.php:176
+#_public.php:161
+$GLOBALS['__l10n']['%s tags'] = '%s mots clés';
+
+#_public.php:177
+$GLOBALS['__l10n']['no author'] = 'aucun auteur';
+
+#_public.php:181
 $GLOBALS['__l10n']['one author'] = 'un auteur';
 
-#_public.php:180
+#_public.php:185
 $GLOBALS['__l10n']['%s authors'] = '%s auteurs';
 
 #_widgets.php:21

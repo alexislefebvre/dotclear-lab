@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of myBlogNumbers, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
@@ -19,21 +21,26 @@ function myBlogNumbersWidgetPublic($w)
 	global $core;
 	
 	$content = $addons = '';
+	$s_line = '<li>%s%s</li>';
+	$s_title = '<strong>%s</strong> ';
 	
 	# Home only
-	if ($w->homeonly && $core->url->type != 'default') return;
+	if (($w->homeonly == 1 && $core->url->type != 'default') ||
+		($w->homeonly == 2 && $core->url->type == 'default')) {
+		return;
+	}
 	
 	# Entry
 	if ($w->entry_show)
 	{
-		$title = ($w->entry_title ? 
-			'<strong>'.html::escapeHTML($w->entry_title).'</strong> ' : '');
+		$title = $w->entry_title ? 
+			sprintf($s_title,html::escapeHTML($w->entry_title)) : '';
 		
 		$count = $core->blog->getPosts(array(),true)->f(0);
 		
 		if ($count == 0)
 		{
-			$text = sprintf(__('none'),$count);
+			$text = sprintf(__('no entries'),$count);
 		}
 		elseif ($count == 1)
 		{
@@ -44,20 +51,20 @@ function myBlogNumbersWidgetPublic($w)
 			$text = sprintf(__('%s entries'),$count);
 		}
 		
-		$content .= sprintf('<li>%s%s</li>',$title,$text);
+		$content .= sprintf($s_line,$title,$text);
 	}
 	
 	# Cat
 	if ($w->cat_show)
 	{
-		$title = ($w->cat_title ? 
-			'<strong>'.html::escapeHTML($w->cat_title).'</strong> ' : '');
+		$title = $w->cat_title ? 
+			sprintf($s_title,html::escapeHTML($w->cat_title)) : '';
 		
 		$count = $core->blog->getCategories(array())->count();
 		
 		if ($count == 0)
 		{
-			$text = sprintf(__('none'),$count);
+			$text = sprintf(__('no categories'),$count);
 		}
 		elseif ($count == 1)
 		{
@@ -68,14 +75,14 @@ function myBlogNumbersWidgetPublic($w)
 			$text = sprintf(__('%s categories'),$count);
 		}
 		
-		$content .= sprintf('<li>%s%s</li>',$title,$text);
+		$content .= sprintf($s_line,$title,$text);
 	}
 	
 	# Comment
 	if ($w->comment_show)
 	{
-		$title = ($w->comment_title ? 
-			'<strong>'.html::escapeHTML($w->comment_title).'</strong> ' : '');
+		$title = $w->comment_title ? 
+			sprintf($s_title,html::escapeHTML($w->comment_title)) : '';
 		
 		$params = array(
 			'post_type' => 'post',
@@ -86,7 +93,7 @@ function myBlogNumbersWidgetPublic($w)
 		
 		if ($count == 0)
 		{
-			$text = sprintf(__('none'),$count);
+			$text = sprintf(__('no comments'),$count);
 		}
 		elseif ($count == 1)
 		{
@@ -97,14 +104,14 @@ function myBlogNumbersWidgetPublic($w)
 			$text = sprintf(__('%s comments'),$count);
 		}
 		
-		$content .= sprintf('<li>%s%s</li>',$title,$text);
+		$content .= sprintf($s_line,$title,$text);
 	}
 	
 	# Trackback
 	if ($w->trackback_show)
 	{
-		$title = ($w->trackback_title ? 
-			'<strong>'.html::escapeHTML($w->trackback_title).'</strong> ' : '');
+		$title = $w->trackback_title ? 
+			sprintf($s_title,html::escapeHTML($w->trackback_title)) : '';
 		
 		$params = array(
 			'post_type' => 'post',
@@ -115,7 +122,7 @@ function myBlogNumbersWidgetPublic($w)
 		
 		if ($count == 0)
 		{
-			$text = sprintf(__('none'),$count);
+			$text = sprintf(__('no trackbacks'),$count);
 		}
 		elseif ($count == 1)
 		{
@@ -126,14 +133,14 @@ function myBlogNumbersWidgetPublic($w)
 			$text = sprintf(__('%s trackbacks'),$count);
 		}
 		
-		$content .= sprintf('<li>%s%s</li>',$title,$text);
+		$content .= sprintf($s_line,$title,$text);
 	}
 	
 	# Tag
 	if ($core->plugins->moduleExists('tags') && $w->tag_show)
 	{
-		$title = ($w->tag_title ? 
-			'<strong>'.html::escapeHTML($w->tag_title).'</strong> ' : '');
+		$title = $w->tag_title ? 
+			sprintf($s_title,html::escapeHTML($w->tag_title)) : '';
 		
 		$count = $core->con->select(
 			'SELECT count(M.meta_id) AS count '.
@@ -145,7 +152,7 @@ function myBlogNumbersWidgetPublic($w)
 		
 		if ($count == 0)
 		{
-			$text = sprintf(__('none'),$count);
+			$text = sprintf(__('no tags'),$count);
 		}
 		elseif ($count == 1)
 		{
@@ -156,20 +163,20 @@ function myBlogNumbersWidgetPublic($w)
 			$text = sprintf(__('%s tags'),$count);
 		}
 		
-		$content .= sprintf('<li>%s%s</li>',$title,$text);
+		$content .= sprintf($s_line,$title,$text);
 	}
 	
 	# User (that post)
 	if ($w->user_show)
 	{
-		$title = ($w->user_title ? 
-			'<strong>'.html::escapeHTML($w->user_title).'</strong> ' : '');
+		$title = $w->user_title ? 
+			sprintf($s_title,html::escapeHTML($w->user_title)) : '';
 		
 		$count = $core->blog->getPostsUsers(array(),true)->count();
 		
 		if ($count == 0)
 		{
-			$text = sprintf(__('none'),$count);
+			$text = sprintf(__('no author'),$count);
 		}
 		elseif ($count == 1)
 		{
@@ -180,7 +187,7 @@ function myBlogNumbersWidgetPublic($w)
 			$text = sprintf(__('%s authors'),$count);
 		}
 		
-		$content .= sprintf('<li>%s%s</li>',$title,$text);
+		$content .= sprintf($s_line,$title,$text);
 	}
 	
 	# --BEHAVIOR-- myBlogNumbersWidgetParse
