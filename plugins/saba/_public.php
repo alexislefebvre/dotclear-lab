@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of saba, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
@@ -23,6 +25,7 @@ if ($core->blog->settings->saba->active) {
 	# templates
 	$core->tpl->addBlock('SabaIf',array('tplSaba','SabaIf'));
 	$core->tpl->addBlock('SabaEntries',array('tplSaba','SabaEntries'));
+	$core->tpl->addBlock('SabaFormIf',array('tplSaba','SabaFormIf'));
 	$core->tpl->addValue('SabaFormSearch',array('tplSaba','SabaFormSearch'));
 	$core->tpl->addValue('SabaFormOptions',array('tplSaba','SabaFormOptions'));
 	$core->tpl->addValue('SabaFormCategories',array('tplSaba','SabaFormCategories'));
@@ -274,12 +277,12 @@ class tplSaba
 		
 		if (isset($a['has_search'])) {
 			$sign = (boolean) $a['has_search'] ? '' : '!';
-			$if[] = $sign."isset(\$_search_count)";
+			$if[] = $sign.'isset($_search_count)';
 		}
 		
 		if (isset($a['from_error'])) {
 			$sign = (boolean) $a['from_error'] ? '' : '!';
-			$if[] = $sign."isset(\$_from_error)";
+			$if[] = $sign.'isset($_from_error)';
 		}
 		
 		if (!empty($if)) {
@@ -293,6 +296,32 @@ class tplSaba
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($a);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("search")').'; ?>';
+	}
+	
+	public static function SabaFormIf($a,$c)
+	{
+		$if = array();
+		
+		$operator = isset($a['operator']) ? $GLOBALS['core']->tpl->getOperator($a['operator']) : '&&';
+		
+		$filters_list = array(
+			'options','orders','ages','categories','authors','types'
+		);
+		
+		$fl = self::getSabaFormFilters();
+		foreach($fl as $filter)
+		{
+			if (isset($a['filter_'.$filter])) {
+				$sign = (boolean) $a['filter_'.$filter] ? '' : '!';
+				$if[] = $sign.'tplSaba::isSabaFormFilter(\''.$filter.'\')';
+			}
+		}
+		
+		if (!empty($if)) {
+			return '<?php if('.implode(' '.$operator.' ',$if).') : ?>'.$c.'<?php endif; ?>';
+		} else {
+			return $c;
+		}
 	}
 	
 	public static function SabaFormOptions($a)
@@ -415,7 +444,7 @@ class tplSaba
 		}
 	}
 	
-	public function SabaPaginationURL($attr)
+	public static function SabaPaginationURL($attr)
 	{
 		$offset = 0;
 		if (isset($attr['offset'])) {
@@ -424,6 +453,18 @@ class tplSaba
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,"ctxSaba::PaginationURL(".$offset.")").'; ?>';
+	}
+	
+	public static function getSabaFormFilters()
+	{
+		return array(
+			'options',
+			'orders',
+			'ages',
+			'categories',
+			'authors',
+			'types'
+		);
 	}
 	
 	public static function getSabaFormOptions()
@@ -476,6 +517,16 @@ class tplSaba
 			$rs[isset($know[$k]) ? $know[$k] : __($k)] = $k;
 		}
 		return $rs;
+	}
+	
+	public static function isSabaFormFilter($f)
+	{
+		$filters = (string) $GLOBALS['core']->blog->settings->saba->filters;
+		$filters = @unserialize($filters);
+		if (!is_array($filters)) {
+			$filters = array();
+		}
+		return !in_array($f,$filters);
 	}
 }
 
