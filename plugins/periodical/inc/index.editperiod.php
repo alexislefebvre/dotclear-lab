@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of periodical, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -52,7 +54,7 @@ if ($action == 'updateperiod' && !empty($_POST))
 		{
 			throw New Exception(__('Period title is required'));
 		}
-		if (strtotime($period_strdt) > strtotime($period_enddt)) 
+		if (strtotime($period_curdt) > strtotime($period_enddt)) 
 		{
 			throw New Exception(__('Start date must be older than end date'));
 		}
@@ -308,7 +310,7 @@ echo '</head>
 <h2>'.
 html::escapeHTML($core->blog->name).
 ' &rsaquo; <a href="'.$p_url.'&amp;part=periods">'.__('Periodical').'</a>'.
-' &rsaquo; '.__('Edit period').
+' &rsaquo; <span class="page-title">'.__('Edit period').'</span>'.
 ' - <a class="button" href="'.$p_url.'&amp;part=addperiod">'.__('New period').'</a>'.
 '</h2>'.$msg;
 
@@ -331,7 +333,7 @@ form::combo('period_pub_int',$per->getTimesCombo(),$period->periodical_pub_int,'
 form::field('period_pub_nb',10,3,html::escapeHTML($period->periodical_pub_nb),'',3).'</label></p>
 </div></div>
 <div class="clear">
-<p><input type="submit" name="save" value="'.__('save').'" />'.
+<p><input type="submit" name="save" value="'.__('Save').'" />'.
 $core->formNonce().
 form::hidden(array('action'),'updateperiod').
 form::hidden(array('id'),$period_id).
@@ -373,7 +375,7 @@ form::combo('sortby',$sortby_combo,$sortby).'</label> '.
 form::combo('order',$order_combo,$order).'</label></p>'.
 '<p><label class="classic">'.form::field('nb',3,3,$nb_per_page).' '.
 __('Entries per page').'</label> '.
-'<input type="submit" value="'.__('filter').'" />'.
+'<input type="submit" value="'.__('Apply filters').'" />'.
 form::hidden(array('id'),$period_id).
 form::hidden(array('p'),'periodical').
 form::hidden(array('part'),'editperiod').

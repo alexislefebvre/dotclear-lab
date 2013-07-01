@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of periodical, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -78,11 +80,11 @@ class adminPeriodical
 			
 			if ($action == 'remove_post_periodical')
 			{
-				echo '<h2>'.__('remove selected entries from periodical').'</h2>';
+				echo '<h2><span class="page-title">'.__('remove selected entries from periodical').'</span></h2>';
 			}
 			elseif ($action == 'add_post_periodical')
 			{
-				echo '<h2>'.__('add selected entries to periodical').'</h2>';
+				echo '<h2><span class="page-title">'.__('add selected entries to periodical').'</span></h2>';
 			}
 			
 			$obj = new periodical($core);
@@ -157,7 +159,7 @@ class adminPeriodical
 					$hidden_fields.
 					$core->formNonce().
 					form::hidden(array('action'),$action).
-					'<input type="submit" value="'.__('save').'" /></p>'.
+					'<input type="submit" value="'.__('Save').'" /></p>'.
 					'</form>';
 				}
 			}

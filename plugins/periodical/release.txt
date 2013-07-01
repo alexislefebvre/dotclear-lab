@@ -1,3 +1,6 @@
+2013.06.30
+ * Small fix and typo
+
 0.5 20110130
  * Fixed install on nightly buid
  * Fixed call to blog object on prepend

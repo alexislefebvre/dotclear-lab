@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of periodical, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -35,7 +37,7 @@ if ($action == 'createperiod' && !empty($_POST))
 		{
 			throw New Exception(__('Period title is required'));
 		}
-		if (strtotime($period_strdt) > strtotime($period_enddt))
+		if (strtotime($period_curdt) > strtotime($period_enddt))
 		{
 			throw New Exception(__('Start date must be older than end date'));
 		}
@@ -66,7 +68,7 @@ dcPage::jsLoad('index.php?pf=periodical/js/period.js').
 <h2>'.
 html::escapeHTML($core->blog->name).
 ' &rsaquo; <a href="'.$p_url.'&amp;part=periods">'.__('Periodical').'</a>'.
-' &rsaquo; '.__('New period').
+' &rsaquo; <span class="page-title">'.__('New period').'</span>'.
 '</h2>'.$msg;
 
 # Period
@@ -87,7 +89,7 @@ form::combo('period_pub_int',$per->getTimesCombo(),$period_pub_int,'',3).'</labe
 form::field('period_pub_nb',10,3,html::escapeHTML($period_pub_nb),'',3).'</label></p>
 </div></div>
 <div class="clear">
-<p><input type="submit" name="save" value="'.__('save').'" />'.
+<p><input type="submit" name="save" value="'.__('Save').'" />'.
 $core->formNonce().
 form::hidden(array('action'),'createperiod').
 form::hidden(array('id'),$period_id).

@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of periodical, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -63,7 +65,7 @@ dcPage::jsVar('jcToolsBox.prototype.section',$section).
 <h2>'.
 html::escapeHTML($core->blog->name).
 ' &rsaquo; <a href="'.$p_url.'&amp;part=periods">'.__('Periodical').'</a>'.
-' &rsaquo; '.__('Settings').
+' &rsaquo; <span class="page-title">'.__('Settings').'</span>'.
 ' - <a class="button" href="'.$p_url.'&amp;part=addperiod">'.__('New period').'</a>'.
 '</h2>'.$msg.'
 
@@ -92,7 +94,7 @@ form::combo('s_order',$order_combo,$s_order).'</label></p>
 </fieldset>
 
 <div class="clear">
-<p><input type="submit" name="save" value="'.__('save').'" />'.
+<p><input type="submit" name="save" value="'.__('Save').'" />'.
 $core->formNonce().
 form::hidden(array('p'),'periodical').
 form::hidden(array('part'),'setting').
