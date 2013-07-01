@@ -1,3 +1,6 @@
+2013.06.30
+ * Used new 'homeonly' style for widgets
+
 2011.08.01
  * Added support of plugin muppet (post types)
  * Try to fix date compare on sql request

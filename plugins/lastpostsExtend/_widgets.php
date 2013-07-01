@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of lastpostsExtend, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
@@ -198,9 +200,14 @@ class lastpostsextendWidget
 		# Home only
 		$w->lastpostsextend->setting(
 			'homeonly',
-			__('Home page only'),
-			1,
-			'check'
+			__('Display on:'),
+			0,
+			'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+			)
 		);
 	}
 	
@@ -211,7 +218,8 @@ class lastpostsextendWidget
 		$params = array('sql' => '', 'columns' => array(), 'from' => '');
 		
 		# Home page only
-		if ($w->homeonly && $core->url->type != 'default')
+		if ($w->homeonly == 1 && $core->url->type != 'default' 
+		||  $w->homeonly == 2 && $core->url->type == 'default')
 		{
 			return;
 		}
