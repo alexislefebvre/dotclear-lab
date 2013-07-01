@@ -1,73 +1,81 @@
-# Language: français
-# Module: lastBlogUpdate - 0.4
-# Date: 2009-08-12 22:06:19
-# Author: JC Denis, jcdenis@gdwd.com
-# Translated with dcTranslater - 0.2.4
+# Language: Français
+# Module: lastBlogUpdate - 2013.06.30
+# Date: 2013-07-01 01:35:43
+# Translated with translater 2013.05.11
 
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: lastBlogUpdate 2013.06.30\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-07-01T01:35:43+00:00\n"
+"Last-Translator: Jean-Christian Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: _widgets.php:24
+#: _widgets.php:23
+#: _widgets.php:26
 msgid "Dates of last updates"
 msgstr "Dates des dernières mise à jour"
 
-#: _widgets.php:25
+#: _widgets.php:27
 msgid "Show blog update"
 msgstr "Afficher la date de mise à jour du blog"
 
-#: _widgets.php:26
+#: _widgets.php:28
 msgid "Title for blog update:"
 msgstr "Titre pour la date de mise à jour du blog :"
 
-#: _widgets.php:28
+#: _widgets.php:30
 msgid "Text for blog update:"
 msgstr "Texte pour la date de mise à jour du blog :"
 
-#: _widgets.php:31
+#: _widgets.php:33
 msgid "Show entry update"
 msgstr "Afficher la date de mise à jour des billets"
 
-#: _widgets.php:32
+#: _widgets.php:34
 msgid "Title for entries update:"
 msgstr "Titre pour la date de mise à jour des billets :"
 
-#: _widgets.php:33
+#: _widgets.php:35
 msgid "Entries:"
 msgstr "Billets :"
 
-#: _widgets.php:34
+#: _widgets.php:36
 msgid "Text for entries update:"
 msgstr "Texte pour la date de mise à jour des billets :"
 
-#: _widgets.php:37
+#: _widgets.php:39
 msgid "Show comment update"
 msgstr "Afficher la date de mise à jour des commentaires"
 
-#: _widgets.php:38
+#: _widgets.php:40
 msgid "Title for comments update:"
 msgstr "Titre pour la date de mise à jour des commentaires :"
 
-#: _widgets.php:39
+#: _widgets.php:41
 msgid "Comments:"
 msgstr "Commentaires :"
 
-#: _widgets.php:40
+#: _widgets.php:42
 msgid "Text for comments update:"
 msgstr "Texte pour la date de mise à jour des commentaires :"
 
-#: _widgets.php:43
+#: _widgets.php:45
 msgid "Show media update"
 msgstr "Afficher la date de mise à jour des médias"
 
-#: _widgets.php:44
+#: _widgets.php:46
 msgid "Title for media update:"
 msgstr "Titre pour la date de mise à jour des médias :"
 
-#: _widgets.php:45
+#: _widgets.php:47
 msgid "Medias:"
 msgstr "Médias :"
 
-#: _widgets.php:46
+#: _widgets.php:48
 msgid "Text for media update:"
 msgstr "Texte pour la date de mise à jour des médias :"
 
