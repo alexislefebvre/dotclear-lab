@@ -1,119 +1,119 @@
 # Language: Français
-# Module: postExpired - 0.4
-# Date: 2010-08-03 14:31:40
-# Translated with translater 1.4.1
+# Module: postExpired - 2013.06.30
+# Date: 2013-07-01 00:33:05
+# Translated with translater 2013.05.11
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: postExpired 0.4\n"
+"Project-Id-Version: postExpired 2013.06.30\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-08-03T14:31:40+00:00\n"
-"Last-Translator: JC Denis\n"
+"PO-Revision-Date: 2013-07-01T00:33:05+00:00\n"
+"Last-Translator: Jean-Christian Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:34
-#: _admin.php:54
-#: _admin.php:63
-#: _admin.php:72
-#: _admin.php:81
+#: _admin.php:42
+#: _admin.php:62
+#: _admin.php:71
+#: _admin.php:80
+#: _admin.php:89
 msgid "Not changed"
 msgstr "Inchangé"
 
-#: _admin.php:55
+#: _admin.php:63
 msgid "Pending"
 msgstr "En attente"
 
-#: _admin.php:56
+#: _admin.php:64
 msgid "Unpublished"
 msgstr "Non publié"
 
-#: _admin.php:65
+#: _admin.php:73
 msgid "Not selected"
 msgstr "Non sélectionné"
 
-#: _admin.php:73
-#: _admin.php:82
+#: _admin.php:81
+#: _admin.php:90
 msgid "Opened"
 msgstr "Ouvert"
 
-#: _admin.php:74
-#: _admin.php:83
+#: _admin.php:82
+#: _admin.php:91
 msgid "Closed"
 msgstr "Fermé"
 
-#: _admin.php:126
+#: _admin.php:135
 msgid "Expired date"
 msgstr "Date de péremption"
 
-#: _admin.php:142
+#: _admin.php:158
 msgid "Comments:"
 msgstr "Commentaires :"
 
-#: _admin.php:143
+#: _admin.php:159
 msgid "Trackbacks:"
 msgstr "Rétroliens :"
 
-#: _admin.php:151
-#: _admin.php:360
+#: _admin.php:167
+#: _admin.php:387
 msgid "On this date, change:"
-msgstr "A cette date, changer :"
+msgstr "Á cette date, changer :"
 
-#: _admin.php:158
-#: _admin.php:367
+#: _admin.php:177
+#: _admin.php:397
 msgid "Selection:"
 msgstr "Séléction :"
 
-#: _admin.php:161
-#: _admin.php:370
+#: _admin.php:182
+#: _admin.php:402
 msgid "Comments status:"
 msgstr "Status des commentaires :"
 
-#: _admin.php:164
-#: _admin.php:373
+#: _admin.php:185
+#: _admin.php:405
 msgid "Trackbacks status:"
 msgstr "Status des rétroliens :"
 
-#: _admin.php:245
-#: _admin.php:249
+#: _admin.php:266
+#: _admin.php:270
 msgid "Expired entries"
 msgstr "Billets périmés"
 
-#: _admin.php:245
+#: _admin.php:266
 msgid "Add expired date"
 msgstr "Ajouter une date de péremption"
 
-#: _admin.php:249
+#: _admin.php:270
 msgid "Remove expired date"
 msgstr "Retirer une date de péremption"
 
-#: _admin.php:354
+#: _admin.php:381
 msgid "Add expired date to entries"
 msgstr "Ajouter une date de péremption aux billets"
 
-#: _admin.php:355
+#: _admin.php:382
 msgid "It will be added only if there is no expired date on entry."
 msgstr "Ajouté uniquement si il n'y a pas de date de péremption sur le billet."
 
-#: _admin.php:407
+#: _admin.php:439
 msgid "Remove selected expired date from entries"
 msgstr "Retirer les dates de péremption sélectionnées des billets"
 
-#: _admin.php:411
+#: _admin.php:443
 msgid "No expired date for selected entries"
 msgstr "Pas de date de peremption sur les billets sélectionnés"
 
-#: _admin.php:419
+#: _admin.php:451
 msgid "Following expired date have been found in selected entries:"
-msgstr "Les dates de péremption suivante ont été trouvé sur les billets sélectionnés :"
+msgstr "Les dates de péremption suivantes ont été trouvé sur les billets sélectionnés :"
 
-#: _public.php:15
+#: _public.php:17
 msgid "Expired on"
 msgstr "Expire le"
 
-#: _public.php:16
+#: _public.php:18
 msgid "This entry has no expiration date"
 msgstr "Ce billet n'a pas de date de péremption"
 

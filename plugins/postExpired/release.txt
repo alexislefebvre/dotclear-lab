@@ -1,6 +1,9 @@
 todo
  * Add option to add/remove tag
 
+2013.06.30
+ * Fixed post_type and posts_actions
+
 0.5 20100817
  * Added compatibility with plugins 'pages' and 'muppet'
 

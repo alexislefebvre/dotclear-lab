@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of postExpired, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -114,7 +116,7 @@ class postExpiredAdmin
 				$rs_status = $core->meta->getMetadata(array('meta_type'=>'postexpiredstatus','limit'=>1,'post_id'=>$post->post_id));
 				$expired_status = $rs_status->isEmpty() ? '' : (string) $rs_status->meta_id;
 				
-				if ($_REQUEST['p'] != 'pages') {
+				if (!isset($_REQUEST['p']) || $_REQUEST['p'] != 'pages') {
 					$rs_cat = $core->meta->getMetadata(array('meta_type'=>'postexpiredcat','limit'=>1,'post_id'=>$post->post_id));
 					$expired_cat = $rs_cat->isEmpty() ? '' : (string) $rs_cat->meta_id;
 					
@@ -136,7 +138,7 @@ class postExpiredAdmin
 		if (!$can_edit && $post)
 		{
 			$status = (string) array_search($expired_status,self::statusCombo());
-			if ($_REQUEST['p'] != 'pages') {
+			if (!isset($_REQUEST['p']) || $_REQUEST['p'] != 'pages') {
 				$category = (string) array_search($expired_cat,self::categoriesCombo());
 				$selected = (string) array_search($expired_selected,self::selectedCombo());
 			}
@@ -147,7 +149,7 @@ class postExpiredAdmin
 			'<p>'.__('Date:').' '.$expired_date.'</p>'.
 			'<p>'.__('Status:').' '.$status.'</p>';
 			
-			if ($_REQUEST['p'] != 'pages') {
+			if (!isset($_REQUEST['p']) || $_REQUEST['p'] != 'pages') {
 				echo 
 				'<p>'.__('Category:').' '.$category.'</p>'.
 				'<p>'.__('Selected:').' '.$selected.'</p>';
@@ -167,7 +169,7 @@ class postExpiredAdmin
 			form::combo('post_expired_status',self::statusCombo(),$expired_status,'maximal',3).
 			'</label></p>';
 			
-			if ($_REQUEST['p'] != 'pages') {
+			if (!isset($_REQUEST['p']) || $_REQUEST['p'] != 'pages') {
 				echo 
 				'<p><label>'.__('Category:').
 				form::combo('post_expired_cat',self::categoriesCombo(),$expired_cat,'maximal',3).
@@ -334,25 +336,31 @@ class postExpiredAdmin
 			{
 				http::redirect($redir);
 			}
-
+			
 			try
 			{
 				$posts_ids = array();
 				while($posts->fetch())
 				{
-					$posts_ids[] = $posts->id;
+					$posts_ids[] = $posts->post_id;
 				}
 				
 				$rs_params['no_content'] = true;
 				$rs_params['post_id'] = $posts_ids;
-				$rs_params['meta_id'] = 'postexpired';
-				$rs = $core->meta->getPostsByMeta($rs_params);
+				$rs_params['post_type'] = '';
+				$rs_params['meta_type'] = 'postexpired';
 				
-				while ($rs->fetch())
+				foreach($_POST['rmv_post_expired'] as $meta_id)
 				{
-					if ($post->isEditable())
+					$rs_params['meta_id'] = $meta_id;
+					$rs = $core->meta->getPostsByMeta($rs_params);
+					
+					while ($rs->fetch())
 					{
-						self::del($rs->post_id);
+						if ($rs->isEditable())
+						{
+							self::del($rs->post_id);
+						}
 					}
 				}
 				
@@ -370,7 +378,7 @@ class postExpiredAdmin
 		if ($action == 'postexpired_add')
 		{
 			echo self::header().
-			'<h2>'.__('Add expired date to entries').'</h2>'.
+			'<h2><span class="page-title">'.__('Add expired date to entries').'</span></h2>'.
 			'<p>'.__('It will be added only if there is no expired date on entry.').'<p>'.
 			'<form action="posts_actions.php" method="post">'.
 			'<p><label>'.__('Date:').
@@ -381,7 +389,7 @@ class postExpiredAdmin
 			form::combo('new_post_expired_status',self::statusCombo(),'','',2).
 			'</label></p>';
 			
-			if ($_POST['post_type'] != 'page') {
+			if (!isset($_POST['psot_type']) || $_POST['post_type'] != 'page') {
 				echo 
 				'<p><label>'.__('Category:').
 				form::combo('new_post_expired_cat',self::categoriesCombo(),'','',2).
@@ -406,7 +414,7 @@ class postExpiredAdmin
 			$hidden_fields.
 			$core->formNonce().
 			form::hidden(array('action'),'action_postexpired_add').
-			'<input type="submit" value="'.__('save').'" /></p>'.
+			'<input type="submit" value="'.__('Save').'" /></p>'.
 			'</form>';
 		}
 		elseif ($action == 'postexpired_remove')
@@ -428,7 +436,7 @@ class postExpiredAdmin
 				}
 			}
 			
-			echo '<h2>'.__('Remove selected expired date from entries').'</h2>';
+			echo '<h2><span class="page-title">'.__('Remove selected expired date from entries').'</span></h2>';
 			
 			if (empty($dts))
 			{
