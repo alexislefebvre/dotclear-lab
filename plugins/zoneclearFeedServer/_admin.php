@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis, BG and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis, BG and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -30,6 +32,8 @@ if ($core->auth->check('admin',$core->blog->id))
 {
 	# Dashboard icon
 	$core->addBehavior('adminDashboardIcons',array('zoneclearFeedServerAdminBehaviors','adminDashboardIcons'));
+	$core->addBehavior('adminDashboardFavs',array('zoneclearFeedServerAdminBehaviors','adminDashboardFavs'));
+	$core->addBehavior('adminDashboardFavsIcon',array('zoneclearFeedServerAdminBehaviors','adminDashboardFavsIcon'));
 	# Add info about feed on post page sidebar
 	$core->addBehavior('adminPostHeaders',array('zoneclearFeedServerAdminBehaviors','adminPostHeaders'));
 	$core->addBehavior('adminPostFormSidebar',array('zoneclearFeedServerAdminBehaviors','adminPostFormSidebar'));
@@ -44,6 +48,28 @@ if (version_compare($core->plugins->moduleInfo('tweakurls','version'),'0.8','>='
 
 class zoneclearFeedServerAdminBehaviors
 {
+	# Cope with dashboard favorites
+	public static function adminDashboardFavs($core,$favs)
+	{
+		$favs['zcfs'] = new ArrayObject(array('zcfs','Feeds server','plugin.php?p=zoneclearFeedServer',
+			'index.php?pf=zoneclearFeedServer/icon.png','index.php?pf=zoneclearFeedServer/icon-b.png',
+			'usage,contentadmin',null,null));
+	}
+
+	# Change icon on dashboard if there are disabled feeds
+	public static function adminDashboardFavsIcon($core,$name,$icon)
+	{
+		if ($name == 'zcfs') {
+			$zcfs = new zoneclearFeedServer($core);
+			$count = $zcfs->getFeeds(array('feed_status'=>'0'),true)->f(0);
+			if ($count) {
+				$icon[0] = $count > 1 ? __('%s disabled feeds') : __('one disable feed');
+				$icon[1] = 'plugin.php?p=zoneclearFeedServer&part=feeds&sortby=feed_status&order=asc';
+				$icon[2] = 'index.php?pf=zoneclearFeedServer/icon-bb.png';
+			}
+		}
+	}
+
 	# Add icon on dashboard if there are disabled feeds
 	public static function adminDashboardIcons($core,$icons)
 	{
@@ -56,7 +82,7 @@ class zoneclearFeedServerAdminBehaviors
 		$icons['zcfs'] = new ArrayObject(array(
 			sprintf($str,$count),
 			'plugin.php?p=zoneclearFeedServer&part=feeds&sortby=feed_status&order=asc',
-			'index.php?pf=zoneclearFeedServer/icon-b.png'
+			'index.php?pf=zoneclearFeedServer/icon-bb.png'
 		));
 	}
 	

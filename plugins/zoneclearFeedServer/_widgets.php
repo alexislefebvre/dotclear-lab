@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis, BG and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis, BG and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
@@ -45,7 +47,14 @@ class zoneclearFeedServerWidget
 			__('Add link to feeds page'),1,'check'
 		);
 		$w->zcfssource->setting('homeonly',
-			__('Home page only'),1,'check'
+			__('Display on:'),
+			0,
+			'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+			)
 		);
 	}
 
@@ -62,7 +71,17 @@ class zoneclearFeedServerWidget
 		$w->zcfsnumber->setting('entry_show',__('Show entries count'),1,'check');
 		$w->zcfsnumber->setting('entry_title',__('Title for entries count:'),__('Entries:'),'text');
 		
-		$w->zcfsnumber->setting('homeonly',__('Home page only'),1,'check');
+		$w->zcfsnumber->setting(
+			'homeonly',
+			__('Display on:'),
+			0,
+			'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+			)
+		);
 	}
 
 	public static function publicSource($w)
@@ -70,7 +89,8 @@ class zoneclearFeedServerWidget
 		global $core; 
 		
 		if (!$core->blog->settings->zoneclearFeedServer->zoneclearFeedServer_active 
-		 || $w->homeonly && $core->url->type != 'default') return;
+		 || $w->homeonly == 1 && $core->url->type != 'default' 
+		 || $w->homeonly == 2 && $core->url->type == 'default') return;
 		
 		$p = array();
 		$p['order'] = ($w->sortby && in_array($w->sortby,array('lowername','feed_creadt'))) ? 
@@ -114,7 +134,8 @@ class zoneclearFeedServerWidget
 		global $core;
 		
 		if (!$core->blog->settings->zoneclearFeedServer->zoneclearFeedServer_active 
-		 || $w->homeonly && $core->url->type != 'default') return;
+		 || $w->homeonly == 1 && $core->url->type != 'default' 
+		 || $w->homeonly == 2 && $core->url->type == 'default') return;
 		
 		$zc = new zoneclearFeedServer($core);
 		$content = '';
@@ -129,7 +150,7 @@ class zoneclearFeedServerWidget
 			
 			if ($count == 0)
 			{
-				$text = sprintf(__('none'),$count);
+				$text = sprintf(__('no sources'),$count);
 			}
 			elseif ($count == 1)
 			{
@@ -137,7 +158,7 @@ class zoneclearFeedServerWidget
 			}
 			else
 			{
-				$text = sprintf(__('%s sources'),$count);
+				$text = sprintf(__('%d sources'),$count);
 			}
 			if ($core->blog->settings->zoneclearFeedServer->zoneclearFeedServer_pub_active)
 			{
@@ -164,7 +185,7 @@ class zoneclearFeedServerWidget
 			
 			if ($count == 0)
 			{
-				$text = sprintf(__('none'),$count);
+				$text = sprintf(__('no entries'),$count);
 			}
 			elseif ($count == 1)
 			{
@@ -172,7 +193,7 @@ class zoneclearFeedServerWidget
 			}
 			else
 			{
-				$text = sprintf(__('%s entries'),$count);
+				$text = sprintf(__('%d entries'),$count);
 			}
 			
 			$content .= sprintf('<li>%s%s</li>',$title,$text);

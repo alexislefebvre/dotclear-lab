@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis, BG and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis, BG and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -77,9 +79,13 @@ class zoneclearFeedServerFeedsList extends adminGenericList
 		$status = $this->rs->feed_status ? 
 			'<img src="images/check-on.png" alt="enable" />' :
 			'<img src="images/check-off.png" alt="disable" />';
-		$category = $this->rs->cat_id ? $this->rs->cat_title : __('none');
+		$category = $this->rs->cat_id ? $this->rs->cat_title : __('no categories');
 		
 		$entries_count = $this->rs->zc->getPostsByFeed(array('feed_id'=>$this->rs->feed_id),true)->f(0);
+		$shunk_feed = $this->rs->feed_feed;
+		if (strlen($shunk_feed) > 83) {
+			$shunk_feed = substr($shunk_feed,0,50).'...'.substr($shunk_feed,-20);
+		}
 		
 		return
 		'<tr class="line">'."\n".
@@ -91,7 +97,7 @@ class zoneclearFeedServerFeedsList extends adminGenericList
 		html::escapeHTML($this->rs->feed_name).'</a>'.
 		"</td>\n".
 		'<td class="maximal nowrap">'.
-		'<a href="'.$this->rs->feed_feed.'" title="'.html::escapeHTML($this->rs->feed_desc).'">'.$this->rs->feed_feed.'</a>'.
+		'<a href="'.$this->rs->feed_feed.'" title="'.html::escapeHTML($this->rs->feed_desc).'">'.html::escapeHTML($shunk_feed).'</a>'.
 		"</td>\n".
 		'<td class="nowrap">'.
 		html::escapeHTML($this->rs->feed_lang).
@@ -108,7 +114,7 @@ class zoneclearFeedServerFeedsList extends adminGenericList
 			dt::str(__('%Y-%m-%d %H:%M'),$this->rs->feed_upd_last,$this->rs->zc->core->auth->getInfo('user_tz'))
 		).
 		"</td>\n".
-		'<td>'.
+		'<td class="nowrap">'.
 		html::escapeHTML($category).
 		"</td>\n".
 		'<td class="nowrap">'.
@@ -383,7 +389,7 @@ dcPage::jsLoad('index.php?pf=zoneclearFeedServer/js/feeds.js').
 '</head>
 <body>
 <h2>'.html::escapeHTML($core->blog->name).
-' &rsaquo; '.__('Feeds').
+' &rsaquo; <span class="page-title">'.__('Feeds').'</span>'.
 ' - <a class="button" href="'.$p_url.'&amp;part=feed">'.__('New feed').'</a>'.
 '</h2>'.$msg;
 
@@ -473,7 +479,7 @@ else
 		<label class="classic">'.
 		form::field('nb',3,3,$nb_per_page).' '.__('Entries per page').'
 		</label> 
-		<input type="submit" value="'.__('filter').'" />'.
+		<input type="submit" value="'.__('Apply filters').'" />'.
 		form::hidden(array('p'),'zoneclearFeedServer').
 		form::hidden(array('part'),'feeds').'
 		</p>

@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis, BG and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis, BG and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -600,12 +602,12 @@ $next_headlink."\n".$prev_headlink.
 if ($feed_id)
 {
 	echo
-	' &rsaquo; '.__('Edit feed').
+	' &rsaquo; <span class="page-title">'.__('Edit feed').'</span>'.
 	' - <a class="button" href="'.$p_url.'&amp;part=feed">'.__('New feed').'</a>';
 }
 else
 {
-	echo ' &rsaquo; '.__('New feed');
+	echo ' &rsaquo; <span class="page-title">'.__('New feed').'</span>';
 }
 echo '
 </h2>';
@@ -683,7 +685,7 @@ if ($can_view_page)
 	form::hidden(array('p'),'zoneclearFeedServer').
 	form::hidden(array('part'),'feed').
 	$core->formNonce().
-	'<input type="submit" name="save" value="'.__('save').'" /></p>
+	'<input type="submit" name="save" value="'.__('Save').'" /></p>
 	</form>
 	</div>';
 }
@@ -728,7 +730,7 @@ if ($feed_id && $can_view_page && !$core->error->flag())
 	form::combo('order',$order_combo,$order).'</label></p>'.
 	'<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 	__('Entries per page').'</label> '.
-	'<input type="submit" value="'.__('filter').'" />'.
+	'<input type="submit" value="'.__('Apply filters').'" />'.
 	form::hidden(array('p'),'zoneclearFeedServer').
 	form::hidden(array('part'),'feed').
 	form::hidden(array('tab'),'entries').

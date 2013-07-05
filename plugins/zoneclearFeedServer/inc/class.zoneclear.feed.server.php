@@ -1,20 +1,22 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis, BG and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis, BG and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
 
 class zoneclearFeedServer
 {
-	public static $nethttp_timeout = 2;
+	public static $nethttp_timeout = 5;
 	public static $nethttp_agent = 'zoneclearFeedServer - http://zoneclear.org';
 	public static $nethttp_maxredirect = 2;
 	
@@ -401,8 +403,11 @@ class zoneclearFeedServer
 				# Nothing to parse
 				if (!$feed)
 				{
-					# Disable feed
-					$this->enableFeed($f->feed_id,false);
+					# Keep active empty feed or disable it ?
+					if (!$s->zoneclearFeedServer_keep_empty_feed)
+					{
+						$this->enableFeed($f->feed_id,false);
+					}
 					$i++;
 				}
 				# Not updated since last visit
@@ -422,7 +427,17 @@ class zoneclearFeedServer
 					foreach ($feed->items as $item)
 					{
 						$item_TS = $item->TS ? $item->TS : $time;
-						$item_link = $this->con->escape($item->link);
+						
+						// I found that mercurial atom feed did not repect standard
+						$item_link = @$item->link;
+						if (!$item_link)
+						{
+							$item_link = @$item->guid;
+						}
+						# Unknow feed item link
+						if (!$item_link) continue;
+						
+						$item_link = $this->con->escape($item_link);
 						$is_new_published_entry = false;
 						
 						# Not updated since last visit
@@ -508,7 +523,7 @@ class zoneclearFeedServer
 							$cur_meta->clean();
 							$cur_meta->post_id = $post_id;
 							$cur_meta->meta_type = 'zoneclearfeed_url';
-							$cur_meta->meta_id = $meta->url = $item->link;
+							$cur_meta->meta_id = $meta->url = $item_link;
 							$cur_meta->insert();
 							
 							$cur_meta->clean();
@@ -542,11 +557,24 @@ class zoneclearFeedServer
 								$tags = array_merge($tags,$item->subject);
 								$tags = array_unique($tags);
 							}
+							$formated_tags = array();
 							foreach ($tags as $tag)
 							{
-								$this->core->auth->sudo(array($this->core->meta,'setPostMeta'),$post_id,'tag',dcMeta::sanitizeMetaID($tag));
+								# Change tags case
+								switch((integer) $s->zoneclearFeedServer_tag_case)
+								{
+									case 3: $tag = strtoupper($tag); break;
+									case 2: $tag = strtolower($tag); break;
+									case 1: $tag = ucfirst(strtolower($tag)); break;
+									default: /* do nothing*/ break;
+								}
+								if (!in_array($tag,$formated_tags))
+								{
+									$formated_tags[] = $tag;
+									$this->core->auth->sudo(array($this->core->meta,'setPostMeta'),$post_id,'tag',dcMeta::sanitizeMetaID($tag));
+								}
 							}
-							$meta->tags = $tags;
+							$meta->tags = $formated_tags;
 							
 							# --BEHAVIOR-- zoneclearFeedServerAfterFeedUpdate
 							$this->core->callBehavior('zoneclearFeedServerAfterFeedUpdate',$this->core,$is_new_published_entry,$cur_post,$meta);
@@ -615,12 +643,7 @@ class zoneclearFeedServer
 	# Check if an URL is well formed
 	public static function validateURL($url)
 	{
-		if (
-		 /*(function_exists('filter_var') && !filter_var($url, FILTER_VALIDATE_URL)) // pff http://my-url.com is not valid!
-		 || */false !== strpos($url,'localhost')
-		 || false === strpos($url,'http://')
-		 || false !== strpos($url,'http://192.')
-		)
+		if (false === strpos($url,'http://') && false === strpos($url,'https://'))
 		{
 			return false;
 		}

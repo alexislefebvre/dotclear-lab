@@ -1,13 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis, BG and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis, BG and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
@@ -18,6 +20,8 @@ $post_status_new = (boolean) $s->zoneclearFeedServer_post_status_new;
 $bhv_pub_upd = (integer) $s->zoneclearFeedServer_bhv_pub_upd;
 $update_limit = (integer) $s->zoneclearFeedServer_update_limit;
 if ($update_limit < 1) $update_limit = 10;
+$keep_empty_feed = (boolean) $s->zoneclearFeedServer_keep_empty_feed;
+$tag_case = (integer) $s->zoneclearFeedServer_tag_case;
 $post_full_tpl = @unserialize($s->zoneclearFeedServer_post_full_tpl);
 if (!is_array($post_full_tpl)) $post_full_tpl = array();
 $post_title_redir = @unserialize($s->zoneclearFeedServer_post_title_redir);
@@ -43,6 +47,8 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s->put('zoneclearFeedServer_post_status_new',!empty($_POST['post_status_new']));
 		$s->put('zoneclearFeedServer_bhv_pub_upd',(integer) $_POST['bhv_pub_upd']);
 		$s->put('zoneclearFeedServer_update_limit',$limit);
+		$s->put('zoneclearFeedServer_keep_empty_feed',!empty($_POST['keep_empty_feed']));
+		$s->put('zoneclearFeedServer_tag_case',(integer) $_POST['tag_case']);
 		$s->put('zoneclearFeedServer_post_full_tpl',serialize($_POST['post_full_tpl']));
 		$s->put('zoneclearFeedServer_post_title_redir',serialize($_POST['post_title_redir']));
 		$s->put('zoneclearFeedServer_user',(string) $_POST['feeduser']);
@@ -68,6 +74,12 @@ $combo_status = array(
 	__('unpublished') => 0,
 	__('published') => 1
 );
+$combo_tagcase = array(
+	__('Keep source case') => 0,
+	__('First upper case') => 1,
+	__('All lower case') => 2,
+	__('All upper case') => 3
+);
 
 $pub_page_url = $core->blog->url.$core->url->getBase('zoneclearFeedsPage');
 
@@ -90,7 +102,7 @@ echo
 <body>
 <h2>'.html::escapeHTML($core->blog->name).
 ' &rsaquo; <a href="'.$p_url.'&amp;part=feeds">'.__('Feeds').'</a>'.
-' &rsaquo; '.__('Settings').
+' &rsaquo; <span class="page-title">'.__('Settings').'</span>'.
 ' - <a class="button" href="'.$p_url.'&amp;part=feed">'.__('New feed').'</a>'.
 '</h2>'.$msg.'
 <form id="setting-form" method="post" action="'.$p_url.'">
@@ -110,11 +122,17 @@ form::combo(array('post_status_new'),$combo_status,$post_status_new).'</label></
 __('Owner of entries created by zoneclearFeedServer:').'<br />'.
 form::combo(array('feeduser'),$combo_admins,$feeduser).'</label></p>
 <p class="field"><label>'.
+__('How to transform imported tags:').'<br />'.
+form::combo(array('tag_case'),$combo_tagcase,$tag_case).'</label></p>
+<p class="field"><label>'.
 __('Update feeds on public side:').'<br />'.
 form::combo(array('bhv_pub_upd'),$combo_pubupd,$bhv_pub_upd).'</label></p>
 <p class="field"><label>'.
 __('Number of feeds to update at one time:').'<br />'.
 form::field('update_limit',6,4,$update_limit).'</label></p>
+<p class="field"><label>'.
+form::checkbox(array('keep_empty_feed'),'1',$keep_empty_feed).
+__('Keep active empty feeds').'</label></p>
 <p class="field"><label>'.
 form::checkbox(array('pub_active'),'1',$pub_active).
 __('Enable public page').'</label></p>';
@@ -167,7 +185,7 @@ echo '
 </fieldset>
 
 <div class="clear">
-<p><input type="submit" name="save" value="'.__('save').'" />'.
+<p><input type="submit" name="save" value="'.__('Save').'" />'.
 $core->formNonce().
 form::hidden(array('p'),'zoneclearFeedServer').
 form::hidden(array('part'),'setting').
