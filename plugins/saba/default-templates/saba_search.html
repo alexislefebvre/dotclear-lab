@@ -53,7 +53,22 @@
 		</tpl:SysIf>
 	</tpl:SabaIf>
 	<tpl:SabaIf has_search="0" from_error="0">
-	<p>{{tpl:lang Please select a request and options to search on}}</p>
+    <form action="{{tpl:BlogURL}}" method="get" id="saba-form">
+
+	<div class="saba-opt-text">
+	 <h2><label for="q">{{tpl:lang Advanced search}}</label></h2>
+	 <p><input name="q" type="text" size="100" maxlength="255" value="{{tpl:SabaFormSearch}}" /> 
+	 <input type="submit" class="submit" value="ok" /></p>
+	</div>
+	
+	<tpl:SabaFormIf filter_options="1">{{tpl:SabaFormOptions}}</tpl:SabaFormIf>
+	<tpl:SabaFormIf filter_orders="1">{{tpl:SabaFormOrders remove="selected"}}</tpl:SabaFormIf>
+	<tpl:SabaFormIf filter_ages="1">{{tpl:SabaFormAges}}</tpl:SabaFormIf>
+	<tpl:SabaFormIf filter_categories="1">{{tpl:SabaFormCategories}}</tpl:SabaFormIf>
+	<tpl:SabaFormIf filter_authors="1">{{tpl:SabaFormAuthors}}</tpl:SabaFormIf>
+	<tpl:SabaFormIf filter_types="1">{{tpl:SabaFormTypes}}</tpl:SabaFormIf>
+	
+    </form>
 	</tpl:SabaIf>
   </div>
   
@@ -83,6 +98,8 @@
 <div id="sidebar">
   <div id="blognav">
 
+	<tpl:SabaIf has_search="1" from_error="1" operator="or">
+
     <form action="{{tpl:BlogURL}}" method="get" id="saba-form">
 
 	<div class="saba-opt-text">
@@ -99,7 +116,7 @@
 	<tpl:SabaFormIf filter_types="1">{{tpl:SabaFormTypes}}</tpl:SabaFormIf>
 		
     </form>
-  
+  </tpl:SabaIf>
     {{tpl:Widgets type="nav"}}
   </div> <!-- End #blognav -->
   

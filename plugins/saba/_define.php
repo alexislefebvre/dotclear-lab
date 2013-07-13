@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */			"saba",
 	/* Description*/		"Search across blog's archive",
 	/* Author */			"JC Denis",
-	/* Version */			'2013.06.30',
+	/* Version */			'2013.07.12',
 	/* Permissions */		'admin'
 );
 ?>
