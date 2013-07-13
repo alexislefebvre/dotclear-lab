@@ -3,6 +3,12 @@ x.x xxxxxxxx
  * Added plugin muppet support (request Mathieu M.)
  * Added log for errors
 
+2013.07.12
+ * Added sort option on widget
+ * Fixed Dashboard counts
+ * Fixed Feed tags spliting
+ * Fixed typo
+
 2013.07.02
  * Required Dotclear 2.5
  * Fixed admin pages titles and messages and typo

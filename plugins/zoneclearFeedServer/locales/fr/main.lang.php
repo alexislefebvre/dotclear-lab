@@ -1,7 +1,7 @@
 <?php
 // Language: Français 
-// Module: zoneclearFeedServer - 2013.07.03
-// Date: 2013-07-04 05:46:48 
+// Module: zoneclearFeedServer - 2013.07.04
+// Date: 2013-07-09 07:13:00 
 // Translated with dcTranslater - 2013.05.11 
 
 #_admin.php:25
@@ -43,106 +43,105 @@ $GLOBALS['__l10n']['Feeds server : sources'] = 'Serveur de flux : les sources';
 #_widgets.php:29
 $GLOBALS['__l10n']['Feeds sources'] = 'Sources des flux';
 
-#_widgets.php:33
-$GLOBALS['__l10n']['name'] = 'nom';
-
 #_widgets.php:34
-$GLOBALS['__l10n']['creation date'] = 'date de création';
+#inc/index.feeds.php:35
+#inc/index.feeds.php:300
+$GLOBALS['__l10n']['Name'] = 'Nom';
 
-#_widgets.php:44
+#_widgets.php:35
+$GLOBALS['__l10n']['Create date'] = 'Date de création';
+
+#_widgets.php:45
 $GLOBALS['__l10n']['Limit:'] = 'Limite :';
 
-#_widgets.php:47
+#_widgets.php:48
 $GLOBALS['__l10n']['Add link to feeds page'] = 'Ajouter un lien vers la page des flux';
 
-#_widgets.php:63
+#_widgets.php:64
 $GLOBALS['__l10n']['Feeds server : numbers'] = 'Serveur de flux : les chiffres';
 
-#_widgets.php:64
+#_widgets.php:65
 $GLOBALS['__l10n']['Feeds numbers'] = 'Le flux en chiffres';
 
-#_widgets.php:67
+#_widgets.php:68
 $GLOBALS['__l10n']['Show feeds count'] = 'Afficher le nombre de flux';
 
-#_widgets.php:68
+#_widgets.php:69
 $GLOBALS['__l10n']['Title for feeds count:'] = 'Titre pour le nombre de flux :';
 
-#_widgets.php:68
+#_widgets.php:69
 $GLOBALS['__l10n']['Feeds:'] = 'Flux :';
 
-#_widgets.php:71
+#_widgets.php:72
 $GLOBALS['__l10n']['Show entries count'] = 'Afficher le nombre de billets';
 
-#_widgets.php:72
+#_widgets.php:73
 $GLOBALS['__l10n']['Title for entries count:'] = 'Titre pour le nombre de billets :';
 
-#_widgets.php:72
+#_widgets.php:73
 $GLOBALS['__l10n']['Entries:'] = 'Billets :';
 
-#_widgets.php:122
+#_widgets.php:123
 $GLOBALS['__l10n']['All sources'] = 'Toutes les sources';
 
-#_widgets.php:153
+#_widgets.php:154
 $GLOBALS['__l10n']['no sources'] = 'aucune source';
 
-#_widgets.php:157
+#_widgets.php:158
 $GLOBALS['__l10n']['one source'] = 'une source';
 
-#_widgets.php:161
+#_widgets.php:162
 $GLOBALS['__l10n']['%d sources'] = '%d sources';
 
-#_widgets.php:188
+#_widgets.php:189
 $GLOBALS['__l10n']['no entries'] = 'aucun billet';
 
-#_widgets.php:192
+#_widgets.php:193
 $GLOBALS['__l10n']['one entry'] = 'un billet';
-
-#_widgets.php:196
-$GLOBALS['__l10n']['%d entries'] = '%d billets';
 
 #default-templates/zcfeeds.html:50
 $GLOBALS['__l10n']['List of feeds'] = 'Liste des sources';
 
-#inc/class.zoneclear.feed.server.php:678
+#inc/class.zoneclear.feed.server.php:688
 $GLOBALS['__l10n']['disabled'] = 'désactivé';
 
-#inc/class.zoneclear.feed.server.php:679
+#inc/class.zoneclear.feed.server.php:689
 $GLOBALS['__l10n']['enabled'] = 'activé';
 
-#inc/class.zoneclear.feed.server.php:686
+#inc/class.zoneclear.feed.server.php:696
 $GLOBALS['__l10n']['every hour'] = 'toutes les heures';
 
-#inc/class.zoneclear.feed.server.php:687
+#inc/class.zoneclear.feed.server.php:697
 $GLOBALS['__l10n']['every two hours'] = 'toutes les deux heures';
 
-#inc/class.zoneclear.feed.server.php:688
+#inc/class.zoneclear.feed.server.php:698
 $GLOBALS['__l10n']['two times per day'] = 'deux fois par jour';
 
-#inc/class.zoneclear.feed.server.php:689
+#inc/class.zoneclear.feed.server.php:699
 $GLOBALS['__l10n']['every day'] = 'tous les jours';
 
-#inc/class.zoneclear.feed.server.php:690
+#inc/class.zoneclear.feed.server.php:700
 $GLOBALS['__l10n']['every two days'] = 'tous les deux jours';
 
-#inc/class.zoneclear.feed.server.php:691
+#inc/class.zoneclear.feed.server.php:701
 $GLOBALS['__l10n']['every week'] = 'toutes les semaines';
 
-#inc/class.zoneclear.feed.server.php:746
+#inc/class.zoneclear.feed.server.php:756
 $GLOBALS['__l10n']['home page'] = 'la page d\'accueil';
 
-#inc/class.zoneclear.feed.server.php:747
+#inc/class.zoneclear.feed.server.php:757
 $GLOBALS['__l10n']['post pages'] = 'la page d\'un billet';
 
-#inc/class.zoneclear.feed.server.php:748
+#inc/class.zoneclear.feed.server.php:758
 $GLOBALS['__l10n']['tags pages'] = 'les pages des tags';
 
-#inc/class.zoneclear.feed.server.php:749
+#inc/class.zoneclear.feed.server.php:759
 $GLOBALS['__l10n']['archives pages'] = 'les pages des archives';
 
-#inc/class.zoneclear.feed.server.php:750
+#inc/class.zoneclear.feed.server.php:760
 $GLOBALS['__l10n']['category pages'] = 'les pages de catégorie';
 
-#inc/class.zoneclear.feed.server.php:751
+#inc/class.zoneclear.feed.server.php:761
 $GLOBALS['__l10n']['entries feed'] = 'le flux des billets';
 
 #inc/index.feed.php:192
@@ -213,10 +212,6 @@ $GLOBALS['__l10n']['Site URL:'] = 'URL du site :';
 
 #inc/index.feeds.php:23
 $GLOBALS['__l10n']['There is no feed'] = 'Il n\'y a pas de flux';
-
-#inc/index.feeds.php:35
-#inc/index.feeds.php:300
-$GLOBALS['__l10n']['Name'] = 'Nom';
 
 #inc/index.feeds.php:39
 $GLOBALS['__l10n']['Frequency'] = 'Fréquence';

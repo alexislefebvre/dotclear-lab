@@ -554,7 +554,12 @@ class zoneclearFeedServer
 							$tags = $this->core->meta->splitMetaValues($f->feed_tags);
 							if ($f->feed_get_tags)
 							{
-								$tags = array_merge($tags,$item->subject);
+								# Some feed subjects contains more than one tag
+								foreach($item->subject as $subjects)
+								{
+									$tmp = $this->core->meta->splitMetaValues($subjects);
+									$tags = array_merge($tags,$tmp);
+								}
 								$tags = array_unique($tags);
 							}
 							$formated_tags = array();
@@ -566,7 +571,7 @@ class zoneclearFeedServer
 									case 3: $tag = strtoupper($tag); break;
 									case 2: $tag = strtolower($tag); break;
 									case 1: $tag = ucfirst(strtolower($tag)); break;
-									default: /* do nothing*/ break;
+									default: /* do nothing */ break;
 								}
 								if (!in_array($tag,$formated_tags))
 								{

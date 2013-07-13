@@ -63,7 +63,7 @@ class zoneclearFeedServerAdminBehaviors
 			$zcfs = new zoneclearFeedServer($core);
 			$count = $zcfs->getFeeds(array('feed_status'=>'0'),true)->f(0);
 			if ($count) {
-				$icon[0] = $count > 1 ? __('%s disabled feeds') : __('one disable feed');
+				$icon[0] = $count > 1 ? sprintf(__('%s disabled feeds'),$count) : __('one disable feed');
 				$icon[1] = 'plugin.php?p=zoneclearFeedServer&part=feeds&sortby=feed_status&order=asc';
 				$icon[2] = 'index.php?pf=zoneclearFeedServer/icon-bb.png';
 			}

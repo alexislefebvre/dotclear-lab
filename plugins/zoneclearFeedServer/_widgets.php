@@ -29,9 +29,10 @@ class zoneclearFeedServerWidget
 			__('Title:'),__('Feeds sources'),'text'
 		);
 		$w->zcfssource->setting('sortby',
-			__('Order by:'),'lowername','combo',array(
-				__('name')=> 'lowername',
-				__('creation date') => 'feed_creadt'
+			__('Order by:'),'feed_upd_last','combo',array(
+				__('Last update') => 'feed_upd_last',
+				__('Name')=> 'lowername',
+				__('Create date') => 'feed_creadt'
 			)
 		);
 		$w->zcfssource->setting('sort',
@@ -93,8 +94,8 @@ class zoneclearFeedServerWidget
 		 || $w->homeonly == 2 && $core->url->type == 'default') return;
 		
 		$p = array();
-		$p['order'] = ($w->sortby && in_array($w->sortby,array('lowername','feed_creadt'))) ? 
-			$w->sortby.' ' : 'lowername ';
+		$p['order'] = ($w->sortby && in_array($w->sortby,array('feed_upd_last','lowername','feed_creadt'))) ? 
+			$w->sortby.' ' : 'feed_upd_last ';
 		
 		$p['order'] .= $w->sort == 'desc' ? 'DESC' : 'ASC';
 		

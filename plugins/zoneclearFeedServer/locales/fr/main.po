@@ -1,14 +1,14 @@
 # Language: Français
-# Module: zoneclearFeedServer - 2013.07.03
-# Date: 2013-07-04 05:46:48
+# Module: zoneclearFeedServer - 2013.07.04
+# Date: 2013-07-09 07:13:00
 # Translated with translater 2013.05.11
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: zoneclearFeedServer 2013.07.03\n"
+"Project-Id-Version: zoneclearFeedServer 2013.07.04\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-07-04T05:46:48+00:00\n"
+"PO-Revision-Date: 2013-07-09T07:13:00+00:00\n"
 "Last-Translator: Jean-Christian Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -64,139 +64,137 @@ msgstr "Serveur de flux : les sources"
 msgid "Feeds sources"
 msgstr "Sources des flux"
 
-#: _widgets.php:33
-msgid "name"
-msgstr "nom"
-
 #: _widgets.php:34
-msgid "creation date"
-msgstr "date de création"
+#: inc/index.feeds.php:35
+#: inc/index.feeds.php:300
+msgid "Name"
+msgstr "Nom"
 
-#: _widgets.php:44
+#: _widgets.php:35
+msgid "Create date"
+msgstr "Date de création"
+
+#: _widgets.php:45
 msgid "Limit:"
 msgstr "Limite :"
 
-#: _widgets.php:47
+#: _widgets.php:48
 msgid "Add link to feeds page"
 msgstr "Ajouter un lien vers la page des flux"
 
-#: _widgets.php:63
+#: _widgets.php:64
 msgid "Feeds server : numbers"
 msgstr "Serveur de flux : les chiffres"
 
-#: _widgets.php:64
+#: _widgets.php:65
 msgid "Feeds numbers"
 msgstr "Le flux en chiffres"
 
-#: _widgets.php:67
+#: _widgets.php:68
 msgid "Show feeds count"
 msgstr "Afficher le nombre de flux"
 
-#: _widgets.php:68
+#: _widgets.php:69
 msgid "Title for feeds count:"
 msgstr "Titre pour le nombre de flux :"
 
-#: _widgets.php:68
+#: _widgets.php:69
 msgid "Feeds:"
 msgstr "Flux :"
 
-#: _widgets.php:71
+#: _widgets.php:72
 msgid "Show entries count"
 msgstr "Afficher le nombre de billets"
 
-#: _widgets.php:72
+#: _widgets.php:73
 msgid "Title for entries count:"
 msgstr "Titre pour le nombre de billets :"
 
-#: _widgets.php:72
+#: _widgets.php:73
 msgid "Entries:"
 msgstr "Billets :"
 
-#: _widgets.php:122
+#: _widgets.php:123
 msgid "All sources"
 msgstr "Toutes les sources"
 
-#: _widgets.php:153
+#: _widgets.php:154
 msgid "no sources"
 msgstr "aucune source"
 
-#: _widgets.php:157
+#: _widgets.php:158
 msgid "one source"
 msgstr "une source"
 
-#: _widgets.php:161
+#: _widgets.php:162
 msgid "%d sources"
 msgstr "%d sources"
 
-#: _widgets.php:188
+#: _widgets.php:189
 msgid "no entries"
 msgstr "aucun billet"
 
-#: _widgets.php:192
+#: _widgets.php:193
 msgid "one entry"
 msgstr "un billet"
-
-#: _widgets.php:196
-msgid "%d entries"
-msgstr "%d billets"
 
 #: default-templates/zcfeeds.html:50
 msgid "List of feeds"
 msgstr "Liste des sources"
 
-#: inc/class.zoneclear.feed.server.php:678
+#: inc/class.zoneclear.feed.server.php:688
 msgid "disabled"
 msgstr "désactivé"
 
-#: inc/class.zoneclear.feed.server.php:679
+#: inc/class.zoneclear.feed.server.php:689
 msgid "enabled"
 msgstr "activé"
 
-#: inc/class.zoneclear.feed.server.php:686
+#: inc/class.zoneclear.feed.server.php:696
 msgid "every hour"
 msgstr "toutes les heures"
 
-#: inc/class.zoneclear.feed.server.php:687
+#: inc/class.zoneclear.feed.server.php:697
 msgid "every two hours"
 msgstr "toutes les deux heures"
 
-#: inc/class.zoneclear.feed.server.php:688
+#: inc/class.zoneclear.feed.server.php:698
 msgid "two times per day"
 msgstr "deux fois par jour"
 
-#: inc/class.zoneclear.feed.server.php:689
+#: inc/class.zoneclear.feed.server.php:699
 msgid "every day"
 msgstr "tous les jours"
 
-#: inc/class.zoneclear.feed.server.php:690
+#: inc/class.zoneclear.feed.server.php:700
 msgid "every two days"
 msgstr "tous les deux jours"
 
-#: inc/class.zoneclear.feed.server.php:691
+#: inc/class.zoneclear.feed.server.php:701
 msgid "every week"
 msgstr "toutes les semaines"
 
-#: inc/class.zoneclear.feed.server.php:746
+#: inc/class.zoneclear.feed.server.php:756
 msgid "home page"
 msgstr "la page d'accueil"
 
-#: inc/class.zoneclear.feed.server.php:747
+#: inc/class.zoneclear.feed.server.php:757
 msgid "post pages"
 msgstr "la page d'un billet"
 
-#: inc/class.zoneclear.feed.server.php:748
+#: inc/class.zoneclear.feed.server.php:758
 msgid "tags pages"
 msgstr "les pages des tags"
 
-#: inc/class.zoneclear.feed.server.php:749
+#: inc/class.zoneclear.feed.server.php:759
 msgid "archives pages"
 msgstr "les pages des archives"
 
-#: inc/class.zoneclear.feed.server.php:750
+#: inc/class.zoneclear.feed.server.php:760
 msgid "category pages"
 msgstr "les pages de catégorie"
 
-#: inc/class.zoneclear.feed.server.php:751
+#: inc/class.zoneclear.feed.server.php:761
 msgid "entries feed"
 msgstr "le flux des billets"
 
@@ -289,11 +287,6 @@ msgstr "URL du site :"
 #: inc/index.feeds.php:23
 msgid "There is no feed"
 msgstr "Il n'y a pas de flux"
-
-#: inc/index.feeds.php:35
-#: inc/index.feeds.php:300
-msgid "Name"
-msgstr "Nom"
 
 #: inc/index.feeds.php:39
 msgid "Frequency"

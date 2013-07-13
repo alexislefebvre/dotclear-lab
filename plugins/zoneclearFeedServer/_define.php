@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */			"Feeds server",
 	/* Description*/		"Mix your blog with a feeds planet",
 	/* Author */			"JC Denis, BG",
-	/* Version */			'2013.07.04',
+	/* Version */			'2013.07.12',
 	/* Permissions */		'admin'
 );
 ?>
