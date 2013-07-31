@@ -1,9 +1,9 @@
 Bloganniv Widget for Dotclear 2
 ===============================================================================
 
-Cette version de plugin sert a afficher le nombre de jours restant avant l'anniversaire de votre blog
+Cette version de plugin sert à afficher le nombre de jours restant avant l'anniversaire de votre blog
 
-Il affiche le nombre de jours restant avant l'anniversaire et le nombre d'année de votre blog.
+Il affiche le nombre de jours restant avant l'anniversaire et le nombre d'année(s) de votre blog.
 
 Installation
 ------------

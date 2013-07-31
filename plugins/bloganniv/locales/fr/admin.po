@@ -6,8 +6,8 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "Born Date (dd/mm/yyyy):"
-msgstr "Date de naissance (jj/mm/aaaa) :"
+msgid "Born Date (dd/mm/yyyy) or blank:"
+msgstr "Date de naissance (jj/mm/aaaa) ou vide :"
 
 msgid "Display Born Date"
 msgstr "Affichage date de naissance"
@@ -29,3 +29,6 @@ msgstr "Anniversaire dans"
 
 msgid "day(s)"
 msgstr "jour(s)"
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"

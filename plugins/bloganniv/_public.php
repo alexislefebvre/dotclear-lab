@@ -50,19 +50,48 @@ class tplBlogAnniv
 		global $core;
 		
 		// Si nous sommes pas en page accueil et que c'est coché page accueil uniquement on fait rien
-		if ($w->homeonly && $core->url->type != 'default') {
+
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 		
 		$title = $w->title ? html::escapeHTML($w->title) : __('Subscribe');
 		$ftdatecrea = $w->ftdatecrea;
-		// Test si la date est valide 
+		//Si la date est vide nous recherchons la date en base
+		if (strlen(rtrim($ftdatecrea))==0){
+			///////////////////////////////////////////////
+			//ACCES BDD
+			//je récupère la date du blog
+			require_once dirname(__FILE__).'/class.dc.dateBlog.php';
 		
-		$date = $ftdatecrea;
+			$lc = new dateBlog($GLOBALS['core']->blog);
+			try {
+				$Posts = $lc->getdateBlog();
+			} 
+			catch (Exception $e) {
+				return false;
+			}
+			foreach($Posts->rows() as $k => $v)
+			{
+				$ftdatecrea = html::clean($v['blog_creadt']);
+				$ftdatecrea = substr($ftdatecrea,0,10);
+				$ftdatecrea = str_replace("-","/",$ftdatecrea);
+				list($annee, $mois, $jour) = explode('/', $ftdatecrea);
+				// On remet la date en forme française
+				$ftdatecrea=$jour."/".$mois."/".$annee;
+				#printf($ftdatecrea);
+				#printf(html::clean($v['blog_id']));
+			}
+			//FIN ACCES BDD
+			///////////////////////////////////////////////
+		} else {
+			list($jour, $mois, $annee) = explode('/', $ftdatecrea);
+		}
 		$nbrejours=0;
 		$nbreannee=0;
-		list($jour, $mois, $annee) = explode('/', $date);
-		if(checkdate($mois,$jour,$annee)){
+		// Test si la date est valide
+		if(@checkdate($mois,$jour,$annee)){
 			// Ok nous pouvons calculer la date anniversaire et le nombre de jours restant avant
 			
 			//Extraction des données

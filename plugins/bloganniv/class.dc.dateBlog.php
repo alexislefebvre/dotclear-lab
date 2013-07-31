@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear bloganniv plugin.
-# Copyright (c) 2007 Trautmann Francis and contributors. All rights
+# This file is part of DotClear.
+# Copyright (c) 2005 Olivier Meunier and contributors. All rights
 # reserved.
 #
 # DotClear is free software; you can redistribute it and/or modify
@@ -19,12 +19,34 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-
-$this->registerModule(
-	/* Name */				"Blog Anniv",
-	/* Description*/		"Décompte du nombre de jours avant et après la date anniversaire du blog",
-	/* Author */			"Fran6t, Pierre Van Glabeke",
-	/* Version */			'1.3',
-	/* Permissions */		'blogAnniv'
-);
+#
+#
+class dateBlog
+{
+	private $blog;
+	private $con;
+	
+	public function __construct($blog)
+	{
+		$this->blog =& $blog;
+		$this->con =& $blog->con;
+	}
+	
+	public function getdateBlog()
+	{
+		$req = "SELECT blog_creadt,blog_id ".
+		"FROM ".$this->blog->prefix."blog ".
+		"WHERE blog_id = '".$this->blog->con->escape($this->blog->id)."' and blog_status = 1";
+		try {
+			$rs = $this->con->select($req);
+			$rs = $rs->toStatic();
+		} catch (Exception $e) {
+			throw $e;			
+			return null;
+		}
+		
+		return $rs;
+		
+	}
+}
 ?>
