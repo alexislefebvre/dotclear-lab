@@ -20,7 +20,6 @@ class SettingsList
 {
   private $items;
   private $namespace;
-  private $settingsNamespace;
   private $listKey;
   private $class;
   private $itemKey;
@@ -30,20 +29,22 @@ class SettingsList
   {
     global $core;
     $this->namespace = $namespace;
-    $this->settingsNamespace = $core->blog->settings->addNamespace($namespace);
     $this->listKey = $listKey;
     $this->itemKey = $itemKey;
     $this->httpTypes = $httpTypes;
     $this->class = new ReflectionClass($class);
-    if( $this->settingsNamespace->$listKey === null ) {
+    $core->blog->settings->setNameSpace($namespace);
+    if( $core->blog->settings->$listKey === null ) {
       $this->items = array();
     } else {
-      $this->items = @unserialize(base64_decode($this->settingsNamespace->$listKey));
+      $this->items = @unserialize(base64_decode($core->blog->settings->$listKey));
     }
   }
     
   public function Store() {
-    $this->settingsNamespace->put($this->listKey,base64_encode(serialize($this->items))); // put in blog local settings
+    global $core;
+    $core->blog->settings->setNameSpace($this->namespace);
+    $core->blog->settings->put($this->listKey,base64_encode(serialize($this->items))); // put in blog local settings
   }
  
   public function IsStorable($property)
@@ -123,8 +124,5 @@ class SettingsList
   }
   
 }
-
-
-
 
 ?>

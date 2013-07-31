@@ -23,6 +23,9 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
+require_once(dirname(__FILE__).'/WidgetAdmin.php');
+$core->addBehavior('initWidgets',array('templateWidgetAdmin','InitWidgets'));
+
 $core->tpl->addBlock('WidgetName',array('templateWidgetBlocksAndValues','Name'));
 $core->tpl->addBlock('WidgetDescription',array('templateWidgetBlocksAndValues','Description'));
 
@@ -32,10 +35,6 @@ $core->tpl->addBlock('WidgetPageTypeIf',array('templateWidgetBlocksAndValues','P
 $core->tpl->addBlock('WidgetSubstring',array('templateWidgetBlocksAndValues','Substring'));
 
 $core->tpl->addValue('WidgetText',array('templateWidgetBlocksAndValues','Text'));
-$core->tpl->addBlock('WidgetTextIf',array('templateWidgetBlocksAndValues','TextIf'));
-$core->tpl->addBlock('WidgetTextLike',array('templateWidgetBlocksAndValues','TextLike'));
-$core->tpl->addValue('WidgetTextMatch',array('templateWidgetBlocksAndValues','TextMatch'));
-$core->tpl->addBlock('WidgetTextNotLike',array('templateWidgetBlocksAndValues','TextNotLike'));
 $core->tpl->addBlock('WidgetCheckboxIf',array('templateWidgetBlocksAndValues','CheckboxIf'));
 $core->tpl->addBlock('WidgetComboIf',array('templateWidgetBlocksAndValues','ComboIf'));
 $core->tpl->addValue('WidgetCombo',array('templateWidgetBlocksAndValues','Combo'));
@@ -51,15 +50,11 @@ define('CRLF',"\r\n");
 class templateWidgetBlocksAndValues
 {
   // widget display only consists in displaying the corresponding template file
-  public static function WidgetCore(&$widget)
+  public static function WidgetCore($widget)
   {
     global $core, $_ctx;
     $_ctx->widget = $widget;
-    $core->tpl->setPath(
-      $core->tpl->getPath(),
-      path::real(dirname(__FILE__).'/default-templates')
-    );
-		$core->callBehavior('publicTemplateWidgetBeforeLoad',$core->tpl,$widget);
+    $core->tpl->setPath(array_merge($core->tpl->getPath(),array(dirname(__FILE__).'/default-templates')));
     $code = $core->tpl->getData($widget->id().'.widget.html');
     $_ctx->widget = null;
     return $code;
@@ -114,37 +109,7 @@ class templateWidgetBlocksAndValues
   public static function Text($attr) {
     return '<?php print html::escapeHTML($_ctx->widget->'.$attr['name'].'); ?>'.CRLF;
   }
-   
-  // Widget text field : testing text value
-  public static function TextIf($attr,$content) {
-		return
-		'<?php if ($_ctx->widget->'.$attr['name'].' == "'.addslashes($attr['value']).'") : ?>'.CRLF.
-			$content.
-		'<?php endif; ?>'.CRLF;
-  }
-   
-  // Widget text field : matching text value against pattern
-  public static function TextLike($attr,$content) {
-		return
-		'<?php if( preg_match( "'.addslashes($attr['pattern']).'", $_ctx->widget->'.$attr['name'].', $widgetTextMatches ) ) : ?>'.CRLF.
-		'<?php $_ctx->widgetTextMatches=$widgetTextMatches; ?>'.CRLF.
-			$content.
-		'<?php endif; ?>'.CRLF;
-  }
   
-  // Widget text field : displaying part of matched pattern
-  public static function TextMatch($attr) {
-    return '<?php print html::escapeHTML($_ctx->widgetTextMatches['.$attr['index'].']); ?>'.CRLF;
-  }
-   
-  // Widget text field : matching text value against pattern
-  public static function TextNotLike($attr,$content) {
-		return
-		'<?php if( !preg_match( "'.addslashes($attr['pattern']).'", $_ctx->widget->'.$attr['name'].' ) ) : ?>'.CRLF.
-			$content.
-		'<?php endif; ?>'.CRLF;
-  }
- 
   // Widget checkbox field
   public static function CheckboxIf($attr,$content) {
     $verif = (isset($attr['value']) && !$attr['value']) ? '!' : '';
@@ -180,14 +145,14 @@ class templateWidgetBlocksAndValues
 
 class templateWidgetBehaviors
 {
-  public static function loadVisitorCookie(&$core)
+  public static function loadVisitorCookie($core)
   {
     global $_ctx;
     if(@$_ctx->comment_preview['name'])
       return;
     if (empty($_COOKIE['comment_info']))
       return;
-    $visitorInfos = split("\n",$_COOKIE['comment_info']);
+    $visitorInfos = explode("\n",$_COOKIE['comment_info']);
 		$_ctx->comment_preview = new ArrayObject();
     $_ctx->comment_preview['name'] = @$_ctx->comment_preview['name'] ? $_ctx->comment_preview['name'] : $visitorInfos[0];
 		$_ctx->comment_preview['mail'] = @$_ctx->comment_preview['mail'] ? $_ctx->comment_preview['mail'] : $visitorInfos[1];
@@ -198,6 +163,5 @@ class templateWidgetBehaviors
 		$_ctx->comment_preview['preview'] = false;
   }
 }
-
 
 ?>

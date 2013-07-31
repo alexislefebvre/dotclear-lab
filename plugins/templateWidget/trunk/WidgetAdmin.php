@@ -21,13 +21,13 @@
 # templateWidget can be used inside Dotclear but this license only applies to templateWidget
 # ***** END LICENSE BLOCK *****
 
-require_once(dirname(__FILE__).'/class.WidgetBuilder.php');
-require_once(dirname(__FILE__).'/class.Settings.php');
+require_once(dirname(__FILE__).'/WidgetBuilder.php');
+require_once(dirname(__FILE__).'/Settings.php');
 
 class templateWidgetAdmin
 {
   // behaviour for widget initialization
-  public static function InitWidgets(&$widgets) {
+  public static function InitWidgets($widgets) {
     $activeWidgets = new templateWidgetSettings();
     // loop on all template widgets definitions and create associated widgets
     foreach (self::GetAllWidgetDefinitions() as $widgetId => $widgetDefinition) {
@@ -74,7 +74,7 @@ class templateWidgetAdmin
   }
   
   // behaviour for widget initialization
-  private static function CreateWidget(&$widgets,$widgetDefinition) {
+  private static function CreateWidget($widgets,$widgetDefinition) {
     $widgetId = $widgetDefinition['id'];
     $widgets->create($widgetId,__($widgetDefinition['name']),array('templateWidgetBlocksAndValues','WidgetCore'));
     
