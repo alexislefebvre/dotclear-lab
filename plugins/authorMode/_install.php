@@ -17,19 +17,19 @@ if (version_compare($cur_version,$new_version,'>=')) {
 	return;
 }
 
-$core->blog->settings->setNameSpace('authormode');
+$core->blog->settings->addNameSpace('authormode');
 if ($cur_version === null)
 {
-	$core->blog->settings->put('authormode_active',false,'boolean');
-	$core->blog->settings->put('authormode_url_author','author','string');
-	$core->blog->settings->put('authormode_url_authors','authors','string');
-	$core->blog->settings->put('authormode_default_alpha_order',true,'boolean');
-	$core->blog->settings->put('authormode_default_posts_only',true,'boolean');
+	$core->blog->settings->authormode->put('authormode_active',false,'boolean');
+	$core->blog->settings->authormode->put('authormode_url_author','author','string');
+	$core->blog->settings->authormode->put('authormode_url_authors','authors','string');
+	$core->blog->settings->authormode->put('authormode_default_alpha_order',true,'boolean');
+	$core->blog->settings->authormode->put('authormode_default_posts_only',true,'boolean');
 }
 elseif (version_compare($cur_version,'1.1','<='))
 {
-	$core->blog->settings->put('authormode_default_alpha_order',true,'boolean');
-	$core->blog->settings->put('authormode_default_posts_only',true,'boolean');
+	$core->blog->settings->authormode->put('authormode_default_alpha_order',true,'boolean');
+	$core->blog->settings->authormode->put('authormode_default_posts_only',true,'boolean');
 }
 $core->setVersion('authorMode',$new_version);
 return true;

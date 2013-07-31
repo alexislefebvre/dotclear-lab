@@ -15,11 +15,11 @@ $core->addBehavior('initWidgets',array('widgetsAuthorMode','init'));
 
 class widgetsAuthorMode
 {
-	public static function authors(&$w)
+	public static function authors($w)
 	{
 		global $core;
 		
-		if (!$core->blog->settings->authormode_active) return;
+		if (!$core->blog->settings->authormode->authormode_active) return;
 		
 		$rs = authormodeUtils::getPostsUsers();
 		if ($rs->isEmpty()) {
@@ -59,7 +59,7 @@ class widgetsAuthorMode
 		return $res;
 	}
 	
-	public static function init(&$w)
+	public static function init($w)
 	{
 	    $w->create('authors',__('Authors'),array('widgetsAuthorMode','authors'));
 	    $w->authors->setting('title',__('Title:'),__('Authors'));

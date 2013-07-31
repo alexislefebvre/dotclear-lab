@@ -11,16 +11,16 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$active      = $core->blog->settings->authormode_active;
-$url_author  = $core->blog->settings->authormode_url_author;
-$url_authors = $core->blog->settings->authormode_url_authors;
-$posts_only  = $core->blog->settings->authormode_default_posts_only;
-$alpha_order = $core->blog->settings->authormode_default_alpha_order;
+$active      = $core->blog->settings->authormode->authormode_active;
+$url_author  = $core->blog->settings->authormode->authormode_url_author;
+$url_authors = $core->blog->settings->authormode->authormode_url_authors;
+$posts_only  = $core->blog->settings->authormode->authormode_default_posts_only;
+$alpha_order = $core->blog->settings->authormode->authormode_default_alpha_order;
 
 if (!empty($_POST['saveconfig'])) {
 	try
 	{
-		$core->blog->settings->setNameSpace('authormode');
+		$core->blog->settings->addNameSpace('authormode');
 		
 		$active = (empty($_POST['active']))?false:true;
 		if (trim($_POST['url_author']) == '') {
@@ -36,11 +36,11 @@ if (!empty($_POST['saveconfig'])) {
 		$posts_only  = (empty($_POST['posts_only']))?false:true;
 		$alpha_order = (empty($_POST['alpha_order']))?false:true;
 		
-		$core->blog->settings->put('authormode_active',$active,'boolean');
-		$core->blog->settings->put('authormode_url_author',$url_author,'string');
-		$core->blog->settings->put('authormode_url_authors',$url_authors,'string');
-		$core->blog->settings->put('authormode_default_posts_only',$posts_only,'boolean');
-		$core->blog->settings->put('authormode_default_alpha_order',$alpha_order,'boolean');
+		$core->blog->settings->authormode->put('authormode_active',$active,'boolean');
+		$core->blog->settings->authormode->put('authormode_url_author',$url_author,'string');
+		$core->blog->settings->authormode->put('authormode_url_authors',$url_authors,'string');
+		$core->blog->settings->authormode->put('authormode_default_posts_only',$posts_only,'boolean');
+		$core->blog->settings->authormode->put('authormode_default_alpha_order',$alpha_order,'boolean');
 		$core->blog->triggerBlog();
 		
 		$msg = __('Configuration successfully updated.');

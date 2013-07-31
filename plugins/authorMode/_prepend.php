@@ -15,13 +15,13 @@ $core =& $GLOBALS['core'];
 
 class rsAuthor
 {
-	public static function getAuthorCN(&$rs)
+	public static function getAuthorCN($rs)
 	{
 		return dcUtils::getUserCN($rs->user_id, $rs->user_name,
 		$rs->user_firstname, $rs->user_displayname);
 	}
 	
-	public static function getAuthorLink(&$rs)
+	public static function getAuthorLink($rs)
 	{
 		$res = '%1$s';
 		$url = $rs->user_url;
@@ -32,7 +32,7 @@ class rsAuthor
 		return sprintf($res,$rs->getAuthorCN(),$url);
 	}
 	
-	public static function getAuthorEmail(&$rs,$encoded=true)
+	public static function getAuthorEmail($rs,$encoded=true)
 	{
 		if ($encoded) {
 			return strtr($rs->user_email,array('@'=>'%40','.'=>'%2e'));
@@ -41,10 +41,10 @@ class rsAuthor
 	}
 }
 
-if ($core->blog->settings->authormode_active)
+if ($core->blog->settings->authormode->authormode_active)
 {
-	if ($core->blog->settings->authormode_url_author !== null) {
-		$url_prefix = $core->blog->settings->authormode_url_author;
+	if ($core->blog->settings->authormode->authormode_url_author !== null) {
+		$url_prefix = $core->blog->settings->authormode->authormode_url_author;
 		if (empty($url_prefix)) {
 			$url_prefix = 'author';
 		}
@@ -54,8 +54,8 @@ if ($core->blog->settings->authormode_active)
 		unset($url_prefix,$feed_prefix);
 	}
 	
-	if ($core->blog->settings->authormode_url_authors !== null) {
-		$url_prefix = $core->blog->settings->authormode_url_authors;
+	if ($core->blog->settings->authormode->authormode_url_authors !== null) {
+		$url_prefix = $core->blog->settings->authormode->authormode_url_authors;
 		if (empty($url_prefix)) {
 			$url_prefix = 'authors';
 		}

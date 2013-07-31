@@ -26,7 +26,7 @@ $core->addBehavior('adminBeforeUserUpdate',array('authorModeBehaviors','adminBef
 
 class authorModeBehaviors
 {
-	public static function adminBeforeUserUpdate(&$cur,&$user_id = '')
+	public static function adminBeforeUserUpdate($cur,$user_id = '')
 	{
 		$cur->user_desc = $_POST['user_desc'];
 	}
@@ -38,7 +38,7 @@ class authorModeBehaviors
 		dcPage::jsLoad('index.php?pf=authorMode/_user.js');
 	}
 	
-	public static function adminAuthorForm(&$rs)
+	public static function adminAuthorForm($rs)
 	{
 		if ($rs instanceof dcCore) {
 			$strReq = 'SELECT user_desc '.

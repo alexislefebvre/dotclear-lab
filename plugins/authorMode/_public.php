@@ -10,7 +10,7 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
-if (!$core->blog->settings->authormode_active) { return; }
+if (!$core->blog->settings->authormode->authormode_active) { return; }
 
 require_once dirname(__FILE__).'/_widgets.php';
 
@@ -51,7 +51,7 @@ class behaviorAuthorMode
 		}
 	}
 	
-	public static function addTplPath(&$core)
+	public static function addTplPath($core)
 	{
 		$core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates');
 	}
@@ -301,7 +301,7 @@ class authormodeUtils
 			$strReq .=
 			" AND P.post_type = '".$core->con->escape($params['post_type'])."' ";
 		}
-		elseif ($core->blog->settings->authormode_default_posts_only)
+		elseif ($core->blog->settings->authormode->authormode_default_posts_only)
 		{
 			$strReq .=
 			" AND P.post_type = 'post' ";
@@ -314,7 +314,7 @@ class authormodeUtils
 			$strReq .=
 			'ORDER BY '.$core->con->escape($params['order']).' ';
 		}
-		elseif ($core->blog->settings->authormode_default_alpha_order)
+		elseif ($core->blog->settings->authormode->authormode_default_alpha_order)
 		{
 			$strReq .=
 			'ORDER BY user_displayname, user_firstname, user_name ';
