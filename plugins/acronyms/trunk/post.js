@@ -1,5 +1,3 @@
-
-
 jsToolBar.prototype.elements.acronyms = {
 	type: 'button',
 	title: 'Acronym',

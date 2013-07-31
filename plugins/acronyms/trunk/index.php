@@ -77,7 +77,7 @@ if (!empty($_POST['p_add']))
 	<style type="text/css">
 	#add_acronyms fieldset { position:relative; }
 	.acroleft { display:block; width:14em; }
-	.acroright { display:inline; left:15em; position:absolute; top:0; }
+	.acroright { display:inline; left:15em; position:absolute; top:43px; }
 	#listacro { height:200px; overflow:auto; }
 	</style>
 	<?php echo dcPage::jsModal(); ?>
@@ -104,7 +104,8 @@ if (!empty($_GET['added'])) {
 }
 ?>
 
-<p><?php echo __('The acronyms in this list will be automatically recognized by the system when you use the wiki syntax. This means that you will not have to take the title, simply enclose an acronym by double question marks.') ?></p>
+<p><?php echo __('The acronyms in this list will be automatically recognized by the system when you use the wiki syntax. This means that you will not have to take the title, simply enclose an acronym by double question marks.') ?><br />
+<strong><?php echo __('Note'); ?> :</strong> <?php echo __('To remove an acronym, just empty its title.'); ?></p>
 
 
 <form id="edit_acronyms" action="plugin.php" method="post">
@@ -130,11 +131,8 @@ if (!empty($_GET['added'])) {
 	echo form::hidden(array('p'),'acronyms');
 	echo $core->formNonce(); ?>
 	<input type="submit" class="submit" value="<?php echo __('Edit'); ?>" />
-	<strong><?php echo __('Note'); ?> :</strong> <?php echo __('To remove an acronym, just empty its title.'); ?></p>
+	</p>
 </form>
-
-
-
 
 <form id="add_acronyms" action="plugin.php" method="post">
 	<fieldset>
@@ -155,3 +153,4 @@ if (!empty($_GET['added'])) {
 
 </body>
 </html>
+?>

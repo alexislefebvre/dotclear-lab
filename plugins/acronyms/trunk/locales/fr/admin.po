@@ -1,10 +1,13 @@
+msgid ""
+msgstr ""
+
 msgid "Acronyms Manager"
 msgstr "Gestionnaire des acronymes"
 
 msgid "Add, remove and modify acronyms for the wiki syntax."
 msgstr "Ajouter, supprimer et modifier les acromymes pour la syntaxe wiki."
 
-msgid "Enable acronyms buton on toolbar"
+msgid "Enable acronyms button on toolbar"
 msgstr "Activer le bouton acronymes sur la barre d'outils"
 
 msgid "Enable acronyms public page"
@@ -66,3 +69,6 @@ msgstr "Note"
 
 msgid "To remove an acronym, just empty its title."
 msgstr "Pour supprimer un acronyme, vider simplement son titre."
+
+msgid ""
+msgstr ""

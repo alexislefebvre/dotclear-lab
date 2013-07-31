@@ -11,6 +11,8 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
 $_menu['Blog']->addItem(__('Acronyms Manager'),'plugin.php?p=acronyms','index.php?pf=acronyms/icon.png',
 		preg_match('/plugin.php\?p=acronyms(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('acronyms',$core->blog->id));
@@ -29,7 +31,7 @@ $core->addBehavior('adminBeforeBlogSettingsUpdate',array('acronymsAdminBehaviors
 
 class acronymsAdminBehaviors
 {
-	public static function coreInitWikiPost(&$wiki2xhtml)
+	public static function coreInitWikiPost($wiki2xhtml)
 	{
 		$acronyms = new dcAcronyms($GLOBALS['core']);
 
@@ -39,7 +41,7 @@ class acronymsAdminBehaviors
 
 	public static function jsLoad()
 	{
-		if ($GLOBALS['core']->blog->settings->acronyms_buton_enabled)
+		if ($GLOBALS['core']->blog->settings->acronyms_button_enabled)
 		{
 			return
 			'<script type="text/javascript" src="index.php?pf=acronyms/post.js"></script>'.
@@ -53,25 +55,45 @@ class acronymsAdminBehaviors
 		}
 	}
 
-	public static function adminBlogPreferencesForm(&$core,&$settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
 		'<fieldset><legend>'.__('Acronyms Manager').'</legend>'.
 		'<p><label class="classic">'.
-		form::checkbox('acronyms_buton_enabled','1',$settings->acronyms_buton_enabled).
-		__('Enable acronyms buton on toolbar').'</label></p>'.
+		form::checkbox('acronyms_button_enabled','1',$settings->acronyms_button_enabled).
+		__('Enable acronyms button on toolbar').'</label></p>'.
 		'<p><label class="classic">'.
 		form::checkbox('acronyms_public_enabled','1',$settings->acronyms_public_enabled).
 		__('Enable acronyms public page').'</label></p>'.
 		'</fieldset>';
 	}
 
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
 		$settings->setNameSpace('acronyms');
-		$settings->put('acronyms_buton_enabled',!empty($_POST['acronyms_buton_enabled']),'boolean');
+		$settings->put('acronyms_button_enabled',!empty($_POST['acronyms_button_enabled']),'boolean');
 		$settings->put('acronyms_public_enabled',!empty($_POST['acronyms_public_enabled']),'boolean');
 		$settings->setNameSpace('system');
 	}
 
 } # class acronymsAdminBehaviors
+
+
+$core->addBehavior('adminDashboardFavs',array('acronymsfavBehaviors','dashboardFavs'));
+
+class acronymsfavBehaviors
+{
+    public static function dashboardFavs($core,$favs)
+    {
+        $favs['Acronyms'] = new ArrayObject(array(
+            'Acronyms',
+            __('Acronyms'),
+            'plugin.php?p=acronyms',
+            'index.php?pf=acronyms/icon.png',
+            'index.php?pf=acronyms/icon-big.png',
+            'usage,contentadmin',
+            null,
+            null));
+    }
+}
+?>

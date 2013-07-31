@@ -11,7 +11,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-
 $core->tpl->addBlock('Acronyms',array('tplAcronyms','Acronyms'));
 $core->tpl->addBlock('AcronymsHeader',array('tplAcronyms','AcronymsHeader'));
 $core->tpl->addBlock('AcronymsFooter',array('tplAcronyms','AcronymsFooter'));
@@ -87,3 +86,4 @@ class acronymsURL extends dcUrlHandlers
         }
 
 } # class acronymsURL
+?>

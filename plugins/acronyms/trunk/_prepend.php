@@ -14,3 +14,4 @@ if (!defined('DC_RC_PATH')) { return; }
 $GLOBALS['__autoload']['dcAcronyms'] = dirname(__FILE__).'/class.dc.acronyms.php';
 
 $GLOBALS['core']->url->register('acronyms','acronyms','^acronyms$',array('acronymsURL','acronyms'));
+?>
