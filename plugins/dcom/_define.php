@@ -18,7 +18,7 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */		'Dcom',
 	/* Description*/	'Last comments with more options',
-	/* Author */		'Oleksandr Syenchuk',
+	/* Author */		'Oleksandr Syenchuk, Pierre Van Glabeke',
 	/* Version */		'0.8.2',
 	/* Permissions */	'admin'
 );
