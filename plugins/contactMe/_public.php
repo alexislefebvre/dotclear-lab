@@ -276,7 +276,8 @@ class tplContactMe
 	{
 		global $core;
 		
-		if ($w->homeonly && $core->url->type != 'default') {
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 		
@@ -285,12 +286,12 @@ class tplContactMe
 		}
 		
 		$res =
-		'<div class="contact-me">'.
+		($w->content_only ? '' : '<div class="contact-me'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<p><a href="'.$core->blog->url.$core->url->getBase('contactme').'">'.
 		($w->link_title ? html::escapeHTML($w->link_title) : __('Contact me')).
 		'</a></p>'.
-		'</div>';
+		($w->content_only ? '' : '</div>');
 		
 		return $res;
 	}

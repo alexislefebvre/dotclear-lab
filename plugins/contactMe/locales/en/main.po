@@ -13,180 +13,132 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../hg-plugins/contactMe/__html_tpl_dummy.php:5
-#: ../hg-plugins/contactMe/_public.php:16
 msgid "Message"
 msgstr ""
 
-#: ../hg-plugins/contactMe/__html_tpl_dummy.php:7
-#: ../hg-plugins/contactMe/_public.php:15
 msgid "Subject"
 msgstr ""
 
-#: ../hg-plugins/contactMe/_admin.php:14 ../hg-plugins/contactMe/_admin.php:24
-#: ../hg-plugins/contactMe/_admin.php:32
-#: ../hg-plugins/contactMe/_public.php:37
-#: ../hg-plugins/contactMe/_public.php:292
-#: ../hg-plugins/contactMe/_widgets.php:20
-#: ../hg-plugins/contactMe/_widgets.php:22
-#: ../hg-plugins/contactMe/index.php:24 ../hg-plugins/contactMe/index.php:104
-#: ../hg-plugins/contactMe/index.php:109
 msgid "Contact me"
 msgstr ""
 
-#: ../hg-plugins/contactMe/_admin.php:33
 msgid "Mail contact form"
 msgstr ""
 
-#: ../hg-plugins/contactMe/_define.php:15
 msgid "ContactMe"
 msgstr ""
 
-#: ../hg-plugins/contactMe/_define.php:16
 msgid "Add a simple contact form on your blog"
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:93
 msgid "You must provide a name."
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:101
 msgid "You must provide a subject."
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:105
 msgid "You must write a message."
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:121
 msgid "No valid contact recipient was found."
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:142
 msgid "Message seems to be a spam."
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:165
 msgid ""
 "Hi there!\n"
 "\n"
 "You received a message from your blog's contact page."
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:167
 #, php-format
 msgid "Blog: %s"
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:168
 #, php-format
 msgid "Message from: %s <%s>"
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:169
 #, php-format
 msgid "Website: %s"
 msgstr ""
 
-#: ../hg-plugins/contactMe/_public.php:170
 msgid "Message:"
 msgstr ""
 
-#: ../hg-plugins/contactMe/_widgets.php:21
 msgid "Contact"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:28
 msgid "<p>You can use the following form to send me an e-mail.</p>"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:32
 msgid "<p style=\"color:green\"><strong>Thank you for your message.</strong></p>"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:36
 #, php-format
 msgid "<p style=\"color:red\"><strong>An error occured:</strong> %s</p>"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:52
 msgid "No page title."
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:56
 msgid "No success message."
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:60
 msgid "No error message."
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:73
 #, php-format
 msgid "%s is not a valid e-mail address."
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:112
 msgid "Setting have been successfully updated."
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:117
 msgid "E-Mail settings"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:118
 msgid "Comma separated recipients list:"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:120
 msgid "Empty recipients list to disable contact page."
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:121
 msgid "E-Mail subject prefix:"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:123
 msgid "This will be prepend to e-mail subject"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:130
 msgid "Use comments spam filter"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:136
 msgid "Presentation options"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:137
 msgid "Page title:"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:140
 msgid "Form caption:"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:143
 msgid "Confirmation message:"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:146
 msgid "Error message:"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:149
 #, php-format
 msgid "\"%s\" is the error message."
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:152
 msgid "save"
 msgstr ""
 
-#: ../hg-plugins/contactMe/index.php:155
 #, php-format
 msgid "Don't forget to add a <a href=\"%s\">widget</a> linking to your contact page."
 msgstr ""
