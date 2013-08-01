@@ -15,8 +15,8 @@ if (!defined('DC_RC_PATH')) {return;}
 $this->registerModule(
 	/* Name */			    "shortArchives",
 	/* Description*/		"Display complete archives of your blog displayed in an accordion",
-	/* Author */			"annso",
-	/* Version */			'1.1',
+	/* Author */			"annso, Pierre Van Glabeke",
+	/* Version */			'1.3',
 	/* Permissions */		'usage,contentadmin'
 );
 ?>

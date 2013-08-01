@@ -20,7 +20,7 @@ $core->addBehavior('publicHeadContent',array('publicShortArchives','publicHeadCo
 class publicShortArchives
 {
 
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
 		echo '<script type="text/javascript" src="'.$url.'/js/accordion.js"></script>'."\n";
@@ -32,11 +32,12 @@ class publicShortArchives
 
 class tplShortArchives
 {
-	public static function shortArchivesWidgets(&$w)
+	public static function shortArchivesWidgets($w)
 	{
 		global $core;
 
-		if ($w->homeonly && $core->url->type != 'default') {
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 		
@@ -73,5 +74,6 @@ class tplShortArchives
 		
         return $res;
 	}
+	
 }
 ?>
