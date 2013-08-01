@@ -40,8 +40,15 @@ class adminDcom
 		$w->lastcomments->setting('stringformat',
 			__('String format (%1$s = date; %2$s = title; %3$s = author; %4$s = content of the comment; %5$s = comment URL):'),
 			$p['stringformat']);
-		$w->lastcomments->setting('homeonly',
-			__('Home page only'),$p['homeonly'],'check');
+		$w->lastcomments->setting('homeonly',__('Display on:'),0,'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+				)
+		);
+    $w->lastcomments->setting('content_only',__('Content only'),0,'check');
+    $w->lastcomments->setting('class',__('CSS class:'),'');
 	}
 }
 ?>

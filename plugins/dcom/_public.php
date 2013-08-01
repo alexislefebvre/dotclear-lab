@@ -23,8 +23,9 @@ class publicDcom
 	public static function showWidget($w)
 	{
 		global $core;
-		
-		if ($w->homeonly && $core->url->type != 'default') {
+
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 		
@@ -37,11 +38,11 @@ class publicDcom
 		$p['dateformat'] = $w->dateformat;
 		
 		commonDcom::adjustDefaults($p);
-		
-		$res = '<div class="lastcomments">'.
+
+    $res = ($w->content_only ? '' : '<div class="lastcomments'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
 			($p['title'] ? '<h2>'.html::escapeHTML($p['title']).'</h2>' : '').
 			self::show($p).
-			'</div>';
+			($w->content_only ? '' : '</div>');
 		
 		return $res;
 	}

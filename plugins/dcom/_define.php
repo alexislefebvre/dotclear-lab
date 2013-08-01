@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */		'Dcom',
 	/* Description*/	'Last comments with more options',
 	/* Author */		'Oleksandr Syenchuk',
-	/* Version */		'0.8.1-dsls',
+	/* Version */		'0.8.2',
 	/* Permissions */	'admin'
 );
 ?>
