@@ -1,14 +1,18 @@
-<?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of My Favicon, a plugin for Dotclear.
-# 
-# Copyright (c) 2008,2011 Alex Pirine <alex pirine.fr>
-# 
-# Licensed under the GPL version 2.0 license.
-# A copy is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
-
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
+/***************************************************************\
+ *  This is 'My Favicon', a plugin for Dotclear 2              *
+ *                                                             *
+ *  Copyright (c) 2008                                         *
+ *  Oleksandr Syenchuk and contributors.                       *
+ *                                                             *
+ *  This is an open source software, distributed under the GNU *
+ *  General Public License (version 2) terms and  conditions.  *
+ *                                                             *
+ *  You should have received a copy of the GNU General Public  *
+ *  License along with 'My Favicon' (see COPYING.txt);         *
+ *  if not, write to the Free Software Foundation, Inc.,       *
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
+\***************************************************************/
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('adminBlogPreferencesHeaders', array('myFavicon', 'adminBlogPreferencesHeaders'));
@@ -26,45 +30,50 @@ class myFavicon
 	{
 		# Dotclear <=2.0-beta7 compatibility
 		if ($settings === false) {
-			$s = &$core->blog->settings->myfavicon;
-		}
-		else {
-			$s = &$settings->myfavicon;
+			$settings = $core->blog->settings;
 		}
 		
-		$favicon_url = $s->url;
-		$favicon_iOS_url = $s->iOS_url;
-		$favicon_ie6 = $s->ie6;
+		if (version_compare(DC_VERSION,'2.2-beta1','<')) {
+			$favicon_url = $settings->favicon_url;
+			$favicon_ie_url = $settings->favicon_ie_url;
+		}
+		else {
+			$favicon_url = $settings->myfavicon->favicon_url;
+			$favicon_ie_url = $settings->myfavicon->favicon_ie_url;
+		}
 		
 		echo
 		'<fieldset><legend>Favicon</legend>'.
 		'<p><label class="classic">'.
-			form::checkbox('favicon_enable','1',!empty($favicon_url)).
+			form::checkbox('favicon_enable','1',(!empty($favicon_url) || !empty($favicon_ie_url))).
 			__('Enable favicon').'</label></p>'.
 		'<div id="favicon_config">'.
-		'<p><label class="classic">'.
-			form::checkbox('favicon_ie6','1',$favicon_ie6).
-			__('Enable Internet Explorer 6 compatibility').'</label></p>'.
-		'<p id="favicon_warn" class="form-note warn">'
-			.__('Please note, IE6 compatibility works only with the “.ico” format.').'</p>'.
+		'<p><label>'.__('Favicon URL for IE:').' '.
+			form::field('favicon_ie_url',40,255,html::escapeHTML($favicon_ie_url)).'</label></p>'.
+		'<p class="form-note warn">'
+			.__('Please note, IE compatibility works only with ".ico" format.').'</p>'.
 		'<p><label>'.__('Favicon URL:').' '.
 			form::field('favicon_url',40,255,html::escapeHTML($favicon_url)).'</label></p>'.
-		'<p><label>'.__('Apple iOS icon URL:').' '.
-			form::field('favicon_iOS_url',40,255,html::escapeHTML($favicon_iOS_url)).'</label></p>'.
 		'</div></fieldset>';
 	}
 	
 	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
-		$favicon_url = empty($_POST['favicon_enable']) ? '' : $_POST['favicon_url'];
-		$favicon_iOS_url = empty($_POST['favicon_enable']) ? '' : $_POST['favicon_iOS_url'];
-		$favicon_ie6 = !empty($_POST['favicon_ie6']);
+		$favicon_url = empty($_POST['favicon_url']) ? '' : $_POST['favicon_url'];
+		$favicon_ie_url = empty($_POST['favicon_ie_url']) ? '' : $_POST['favicon_ie_url'];
 		
-		$s = &$settings->myfavicon;
-		
-		$s->put('url',$favicon_url);
-		$s->put('iOS_url',$favicon_iOS_url);
-		$s->put('ie6',$favicon_ie6);
+		if (version_compare(DC_VERSION,'2.2-beta1','<')) {
+			$settings->setNameSpace('myfavicon');
+			$settings->put('favicon_url',$favicon_url);
+			$settings->put('favicon_ie_url',$favicon_ie_url);
+			$settings->setNameSpace('system');
+		}
+		else {
+			$settings->addNameSpace('myfavicon');
+			$settings->myfavicon->put('favicon_url',$favicon_url);
+			$settings->myfavicon->put('favicon_ie_url',$favicon_ie_url);
+			$settings->addNameSpace('system');
+		}
 	}
 }
 ?>

@@ -1,14 +1,18 @@
-<?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of My Favicon, a plugin for Dotclear.
-# 
-# Copyright (c) 2008,2011 Alex Pirine <alex pirine.fr>
-# 
-# Licensed under the GPL version 2.0 license.
-# A copy is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
-
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
+/***************************************************************\
+ *  This is 'My Favicon', a plugin for Dotclear 2              *
+ *                                                             *
+ *  Copyright (c) 2008                                         *
+ *  Oleksandr Syenchuk and contributors.                       *
+ *                                                             *
+ *  This is an open source software, distributed under the GNU *
+ *  General Public License (version 2) terms and  conditions.  *
+ *                                                             *
+ *  You should have received a copy of the GNU General Public  *
+ *  License along with 'My Favicon' (see COPYING.txt);         *
+ *  if not, write to the Free Software Foundation, Inc.,       *
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
+\***************************************************************/
 if (!defined('DC_RC_PATH')) { return; }
 
 if (is_callable('dcTemplate','SysBehavior')) {
@@ -31,7 +35,7 @@ class myFavicon
 	
 	public static function publicHeadContent($core)
 	{
-		$res = self::faviconHTML($core->blog->settings->myfavicon);
+		$res = self::faviconHTML($core->blog->settings);
 		if (!empty($res)) {
 			echo $res."\n";
 		}
@@ -46,50 +50,47 @@ class myFavicon
 		}
 	}
 
-	private static function faviconHTML($settings)
+	private static function faviconHTML(&$settings)
 	{
-		$favicon_url = $settings->url;
-		$favicon_iOS_url = $settings->iOS_url;
-		$favicon_ie6 = $settings->ie6;
-		
-		if (empty($favicon_url) && empty($favicon_iOS_url)) {
+		if (version_compare(DC_VERSION,'2.2-beta1','<')) {
+			$favicon_url = $settings->favicon_url;
+			$favicon_ie_url = $settings->favicon_ie_url;
+		}
+		else {
+			$favicon_url = $settings->myfavicon->favicon_url;
+			$favicon_ie_url = $settings->myfavicon->favicon_ie_url;
+		}
+		if (empty($favicon_url) && empty($favicon_ie_url)) {
 			return;
 		}
+
+		$ie_link = '';
+		if ($favicon_ie_url != null) {
+			$ie_link = '
+<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="'.html::escapeHTML($favicon_ie_url).'" /><![endif]-->';
+			
+		}
 		
-		$res = '';
-		
+		$other_link = '';
 		if (!empty($favicon_url)) {
 			$extension = files::getExtension($favicon_url);
-			$mimetype = files::getMimeType($favicon_url);
 			
-			if (!isset(self::$allowed_mimetypes[$extension]) && !in_array($mimetype,self::$allowed_mimetypes)) {
-				$res .= '<!-- Bad favicon MIME type: must be an image -->'."\n";
+			if (!isset(self::$allowed_mimetypes[$extension])) {
+				$mimetype = files::getMimeType($favicon_url);
+				if (!in_array($mimetype,self::$allowed_mimetypes)) {
+					return '<!-- Bad favicon MIME type. -->'."\n";
+				}
 			}
 			else {
-				$rel = ($favicon_ie6 ? 'shortcut ' : '').'icon';
 				$mimetype = self::$allowed_mimetypes[$extension];
-				$href = html::escapeHTML($favicon_url);
-				$res .= '<link rel="'.$rel.'" type="'.$mimetype.'" href="'.$href.'" />';
 			}
-			$res .= "\n";
-		}
-		
-		if (!empty($favicon_iOS_url)) {
-			$extension = files::getExtension($favicon_iOS_url);
-			$mimetype = files::getMimeType($favicon_iOS_url);
 			
-			if ($extension != 'png' && $mimetype != 'image/png') {
-				$res .= '<!-- Bad iOS MIME type: must be a PNG image -->'."\n";
-			}
-			else {
-				$rel = 'apple-touch-icon';
-				$href = html::escapeHTML($favicon_iOS_url);
-				$res .= '<link rel="'.$rel.'" href="'.$href.'" />';
-			}
-			$res .= "\n";
+			$other_link = '<link rel="icon" type="'.$mimetype.
+			'" href="'.html::escapeHTML($favicon_url).'" />';
+			
 		}
-		
-		return $res;
+			
+		return $other_link.$ie_link;
 	}
 }
 ?>
