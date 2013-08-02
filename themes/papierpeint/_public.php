@@ -15,9 +15,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicHeadContent','papierpeint_publicHeadContent');
 
-function papierpeint_publicHeadContent(&$core)
+function papierpeint_publicHeadContent($core)
 {
-	$style = $core->blog->settings->papierpeint_style;
+	$style = $core->blog->settings->themes->papierpeint_style;
 	if (!preg_match('/^1930|1950|1970$/',$style)) {
 		$style = '1950';
 	}

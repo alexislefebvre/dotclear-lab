@@ -19,15 +19,15 @@ $papierpeint_styles = array(
 	"70's" => '1970'
 );
 
-if (!$core->blog->settings->papierpeint_style) {
-	$core->blog->settings->papierpeint_style = '1950';
+if (!$core->blog->settings->themes->papierpeint_style) {
+	$core->blog->settings->themes->papierpeint_style = '1950';
 }
 
 if (!empty($_POST['papierpeint_style']) && in_array($_POST['papierpeint_style'],$papierpeint_styles))
 {
-	$core->blog->settings->papierpeint_style = $_POST['papierpeint_style'];
-	$core->blog->settings->setNamespace('themes');
-	$core->blog->settings->put('papierpeint_style',$core->blog->settings->papierpeint_style,'string','Papier Peint theme style',true);
+	$core->blog->settings->themes->papierpeint_style = $_POST['papierpeint_style'];
+	$core->blog->settings->addNamespace('themes');
+	$core->blog->settings->themes->put('papierpeint_style',$core->blog->settings->papierpeint_style,'string','Papier Peint theme style',true);
 	$core->blog->triggerBlog();
 }
 

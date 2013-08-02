@@ -17,6 +17,6 @@ $this->registerModule(
 	/* Name */			"Papier Peint",
 	/* Description*/		"Papier Peint, from 30's, 50's & 70's",
 	/* Author */			"Steven Tlucek",
-	/* Version */			'1.0'
+	/* Version */			'1.1'
 );
 ?>
