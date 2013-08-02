@@ -407,6 +407,9 @@ class zoneclearFeedServer
 					if (!$s->zoneclearFeedServer_keep_empty_feed)
 					{
 						$this->enableFeed($f->feed_id,false);
+					} else {
+						# Set update time of this feed
+						$this->enableFeed($f->feed_id,true,$time);
 					}
 					$i++;
 				}
