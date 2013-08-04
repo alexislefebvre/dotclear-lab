@@ -132,12 +132,12 @@ class tplBlogAnniv
 		}
 		return
 		$res = ($w->content_only ? '' : '<div class="bloganniv'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-		'<h2>'.$title.'</h2>'.
+		'<h2>'.$title.'</h2>'.'<p>'.
 		$dispyearborn.
 		$dispyear.
 		__('Birthday in').
     ' <span class="annivjrs">'.$nbrejours.'</span> '.
-    __('day(s)').
+    __('day(s)').'</p>'.
     ($w->content_only ? '' : '</div>');
 	}
 }

@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */				"Blog Anniv",
 	/* Description*/		"Décompte du nombre de jours avant et après la date anniversaire du blog",
 	/* Author */			"Fran6t, Pierre Van Glabeke",
-	/* Version */			'1.3.1',
+	/* Version */			'1.3.2',
 	/* Permissions */		'blogAnniv'
 );
 ?>
