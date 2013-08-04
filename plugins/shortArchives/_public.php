@@ -55,9 +55,8 @@ class tplShortArchives
 					  'date' => html::escapeHTML(dt::dt2str(__('%B'),$rs->dt)), 
 					  'nbpost' => $rs->nb_post);
         }
-		        
-        $res =
-            '<div class="shortArchives">'.
+
+		    $res = ($w->content_only ? '' : '<div class="shortArchives'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
             ($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
             '<ul>';
 		foreach($posts as $annee=>$post) {
@@ -70,7 +69,8 @@ class tplShortArchives
 			}
 			$res .= '</ul></li>';
 		}
-        $res .= '</ul></div>';
+        $res .= '</ul>'.
+		($w->content_only ? '' : '</div>');
 		
         return $res;
 	}
