@@ -70,7 +70,7 @@ class tplEnvoyer extends dcUrlHandlers
 										$_ctx->sdf->senderName = $_POST['yourName'];
 										$_ctx->sdf->senderEmail = $_POST['yourEmail'];
 										$_ctx->sdf->receiverName = $_POST['yourFriendName'];
-										$_ctx->sdf->receiverEmail = $_POST['yourFriendEmail'];										
+										$_ctx->sdf->receiverEmail = $_POST['yourFriendEmail'];
 
 										$headers = array(
 											'From: '.mail::B64Header($_POST['yourName']).' <'.$_POST['yourEmail'].'>',
@@ -154,7 +154,7 @@ class tplEnvoyer extends dcUrlHandlers
 			$_ctx->sdf->senderName,
 			$_ctx->sdf->senderEmail,
 			$_ctx->sdf->receiverName,
-			$_ctx->sdf->receiverEmail			
+			$_ctx->sdf->receiverEmail
 		);
 		return str_replace($in,$out,$str);
 	

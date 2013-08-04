@@ -142,7 +142,7 @@ if(isset($_POST['type']))
 </div>
 
 <div class="multi-part" title="<?php echo __('About'); ?>">
-	<p><?php echo __("This plugin was developed by"); ?> Julien Appert <?php echo __('and contributors'); ?> (brol).</p>
+	<p><?php echo __("This plugin was developed by"); ?> Julien Appert <?php echo __('and contributors'); ?>.</p>
 	<p><?php echo __('For more informations, visit the'); ?> <a href="http://forum.dotclear.net/viewtopic.php?id=43911"><?php echo __("forum dotclear"); ?></a></p>
 </div>
 </body>
