@@ -1,5 +1,4 @@
 <?php
-
 /*
 Copyright (c) 2008 Noel GUILBERT
 
@@ -43,14 +42,14 @@ class mobileThemeSwitcherAdminBehaviours
     echo '<fieldset><legend>Mobile Theme Switcher</legend>'.
     '<div class="two-cols"><div class="col">'.
     '<p><label>Mobile theme</label>'.
-    form::combo('mobilethemeswitcher_theme', $themes, $settings->mobilethemeswitcher->mobilethemeswitcher_theme).
+    form::combo('mobileThemeSwitcher_theme', $themes, $settings->mobileThemeSwitcher->mobileThemeSwitcher_theme).
     '</p></div></div></fieldset>';
   }
 
   public static function adminBeforeBlogSettingsUpdate($settings)
   {
-    $settings->addNameSpace('mobilethemeswitcher');
-    $settings->mobilethemeswitcher->put('mobilethemeswitcher_theme', empty($_POST['mobilethemeswitcher_theme'])?"":$_POST['mobilethemeswitcher_theme'], 'string');
+    $settings->addNameSpace('mobileThemeSwitcher');
+    $settings->mobileThemeSwitcher->put('mobileThemeSwitcher_theme', empty($_POST['mobileThemeSwitcher_theme'])?"":$_POST['mobileThemeSwitcher_theme'], 'string');
   }
 }
 ?>

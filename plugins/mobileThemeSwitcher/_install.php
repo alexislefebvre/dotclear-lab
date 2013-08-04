@@ -1,5 +1,4 @@
 <?php
-
 /*
 Copyright (c) 2008 Noel GUILBERT
 
@@ -39,8 +38,8 @@ if (version_compare($i_version,$m_version,'>=')) {
 
 # Création du setting (s'il existe, il ne sera pas écrasé)
 $settings = new dcSettings($core,null);
-$settings->addNamespace('mobilethemeswitcher');
-$settings->mobilethemeswitcher->put('mobilethemeswitcher_theme', null, 'string', 'mobileThemeSwitcher theme', false, true);
+$settings->addNamespace('mobileThemeSwitcher');
+$settings->mobileThemeSwitcher->put('mobileThemeSwitcher_theme', null, 'string', 'mobileThemeSwitcher theme', false, true);
 
  
 # La procédure d'installation commence vraiment là

@@ -1,5 +1,4 @@
 <?php
-
 /*
 Copyright (c) 2008 Noel GUILBERT
 
@@ -46,7 +45,7 @@ class mobileThemeSwitcherBehaviors
     }
     elseif (self::isMobileDevice() || isset($_GET['dc_mobile_theme']))
     {
-      $theme = $core->blog->settings->mobilethemeswitcher->mobilethemeswitcher_theme;
+      $theme = $core->blog->settings->mobileThemeSwitcher->mobileThemeSwitcher_theme;
     }
 
     if ($theme && $core->themes->moduleExists($theme))
@@ -67,7 +66,8 @@ class mobileThemeSwitcherBehaviors
       '#Profile/MIDP-2.0#i', // Motorola
       '#Opera mini#i', // Opera mini browser
       '#Symbian#i', // Symbian OS
-      '#Android#i', // Android
+      '#Android 1#i', // Android version 1
+      '#Android 2#i', // Android version 2
     );
 
     foreach ($patterns as $pattern)
