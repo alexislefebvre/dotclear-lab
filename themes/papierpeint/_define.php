@@ -16,7 +16,7 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */			"Papier Peint",
 	/* Description*/		"Papier Peint, from 30's, 50's & 70's",
-	/* Author */			"Steven Tlucek",
-	/* Version */			'1.1'
+	/* Author */			"Steven Tlucek, Pierre Van Glabeke",
+	/* Version */			'1.2'
 );
 ?>

@@ -29,6 +29,8 @@ if (!empty($_POST['papierpeint_style']) && in_array($_POST['papierpeint_style'],
 	$core->blog->settings->addNamespace('themes');
 	$core->blog->settings->themes->put('papierpeint_style',$core->blog->settings->papierpeint_style,'string','Papier Peint theme style',true);
 	$core->blog->triggerBlog();
+
+	echo '<p class="message">'.__('Theme configuration has been successfully updated.').'</p>';
 }
 
 echo
