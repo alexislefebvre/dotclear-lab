@@ -18,8 +18,8 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */		"My Favicon",
 	/* Description*/	"Add a customized favicon to your blog",
-	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'0.6.1',
+	/* Author */		"Oleksandr Syenchuk, Pierre Van Glabeke",
+	/* Version */		'0.6.2',
 	/* Permissions */	'contentadmin'
 );
 ?>
