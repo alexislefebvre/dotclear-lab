@@ -1,0 +1,228 @@
+/* -- BEGIN LICENSE BLOCK ----------------------------------
+This file is part of dc2smartphone, a theme for Dotclear.
+Copyright (c) 2009
+Guillaume Bizet guillaumebizet@gmail.com
+Pierre Van Glabeke contact@brol.info
+
+Licensed under the Creative Commons license.
+A copy of this license is available at
+http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
+-- END LICENSE BLOCK ------------------------------------*/
+
+* { margin: 0; padding: 0; border: 0; }
+
+/* 1. STRUCTURE */
+html{-webkit-text-size-adjust:none}
+
+body {	background: #fff; font-family: helvetica,arial,sans-serif; font-size:90%;}
+#page { position: relative; background: transparent;}
+
+
+/*--Nom du blog avec titre court--*/
+#top { background: #C9C9C9 url(img/bg_header.png) repeat-x bottom left; }
+#top h1 { padding: 0 0 0 10px; font-size: 20px;}
+#top h1 a, #top h1 a:visited, #top h1 a:hover { height: 40px; line-height: 40px; color: #fff;}
+
+/*--Nom du blog avec titre long--*/
+/*#top { background: #C9C9C9 url(img/bg_header.png) repeat-x bottom left; }
+#top h1 { padding: 5px 10px; font-size: 20px;}
+#top h1 a, #top h1 a:visited, #top h1 a:hover { display: block; color: #fff;}*/
+
+.description {color:#ccc;padding:0 0 5px 10px;font-style:italic;font-size: 12px;display:none;}
+
+#prelude { display: none; }
+	
+#footer { background: #838383; clear: both; font-size: 0.8em;text-align: center; }
+#footer p { padding: 6px 16px 6px 0; color: #FFF; }
+#footer p a:link, #footer p a:visited { color: #FFF; text-decoration: underline; }
+#footer p a:hover { text-decoration: none; }
+
+#footer #search fieldset { border: none; margin: 0; padding: 3px 0;}
+#footer #q { border: 1px solid #bfbfbf; width: 230px; color: #6b6b6b; padding: 2px; }
+#footer #search .submit { padding: 2px; border: none; background: #ccc; font-weight: bold; color: #6b6b6b; text-transform: uppercase; }
+#footer #search .submit:hover { background: #ccc; color: #fff; border: none; }
+	
+/* 2. BALISES HTML PAR DEFAUT */
+
+ul {margin-left: 20px; }
+a:link, a:visited, a:hover { color: #275EA6; text-decoration: none; }
+pre { overflow: auto; width: 100%; height: auto; }
+
+/* 3. MENU */
+#menunav { height: 36px; margin: 0px; background: transparent url(img/bg_nav.png) repeat-x top left; list-style-type: none; }
+#menunav li {float: left; width: 16.66%; text-align: center;}
+
+#menunav li a, li a:visited, #menunav li a:hover { display: block; margin: 0px; padding: 10px;  color: #fff; text-decoration: none; font-size: 80%;}
+#menunav li a:hover { background: transparent url(img/bg_navh.png) repeat-x top left; }
+
+#menunav li a.mhome, #menunav li a.mhome:visited { background: transparent url(img/bg_mhome.png) no-repeat 50% 50%;}
+#menunav li a.mhome:hover { background: transparent url(img/bg_mhomeh.png) no-repeat 50% 50%;}
+#menunav li a.mcomliste, #menunav li a.mcomliste:visited { background: transparent url(img/bg_mcomliste.png) no-repeat 50% 50%;}
+#menunav li a.mcomliste:hover { background: transparent url(img/bg_mcomlisteh.png) no-repeat 50% 50%;}
+#menunav li a.mcat, #menunav li a.mcat:visited { background: transparent url(img/bg_mcat.png) no-repeat 50% 50%;}
+#menunav li a.mcat:hover { background: transparent url(img/bg_mcath.png) no-repeat 50% 50%;}
+#menunav li a.mtags, #menunav li a.mtags:visited { background: transparent url(img/bg_mtags.png) no-repeat 50% 50%;}
+#menunav li a.mtags:hover { background: transparent url(img/bg_mtagsh.png) no-repeat 50% 50%;}
+#menunav li a.msearch, #menunav li a.msearch:visited { background: transparent url(img/bg_msearch.png) no-repeat 50% 50%;}
+#menunav li a.msearch:hover { background: transparent url(img/bg_msearchh.png) no-repeat 50% 50%;}
+#menunav li a.marchives, #menunav li a.marchives:visited { background: transparent url(img/bg_marchives.png) no-repeat 50% 50%;}
+#menunav li a.marchives:hover { background: transparent url(img/bg_marchivesh.png) no-repeat 50% 50%;}
+#menunav li a.mcontact, #menunav li a.mcontact:visited { background: transparent url(img/bg_mcontact.png) no-repeat 50% 50%;}
+#menunav li a.mcontact:hover { background: transparent url(img/bg_mcontacth.png) no-repeat 50% 50%;}
+
+/* 4. Page HOME */
+
+.dc-home #content ul, .dc-home #content ul li { list-style: none; margin: 0; }
+.dc-home #content li { background: transparent url(img/ico_suiv.png) no-repeat 95% 50%; border-width: 1px 0 0 0;border-style: solid; border-color: #bbb;}
+.dc-home #content li a:link, .dc-home #content li a:visited, .dc-home #content li a:hover { padding: 10px 40px 10px 10px; display: block; font-size: 100%; color: #000; text-decoration: none; }
+.dc-home #content li a:hover {background: #bbb url(img/ico_suiv.png) no-repeat 95% 50%;}
+.dc-home a:link, .dc-home a:visited, .dc-home a:hover { }
+
+/* 5. Page POST */
+.dc-post .post h2 {background: #dceffa; padding: 10px;}
+
+.dc-post .post-info {background: #dceffa; padding: 0px 0 5px 10px; font-style: italic;}
+.dc-post .post-excerpt {padding: 10px 10px 0 10px;}
+.dc-post .post-content {padding: 10px;}
+.dc-post .post-content a, .dc-post .post-content a:visited, .dc-post .post-content a:hover {text-decoration: underline; color: #275ea6;}
+.dc-post .post-info a:link, .dc-post .post-info a:visited, .dc-post .post-info a:hover { color: #000; text-decoration: underline }
+
+.dc-post .div-post-tags {background: #dceffa; padding: 0px 10px 5px 10px; font-style: italic;}
+.dc-post .div-post-tags a:link, .dc-post .div-post-tags a:visited, .dc-post .div-post-tags a:hover { color: #000; text-decoration: underline; }
+
+.dc-post .post-excerpt p {margin:5px 0;}
+
+.dc-post .post-content ul, .dc-post .post-content ul li {list-style: none;}
+.dc-post .post-content ul { margin: 0 0 0 15px; padding: 4px 0; }
+.dc-post .post-content ol { margin: 0 0 0 25px; padding: 4px 0; }
+.dc-post .post-content ul li { padding: 1px 0 1px 15px; background: transparent url(img/li.gif) no-repeat 0 5px; font-size: 1em; line-height: 1.3; }
+.dc-post .post-content ul li li { padding: 1px 0 1px 15px; background: transparent url(img/li.gif) no-repeat 0 5px; font-size: 1em; line-height: 1.3; }
+.dc-post .post-content p {margin: 5px 0px;}
+.dc-post .post-content img, .dc-post .post-excerpt img {max-width: 280px;}
+.post-content hr{border:1px dashed #b7b5d4;}
+.post-excerpt blockquote, .post-content blockquote {margin:0 0 0 10px;}
+
+.dc-post #infosbillet {margin: 0px 0px 10px 0px;}
+.dc-post #infosbillet h3 { margin-bottom: 10px; padding: 7px; background: transparent url(img/bg_posth3.png) repeat-x top left; color: #fff; }
+.dc-post #infosbillet ul, .dc-post #infosbillet ul li {list-style: none;}
+.dc-post #infosbillet ul { margin: 0 0 0 15px; padding: 4px 0; }
+.dc-post #infosbillet ul li { padding: 1px 0 1px 15px; background: transparent url(img/li.gif) no-repeat 0 5px; font-size: 1em; line-height: 1.3; }
+.dc-post #infosbillet ul li li { padding: 1px 0 1px 15px; background: transparent url(img/li.gif) no-repeat 0 5px; font-size: 1em; line-height: 1.3; }
+.dc-post #infosbillet ul li a {display: inline; margin: 0; padding: 0; color: #; color: #275EA6; text-decoration: none; font-size: 100%; font-weight: bold;}
+
+.dc-post #post-rss	{margin: 0; padding: 10px; background: #f5f5f5;clear: both;}
+.dc-post #post-rss a, .dc-post #post-rss a:visited, .dc-post #post-rss a:hover {text-decoration: underline; }
+
+.dc-post #comments, .dc-post #pings, .dc-post #comment-form {margin: 10px 0px 20px 0px;}
+.dc-post #pings h3, .dc-post #comments h3, .dc-post #comment-form h3 {padding: 7px; background: transparent url(img/bg_posth3.png) repeat-x top left; color: #fff; }
+.dc-post #ping-url {margin-left: 10px; }
+.dc-post #ping-url a, .dc-post #ping-url a:visited, .dc-post #ping-url a:hover {text-decoration: underline; }
+
+.dc-post #comments dl, .dc-post #pings dl {margin: 10px 10px 0px 10px;}
+.dc-post #comments dt, .dc-post #pings dt {margin: 0px 0px 5px 0px; font-weight: bold; font-style: italic;}
+.dc-post #comments dd, .dc-post #pings dd {margin-bottom: 20px; padding: 5px; border: 1px solid #bbb; }
+.dc-post #comments p, .dc-post #pings p {margin:5px 0;}
+.dc-post #comments a.comment-number {color: #000;}
+
+.comment-preview p {padding:5px 10px;}
+#pr input.submit {margin-bottom: 10px;}
+
+.dc-post #comment-form fieldset {margin: 10px;}
+.dc-post #comment-form p.field label { display: block; margin-top: 10px; font-weight: bold; }
+.dc-post #comment-form input, .dc-post #comment-form textarea {padding: 1px 2px; border: 1px solid #CDCDCD; font: 1em Arial,sans-serif; color: #005D99; }
+.dc-post #c_name, .dc-post #c_mail, .dc-post #c_site, .dc-post #c_content {width: 100%;}
+.dc-post p.remember {margin-bottom: 10px;}
+.dc-post p.remember label {margin-left: 10px;}
+.dc-post #comment-form input.submit  { margin-left: 10px; }
+.dc-post #comment-form input.preview, #comment-form input.submit { width: auto; background: #F5F5F5; border: 1px solid #CDCDCD; color: #838383; font-size: 1em; font-weight: bold; text-transform: capitalize; }
+.dc-post #comment-form input.preview:hover, #comment-form input.submit:hover { background: #838383; border: 1px solid #CDCDCD; color: #FFF; }
+.dc-post p.form-help  {margin: 10px 0px;}
+.dc-post #comment-form #subscribeToComments {margin-right: 10px;}
+
+/* 6. Page CATEGORIES + TAG + TAGS + ARCHIVES + ARCHIVES MONTH + CATEGORIES */
+
+.dc-gen #content-info	{margin: 0px; padding: 10px; background: #dceffa; }
+.dc-gen #content-info a:link, #content-info a:visited, #content-info a:hover { color: #275EA6; text-decoration: underline; }
+.dc-gen #content-info p {margin: 5px 0px;}
+
+.dc-gen #content ul, .dc-gen #content ul li { list-style: none; margin: 0; }
+.dc-gen #content ul li { background: transparent url(img/ico_suiv.png) no-repeat 98% 50%; border-width: 1px 0 0 0;border-style: solid; border-color: #bbb;}
+.dc-gen #content li a:link, .dc-gen #content li a:visited, .dc-gen #content li a:hover { padding: 10px; display: block;}
+.dc-gen #content li a:hover {background: #bbb url(img/ico_suiv.png) no-repeat 98% 50%;}
+
+.dc-gen a:link, .dc-gen a:visited, .dc-gen a:hover { color: #000; text-decoration: none; }
+
+.dc-404 .content-inner {padding: 10px;}
+.dc-gen .content-inner h3 {padding: 10px; background: #ccc; color: #838383;font-weight: bold; text-align: center;}
+
+.tag0 { font-size: 75%; }
+.tag10 { font-size: 80%; }
+.tag20 { font-size: 90%; }
+.tag30 { font-size: 100%; }
+.tag40 { font-size: 110%; }
+.tag50 { font-size: 120%; }
+.tag60 { font-size: 130%; }
+.tag70 { font-size: 140%; }
+.tag80 { font-size: 150%; }
+.tag90 { font-size: 160%; }
+.tag100 { font-size: 170%; }
+
+/* navigations */
+
+.pagination { clear: left; margin: 0; padding: 10px; background: #F5F5F5; border: 1px solid #CDCDCD; text-align: center; color: #838383; font-weight: bold; }
+.pagination a:link, .pagination a:visited, #navlinks a:link, #navlinks a:visited { color: #838383; text-decoration: none; }
+.pagination a:hover, #navlinks a:hover { text-decoration: underline; }
+
+#navlinks { clear: left; margin: 0; padding: 10px; background: #F5F5F5; border-top: 1px solid #CDCDCD; text-align: center; color: #838383; font-weight: bold; }
+
+/* dans la categorie contexte billet seul */
+
+#navincat {padding:5px;}
+.prev { float:left; }
+.next {	float:right; }
+
+/* 7. Page Contact (plugin contactMe) */
+.dc-contactme h2 {background: #dceffa; padding: 10px;}
+.dc-contactme .content-inner p {margin-top: 10px;margin-left:10px;}
+.dc-contactme #comment-form fieldset {margin: 10px 10px 10px 0;}
+.dc-contactme #comment-form p.field label { display: block; margin-top: 10px; font-weight: bold; }
+.dc-contactme #comment-form input, .dc-contactme #comment-form textarea {padding: 1px 2px; border: 1px solid #CDCDCD; font: 1em Arial,sans-serif; color: #005D99; }
+.dc-contactme #c_name, .dc-contactme #c_mail, .dc-contactme #c_site, .dc-contactme #c_message, .dc-contactme #c_subject {width: 100%;}
+.dc-contactme #comment-form input.submit  { margin-top: 10px; width: auto; background: #F5F5F5; border: 1px solid #CDCDCD; color: #838383; font-size: 1em; font-weight: bold; text-transform: capitalize; }
+.dc-contactme #comment-form input.preview:hover, .dc-contactme #comment-form input.submit:hover { background: #838383; border: 1px solid #CDCDCD; color: #FFF; }
+.dc-contactme p.form-help  {margin: 10px 0px;}
+
+/* 8. CLASSES COMMUNES */
+
+.error { margin: 20px 0 0; padding: 10px 5px; background: #FFCCCC; border: 2px solid red; font-weight: bold; }
+.message { padding-left: 10px; color: #693; font-weight: bold; }
+
+/* 9. STYLES COURANTS UTILES */
+.left {float: left; margin-right: 1em; }
+.right {float: right; margin-left: 1em; }
+.center {margin-left: auto; margin-right: auto; }
+.left-text {text-align: left; }
+.right-text {text-align: right; }
+.center-text {text-align: center; }
+.italic { font-style: italic;}
+.little-text {font-size: .8em;}
+.little-upper-text {font-size: .8em; text-transform: uppercase; }
+.imgcache { display: none;}
+.clear{ clear: both; }
+#attachments {margin-left: 10px;}
+
+/* subscribetocomments */
+.dc-post #infosbillet #subscribetocomments_block {display:none;}
+.dc-post #subscribetocomments_block h3 {display:none;}
+.dc-post #subscribetocomments_block {margin:0 0 10px 10px}
+
+/* categories */
+.dc-categories li a:visited {font-size:100%;}
+
+/* comListe */
+.dc-comliste .post-info {display:none;}
+.dc-comliste #content ul li {background-color:#f5f5f5;}
+.dc-comliste #content ul li.nosuiv {background:none;padding:10px;}
+.dc-comliste #content ul li.nosuiv a {background:none;display:inline;padding:0;color:#275ea6;text-decoration:underline;}
+.dc-comliste #comments p {margin:5px 0;}
+.dc-comliste #comments ul ul li {background:none;border:none;list-style:disc;margin-left: 20px;}

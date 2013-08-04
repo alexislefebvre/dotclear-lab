@@ -1,0 +1,53 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: brol <contact@brol.info>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+
+msgid "Informations on the ticket"
+msgstr "Informations sur le billet"
+
+msgid "of the ticket"
+msgstr "du billet"
+
+msgid "To make a"
+msgstr "Faire un"
+
+msgid "on this ticket"
+msgstr "sur ce billet"
+
+msgid "You liked this ticket? You can subscribe to"
+msgstr "Vous avez aimé ce billet ? Vous pouvez vous abonner au"
+
+msgid "entries feed of this blog"
+msgstr "fil des billets de ce blog"
+
+msgid "thus you will be automatically informed of all new ticket!"
+msgstr "ainsi vous serez automatiquement averti de tout nouveau billet !"
+
+msgid "You do not know what is a flow RSS."
+msgstr "Vous ne savez pas ce qu'est un flux RSS."
+
+msgid "View a video explanatory"
+msgstr "Visionnez une vidéo explicative"
+
+msgid "French video explanatory of the interest of flows RSS"
+msgstr "Vidéo explicative en français de l'intérêt des flux RSS"
+
+msgid "in"
+msgstr "dans"
+
+msgid "Category:"
+msgstr "Catégorie :"
+
+msgid "Tags:"
+msgstr "Tags :"
+
+msgid "Browse the category"
+msgstr "Naviguez dans la catégorie"

@@ -1,0 +1,14 @@
+<div id="top">
+	<h1><a href="{{tpl:BlogURL}}">{{tpl:BlogName encode_html="1"}}</a></h1>
+    <p class="description">{{tpl:BlogDescription}}</p> 
+  <!-- # --BEHAVIOR-- publicTopAfterContent -->
+  {{tpl:SysBehavior behavior="publicTopAfterContent"}}
+</div>
+	<ul id="menunav">
+		<li><a class="mhome" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}">&nbsp;</a></li>
+		<li><a class="mcomliste" href="{{tpl:BlogURL}}comListe" title="{{tpl:ComListePageTitle}}">&nbsp;</a></li>
+		<li><a class="mcat" href="{{tpl:BlogURL}}categories" title="{{tpl:lang Categories}}">&nbsp;</a></li>
+		<li><a class="mtags" href="{{tpl:BlogURL}}tags" title="{{tpl:lang Tags}}">&nbsp;</a></li>
+		<li><a class="marchives" href="{{tpl:BlogURL}}archive" title="{{tpl:lang Archives}}">&nbsp;</a></li>
+		<li><a class="mcontact" href="{{tpl:BlogURL}}contact" title="{{tpl:ContactMePageTitle}}">&nbsp;</a></li>
+	</ul>
