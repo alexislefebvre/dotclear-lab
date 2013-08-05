@@ -1,5 +1,14 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: brol <contact@brol.info>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
 
 msgid "Acronyms Manager"
 msgstr "Gestionnaire des acronymes"
@@ -16,8 +25,6 @@ msgstr "Activer la page publique des acronymes"
 msgid "View the acronyms page"
 msgstr "Voir la page des acronymes"
 
-msgid "The acronyms in this list will be automatically recognized by the system when you use the wiki syntax. This means that you will not have to take the title, simply enclose an acronym by double question marks."
-msgstr "Les acronymes de cette liste seront automatiquement reconnus par le système lorsque vous utiliserez la syntaxe wiki. C'est-à-dire que vous n'aurez pas à saisir le titre, simplement encadrer l'acronyme de doubles points d'interrogation."
 
 msgid "manage acronyms"
 msgstr "gérer les acronymes"
@@ -32,10 +39,13 @@ msgid "Acronym"
 msgstr "Acronyme"
 
 msgid "Title"
-msgstr "Titre"
+msgstr "Libellé"
+
+msgid "Entitled"
+msgstr "Libellé"
 
 msgid "Title?"
-msgstr "Titre ?"
+msgstr "Libellé ?"
 
 msgid "Lang?"
 msgstr "Langue ?"
@@ -47,7 +57,7 @@ msgid "You must give an acronym"
 msgstr "Vous devez indiquer un acronyme"
 
 msgid "You must give a title"
-msgstr "Vous devez indiquer un titre"
+msgstr "Vous devez indiquer un libellé"
 
 msgid "This acronym already exists"
 msgstr "Cet acronyme existe déjà"
@@ -64,11 +74,5 @@ msgstr "Modifier"
 msgid "Acronyms list successfully updated."
 msgstr "Liste des acronymes mise à jour avec succès."
 
-msgid "Note"
-msgstr "Note"
-
-msgid "To remove an acronym, just empty its title."
-msgstr "Pour supprimer un acronyme, vider simplement son titre."
-
-msgid ""
-msgstr ""
+msgid "List of Acronyms"
+msgstr "Liste des acronymes"

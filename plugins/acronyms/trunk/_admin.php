@@ -11,7 +11,9 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+require_once dirname(__FILE__).'/_widgets.php';
+
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 
 $_menu['Blog']->addItem(__('Acronyms Manager'),'plugin.php?p=acronyms','index.php?pf=acronyms/icon.png',
 		preg_match('/plugin.php\?p=acronyms(&.*)?$/',$_SERVER['REQUEST_URI']),
@@ -70,10 +72,10 @@ class acronymsAdminBehaviors
 
 	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
-		$settings->setNameSpace('acronyms');
-		$settings->put('acronyms_button_enabled',!empty($_POST['acronyms_button_enabled']),'boolean');
-		$settings->put('acronyms_public_enabled',!empty($_POST['acronyms_public_enabled']),'boolean');
-		$settings->setNameSpace('system');
+		$settings->addNameSpace('acronyms');
+		$settings->acronyms->put('acronyms_button_enabled',!empty($_POST['acronyms_button_enabled']),'boolean');
+		$settings->acronyms->put('acronyms_public_enabled',!empty($_POST['acronyms_public_enabled']),'boolean');
+		$settings->addNameSpace('system');
 	}
 
 } # class acronymsAdminBehaviors

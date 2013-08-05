@@ -9,13 +9,10 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */				"Acronyms Manager",
-	/* Description*/		"Add, remove and modify acronyms for the wiki syntax.",
-	/* Author */			"Vincent Garnier, Pierre Van Glabeke",
-	/* Version */			'1.2',
-	/* Permissions */		'acronyms'
-);
+if (!isset($__resources['help']['acronyms']))
+{
+	$__resources['help']['acronyms'] = dirname(__FILE__).'/help/help.html';
+}
+
 ?>

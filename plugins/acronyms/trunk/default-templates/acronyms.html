@@ -32,13 +32,13 @@
 <div id="main">
   <div id="content">
 
-  <h2>{{tpl:lang Acronyms}}</h2>
+  <h2>{{tpl:lang List of Acronyms}}</h2>
 
   <tpl:Acronyms>
-  <tpl:AcronymsHeader><dl></tpl:AcronymsHeader>
-    <dt><acronym title="{{tpl:AcronymTitle}}">{{tpl:Acronym}}</acronym></dt>
-    <dd>{{tpl:AcronymTitle}}</dd>
-  <tpl:AcronymsFooter></dl></tpl:AcronymsFooter>
+  <tpl:AcronymsHeader><div class="acronymslist"></tpl:AcronymsHeader>
+    <p><acronym title="{{tpl:AcronymTitle}}">{{tpl:Acronym}}</acronym><br />
+    {{tpl:AcronymTitle}}</p>
+  <tpl:AcronymsFooter></div></tpl:AcronymsFooter>
   </tpl:Acronyms>
 
   </div><!-- #content -->

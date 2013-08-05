@@ -11,6 +11,10 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
+require_once dirname(__FILE__).'/_widgets.php';
+
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
+
 $core->tpl->addBlock('Acronyms',array('tplAcronyms','Acronyms'));
 $core->tpl->addBlock('AcronymsHeader',array('tplAcronyms','AcronymsHeader'));
 $core->tpl->addBlock('AcronymsFooter',array('tplAcronyms','AcronymsFooter'));
@@ -75,7 +79,7 @@ class acronymsURL extends dcUrlHandlers
         {
         	global $core;
 
-        	if (!$core->blog->settings->acronyms_public_enabled) {
+        	if (!$core->blog->settings->acronyms->acronyms_public_enabled) {
 				self::p404();
 				exit;
         	}

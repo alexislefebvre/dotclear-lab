@@ -91,7 +91,7 @@ if (!empty($_POST['p_add']))
 </head>
 <body>
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('Acronyms Manager'); ?>
-<?php if ($core->blog->settings->acronyms_public_enabled) {
+<?php if ($core->blog->settings->acronyms->acronyms_public_enabled) {
 	echo ' - <a id="post-preview" href="'.$core->blog->url.$core->url->getBase('acronyms').'" class="button">'.__('View the acronyms page').'</a>';
 } ?></h2>
 
@@ -103,10 +103,6 @@ if (!empty($_GET['added'])) {
 	echo '<p class="message">'.__('Acronym successfully added.').'</p>';
 }
 ?>
-
-<p><?php echo __('The acronyms in this list will be automatically recognized by the system when you use the wiki syntax. This means that you will not have to take the title, simply enclose an acronym by double question marks.') ?><br />
-<strong><?php echo __('Note'); ?> :</strong> <?php echo __('To remove an acronym, just empty its title.'); ?></p>
-
 
 <form id="edit_acronyms" action="plugin.php" method="post">
 	<fieldset>
@@ -141,7 +137,7 @@ if (!empty($_GET['added'])) {
 		<p class="acroleft"><label for="a_acro"><?php echo __('Acronym'); ?></label>
 		<?php echo form::field('a_acro',10,'',$a_acro,'',''); ?></p>
 
-		<p class="acroright"><label for="a_title"><?php echo __('Title'); ?></label>
+		<p class="acroright"><label for="a_title"><?php echo __('Entitled'); ?></label>
 		<?php echo form::field('a_title',60,'',$a_title,'',''); ?></p>
 
 	</fieldset>
@@ -150,7 +146,7 @@ if (!empty($_GET['added'])) {
 	echo $core->formNonce(); ?>
 	<input type="submit" class="submit" value="<?php echo __('Add'); ?>" /></p>
 </form>
-
+<?php dcPage::helpBlock('acronyms'); ?>
 </body>
 </html>
 ?>
