@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Aide de authorMode</title>
+  </head>
+  <body>
+  <h2>Activation</h2>
+    <p>Pour obtenir le widget de présentation ainsi que les pages .html associées,
+    il faut bien évidemment activer le plugin.</p>
+
+  <h2>Options avancées</h2>
+    <h3>Préfixes des URLs</h3>
+    <p>Vous pouvez indiquer le préfixe qui sera utilisé pour accéder à la page
+    publique de l'auteur (par défaut, l'URL author aura comme préfixe <code>author</code>)
+    et pour la page publique regroupant tous les auteurs (par défaut, l'URL authors aura comme
+    préfixe <code>authors</code>).</p>
+    <h3>Options de liste</h3>
+    <p>Lister seulement les auteurs de billets standards : quand cette option est cochée,
+    seuls les billets sont pris en compte (pas les pages, pages connexes, billets muppet ou autres).</p>
+    <p>Le tri alphabétique n'intervient que sur la liste des auteurs (widget et page regroupant
+    tous les auteurs). Il s'effectue par ordre de préférence (si vide, on passe au
+    suivant) : Pseudonyme -> Prénom -> Nom.</p>
+
+  <h2>Widget</h2>
+    <p>Le widget affiche, par défaut, le lien vers la liste des auteurs. Si vous voulez ne
+    pas l'afficher, ajoutez à la fin de votre fichier css de thème le code suivant :
+    <code>#sidebar .listauthors {display:none;}</code></p>
+  </body>
+</html>

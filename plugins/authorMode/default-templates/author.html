@@ -30,7 +30,7 @@
     <tpl:EntriesHeader>
       <tpl:Pagination>
         <tpl:PaginationIf end="0">
-        <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
+        <link rel="prev" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
         </tpl:PaginationIf>
         
         <tpl:PaginationIf start="0">
@@ -43,7 +43,6 @@
   </tpl:Entries>
   
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
-  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
   {{tpl:include src="_head.html"}}
 </head>
@@ -69,11 +68,11 @@
   </div>
 
   <tpl:Entries>
-    <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
+    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
     <!-- # New day date -->
     <tpl:DateHeader><p class="day-date">{{tpl:EntryDate}}</p></tpl:DateHeader>
     
-    <h2 id="p{{tpl:EntryID}}" class="post-title"><a
+    <h2 class="post-title"><a
     href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
     
     <p class="post-info">{{tpl:lang By}} {{tpl:EntryAuthorLink}}
@@ -109,15 +108,17 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
     
     <!-- # Number of comments, trackbacks and attachments -->
-    <p class="post-info-co">
+    <tpl:EntryIf operator="or" show_comments="1" show_pings="1" has_attachment="1">
+      <p class="post-info-co">
+    </tpl:EntryIf>
     <tpl:EntryIf show_comments="1">
     <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a>
     </tpl:EntryIf>
     <tpl:EntryIf show_pings="1">
-    <a href="{{tpl:EntryURL}}#pings" class="ping_count">{{tpl:EntryTrackbackCount}}</a></tpl:EntryIf>
-    <tpl:EntryIf type="post" has_attachment="1">
+      <a href="{{tpl:EntryURL}}#pings" class="ping_count">{{tpl:EntryPingCount}}</a></tpl:EntryIf>
+    <tpl:EntryIf has_attachment="1">
       <a href="{{tpl:EntryURL}}#attachments" class="attach_count">{{tpl:EntryAttachmentCount}}</a>
-</tpl:EntryIf>
+    </tpl:EntryIf>
     <tpl:EntryIf operator="or" show_comments="1" show_pings="1" has_attachment="1">
      </p>
     </tpl:EntryIf>

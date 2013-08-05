@@ -1,9 +1,9 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of Dotclear 2.
+# This file is part of authorMode, a plugin for DotClear2.
 #
-# Copyright (c) 2003-2009 Olivier Meunier and contributors
+# Copyright (c) 2003 Olivier Meunier and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -93,5 +93,6 @@ if (!empty($_POST['saveconfig'])) {
 	</p>
 	</form>
 </div>
+<?php dcPage::helpBlock('authorMode'); ?>
 </body>
 </html>
