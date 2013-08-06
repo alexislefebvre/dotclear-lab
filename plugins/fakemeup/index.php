@@ -3,9 +3,9 @@
 #
 # This file is part of Dotclear 2 "Fake Me Up" plugin.
 #
-# Copyright (c) 2003-2010 DC Team
+# Copyright (c) 2010 Bruno Hondelatte, and contributors.
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
@@ -140,7 +140,7 @@ function backup ($changes) {
 		} else {
 			echo '<p>'.__("The updates have been performed.").'</p>';
 		}
-		echo '<p><a href="update.php">'.__('Update dotclear').'</p>'.
+		echo '<p><a href="update.php">'.__('Update dotclear').'</a></p>'.
 			'</div>';
 	} elseif (isset($_POST['disclaimer_ok'])) {
 		$changes = check_config(DC_ROOT,DC_DIGESTS);
@@ -167,17 +167,17 @@ function backup ($changes) {
 			echo '<form action="'.$p_url.'" method="post"><p>'.
 			$core->formNonce().
 			form::hidden("override",1).
-			'<input type="submit" name="confirm" value="'.__('Still ok to continue').'"/></p></div>';
+			'<input type="submit" name="confirm" value="'.__('Still ok to continue').'"/></p></form></div>';
 		}
 	} else {
 		if (file_exists(DC_DIGESTS_BACKUP)) {
-			echo '<div class="error"><p>'.__('Fake Me Up has already been run once.').
+			echo '<div class="error"><p>'.__('Fake Me Up has already been run once.').'</p>'.
 				'<form action="'.$p_url.'" method="post">'.
 				'<p><input type="checkbox" name="erase_backup" id="erase_backup" />&nbsp;'.
 				'<label for="confirm" class="inline">'.__("Remove the backup digest file, I want to play again").'</label>'.
 				$core->formNonce().
 				'</p>'.
-				'<p><input type="submit" name="confirm" value="'.__('Continue').'"/></p>'.
+				'<p><input type="submit" name="confirm" id="confirm" value="'.__('Continue').'"/></p>'.
 				'</form></div>';
 		} else {
 			$disclaimer = l10n::getFilePath(dirname(__FILE__).'/locales','disclaimer.html',$GLOBALS['_lang']);
@@ -188,7 +188,7 @@ function backup ($changes) {
 				'<label for="confirm" class="inline">'.__("I have read and understood the disclaimer and wish to continue anyway").'</label>'.
 				$core->formNonce().
 				'</p>'.
-				'<p><input type="submit" name="confirm" value="'.__('Continue').'"/></p>'.
+				'<p><input type="submit" name="confirm" id="confirm" value="'.__('Continue').'"/></p>'.
 				'</form></div>';
 		}
 	}
