@@ -17,11 +17,10 @@ if ($dsm_title === null) {
 	$dsm_title = __('Site map');
 }
 
-if (isset($_POST['dsm_flag']))
+if (isset($_POST['dsm_title']))
 {
 	try
 	{
-		$dsm_flag  = $_POST['dsm_flag'];
 		$dsm_title = $_POST['dsm_title'];
 		
 		if (empty($_POST['dsm_title'])) {
@@ -30,7 +29,7 @@ if (isset($_POST['dsm_flag']))
 
 		# Everything's fine, save options
 		$core->blog->settings->addNamespace('dcsitemap');
-		$core->blog->settings->dcsitemap->put('dsm_flag',$dsm_flag,'boolean','dcSiteMap plugin status');
+		$core->blog->settings->dcsitemap->put('dsm_flag',!empty($_POST['dsm_flag']),'boolean','dcSiteMap plugin status');
 		$core->blog->settings->dcsitemap->put('dsm_title',$dsm_title,'string','dcSiteMap page title');
 		
 		$core->blog->triggerBlog();

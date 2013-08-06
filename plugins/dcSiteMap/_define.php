@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */		"dcSiteMap",
 	/* Description*/	"Add a simple sitemap on your blog",
 	/* Author */		"Gaetan Guillard and contributors",
-	/* Version */		'0.0',
+	/* Version */		'0.1',
 	/* Permissions */	'admin'
 );
 ?>
