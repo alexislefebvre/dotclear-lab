@@ -33,11 +33,11 @@ msgid "No changed filed have been found, nothing to do!"
 msgstr ""
 
 #: plugins/fakemeup/index.php:149
-msgid "The following files will have their checksum faked :"
+msgid "The following files will have their checksum faked:"
 msgstr ""
 
 #: plugins/fakemeup/index.php:157
-msgid "The following files digests will have their checksum cleaned :"
+msgid "The following files digests will have their checksum cleaned:"
 msgstr ""
 
 #: plugins/fakemeup/index.php:167
@@ -57,7 +57,7 @@ msgid "Continue"
 msgstr ""
 
 #: plugins/fakemeup/index.php:181
-msgid "Please read carefully the following disclaimer before proceeding !"
+msgid "Please read carefully the following disclaimer before proceeding!"
 msgstr ""
 
 #: plugins/fakemeup/index.php:185

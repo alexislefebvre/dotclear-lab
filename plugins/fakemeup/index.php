@@ -146,7 +146,7 @@ function backup ($changes) {
 		} else {
 			echo '<p>'.__("The updates have been performed.").'</p>';
 		}
-		echo '<p><a href="update.php">'.__('Update dotclear').'</a></p>'.
+		echo '<p><a href="update.php">'.__('Update Dotclear').'</a></p>'.
 			'</div>';
 	} elseif (isset($_POST['disclaimer_ok'])) {
 		$changes = check_config(DC_ROOT,DC_DIGESTS);
@@ -155,7 +155,7 @@ function backup ($changes) {
 		} else {
 			echo '<div class="message">';
 			if (count($changes["changed"]) != 0) {
-				echo '<p>'.__('The following files will have their checksum faked :').'</p>'.
+				echo '<p>'.__('The following files will have their checksum faked:').'</p>'.
 					'<ul>';
 				foreach ($changes["changed"] as $k => $v) {
 					printf('<li> %s [old:%s, new:%s]</li>',$k,$v['old'],$v['new']);
@@ -163,7 +163,7 @@ function backup ($changes) {
 				echo '</ul>';
 			}
 			if (count($changes["removed"]) != 0) {
-				echo '<p>'.__('The following files digests will have their checksum cleaned :').'</p>'.
+				echo '<p>'.__('The following files digests will have their checksum cleaned:').'</p>'.
 					'<ul>';
 				foreach ($changes["removed"] as $k => $v) {
 					printf('<li> %s</li>',$k);
@@ -187,11 +187,11 @@ function backup ($changes) {
 				'</form></div>';
 		} else {
 			$disclaimer = l10n::getFilePath(dirname(__FILE__).'/locales','disclaimer.html',$GLOBALS['_lang']);
-			echo '<p class="error">'.__('Please read carefully the following disclaimer before proceeding !').'</p>';
+			echo '<p class="error">'.__('Please read carefully the following disclaimer before proceeding!').'</p>';
 			echo '<div class="message">'.file_get_contents($disclaimer);
 			echo '<form action="'.$p_url.'" method="post">'.
 				'<p><input type="checkbox" name="disclaimer_ok" id="disclaimer_ok" />&nbsp;'.
-				'<label for="disclaimer_ok" class="inline">'.__("I have read and understood the disclaimer and wish to continue anyway").'</label>'.
+				'<label for="disclaimer_ok" class="inline">'.__("I have read and understood the disclaimer and wish to continue anyway.").'</label>'.
 				$core->formNonce().
 				'</p>'.
 				'<p><input type="submit" name="confirm" id="confirm" value="'.__('Continue').'"/></p>'.

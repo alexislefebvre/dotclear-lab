@@ -16,16 +16,16 @@ msgstr ""
 msgid "The updates have been performed."
 msgstr "Les mises à jour ont été faites."
 
-msgid "Update dotclear"
-msgstr "Mettre à jour dotclear"
+msgid "Update Dotclear"
+msgstr "Mettre à jour Dotclear"
 
 msgid "No changed filed have been found, nothing to do!"
 msgstr "Pas de fichier modifié trouvé. Rien à faire !"
 
-msgid "The following files will have their checksum faked :"
+msgid "The following files will have their checksum faked:"
 msgstr "Les fichiers suivants vont voir leur checksum modifié :"
 
-msgid "The following files digests will have their checksum cleaned :"
+msgid "The following files digests will have their checksum cleaned:"
 msgstr "Les fichiers suivants vont avoir leur checksum nettoyé :"
 
 msgid "Still ok to continue"
@@ -40,9 +40,9 @@ msgstr "Supprimer le fichier de sauvegarde du digest, je veux relancer le proces
 msgid "Continue"
 msgstr "Continuer"
 
-msgid "Please read carefully the following disclaimer before proceeding !"
+msgid "Please read carefully the following disclaimer before proceeding!"
 msgstr "Merci de lire avec attention la mise en garde suivante avant de continuer !"
 
-msgid "I have read and understood the disclaimer and wish to continue anyway"
+msgid "I have read and understood the disclaimer and wish to continue anyway."
 msgstr "J'ai lu et j'ai compris la mise en garde, je souhaite continuer quand même."
 
