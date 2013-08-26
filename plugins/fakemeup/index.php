@@ -18,23 +18,23 @@ function check_config($root,$digests_file)
 	if (!is_readable($digests_file)) {
 		throw new Exception(__('Unable to read digests file.'));
 	}
-	
+
 	$opts = FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES;
 	$contents = file($digests_file,$opts);
-	
+
 	$changed = array();
 	$same = array();
 	$removed = array();
-	
+
 	foreach ($contents as $digest)
 	{
 		if (!preg_match('#^([\da-f]{32})\s+(.+?)$#',$digest,$m)) {
 			continue;
 		}
-		
+
 		$md5 = $m[1];
 		$filename = $root.'/'.$m[2];
-		
+
 		# Invalid checksum
 		if (is_readable($filename)) {
 			$md5_new = md5_file($filename);
@@ -46,14 +46,14 @@ function check_config($root,$digests_file)
 		} else {
 			$removed[$m[2]] = true;
 		}
-		
+
 	}
-	
+
 	# No checksum found in digests file
 	if (empty($md5)) {
 		throw new Exception(__('Invalid digests file.'));
 	}
-	
+
 	return array("same"=>$same,"changed"=>$changed,"removed" => $removed);
 }
 
@@ -109,11 +109,17 @@ function backup ($changes) {
 
 ?>
 <html>
-<head><title><?php echo __('Fake Me Up'); ?></title></head>
+<head><title><?php echo __('Fake Me Up'); ?></title>
+<style type="text/css">
+  .message h3 {
+    color:#fff;
+	}
+</style>
+</head>
 <body>
 <?php
 	global $_lang;
-	
+
 	echo '<h2>'.__('Fake Me Up').'</h2>';
 	if (isset($_POST['erase_backup'])) {
 		@unlink(DC_DIGESTS_BACKUP);
@@ -173,8 +179,8 @@ function backup ($changes) {
 		if (file_exists(DC_DIGESTS_BACKUP)) {
 			echo '<div class="error"><p>'.__('Fake Me Up has already been run once.').'</p>'.
 				'<form action="'.$p_url.'" method="post">'.
-				'<p><input type="checkbox" name="erase_backup" id="erase_backup" />&nbsp;'.
-				'<label for="confirm" class="inline">'.__("Remove the backup digest file, I want to play again").'</label>'.
+				'<p><input type="checkbox" name="erase_backup" id="erase_backup" class="inline" />&nbsp;'.
+				'<label for="erase_backup" class="inline">'.__("Remove the backup digest file, I want to play again").'</label>'.
 				$core->formNonce().
 				'</p>'.
 				'<p><input type="submit" name="confirm" id="confirm" value="'.__('Continue').'"/></p>'.
@@ -185,7 +191,7 @@ function backup ($changes) {
 			echo '<div class="message">'.file_get_contents($disclaimer);
 			echo '<form action="'.$p_url.'" method="post">'.
 				'<p><input type="checkbox" name="disclaimer_ok" id="disclaimer_ok" />&nbsp;'.
-				'<label for="confirm" class="inline">'.__("I have read and understood the disclaimer and wish to continue anyway").'</label>'.
+				'<label for="disclaimer_ok" class="inline">'.__("I have read and understood the disclaimer and wish to continue anyway").'</label>'.
 				$core->formNonce().
 				'</p>'.
 				'<p><input type="submit" name="confirm" id="confirm" value="'.__('Continue').'"/></p>'.
