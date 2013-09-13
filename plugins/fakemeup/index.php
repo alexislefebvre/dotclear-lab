@@ -110,11 +110,6 @@ function backup ($changes) {
 ?>
 <html>
 <head><title><?php echo __('Fake Me Up'); ?></title>
-<style type="text/css">
-  .message h3 {
-    color:#fff;
-	}
-</style>
 </head>
 <body>
 <?php
@@ -179,8 +174,8 @@ function backup ($changes) {
 		if (file_exists(DC_DIGESTS_BACKUP)) {
 			echo '<div class="error"><p>'.__('Fake Me Up has already been run once.').'</p>'.
 				'<form action="'.$p_url.'" method="post">'.
-				'<p><input type="checkbox" name="erase_backup" id="erase_backup" class="inline" />&nbsp;'.
-				'<label for="erase_backup" class="inline">'.__("Remove the backup digest file, I want to play again").'</label>'.
+				'<p><input type="checkbox" name="erase_backup" id="erase_backup" class="classic" />&nbsp;'.
+				'<label for="erase_backup" class="classic">'.__("Remove the backup digest file, I want to play again").'</label>'.
 				$core->formNonce().
 				'</p>'.
 				'<p><input type="submit" name="confirm" id="confirm" value="'.__('Continue').'"/></p>'.
@@ -191,7 +186,7 @@ function backup ($changes) {
 			echo '<div class="message">'.file_get_contents($disclaimer);
 			echo '<form action="'.$p_url.'" method="post">'.
 				'<p><input type="checkbox" name="disclaimer_ok" id="disclaimer_ok" />&nbsp;'.
-				'<label for="disclaimer_ok" class="inline">'.__("I have read and understood the disclaimer and wish to continue anyway.").'</label>'.
+				'<label for="disclaimer_ok" class="classic">'.__("I have read and understood the disclaimer and wish to continue anyway.").'</label>'.
 				$core->formNonce().
 				'</p>'.
 				'<p><input type="submit" name="confirm" id="confirm" value="'.__('Continue').'"/></p>'.

@@ -45,4 +45,3 @@ msgstr "Merci de lire avec attention la mise en garde suivante avant de continue
 
 msgid "I have read and understood the disclaimer and wish to continue anyway."
 msgstr "J'ai lu et j'ai compris la mise en garde, je souhaite continuer quand même."
-
