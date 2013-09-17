@@ -113,9 +113,13 @@ function backup ($changes) {
 </head>
 <body>
 <?php
-	global $_lang;
 
-	echo '<h2>'.__('Fake Me Up').'</h2>';
+  	echo dcPage::breadcrumb(
+		array(
+			__('System') => '',
+			'<span class="page-title">'.__('Fake Me Up').'</span>' => ''
+		));
+
 	if (isset($_POST['erase_backup'])) {
 		@unlink(DC_DIGESTS_BACKUP);
 	}
