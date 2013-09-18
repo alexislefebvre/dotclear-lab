@@ -11,6 +11,11 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+$page_title = __('authorMode');
+
+# Url de base
+$p_url = 'plugin.php?p=authorMode';
+
 $active      = $core->blog->settings->authormode->authormode_active;
 $url_author  = $core->blog->settings->authormode->authormode_url_author;
 $url_authors = $core->blog->settings->authormode->authormode_url_authors;
@@ -53,39 +58,50 @@ if (!empty($_POST['saveconfig'])) {
 ?>
 <html>
 <head>
-	<title><?php echo __('authorMode'); ?></title>
+  <title><?php echo $page_title; ?></title>
 </head>
 
 <body>
-<h2><?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; <?php echo __('authorMode'); ?></h2>
-<?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>'; ?>
+<?php
+
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+		
+if (!empty($msg)) {
+  dcPage::success($msg);
+}
+?>
+
 <div id="authormode_options">
 	<form method="post" action="plugin.php">
-	<fieldset>
-		<legend><?php echo __('Plugin activation'); ?></legend>
+	<div class="fieldset">
+		<h4><?php echo __('Plugin activation'); ?></h4>
 		<p class="field">
-		<label class=" classic"><?php echo form::checkbox('active', 1, $active); ?>&nbsp;
+		<label class="classic"><?php echo form::checkbox('active', 1, $active); ?>&nbsp;
 		<?php echo __('Enable authorMode');?>
 		</label>
 		</p>
-	</fieldset>
-	<fieldset>
-		<legend><?php echo __('Advanced options'); ?></legend>
-		<h3><?php echo __('URLs prefixes'); ?></h3>
-		<p><label class=" classic"><?php echo __('URL author : '); ?>
+	</div>
+	<div class="fieldset">
+		<h4><?php echo __('Advanced options'); ?></h4>
+		<h5><?php echo __('URLs prefixes'); ?></h5>
+		<p><label class="classic"><?php echo __('URL author : '); ?>
 		<?php echo form::field('url_author', 60, 255, $url_author); ?>
 		</label></p>
-		<p><label class=" classic"><?php echo __('URL authors : '); ?>
+		<p><label class="classic"><?php echo __('URL authors : '); ?>
 		<?php echo form::field('url_authors', 60, 255, $url_authors); ?>
 		</label></p>
-		<h3><?php echo __('List options'); ?></h3>
-		<p><label class=" classic"><?php echo form::checkbox('posts_only', 1, $posts_only); ?>&nbsp;
+		<h5><?php echo __('List options'); ?></h5>
+		<p><label class="classic"><?php echo form::checkbox('posts_only', 1, $posts_only); ?>&nbsp;
 		<?php echo __('List only authors of standard posts'); ?>
 		</label></p>
-		<p><label class=" classic"><?php echo form::checkbox('alpha_order', 1, $alpha_order); ?>&nbsp;
+		<p><label class="classic"><?php echo form::checkbox('alpha_order', 1, $alpha_order); ?>&nbsp;
 		<?php echo __('Sort list (alphabetical order)'); ?>
 		</label></p>
-	</fieldset>
+	</div>
 	<p>
 		<input type="hidden" name="p" value="authorMode" />
 		<?php echo $core->formNonce(); ?>

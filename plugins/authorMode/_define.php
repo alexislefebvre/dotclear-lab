@@ -13,9 +13,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			"authorMode",
-	/* Description*/		"post entries per author + author desc handling",
+	/* Description*/		"Post entries per author + author desc handling",
 	/* Author */			"xave, Pierre Van Glabeke",
-	/* Version */			'1.5',
+	/* Version */			'1.6',
 	/* Permissions */		'admin,contentadmin'
 );
 ?>

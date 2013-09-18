@@ -51,12 +51,11 @@ class authorModeBehaviors
 		else $user_desc = '';
 		
 		echo
-		'<fieldset class="clear"><legend>'.
-		'<label for="user_desc">'.__('Description:').
-		dcPage::help('users','user_desc').'</label></legend>'.
+		'<div class="fieldset"><h4>'.__('Author\'s description').
+		dcPage::help('users','user_desc').'</h4>'.
 		'<p class="area">'.
 		form::textarea('user_desc',50,8,html::escapeHTML($user_desc),'',4).
-		'</p></fieldset>';
+		'</p></div>';
 	}
 }
 ?>
