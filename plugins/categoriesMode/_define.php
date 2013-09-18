@@ -13,9 +13,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			"CategoriesMode",
-	/* Description*/		"Add a category list page / Ajoute une page listant les catégories",
+	/* Description*/		"Add a category list page",
 	/* Author */		"Adjaya, Pierre Van Glabeke",
-	/* Version */		'0.4.1',
+	/* Version */		'0.5',
 	/* Permissions */		null
 );
 

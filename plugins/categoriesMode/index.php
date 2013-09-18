@@ -12,6 +12,11 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+$page_title = __('categoriesMode');
+
+# Url de base
+$p_url = 'plugin.php?p=categoriesMode';
+
 if ($core->blog->settings->categoriesmode->categoriesmode_active === null) {
 	try
 	{
@@ -48,22 +53,32 @@ if (!empty($_POST['saveconfig'])) {
 ?>
 <html>
 <head>
-	<title><?php echo __('categoriesMode'); ?></title>
+	<title><?php echo $page_title; ?></title>
 </head>
 
 <body>
-<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('categoriesMode'); ?></h2>
-<?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>'; ?>
+<?php
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+
+if (!empty($msg)) {
+  dcPage::success($msg);
+}
+?>
+
 <div id="categoriesmode_options">
 	<form method="post" action="plugin.php">
-	<fieldset>
-		<legend><?php echo __('Plugin activation'); ?></legend>
+	<div class="fieldset">
+		<h4><?php echo __('Plugin activation'); ?></h4>
 		<p class="field">
 		<label class=" classic"><?php echo form::checkbox('active', 1, $active); ?>&nbsp;
 		<?php echo __('Enable categoriesMode');?>
 		</label>
 		</p>
-	</fieldset>
+	</div>
 		<p>
 	<input type="hidden" name="p" value="categoriesMode" />
 	<?php echo $core->formNonce(); ?>

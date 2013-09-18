@@ -10,6 +10,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
+msgid "Add a category list page"
+msgstr "Ajoute une page listant les catégories"
+
 msgid "All categories"
 msgstr "Toutes les catégories"
 
