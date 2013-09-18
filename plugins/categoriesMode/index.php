@@ -74,7 +74,7 @@ if (!empty($msg)) {
 	<div class="fieldset">
 		<h4><?php echo __('Plugin activation'); ?></h4>
 		<p class="field">
-		<label class=" classic"><?php echo form::checkbox('active', 1, $active); ?>&nbsp;
+		<label class="classic"><?php echo form::checkbox('active', 1, $active); ?>&nbsp;
 		<?php echo __('Enable categoriesMode');?>
 		</label>
 		</p>
