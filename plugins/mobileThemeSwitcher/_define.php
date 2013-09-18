@@ -26,7 +26,7 @@ $this->registerModule(
 	/* Name */			"Mobile Theme Switcher",
 	/* Description*/	"Mobile Theme Switcher",
 	/* Author */		"Noel Guilbert, Pierre Van Glabeke",
-	/* Version */		'0.2.3',
+	/* Version */		'0.2.4',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>

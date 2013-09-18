@@ -10,8 +10,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
+msgid "Mobile Theme Switcher"
+msgstr "Gestionnaire de thème mobile"
+
 msgid "Full Version"
 msgstr "Version complete"
 
 msgid "Mobile Version"
 msgstr "Version mobile"
+
+msgid "Mobile theme"
+msgstr "Thème mobile"

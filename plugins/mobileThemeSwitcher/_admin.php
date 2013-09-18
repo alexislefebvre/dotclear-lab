@@ -39,11 +39,10 @@ class mobileThemeSwitcherAdminBehaviours
         $themes[$dir->getFilename()] = $dir->getFilename();
       }
     }
-    echo '<fieldset><legend>Mobile Theme Switcher</legend>'.
-    '<div class="two-cols"><div class="col">'.
-    '<p><label>Mobile theme</label>'.
+    echo '<div class="fieldset"><h4>'.__('Mobile Theme Switcher').'</h4>'.
+    '<p><label>'.__('Mobile theme').'</label>'.
     form::combo('mobileThemeSwitcher_theme', $themes, $settings->mobileThemeSwitcher->mobileThemeSwitcher_theme).
-    '</p></div></div></fieldset>';
+    '</p></div>';
   }
 
   public static function adminBeforeBlogSettingsUpdate($settings)
