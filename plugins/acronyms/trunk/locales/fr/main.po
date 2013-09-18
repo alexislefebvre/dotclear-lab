@@ -13,8 +13,8 @@ msgstr ""
 msgid "Acronyms Manager"
 msgstr "Gestionnaire des acronymes"
 
-msgid "Add, remove and modify acronyms for the wiki syntax."
-msgstr "Ajouter, supprimer et modifier les acromymes pour la syntaxe wiki."
+msgid "Add, remove and modify acronyms for the wiki syntax"
+msgstr "Ajouter, supprimer et modifier les acromymes pour la syntaxe wiki"
 
 msgid "Enable acronyms button on toolbar"
 msgstr "Activer le bouton acronymes sur la barre d'outils"
@@ -24,7 +24,6 @@ msgstr "Activer la page publique des acronymes"
 
 msgid "View the acronyms page"
 msgstr "Voir la page des acronymes"
-
 
 msgid "manage acronyms"
 msgstr "gérer les acronymes"

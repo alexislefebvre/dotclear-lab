@@ -13,9 +13,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */				"Acronyms Manager",
-	/* Description*/		"Add, remove and modify acronyms for the wiki syntax.",
+	/* Description*/		"Add, remove and modify acronyms for the wiki syntax",
 	/* Author */			"Vincent Garnier, Pierre Van Glabeke",
-	/* Version */			'1.2',
+	/* Version */			'1.4',
 	/* Permissions */		'acronyms'
 );
 ?>

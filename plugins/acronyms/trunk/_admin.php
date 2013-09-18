@@ -60,14 +60,14 @@ class acronymsAdminBehaviors
 	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
-		'<fieldset><legend>'.__('Acronyms Manager').'</legend>'.
+		'<div class="fieldset"><h4>'.__('Acronyms Manager').'</h4>'.
 		'<p><label class="classic">'.
 		form::checkbox('acronyms_button_enabled','1',$settings->acronyms_button_enabled).
 		__('Enable acronyms button on toolbar').'</label></p>'.
 		'<p><label class="classic">'.
 		form::checkbox('acronyms_public_enabled','1',$settings->acronyms_public_enabled).
 		__('Enable acronyms public page').'</label></p>'.
-		'</fieldset>';
+		'</div>';
 	}
 
 	public static function adminBeforeBlogSettingsUpdate($settings)

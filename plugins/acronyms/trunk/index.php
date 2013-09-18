@@ -11,6 +11,11 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+$page_title = __('Acronyms Manager');
+
+# Url de base
+$p_url = 'plugin.php?p=acronyms';
+
 $acronyms = new dcAcronyms($core);
 $acronyms_list = $acronyms->getList();
 
@@ -73,9 +78,10 @@ if (!empty($_POST['p_add']))
 ?>
 <html>
 <head>
-	<title><?php echo __('Acronyms Manager'); ?></title>
+	<title><?php echo $page_title; ?></title>
 	<style type="text/css">
-	#add_acronyms fieldset { position:relative; }
+	#edit_acronyms {margin-top:3.5em;}
+	#add_acronyms div { position:relative; }
 	.acroleft { display:block; width:14em; }
 	.acroright { display:inline; left:15em; position:absolute; top:43px; }
 	#listacro { height:200px; overflow:auto; }
@@ -90,23 +96,29 @@ if (!empty($_POST['p_add']))
 	</script>
 </head>
 <body>
-<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('Acronyms Manager'); ?>
-<?php if ($core->blog->settings->acronyms->acronyms_public_enabled) {
-	echo ' - <a id="post-preview" href="'.$core->blog->url.$core->url->getBase('acronyms').'" class="button">'.__('View the acronyms page').'</a>';
-} ?></h2>
-
 <?php
+
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+
 if (!empty($_GET['edited'])) {
-	echo '<p class="message">'.__('Acronyms list successfully updated.').'</p>';
+  dcPage::success(__('Acronyms list successfully updated.'));
 }
 if (!empty($_GET['added'])) {
-	echo '<p class="message">'.__('Acronym successfully added.').'</p>';
+  dcPage::success(__('Acronym successfully added.'));
+}
+
+if ($core->blog->settings->acronyms->acronyms_public_enabled) {
+	echo '<p><a class="onblog_link" href="'.$core->blog->url.$core->url->getBase('acronyms').'" onclick="window.open(this.href);return false;" title="'.$post_title.' ('.__('new window').')'.'">'.__('View the acronyms page').' <img src="images/outgoing-blue.png" alt="" /></a></p>';
 }
 ?>
 
 <form id="edit_acronyms" action="plugin.php" method="post">
-	<fieldset>
-		<legend><?php echo __('Edit acronyms'); ?></legend>
+	<div class="fieldset">
+		<h4><?php echo __('Edit acronyms'); ?></h4>
 		<div id="listacro">
 		<?php
 		$i = 1;
@@ -122,7 +134,7 @@ if (!empty($_GET['added'])) {
 		}
 		?>
 		</div><!-- #listacro -->
-	</fieldset>
+	</div>
 	<p class="clear"><?php echo form::hidden('p_edit', '1');
 	echo form::hidden(array('p'),'acronyms');
 	echo $core->formNonce(); ?>
@@ -131,16 +143,16 @@ if (!empty($_GET['added'])) {
 </form>
 
 <form id="add_acronyms" action="plugin.php" method="post">
-	<fieldset>
-		<legend><?php echo __('Add an acronym'); ?></legend>
+	<div class="fieldset">
+		<h4><?php echo __('Add an acronym'); ?></h4>
 
-		<p class="acroleft"><label for="a_acro"><?php echo __('Acronym'); ?></label>
+		<p class="acroleft"><label for="a_acro" class="required"><abbr title="'.__('Required field').'">*</abbr> <?php echo __('Acronym'); ?></label>
 		<?php echo form::field('a_acro',10,'',$a_acro,'',''); ?></p>
 
-		<p class="acroright"><label for="a_title"><?php echo __('Entitled'); ?></label>
+		<p class="acroright"><label for="a_title" class="required"><abbr title="'.__('Required field').'">*</abbr> <?php echo __('Entitled'); ?></label>
 		<?php echo form::field('a_title',60,'',$a_title,'',''); ?></p>
 
-	</fieldset>
+	</div>
 	<p class="clear"><?php echo form::hidden('p_add', '1');
 	echo form::hidden(array('p'),'acronyms');
 	echo $core->formNonce(); ?>

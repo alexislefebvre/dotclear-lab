@@ -72,7 +72,6 @@ class tplAcronyms
 
 } # class tplAcronyms
 
-
 class acronymsURL extends dcUrlHandlers
 {
         public static function acronyms($args)
