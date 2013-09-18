@@ -20,3 +20,19 @@ msgstr "Sous-catégories"
 
 msgid "Include sub-categories in category page and category posts feed"
 msgstr "Inclure les sous-catégories dans les pages de catégories et les flux de billets des catégories"
+
+#: _widgets.php:20
+msgid "SubCategories list"
+msgstr "Liste des sous-catégories"
+
+#: _widgets.php:21
+msgid "Title:"
+msgstr ""
+
+#: _widgets.php:22
+msgid "With entries counts"
+msgstr "Avec le nombre de billets"
+
+#: _widgets.php:23
+msgid "Include sub cats in count"
+msgstr "Inclure les billets des sous-catégories dans le nombre de billets"

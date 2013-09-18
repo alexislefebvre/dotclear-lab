@@ -3,7 +3,7 @@
 #
 # This file is part of Dotclear 2 "Include subcats" plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2009-2013 Bruno Hondelatte and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -11,6 +11,8 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+require dirname(__FILE__).'/_widgets.php';
+	
 $core->addBehavior('adminBlogPreferencesForm',array('ISCBehaviors','adminBlogPreferencesForm'));
 $core->addBehavior('adminBeforeBlogSettingsUpdate',array('ISCBehaviors','adminBeforeBlogSettingsUpdate'));
 
@@ -20,11 +22,11 @@ class ISCBehaviors
 	{
 		$core->blog->settings->addNamespace('incsubcat');
 		echo
-		'<fieldset><legend>'.__('Sub-categories').'</legend>'.
+		'<div class="fieldset"><h4>'.__('Sub-categories').'</h4>'.
 		'<p><label class="classic">'.
 		form::checkbox('incsubcat_enabled','1',$settings->incsubcat->incsubcat_enabled).
 		__('Include sub-categories in category page and category posts feed').'</label></p>'.
-		'</fieldset>';
+		'</div>';
 	}
 	
 	public static function adminBeforeBlogSettingsUpdate($settings)
