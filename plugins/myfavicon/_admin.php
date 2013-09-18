@@ -43,7 +43,7 @@ class myFavicon
 		}
 		
 		echo
-		'<fieldset><legend>Favicon</legend>'.
+		'<div class="fieldset"><h4>Favicon</h4>'.
 		'<p><label class="classic">'.
 			form::checkbox('favicon_enable','1',(!empty($favicon_url) || !empty($favicon_ie_url))).
 			__('Enable favicon').'</label></p>'.
@@ -54,7 +54,7 @@ class myFavicon
 			.__('Please note, IE compatibility works only with ".ico" format.').'</p>'.
 		'<p><label>'.__('Favicon URL:').' '.
 			form::field('favicon_url',40,255,html::escapeHTML($favicon_url)).'</label></p>'.
-		'</div></fieldset>';
+		'</div></div>';
 	}
 	
 	public static function adminBeforeBlogSettingsUpdate($settings)

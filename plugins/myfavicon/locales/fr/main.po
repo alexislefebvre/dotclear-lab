@@ -10,6 +10,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
+msgid "Add a customized favicon to your blog"
+msgstr "Ajouter un favicon à votre blog"
+
 msgid "To finish installation, please delete the whole cache/cbtpl directory."
 msgstr "Pour finir l'installation, merci de supprimer l'intégralité du dossier cache/cbtpl."
 
