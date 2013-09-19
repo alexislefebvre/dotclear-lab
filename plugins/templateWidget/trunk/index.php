@@ -23,6 +23,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+$page_title = __('Template Widget');
+
 dcPage::check('usage,contentadmin');
 
 require_once(dirname(__FILE__).'/Settings.php');
@@ -32,22 +34,29 @@ try
 ?>
 <html>
 <head>
-  <title>Template Widget</title>
+	<title><?php echo $page_title; ?></title>
 </head>
 <body>
 <?php
+
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+
   $activeWidgets = new templateWidgetSettings();
   if ($activeWidgets->LoadFromHTTP()) {
     $activeWidgets->Store();
-    print '<p class="message">'.__('Settings have been successfully updated.').'</p>';
+    dcPage::success(__('Settings have been successfully updated.'));
   }
   foreach (templateWidgetAdmin::GetAllWidgetDefinitions() as $widgetId => $widgetDefinition) {
     $activeWidgets->UpdateWith( templateWidgetActive::FromWidgetDefinition($widgetDefinition) );
   }
-  print '<h2>'.__('Define active widgets').'</h2>';
+
   print '<form action="'.$p_url.'" method="post">';
   $activeWidgets->Display();
-  print '<p><input type="submit" value="'.__('save').'" />'.$core->formNonce().'</p>'.'</form>';
+  print '<p><input type="submit" value="'.__('Save').'" />'.$core->formNonce().'</p>'.'</form>';
 ?>
 </body>
 </html>

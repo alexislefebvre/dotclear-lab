@@ -30,7 +30,7 @@ class templateWidgetActive
   
   public function Display($settings) {
     print
-      form::hidden($settings->GetHttpDefinition('id'), html::escapeHTML($this->id)).
+      '<p>'.form::hidden($settings->GetHttpDefinition('id'), html::escapeHTML($this->id)).'</p>'.
       '<p><label class="classic">'.
       ' '.form::checkbox($settings->GetHttpDefinition('isActive'), html::escapeHTML($this->id), $this->isActive).
       ' '.html::escapeHTML($this->name).
