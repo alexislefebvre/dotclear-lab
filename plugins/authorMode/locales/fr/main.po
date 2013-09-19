@@ -40,5 +40,5 @@ msgstr "Fil Atom des billets de cet auteur"
 msgid "This authors's entries comments Atom feed"
 msgstr "Fil Atom des commentaires de cet auteur"
 
-msgid "Author\'s description"
-msgstr "Description de l'auteur"
+msgid "Author\'s description:"
+msgstr "Description de l'auteur :"

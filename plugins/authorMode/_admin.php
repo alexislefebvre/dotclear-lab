@@ -19,8 +19,8 @@ $_menu['Plugins']->addItem('authorMode','plugin.php?p=authorMode','index.php?pf=
 
 $core->addBehavior('adminUserHeaders',array('authorModeBehaviors','adminAuthorHeaders'));
 $core->addBehavior('adminPreferencesHeaders',array('authorModeBehaviors','adminAuthorHeaders'));
-$core->addBehavior('adminUserForm',array('authorModeBehaviors','adminAuthorForm'));
-$core->addBehavior('adminPreferencesForm',array('authorModeBehaviors','adminAuthorForm'));
+$core->addBehavior('adminUserForm',array('authorModeBehaviors','adminAuthorForm')); // user.php
+//$core->addBehavior('adminPreferencesForm',array('authorModeBehaviors','adminAuthorForm')); //preferences.php
 $core->addBehavior('adminBeforeUserCreate',array('authorModeBehaviors','adminBeforeUserUpdate'));
 $core->addBehavior('adminBeforeUserUpdate',array('authorModeBehaviors','adminBeforeUserUpdate'));
 
@@ -51,11 +51,10 @@ class authorModeBehaviors
 		else $user_desc = '';
 		
 		echo
-		'<div class="fieldset"><h4>'.__('Author\'s description').
-		dcPage::help('users','user_desc').'</h4>'.
-		'<p class="area">'.
+		'<p><label>'.__('Author\'s description:').
+		dcPage::help('users','user_desc').'</label>'.
 		form::textarea('user_desc',50,8,html::escapeHTML($user_desc),'',4).
-		'</p></div>';
+		'</p>';
 	}
 }
 ?>
