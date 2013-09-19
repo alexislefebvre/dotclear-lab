@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"Fake Me Up",
 	/* Description*/		"Fakes Dotclear digest to force automatic updates",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'1.5',
+	/* Version */			'1.6',
 	/* Permissions */		'admin'
 );
 

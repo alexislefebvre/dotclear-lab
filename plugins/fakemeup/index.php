@@ -139,7 +139,7 @@ function backup ($changes) {
 		rename(DC_DIGESTS,DC_DIGESTS_BACKUP);
 		file_put_contents(DC_DIGESTS,$digest);
 		$uri = backup($changes);
-		echo '<div class="message">';
+		echo '<div class="success">';
 		if ($uri !== false) {
 			printf(file_get_contents($helpus),$uri,"fakemeup@dotclear.org");
 		} else {
