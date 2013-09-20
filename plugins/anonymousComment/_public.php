@@ -9,7 +9,7 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/agpl-3.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
+if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicHeadContent',
 	array('anonymousCommentBehaviors','publicHeadContent'));
@@ -20,17 +20,17 @@ class anonymousCommentBehaviors
 {
 	public static function publicHeadContent($core,$_ctx)
 	{
-		if (!$core->blog->settings->anonymous_active) { return; }
+		if (!$core->blog->settings->anonymousComment->anonymous_active) { return; }
 		// print the headers
 		echo "\n<!-- Anonymous comments -->\n";
 		echo (
 			'<script type="text/javascript">'.
 			'//<![CDATA['."\n".
 			'var anonymous_name = "'.
-			html::escapeHTML($core->blog->settings->anonymous_name).
+			html::escapeHTML($core->blog->settings->anonymousComment->anonymous_name).
 			'";'."\n".
 			'var anonymous_mail = "'.
-			html::escapeHTML($core->blog->settings->anonymous_email).
+			html::escapeHTML($core->blog->settings->anonymousComment->anonymous_email).
 			'";'."\n".
 			'//]]>'.
 			'</script>'.
@@ -41,11 +41,11 @@ class anonymousCommentBehaviors
 
 	public static function publicCommentFormBeforeContent($core,$_ctx)
 	{
-		if (!$core->blog->settings->anonymous_active) { return; }
+		if (!$core->blog->settings->anonymousComment->anonymous_active) { return; }
 		echo ('<p class="field"><label for="c_anonymous">'.
-			 __("Anonymous comment:")."</label>\n".
-		      '<input name="c_anonymous" id="c_anonymous" type="checkbox" />'.
-			 "</p>\n");
+			  __('Anonymous comment:').'</label>'.
+		    '<input name="c_anonymous" id="c_anonymous" type="checkbox" />'.
+			 '</p>');
 	}
 }
 

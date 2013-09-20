@@ -9,10 +9,10 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/agpl-3.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 # ajouter le plugin dans la liste des plugins du menu de l'administration
-$_menu['Plugins']->addItem(
+$_menu['Blog']->addItem(
 	# nom du lien (en anglais)
 	__('Anonymous comments'),
 	# URL de base de la page d'administration

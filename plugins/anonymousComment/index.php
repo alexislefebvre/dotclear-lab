@@ -9,12 +9,14 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/agpl-3.0.html
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+$page_title = __('Anonymous comments');
 
 # Get settings
-$anonymous_active = $core->blog->settings->anonymous_active;
-$anonymous_name = $core->blog->settings->anonymous_name;
-$anonymous_email = $core->blog->settings->anonymous_email;
+$anonymous_active = $core->blog->settings->anonymousComment->anonymous_active;
+$anonymous_name = $core->blog->settings->anonymousComment->anonymous_name;
+$anonymous_email = $core->blog->settings->anonymousComment->anonymous_email;
 
 if ($anonymous_name === null) {
 	$anonymous_name = __('Anonymous');
@@ -36,12 +38,12 @@ if (isset($_POST["save"])) {
 		if (empty($_POST['anonymous_email'])) {
 			throw new Exception(__('No email.'));
 		}
-
-		$core->blog->settings->setNameSpace('anonymousComment');
-		$core->blog->settings->put('anonymous_active',$anonymous_active,'boolean');
-		$core->blog->settings->put('anonymous_name',$anonymous_name,'string');
-		$core->blog->settings->put('anonymous_email',$anonymous_email,'string');
-		$core->blog->settings->setNameSpace('system');
+		
+		$core->blog->settings->addNameSpace('anonymousComment');
+		$core->blog->settings->anonymousComment->put('anonymous_active',$anonymous_active,'boolean');
+		$core->blog->settings->anonymousComment->put('anonymous_name',$anonymous_name,'string');
+		$core->blog->settings->anonymousComment->put('anonymous_email',$anonymous_email,'string');
+		$core->blog->settings->addNameSpace('system');
 
 		http::redirect($p_url.'&upd=1');
 
@@ -53,21 +55,21 @@ if (isset($_POST["save"])) {
 ?>
 <html>
 <head>
-	<title><?php echo(__('Anonymous comments')); ?></title>
+	<title><?php echo $page_title; ?></title>
 </head>
 <body>
+<?php
 
-	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.
-		__('Anonymous comments'); ?></h2>
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
 
-	<?php
-	if (!empty($_GET['upd'])) {
-		echo '<p class="message">'.__('Settings have been successfully updated.').'</p>';
-	}
-	?>
-
-	<p style="float:right;margin-right:3%"><a href="http://flattr.com/thing/48106/Dotclear-Anonymous-comment-plugin" target="_blank" style="border:none">
-	<img src="http://api.flattr.com/button/button-static-50x60.png" alt="Flattr this" title="Flattr this" border="0" /></a></p>
+if (!empty($_GET['upd'])) {
+  dcPage::success(__('Settings have been successfully updated.'));
+}
+?>
 
 	<form method="post" action="<?php echo($p_url); ?>">
 		<p><?php echo $core->formNonce(); ?></p>
@@ -77,18 +79,18 @@ if (isset($_POST["save"])) {
 			    (boolean) $anonymous_active).' '.
 			    __('Allow anonymous comments')); ?></label></p>
 
-		<p><label><?php echo(__('Replacement name:').
+		<p><label><?php echo(__('Replacement name: ').
 				form::field('anonymous_name',40,255,
-				$anonymous_name)); ?></p>
+				$anonymous_name)); ?></label></p>
 
-		<p><label><?php echo(__('Replacement email:').
+		<p><label><?php echo(__('Replacement email: ').
 				form::field('anonymous_email',40,255,
-				$anonymous_email)); ?></p>
+				$anonymous_email)); ?></label></p>
 
 		<p><input type="submit" name="save"
 		          value="<?php echo __('Save'); ?>" /></p>
 	</form>
-
+ 
 <?php dcPage::helpBlock('anonymousComment');?>
 </body>
 </html>

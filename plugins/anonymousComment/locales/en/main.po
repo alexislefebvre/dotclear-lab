@@ -45,13 +45,9 @@ msgid "Allow anonymous comments"
 msgstr "Allow anonymous comments"
 
 #: index.php:77
-msgid "Replacement name:"
-msgstr "Replacement name:"
+msgid "Replacement name: "
+msgstr "Replacement name: "
 
 #: index.php:81
-msgid "Replacement email:"
-msgstr "Replacement email:"
-
-#: index.php:86
-msgid "Save"
-msgstr "Save"
+msgid "Replacement email: "
+msgstr "Replacement email: "

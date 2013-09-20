@@ -9,14 +9,13 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/agpl-3.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
 if (!defined('DC_RC_PATH')) { return; }
  
 $this->registerModule(
 	/* Name */		"Anonymous comments",
 	/* Description*/	"Allows posting comments as anonymous",
 	/* Author */		"Aurélien Bompard",
-	/* Version */		'1.1',
+	/* Version */		'1.2',
 	/* Permissions */	'admin'
 );
 ?>
