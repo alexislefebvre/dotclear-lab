@@ -26,8 +26,8 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */			"templateWidget",
 	/* Description*/		"Define widgets using template file only",
-	/* Author */			"Olivier Azeau",
-	/* Version */			'1.4.3',
+	/* Author */			"Olivier Azeau and contributors",
+	/* Version */			'1.4.4',
 	/* Permissions */		null
 );
 ?>

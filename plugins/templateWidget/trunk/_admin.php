@@ -26,7 +26,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 require_once(dirname(__FILE__).'/WidgetAdmin.php');
 $core->addBehavior('initWidgets',array('templateWidgetAdmin','InitWidgets'));
 
-$_menu['Plugins']->addItem(
+$_menu['Blog']->addItem(
   'Template Widget', // title
   'plugin.php?p=templateWidget', // url
   'index.php?pf=templateWidget/icon.png',  // img

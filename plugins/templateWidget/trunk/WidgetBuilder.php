@@ -29,12 +29,7 @@ class templateWidget_WidgetBuilder extends template
 	function __construct($self_name)
 	{
     global $core;
- /*
-    if (!isset($core->themes)) { // In admin area, themes are not usually initialized, but now we might need them...
-      $core->themes = new dcModules($core);
-      $core->themes->loadModules($core->blog->themes_path,null);
-    }
- */
+    
 		files::makeDir(DC_WIDGET_ADMIN_TPL_CACHE,true);
 		parent::__construct(DC_WIDGET_ADMIN_TPL_CACHE,$self_name);
 

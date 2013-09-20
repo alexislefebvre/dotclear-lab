@@ -1,0 +1,19 @@
+<tpl:WidgetName>taglist</tpl:WidgetName>
+<tpl:WidgetDescription>Tags in dropdown menu / Mots-clés en menu déroulant</tpl:WidgetDescription>
+<div class="taglist">
+<tpl:Tags type="tag">
+  <tpl:TagsHeader>
+    <h2>{{tpl:lang Tags}}</h2>
+    <form method="get" action="" id="tag">
+    <p>
+    <select name="tag" onchange="location = this.options[this.selectedIndex].value;">
+    <option>{{tpl:lang Select...}}</option>
+  </tpl:TagsHeader>
+    <option value="{{tpl:TagURL}}">{{tpl:TagID}}</option>
+  <tpl:TagsFooter>
+    </select>
+    </p>
+    </form>
+  </tpl:TagsFooter>
+</tpl:Tags>
+</div>
