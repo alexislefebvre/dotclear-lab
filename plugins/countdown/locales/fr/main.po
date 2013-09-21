@@ -1,10 +1,14 @@
-# Language: français
-# Module: countdown - 1.2-alpha4
-# Date: 2010-02-15 13:04:14
-# Translated with dcTranslater - 1.2
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: brol <contact@brol.info>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: _widget.php:38
 msgid "CountDown"
@@ -113,4 +117,3 @@ msgstr "secondes"
 #: _widget.php:199
 msgid "and"
 msgstr "et"
-

@@ -123,8 +123,15 @@ class CountDownBehaviors
 			__('For {y<}{yn} {yl}, {y>} {o<}{on} {ol}, {o>} {w<}{wn} {wl}, {w>} {d<}{dn} {dl}, {d>} {hn} {hl}, {mn} {ml} and {sn} {sl}'),
 			'textarea');
 		
-		$w->CountDown->setting('homeonly',
-			__('Home page only'),false,'check');
+		$w->CountDown->setting('homeonly',__('Display on:'),0,'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+				)
+		);
+    $w->CountDown->setting('content_only',__('Content only'),0,'check');
+    $w->CountDown->setting('class',__('CSS class:'),'');
 	}
 	
 	# escape quotes but not XHTML tags
@@ -141,7 +148,8 @@ class CountDownBehaviors
 		# set timezone
 		global $core;
 
-		if ($w->homeonly && $core->url->type != 'default') {
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 
@@ -202,9 +210,11 @@ class CountDownBehaviors
 		
 		if (!$w->dynamic)
 		{
-			return '<div class="countdown">'.$header.
+		return $res = ($w->content_only ? '' : '<div class="countdown'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').$header.
+			//return '<div class="countdown">'.$header.
 				'<p class="text">'.$text.'<span>'.$str.'</span></p>'.
-			'</div>';
+		($w->content_only ? '' : '</div>');
+			//'</div>';
 		}
 		else
 		{
@@ -248,7 +258,8 @@ class CountDownBehaviors
 				$layout = $w->dynamic_layout_before;
 			}
 			
-			return $script.'<div class="countdown">'.$header.
+			//return $script.'<div class="countdown">'.$header.
+			return $res = ($w->content_only ? '' : '<div class="countdown'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').$header.
 				'<p class="text" id="countdown-'.$id.'">'.$text.$str.'</p>'.
 				'<script type="text/javascript">'."\n".
 				'//<![CDATA['."\n".
@@ -266,7 +277,8 @@ class CountDownBehaviors
 					'});'."\n".
 				'//]]>'.
 				'</script>'."\n".
-			'</div>';
+			//'</div>';
+			($w->content_only ? '' : '</div>');
 		}
 	}
 }
