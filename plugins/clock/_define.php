@@ -1,4 +1,4 @@
-<?php 
+<?php
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Clock, a plugin for Dotclear 2
@@ -17,12 +17,13 @@
 # along with this program; If not, see <http://www.gnu.org/licenses/>.
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
-        /* Name */                      "Clock",
-        /* Description*/                "Display the date of a time zone with the strftime() format in a widget",
-        /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.2.3',
-        /* Permissions */               'admin'
+    /* Name */             "Clock",
+    /* Description*/       "Display the date of a time zone with the strftime() format in a widget",
+    /* Author */           "Moe (http://gniark.net/)",
+    /* Version */          '1.2.4',
+    /* Permissions */      'admin'
 );
 ?>

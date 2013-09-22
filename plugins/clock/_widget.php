@@ -17,8 +17,10 @@
 # along with this program; If not, see <http://www.gnu.org/licenses/>.
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_RC_PATH')) { return; }
 
-if (!defined('DC_RC_PATH')) {return;}
+# load locales for the blog language
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
 
 $core->addBehavior('initWidgets',array('ClockBehaviors','initWidgets'));
  
@@ -26,10 +28,6 @@ class ClockBehaviors
 {
 	public static function initWidgets($w)
 	{
-		# load locales for the blog language
-		l10n::set(dirname(__FILE__).'/locales/'.
-			$GLOBALS['core']->blog->settings->lang.'/widget');
-
 		# set timezone
 		$tz = $GLOBALS['core']->blog->settings->blog_timezone;
 
@@ -47,9 +45,16 @@ class ClockBehaviors
 			__('http://www.php.net/manual/en/function.strftime.php'),
 			'onclick="return window.confirm(\''.__('Are you sure you want to leave this page?').'\')"'),
 			'%A, %e %B %Y, HMS','text');
-
-		$w->Clock->setting('homeonly',__('Home page only'),false,'check');
-
+			
+		$w->Clock->setting('homeonly',__('Display on:'),0,'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+				)
+		);
+    $w->Clock->setting('content_only',__('Content only'),0,'check');
+    $w->Clock->setting('class',__('CSS class:'),'');
 	}
 }
 
@@ -57,7 +62,9 @@ class publicClock
 {
 	public static function Show($w)
 	{
-		if ($w->homeonly && $GLOBALS['core']->url->type != 'default') {
+
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 
@@ -103,7 +110,11 @@ class publicClock
 			$js = null;
 		}
 
-		return '<div class="clock">'.$header.'<p class="text">'.$time.'</p>'.$js.'</div>';
+		//return '<div class="clock">'.$header.
+		return $res = ($w->content_only ? '' : '<div class="clock'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').$header.
+		'<p class="text">'.$time.'</p>'.$js.
+    ($w->content_only ? '' : '</div>');
+    //'</div>';
 	}
 }
 

@@ -1,2 +1,0 @@
-msgid "Local time in %s"
-msgstr "Heure de %s"

@@ -13,6 +13,8 @@ $GLOBALS['__l10n']['Title:'] = 'Titre&nbsp;:';
 #_widget.php:37
 $GLOBALS['__l10n']['optional'] = 'facultatif';
 
+$GLOBALS['__l10n']['Local time in %s'] = 'Heure de %s';
+
 #_widget.php:41
 $GLOBALS['__l10n']['Timezone:'] = 'Fuseau horaire&nbsp;:';
 
