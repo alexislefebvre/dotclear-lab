@@ -25,10 +25,10 @@
 if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
-        /* Name */                      "New Navigation Links",
-        /* Description*/                "New Navigation links widget",
-        /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1',
-        /* Permissions */               'admin'
+    /* Name */             "New Navigation Links",
+    /* Description*/       "New Navigation links widget",
+    /* Author */           "Moe (http://gniark.net/)",
+    /* Version */          '1.2',
+    /* Permissions */      'admin'
 );
 ?>

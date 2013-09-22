@@ -57,17 +57,25 @@ class NewNavLinksBehaviors
 		
 		$w->NewNavLinks->setting('tag',html::escapeHTML(__('Tag to use:')),
 			'2','combo',$tags);
-
-		$w->NewNavLinks->setting('homeonly',__('Home page only'),false,
-			'check');
+			
+		$w->NewNavLinks->setting('homeonly',__('Display on:'),0,'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+				)
+		);
+    $w->NewNavLinks->setting('content_only',__('Content only'),0,'check');
+    $w->NewNavLinks->setting('class',__('CSS class:'),'');
 	}
 	
 	public static function Show($w)
 	{
 		global $core;
-
-		if ($w->homeonly && $core->url->type != 'default') {
-			return;
+		
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+		($w->homeonly == 2 && $core->url->type == 'default')) {
+		return;
 		}
 
 		$elements = array();
@@ -90,7 +98,11 @@ class NewNavLinksBehaviors
 		{
 			$str = implode('<span> - </span>',$elements);
 			$class = ($w->tag == 'p') ? ' class="text"' : '';
-			return '<div id="newnav"><'.$w->tag.$class.'>'.$str.'</'.$w->tag.'></div>';
+			//return '<div id="newnav">
+      return 		$res = ($w->content_only ? '' : '<div class="newnav'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
+      '<'.$w->tag.$class.'>'.$str.'</'.$w->tag.'>'.
+      ($w->content_only ? '' : '</div>');
+      //'</div>';
 		}
 	}
 }
