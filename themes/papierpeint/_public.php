@@ -12,6 +12,7 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 
 $core->addBehavior('publicHeadContent','papierpeint_publicHeadContent');
 
