@@ -27,7 +27,7 @@ if (!empty($_POST['papierpeint_style']) && in_array($_POST['papierpeint_style'],
 {
 	$core->blog->settings->themes->papierpeint_style = $_POST['papierpeint_style'];
 	$core->blog->settings->addNamespace('themes');
-	$core->blog->settings->themes->put('papierpeint_style',$core->blog->settings->papierpeint_style,'string','Papier Peint theme style',true);
+	$core->blog->settings->themes->put('papierpeint_style',$core->blog->settings->themes->papierpeint_style,'string','Papier Peint theme style',true);
 	$core->blog->triggerBlog();
 	
 	dcPage::success(__('Theme configuration has been successfully updated.'));
@@ -36,8 +36,8 @@ if (!empty($_POST['papierpeint_style']) && in_array($_POST['papierpeint_style'],
 
 echo
 '<div class="fieldset"><h4>'.__('Papier Peint style').'</h4>'.
-'<p class="field"><label>'.__('Style:').' '.
-form::combo('papierpeint_style',$papierpeint_styles,$core->blog->settings->papierpeint_style).
+'<p class="field"><label>'.__('Style:').'</label>'.
+form::combo('papierpeint_style',$papierpeint_styles,$core->blog->settings->themes->papierpeint_style).
 '</p>'.
 '</div>';
 

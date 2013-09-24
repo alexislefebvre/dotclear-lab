@@ -24,8 +24,6 @@ function papierpeint_publicHeadContent($core)
 	}
 	
 	$url = $core->blog->settings->themes_url.'/'.$core->blog->settings->theme;
-	echo '<style type="text/css">'."\n".
-	"@import url(".$url."/".$style.".css);\n".
-	"</style>\n";
+	echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$url."/".$style.".css\" />\n";
 }
 ?>
