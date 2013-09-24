@@ -12,19 +12,18 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 
 $core->addBehavior('publicHeadContent','warped_publicHeadContent');
 
-function warped_publicHeadContent(&$core)
+function warped_publicHeadContent($core)
 {
-	$style = $core->blog->settings->warped_style;
+	$style = $core->blog->settings->themes->warped_style;
 	if (!preg_match('/^blue|green|orange$/',$style)) {
-		$style = 'green';
+		$style = 'orange';
 	}
 	
 	$url = $core->blog->settings->themes_url.'/'.$core->blog->settings->theme;
-	echo '<style type="text/css">'."\n".
-	"@import url(".$url."/".$style.".css);\n".
-	"</style>\n";
+	echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$url."/".$style.".css\" />\n";
 }
 ?>
