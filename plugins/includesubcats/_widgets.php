@@ -18,37 +18,34 @@ class includesubcatsWidgets
 
   public static function initWidgets($w) {
     $w->create('subcat', __('SubCategories list'), array('includesubcatsWidgets', 'categories'));
-    $w->subcat->setting('title', __('Title:'), '', 'text');
-    $w->subcat->setting('postcount', __('With entries counts'), false, 'check');
+	$w->subcat->setting('title',__('Title:'),__('Categories'));
+	$w->subcat->setting('postcount',__('With entries counts'),0,'check');
     $w->subcat->setting('subcatscount', __('Include sub cats in count'), false, 'check');
-		$w->subcat->setting('homeonly',__('Display on:'),0,'combo',
-			array(
-				__('All pages') => 0,
-				__('Home page only') => 1,
-				__('Except on home page') => 2
-				)
-		);
-    $w->subcat->setting('content_only',__('Content only'),0,'check');
-    $w->subcat->setting('class',__('CSS class:'),'');
+	$w->subcat->setting('with_empty',__('Include empty categories'),0,'check');
+	$w->subcat->setting('homeonly',__('Display on:'),0,'combo',
+		array(__('All pages') => 0, __('Home page only') => 1, __('Except on home page') => 2));
+	$w->subcat->setting('content_only',__('Content only'),0,'check');
+	$w->subcat->setting('class',__('CSS class:'),'');    
   }
 
 	public static function categories($w)
 	{
 		global $core, $_ctx;
-
-		$rs = $core->blog->getCategories(array('post_type'=>'post'));
-		if ($rs->isEmpty()) {
-			return;
-		}
-
+		
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 
-		$res = ($w->content_only ? '' : '<div class="categories'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
+		$rs = $core->blog->getCategories(array('post_type'=>'post','without_empty'=> !$w->with_empty));
+		if ($rs->isEmpty()) {
+			return;
+		}
+		
+		$res =
+		($w->content_only ? '' : '<div class="categories'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '');
-
+		
 		$ref_level = $level = $rs->level-1;
 		while ($rs->fetch())
 		{
@@ -57,31 +54,31 @@ class includesubcatsWidgets
 			|| ($core->url->type == 'post' && $_ctx->posts instanceof record && $_ctx->posts->cat_id == $rs->cat_id)) {
 				$class = ' class="category-current"';
 			}
-
+			
 			if ($rs->level > $level) {
 				$res .= str_repeat('<ul><li'.$class.'>',$rs->level - $level);
 			} elseif ($rs->level < $level) {
 				$res .= str_repeat('</li></ul>',-($rs->level - $level));
 			}
-
+			
 			if ($rs->level <= $level) {
 				$res .= '</li><li'.$class.'>';
 			}
-
+			
 			$res .=
-			'<a href="'.$core->blog->url.$core->url->getBase('category').'/'.
-			$rs->cat_url.'">'.
+			'<a href="'.$core->blog->url.$core->url->getURLFor('category', $rs->cat_url).'">'.
 			html::escapeHTML($rs->cat_title).'</a>'.
-			($w->postcount ? ' ('.($w->subcatscount ? $rs->nb_total : $rs->nb_post).')' : '');
-
+			($w->postcount ? ' <span>('.($w->subcatscount ? $rs->nb_total : $rs->nb_post).')</span>' : '');
+			
+			
 			$level = $rs->level;
 		}
-
+		
 		if ($ref_level - $level < 0) {
 			$res .= str_repeat('</li></ul>',-($ref_level - $level));
 		}
-  $res .= ($w->content_only ? '' : '</div>');
-
+		$res .= ($w->content_only ? '' : '</div>');
+		
 		return $res;
 	}
 }
