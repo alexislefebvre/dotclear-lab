@@ -24,9 +24,14 @@
     suivant)&nbsp;: Pseudonyme -> Prénom -> Nom.</dd>
 </dl>
 
-<h3>Widget</h3>
-  <p>Le widget affiche, par défaut, le lien vers la liste des auteurs. Si vous voulez ne
-  pas l'afficher, ajoutez à la fin de votre fichier css de thème le code suivant&nbsp;:
+<h3>Astuces</h3>
+  <p>Le widget affiche, par défaut, le lien vers la liste des auteurs. Pour ne
+  pas l'afficher, ajouter à la fin du fichier css de thème le code suivant&nbsp;:
   <code>#sidebar .listauthors {display:none;}</code></p>
+
+  <p>Pour lier le nom/pseudo de l'auteur à sa page d'auteur.<br />
+  Dans <code>&lt;p class="post-info"&gt;...&lt;/p&gt;</code>, remplacer
+  <code>{{tpl:EntryAuthorLink}}</code> par
+  <code>&lt;a href="{{tpl:AuthorPostsURL}}"&gt;{{tpl:EntryAuthorCommonName}}&lt;/a&gt;</code></p>
 </body>
 </html>
