@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of infoBlog, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Tomtom
+# Copyright (c) 2009 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -36,7 +36,15 @@ class infoBlogWidgets
 		$w->infoBlog->setting('displaystartblogdatetext',__('Text to display start day'),__('Blog start the %s'),'text');
 		$w->infoBlog->setting('displayauthors',__('Display authors'),true,'check');
 		$w->infoBlog->setting('displayauthorstats',__('Display author statistics'),true,'check');
-		$w->infoBlog->setting('homeonly',__('Home page only'),true,'check');
+		$w->infoBlog->setting('homeonly',__('Display on:'),0,'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+				)
+		);
+    $w->infoBlog->setting('content_only',__('Content only'),0,'check');
+    $w->infoBlog->setting('class',__('CSS class:'),'');
 	}
 }
 

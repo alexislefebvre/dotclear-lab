@@ -2,16 +2,14 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of infoBlog, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Tomtom
+# Copyright (c) 2009 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
 if (!defined('DC_RC_PATH')) { return; }
-
 class infoBlogPublic
 {
 	/**
@@ -25,7 +23,8 @@ class infoBlogPublic
 	{
 		global $core;
 
-		if ($w->homeonly && $core->url->type != 'default') {
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 
@@ -121,10 +120,12 @@ class infoBlogPublic
 		$res = !empty($res) ? '<ul>'.$res.'</ul>' : '';
 
 		return
-			'<div id="info-blog">'.
+			$res = ($w->content_only ? '' : '<div class="info-blog'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
+			//'<div id="info-blog">'.
 			$title.
 			$res.
-			'</div>';
+		//	'</div>';
+			($w->content_only ? '' : '</div>');
 	}
 }
 
