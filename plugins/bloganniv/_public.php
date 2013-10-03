@@ -120,24 +120,24 @@ class tplBlogAnniv
 		$dispyearborn = $dispyear = "";
 		// Si je dois afficher la date de naissance
 		if ($w->dispyearborn) {
-			$dispyearborn = __('Born:').
-      ' <span class="annivne">'.$ftdatecrea.'</span><br />';
+			$dispyearborn = '<li>'.__('Born:').
+      ' <span class="annivne">'.$ftdatecrea.'</span></li>';
 		}
 		// Si je dois afficher le l'age en année
 		if ($w->dispyear) {
-			$dispyear = __('Age:').
+			$dispyear = '<li>'.__('Age:').
       ' <span class="annivan">'.$nbreannee.'</span> '.
       __('year(s)').
-      '<br />';
+      '</li>';
 		}
 		return
 		$res = ($w->content_only ? '' : '<div class="bloganniv'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-		'<h2>'.$title.'</h2>'.'<p>'.
+		'<h2>'.$title.'</h2>'.'<ul>'.
 		$dispyearborn.
 		$dispyear.
-		__('Birthday in').
+		'<li>'.__('Birthday in').
     ' <span class="annivjrs">'.$nbrejours.'</span> '.
-    __('day(s)').'</p>'.
+    __('day(s)').'</li></ul>'.
     ($w->content_only ? '' : '</div>');
 	}
 }
