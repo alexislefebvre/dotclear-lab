@@ -29,7 +29,7 @@ class ClockBehaviors
 	public static function initWidgets($w)
 	{
 		# set timezone
-		$tz = $GLOBALS['core']->blog->settings->blog_timezone;
+		$tz = $GLOBALS['core']->blog->settings->system->blog_timezone;
 
 		$w->create('Clock',__('Clock'),array('publicClock','Show'));
 

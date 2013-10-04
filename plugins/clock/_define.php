@@ -23,7 +23,7 @@ $this->registerModule(
     /* Name */             "Clock",
     /* Description*/       "Display the date of a time zone with the strftime() format in a widget",
     /* Author */           "Moe (http://gniark.net/)",
-    /* Version */          '1.2.4',
+    /* Version */          '1.2.5',
     /* Permissions */      'admin'
 );
 ?>
