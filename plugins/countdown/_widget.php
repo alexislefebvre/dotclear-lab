@@ -30,7 +30,7 @@ class CountDownBehaviors
 	{
 		# set timezone
 		global $core;
-		$tz = $core->blog->settings->blog_timezone;
+		$tz = $core->blog->settings->system->blog_timezone;
 
 		$w->create('CountDown',__('CountDown'),
 			array('CountDownBehaviors','Show'));
@@ -154,7 +154,7 @@ class CountDownBehaviors
 		}
 
 		# get local time
-		$local_time = dt::addTimeZone($core->blog->settings->blog_timezone);
+		$local_time = dt::addTimeZone($core->blog->settings->system->blog_timezone);
 
 		$ts = mktime($w->hour,$w->minute,$w->second,$w->month,$w->day,
 			$w->year);
@@ -236,7 +236,7 @@ class CountDownBehaviors
 					'pf=countdown/js/jquery.countdown.min.js"></script>'."\n";
 		
 				$l10n_file =
-					'jquery.countdown-'.$core->blog->settings->lang.'.js';
+					'jquery.countdown-'.$core->blog->settings->system->lang.'.js';
 				if (file_exists(dirname(__FILE__).'/js/'.$l10n_file))
 				{
 					$script .= 

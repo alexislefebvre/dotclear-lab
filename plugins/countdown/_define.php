@@ -25,7 +25,7 @@ $this->registerModule(
 	/* Name */					"CountDown",
 	/* Description*/		"CountDown widget",
 	/* Author */				"Moe (http://gniark.net/)",
-	/* Version */				'1.3',
+	/* Version */				'1.3.1',
 	/* Permissions */		'admin'
 );
 ?>
