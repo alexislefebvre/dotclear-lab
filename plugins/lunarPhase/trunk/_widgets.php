@@ -29,7 +29,15 @@ class lunarPhaseWidgets
 		$w->lunarphase->setting('sun_angle',__('Display actual angle of sun'),1,'check');
 		$w->lunarphase->setting('parallax',__('Display actual parallax of moon'),1,'check');
 		$w->lunarphase->setting('previsions',__('Display all previsions for the next moon phases'),1,'check');
-		$w->lunarphase->setting('homeonly',__('Home page only'),1,'check');
+		$w->lunarphase->setting('homeonly',__('Display on:'),0,'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+				)
+		);
+    $w->lunarphase->setting('content_only',__('Content only'),0,'check');
+    $w->lunarphase->setting('class',__('CSS class:'),'');
 	}
 
 }

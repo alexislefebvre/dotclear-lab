@@ -13,11 +13,11 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-		/* Name */			'lunarPhase',
-		/* Description */		'Display the moon phases',
-		/* Author */			'Tomtom (http://blog.zenstyle.fr)',
-		/* Verion */			'1.1.1',
-		/* Premission */		'usage,contentadmin'
+		/* Name */			     'lunarPhase',
+		/* Description */		 'Display the moon phases',
+		/* Author */			   'Tomtom (http://blog.zenstyle.fr)',
+		/* Verion */			   '1.1.2',
+		/* Premission */	   'usage,contentadmin'
 );
 
 ?>

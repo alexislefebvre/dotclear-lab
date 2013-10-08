@@ -42,9 +42,10 @@ class lunarPhasePublic
 		global $core;
 		
 		$lp = new lunarPhase();
-		
-		if ($w->homeonly && $core->url->type != 'default') {
-			return;
+
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+		($w->homeonly == 2 && $core->url->type == 'default')) {
+		return;
 		}
 		
 		$res = strlen($w->title) > 0 ? '<h2>'.$w->title.'</h2>' : '';
@@ -55,9 +56,9 @@ class lunarPhasePublic
 		$res .= lunarPhasePublic::getPrevisions($w,$lp);
 			
 		return
-			'<div id="lunarphase">'.
+    	($w->content_only ? '' : '<div class="lunarphase'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
 			$res.
-			'</div>';
+			($w->content_only ? '' : '</div>');
 	}
 	
 	/**
