@@ -17,6 +17,6 @@ $this->registerModule(
 	/* Name */			"Flavin",
 	/* Description*/		"Flavin in pink, blue or green",
 	/* Author */			"Steven Tlucek",
-	/* Version */			'1.0'
+	/* Version */			'1.1'
 );
 ?>

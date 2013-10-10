@@ -15,16 +15,14 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicHeadContent','flavin_publicHeadContent');
 
-function flavin_publicHeadContent(&$core)
+function flavin_publicHeadContent($core)
 {
-	$style = $core->blog->settings->flavin_style;
+	$style = $core->blog->settings->themes->flavin_style;
 	if (!preg_match('/^pink|blue|green$/',$style)) {
 		$style = 'pink';
 	}
 	
 	$url = $core->blog->settings->themes_url.'/'.$core->blog->settings->theme;
-	echo '<style type="text/css">'."\n".
-	"@import url(".$url."/".$style.".css);\n".
-	"</style>\n";
+	echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$url."/".$style.".css\" />\n";
 }
 ?>

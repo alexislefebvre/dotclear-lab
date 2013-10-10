@@ -12,6 +12,7 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 
 $flavin_styles = array(
 	__('Pink') => 'pink',
@@ -19,18 +20,24 @@ $flavin_styles = array(
 	__('Green') => 'green'
 );
 
+if (!$core->blog->settings->themes->flavin_style) {
+	$core->blog->settings->themes->flavin_style = 'pink';
+}
+
 if (!empty($_POST['flavin_style']) && in_array($_POST['flavin_style'],$flavin_styles))
 {
-	$core->blog->settings->flavin_style = $_POST['flavin_style'];
-	$core->blog->settings->setNamespace('themes');
-	$core->blog->settings->put('flavin_style',$core->blog->settings->flavin_style,'string','Flavin theme style',true);
+	$core->blog->settings->themes->flavin_style = $_POST['flavin_style'];
+	$core->blog->settings->addNamespace('themes');
+	$core->blog->settings->themes->put('flavin_style',$core->blog->settings->themes->flavin_style,'string','Flavin theme style',true);
 	$core->blog->triggerBlog();
+
+	dcPage::success(__('Theme configuration has been successfully updated.'));
 }
 
 echo
-'<fieldset><legend>Flavin style</legend>'.
-'<p class="field"><label>'.__('Style:').' '.
-form::combo('flavin_style',$flavin_styles,$core->blog->settings->flavin_style).
+'<div class="fieldset"><h4>'.__('Flavin style').'</h4>'.
+'<p class="field"><label>'.__('Style:').'</label>'.
+form::combo('flavin_style',$flavin_styles,$core->blog->settings->themes->flavin_style).
 '</p>'.
-'</fieldset>';
+'</div>';
 ?>

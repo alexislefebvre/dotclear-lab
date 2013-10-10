@@ -54,7 +54,7 @@ pre { overflow: auto; width: 100%; height: auto; }
 #top h1 {
 	margin : 0;
 	text-align : center;
-	padding : 30px 0 0 0;
+	padding : 25px 0 0 0;
 	font-size : 2.5em;
 	font-weight : bold;
 	line-height : normal;
@@ -91,7 +91,7 @@ pre { overflow: auto; width: 100%; height: auto; }
 
 #wrapper {
 	margin : 0;
-	overflow : auto;
+	overflow : hidden;
 	font-size : 1.3em;
 }
 #main {
@@ -157,6 +157,7 @@ pre { overflow: auto; width: 100%; height: auto; }
 }
 #sidebar div div div {
 	background : transparent;
+	border:none;
 	padding : 0;
 	margin : 0;
 }
@@ -168,6 +169,18 @@ pre { overflow: auto; width: 100%; height: auto; }
 #sidebar li {
 	margin: 0;
 	padding: 0;
+}
+#sidebar ul ul {
+	list-style: none;
+	margin: 0;
+	padding: 0 0 0 15px;
+	border: none;
+}
+#sidebar li li {
+	/*display: list-item;*/
+	margin: 0 0 0 5px;
+	padding: 0;
+	border: none;
 }
 
 #blognav, #blogextra {
@@ -188,6 +201,12 @@ pre { overflow: auto; width: 100%; height: auto; }
 	display: inline;
 	margin: 0;
 	padding: 0;
+}
+#sidebar .categories li.category-current {
+	font-weight: bold;
+}
+#sidebar .categories li.category-current li {
+	font-weight: normal;
 }
 
 #sidebar .tags ul {
@@ -210,6 +229,11 @@ pre { overflow: auto; width: 100%; height: auto; }
 #search .submit {
 	color : #FFF
 }
+
+#sidebar img {
+  max-width:165px;
+}
+
 #comments dt, #pings dt {
 	margin: 1em 0 0 0;
 	padding: 15px 15px 0 15px;
@@ -249,6 +273,9 @@ div.post {
 }
 div.post-content {
 	margin: 1em 0;
+}
+.post-excerpt p img, .post-content p img {
+  max-width:441px;
 }
 p.post-info {
 	font-style : italic;
@@ -345,4 +372,20 @@ input.preview, input.submit {
 .field textarea {
 	display: block;
 	width: 99%;
+}
+
+.dc-category #content-info p img {
+  max-width:441px;
+}
+#subcategories {
+	margin: 1em 0;
+	padding: 0.5em;
+}
+#subcategories h3 {
+	margin: 0;
+}
+#subcategories ul {
+	margin: 0.5em 0 0 0;
+	padding: 0 0 0 20px;
+	line-height: 1.4;
 }
