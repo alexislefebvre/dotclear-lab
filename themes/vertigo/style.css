@@ -265,7 +265,15 @@ a:hover, a:focus, a:active {
 	padding-left: 16px;
 	background: transparent url(img/feed.png) no-repeat center left;
 }
-
+#sidebar .categories li.category-current {
+	font-weight: bold;
+}
+#sidebar .categories li.category-current li {
+	font-weight: normal;
+}
+#sidebar img {
+  max-width:309px;
+}
 /* Post ------------------------------------------------ */
 #content div.post {
 	position: relative;
@@ -378,6 +386,10 @@ a:hover, a:focus, a:active {
 #content #ping-url {
 	padding-left: 18px;
 	background: transparent url(img/ping.png) no-repeat center left;
+}
+
+.post-excerpt p img, .post-content p img {
+  max-width:510px;
 }
 
 /* Navigation links ------------------------------------ */
@@ -597,4 +609,25 @@ input.preview:focus, input.submit:focus, input.preview:hover, input.submit:hover
 #c_name:hover, #c_mail:hover, #c_site:hover, #c_content:hover,
 #c_name:focus, #c_mail:focus, #c_site:focus, #c_content:focus {
 	color: #000;
+}
+
+/* page categorie */
+.dc-category #content-info p img {
+  max-width:510px;
+}
+#subcategories {
+	background: #fbfbfb;
+	border-color: #BFBFBF;
+	border-style: solid;
+	border-width: 1px 0;
+	margin: 1em 0;
+	padding: 0.5em;
+}
+#subcategories h3 {
+	margin: 0;
+}
+#subcategories ul {
+	margin: 0.5em 0 0 0;
+	padding: 0 0 0 20px;
+	line-height: 1.4;
 }

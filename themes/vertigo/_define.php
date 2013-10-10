@@ -12,9 +12,9 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-	/* Name */			"Vertigo",
+	/* Name */			    "Vertigo",
 	/* Description*/		"Two columns, black on white layout.",
-	/* Author */			"Olivier Meunier",
-	/* Version */			'1.0'
+	/* Author */			  "Olivier Meunier",
+	/* Version */			  '1.1'
 );
 ?>
