@@ -21,7 +21,7 @@ p {
 	margin: 1em 0;
 	text-align: justify;
 }
-ul {
+ul, ol {
 	margin: 0 0 0.5em 0;
 	padding: 0 0 0 25px;
 }
@@ -264,6 +264,13 @@ ul.sidebarmenu a:hover {
 	background: transparent url(img/feed.png) no-repeat 0 50%;
 }
 
+/* Category */
+#sidebar .categories li.category-current {
+	font-weight: bold;
+}
+#sidebar .categories li.category-current li {
+	font-weight: normal;
+}
 /* Posts
 -------------------------------------------------------- */
 .day-date {
@@ -307,7 +314,9 @@ ul.sidebarmenu a:hover {
 .post-content a, .post-excerpt a, #comments a, #pings a {
 	color: #b0a088;
 }
-
+.post-excerpt p img, .post-content p img {
+  max-width:640px;
+}
 .post-content blockquote {
 	margin-left: 1em;
 	padding: 1px 0 1px 1em;
@@ -332,8 +341,14 @@ ul.sidebarmenu a:hover {
 
 /* Categories
 -------------------------------------------------------- */
+.dc-category #content-info p img {
+  max-width:640px;
+}
 #subcategories {
 	margin: 1em 0 2em;
+}
+#subcategories h3 {
+	margin: 0;
 }
 #subcategories ul {
 	margin: 0;

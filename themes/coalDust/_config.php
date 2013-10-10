@@ -13,23 +13,24 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
-$hreflang = $core->blog->settings->coaldust_hreflang;
+$hreflang = $core->blog->settings->themes->coaldust_hreflang;
 
 if (!empty($_POST))
 {
-	$core->blog->settings->setNameSpace('coalDust');
-	$core->blog->settings->put('coaldust_hreflang',
+	$core->blog->settings->addNameSpace('themes');
+	$core->blog->settings->themes->put('coaldust_hreflang',
 			!empty($_POST['coaldust_hreflang']),
 			'boolean', 'Display links\'s language after links');
 	
 	# update setting
 	$hreflang = (!empty($_POST['coaldust_hreflang']));
 	
-	$core->blog->settings->setNameSpace('system');
 	$core->blog->triggerBlog();
+	
+	dcPage::success(__('Theme configuration has been successfully updated.'));
 }
 
-echo '<fieldset><legend>'.__('Coal Dust').'</legend>';
+echo '<div class="fieldset"><h4>'.__('Coal Dust').'</h4>';
 
 echo '<p>'.
 	form::checkbox('coaldust_hreflang',1,$hreflang).
@@ -38,5 +39,5 @@ echo '<p>'.
 	'</label>'.
 '</p>';
 
-echo '</fieldset>';
+echo '</div>';
 ?>

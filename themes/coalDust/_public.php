@@ -11,7 +11,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-if ($core->blog->settings->coaldust_hreflang)
+if ($core->blog->settings->themes->coaldust_hreflang)
 {
 	$core->addBehavior('publicHeadContent',
 		array('tplCoalDustTheme','publicHeadContent'));
@@ -19,7 +19,7 @@ if ($core->blog->settings->coaldust_hreflang)
 
 class tplCoalDustTheme
 {
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		echo '<style type="text/css">'."\n".
 			'a[hreflang]:after {'.
