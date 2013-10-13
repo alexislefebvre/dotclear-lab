@@ -158,7 +158,7 @@ class tplComListe
 			"}\n";
 		}
 		
-		// Sens de tri issu des paramètres du plugin
+		// Sens de tri issu des paramÃ¨tres du plugin
 		$order = $blog_settings->comliste_comments_order;
 		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order'])) {
 			$order = $attr['order'];
@@ -312,7 +312,8 @@ class tplComListe
 			$blog_settings =& $core->blog->settings;
 		}
 		
-		if ($w->homeonly && $core->url->type != 'default') {
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 		if (!$blog_settings->comliste_enable) {
@@ -320,12 +321,12 @@ class tplComListe
 		}
 		
 		$res =
-		'<div class="comliste">'.
+    ($w->content_only ? '' : '<div class="comliste'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul><li><a href="'.$core->blog->url.$core->url->getBase('comListe').'">'.
 		($w->link_title ? html::escapeHTML($w->link_title) : __('List of comments')).
 		'</a></li></ul>'.
-		'</div>';
+    ($w->content_only ? '' : '</div>');
 		
 		return $res;
 	}	

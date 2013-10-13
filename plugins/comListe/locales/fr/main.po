@@ -30,7 +30,7 @@ msgstr "Liste des commentaires"
 
 #: _widgets.php:23
 msgid "Link title:"
-msgstr "Titre du lien:"
+msgstr "Titre du lien :"
 
 #: inc/class.dc.comListe.php:91
 msgid "Number of comments"
@@ -46,7 +46,7 @@ msgstr "Pas de titre de page."
 
 #: index.php:123
 msgid "Plugin activation"
-msgstr "Activation de l'extension"
+msgstr "Activation du plugin"
 
 #: index.php:126
 msgid "Enable comListe"
@@ -77,7 +77,7 @@ msgid "Save configuration successful"
 msgstr "Sauvegarde de la configuration réussie"
 
 msgid "Message:"
-msgstr "Message:"
+msgstr "Message :"
 
 msgid "Setting have been successfully updated."
 msgstr "Configuration mise à jour avec succès."
@@ -85,3 +85,5 @@ msgstr "Configuration mise à jour avec succès."
 msgid "Current page"
 msgstr "Page courante"
 
+msgid "source:"
+msgstr "source :"

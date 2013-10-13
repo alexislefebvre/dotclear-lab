@@ -3,18 +3,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX,NOARCHIVE"}}" />
   
   <title>{{tpl:ComListePageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
   
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
   <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:ComListePageTitle}} - {{tpl:BlogName encode_html="1"}}" />
   <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
   <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
   <meta name="dc.type" content="text" />
   <meta name="dc.format" content="text/html" />
   
@@ -45,13 +46,13 @@
 				<a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}" class="comment-number">{{tpl:CommentOrderNumber}}.</a>
 				{{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}},
 				{{tpl:lang by}} {{tpl:CommentAuthorLink}}
-				<br />({{tpl:lang source}}: {{tpl:CommentEntryTitle}})
+				<br />({{tpl:lang source:}} {{tpl:CommentEntryTitle}})
 			</dt>
 			<dd class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
 				<!-- # --BEHAVIOR-- publicCommentBeforeContent -->
 			     {{tpl:SysBehavior behavior="publicCommentBeforeContent"}}
 			     {{tpl:CommentContent}}
-				<a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}">{{tpl:ComListeOpenPostTitle}} ...</a>
+				<a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}">{{tpl:ComListeOpenPostTitle}}...</a>
 			     <!-- # --BEHAVIOR-- publicCommentAfterContent -->
 			     {{tpl:SysBehavior behavior="publicCommentAfterContent"}}
 	      	</dd>
@@ -71,7 +72,6 @@
 	</p>		
   </div>
 </div>
-
 
 <div id="sidebar">
   <div id="blognav">

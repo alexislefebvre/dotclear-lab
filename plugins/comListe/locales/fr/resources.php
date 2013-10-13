@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 if (!isset($__resources['help']['comListe'])) {
-	$__resources['help']['comListe'] = dirname(__FILE__).'/help/help.html';
+	$__resources['help']['comListe'] = dirname(__FILE__).'/help/comListe.html';
 }
 
 ?>

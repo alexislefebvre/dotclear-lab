@@ -16,7 +16,7 @@ $this->registerModule(
         /* Name */                      "ComListe",
         /* Description*/                "Plugin for printing comments list",
         /* Author */                    "Benoit de Marne",
-        /* Version */                   '0.1.8',
+        /* Version */                   '0.1.9',
         /* Permissions */               'admin'
 );
 

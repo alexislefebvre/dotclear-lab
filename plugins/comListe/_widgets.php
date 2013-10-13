@@ -21,7 +21,15 @@ class comListeWidgets
 		$w->create('comListe',__('List of comments'),array('tplComListe','comListeWidget'));
 		$w->comListe->setting('title',__('Title:'),__('ComListe'));
 		$w->comListe->setting('link_title',__('Link title:'),__('List of comments'));
-		$w->comListe->setting('homeonly',__('Home page only'),0,'check');
+		$w->comListe->setting('homeonly',__('Display on:'),0,'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+				)
+		);
+    $w->comListe->setting('content_only',__('Content only'),0,'check');
+    $w->comListe->setting('class',__('CSS class:'),'');
 	}
 }
 ?>

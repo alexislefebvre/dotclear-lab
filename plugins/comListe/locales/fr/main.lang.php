@@ -17,7 +17,7 @@ $GLOBALS['__l10n']['ComListe'] = 'ComListe';
 $GLOBALS['__l10n']['List of comments'] = 'Liste des commentaires';
 
 #_widgets.php:23
-$GLOBALS['__l10n']['Link title:'] = 'Titre du lien:';
+$GLOBALS['__l10n']['Link title:'] = 'Titre du lien :';
 
 #inc/class.dc.comListe.php:91
 $GLOBALS['__l10n']['Number of comments'] = 'Nombres de commentaires';
@@ -29,7 +29,7 @@ $GLOBALS['__l10n']['open post'] = 'ouvrir le billet';
 $GLOBALS['__l10n']['No page title.'] = 'Pas de titre de page.';
 
 #index.php:123
-$GLOBALS['__l10n']['Plugin activation'] = 'Activation de l\'extension';
+$GLOBALS['__l10n']['Plugin activation'] = 'Activation du plugin';
 
 #index.php:126
 $GLOBALS['__l10n']['Enable comListe'] = 'Activer comListe';
@@ -52,10 +52,12 @@ $GLOBALS['__l10n']['Save configuration'] = 'Enregistrer la configuration';
 
 $GLOBALS['__l10n']['Save configuration successful'] = 'Sauvegarde de la configuration réussie';
 
-$GLOBALS['__l10n']['Message:'] = 'Message:';
+$GLOBALS['__l10n']['Message:'] = 'Message :';
 
 $GLOBALS['__l10n']['Setting have been successfully updated.'] = 'Configuration mise à jour avec succès.';
 
 $GLOBALS['__l10n']['Current page'] = 'Page courante';
+
+$GLOBALS['__l10n']['source:'] = 'source :';
 
 ?>

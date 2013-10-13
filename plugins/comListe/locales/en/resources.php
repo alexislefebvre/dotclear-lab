@@ -1,7 +1,7 @@
 <?php
 /*
---- BEGIN LICENSE BLOCK --- 
-This file is part of comListe, a plugin for printing comments list 
+--- BEGIN LICENSE BLOCK ---
+This file is part of comListe, a plugin for printing comments list
 in public part of DotClear2.
 Copyright (C) 2009 Benoit de Marne,  and contributors
 
@@ -21,8 +21,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 --- END LICENSE BLOCK ---
 */
 
-if (!isset($__resources['help']['comListe']))
-{
-	$__resources['help']['comListe'] = dirname(__FILE__).'/help/help.html';
+if (!isset($__resources['help']['comListe'])) {
+	$__resources['help']['comListe'] = dirname(__FILE__).'/help/comListe.html';
 }
+
 ?>

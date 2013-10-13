@@ -12,6 +12,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+$page_title = __('ComListe');
+
 # Settings compatibility test
 if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 	$core->blog->settings->addNamespace('comListe');
@@ -96,19 +98,23 @@ if ($action == 'saveconfig')
 
 <!-- header -->
 <head>
-  <title><?php echo __('ComListe'); ?></title>
+  <title><?php echo $page_title; ?></title>
 </head>
 
 <!-- body -->
 <body>
 
 <?php
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+
 if (!empty($_GET['saveconfig'])) {
-	echo '<p class="message">'.__('Settings have been successfully updated.').'</p>';
+  dcPage::success(__('Settings have been successfully updated.'));
 }
 ?>
-
-<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('ComListe'); ?></h2>
 
 <?php
 
@@ -120,12 +126,13 @@ __('Descending') => 'desc' );
 	{
 		echo
 		'<form method="post" action="plugin.php">'.
-		'<fieldset><legend>'. __('Plugin activation').'</legend>'.
+		'<div class="fieldset"><h4>'. __('Plugin activation').'</h4>'.
 		'<p class="field">'.
+		'<label class="classic" for="comliste_enable">'.
 		form::checkbox('comliste_enable', 1, $comliste_enable).
-		'<label class=" classic" for="active">'.__('Enable comListe').'</label></p>'.
-		'</fieldset>'.
-		'<fieldset><legend>'. __('General options').'</legend>'.
+		__('Enable comListe').'</label></p>'.
+		'</div>'.
+		'<div class="fieldset"><h4>'. __('General options').'</h4>'.
 		'<p><label class="classic">'. __('Title page').' : '.
 		form::field('comliste_page_title', 30,256, $comliste_page_title).
 		'</label></p>'.
@@ -135,7 +142,7 @@ __('Descending') => 'desc' );
 		'<p><label class=" classic">'. __('Comments order').' : '.
 		form::combo('comliste_comments_order', $order_combo, $comliste_comments_order).
 		'</label></p>'.
-		'</fieldset>'.
+		'</div>'.
 		'<p><input type="submit" value="'.__('Save configuration').'" onclick="affinfo(\''.__('Save configuration').'\')" /> '.
 		$core->formNonce().
 		form::hidden(array('action'),'saveconfig').
