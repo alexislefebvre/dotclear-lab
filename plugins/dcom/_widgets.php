@@ -26,7 +26,7 @@ class adminDcom
 		commonDcom::adjustDefaults($p);
 		
 		$w->create('lastcomments',__('Last comments'),
-			array('publicDcom','showWidget'));
+			array('publicDcom','showWidget'),null,'Plugin Dcom');
 		$w->lastcomments->setting('title',
 			__('Title:'),$p['title']);
 		$w->lastcomments->setting('c_limit',

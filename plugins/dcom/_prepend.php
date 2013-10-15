@@ -17,7 +17,7 @@ if (!defined('DC_RC_PATH')) { return; }
 
 class commonDcom
 {
-	public static function adjustDefaults(&$p)
+	public static function adjustDefaults($p)
 	{
 		global $core;
 		
