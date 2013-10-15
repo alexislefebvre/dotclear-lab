@@ -19,9 +19,6 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_RC_PATH')) { return; }
 
-# load locales for the blog language
-l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
-
 $core->addBehavior('initWidgets',array('ClockBehaviors','initWidgets'));
  
 class ClockBehaviors
@@ -110,11 +107,9 @@ class publicClock
 			$js = null;
 		}
 
-		//return '<div class="clock">'.$header.
 		return $res = ($w->content_only ? '' : '<div class="clock'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').$header.
 		'<p class="text">'.$time.'</p>'.$js.
     ($w->content_only ? '' : '</div>');
-    //'</div>';
 	}
 }
 

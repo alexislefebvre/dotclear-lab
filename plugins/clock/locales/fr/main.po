@@ -36,3 +36,6 @@ msgstr "Êtes-vous sûr de vouloir quitter la page&nbsp;?"
 
 msgid "Format (see <a href="%1$s" %2$s>PHP strftime function</a>) (HMS display dynamically %%H:%%M:%%S):"
 msgstr "Format (voir la <a href="%1$s" %2$s>fonction strftime de PHP</a>) (HMS affiche dynamiquement %%H:%%M:%%S):';"
+
+msgid "Local time in %s"
+msgstr "Heure de %s"
