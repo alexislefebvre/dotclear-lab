@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			    "shortArchives",
 	/* Description*/		"Display complete archives of your blog displayed in an accordion",
 	/* Author */			"annso, Pierre Van Glabeke",
-	/* Version */			'1.4.1',
+	/* Version */			'1.4',
 	/* Permissions */		'usage,contentadmin'
 );
 ?>

@@ -16,10 +16,8 @@ require dirname(__FILE__).'/_widgets.php';
 
 $core->addBehavior('publicHeadContent',array('publicShortArchives','publicHeadContent'));
 
-
 class publicShortArchives
 {
-
 	public static function publicHeadContent($core)
 	{
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
