@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"CategoriesMode",
 	/* Description*/		"Add a category list page",
 	/* Author */		"Adjaya, Pierre Van Glabeke",
-	/* Version */		'0.5',
+	/* Version */		'0.6',
 	/* Permissions */		null
 );
 

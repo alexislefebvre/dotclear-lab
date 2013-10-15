@@ -37,7 +37,7 @@ class tplCategories
     public static function EntryIfCategoriesMode($attr,$content)
     {
 		return
-		"<?php if (\$core->blog->settings->system->categoriesmode_active) : ?>".
+		"<?php if (\$core->blog->settings->categoriesmode->categoriesmode_active) : ?>".
 		$content.
 		"<?php endif; ?>";
     }
@@ -54,7 +54,7 @@ class tplCategories
 }
 
 # If categoriesMode  not active we stop here :
-if (!$core->blog->settings->categoriesmode_active) {
+if (!$core->blog->settings->categoriesmode->categoriesmode_active) {
 	return;
 }
 
