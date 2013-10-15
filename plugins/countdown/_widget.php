@@ -211,10 +211,8 @@ class CountDownBehaviors
 		if (!$w->dynamic)
 		{
 		return $res = ($w->content_only ? '' : '<div class="countdown'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').$header.
-			//return '<div class="countdown">'.$header.
-				'<p class="text">'.$text.'<span>'.$str.'</span></p>'.
+		'<p class="text">'.$text.'<span>'.$str.'</span></p>'.
 		($w->content_only ? '' : '</div>');
-			//'</div>';
 		}
 		else
 		{
@@ -258,7 +256,6 @@ class CountDownBehaviors
 				$layout = $w->dynamic_layout_before;
 			}
 			
-			//return $script.'<div class="countdown">'.$header.
 			return $res = ($w->content_only ? '' : '<div class="countdown'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').$header.
 				'<p class="text" id="countdown-'.$id.'">'.$text.$str.'</p>'.
 				'<script type="text/javascript">'."\n".
@@ -277,7 +274,6 @@ class CountDownBehaviors
 					'});'."\n".
 				'//]]>'.
 				'</script>'."\n".
-			//'</div>';
 			($w->content_only ? '' : '</div>');
 		}
 	}
