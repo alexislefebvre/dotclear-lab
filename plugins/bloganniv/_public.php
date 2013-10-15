@@ -1,28 +1,17 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear bloganniv plugin.
-# Copyright (c) 2007 Trautmann Francis and contributors. All rights
-# reserved.
 #
-# DotClear is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# This file is part of DotClear.
 #
-# DotClear is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# Plugin Bloganniv by Francis Trautmann
+# Contributor: Pierre Van Glabeke
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_RC_PATH')) { return; }
-
-l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
 require dirname(__FILE__).'/_widgets.php';
 
@@ -123,7 +112,7 @@ class tplBlogAnniv
 			$dispyearborn = '<li>'.__('Born:').
       ' <span class="annivne">'.$ftdatecrea.'</span></li>';
 		}
-		// Si je dois afficher le l'age en année
+		// Si je dois afficher l'age en année
 		if ($w->dispyear) {
 			$dispyear = '<li>'.__('Age:').
       ' <span class="annivan">'.$nbreannee.'</span> '.

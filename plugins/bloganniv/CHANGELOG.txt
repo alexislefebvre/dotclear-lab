@@ -19,3 +19,6 @@
 
 == Version 1.4 ================================================================
 - Modifs affichage pour le widget (remplacement paragraphe par une liste)
+
+== Version 1.4.1 ================================================================
+- Ajustements settings
