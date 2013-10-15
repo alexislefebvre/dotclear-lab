@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */		"My Favicon",
 	/* Description*/	"Add a customized favicon to your blog",
 	/* Author */		"Oleksandr Syenchuk, Pierre Van Glabeke",
-	/* Version */		'0.6.3',
+	/* Version */		'0.7',
 	/* Permissions */	'contentadmin'
 );
 ?>

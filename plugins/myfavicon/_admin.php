@@ -26,22 +26,11 @@ class myFavicon
 		return '<script type="text/javascript" src="index.php?pf=myfavicon/blog_pref.js"></script>';
 	}
 	
-	public static function adminBlogPreferencesForm($core,$settings=false)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
-		# Dotclear <=2.0-beta7 compatibility
-		if ($settings === false) {
-			$settings = $core->blog->settings;
-		}
-		
-		if (version_compare(DC_VERSION,'2.2-beta1','<')) {
-			$favicon_url = $settings->favicon_url;
-			$favicon_ie_url = $settings->favicon_ie_url;
-		}
-		else {
 			$favicon_url = $settings->myfavicon->favicon_url;
 			$favicon_ie_url = $settings->myfavicon->favicon_ie_url;
-		}
-		
+
 		echo
 		'<div class="fieldset"><h4>Favicon</h4>'.
 		'<p><label class="classic">'.
@@ -61,19 +50,11 @@ class myFavicon
 	{
 		$favicon_url = empty($_POST['favicon_url']) ? '' : $_POST['favicon_url'];
 		$favicon_ie_url = empty($_POST['favicon_ie_url']) ? '' : $_POST['favicon_ie_url'];
-		
-		if (version_compare(DC_VERSION,'2.2-beta1','<')) {
-			$settings->setNameSpace('myfavicon');
-			$settings->put('favicon_url',$favicon_url);
-			$settings->put('favicon_ie_url',$favicon_ie_url);
-			$settings->setNameSpace('system');
-		}
-		else {
+
 			$settings->addNameSpace('myfavicon');
 			$settings->myfavicon->put('favicon_url',$favicon_url);
 			$settings->myfavicon->put('favicon_ie_url',$favicon_ie_url);
 			$settings->addNameSpace('system');
-		}
 	}
 }
 ?>

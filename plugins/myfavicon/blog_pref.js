@@ -23,4 +23,3 @@ $(function() {
 		$("#favicon_config").hide();
 	}
 });
-

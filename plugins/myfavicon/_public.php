@@ -50,16 +50,11 @@ class myFavicon
 		}
 	}
 
-	private static function faviconHTML(&$settings)
+	private static function faviconHTML($settings)
 	{
-		if (version_compare(DC_VERSION,'2.2-beta1','<')) {
-			$favicon_url = $settings->favicon_url;
-			$favicon_ie_url = $settings->favicon_ie_url;
-		}
-		else {
 			$favicon_url = $settings->myfavicon->favicon_url;
 			$favicon_ie_url = $settings->myfavicon->favicon_ie_url;
-		}
+
 		if (empty($favicon_url) && empty($favicon_ie_url)) {
 			return;
 		}

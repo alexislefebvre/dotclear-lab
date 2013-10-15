@@ -23,31 +23,12 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-# --INSTALL AND UPDATE PROCEDURES--
-if (version_compare(DC_VERSION,'2.2-beta1','<')) {
-	$sets = &$core->blog->settings;
-	$sets->setNamespace(strtolower($label));
-	
-	# New install / update
-	$sets->put('favicon_url','','string','Favicon URL',false);
-	$sets->put('favicon_ie_url','','string','Favicon URL Internet Explorer',false);
-}
-else {
-	$core->blog->settings->addNamespace(strtolower($label));
-	
-	# New install / update
-	$core->blog->settings->myfavicon->put('favicon_url','','string','Favicon URL',false);
-	$core->blog->settings->myfavicon->put('favicon_ie_url','','string','Favicon URL Internet Explorer',false);
-}
-if (version_compare(DC_VERSION,'2.0-rc1','<')
-&& file_exists(DC_TPL_CACHE.'/cbtpl')
-&& !files::deltree(DC_TPL_CACHE.'/cbtpl')) {
-	throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
-}
+# Création du setting (s'il existe, il ne sera pas écrasé)
+$settings = new dcSettings($core,null);
+$settings->addNamespace('myfavicon');
+$settings->myfavicon->put('favicon_url','','string','Favicon URL',false);
+$settings->myfavicon->put('favicon_ie_url','','string','Favicon URL Internet Explorer',false);
 
-# --SETTING NEW VERSION--
-
-$core->setVersion($label,$m_version);
-unset($label,$i_version,$m_version,$s,$si);
-return true;
+# La procédure d'installation commence vraiment là
+$core->setVersion('$label',$m_version);
 ?>
