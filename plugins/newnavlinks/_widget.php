@@ -98,11 +98,9 @@ class NewNavLinksBehaviors
 		{
 			$str = implode('<span> - </span>',$elements);
 			$class = ($w->tag == 'p') ? ' class="text"' : '';
-			//return '<div id="newnav">
       return 		$res = ($w->content_only ? '' : '<div class="newnav'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
       '<'.$w->tag.$class.'>'.$str.'</'.$w->tag.'>'.
       ($w->content_only ? '' : '</div>');
-      //'</div>';
 		}
 	}
 }
