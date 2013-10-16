@@ -18,63 +18,68 @@ if (!defined('DC_CONTEXT_ADMIN')) exit;
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 require dirname(__FILE__).'/lib/class.freshy2.config.php';
 
-if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-	$core->blog->settings->addNamespace('freshy2');
-	$freshy2_settings =& $core->blog->settings->freshy2;
-} else {
-	$core->blog->settings->setNamespace('themes');
-	$freshy2_settings =& $core->blog->settings;
-}
+
+$core->blog->settings->addNamespace('freshy2');
+$freshy2_settings =& $core->blog->settings->freshy2;
 
 $config = new freshy2Config($core);
 
 $sidebar_combo = array(__('None') => 'none',__('Navigation sidebar') =>'nav', __('Extra sidebar')=>'extra');
-$custom_themes_combo = $config->getCustomThemes();
-$images = $config->getHeaderImages();
-$current_custom_theme = $freshy2_settings->freshy2_custom;
-$current_top_image = $freshy2_settings->freshy2_top_image;
-$left_sidebar = $freshy2_settings->freshy2_sidebar_left;
-$right_sidebar = $freshy2_settings->freshy2_sidebar_right;
-if ($current_custom_theme == null) {
-	$current_custom_theme = 'default';
-	$current_top_image = empty($current_top_image)?'default':$current_top_image;
-	$left_sidebar = 'none';
-	$right_sidebar = 'nav';
-}
+$menu_combo = array(
+	__('Simple Menu') => 'simplemenu',
+	__('Freshy Menu') => 'freshymenu'
+);
 if (!empty($_POST))
 {
-	$current_custom_theme = $_POST['freshy_custom'];
-	$current_top_image = $_POST['freshy_top_image'];
-	if (!isset($images[$current_top_image])) {
-		$current_top_image = 'default';
+	$config->custom_theme = $_POST['freshy_custom'];
+	$config->top_image = $_POST['freshy_top_image'];
+	$config->menu = (isset($_POST['menu']) && $_POST['menu'] == "freshymenu") ? "freshymenu" : "simplemenu";
+echo $config->menu;
+	if (!isset($images[$config->top_image])) {
+		$config->top_image = 'default';
 	}
-	$left_sidebar = $_POST['left_sidebar'];
-	$right_sidebar = $_POST['right_sidebar'];
-	$freshy2_settings->put('freshy2_custom',$current_custom_theme,'string');
-	$freshy2_settings->put('freshy2_top_image',$current_top_image,'string');
-	$freshy2_settings->put('freshy2_sidebar_left',$left_sidebar,'string');
-	$freshy2_settings->put('freshy2_sidebar_right',$right_sidebar,'string');
+	$config->left_sidebar = $_POST['left_sidebar'];
+	$config->right_sidebar = $_POST['right_sidebar'];
+	$config->store();
 	$core->blog->triggerBlog();
 	
 	echo '<p class="message">'.__('Theme configuration has been successfully updated.').'</p>';
 }
+$custom_themes_combo = $config->getCustomThemes();
+$images = $config->getHeaderImages();
+$current_custom_theme = $config->custom_theme;
+$current_top_image = $config->top_image;
+$left_sidebar = $config->left_sidebar;
+$right_sidebar = $config->right_sidebar;
+$menu = $config->menu;
+$has_freshy_menu = $core->plugins->moduleExists('menuFreshy');
+
 echo'<style type="text/css" media="screen">';
 include dirname(__FILE__).'/lib/admin_style.css';
 echo '</style>';
 
 # Options display
-echo '<fieldset><legend>'.__('Preferences').'</legend>';
+echo '<div class="fieldset"><h3>'.__('Preferences').'</h3>';
 echo
 '<p class="field"><label>'.__('Custom theme:').' '.
 form::combo('freshy_custom',$config->getCustomThemes(),$current_custom_theme).'</label></p>';
-echo '</fieldset>';
+echo '</div>';
+if ($has_freshy_menu) {
+	echo '<div class="fieldset"><h3>'.__('Menus').'</h3>'.
+		'<p><label for="menu">'.__('Menu')." : </label>".form::combo('menu',$menu_combo,$menu)."</p>".
+		'</div>';
+}
 
-echo '<fieldset><legend>'.__('Sidebars').'</legend>'.
+echo '<div class="fieldset"><h3>'.__('Sidebars').'</h3>'.
 	"<p>".__('Left sidebar')." : ".form::combo('left_sidebar',$sidebar_combo,$left_sidebar)."</p>".
-	"<p>".__('Right sidebar')." : ".form::combo('right_sidebar',$sidebar_combo,$right_sidebar)."</p>".
-	'</fieldset>';
+	"<p>".__('Right sidebar')." : ".form::combo('right_sidebar',$sidebar_combo,$right_sidebar);
+if (!$has_freshy_menu) {
+	echo form::hidden('menu','simplemenu');
+}
+echo "</p>".
+	'</div>';
 
-echo '<fieldset><legend>'.__('Top Image').'</legend>';
+echo '<div class="fieldset clearfix"><h3>'.__('Top Image').'</h3>';
 $nb_img = count($images);
 $nb_img_by_col = 1+($nb_img-$nb_img%3)/3;
 echo '<div id="imgheaders">';
@@ -88,5 +93,5 @@ foreach ($images as $ref => $image) {
 	$count++;
 }
 echo '</ul></div></div></div>';
-echo '</fieldset>';
+echo '</div>';
 ?>

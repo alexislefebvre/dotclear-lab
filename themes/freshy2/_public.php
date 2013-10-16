@@ -16,34 +16,41 @@ $core->tpl->addValue('Freshy2StyleSheet',array('tplFreshy2Theme','FreshyStyleShe
 $core->tpl->addValue('Freshy2LayoutClass',array('tplFreshy2Theme','FreshyLayoutClass'));
 $core->tpl->addBlock('Freshy2IfHasSidebar',array('tplFreshy2Theme','FreshyIfHasSidebar'));
 $core->tpl->addBlock('Freshy2IfHasSidebarContent',array('tplFreshy2Theme','FreshyIfHasSidebarContent'));
+$core->tpl->addBlock('Freshy2MenuIf',array('tplFreshy2Theme','FreshyMenuIf'));
 $core->addBehavior('publicHeadContent',array('tplFreshy2Theme','publicHeadContent'));
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
-
+require dirname(__FILE__).'/lib/class.freshy2.config.php';
 class tplFreshy2Theme
 {
-	public static $settings;
+	public static $config;
 	public static $syssettings;
 	
 	public static function initSettings() {
 		global $core;
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			self::$settings =& $core->blog->settings->freshy2;
-			self::$syssettings =& $core->blog->settings->system;
-		} else {
-			self::$settings =& $core->blog->settings;
-			self::$syssettings =& $core->blog->settings;
-		}
+		self::$config = new freshy2Config($core);
+		self::$syssettings =& $core->blog->settings->system;
 	}
 
 	public static function FreshyStyleSheet($attr) {
 		return "style.css";
 	}
 
+	public static function FreshyMenuIf($attr,$content) {
+		if (isset($attr['name']) && $attr['name']=="freshymenu") {
+			$menu = "freshymenu";
+		} else {
+			$menu = "simplemenu";
+		}
+		return '<?php if (tplFreshy2Theme::$config->menu == "'.$menu.'"): ?>'."\n".
+			$content."\n".
+			'<?php endif; ?>'."\n";
+	}
+
 	public static function FreshyLayoutClass($attr) {
 		$p = '<?php '."\n";
-		$p .= 'if (tplFreshy2Theme::$settings->freshy2_sidebar_right != "none")'."\n";
+		$p .= 'if (tplFreshy2Theme::$config->right_sidebar != "none")'."\n";
 		$p .= '  echo "sidebar_right ";'."\n";
-		$p .= 'if (tplFreshy2Theme::$settings->freshy2_sidebar_left != "none")'."\n";
+		$p .= 'if (tplFreshy2Theme::$config->left_sidebar != "none")'."\n";
 		$p .= '  echo "sidebar_left";'."\n";
 		$p .= '?>'."\n";
 		return $p;
@@ -55,13 +62,13 @@ class tplFreshy2Theme
 		else
 			$pos="right";
 		if ($pos == 'both') {
-			return '<?php if ((tplFreshy2Theme::$settings->freshy2_sidebar_left != "none") '.
-				'&& (tplFreshy2Theme::$settings->freshy2_sidebar_right != "none")): ?>'."\n".
+			return '<?php if ((tplFreshy2Theme::$config->left_sidebar != "none") '.
+				'&& (tplFreshy2Theme::$config->right_sidebar != "none")): ?>'."\n".
 				$content."\n".
 				'<?php endif; ?>'."\n";
 		} else {
-			$setting = "freshy2_sidebar_".$pos;
-			return '<?php if (tplFreshy2Theme::$settings->'.$setting.' != "none"): ?>'."\n".
+			$setting = $pos."_sidebar";
+			return '<?php if (tplFreshy2Theme::$config->'.$setting.' != "none"): ?>'."\n".
 				$content."\n".
 				'<?php endif; ?>'."\n";
 		}
@@ -71,20 +78,20 @@ class tplFreshy2Theme
 			$pos=trim(strtolower($attr['pos']));
 		else
 			$pos="right";
-		$setting = "freshy2_sidebar_".$pos;
+		$setting = $pos."_sidebar";
 		if (isset($attr['value'])) 
 			$value=trim(strtolower($attr['value']));
 		else
 			$value="nav";
-		return '<?php if (tplFreshy2Theme::$settings->'.$setting.' == "'.$value.'"): ?>'."\n".
+		return '<?php if (tplFreshy2Theme::$config->'.$setting.' == "'.$value.'"): ?>'."\n".
 			$content."\n".
 			'<?php endif; ?>'."\n";
 	}
 
 	public static function publicHeadContent($core)
 	{
-		$cust = self::$settings->freshy2_custom;
-		$topimg = self::$settings->freshy2_top_image;
+		$cust = self::$config->custom_theme;
+		$topimg = self::$config->top_image;
 		$theme_url= self::$syssettings->themes_url."/".self::$syssettings->theme;
 
 		$css_content='';

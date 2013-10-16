@@ -33,7 +33,8 @@
 				<li class="page_item"><a href="/galleries">Galeries</a></li>
 				<li class="page_item"><a href="/archives">Archives</a></li>
 			</ul>-->
-			<tpl:SysIf has_tag="MenuFreshy">{{tpl:MenuFreshy level="0"}}</tpl:SysIf>
+			<tpl:Freshy2MenuIf name="simplemenu">{{tpl:SimpleMenu id="supranav" description="title"}}</tpl:Freshy2MenuIf>
+			<tpl:Freshy2MenuIf name="freshymenu">{{tpl:MenuFreshy level="0"}}</tpl:Freshy2MenuIf>
 			</div><span class="menu_end"></span>
 			</div>
 		</div>

@@ -16,9 +16,42 @@
 class freshy2Config
 {
 	private $core;
+	public $ns;
+	public $custom_theme;
+	public $top_image;
+	public $left_sidebar;
+	public $right_sidebar;
+	public $menu;
+
+
+	protected function getSetting($name,$default) {
+		$val = $this->ns->$name;
+		if (!is_null($val)){
+			return $val;
+		} else {
+			$this->ns->put($name,$default,'string');
+			return $default;
+		}
+
+	}
+
+	public function store() {
+		$this->ns->put('freshy2_custom'        ,$this->custom_theme,'string');
+		$this->ns->put('freshy2_top_image'     ,$this->top_image,'string');
+		$this->ns->put('freshy2_sidebar_left'  ,$this->left_sidebar,'string');
+		$this->ns->put('freshy2_sidebar_right' ,$this->right_sidebar,'string');
+		$this->ns->put('freshy2_menu'          ,$this->menu,'string');
+	}
 
 	public function __construct($core) {
 		$this->core = $core;
+		$this->core->blog->settings->addNamespace('freshy2');
+		$this->ns =& $core->blog->settings->freshy2;
+		$this->custom_theme = $this->getSetting('freshy2_custom','default');
+		$this->top_image = $this->getSetting('freshy2_top_image','default');
+		$this->left_sidebar = $this->getSetting('freshy2_sidebar_left','none');
+		$this->right_sidebar = $this->getSetting('freshy2_sidebar_right','nav');
+		$this->menu = $this->getSetting('freshy2_menu','simplemenu');
 	}
 
 	public function getCustomThemes() {
