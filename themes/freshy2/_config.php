@@ -52,7 +52,7 @@ $current_top_image = $config->top_image;
 $left_sidebar = $config->left_sidebar;
 $right_sidebar = $config->right_sidebar;
 $menu = $config->menu;
-$has_freshy_menu = $core->plugins->moduleExists('menuFreshy');
+$has_freshy_menu = $core->plugins->moduleExists('menuFreshy') || $core->plugins->moduleExists('menu');
 
 echo'<style type="text/css" media="screen">';
 include dirname(__FILE__).'/lib/admin_style.css';
