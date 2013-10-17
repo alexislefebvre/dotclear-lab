@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
   
   <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
@@ -25,6 +24,7 @@
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:EntryIf pings_active="1"><link rel="pingback" href="{{tpl:BlogXMLRPCURL}}" /></tpl:EntryIf>
   
   <tpl:EntryNext><link rel="next" href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryNext>
@@ -36,7 +36,7 @@
   
   {{tpl:include src="_head.html"}}
   
-  <script type="text/javascript" src="{{tpl:BlogThemeURL}}/js/post.js"></script>
+  <script type="text/javascript" src="{{tpl:BlogThemeURL}}/../default/js/post.js"></script>
   <script type="text/javascript">
   //<![CDATA[
   var post_remember_str = '{{tpl:lang Remember me on this blog}}';
@@ -123,7 +123,7 @@
 		  {{tpl:include src="_flv_player.html"/}}
 		</tpl:AttachmentIf>
 		<tpl:AttachmentIf is_flv="0">
-		  <span  class="download-mp3"><a href="{{tpl:AttachmentURL}}"
+		  <span class="download-mp3"><a href="{{tpl:AttachmentURL}}"
 		  title="{{tpl:AttachmentFileName}} ({{tpl:AttachmentSize}})">{{tpl:AttachmentTitle}}</a></span>
 		</tpl:AttachmentIf>
 	      </li>
