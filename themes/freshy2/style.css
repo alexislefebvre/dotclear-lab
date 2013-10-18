@@ -1,4 +1,4 @@
-/*  
+/*
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Freshy2, a theme for Dotclear.
 # Original WP Theme from Julien de Luca
@@ -7,7 +7,7 @@
 # Copyright (c) 2008-2013
 # Bruno Hondelatte dsls@morefnu.org
 # Pierre Van Glabeke contact@brol.info
-# 
+#
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -116,7 +116,7 @@ h1 a {
 	font-family:Trebuchet Ms, Lucida, Arial, Verdana, serif, sans;
 	font-weight:bold;
 	font-style:italic;
-	font-size:1em;	
+	font-size:1em;
 	color:#8d8d8d;
 }
 
@@ -388,12 +388,12 @@ small {
 	clear:both;
 }
 
-.comment_author { 
+.comment_author {
 	background:#69a500 url(images/transparency/white-90.png) repeat scroll 0 0;
 	border:1px solid #69a500;
 }
 
-.comment_author h4 { 
+.comment_author h4 {
 	color:#69a500;
 }
 
@@ -497,10 +497,11 @@ small {
 	color: #3d3d3d;
 	background:none;
 }
-
+.sidebar fieldset {border:none;margin:0;padding:0;}
+.sidebar form p {margin:0;padding:0;}
 /* nuage de tags dans la sidebar (commentez le code pour désactiver le nuage) */
-.sidebar .tags ul { 
-  text-align: justify; 
+.sidebar .tags ul {
+  text-align: justify;
   font-size:1.1em;
 }
 
@@ -708,8 +709,8 @@ p.navigation {
 }
 
 .day-date {
-  text-align:right; 
-  font-size:1em; 
+  text-align:right;
+  font-size:1em;
   margin-top:30px;
 }
 
