@@ -11,6 +11,8 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+require_once dirname(__FILE__).'/_widgets.php';
+
 $_menu['Blog']->addItem('categoriesMode','plugin.php?p=categoriesMode','index.php?pf=categoriesMode/icon.png',
 		preg_match('/plugin.php\?p=categoriesMode(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->isSuperAdmin());

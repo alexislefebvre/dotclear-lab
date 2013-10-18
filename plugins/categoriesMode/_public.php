@@ -11,6 +11,9 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
+# If categoriesMode is not active we stop here :
+if (!$core->blog->settings->categoriesmode->categoriesmode_active) { return; }
+
 require_once dirname(__FILE__).'/_widgets.php';
 
 # Adds  news Categories' templates tags :
@@ -53,10 +56,7 @@ class tplCategories
 	}
 }
 
-# If categoriesMode  not active we stop here :
-if (!$core->blog->settings->categoriesmode->categoriesmode_active) {
-	return;
-}
+
 
 # Adds a new template behavior :
 $GLOBALS['core']->addBehavior('publicBeforeDocument',array('behaviorCategoriesMode','addTplPath'));
