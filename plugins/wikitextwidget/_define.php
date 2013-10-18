@@ -25,7 +25,7 @@ $this->registerModule(
   /* Name */				 "Wiki Text Widget",
   /* Description*/		"Text widget with wiki syntax",
   /* Author */				"Moe (http://gniark.net/)",
-  /* Version */				'0.1',
+  /* Version */				'0.1.1',
   /* Permissions */		'admin'
 );
 ?>

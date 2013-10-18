@@ -25,7 +25,7 @@ $core->addBehavior('initWidgets',array('WikiTextWidgetBehaviors','initWidgets'))
  
 class WikiTextWidgetBehaviors
 {
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('WikiTextWidget',__('Wiki Text'),array('publicWikiTextWidget','Show'));
 

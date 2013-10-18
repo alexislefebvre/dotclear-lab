@@ -23,7 +23,7 @@ if (!defined('DC_RC_PATH')) {return;}
 
 class publicWikiTextWidget
 {
-	public static function Show(&$w)
+	public static function Show($w)
 	{
 		global $core;
 
