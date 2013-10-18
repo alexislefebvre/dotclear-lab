@@ -62,7 +62,7 @@ unset($rs);
 			info::fp(__('The blog ID is %s'),$core->blog->id);
 			info::fp(__('The blog URL is %s'),$core->blog->url);
 			info::fp(__('URL scan method is %s'),
-				$core->blog->settings->url_scan);
+				$core->blog->settings->system->url_scan);
 			
 			if ($post_url === null)
 			{

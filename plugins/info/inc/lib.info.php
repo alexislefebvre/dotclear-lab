@@ -312,17 +312,20 @@ class info
 		} else {
 			$dirs = array(
 				__('public') => array(
-					'relative_path' => $settings->public_path,
+					'relative_path' => $settings->system->public_path,
 					'absolute_path' => $core->blog->public_path,
-					'url' => $settings->public_url),
+					'url' => $settings->system->public_url),
 				__('themes') => array(
-					'relative_path' => $settings->themes_path,
+					'relative_path' => $settings->system->themes_path,
 					'absolute_path' => $core->blog->themes_path,
-					'url' => $settings->themes_url),
+					'url' => $settings->system->themes_url),
 				__('theme') => array(
-					'relative_path' => $settings->themes_path.'/'.$settings->theme,
-					'absolute_path' => $core->blog->themes_path.'/'.$settings->theme,
-					'url' => $settings->themes_url.'/'.$settings->theme)
+					'relative_path' => $settings->system->themes_path.'/'.
+						$settings->system->theme,
+					'absolute_path' => $core->blog->themes_path.'/'.
+						$settings->system->theme,
+					'url' => $settings->system->themes_url.'/'.
+						$settings->system->theme)
 			);
 		}
 		

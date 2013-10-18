@@ -26,9 +26,9 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
      /* Name */                      "Informations",
-     /* Description*/                "Informations about Dotclear and your system",
+     /* Description*/                "Information about Dotclear and your system",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.8.2',
+     /* Version */                   '1.8.3',
      /* Permissions */               null
 );
 ?>
