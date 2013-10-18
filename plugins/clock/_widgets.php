@@ -20,7 +20,7 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('initWidgets',array('ClockBehaviors','initWidgets'));
- 
+
 class ClockBehaviors
 {
 	public static function initWidgets($w)
@@ -33,16 +33,16 @@ class ClockBehaviors
 		$w->Clock->setting('title',__('Title:').' ('.__('optional').')',
 			sprintf(__('Local time in %s'),substr(strrchr($tz,'/'),1)),
 			'text');
-		
+
 		$w->Clock->setting('timezone',__('Timezone:'),$tz,'combo',
 			dt::getZones(true,false));
-		
+
 		$w->Clock->setting('format',
 			sprintf(__('Format (see <a href="%1$s" %2$s>PHP strftime function</a>) (HMS display dynamically %%H:%%M:%%S):'),
 			__('http://www.php.net/manual/en/function.strftime.php'),
 			'onclick="return window.confirm(\''.__('Are you sure you want to leave this page?').'\')"'),
 			'%A, %e %B %Y, HMS','text');
-			
+
 		$w->Clock->setting('homeonly',__('Display on:'),0,'combo',
 			array(
 				__('All pages') => 0,
@@ -59,6 +59,7 @@ class publicClock
 {
 	public static function Show($w)
 	{
+	global $core;
 
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default')) {
@@ -93,7 +94,7 @@ class publicClock
 				'gEBI(\'hms_'.$id.'\').innerHTML = h+\':\'+m+\':\'+s;'.
 				'setTimeout("clock_'.$id.'()",500);'.
 				'}';
-	
+
 			$js .= 'clock_'.$id.'();';
 			$js .= '</script>';
 
