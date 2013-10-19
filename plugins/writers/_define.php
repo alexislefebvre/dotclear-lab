@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */			"Writers",
 	/* Description*/		"Invite people to write on your blog",
 	/* Author */			"Olivier Meunier",
-	/* Version */			'1.0',
+	/* Version */			'1.1',
 	/* Permissions */		'admin'
 );
 ?>

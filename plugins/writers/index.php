@@ -12,10 +12,12 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+$page_title = __('Writers');
+
 $u_id = null;
 $u_name = null;
 $chooser = false;
-
+		
 $blog_users = $core->getBlogPermissions($core->blog->id,false);
 $perm_types = $core->auth->getPermissionsTypes();
 
@@ -26,7 +28,7 @@ if (!empty($_POST['i_id']))
 		$rs = $core->getUser($_POST['i_id']);
 		
 		if ($rs->isEmpty()) {
-			throw new Exception(__('Writer does not exist.'));
+			throw new Exception(__('Writer does not exists.'));
 		}
 		
 		if ($rs->user_super) {
@@ -74,7 +76,7 @@ elseif (!empty($_GET['u_id']))
 	try
 	{
 		if (!isset($blog_users[$_GET['u_id']])) {
-			throw new Exception(__('Writer does not exist.'));
+			throw new Exception(__('Writer does not exists.'));
 		}
 		
 		if ($_GET['u_id'] == $core->auth->userID()) {
@@ -94,15 +96,19 @@ elseif (!empty($_GET['u_id']))
 ?>
 <html>
 <head>
-  <title><?php echo __('Writers'); ?></title>
+  <title><?php echo $page_title; ?></title>
 </head>
 
 <body>
 <?php
 if (!$chooser)
 {
-	echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Writers').'</h2>';
-	
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+		
 	echo '<h3>'.__('Active writers').'</h3>';
 	
 	if (count($blog_users) <= 1)
@@ -136,9 +142,9 @@ if (!$chooser)
 	
 	echo
 	'<form action="'.$p_url.'" method="post">'.
-	'<p><label class="classic">'.__('Login:').' '.
+	'<p><label class="classic" for="i_id">'.__('Author ID (login): ').' '.
 	form::field('i_id',32,32,$u_id).'</label> '.
-	'<input type="submit" value="'.__('invite').'" />'.
+	'<input type="submit" value="'.__('Invite').'" />'.
 	$core->formNonce().'</p>'.
 	'</form>';
 }
@@ -150,11 +156,14 @@ elseif ($u_id)
 		$user_perm = array();
 	}
 	
-	echo
-	'<h2>'.html::escapeHTML($core->blog->name).
-	' &rsaquo; <a href="'.$p_url.'">'.__('Writers').'</a>'.
-	' &rsaquo; '.html::escapeHTML($u_id).'</h2>'.
+ echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
 	
+	echo '<p><a class="back" href="'.html::escapeURL('plugin.php?p=writers&pup=1').'">'.__('Back').'</a></p>';
+	echo
 	'<p>'.sprintf(__('You are about to set permissions on the blog %s for user %s (%s).'),
 		'<strong>'.html::escapeHTML($core->blog->name).'</strong>',
 		'<strong>'.$u_id.'</strong>',
@@ -178,12 +187,14 @@ elseif ($u_id)
 	}
 	
 	echo
-	'<p><input type="submit" value="'.__('save').'" />'.
+	'<p><input type="submit" value="'.__('Save').'" />'.
 	$core->formNonce().
 	form::hidden('i_id',html::escapeHTML($u_id)).
 	form::hidden('set_perms',1).'</p>'.
 	'</form>';
 }
+
+dcPage::helpBlock('writers');
 ?>
 </body>
 </html>

@@ -10,7 +10,7 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-$_menu['System']->addItem(__('Writers'),'plugin.php?p=writers','images/menu/users.png',
+$_menu['Blog']->addItem(__('Writers'),'plugin.php?p=writers','images/menu/users.png',
 		preg_match('/plugin.php\?p=writers/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('admin',$core->blog->id));
 ?>

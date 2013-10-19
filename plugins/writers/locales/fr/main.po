@@ -13,7 +13,7 @@ msgstr ""
 msgid "Writers"
 msgstr "Rédacteurs"
 
-msgid "Writer does not exist."
+msgid "Writer does not exists."
 msgstr "Le rédacteur n'existe pas."
 
 msgid "You cannot add or update this writer."
@@ -31,9 +31,15 @@ msgstr "Aucun rédacteur"
 msgid "Invite a new writer"
 msgstr "Inviter un nouveau rédacteur"
 
-msgid "invite"
-msgstr "inviter"
+msgid "Invite"
+msgstr "Inviter"
+
+msgid "Author ID (login): "
+msgstr "Identifiant utilisateur (login) : "
 
 #, php-format
 msgid "You are about to set permissions on the blog %s for user %s (%s)."
 msgstr "Vous allez définir les permissions de l'utilisateur %2$s (%3$s) sur le blog %1$s"
+
+msgid "change permissions"
+msgstr "changer les permissions"
