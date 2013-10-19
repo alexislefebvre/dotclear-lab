@@ -4,7 +4,7 @@
 # Original WP Theme from Julien de Luca
 # (http://www.jide.fr/francais/)
 #
-# Copyright (c) 2008-2009
+# Copyright (c) 2008-2013
 # Bruno Hondelatte dsls@morefnu.org
 # Pierre Van Glabeke contact@brol.info
 # 
