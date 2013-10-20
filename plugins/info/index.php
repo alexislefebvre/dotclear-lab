@@ -29,6 +29,8 @@ l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 require_once(dirname(__FILE__).'/inc/lib.info.php');
 
+$page_title = __('Informations');
+
 $errors = array();
 
 # get URL of a post
@@ -44,7 +46,7 @@ unset($rs);
 ?>
 <html>
 <head>
-	<title><?php echo(__('Informations')); ?></title>
+	<title><?php echo($page_title); ?></title>
 	<?php echo dcPage::jsPageTabs('blog'); ?>
   <style type="text/css">
   	p img, table img {vertical-align:middle;}
@@ -52,8 +54,15 @@ unset($rs);
   </style>
 </head>
 <body>
-
-	<h2><?php echo(__('Informations')); ?></h2>
+	<?php
+	
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+	?>
+	
 	<h3><?php echo(__('Legend:')); ?></h3>
 	<p><?php echo(info::yes().__('ok').', '.info::no().__('error')); ?></p>
 	

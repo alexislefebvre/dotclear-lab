@@ -360,7 +360,7 @@ class info
 				if (substr($url,0,1) == '/')
 				{
 					# public_path is located at the root of the website
-					$url = $core->blog->host.'/'.$url;
+					$url = $core->blog->host.$url;
 				}
 				
 				$url = '<a href="'.$url.'">'.__('URL').'</a>';
@@ -372,11 +372,14 @@ class info
 			$table->cell(self::img($is_dir),'class="status center"');
 			$table->cell(self::img($is_writable),'class="status center"');
 			$table->cell(self::img($is_readable),'class="status center"');
+			
 			if (!$system)
 			{
 				$table->cell($relative_path,'class="nowrap"');
 			}
+			
 			$table->cell($path,'class="nowrap"');
+			
 			if (!$system) {$table->cell($url);}
 			
 			$owner = '';

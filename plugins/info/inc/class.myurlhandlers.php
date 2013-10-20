@@ -19,7 +19,7 @@ class myUrlHandlers
 	private static $url2post = array();
 	private static $post_adm_url = array();
 	
-	public static function init(&$core)
+	public static function init($core)
 	{
 		# Set defaults
 		foreach ($core->url->getTypes() as $k=>$v)
