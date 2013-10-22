@@ -39,6 +39,8 @@ if (!$core->auth->check('admin',$core->blog->id))
 	return;
 }
 
+$page_title = __('@ Reply');
+
 $core->blog->settings->addNameSpace('atreply');
 
 $settings =& $core->blog->settings->atreply;
@@ -161,7 +163,7 @@ $system = $core->blog->settings->system;
 if (strlen($settings->atreply_color) > 1)
 {
 	$personalized_image = $system->public_url.
-		'/atReply/reply.png';
+		'/atReply/reply.png'.'?time='.time();
 	
 	if (file_exists(path::fullFromRoot($system->public_path,
 		DC_ROOT).'/atReply/reply.png'))
@@ -173,10 +175,12 @@ if (strlen($settings->atreply_color) > 1)
 			# public_path is located at the root of the website
 			$image_url = $core->blog->host.'/'.$personalized_image;
 		}
-		elseif (substr($system->public_url,0,4) == 'http')
+		else if (substr($system->public_url,0,4) == 'http')
 		{
 			$image_url = $personalized_image;
-		} else {
+		}
+		else
+		{
 			$image_url = $core->blog->url.$personalized_image;
 		}
 	}
@@ -184,15 +188,32 @@ if (strlen($settings->atreply_color) > 1)
 
 ?><html>
 <head>
-	<title><?php echo(('@ Reply')); ?></title>
+	<title><?php echo($page_title); ?></title>
 	<?php echo(dcPage::jsColorPicker()); ?>
 </head>
 <body>
-
-	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.('@ Reply'); ?></h2>
+	
+	<?php
+	if (is_callable(array('dcPage', 'breadcrumb')))
+	{
+		echo dcPage::breadcrumb(
+			array(
+				html::escapeHTML($core->blog->name) => '',
+				'<span class="page-title">'.$page_title.'</span>' => ''
+			));
+	}
+	else
+	{
+		echo('<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.
+			$page_title.'</h2>');
+	}
+	?>
 	
 	<?php 
-		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
+		if (!empty($msg))
+		{
+			dcPage::message($msg);
+		}
 	?>
 	
 	<form method="post" action="<?php echo $p_url; ?>">
@@ -262,7 +283,10 @@ if (strlen($settings->atreply_color) > 1)
 			
 			<?php echo('<p>'.__('Preview:').' <img src="'.$image_url.
 				'" alt="reply.png" /></p>'); ?>
+			
+			<p class="form-note"><?php echo(__('Visitors may see the old image if their browser still use it.')); ?></p>
 		</fieldset>
+		
 		<p><?php echo $core->formNonce(); ?></p>
 		<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
 	</form>

@@ -185,10 +185,21 @@ function setCommentInfos(id)
 			// add to replies_list
 			replies_list[id] = a[1];
 		}
-		// not a reply
 		else
 		{
-			commentInfos_list['c'+id] = new commentInfos(id, null);
+			// absolute URL
+			var a = dd.html().match(/@<a href="http(.+)#c(\d+)"/i);
+			if (a)
+			{
+				commentInfos_list['c'+id] = new commentInfos(id, 'c'+a[1]);
+				// add to replies_list
+				replies_list[id] = a[2];
+			}
+			else
+			{
+				// not a reply
+				commentInfos_list['c'+id] = new commentInfos(id, null);
+			}
 		}
 	}
 }

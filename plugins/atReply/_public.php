@@ -80,35 +80,18 @@ class AtReplyTpl
 			$image_url = $QmarkURL.'pf=atReply/img/reply.png';
 		}
 		
-		$entry_url = '';
-		
-		# simple and efficient test on entry, from dcTemplate::SysIf())
-		if ($GLOBALS['_ctx']->posts !== null)
-		{
-			if (method_exists($GLOBALS['_ctx']->posts, 'getURL'))
-			{
-				$entry_url = $GLOBALS['_ctx']->posts->getURL();
-			}
-		}
-		
 		$title = (($set->atreply_display_title) ? '1' : '0');
 		
 		# Javascript
 		echo(
 			'<script type="text/javascript">'."\n".
 			'//<![CDATA['."\n".
-			'var atReplyEntryURL = \''.
-				html::escapeHTML($entry_url).'\';'."\n".
 			'var atReplyDisplayTitle = '.$title.';'."\n".
 			'var atReplyTitle = \''.
 				html::escapeHTML(__('Reply to this comment by {author}')).'\';'."\n".
 			'var atReplyImage = \''.$image_url.'\';'."\n".
 			'var atReply_switch_text = \''.
 				html::escapeHTML(__('Threaded comments')).'\';'."\n".
-			'var atReplyLink = \' <a href="#" title="\'+atReplyTitle+\'" class="at_reply_link">\'+'.
-			'\'<img src="\'+atReplyImage+\'" alt="\'+atReplyTitle+\'" /> \'+'.
-			'\'<span class="at_reply_title" style="display:none;">\'+'.
-				'atReplyTitle+\'</span></a>\';'."\n".
 			'var atreply_append = '.($set->atreply_append ? '1' : '0').';'."\n".
 			'var atreply_show_switch = '.($set->atreply_show_switch ? '1' : '0').';'."\n".
 			'//]]>'."\n".
