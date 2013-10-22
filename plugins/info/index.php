@@ -55,12 +55,18 @@ unset($rs);
 </head>
 <body>
 	<?php
-	
-	echo dcPage::breadcrumb(
-		array(
-			html::escapeHTML($core->blog->name) => '',
-			'<span class="page-title">'.$page_title.'</span>' => ''
-		));
+	if (is_callable(array('dcPage', 'breadcrumb')))
+	{
+		echo dcPage::breadcrumb(
+			array(
+				html::escapeHTML($core->blog->name) => '',
+				'<span class="page-title">'.$page_title.'</span>' => ''
+			));
+	}
+	else
+	{
+		echo('<h2>'.__('Informations').'</h2>');
+	}
 	?>
 	
 	<h3><?php echo(__('Legend:')); ?></h3>
