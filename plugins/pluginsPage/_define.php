@@ -27,7 +27,6 @@ $this->registerModule(
 	/* Name */					"Plugins Page",
 	/* Description*/		"List plugins on a public page",
 	/* Author */				"Moe (http://gniark.net/)",
-	/* Version */				'1.3',
+	/* Version */				'1.4-dead',
 	/* Permissions */		'admin'
 );
-?>

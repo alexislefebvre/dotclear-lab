@@ -26,4 +26,3 @@ if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 $_menu['Plugins']->addItem(__('Plugins Page'),'plugin.php?p=pluginsPage','index.php?pf=pluginsPage/icon.png',
 		preg_match('/plugin.php\?p=pluginsPage(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('admin',$core->blog->id));
-?>
