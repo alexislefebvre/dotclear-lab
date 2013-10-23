@@ -28,7 +28,6 @@ $this->registerModule(
  	/* Name        */		"Popularity Contest",
 	/* Description */		"Dotclear Popularity Contest (http://popcon.gniark.net/)",
 	/* Author      */		"Moe (http://gniark.net/)",
-	/* Version     */		"1.5",
+	/* Version     */		"1.6-dead",
 	/* Permissions */		null
 );
-?>

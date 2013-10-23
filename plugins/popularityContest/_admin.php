@@ -28,14 +28,3 @@ $_menu['Plugins']->addItem(__('Popularity Contest'),'plugin.php?p=popularityCont
 	'index.php?pf=popularityContest/icon.png',
 	preg_match('/plugin.php\?p=popularityContest(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
-
-require_once(dirname(__FILE__).'/inc/lib.popularityContest.php');
-
-# if the last report is "old"
-if (($_SERVER['REQUEST_TIME'] - $core->blog->settings->popularityContest_last_report) >
-	$core->blog->settings->popularityContest_time_interval)
-{
-	popularityContest::send();
-}
-
-?>
