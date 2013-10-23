@@ -53,7 +53,7 @@ $core->addBehavior('adminAfterCommentCreate',
 $core->addBehavior('adminDashboardFavs',
 	array('AtReplyAdmin','adminDashboardFavs'));
 
-$_menu['Plugins']->addItem(__('@ Reply'),'plugin.php?p=atReply',
+$_menu['Blog']->addItem(__('@ Reply'),'plugin.php?p=atReply',
 	'index.php?pf=atReply/icon.png',preg_match('/plugin.php\?p=atReply(&.*)?$/',
 		$_SERVER['REQUEST_URI']),$core->auth->check('admin',$core->blog->id));	
 

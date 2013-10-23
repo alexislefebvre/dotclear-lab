@@ -212,80 +212,83 @@ if (strlen($settings->atreply_color) > 1)
 	<?php 
 		if (!empty($msg))
 		{
-			dcPage::message($msg);
+			if (is_callable(array('dcPage', 'success')))
+			{
+				dcPage::success($msg);
+			}
+			else
+			{
+				dcPage::message($msg);
+			}
 		}
 	?>
 	
 	<form method="post" action="<?php echo $p_url; ?>">
-		<fieldset>
-			<legend><?php echo(__('@ Reply')); ?></legend>
-			
-			<p><?php echo(form::checkbox('atreply_active',1,
-				$settings->atreply_active)); ?>
-				<label class="classic" for="atreply_active">
-					<?php echo(__('Add arrows to easily reply to comments on the blog')); ?>
-				</label>
-			</p>
-			<p class="form-note">
-				<?php
-					# from commentsWikibar/index.php
-					echo(' '.__('Activating this plugin also enforces wiki syntax in blog comments.')); ?>
-			</p>
+		<p><?php echo(form::checkbox('atreply_active',1,
+			$settings->atreply_active)); ?>
+			<label class="classic" for="atreply_active">
+				<?php echo(__('Add arrows to easily reply to comments on the blog')); ?>
+			</label>
+		</p>
+		<p class="form-note">
+			<?php
+				# from commentsWikibar/index.php
+				echo(' '.__('Activating this plugin also enforces wiki syntax in blog comments.')); ?>
+		</p>
 
-			<p><?php echo(form::checkbox('atreply_display_title',1,
-				$settings->atreply_display_title)); ?>
-				<label class="classic" for="atreply_display_title">
-					<?php echo(__('Display a text when the cursor is hovering the arrow')); ?>
-				</label>
-			</p>
-			
-			<p><?php echo(form::checkbox('atreply_append',1,
-				$settings->atreply_append)); ?>
-				<label class="classic" for="atreply_append">
-					<?php echo(__('Append replies to appropriate comments')); ?>
-				</label>
-			</p>
-			
-			<p><?php echo(form::checkbox('atreply_show_switch',1,
-				$settings->atreply_show_switch)); ?>
-				<label class="classic" for="atreply_show_switch">
-					<?php echo(__('Display a switch to toggle threading')); ?>
-				</label>
-			</p>
-			<p class="form-note">
-				<?php printf(__('Requires %s.'),
-					__('Append replies to appropriate comments')); ?>
-			</p>
+		<p><?php echo(form::checkbox('atreply_display_title',1,
+			$settings->atreply_display_title)); ?>
+			<label class="classic" for="atreply_display_title">
+				<?php echo(__('Display a text when the cursor is hovering the arrow')); ?>
+			</label>
+		</p>
+		
+		<p><?php echo(form::checkbox('atreply_append',1,
+			$settings->atreply_append)); ?>
+			<label class="classic" for="atreply_append">
+				<?php echo(__('Append replies to appropriate comments')); ?>
+			</label>
+		</p>
+		
+		<p><?php echo(form::checkbox('atreply_show_switch',1,
+			$settings->atreply_show_switch)); ?>
+			<label class="classic" for="atreply_show_switch">
+				<?php echo(__('Display a switch to toggle threading')); ?>
+			</label>
+		</p>
+		<p class="form-note">
+			<?php printf(__('Requires %s.'),
+				__('Append replies to appropriate comments')); ?>
+		</p>
 
-			<p><?php echo(form::checkbox('atreply_subscribe_replied_comment',1,
-				$settings->atreply_subscribe_replied_comment)); ?>
-				<label class="classic" for="atreply_subscribe_replied_comment">
-					<?php printf(__('When clicking on the "%s" button in a comment list of the administration, subscribe to comments the email address of the replied comment with the %s plugin'),
-						__('Reply to this comment'),__('Subscribe to comments')); ?>
-				</label>
-			</p>
-			<p class="form-note">
-				<?php printf(__('Requires the %s plugin.'),
-					__('Subscribe to comments')); ?>
-			</p>
-			
-			<p>
-				<label class="classic" for="atreply_color">
-					<?php echo(__('Create an image with another color')); ?>
-				</label>
-				<?php echo(form::field('atreply_color',7,7,
-					$settings->atreply_color,'colorpicker')); ?>
-			</p>
-			<p class="form-note">
-				<?php echo(__('Leave blank to disable this feature.').' '.
-					__('The default image will be used.')); ?>
-			</p>
-			
-			<?php echo('<p>'.__('Preview:').' <img src="'.$image_url.
-				'" alt="reply.png" /></p>'); ?>
-			
-			<p class="form-note"><?php echo(__('Visitors may see the old image if their browser still use it.')); ?></p>
-		</fieldset>
+		<p><?php echo(form::checkbox('atreply_subscribe_replied_comment',1,
+			$settings->atreply_subscribe_replied_comment)); ?>
+			<label class="classic" for="atreply_subscribe_replied_comment">
+				<?php printf(__('When clicking on the "%s" button in a comment list of the administration, subscribe to comments the email address of the replied comment with the %s plugin'),
+					__('Reply to this comment'),__('Subscribe to comments')); ?>
+			</label>
+		</p>
+		<p class="form-note">
+			<?php printf(__('Requires the %s plugin.'),
+				__('Subscribe to comments')); ?>
+		</p>
+		
+		<p>
+			<label class="classic" for="atreply_color">
+				<?php echo(__('Create an image with another color')); ?>
+			</label>
+			<?php echo(form::field('atreply_color',7,7,
+				$settings->atreply_color,'colorpicker')); ?>
+		</p>
+		<p class="form-note">
+			<?php echo(__('Leave blank to disable this feature.').' '.
+				__('The default image will be used.')); ?>
+		</p>
+		
+		<?php echo('<p>'.__('Preview:').' <img src="'.$image_url.
+			'" alt="reply.png" /></p>'); ?>
+		
+		<p class="form-note"><?php echo(__('Visitors may see the old image if their browser still use it.')); ?></p>
 		
 		<p><?php echo $core->formNonce(); ?></p>
 		<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>

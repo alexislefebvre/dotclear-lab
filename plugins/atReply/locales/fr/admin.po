@@ -90,3 +90,6 @@ msgstr "Enregistrer la configuration"
 msgid "Visitors may see the old image if their browser still use it."
 msgstr "Les visiteurs peuvent voir l'ancienne image si leur navigateur l'utilise toujours."
 
+msgid "Leave blank to disable this feature."
+msgstr "Laissez vide pour annuler ce comportement."
+

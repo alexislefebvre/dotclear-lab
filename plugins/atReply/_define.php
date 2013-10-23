@@ -34,7 +34,7 @@ $this->registerModule(
   /* Name */				'@ Reply',
   /* Description*/	'Easily reply to comments',
   /* Author */			'Moe (http://gniark.net/) append extension by buns.fr',
-  /* Version */			'1.8',
+  /* Version */			'1.8.1',
   /* Permissions */	'usage,contentadmin'
 );
 ?>
