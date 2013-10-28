@@ -12,41 +12,108 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_CONTEXT_ADMIN')) {
 
-$rdc_version = '2.5-alpha';
-$new_version = $core->plugins->moduleInfo('licenseBootstrap','version');
-$old_version = $core->getVersion('licenseBootstrap');
+	return null;
+}
 
-if (version_compare($old_version,$new_version,'>=')) return;
+# -- Module specs --
 
-try
-{
-	if (version_compare(str_replace("-r","-p",DC_VERSION),$rdc_version,'<')) {
-		throw new Exception(sprintf('%s requires Dotclear %s','licenseBootstrap',$rdc_version));
+$dc_min = '2.6';
+$mod_id = 'licenseBootstrap';
+$mod_conf = array(
+	array(
+		'overwrite',
+		'Overwrite existing licence',
+		false,
+		'boolean'
+	),
+	array(
+		'write_full',
+		'Add complete licence file',
+		true,
+		'boolean'
+	),
+	array(
+		'write_php',
+		'Write license into php files',
+		true,
+		'boolean'
+	),
+	array(
+		'write_js',
+		'Write license into js files',
+		false,
+		'boolean'
+	),
+	array(
+		'exclude_locales',
+		'Exclude locales from license',
+		true,
+		'boolean'
+	),
+	array(
+		'license_name',
+		'License short name',
+		'gpl2',
+		'string'
+	),
+	array(
+		'license_head',
+		'File header licence text',
+		licenseBootstrap::encode(
+			licenseBootstrap::getHead('gpl2')
+		),
+		'string'
+	),
+	array(
+		'behavior_packman',
+		'Add LicenceBootstrap to plugin pacKman',
+		false,
+		'boolean'
+	)
+);
+
+# -- Nothing to change below --
+
+try {
+
+	# Check module version
+	if (version_compare(
+		$core->getVersion($mod_id),
+		$core->plugins->moduleInfo($mod_id, 'version'),
+		'>='
+	)) {
+
+		return null;
 	}
-	
-	$default_license = 'gpl2';
-	$default_exts = licenseBootstrap::getDefaultExtensions();
-	$default_headers = licenseBootstrap::getDefaultLicenses();
 
-	$core->blog->settings->addNamespace('licenseBootstrap');
-	$core->blog->settings->licenseBootstrap->put('licensebootstrap_addfull',true,'boolean','Add complete licence file',false,true);
-	$core->blog->settings->licenseBootstrap->put('licensebootstrap_overwrite',false,'boolean','Overwrite existing licence',false,true);
-	$core->blog->settings->licenseBootstrap->put('licensebootstrap_license',$default_license,'string','default licence',false,true);
-	$core->blog->settings->licenseBootstrap->put('licensebootstrap_files_exts',licenseBootstrap::encode($default_exts),'string','List of files to include licenceEnable xiti',false,true);
-	$core->blog->settings->licenseBootstrap->put('licensebootstrap_licenses_headers',licenseBootstrap::encode($default_headers),'string','File header licence text',false,true);
-	$core->blog->settings->licenseBootstrap->put('licensebootstrap_exclusion','/(\/locales\/)/','string','Path to exlude',false,true);
-	$core->blog->settings->licenseBootstrap->put('licensebootstrap_packman_behavior',false,'boolean','Add LicenceBootstrap to plugin pacKman',false,true);
-	$core->blog->settings->licenseBootstrap->put('licensebootstrap_translater_behavior',false,'boolean','Add LicenceBootstrap to plugin translater',false,true);
+	# Check Dotclear version
+	if (!method_exists('dcUtils', 'versionsCompare') 
+	 || dcUtils::versionsCompare(DC_VERSION, $dc_min, '>', false)) {
+		throw new Exception(sprintf(
+			'%s requires Dotclear %s', $mod_id, $dc_min
+		));
+	}
 
-	$core->setVersion('licenseBootstrap',$new_version);
+	# Set module settings
+	$core->blog->settings->addNamespace($mod_id);
+	foreach($mod_conf as $v) {
+		$core->blog->settings->{$mod_id}->put(
+			$v[0], $v[2], $v[3], $v[1], false, true
+		);
+	}
+
+	# Set module version
+	$core->setVersion(
+		$mod_id,
+		$core->plugins->moduleInfo($mod_id, 'version')
+	);
 
 	return true;
 }
-catch (Exception $e)
-{
+catch (Exception $e) {
 	$core->error->add($e->getMessage());
+
+	return false;
 }
-return false;
-?>

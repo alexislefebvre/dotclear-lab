@@ -12,15 +12,12 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_RC_PATH')) {
 
-global $__autoload,$core;
+	return null;
+}
 
-if ($core->blog === null) return;
+$d = dirname(__FILE__).'/inc/';
 
-$__autoload['licenseBootstrap'] = dirname(__FILE__).'/inc/class.license.bootstrap.php';
-$__autoload['libLicenseBootstrap'] = dirname(__FILE__).'/inc/lib.license.bootstrap.index.php';
-
-$core->addBehavior('packmanBeforeCreatePackage',array('licenseBootstrap','packmanBeforeCreatePackage'));
-$core->addBehavior('dcTranslaterAfterWriteLangFile',array('licenseBootstrap','dcTranslaterAfterWriteLangFile'));
-?>
+$__autoload['licenseBootstrap']	= $d.'class.license.bootstrap.php';
+$__autoload['libLicenseBootstrap']	= $d.'lib.license.bootstrap.php';

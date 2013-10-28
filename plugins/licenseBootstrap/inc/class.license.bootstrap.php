@@ -12,172 +12,299 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_CONTEXT_ADMIN')) {
+
+	return null;
+}
 
 class licenseBootstrap
 {
-	public $core;
-	public $extensions;
-	public $license;
-	public $head;
-	public $full;
-	public $addfull;
-	public $overwrite;
-	public $exclusion;
-	
-	public function __construct($core,$extensions=null,$license=null,$head=null,$addfull=true,$overwrite=false,$exclusion='')
-	{
-		$this->core = $core;
-		$this->overwrite = (boolean) $overwrite;
-		$this->exclusion = (string) $exclusion;
-		$this->license = (string) $license;
-		
-		$this->extensions = self::getDefaultExtensions($extensions);
-		$this->head = self::getDefaultLicenses('head',$license,$head);
-		$this->full = self::getDefaultLicenses('full',$license);
-	}
-	
-	public function moduleInfo($type,$id)
-	{
-		$info = array();
-		
-		if ($type == 'plugin')
-		{
-			$modules = $this->core->plugins;
-		}
-		elseif ($type = 'theme')
-		{
-			$modules = new dcModules($core);
-			$modules->loadModules($this->core->blog->themes_path,null);
-		}
-		else
-		{
-			$type = '';
-		}
-		
-		if ($type && $modules->moduleExists($id))
-		{
-			$info = $modules->getModules($id);
-			$info['user_cn'] = $this->core->auth->getInfo('user_cn');
-			$info['user_name'] = $this->core->auth->getInfo('user_name');
-			$info['user_email'] = $this->core->auth->getInfo('user_email');
-		}
-		
-		return $info;
-	}
-	
-	public function writeModuleLicense($type,$id)
-	{
-		$info = $this->moduleInfo($type,$id);
-		
-		# Try if root is writable
-		if (!isset($info['root']) || !is_writable($info['root']))
-		{
-			throw new Exception('Failed to get module directory');
-		}
-		$root = $info['root'];
-		
-		# Get license text
-		$head = self::parseInfo($type,$id,$info,$this->head[$this->license]);
-		$full = self::parseInfo($type,$id,$info,$this->full[$this->license]);
-		
-		# Get files from module root
-		$files = self::scandir($root);
-		if (empty($files))
-		{
-			throw new Exception('Nothing to do');
-		}
-		
-		# Write full license file
-		if (!file_exists($root.'/LICENSE') || $overwrite)
-		{
-			files::putContent($root.'/LICENSE',$full);
-		}
-		
-		# Write license header in files
-		foreach($files as $file)
-		{
-			if (!is_file($root.'/'.$file)) continue;
-			
-			if (!empty($this->exclusion))
-			{
-				if (preg_match($this->exclusion,$file)) continue;
-			}
-			
-			$ext = files::getExtension($file) ;
-			$func = 'filesLicenseBootstrap::'.$ext.'File';
-			if (!in_array($ext,$this->extensions) || !is_callable($func)) continue;
-			
-			$content = file_get_contents($root.'/'.$file);
-			$content = call_user_func($func,$content,$head,$this->overwrite);
-			
-			if (!empty($content))
-			{
-				files::putContent($root.'/'.$file,$content);
-			}
-		}
-		return true;
-	}
-	
-	public function addFileLicense($type,$id,$file,$content)
-	{
-		$info = $this->moduleInfo($type,$id);
-		$head = self::parseInfo($type,$id,$info,$this->head);
-		
-		if (!empty($this->exclusion))
-		{
-			if (preg_match($this->exclusion,$file)) return $content;
-		}
-		
-		$ext = files::getExtension($file) ;
-		$func = 'filesLicenseBootstrap::'.$ext.'File';
-		if (!in_array($ext,$this->extensions) || !is_callable($func)) return $content;
-		
-		return call_user_func($func,$content,$head[$this->license],$this->overwrite);
-	}
-	
-	public static function getDefaultExtensions($exts=null)
-	{
-		$default = array('php','js');
-		if (null === $exts) $exts = $default;
-		elseif (!is_array($exts)) $exts = array($exts);
-		
-		return array_intersect($default,$exts);
-	}
-	
-	public static function getDefaultLicenses($type='head',$license=null,$content=null)
-	{
-		$rs = array();
+	protected static $licenses = array();
 
-		if ($license && $content)
-		{
-			$rs = array($license => $content);
+	/**
+	 * Add license to a module.
+	 *
+	 * Note that you must check if module exists
+	 * before calling this method.
+	 * 
+	 * @param object $core   dcCore instance
+	 * @param array  $module Module info
+	 */
+	public static function addLicense($core, $module)
+	{
+		$s = $core->blog->settings->licenseBootstrap;
+
+		# --BEHAVIOR-- licenseBootstrapBeforeAddLicense
+		$core->callBehavior(
+			'licenseBootstrapBeforeAddLicense',
+			$core,
+			$module
+		);
+
+		if ($s->write_full) {
+			licenseBootstrap::writeFullContent(
+				$s->license_name,
+				$module,
+				$s->overwrite
+			);
 		}
-		
-		if ($license && !$content)
-		{
-			$f = dirname(__FILE__).'/licenses/'.$license.'.'.$type.'.txt';
-			if (file_exists($f))
-			{
-				$rs = array($license => file_get_contents($f));
-			}
-		}
-		
-		if (!$license)
-		{
-			$files = files::scandir(dirname(__FILE__).'/licenses');
-			foreach($files as $file)
-			{
-				if (preg_match('/^(.*?)\.'.$type.'\.txt$/',$file,$m))
-				{
-					$rs[$m[1]] = file_get_contents(dirname(__FILE__).'/licenses/'.$m[0]);
+		licenseBootstrap::writeHeadContent(
+			$s->license_name,
+			licenseBootstrap::decode($s->license_head),
+			$module,
+			$core->auth,
+			$s->overwrite,
+			$s->write_php,
+			$s->write_js,
+			$s->exclude_locales
+		);
+
+		# --BEHAVIOR-- licenseBootstrapAfterAddLicense
+		$core->callBehavior(
+			'licenseBootstrapAfterAddLicense',
+			$core,
+			$module
+		);
+	}
+
+	/**
+	 * Get available licenses.
+	 * 
+	 * @return array List of licenses names
+	 */
+	public static function getLicenses()
+	{
+		if (empty(licenseBootstrap::$licenses)) {
+			$file_reg = '/^([a-z0-9]+)\.head\.txt$/';
+			$res = array();
+			foreach (files::scandir(dirname(__FILE__).'/licenses/') as $file) {
+				if (preg_match($file_reg, $file, $matches)) {
+					$res[] = $matches[1];
 				}
 			}
+			licenseBootstrap::$licenses = $res;
 		}
-		return $rs;
+
+		return licenseBootstrap::$licenses;
 	}
-		
-	private function parseInfo($type,$id,$info,$text)
+
+	/**
+	 * Get license name.
+	 *
+	 * Check requested license name and return existing one.
+	 * 
+	 * @param  string $name License name
+	 * @return string       License name
+	 */
+	public static function getName($name='gpl2')
+	{
+		return in_array($name, self::getLicenses()) ? $name : 'gpl2';
+	}
+ 
+ 	/**
+ 	 * Get license header.
+ 	 * 
+ 	 * @param  string $name    License name
+ 	 * @param  string $content Header content
+ 	 * @return string          Header content
+ 	 */
+	public static function getHead($name='gpl2', $content='')
+	{
+		if (!in_array($name, self::getLicenses())) {
+			$name = 'gpl2';
+			$content = '';
+		}
+
+		return empty($content) ? 
+			self::getContent($name, 'head') : $content;
+	}
+
+	/**
+	 * Get full license.
+	 * 
+	 * @param  string $name License name
+	 * @return string       Full license content
+	 */
+	public static function getFull($name='gpl2')
+	{
+		return self::getContent($name, 'full');
+	}
+
+	/**
+	 * Get original license content.
+	 * 
+	 * @param  string $name License name
+	 * @param  string $part License part (head or full)
+	 * @return string       License content
+	 */
+	public static function getContent($name='gpl2', $part='head')
+	{
+		if (!in_array($name, self::getLicenses())) {
+			$name = 'gpl2';
+		}
+		if (!in_array($part, array('head, full'))) {
+			$part = 'head';
+		}
+
+		return file_get_contents(
+			dirname(__FILE__).'/licenses/'.$name.'.'.$part.'.txt'
+		);
+	}
+
+	/**
+	 * Write license block into module files headers
+	 * 
+	 * @param  string  $name       License name
+	 * @param  string  $content    License block content
+	 * @param  array   $module     Module info
+	 * @param  object  $user       dcAuth instance
+	 * @param  boolean $overwrite  Overwrite existing license
+	 * @param  boolean $php        Write license in PHP
+	 * @param  boolean $js         Write license in JS
+	 * @param  boolean $locales    Excludes locales folder
+	 */
+	public static function writeHeadContent($name, $content, $module, $user, $overwrite, $php, $js, $locales)
+	{
+		if (!isset($module['root']) || !is_writable($module['root'])) {
+			throw new Exception();
+		}
+
+		$license = self::replaceInfo(
+			self::getHead($name, $content),
+			$module,
+			$user
+		);
+
+		foreach(self::getModuleFiles($module['root']) as $file) {
+
+			if ($locales && preg_match('/(locales|libs)/', $file)) {
+				continue;
+			}
+
+			$path = $module['root'].'/'.$file;
+			$extension = files::getExtension($file);
+
+			if ($php && $extension == 'php') {
+				file_put_contents(
+					$file,
+					self::replacePhpContent(
+						file_get_contents($file),
+						$license,
+						$overwrite
+					)
+				);
+			}
+			elseif ($js && $extension == 'js') {
+				file_put_contents(
+					$file,
+					self::replaceJsContent(
+						file_get_contents($file),
+						$license,
+						$overwrite
+					)
+				);
+			}
+		}
+	}
+
+	/**
+	 * Write full license file
+	 * 
+	 * @param  string  $name      License name
+	 * @param  array   $module    Module info
+	 * @param  boolean $overwrite Overwrite existing license
+	 */
+	public static function writeFullContent($name, $module, $overwrite)
+	{
+		if (!isset($module['root']) || !is_writable($module['root'])) {
+			throw new Exception();
+		}
+		if (file_exists($module['root'].'/LICENSE') && !$overwrite) {
+
+			return null;
+		}
+
+		file_put_contents(
+			$module['root'].'/LICENSE',
+			self::getFull($name)
+		);
+	}
+
+	/**
+	 * Replace license block in PHP file
+	 * 
+	 * @param  string  $content   File content
+	 * @param  string  $license   License content
+	 * @param  boolean $overwrite Overwrite existing license
+	 * @return string             File content
+	 */
+	protected static function replacePhpContent($content, $license, $overwrite)
+	{
+		$clean = preg_replace(
+			'/((# -- BEGIN LICENSE BLOCK ([-]+))(.*?)'.
+			'(# -- END LICENSE BLOCK ([-]+))([\n|\r\n]+))/msi',
+			'',
+			$content
+		);
+
+		if ($clean != $content && !$overwrite) {
+
+			return $content;
+		}
+
+		return preg_replace(
+			'/(\<\?php)/',
+			'<?php'.
+			"\r\n# -- BEGIN LICENSE BLOCK ----------------------------------\r\n".
+			"#\r\n".
+			'# '.str_replace("\n", "\n# ", trim($license)).
+			"\r\n#".
+			"\r\n# -- END LICENSE BLOCK ------------------------------------\r\n",
+			$clean,
+			1
+		);
+	}
+
+	/**
+	 * Replace license block in JS files
+	 * 
+	 * @param  string  $content   File content
+	 * @param  string  $license   License content
+	 * @param  boolean $overwrite Overwrite existing license
+	 * @return string             File content
+	 */
+	protected static function replaceJsContent($content, $license, $overwrite)
+	{
+		$clean = preg_replace(
+			'/((\/\* -- BEGIN LICENSE BLOCK ([-]+))(.*?)'.
+			'(\* -- END LICENSE BLOCK ([-]+)\*\/)([\n|\r\n]+))/msi',
+			'',
+			$content
+		);
+
+		if ($clean != $content && !$overwrite) {
+
+			return $content;
+		}
+
+		return 
+		"/* -- BEGIN LICENSE BLOCK ----------------------------------\r\n".
+		" *\r\n".
+		' * '.str_replace("\n", "\n * ", trim($license)).
+		"\r\n *".
+		"\r\n * -- END LICENSE BLOCK ------------------------------------*/\r\n\r\n".
+		$clean;
+	}
+
+	/**
+	 * Replace info in license
+	 * 
+	 * @param  string $content License content
+	 * @param  array $module   Module info
+	 * @param  array $user     User info
+	 * @return string          License content
+	 */
+	protected static function replaceInfo($content, $module, $user)
 	{
 		return str_replace(
 			array(
@@ -188,46 +315,65 @@ class licenseBootstrap
 				'%module_type%',
 				'%user_cn%',
 				'%user_name%',
-				'%user_email%'
+				'%user_email%',
+				'%user_url%'
 			),
 			array(
 				date('Y'),
-				$id,
-				$info['name'],
-				$info['author'],
-				$type,
-				$info['user_cn'],
-				$info['user_name'],
-				$info['user_email']
+				$module['id'],
+				$module['name'],
+				$module['author'],
+				$module['type'],
+				$user->getInfo('user_cn'),
+				$user->getinfo('user_name'),
+				$user->getInfo('user_email'),
+				$user->getInfo('user_user')
 			),
-			$text
+			$content
 		);
 	}
-	
-	private static function scandir($path,$dir='',$res=array())
+
+	/**
+	 * Get list of module files
+	 * 
+	 * @param  string $path Path to scan
+	 * @param  string $dir  Ignore
+	 * @param  array  $res  Ignore
+	 * @return array        List of files
+	 */
+	protected static function getModuleFiles($path, $dir='', $res=array())
 	{
 		$path = path::real($path);
-		if (!is_dir($path) || !is_readable($path)) return array();
+		if (!is_dir($path) || !is_readable($path)) {
+
+			return array();
+		}
+
+		if (!$dir) {
+			$dir = $path;
+		}
 		
 		$files = files::scandir($path);
 		
-		foreach($files AS $file)
-		{
-			if ($file == '.' || $file == '..') continue;
-
-			if (is_dir($path.'/'.$file))
-			{
-				$res[] = $file;
-				$res = self::scandir($path.'/'.$file,$dir.'/'.$file,$res);
+		foreach($files AS $file) {
+			if (substr($file, 0, 1) == '.') {
+				continue;
 			}
-			else
-			{
+
+			if (is_dir($path.'/'.$file)) {
+				$res = self::getModuleFiles(
+					$path.'/'.$file, $dir.'/'.$file,
+					$res
+				);
+			}
+			else {
 				$res[] = empty($dir) ? $file : $dir.'/'.$file;
 			}
 		}
+
 		return $res;
 	}
-	
+
 	public static function encode($a)
 	{
 		return base64_encode(serialize($a));
@@ -237,148 +383,4 @@ class licenseBootstrap
 	{
 		return unserialize(base64_decode($a));
 	}
-	
-	public static function packmanBeforeCreatePackage($info,$a,$b,$c,$d)
-	{
-		global $core;
-		
-		if (!$core->blog->settings->licenseBootstrap->licensebootstrap_packman_behavior) {
-			return;
-		}
-		
-		$addfull = (boolean) $core->blog->settings->licenseBootstrap->licensebootstrap_addfull;
-		$overwrite = (boolean) $core->blog->settings->licenseBootstrap->licensebootstrap_overwrite;
-		$exclusion = $core->blog->settings->licenseBootstrap->licensebootstrap_exclusion;
-		
-		$license = $core->blog->settings->licenseBootstrap->licensebootstrap_license;
-		if (empty($license)) $license = 'gpl2';
-		
-		$exts = licenseBootstrap::decode($core->blog->settings->licenseBootstrap->licensebootstrap_files_exts);
-		if (!is_array($exts)) $exts = self::getDefaultExtensions();
-		
-		$headers = licenseBootstrap::decode($core->blog->settings->licenseBootstrap->licensebootstrap_licenses_headers);
-		if (!is_array($headers)) $headers = self::getDefaulLicenses();
-		
-		$license = new licenseBootstrap($core,$exts,$license,$headers[$license],$addfull,$overwrite,$exclusion);
-		$license->writeModuleLicense($info['type'],$info['id']);
-	}
-
-	public static function dcTranslaterAfterWriteLangFile($f,$file,$content,$throw)
-	{
-		if (!$f) return;
-		
-		global $core;
-		
-		if (!$core->blog->settings->licenseBootstrap->licensebootstrap_translater_behavior) {
-			return;
-		}
-		
-		$id = '';
-		$type = 'theme';
-		$dir = path::real($file);
-		
-		# Is a plugin
-		$plugins_roots = explode(PATH_SEPARATOR,DC_PLUGINS_ROOT);
-		foreach($plugins_roots as $path)
-		{
-			$root = path::real($path);
-			if ($root == substr($dir,0,strlen($root)))
-			{
-				$type = 'plugin';
-				$reg = '/'.preg_quote($root,'/').'\/([^\/]+)\/(.*?)/';
-				if (!preg_match($reg,$dir,$m))
-				{
-					if ($throw)
-					{
-						throw new Exception('Failed to retreive module id for adding license');
-					}
-					//return;
-				}
-				$id = $m[1];
-				break;
-			}
-		}
-		# Not a plugin try a theme
-		if ($type == 'theme')
-		{
-			$path = $core->blog->themes_path;
-			$root = path::real($path);
-			if ($root == substr($dir,0,strlen($root)))
-			{
-				$reg = '/'.preg_quote($root,'/').'\/([^\/]+)\/(.*?)/';
-				if (!preg_match($reg,$dir,$m))
-				{
-					if ($throw)
-					{
-						throw new Exception('Failed to retreive module id for adding license');
-					}
-					//return;
-				}
-				$id = $m[1];
-			}
-		}
-		# Not a plugin nor theme
-		if (empty($id)) return;
-		
-		$core->blog->settings->addNamespace('licenseBootstrap');
-		
-		$addfull = (boolean) $core->blog->settings->licenseBootstrap->licensebootstrap_addfull;
-		$overwrite = (boolean) $core->blog->settings->licenseBootstrap->licensebootstrap_overwrite;
-		$exclusion = $core->blog->settings->licenseBootstrap->licensebootstrap_exclusion;
-		
-		$license = $core->blog->settings->licenseBootstrap->licensebootstrap_license;
-		if (empty($license)) $license = 'gpl2';
-		
-		$exts = licenseBootstrap::decode($core->blog->settings->licenseBootstrap->licensebootstrap_files_exts);
-		if (!is_array($exts)) $exts = self::getDefaultExtensions();
-		
-		$headers = licenseBootstrap::decode($core->blog->settings->licenseBootstrap->licensebootstrap_licenses_headers);
-		if (!is_array($headers)) $headers = self::getDefaultLicenses();
-		
-		$license = new licenseBootstrap($core,$exts,$license,$headers[$license],$addfull,$overwrite,$exclusion);
-		$content = $license->addFileLicense($type,$id,$file,$content);
-		
-		files::putContent($file,$content);
-	}
 }
-
-class filesLicenseBootstrap
-{
-	public static function phpFile($content,$license,$overwrite=false)
-	{
-		$c = preg_replace('/((# -- BEGIN LICENSE BLOCK ([-]+))(.*?)(# -- END LICENSE BLOCK ([-]+))([\n|\r\n]+))/msi','',$content);
-
-		if ($c != $content && !$overwrite) return $content;
-		$content = $c;
-
-		$block = 
-		"\r\n# -- BEGIN LICENSE BLOCK ----------------------------------\r\n".
-		"#\r\n".
-		'# '.str_replace("\n","\n# ",$license).
-		"\r\n#".
-		"\r\n# -- END LICENSE BLOCK ------------------------------------\r\n";
-
-		$content = preg_replace('/(\<\?php)/','<?php'.$block,$content,1);
-		return $content;
-	}
-
-	public static function jsFile($content,$license,$overwrite=false)
-	{
-		$c = preg_replace('/((\/\* -- BEGIN LICENSE BLOCK ([-]+))(.*?)(\* -- END LICENSE BLOCK ([-]+)\*\/)([\n|\r\n]+))/msi','',$content);
-
-		if ($c != $content && !$overwrite) return $content;
-		$content = $c;
-
-		$block = 
-		"/* -- BEGIN LICENSE BLOCK ----------------------------------\r\n".
-		" *\r\n".
-		' * '.str_replace("\n","\n * ",$license).
-		"\r\n *".
-		"\r\n * -- END LICENSE BLOCK ------------------------------------*/\r\n\r\n";
-
-		$content = $block.$content;
-	
-		return $content;
-	}
-}
-?>

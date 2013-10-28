@@ -12,13 +12,26 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_RC_PATH')) {
+
+	return null;
+}
 
 $this->registerModule(
-	/* Name */			"License bootstrap",
-	/* Description*/		"Add license to your plugins and themes",
-	/* Author */			"JC Denis",
-	/* Version */			'2013.05.11',
-	/* Permissions */		null
+	/* Name */
+	"License bootstrap",
+	/* Description*/
+	"Add license to your plugins and themes",
+	/* Author */
+	"Jean-Christian Denis",
+	/* Version */
+	'2013.10.28',
+	/* Properties */
+	array(
+		'permissions' => null,
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://jcd.lv?q=licenseBootstrap',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/licenseBootstrap'
+	)
 );
-?>
