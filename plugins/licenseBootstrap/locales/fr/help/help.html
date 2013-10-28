@@ -13,31 +13,22 @@ Les changements se font sur les modules installés. Ces changements sont irréve
 <h3>Paramètres des fichiers</h3>
 <dl>
   <dt>Écraser la licence existante</dt>
-  <dd>Réécrit la licence dans les fichiers même si elle existe déjà.</dd>
+  <dd>Réécrit la licence dans les fichiers même si elle existe déjà. (recommandé)</dd>
 
-  <dt>Ajouter la licence aux entêtes de fichiers</dt>
-  <dd>Permet de sélectionner les types de fichiers auxquels il faut ajouter la licence.</dd>
+  <dt>Ajouter le fichier de licence complet à la racine du module</dt>
+  <dd>Comme son nom l'indique, cela ajoute la licence complête dans le fichier LICENSE à la racine du module. (recommandé)</dd>
 
-  <dt>Exclusion</dt>
-  <dd>Permet d'exclure certains fichiers ou dossiers. Dans ce champs il faut utiliser une expression rationnelle.<br />
-  Par exemple pour ne pas affecter les fichiers de traduction, il faut écrire:</br />
-  /(\/locales\/)/</dd>
+  <dt>Ajouter le bloc de licence aux ficheirs PHP</dt>
+  <dd>Permet d'ajouter le bloc de licence court aux fichiers php du module. (recommandé)</dd>
+
+  <dt>Ajouter le bloc de licence aux ficheirs JS</dt>
+  <dd>Permet d'ajouter le bloc de licence court aux fichiers javascript du module.</dd>
+
+  <dt>Ne pas ajouter la licence aux fichiers du dossier locales</dt>
+  <dd>Les fichiers de traduction présent dans le réperoire <em>locales</em> du module ne seront pas changés. A noter que si un répertoire <em>libs</em> est présent dans le module, celui ci ne sera pas changé non plus.</dd>
 </dl>
 
-<h3>Paramètres des astuces</h3>
-<p>Ces paramètres utilisent les behaviors de certains plugins pour automatiser les ajouts de licence.</p>
-<dl>
-  <dt>Ajouter la licence avant de créer un paquetage avec le plugin pacKman</dt>
-  <dd>Si le plugin pacKman est installé et que cette option est activée, 
-  la licence sera ajoutée au module avec la création du paquetage.</dd>
-
-  <dt>Ajouter la licence après avoir créé une traduction avec le plugin translater</dt>
-  <dd>Si vous avez le plugin translater d'installé et que cette option est activé, 
-  la licence sera ajoutée aux fichiers de traduction lors de la création de ces derniers.<br />
-  Attention la liste d'exclusion est prioritaire.</dd>
-</dl>
-
-<h3>Paramètres des entêtes</h3>
+<h3>Paramètres des licences</h3>
 <p>Les entêtes sont les résumés de licence. Elles sont placées en haut de chaque fichier d'un module sous forme de commentaire.
 Pour les plugins il est préférable de choisir la licence GPL2 qui correspond à la licence de Dotclear.
 Il est possible de modifier une entête et certaines informations directement en rapport avec 
@@ -59,18 +50,18 @@ le module peuvent être écrites dans une entête en utilisant les masques suiva
   <dd>Le nom de l'utilisateur qui utilise licenseBootstrap.</dd>
   <dt>%user_email%</dt>
   <dd>L'adresse email de l'utilisateur qui utilise licenseBootstrap.</dd>
+  <dt>%user_url%</dt>
+  <dd>L'adresse web de l'utilisateur qui utilise licenseBootstrap.</dd>
 </dl>
-<p>Un fichier LICENSE est également écrit à la racine du module avec le texte complet de la licence choisie.</p>
-
-<h3>Remise à zéro</h3>
-<p>Un bouton de remise à zéro est disponible. Il permet de remettre les options et les entêtes de licenseBootstrap à l'origine.</p>
+<p>Pour chaque licence présente dans cette liste, un fichier LICENSE complet est également disponible.</p>
 
 <h3>Support</h3>
 <p>Si vous souhaitez plus d'aide ou apporter votre contribution à cette extension, voici quelques liens utiles.</p>
 <ul>
-  <li><a href="http://dotclear.jcdenis.com/go/licenseBootstrap-support">Sujet sur le forum Dotclear</a></li>
-  <li><a href="http://lab.dotclear.org/wiki/plugin/licenseBootstrap">Page dédiée du lab Dotclear</a></li>
-  <li><a href="http://dotclear.jcdenis.com/go/licenseBootstrap">Billet dédié sur le blog de l'auteur</a></li>
+  <li><a href="http://forum.dotclear.org/viewtopic.php?id=40798">Sujet sur le forum Dotclear</a></li>
+  <li><a href="http://lab.dotclear.org/wiki/plugin/licenseBootstrap">Dépôt svn</a></li>
+  <li><a href="https://bitbucket.org/JcDenis/licensebootstrap">Dépôt hg</a></li>
+  <li><a href="http://jcd.lv/licenseBootstrap">Billet dédié sur le blog de l'auteur</a></li>
 </ul>
 
 </body>

@@ -1,4 +1,9 @@
-licenseBootstrap 2013.10.26
+licenseBootstrap 2013.10.29
+===========================================================
+ * Fix full license bug
+ * Fix french help and support links
+
+licenseBootstrap 2013.10.28
 ===========================================================
  * Switched to DC 2.6
  * New icon

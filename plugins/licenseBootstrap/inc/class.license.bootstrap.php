@@ -142,7 +142,7 @@ class licenseBootstrap
 		if (!in_array($name, self::getLicenses())) {
 			$name = 'gpl2';
 		}
-		if (!in_array($part, array('head, full'))) {
+		if (!in_array($part, array('head', 'full'))) {
 			$part = 'head';
 		}
 
@@ -177,7 +177,7 @@ class licenseBootstrap
 
 		foreach(self::getModuleFiles($module['root']) as $file) {
 
-			if ($locales && preg_match('/(locales|libs)/', $file)) {
+			if ($locales && preg_match('/(\.lang\.php|libs)/', $file)) {
 				continue;
 			}
 
@@ -327,7 +327,8 @@ class licenseBootstrap
 				$user->getInfo('user_cn'),
 				$user->getinfo('user_name'),
 				$user->getInfo('user_email'),
-				$user->getInfo('user_user')
+				$user->getInfo('user_user'),
+				$user->getInfo('user_url')
 			),
 			$content
 		);
