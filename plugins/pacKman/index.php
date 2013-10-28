@@ -12,30 +12,28 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_CONTEXT_ADMIN')) {
+	return null;
+}
 
 dcPage::checkSuper();
 
-# Init vars
+# Queries
 $p_url = 'plugin.php?p=pacKman';
-$default_tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : '';
 $action = isset($_POST['action']) ? $_POST['action'] : '';
 $type = isset($_POST['type']) && in_array($_POST['type'],
 	array('plugins','themes','repository')) ? $_POST['type'] : '';
 
 # Settings
 $core->blog->settings->addNamespace('pacKman');
-$packman_menu_plugins = $core->blog->settings->pacKman->packman_menu_plugins;
-$packman_pack_nocomment = $core->blog->settings->pacKman->packman_pack_nocomment;
-$packman_pack_overwrite = $core->blog->settings->pacKman->packman_pack_overwrite;
-$packman_pack_filename = $core->blog->settings->pacKman->packman_pack_filename;
-$packman_secondpack_filename = $core->blog->settings->pacKman->packman_secondpack_filename;
-$packman_pack_repository = $core->blog->settings->pacKman->packman_pack_repository;
-$packman_pack_excludefiles = $core->blog->settings->pacKman->packman_pack_excludefiles;
+$s = $core->blog->settings->pacKman;
 
-# List plugins and themes
-$themes = new dcModules($core);
-$themes->loadModules($core->blog->themes_path,null);
+# Modules
+if (!isset($core->themes)) {
+	$core->themes = new dcThemes($core);
+	$core->themes->loadModules($core->blog->themes_path,null);
+}
+$themes = $core->themes;
 $plugins = $core->plugins;
 
 # Paths
@@ -43,444 +41,330 @@ $ppexp = explode(PATH_SEPARATOR, DC_PLUGINS_ROOT);
 $pppop = array_pop($ppexp);
 $plugins_path = path::real($pppop);
 $themes_path = $core->blog->themes_path;
-$repo_path = $packman_pack_repository;
+$repo_path = $s->packman_pack_repository;
+
+# Rights
+$is_writable = libPackman::is_writable(
+	$s->packman_pack_repository,
+	$s->packman_pack_filename
+);
+$is_editable =
+	!empty($type)
+	&& !empty($_POST['modules']) 
+	&& is_array($_POST['modules']);
+
+$is_configured = libPackman::is_configured(
+	$core,
+	$s->packman_pack_repository,
+	$s->packman_pack_filename,
+	$s->packman_secondpack_filename
+);
 
 # Actions
 try
 {
 	# Download
-	if (isset($_REQUEST['package']) && empty($type))
-	{
+	if (isset($_REQUEST['package']) && empty($type)) {
+
 		$modules = array();
-		if ($type == 'plugins')
-		{
-			$modules = dcPackman::getPackages($core,$plugins_path);
+		if ($type == 'plugins') {
+			$modules = dcPackman::getPackages($core, $plugins_path);
 		}
-		elseif ($type == 'themes')
-		{
-			$modules = dcPackman::getPackages($core,$themes_path);
+		elseif ($type == 'themes') {
+			$modules = dcPackman::getPackages($core, $themes_path);
 		}
-		else
-		{
+		else {
 			$modules = array_merge(
-				dcPackman::getPackages($core,dirname($repo_path.'/'.$packman_pack_filename)),
-				dcPackman::getPackages($core,dirname($repo_path.'/'.$packman_secondpack_filename))
+				dcPackman::getPackages($core, dirname($repo_path.'/'.$s->packman_pack_filename)),
+				dcPackman::getPackages($core, dirname($repo_path.'/'.$s->packman_secondpack_filename))
 			);
 		}
-		if (empty($modules))
-		{
-			# Not found
-			header('Content-Type: text/plain');
-			http::head(404,'Not Found');
-			exit;
-		}
-		foreach($modules as $f)
-		{
-			if (preg_match('/'.preg_quote($_REQUEST['package']).'$/',$f['root'])
-			 && is_file($f['root']) && is_readable($f['root']))
-			{
-				
+
+		foreach($modules as $f) {
+
+			if (preg_match('/'.preg_quote($_REQUEST['package']).'$/', $f['root'])
+			 && is_file($f['root']) && is_readable($f['root'])
+			) {
+
 				# --BEHAVIOR-- packmanBeforeDownloadPackage
-				$core->callBehavior('packmanBeforeDownloadPackage',$f,$type);
-				
+				$core->callBehavior('packmanBeforeDownloadPackage', $f, $type);
+
 				header('Content-Type: application/zip');
 				header('Content-Length: '.filesize($f['root']));
 				header('Content-Disposition: attachment; filename="'.basename($f['root']).'"');
 				readfile($f['root']);
-				
+
 				# --BEHAVIOR-- packmanAfterDownloadPackage
-				$core->callBehavior('packmanAfterDownloadPackage',$f,$type);
-				
+				$core->callBehavior('packmanAfterDownloadPackage', $f, $type);
+
 				exit;
 			}
 		}
+
 		# Not found
 		header('Content-Type: text/plain');
 		http::head(404,'Not Found');
 		exit;
 	}
-	
-	# Reset settings
-	if (isset($_POST['reset_settings']))
-	{
-		$core->blog->settings->pacKman->put('packman_menu_plugins',false);
-		$core->blog->settings->pacKman->put('packman_pack_nocomment',false);
-		$core->blog->settings->pacKman->put('packman_pack_overwrite',false);
-		$core->blog->settings->pacKman->put('packman_pack_filename','%type%-%id%-%version%');
-		$core->blog->settings->pacKman->put('packman_secondpack_filename','%type%-%id%');
-		$core->blog->settings->pacKman->put('packman_pack_repository',
-			path::real(path::fullFromRoot($core->blog->settings->system->public_path,DC_ROOT))
-		);
-		$core->blog->settings->pacKman->put('packman_pack_excludefiles','*.zip,*.tar,*.tar.gz');
+	elseif (!empty($action) && !$is_editable) {
+		throw new Exception('No selected modules');
+	}
 
-		http::redirect($p_url.'&tab=settings&setupdone=1');
-	}
-	
-	# Save settings
-	if (isset($_POST['save_settings']))
-	{
-		if (!is_writable($_POST['packman_pack_repository']))
-		{
-			throw new Exception(__('Path to repository is not writable'));
-		}
-		if (empty($_POST['packman_pack_filename']))
-		{
-			throw new Exception(__('You must specify the name of package to export'));
-		}
-		if (!is_writable(dirname($_POST['packman_pack_repository'].'/'.$_POST['packman_pack_filename'])))
-		{
-			throw new Exception(__('Path to first export package is not writable'));
-		}
-		if (!empty($_POST['packman_secondpack_filename']) 
-		 && !is_writable(dirname($_POST['packman_pack_repository'].'/'.$_POST['packman_secondpack_filename'])))
-		{
-			throw new Exception(__('Path to second export package is not writable'));
-		}
-		
-		$packman_menu_plugins = !empty($_POST['packman_menu_plugins']);
-		$packman_pack_nocomment = !empty($_POST['packman_pack_nocomment']);
-		$packman_pack_overwrite = !empty($_POST['packman_pack_overwrite']);
-		$packman_pack_filename = $_POST['packman_pack_filename'];
-		$packman_secondpack_filename = $_POST['packman_secondpack_filename'];
-		$packman_pack_repository = path::real($_POST['packman_pack_repository']);
-		$packman_pack_excludefiles = $_POST['packman_pack_excludefiles'];
-		
-		$core->blog->settings->pacKman->put('packman_menu_plugins',$packman_menu_plugins);
-		$core->blog->settings->pacKman->put('packman_pack_nocomment',$packman_pack_nocomment);
-		$core->blog->settings->pacKman->put('packman_pack_overwrite',$packman_pack_overwrite);
-		$core->blog->settings->pacKman->put('packman_pack_filename',$packman_pack_filename);
-		$core->blog->settings->pacKman->put('packman_secondpack_filename',$packman_secondpack_filename);
-		$core->blog->settings->pacKman->put('packman_pack_repository',$packman_pack_repository);
-		$core->blog->settings->pacKman->put('packman_pack_excludefiles',$packman_pack_excludefiles);
-		
-		http::redirect($p_url.'&tab=settings&setupdone=1');
-	}
-	
 	# Pack
-	if ($action == 'packup')
-	{
-		if ($type == '' || empty($_POST['modules']) || !is_array($_POST['modules']))
-		{
-			throw new Exception('Nothing to pack');
-		}
-		
+	elseif ($action == 'packup') {
+
 		$modules = array_keys($_POST['modules']);
-		
-		foreach ($modules as $module)
-		{
-			if (!${$type}->moduleExists($module))
-			{
-				throw new Exception('No such module '.$module);
+
+		foreach ($modules as $id) {
+
+			if (!${$type}->moduleExists($id)) {
+				throw new Exception('No such module');
 			}
-			
-			$info = ${$type}->getModules($module);
-			$info['id'] = $module;
-			$info['type'] = $type == 'themes' ? 'theme' : 'plugin';
-			
-			$root = $packman_pack_repository;
-			$files = array($packman_pack_filename,$packman_secondpack_filename);
-			$nocomment = $packman_pack_nocomment;
-			$overwrite = $packman_pack_overwrite;
-			$exclude = explode(',',$packman_pack_excludefiles);
-			
+
+			$module = ${$type}->getModules($id);
+			$module['id'] = $id;
+			$module['type'] = $type == 'themes' ? 'theme' : 'plugin';
+
+			$root = $s->packman_pack_repository;
+			$files = array(
+				$s->packman_pack_filename,
+				$s->packman_secondpack_filename
+			);
+			$nocomment = $s->packman_pack_nocomment;
+			$overwrite = $s->packman_pack_overwrite;
+			$exclude = explode(',', $s->packman_pack_excludefiles);
+
 			# --BEHAVIOR-- packmanBeforeCreatePackage
-			$core->callBehavior('packmanBeforeCreatePackage',$info,$root,$files,$overwrite,$exclude,$nocomment);
-			
-			dcPackman::pack($info,$root,$files,$overwrite,$exclude,$nocomment);
-			
+			$core->callBehavior('packmanBeforeCreatePackage', $core, $module);
+
+			dcPackman::pack($module, $root, $files, $overwrite, $exclude, $nocomment);
+
 			# --BEHAVIOR-- packmanAfterCreatePackage
-			$core->callBehavior('packmanAfterCreatePackage',$info,$root,$files,$overwrite,$exclude,$nocomment);
-			
+			$core->callBehavior('packmanAfterCreatePackage', $core, $module);
+
 		}
-		
-		if (!empty($_POST['redir']))
-		{
-			$redir = $_POST['redir'];
-			
-			if (preg_match('!^plugins.php$!',$redir))
-			{
-				$qa = array('tab' => 'packman-plugins', 'packupdone' => '1');
-				$redir .=	'?'.http_build_query($qa,'','&');
-			}
-			http::redirect($redir);
-		}
-		http::redirect($p_url.'&tab=packman-'.$type.'&packupdone=1');
+
+		dcPage::addSuccessNotice(
+			__('Package successfully created.')
+		);
+		http::redirect(empty($_POST['redir']) ? 
+			$p_url.'#packman-'.$type : $_POST['redir']
+		);
 	}
-	
+
 	# Delete
-	if ($action == 'delete')
-	{
-		if ($type == '' || empty($_POST['modules']) || !is_array($_POST['modules']))
-		{
-			throw new Exception('Nothing to delete');
-		}
-		if ($type == 'plugins') 
-		{
+	elseif ($action == 'delete') {
+
+		if ($type == 'plugins') {
 			$proot = $plugins_path;
 		}
-		elseif ($type == 'themes')
-		{
+		elseif ($type == 'themes') {
 			$proot == $themes_path;
 		}
-		else
-		{
+		else {
 			$proot == 'repository';
 		}
-		
-		foreach ($_POST['modules'] as $module => $root)
-		{
-			if (!file_exists($root) || !files::isDeletable($root))
-			{
+
+		foreach ($_POST['modules'] as $id => $root) {
+			if (!file_exists($root) || !files::isDeletable($root))	{
 				throw new Exception('Undeletable file: '.$root);
 			}
+
 			unlink($root);
 		}
-		http::redirect($p_url.'&tab=repository&deletedone='.$type);
+
+		dcPage::addSuccessNotice(
+			__('Package successfully deleted.')
+		);
+		http::redirect(
+			$p_url.'#packman-repository-'.$type
+		);
 	}
-	
-	# Install 
-	if ($action == 'install')
-	{
-		if ($type == '' || empty($_POST['modules']) || !is_array($_POST['modules']))
-		{
-			throw new Exception('Nothing to install');
-		}
-		
-		foreach ($_POST['modules'] as $id => $root)
-		{
-			
+
+	# Install
+	elseif ($action == 'install') {
+
+		foreach ($_POST['modules'] as $id => $root) {
+
 			# --BEHAVIOR-- packmanBeforeInstallPackage
-			$core->callBehavior('packmanBeforeInstallPackage',$type,$id,$root);
-			
-			if ($type == 'plugins')
-			{
-				$ret_code = $plugins->installPackage($root,$plugins);
+			$core->callBehavior('packmanBeforeInstallPackage', $type, $id, $root);
+
+			if ($type == 'plugins') {
+				$plugins->installPackage($root, $plugins);
 			}
-			if ($type == 'themes')
-			{
-				$ret_code = $themes->installPackage($root,$themes);
+			if ($type == 'themes') {
+				$themes->installPackage($root, $themes);
 			}
-			
+
 			# --BEHAVIOR-- packmanAfterInstallPackage
-			$core->callBehavior('packmanAfterInstallPackage',$type,$id,$root);
-			
+			$core->callBehavior('packmanAfterInstallPackage', $type, $id, $root);
+
 		}
-		http::redirect($p_url.'&tab=repository&installdone='.$type);
+
+		dcPage::addSuccessNotice(
+			__('Package successfully installed.')
+		);
+		http::redirect(
+			$p_url.'#packman-repository-'.$type
+		);
 	}
-	
+
 	# Copy
-	if ($action == 'copy_to_plugins'
-	 || $action == 'copy_to_themes' 
-	 || $action == 'copy_to_repository')
-	{
-		if ($type == '' || empty($_POST['modules']) || !is_array($_POST['modules']))
-		{
-			throw new Exception('Nothing to copy');
-		}
-		if ($action == 'copy_to_plugins')
-		{
+	elseif (strpos($action, 'copy_to_') !== false) {
+
+		if ($action == 'copy_to_plugins') {
 			$dest = $plugins_path;
 		}
-		elseif ($action == 'copy_to_themes')
-		{
+		elseif ($action == 'copy_to_themes') {
 			$dest = $themes_path;
 		}
-		elseif ($action == 'copy_to_repository')
-		{
+		elseif ($action == 'copy_to_repository') {
 			$dest = $repo_path;
 		}
-		
-		foreach ($_POST['modules'] as $id => $root)
-		{
-			file_put_contents($dest.'/'.basename($root),file_get_contents($root));
+
+		foreach ($_POST['modules'] as $id => $root) {
+			file_put_contents(
+				$dest.'/'.basename($root),
+				file_get_contents($root)
+			);
 		}
-		http::redirect($p_url.'&tab=repository&copydone='.$type);
+
+		dcPage::addSuccessNotice(
+			__('Package successfully copied.')
+		);
+		http::redirect(
+			$p_url.'#packman-repository-'.$type
+		);
 	}
-	
+
 	# Move
-	if ($action == 'move_to_plugins'
-	 || $action == 'move_to_themes' 
-	 || $action == 'move_to_repository')
-	{
-		if ($type == '' || empty($_POST['modules']) || !is_array($_POST['modules']))
-		{
-			throw new Exception('Nothing to move');
-		}
-		if ($action == 'move_to_plugins')
-		{
+	elseif (strpos($action, 'move_to_') !== false) {
+
+		if ($action == 'move_to_plugins') {
 			$dest = $plugins_path;
 		}
-		elseif ($action == 'move_to_themes')
-		{
+		elseif ($action == 'move_to_themes') {
 			$dest = $themes_path;
 		}
-		elseif ($action == 'move_to_repository')
-		{
+		elseif ($action == 'move_to_repository') {
 			$dest = $repo_path;
 		}
-		
-		foreach ($_POST['modules'] as $id => $root)
-		{
-			file_put_contents($dest.'/'.basename($root),file_get_contents($root));
+
+		foreach ($_POST['modules'] as $id => $root) {
+			file_put_contents(
+				$dest.'/'.basename($root),
+				file_get_contents($root)
+			);
 			unlink($root);
 		}
-		http::redirect($p_url.'&tab=repository&movedone='.$type);
+
+		dcPage::addSuccessNotice(
+			__('Package successfully moved.')
+		);
+		http::redirect(
+			$p_url.'#packman-repository-'.$type
+		);
 	}
 }
-catch(Exception $e)
-{
+catch(Exception $e) {
 	$core->error->add($e->getMessage());
 }
 
-$iswritable = libPackman::is_writable($packman_pack_repository,$packman_pack_filename);
-if ($default_tab == '')
-{
-	$default_tab = $iswritable ? 'repository' : 'setting';
-}
-$title = '';
-if ($default_tab == 'packman-plugins') {
-	$title = sprintf(__('Pack up %s'),__('plugins'));
-}
-elseif ($default_tab == 'packman-themes') {
-	$title = sprintf(__('Pack up %s'),__('themes'));
-}
-elseif ($default_tab == 'repository') {
-	$title = __('Repositories of packages');
-}
-elseif ($default_tab == 'setting') {
-	$title = __('Settings');
-}
-$title = html::escapeHTML($title);
-
 # Display
-echo '
-<html><head><title>'.__('pacKman');
-if (!empty($title)) {
-	echo ' - '.$title;
-}
 echo 
-'</title>
-'.dcPage::jsLoad('js/_posts_list.js').
-'<link rel="stylesheet" type="text/css" href="index.php?pf=pacKman/style.css" />';
+'<html><head><title>'.__('pacKman').'</title>'.
+dcPage::jsPageTabs().
+dcPage::jsLoad('index.php?pf=pacKman/js/packman.js');
 
 # --BEHAVIOR-- packmanAdminHeader
-$core->callBehavior('packmanAdminHeader',$core,$default_tab);
+$core->callBehavior('packmanAdminHeader', $core);
 
-echo '
-</head><body>
-<h2>pac<img alt="'.__('pacKman').'" src="index.php?pf=pacKman/icon.png" />man';
-if (!empty($title)) {
-	echo ' &rsaquo; <span class="page-title">'.$title.'</span>';
-}
 echo 
-' - <a class="button" href="'.$p_url.'&amp;tab=packman-plugins">'.__('Plugins').'</a>'.
-' - <a class="button" href="'.$p_url.'&amp;tab=packman-themes">'.__('Themes').'</a>';
-if ($iswritable) {
-	echo ' - <a class="button" href="'.$p_url.'&amp;tab=repository">'.__('Repositories').'</a>';
-}
-echo 
-'</h2>';
+'</head><body>'.
 
-if ($default_tab == 'packman-plugins' && $iswritable)
-{
-	libPackman::tab($plugins->getModules(),'plugins',null,false);
+dcPage::breadcrumb(
+	array(
+		__('Plugins') => '',
+		__('pacKman') => ''
+	)
+).
+dcPage::notices();
+
+if ($core->error->flag()) {
+	echo
+	'<p class="warning">'.__('pacKman is not well configured.').' '.
+	'<a href="plugins.php?module=pacKman&amp;conf=1&amp;redir='.
+	urlencode('plugin.php?p=pacKman').'">'.__('Configuration').'</a>'.
+	'</p>';
 }
-elseif ($default_tab == 'packman-themes' && $iswritable)
-{
-	libPackman::tab($themes->getModules(),'themes',null,false);
-}
-elseif ($default_tab == 'repository' && $iswritable)
-{
+else {
+
 	$repo_path_modules = array_merge(
-		dcPackman::getPackages($core,dirname($repo_path.'/'.$packman_pack_filename)),
-		dcPackman::getPackages($core,dirname($repo_path.'/'.$packman_secondpack_filename))
+		dcPackman::getPackages(
+			$core,
+			dirname($repo_path.'/'.$s->packman_pack_filename)
+		),
+		dcPackman::getPackages(
+			$core,
+			dirname($repo_path.'/'.$s->packman_secondpack_filename)
+		)
 	);
-	$plugins_path_modules = dcPackman::getPackages($core,$plugins_path);
-	$themes_path_modules = dcPackman::getPackages($core,$themes_path);
-	
-	echo '<div id="repository">';
-	
-	if (empty($plugins_path_modules) && empty($themes_path_modules) && empty($repo_path_modules))
-	{
-		echo '<p>'.__('There is no package').'</p>';
-	}
-	if (!empty($plugins_path_modules))
-	{
-		libPackman::repo($plugins_path_modules,'plugins');
-	}
-	if (!empty($themes_path_modules))
-	{
-		libPackman::repo($themes_path_modules,'themes');
-	}
-	if (!empty($repo_path_modules))
-	{
-		libPackman::repo($repo_path_modules,'repository');
-	}
-	
-	echo '</div>';
-}
-else
-{
-	if (isset($_REQUEST['setupdone']))
-	{
-		dcPage::message(__('Configuration successfully saved'));
-	}
-	
-	echo '<div id="settings">';
-	
-	if (!is_writable(DC_TPL_CACHE))
-	{
-		echo '<p class="error">'.__('Cache directory is not writable, packman repository functions are unavailable').'</p>';
-	}
-	echo '
-	<form class="dtbfieldsettomenu" method="post" action="'.$p_url.'">
-	<fieldset id="setting-behavior"><legend>'.__('Behaviors').'</legend>
-	<p><label class="classic">'.
-	form::checkbox(array('packman_menu_plugins'),'1',$packman_menu_plugins).' '.
-	__('Enable menu on extensions page').'</label></p>
-	<p><label class="classic">'.
-	form::checkbox(array('packman_pack_nocomment'),'1',$packman_pack_nocomment).' '.
-	__('Remove comments from files').'</label></p>
-	<p><label class="classic">'.
-	form::checkbox(array('packman_pack_overwrite'),'1',$packman_pack_overwrite).' '.
-	__('Overwrite existing package').'</label></p>
-	</fieldset>
-	
-	<fieldset id="setting-file"><legend>'.__('Packages').'</legend>
-	<p><label class="classic">'.__('Name of exported package').'<br />'.
-	form::field(array('packman_pack_filename'),65,255,$packman_pack_filename).'</label></p>
-	<p><label class="classic">'.__('Name of second exported package').'<br />'.
-	form::field(array('packman_secondpack_filename'),65,255,$packman_secondpack_filename).'</label></p>
-	<p><label class="classic">'.__('Path to repository').'<br />'.
-	form::field(array('packman_pack_repository'),65,255,$packman_pack_repository).'</label></p>';
-	if ($core->blog->public_path)
-	{
-		echo'<p class="form-note">'.sprintf(__('Public directory is: %s'),$core->blog->public_path).'</p>';
-	}
-	echo '
-	<p><label class="classic">'.__('Extra files to exclude from package').'<br />'.
-	form::field(array('packman_pack_excludefiles'),65,255,$packman_pack_excludefiles).'</label></p>
-	</fieldset>
-	
-	<p class="clear">
-	<input type="submit" name="save_settings" value="'.__('save').'" /> 
-	<input type="submit" name="reset_settings" value="'.__('Reset settings').'" />'.
-	$core->formNonce().
-	form::hidden(array('tab'),'settings').
-	form::hidden(array('p'),'pacKman').'
-	</p>
-	</form>
-	</div>';
+	$plugins_path_modules = dcPackman::getPackages(
+		$core,
+		$plugins_path
+	);
+	$themes_path_modules = dcPackman::getPackages(
+		$core,
+		$themes_path
+	);
+
+	libPackman::modules(
+		$core,
+		$plugins->getModules(),
+		'plugins',
+		__('Installed plugins')
+	);
+
+	libPackman::modules(
+		$core,
+		$themes->getModules(),
+		'themes',
+		__('Installed themes')
+	);
+
+	libPackman::repository(
+		$core,
+		$plugins_path_modules,
+		'plugins',
+		__('Plugins root')
+	);
+
+	libPackman::repository(
+		$core,
+		$themes_path_modules,
+		'themes',
+		__('Themes root')
+	);
+
+	libPackman::repository(
+		$core,
+		$repo_path_modules,
+		'repository',
+		__('Packages repository')
+	);
 }
 
 # --BEHAVIOR-- packmanAdminTabs
-$core->callBehavior('packmanAdminTabs',$core,$default_tab);
+$core->callBehavior('packmanAdminTabs', $core);
 
 dcPage::helpBlock('pacKman');
 
-echo '<hr class="clear"/><p class="right">
-<a class="button" href="'.$p_url.'&amp;tab=setting">'.__('Settings').'</a> - 
-pacKman - '.$core->plugins->moduleInfo('pacKman','version').'&nbsp;
+echo 
+'<hr class="clear"/><p class="right modules">
+<a class="module-config" '.
+'href="plugins.php?module=pacKman&amp;conf=1&amp;redir='.
+urlencode('plugin.php?p=pacKman').'">'.__('Configuration').'</a> - 
+pacKman - '.$core->plugins->moduleInfo('pacKman', 'version').'&nbsp;
 <img alt="'.__('pacKman').'" src="index.php?pf=pacKman/icon.png" />
-</p></body></html>';
-?>
+</p>
+</body></html>';

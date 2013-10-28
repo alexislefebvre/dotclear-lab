@@ -12,26 +12,50 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_CONTEXT_ADMIN')) {
+
+	return null;
+}
 
 $core->blog->settings->addNamespace('pacKman');
-$core->addBehavior('pluginsToolsTabs',array('packmanBehaviors','pluginsToolsTabs'));
+
+$core->addBehavior(
+	'adminDashboardFavorites',
+	array('packmanBehaviors', 'adminDashboardFavorites')
+);
 
 $_menu['Plugins']->addItem(
-	__('pacKman'),
-	'plugin.php?p=pacKman',
+	__('Packages repository'),
+	'plugin.php?p=pacKman#packman-repository-repository',
 	'index.php?pf=pacKman/icon.png',
-	preg_match('/plugin.php\?p=pacKman(&.*)?$/',$_SERVER['REQUEST_URI']),
+	preg_match(
+		'/plugin.php\?p=pacKman(&.*)?$/',
+		$_SERVER['REQUEST_URI']
+	),
 	$core->auth->isSuperAdmin()
 );
 
 class packmanBehaviors
 {
-	public static function pluginsToolsTabs($core)
+	public static function adminDashboardFavorites($core, $favs)
 	{
-		if ($core->blog->settings->pacKman->packman_menu_plugins && $core->auth->isSuperAdmin()) {
-			libPackman::tab($core->plugins->getModules(),'plugins','plugins.php');
-		}
+		$favs->register('pacKman', array(
+			'title'		=> __('Packages repository'),
+			'url'		=> 'plugin.php?p=pacKman#packman-repository-repository',
+			'small-icon'	=> 'index.php?pf=pacKman/icon.png',
+			'large-icon'	=> 'index.php?pf=pacKman/icon-big.png',
+			'permissions'	=> $core->auth->isSuperAdmin(),
+			'active_cb'	=> array(
+				'packmanBehaviors', 
+				'adminDashboardFavoritesActive'
+			)
+		));
+	}
+
+	public static function adminDashboardFavoritesActive($request, $params)
+	{
+		return $request == 'plugin.php' 
+			&& isset($params['p']) 
+			&& $params['p'] == 'pacKman';
 	}
 }
-?>

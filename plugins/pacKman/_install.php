@@ -12,36 +12,102 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_CONTEXT_ADMIN')) {
 
-$rdc_version = '2.5-alpha';
-$new_version = $core->plugins->moduleInfo('pacKman','version');
-$old_version = $core->getVersion('pacKman');
+	return null;
+}
 
-if (version_compare($old_version,$new_version,'>=')) return;
+# -- Module specs --
 
-try
-{
-	if (version_compare(str_replace("-r","-p",DC_VERSION),$rdc_version,'<')) {
-		throw new Exception(sprintf('%s requires Dotclear %s','pacKman',$rdc_version));
+$dc_min = '2.6';
+$mod_id = 'pacKman';
+$mod_conf = array(
+	array(
+		'packman_menu_plugins',
+		'Add link to pacKman in plugins page',
+		false,
+		'boolean'
+	),
+	array(
+		'packman_pack_nocomment',
+		'Remove comments from files',
+		false,
+		'boolean'
+	),
+	array(
+		'packman_pack_overwrite',
+		'Overwrite existing package',
+		false,
+		'boolean'
+	),
+	array(
+		'packman_pack_filename',
+		'Name of package',
+		'%type%-%id%',
+		'string'
+	),
+	array(
+		'packman_secondpack_filename',
+		'Name of second package',
+		'%type%-%id%-%version%',
+		'string'
+	),
+	array(
+		'packman_pack_repository',
+		'Path to package repository',
+		'',
+		'string'
+	),
+	array(
+		'packman_pack_excludefiles',
+		'Extra files to exclude from package',
+		'*.zip,*.tar,*.tar.gz,.directory,.hg',
+		'string'
+	)
+);
+
+# -- Nothing to change below --
+
+try {
+
+	# Check module version
+	if (version_compare(
+		$core->getVersion($mod_id),
+		$core->plugins->moduleInfo($mod_id, 'version'),
+		'>='
+	)) {
+
+		return null;
 	}
-	
-	$core->blog->settings->addNamespace('pacKman');
-	$core->blog->settings->pacKman->put('packman_menu_plugins',false,'boolean','Add link to pacKman in plugins page',false,true);
-	$core->blog->settings->pacKman->put('packman_pack_nocomment',false,'boolean','Remove comments from files',false,true);
-	$core->blog->settings->pacKman->put('packman_pack_overwrite',false,'boolean','Overwrite existing package',false,true);
-	$core->blog->settings->pacKman->put('packman_pack_filename','%type%-%id%','string','Name of package',false,true);
-	$core->blog->settings->pacKman->put('packman_secondpack_filename','%type%-%id%-%version%','string','Name of second package',false,true);
-	$core->blog->settings->pacKman->put('packman_pack_repository','','string','Path to package repository',false,true);
-	$core->blog->settings->pacKman->put('packman_pack_excludefiles','*.zip,*.tar,*.tar.gz,.directory','string','Extra files to exclude from package',false,true);
-	
-	$core->setVersion('pacKman',$new_version);
-	
+
+	# Check Dotclear version
+	if (!method_exists('dcUtils', 'versionsCompare') 
+	 || dcUtils::versionsCompare(DC_VERSION, $dc_min, '>', false)) {
+		throw new Exception(sprintf(
+			'%s requires Dotclear %s', $mod_id, $dc_min
+		));
+	}
+
+	# Set module settings
+	$core->blog->settings->addNamespace($mod_id);
+	foreach($mod_conf as $v) {
+		$core->blog->settings->{$mod_id}->put(
+			$v[0], $v[2], $v[3], $v[1], false, true
+		);
+	}
+
+	# Set module version
+	$core->setVersion(
+		$mod_id,
+		$core->plugins->moduleInfo($mod_id, 'version')
+	);
+
 	return true;
 }
-catch (Exception $e)
-{
+catch (Exception $e) {
 	$core->error->add($e->getMessage());
+
+	return false;
 }
-return false;
+
 ?>

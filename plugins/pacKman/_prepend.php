@@ -12,11 +12,13 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_RC_PATH')) {
 
-global $__autoload;
+	return null;
+}
 
-$__autoload['dcPackman'] = dirname(__FILE__).'/inc/class.dc.packman.php';
-$__autoload['libPackman'] = dirname(__FILE__).'/inc/lib.packman.php';
-$__autoload['packmanFileZip'] = dirname(__FILE__).'/inc/lib.packman.filezip.php';
-?>
+$d = dirname(__FILE__).'/inc/';
+
+$__autoload['dcPackman']		= $d.'class.dc.packman.php';
+$__autoload['libPackman']	= $d.'lib.packman.php';
+$__autoload['packmanFileZip']	= $d.'lib.packman.filezip.php';
