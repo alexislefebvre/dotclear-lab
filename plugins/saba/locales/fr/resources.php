@@ -4,7 +4,7 @@
 # This file is part of saba, a plugin for Dotclear 2.
 # 
 # Copyright (c) 2009-2013 Jean-Christian Denis and contributors
-# contact@jcdenis.fr http://jcd.lv
+# contact@jcdenis.fr
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -12,17 +12,11 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_RC_PATH')) {
 
-# Plugin menu
-$_menu['Plugins']->addItem(
-	__('saba'),
-	'plugin.php?p=saba','index.php?pf=saba/icon.png',
-	preg_match('/plugin.php\?p=saba(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id)
-);
+	return null;
+}
 
-# Admin behaviors
-$core->blog->settings->addNamespace('saba');
-
-?>
+if (!empty($_REQUEST['module']) && $_REQUEST['module'] == 'saba') {
+	$__resources['help']['core_plugins_conf'] = dirname(__FILE__).'/help/help.html';
+}
