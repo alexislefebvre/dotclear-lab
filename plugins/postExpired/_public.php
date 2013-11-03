@@ -12,23 +12,56 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_RC_PATH')) {
+
+	return null;
+}
+
+if ($core->getVersion('postExpired') != $core->plugins->moduleInfo('postExpired', 'version')) {
+
+	return null;
+}
 
 __('Expired on');
 __('This entry has no expiration date');
 
-if (in_array($core->url->type,array('default','feed'))){ //launch update only on home page and feed
-	$core->addBehavior('publicBeforeDocument',array('publicBehaviorPostExpired','updateExpiredEntries'));
+# launch update only on public home page and feed
+if (in_array($core->url->type, array('default', 'feed'))) { 
+	$core->addBehavior(
+		'publicBeforeDocument',
+		array('publicBehaviorPostExpired', 'publicBeforeDocument')
+	);
 }
-$core->addBehavior('coreBlogGetPosts',array('publicBehaviorPostExpired','coreBlogGetPosts'));
+$core->addBehavior(
+	'coreBlogGetPosts',
+	array('publicBehaviorPostExpired', 'coreBlogGetPosts')
+);
+$core->tpl->addBlock(
+	'EntryExpiredIf',
+	array('tplPostExpired', 'EntryExpiredIf')
+);
+$core->tpl->addValue(
+	'EntryExpiredDate',
+	array('tplPostExpired', 'EntryExpiredDate')
+);
+$core->tpl->addValue(
+	'EntryExpiredTime',
+	array('tplPostExpired', 'EntryExpiredTime')
+);
 
-$core->tpl->addBlock('EntryExpiredIf',array('tplPostExpired','EntryExpiredIf'));
-$core->tpl->addValue('EntryExpiredDate',array('tplPostExpired','EntryExpiredDate'));
-$core->tpl->addValue('EntryExpiredTime',array('tplPostExpired','EntryExpiredTime'));
-
+/**
+ * @ingroup DC_PLUGIN_POSTEXPIRED
+ * @brief Scheduled post change - public methods.
+ * @since 2.6
+ */
 class publicBehaviorPostExpired
 {
-	public static function updateExpiredEntries($core)
+	/**
+	 * Check if there are expired dates
+	 * 
+	 * @param  dcCore $core dcCore instance
+	 */
+	public static function publicBeforeDocument(dcCore $core)
 	{
 		# Get expired dates and post_id
 		$posts = $core->con->select(
@@ -37,131 +70,163 @@ class publicBehaviorPostExpired
 			'INNER JOIN '.$core->prefix.'meta META '.
 			'ON META.post_id = P.post_id '.
 			"WHERE blog_id = '".$core->con->escape($core->blog->id)."' ".
-			//"AND P.post_type = 'post' ". //quick compatibility with some plugins
-			"AND META.meta_type = 'postexpired' "
+			// Removed for quick compatibility with some plugins
+			//"AND P.post_type = 'post' ". 
+			"AND META.meta_type = 'post_expired' "
 		);
+
 		# No expired date
-		if ($posts->isEmpty())
-		{
-			return;
+		if ($posts->isEmpty()) {
+
+			return null;
 		}
+
 		# Get curent timestamp
 		$now = dt::toUTC(time());
+
 		# Prepared post cursor
 		$post_cur = $core->con->openCursor($core->prefix.'post');
+
 		# Loop through marked posts
-		while($posts->fetch())
-		{
+		$updated = false;
+		while($posts->fetch()) {
+
+			# Decode meta record
+			$post_expired = decodePostExpired($posts->meta_id);
+
 			# Check if post is outdated
-			$now_tz = $now + dt::getTimeOffset($posts->post_tz,$now);
-			$meta_tz = strtotime($posts->meta_id);
+			$now_tz = $now + dt::getTimeOffset($posts->post_tz, $now);
+			$meta_tz = strtotime($post_expired['date']);
 			if ($now_tz > $meta_tz)
 			{
 				# Delete meta for expired date
-				$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,'postexpired');
-				# Know types of actions
-				$types = array(
-					'postexpiredstatus',
-					'postexpiredcat',
-					'postexpiredselected',
-					'postexpiredcomment',
-					'postexpiredtrackback'
+				$core->auth->sudo(
+					array($core->meta, 'delPostMeta'),
+					$posts->post_id,
+					'post_expired'
 				);
-				# Retrieve actions
-				$rs = $core->con->select(
-					'SELECT meta_id, meta_type FROM '.$core->prefix.'meta '.
-					'WHERE post_id = '.$posts->post_id.' '.
-					'AND meta_type '.$core->con->in($types)
-				);
-				
-				# --BEHAVIOR-- publicBeforePostExpiredUpdate
-				$core->callbehavior('publicBeforePostExpiredUpdate',$posts->post_id,$posts->meta_id,$posts->post_tz);
-				
-				# If there are actions to do
-				if (!$rs->isEmpty())
+
+				# Prepare post cursor
+				$post_cur->clean();
+				$post_cur->post_upddt = date('Y-m-d H:i:s', $now_tz);
+
+				# Loop through actions
+				foreach($post_expired as $k => $v)
 				{
-					# Prepare post cursor
-					$post_cur->clean();
-					$post_cur->post_upddt = date('Y-m-d H:i:s',$now_tz);
-					# Loop through actions
-					while($rs->fetch())
-					{
-						// All new values are in same format
-						$value =  (integer) substr($rs->meta_id,1);
-						# Put value in post cursor
-						switch($rs->meta_type)
-						{
-							case 'postexpiredstatus':
-							$post_cur->post_status = $value;
-							break;
-							
-							case 'postexpiredcat':
-							$post_cur->cat_id = $value ? $value : null;
-							break;
-							
-							case 'postexpiredselected':
-							$post_cur->post_selected = $value ? 1 : 0;
-							break;
-							
-							case 'postexpiredcomment':
-							$post_cur->post_open_comment = $value ? 1 : 0;
-							break;
-							
-							case 'postexpiredtrackback':
-							$post_cur->post_open_tb = $value ? 1 : 0;
-							break;
-						}
-						# Delete meta record of this type
-						$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,$rs->meta_type);
+					if (empty($v)) {
+						continue;
 					}
-					# Update post
-					$post_cur->update(
-						'WHERE post_id = '.$posts->post_id.' '.
-						"AND blog_id = '".$core->con->escape($core->blog->id)."' "
-					);
-					# Say blog is updated
-					$core->blog->triggerBlog();
+
+					# values are prefixed by "!"
+					$v =  (integer) substr($v, 1);
+
+					# Put value in post cursor
+					switch($k)
+					{
+						case 'status':
+						$post_cur->post_status = $v;
+						break;
+
+						case 'category':
+						$post_cur->cat_id = $v ? $v : null;
+						break;
+
+						case 'selected':
+						$post_cur->post_selected = $v;
+						break;
+
+						case 'comment':
+						$post_cur->post_open_comment = $v;
+						break;
+
+						case 'trackback':
+						$post_cur->post_open_tb = $v;
+						break;
+					}
 				}
-				
-				# --BEHAVIOR-- publicAfterPostExpiredUpdate
-				$core->callbehavior('publicAfterPostExpiredUpdate',$posts->post_id,$posts->meta_id,$posts->post_tz);
+
+				# Update post
+				$post_cur->update(
+					'WHERE post_id = '.$posts->post_id.' '.
+					"AND blog_id = '".$core->con->escape($core->blog->id)."' "
+				);
+
+				$updated = true;
 			}
 		}
+
+		# Say blog is updated
+		if ($updated) {
+			$core->blog->triggerBlog();
+		}
 	}
-	
-	public static function coreBlogGetPosts($rs)
+
+	/**
+	 * Extends posts record with expired date
+	 * 
+	 * @param  record $rs Post recordset
+	 */
+	public static function coreBlogGetPosts(record $rs)
 	{
 		$rs->extend('rsExtPostExpiredPublic');
 	}
 }
 
+/**
+ * @ingroup DC_PLUGIN_POSTEXPIRED
+ * @brief Scheduled post change - extends recordset.
+ * @since 2.6
+ */
 class rsExtPostExpiredPublic extends rsExtPost
 {
-	public static function postExpiredDate($rs,$absolute_urls=false)
+	/**
+	 * Retrieve expired date of a post
+	 * 
+	 * @param  record  $rs            Post recordset
+	 * @return string                 Expired date or null
+	 */
+	public static function postExpiredDate(record $rs)
 	{
-		if (!$rs->postexpired[$rs->post_id]) //memory
-		{
-			$params = array(
-				'meta_type' => 'postexpired',
-				'post_id' => $rs->post_id,
-				'limit' => 1
-			);
-			$rs_date = $rs->core->meta->getMetadata($params);
-			return $rs_date->isEmpty() ? null : (string) $rs_date->meta_id;
+		if (!$rs->postexpired[$rs->post_id]) { //memory
+			$rs_date = $rs->core->meta->getMetadata(array(
+				'meta_type'	=> 'post_expired',
+				'post_id'		=> $rs->post_id,
+				'limit'		=> 1
+			));
+
+			if ($rs_date->isEmpty()) {
+
+				return null;
+			}
+
+			$v = unserialize(base64_decode($rs_date->meta_id));
+			$rs->postexpired[$rs->post_id] = $v['date'];
 		}
+
 		return $rs->postexpired[$rs->post_id];
 	}
 }
 
+/**
+ * @ingroup DC_PLUGIN_POSTEXPIRED
+ * @brief Scheduled post change - template methods.
+ * @since 2.6
+ */
 class tplPostExpired
 {
-	public static function EntryExpiredIf($attr,$content)
+	/**
+	 * Template condition to check if there is an expired date
+	 * 
+	 * @param array  $attr    Block attributes
+	 * @param string $content Block content
+	 */
+	public static function EntryExpiredIf($attr, $content)
 	{
 		$if = array();
-		$operator = isset($attr['operator']) ? self::getOperator($attr['operator']) : '&&';
+		$operator = isset($attr['operator']) ? 
+			self::getOperator($attr['operator']) : '&&';
 
-		if (isset($attr['has_date']))
-		{
+		if (isset($attr['has_date'])) {
 			$sign = (boolean) $attr['has_date'] ? '!' : '=';
 			$if[] = '(null '.$sign.'== $_ctx->posts->postExpiredDate())';
 		}
@@ -170,14 +235,20 @@ class tplPostExpired
 		}
 
 		return 
-		"<?php if(".implode(' '.$operator.' ',$if).") : ?>\n".
+		"<?php if(".implode(' '.$operator.' ', $if).") : ?>\n".
 		$content.
 		"<?php endif; ?>\n";
 	}
 
+	/**
+	 * Template for expired date
+	 * 
+	 * @param array $attr Value attributes
+	 */
 	public static function EntryExpiredDate($attr)
 	{
-		$format = !empty($attr['format']) ? addslashes($attr['format']) : '';
+		$format = !empty($attr['format']) ? 
+			addslashes($attr['format']) : '';
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		if (!empty($attr['rfc822']))
@@ -187,16 +258,26 @@ class tplPostExpired
 		elseif ($format)
 			$res = sprintf($f,"dt::dt2str('".$format."',\$_ctx->posts->postExpiredDate())");
 		else 
-			$res = sprintf($f,"dt::dt2str((version_compare(DC_VERSION,'2.2-alpha','>=') ? \$core->blog->settings->system->date_format : \$core->blog->settings->date_format),\$_ctx->posts->postExpiredDate())");
+			$res = sprintf($f,"dt::dt2str(\$core->blog->settings->system->date_format,\$_ctx->posts->postExpiredDate())");
 
 		return '<?php if (null !== $_ctx->posts->postExpiredDate()) { echo '.$res.'; } ?>';
 	}
 
+	/**
+	 * Template for expired time
+	 * 
+	 * @param array $attr Value attributes
+	 */
 	public static function EntryExpiredTime($attr)
 	{
-		return '<?php if (null !== $_ctx->posts->postExpiredDate()) { echo '.sprintf($GLOBALS['core']->tpl->getFilters($attr),"dt::dt2str(".(!empty($attr['format']) ? "'".addslashes($attr['format'])."'" : "(version_compare(DC_VERSION,'2.2-alpha','>=') ? \$core->blog->settings->system->time_format : \$core->blog->settings->time_format)").",\$_ctx->posts->postExpiredDate())").'; } ?>';
+		return '<?php if (null !== $_ctx->posts->postExpiredDate()) { echo '.sprintf($GLOBALS['core']->tpl->getFilters($attr),"dt::dt2str(".(!empty($attr['format']) ? "'".addslashes($attr['format'])."'" : "\$core->blog->settings->system->time_format").",\$_ctx->posts->postExpiredDate())").'; } ?>';
 	}
 
+	/**
+	 * Parse tempalte attributes oprerator
+	 * 
+	 * @param string $op Operator
+	 */
 	protected static function getOperator($op)
 	{
 		switch (strtolower($op))
@@ -211,4 +292,3 @@ class tplPostExpired
 		}
 	}
 }
-?>

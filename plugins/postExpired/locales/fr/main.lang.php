@@ -1,87 +1,62 @@
 <?php
 // Language: Français 
-// Module: postExpired - 2013.06.30
-// Date: 2013-07-01 00:33:05 
+// Module: postExpired - 2013.11.03
+// Date: 2013-11-03 22:12:31 
 // Translated with dcTranslater - 2013.05.11 
 
-#_admin.php:42
-#_admin.php:62
-#_admin.php:71
-#_admin.php:80
-#_admin.php:89
-$GLOBALS['__l10n']['Not changed'] = 'Inchangé';
-
-#_admin.php:63
-$GLOBALS['__l10n']['Pending'] = 'En attente';
-
-#_admin.php:64
-$GLOBALS['__l10n']['Unpublished'] = 'Non publié';
-
-#_admin.php:73
-$GLOBALS['__l10n']['Not selected'] = 'Non sélectionné';
-
-#_admin.php:81
-#_admin.php:90
-$GLOBALS['__l10n']['Opened'] = 'Ouvert';
-
-#_admin.php:82
-#_admin.php:91
-$GLOBALS['__l10n']['Closed'] = 'Fermé';
-
-#_admin.php:135
-$GLOBALS['__l10n']['Expired date'] = 'Date de péremption';
-
-#_admin.php:158
-$GLOBALS['__l10n']['Comments:'] = 'Commentaires :';
-
-#_admin.php:159
-$GLOBALS['__l10n']['Trackbacks:'] = 'Rétroliens :';
-
-#_admin.php:167
-#_admin.php:387
-$GLOBALS['__l10n']['On this date, change:'] = 'Á cette date, changer :';
-
-#_admin.php:177
-#_admin.php:397
-$GLOBALS['__l10n']['Selection:'] = 'Séléction :';
-
-#_admin.php:182
-#_admin.php:402
-$GLOBALS['__l10n']['Comments status:'] = 'Status des commentaires :';
-
-#_admin.php:185
-#_admin.php:405
-$GLOBALS['__l10n']['Trackbacks status:'] = 'Status des rétroliens :';
-
-#_admin.php:266
-#_admin.php:270
+#_admin.php:100
+#_admin.php:110
 $GLOBALS['__l10n']['Expired entries'] = 'Billets périmés';
 
-#_admin.php:266
+#_admin.php:101
 $GLOBALS['__l10n']['Add expired date'] = 'Ajouter une date de péremption';
 
-#_admin.php:270
+#_admin.php:111
 $GLOBALS['__l10n']['Remove expired date'] = 'Retirer une date de péremption';
 
-#_admin.php:381
-$GLOBALS['__l10n']['Add expired date to entries'] = 'Ajouter une date de péremption aux billets';
+#_admin.php:139
+$GLOBALS['__l10n']['Expired date'] = 'Date de péremption';
 
-#_admin.php:382
-$GLOBALS['__l10n']['It will be added only if there is no expired date on entry.'] = 'Ajouté uniquement si il n\'y a pas de date de péremption sur le billet.';
+#_admin.php:209
+$GLOBALS['__l10n']['Expired date added.'] = 'Date de péremption ajoutée.';
 
-#_admin.php:439
-$GLOBALS['__l10n']['Remove selected expired date from entries'] = 'Retirer les dates de péremption sélectionnées des billets';
+#_admin.php:222
+$GLOBALS['__l10n']['Add expired date to this selection'] = 'Ajouter une date de péremtion à cette sélection';
 
-#_admin.php:443
-$GLOBALS['__l10n']['No expired date for selected entries'] = 'Pas de date de peremption sur les billets sélectionnés';
+#_admin.php:269
+$GLOBALS['__l10n']['Expired date deleted.'] = 'Dtae de péremtion supprimé';
 
-#_admin.php:451
-$GLOBALS['__l10n']['Following expired date have been found in selected entries:'] = 'Les dates de péremption suivantes ont été trouvé sur les billets sélectionnés :';
+#_admin.php:370
+$GLOBALS['__l10n']['On this date, change:'] = 'Á cette date, changer :';
 
-#_public.php:17
+#_admin.php:398
+$GLOBALS['__l10n']['Selection:'] = 'Séléction :';
+
+#_admin.php:409
+$GLOBALS['__l10n']['Comments status:'] = 'Status des commentaires :';
+
+#_admin.php:419
+$GLOBALS['__l10n']['Trackbacks status:'] = 'Status des rétroliens :';
+
+#_admin.php:440
+#_admin.php:470
+#_admin.php:485
+#_admin.php:499
+#_admin.php:513
+$GLOBALS['__l10n']['Not changed'] = 'Inchangé';
+
+#_admin.php:500
+#_admin.php:514
+$GLOBALS['__l10n']['Opened'] = 'Ouvert';
+
+#_admin.php:501
+#_admin.php:515
+$GLOBALS['__l10n']['Closed'] = 'Fermé';
+
+#_public.php:25
 $GLOBALS['__l10n']['Expired on'] = 'Expire le';
 
-#_public.php:18
+#_public.php:26
 $GLOBALS['__l10n']['This entry has no expiration date'] = 'Ce billet n\'a pas de date de péremption';
 
 ?>

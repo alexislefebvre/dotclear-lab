@@ -15,10 +15,20 @@
 if (!defined('DC_RC_PATH')){return;}
  
 $this->registerModule(
-	/* Name */			"Expired entries",
-	/* Description*/		"Change entries options at a given date",
-	/* Author */			"JC Denis",
-	/* Version */			'2013.06.30',
-	/* Permissions */		'usage,contentadmin'
+	/* Name */
+	"Expired entries",
+	/* Description*/
+	"Change entries options at a given date",
+	/* Author */
+	"Jean-Christian Denis",
+	/* Version */
+	'2013.11.03',
+	/* Properies */
+	array(
+		'permissions' => 'usage,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://jcd.lv/q=postExpired',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/postExpired'
+	)
 );
-?>
