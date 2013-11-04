@@ -2,7 +2,7 @@
 
 ## WHAT IS PACKMAN ?
 
-pacKman is a plugins for the open-source 
+pacKman is a plugin for the open-source 
 web publishing software called Dotclear.
 
 It help super admin to create and manage packages of
@@ -19,7 +19,7 @@ themes and plugins from Dotclear administration pages.
 
 ## USAGE
 
-First install pacKman, mannualy from a zip package or from 
+First install pacKman, manualy from a zip package or from 
 Dotaddict repository. (See Dotclear's documentation to know how do this)
 
 Go to ''plugins manager'', expand pacKman information then 

@@ -25,13 +25,13 @@ $this->registerModule(
 	/* Author */
 	"Jean-Christian Denis",
 	/* Version */
-	'2013.10.29',
+	'2013.11.03',
 	/* Properies */
 	array(
 		'permissions' => null,
 		'type' => 'plugin',
 		'dc_min' => '2.6',
-		'support' => 'http://jcd.lv/pacKman',
+		'support' => 'http://jcd.lv/q=pacKman',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/pacKman'
 	)
 );

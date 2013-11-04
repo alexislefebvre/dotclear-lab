@@ -155,16 +155,6 @@ try
 	# Delete
 	elseif ($action == 'delete') {
 
-		if ($type == 'plugins') {
-			$proot = $plugins_path;
-		}
-		elseif ($type == 'themes') {
-			$proot == $themes_path;
-		}
-		else {
-			$proot == 'repository';
-		}
-
 		foreach ($_POST['modules'] as $id => $root) {
 			if (!file_exists($root) || !files::isDeletable($root))	{
 				throw new Exception('Undeletable file: '.$root);
