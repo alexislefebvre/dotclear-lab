@@ -1,43 +1,69 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of cinecturlink2, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_RC_PATH')) {
 
+	return null;
+}
+
+/**
+ * @ingroup DC_PLUGIN_CINECTURLINK2
+ * @brief Share media you like - main methods.
+ * @since 2.6
+ */
 class cinecturlink2
 {
+	/** @var dcCore dcCore instance */
 	public $core;
+	/** @var dbLayer dbLayer instance */
 	public $con;
+	/** @var string Cinecturlink table name */
 	public $table;
+	/** @var string Blog ID */
 	public $blog;
 
-	public function __construct($core)
+	/**
+	 * Contructor
+	 * 
+	 * @param dcCore $core dcCore instance
+	 */
+	public function __construct(dcCore $core)
 	{
+		$core->blog->settings->addNamespace('cinecturlink2');
+
 		$this->core = $core;
 		$this->con = $core->con;
 		$this->table = $core->prefix.'cinecturlink2';
 		$this->blog = $core->con->escape($core->blog->id);
 	}
 
-	public function getLinks($params=array(),$count_only=false)
+	/**
+	 * Get links
+	 * 
+	 * @param  array   $params     Query params
+	 * @param  boolean $count_only Count only result
+	 * @return record              record instance
+	 */
+	public function getLinks($params=array(), $count_only=false)
 	{
-		if ($count_only)
-		{
+		if ($count_only) {
 			$strReq = 'SELECT count(L.link_id) ';
 		}
-		else
-		{
+		else {
 			$content_req = '';
 			if (!empty($params['columns']) && is_array($params['columns'])) {
-				$content_req .= implode(', ',$params['columns']).', ';
+				$content_req .= implode(', ', $params['columns']).', ';
 			}
 
 			$strReq =
@@ -62,23 +88,23 @@ class cinecturlink2
 
 		$strReq .= "WHERE L.blog_id = '".$this->blog."' ";
 
-		if (isset($params['link_type']))
-		{
+		if (isset($params['link_type'])) {
 			if (is_array($params['link_type']) && !empty($params['link_type'])) {
 				$strReq .= 'AND L.link_type '.$this->con->in($params['link_type']);
-			} elseif ($params['link_type'] != '') {
+			}
+			elseif ($params['link_type'] != '') {
 				$strReq .= "AND L.link_type = '".$this->con->escape($params['link_type'])."' ";
 			}
 		}
-		else
-		{
+		else {
 			$strReq .= "AND L.link_type = 'cinecturlink' ";
 		}
 
 		if (!empty($params['link_id'])) {
 			if (is_array($params['link_id'])) {
-				array_walk($params['link_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
-			} else {
+				array_walk($params['link_id'], create_function('&$v,$k', 'if($v!==null){$v=(integer)$v;}'));
+			}
+			else {
 				$params['link_id'] = array((integer) $params['link_id']);
 			}
 			$strReq .= 'AND L.link_id '.$this->con->in($params['link_id']);
@@ -86,8 +112,9 @@ class cinecturlink2
 		
 		if (!empty($params['cat_id'])) {
 			if (is_array($params['cat_id'])) {
-				array_walk($params['cat_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
-			} else {
+				array_walk($params['cat_id'], create_function('&$v,$k', 'if($v!==null){$v=(integer)$v;}'));
+			}
+			else {
 				$params['cat_id'] = array((integer) $params['cat_id']);
 			}
 			$strReq .= 'AND L.cat_id '.$this->con->in($params['cat_id']);
@@ -108,11 +135,11 @@ class cinecturlink2
 			$strReq .= $params['sql'].' ';
 		}
 
-		if (!$count_only)
-		{
+		if (!$count_only) {
 			if (!empty($params['order'])) {
 				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
-			} else {
+			}
+			else {
 				$strReq .= 'ORDER BY L.link_upddt DESC ';
 			}
 		}
@@ -124,12 +151,16 @@ class cinecturlink2
 		return $this->con->select($strReq);
 	}
 
-	public function addLink($cur)
+	/**
+	 * Add link
+	 * 
+	 * @param cursor $cur cursor instance
+	 */
+	public function addLink(cursor $cur)
 	{
 		$this->con->writeLock($this->table);
 		
-		try
-		{
+		try {
 			if ($cur->link_title == '') {
 				throw new Exception(__('No link title'));
 			}
@@ -153,20 +184,26 @@ class cinecturlink2
 			$cur->insert();
 			$this->con->unlock();
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 			$this->con->unlock();
 			throw $e;
 		}
 		$this->trigger();
 
 		# --BEHAVIOR-- cinecturlink2AfterAddLink
-		$this->core->callBehavior('cinecturlink2AfterAddLink',$cur);
+		$this->core->callBehavior('cinecturlink2AfterAddLink', $cur);
 
 		return $cur->link_id;
 	}
-	
-	public function updLink($id,$cur,$behavior=true)
+
+	/**
+	 * Update link
+	 * 
+	 * @param  integer $id       Link ID
+	 * @param  cursor  $cur      cursor instance
+	 * @param  boolean $behavior Call related behaviors
+	 */
+	public function updLink($id, cursor $cur, $behavior=true)
 	{
 		$id = (integer) $id;
 		
@@ -181,10 +218,15 @@ class cinecturlink2
 
 		if ($behavior) {
 			# --BEHAVIOR-- cinecturlink2AfterUpdLink
-			$this->core->callBehavior('cinecturlink2AfterUpdLink',$cur,$id);
+			$this->core->callBehavior('cinecturlink2AfterUpdLink', $cur, $id);
 		}
 	}
 
+	/**
+	 * Delete link
+	 * 
+	 * @param  integer $id Link ID
+	 */
 	public function delLink($id)
 	{
 		$id = (integer) $id;
@@ -194,7 +236,7 @@ class cinecturlink2
 		}
 
 		# --BEHAVIOR-- cinecturlink2BeforeDelLink
-		$this->core->callBehavior('cinecturlink2BeforeDelLink',$id);
+		$this->core->callBehavior('cinecturlink2BeforeDelLink', $id);
 
 		$this->con->execute(
 			'DELETE FROM '.$this->table.' '.
@@ -205,6 +247,11 @@ class cinecturlink2
 		$this->trigger();
 	}
 
+	/**
+	 * Get next link ID
+	 * 
+	 * @return integer Next link ID
+	 */
 	private function getNextLinkId()
 	{
 		return $this->con->select(
@@ -212,17 +259,22 @@ class cinecturlink2
 		)->f(0) + 1;
 	}
 
-	public function getCategories($params=array(),$count_only=false)
+	/**
+	 * Get categories
+	 * 
+	 * @param  array   $params     Query params
+	 * @param  boolean $count_only Count only result
+	 * @return record              record instance
+	 */
+	public function getCategories($params=array(), $count_only=false)
 	{
-		if ($count_only)
-		{
+		if ($count_only) {
 			$strReq = 'SELECT count(C.cat_id) ';
 		}
-		else
-		{
+		else {
 			$content_req = '';
 			if (!empty($params['columns']) && is_array($params['columns'])) {
-				$content_req .= implode(', ',$params['columns']).', ';
+				$content_req .= implode(', ', $params['columns']).', ';
 			}
 
 			$strReq =
@@ -241,13 +293,14 @@ class cinecturlink2
 
 		if (!empty($params['cat_id'])) {
 			if (is_array($params['cat_id'])) {
-				array_walk($params['cat_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
-			} else {
+				array_walk($params['cat_id'], create_function('&$v,$k', 'if($v!==null){$v=(integer)$v;}'));
+			}
+			else {
 				$params['cat_id'] = array((integer) $params['cat_id']);
 			}
 			$strReq .= 'AND C.cat_id '.$this->con->in($params['cat_id']);
 		}
-		
+
 		if (!empty($params['cat_title'])) {
 			$strReq .= "AND C.cat_title = '".$this->con->escape($params['cat_title'])."' ";
 		}
@@ -256,11 +309,11 @@ class cinecturlink2
 			$strReq .= $params['sql'].' ';
 		}
 
-		if (!$count_only)
-		{
+		if (!$count_only) {
 			if (!empty($params['order'])) {
 				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
-			} else {
+			}
+			else {
 				$strReq .= 'ORDER BY cat_pos ASC ';
 			}
 		}
@@ -272,12 +325,17 @@ class cinecturlink2
 		return $this->con->select($strReq);
 	}
 
-	public function addCategory($cur)
+	/**
+	 * Add category
+	 * 
+	 * @param  cursor  $cur cursor instance
+	 * @return integer      New category ID
+	 */
+	public function addCategory(cursor $cur)
 	{
 		$this->con->writeLock($this->table.'_cat');
 		
-		try
-		{
+		try {
 			if ($cur->cat_title == '') {
 				throw new Exception(__('No category title'));
 			}
@@ -293,16 +351,22 @@ class cinecturlink2
 			$cur->insert();
 			$this->con->unlock();
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 			$this->con->unlock();
 			throw $e;
 		}
 		$this->trigger();
+
 		return $cur->cat_id;
 	}
-	
-	public function updCategory($id,$cur)
+
+	/**
+	 * Update category
+	 * 
+	 * @param  integer $id  Category ID
+	 * @param  cursor  $cur cursor instance
+	 */
+	public function updCategory($id, cursor $cur)
 	{
 		$id = (integer) $id;
 		
@@ -316,6 +380,11 @@ class cinecturlink2
 		$this->trigger();
 	}
 
+	/**
+	 * Delete category
+	 * 
+	 * @param  integer $id Category ID
+	 */
 	public function delCategory($id)
 	{
 		$id = (integer) $id;
@@ -338,14 +407,24 @@ class cinecturlink2
 
 		$this->trigger();
 	}
-	
+
+	/**
+	 * Get next category ID
+	 * 
+	 * @return integer Next category ID
+	 */
 	private function getNextCatId()
 	{
 		return $this->con->select(
 			'SELECT MAX(cat_id) FROM '.$this->table.'_cat '
 		)->f(0) + 1;
 	}
-	
+
+	/**
+	 * Get next category position
+	 * 
+	 * @return integer Next category position
+	 */
 	private function getNextCatPos()
 	{
 		return $this->con->select(
@@ -354,25 +433,34 @@ class cinecturlink2
 		)->f(0) + 1;
 	}
 
+	/**
+	 * Trigger event
+	 */
 	private function trigger()
 	{
 		$this->core->blog->triggerBlog();
 	}
-	
-	public static function test_folder($root,$folder,$throw=false)
+
+	/**
+	 * Check if a directory exists and is writable
+	 * 
+	 * @param  string  $root   Root
+	 * @param  string  $folder Folder to create into root folder
+	 * @param  boolean $throw  Throw exception or not
+	 * @return boolean         True if exists and writable
+	 */
+	public static function test_folder($root, $folder, $throw=false)
 	{
-		if (!is_dir($root.'/'.$folder))
-		{
-			if (!is_dir($root) || !is_writable($root) || !mkdir($root.'/'.$folder))
-			{
-				if ($throw)
-				{
+		if (!is_dir($root.'/'.$folder)) {
+			if (!is_dir($root) || !is_writable($root) || !mkdir($root.'/'.$folder)) {
+				if ($throw) {
 					throw new Exception(__('Failed to create public folder for images.'));
 				}
+
 				return false;
 			}
 		}
+
 		return true;
 	}
 }
-?>

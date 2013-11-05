@@ -43,3 +43,60 @@
 		});
 	}
 })(jQuery);
+
+var dragsort = ToolMan.dragsort();
+$(function(){
+ dragsort.makeTableSortable($('#links-list-cat').get(0),
+ dotclear.sortable.setHandle,dotclear.sortable.saveOrder);
+});
+dotclear.sortable = {
+  setHandle: function(item) {
+	var handle = $(item).find('td.handle').get(0);
+	while (handle.firstChild) {
+		handle.removeChild(handle.firstChild);
+	}
+	item.toolManDragGroup.setHandle(handle);
+	handle.className = handle.className+' handler';
+  },
+  saveOrder: function(item) {
+	var group = item.toolManDragGroup;
+	var order = document.getElementById('cats_order');
+	group.register('dragend', function() {
+		order.value = '';
+		items = item.parentNode.getElementsByTagName('tr');
+		for (var i=0; i<items.length; i++) {
+			order.value += items[i].id.substr(2)+',';
+		}
+	});
+  }
+};
+$(function() {
+	
+	$filtersform = $('#filters-form');
+	$filtersform.before('<p><a id="filter-control" class="form-control" href="plugin.php?p=cinecturlink2" style="display:inline">'+dotclear.msg.filter_posts_list+'</a></p>')
+	
+	if( dotclear.msg.show_filters == 'false' ) {
+		$filtersform.hide();
+	} else {
+		$('#filter-control')
+			.addClass('open')
+			.text(dotclear.msg.cancel_the_filter);
+	}
+	
+	$('#filter-control').click(function() {
+		if( $(this).hasClass('open') ) {
+			if( dotclear.msg.show_filters == 'true' ) {
+				return true;
+			} else {
+				$filtersform.hide();
+				$(this).removeClass('open')
+					   .text(dotclear.msg.filter_posts_list);
+			}
+		} else {
+			$filtersform.show();
+			$(this).addClass('open')
+				   .text(dotclear.msg.cancel_the_filter);
+		}
+		return false;
+	});
+});
