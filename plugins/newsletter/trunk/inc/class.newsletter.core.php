@@ -1,14 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2012 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 // Loading libraries
@@ -264,12 +265,7 @@ class newsletterCore
 			$cur->regcode = $con->escape(html::escapeHTML(html::clean($_regcode)));
 			$cur->state = 'pending';
 
-			# Settings compatibility test
-			if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-				$system_settings = $core->blog->settings->system;
-			} else {
-				$system_settings->system_settings =& $core->blog->settings;
-			}		
+			$system_settings = $core->blog->settings->system;
 			
 			$time = time() + dt::getTimeOffset($system_settings->blog_timezone);
 			
@@ -660,12 +656,7 @@ class newsletterCore
 			$newsletter_settings = new newsletterSettings($core);
 			$debug = false;
 			
-			# Settings compatibility test
-			if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-				$system_settings = $core->blog->settings->system;
-			} else {
-				$system_settings = $core->blog->settings;
-			}			
+			$system_settings = $core->blog->settings->system;
 			
 			// parametrage de la recuperation des billets
 			$params = array();
@@ -767,13 +758,7 @@ class newsletterCore
 	{
 		global $core;
 		$newsletter_settings = new newsletterSettings($core);
-
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$system_settings = $core->blog->settings->system;
-		} else {
-			$system_settings = $core->blog->settings;
-		}			
+		$system_settings = $core->blog->settings->system;
 		
 		// boucle sur les billets concernes pour l'abonnes
 		$bodies = array();
@@ -1045,18 +1030,9 @@ class newsletterCore
 		$url = &$core->url;
 		$blog = &$core->blog;
 		$blogurl = &$blog->url;
-		
 		$send = array();
-		
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$blog_settings =& $core->blog->settings->newsletter;
-			$system_settings = $core->blog->settings->system;
-		} else {
-			$blog_settings =& $core->blog->settings;
-			$system_settings =& $core->blog->settings;
-		}
-
+		$blog_settings =& $core->blog->settings->newsletter;
+		$system_settings = $core->blog->settings->system;
 		$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 
 		try {
@@ -1301,12 +1277,7 @@ class newsletterCore
 	{
 		global $core;
 		
-			# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$system_settings = $core->blog->settings->system;
-		} else {
-			$system_settings =& $core->blog->settings;
-		}		
+		$system_settings = $core->blog->settings->system;
 		
 		// initialisation des variables de travail
 		//$mode = $newsletter_settings->getSendMode();
@@ -1711,15 +1682,8 @@ class newsletterCore
 	{
 		global $core;
 
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$blog_settings =& $core->blog->settings->newsletter;
-			$system_settings =& $core->blog->settings->system;
-		} else {
-			$blog_settings =& $core->blog->settings;
-			$system_settings =& $core->blog->settings;
-		}
-				
+		$blog_settings =& $core->blog->settings->newsletter;
+		$system_settings =& $core->blog->settings->system;
 		$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 		
 		// test si le plugin est actif
@@ -1763,15 +1727,8 @@ class newsletterCore
 	{
 		global $core;
 
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$blog_settings =& $core->blog->settings->newsletter;
-			$system_settings = $core->blog->settings->system;
-		} else {
-			$blog_settings =& $core->blog->settings;
-			$system_settings =& $core->blog->settings;
-		}
-				
+		$blog_settings =& $core->blog->settings->newsletter;
+		$system_settings = $core->blog->settings->system;
 		$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 		
 		// test si le plugin est actif

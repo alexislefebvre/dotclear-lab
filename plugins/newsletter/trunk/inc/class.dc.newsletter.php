@@ -1,17 +1,18 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 class rsExtNewsletter 
 {
@@ -44,13 +45,8 @@ class dcNewsletter
 		$this->blog = $core->blog;
 		$this->blogname = $this->blog->name;
 		
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$this->blog->settings->addNamespace('newsletter');
-			$this->settings =& $core->blog->settings->newsletter;			
-		} else {
-			$this->blog->settings->setNamespace('newsletter');
-			$this->settings =& $core->blog->settings;
-		}
+		$this->blog->settings->addNamespace('newsletter');
+		$this->settings =& $core->blog->settings->newsletter;			
 		
 		$this->newsletter_settings = new newsletterSettings($core);
 		$this->errors = $this->settings->newsletter_errors != '' ? unserialize($this->settings->newsletter_errors) : array();

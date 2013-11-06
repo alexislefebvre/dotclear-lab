@@ -1,14 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 class newsletterTools
@@ -68,26 +69,19 @@ class newsletterTools
 		else
 		{
 			$redir .= '&m='.$module.
-			($_POST['sortby'] ? '&sortby='.$_POST['sortby'] : '' ).
-			($_POST['order'] ? '&order='.$_POST['order'] : '' ).
-			($_POST['page'] ? '&page='.$_POST['page'] : '' ).
-			($_POST['nb'] ? '&nb='.(integer) $_POST['nb'] : '' ).
+			(!empty($_REQUEST['sortby']) ? '&sortby='.$_REQUEST['sortby'] : '').
+			(!empty($_REQUEST['order']) ? '&order='.$_REQUEST['order'] : '' ).
+			(!empty($_REQUEST['page']) ? '&page='.$_REQUEST['page'] : '' ).
+			(!empty($_REQUEST['nb']) ? '&nb='.(integer) $_REQUEST['nb'] : '' ).
 			'&msg='.rawurldecode($msg);
 		}
 		http::redirect($redir);	
-
 	}
 	
 	# recherche si le template existe dans le theme
 	public static function requestTemplate(dcCore $core, $filename) 
 	{	
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$system_settings =& $core->blog->settings->system;
-		} else {
-			$system_settings->system_settings =& $core->blog->settings;
-		}				
-
+		$system_settings =& $core->blog->settings->system;
 		if (file_exists(path::real($core->blog->themes_path.'/'.$system_settings->theme).'/tpl/'.$filename))
 			$folder = path::real($core->blog->themes_path.'/'.$system_settings->theme).'/tpl/';
 		else
@@ -98,13 +92,7 @@ class newsletterTools
 	# recherche si le CSS existe dans le theme
 	public static function requestPathFileCSS(dcCore $core, $filename) 
 	{	
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$system_settings =& $core->blog->settings->system;
-		} else {
-			$system_settings =& $core->blog->settings;
-		}		
-		
+		$system_settings =& $core->blog->settings->system;
 		if (file_exists(path::real($core->blog->themes_path.'/'.$system_settings->theme.'/'.$filename)))
 			$folder = path::real($core->blog->themes_path.'/'.$system_settings->theme);
 		else
@@ -113,7 +101,7 @@ class newsletterTools
 	}
 	
 	/**
-	 * Extrait les adresses e-mails présentes dans une chaine.
+	 * Extrait les adresses e-mails presentes dans une chaine.
 	 * La fonction retourne un tableau des adresses e-mails. Si
 	 * des adresses e-mails se trouvent en doublon dans la chaine,
 	 * alors la fonction ne gardera dans le tableau qu'un seul exemplaire
@@ -122,7 +110,7 @@ class newsletterTools
 	 * @author Hugo HAMON <webmaster@apprendre-php.com>
 	 * @licence LGPL
 	 * @param string $sChaine la chaine contenant les e-mails
-	 * @return array $aEmails[0] Tableau dédoublonné des e-mails
+	 * @return array $aEmails[0] Tableau dedoublonne des e-mails
 	 */	
 	public static function extractEmailsFromString($sChaine) 
 	{

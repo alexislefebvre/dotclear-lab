@@ -1,27 +1,28 @@
---------- TODO -----------
-* Idee : ajout nom / prenom
-* Idee : ajout de statistiques sur les envois
-* Idee : ajout des envois par lots avec gestion des files d'envoi
-* Idee : ajout des parametres d'envoi (mail par jour, delai entre chaque mail)
-* terminer l'aide en ligne pour les onglets Lettres / Lettre / CSS
-* Ticket #544 : groupes d'abonnés
-* Ticket #658 : pages en erreur 500 sur Free
---------- TODO -----------
-Newsletter 3.8.2 - 2012-xx-xx
+Newsletter 3.9.0 - 2013-11-xx
 ===========================================================
-* Modifications pour s'adapter aux évolutions graphiques jusqu'à Dotclear 2.4.4
-* Ticket #706 : Ajout du ":" dans le champ code visuel
+* Mise en conformité dotclear 2.6
+* Réorganisation des classes et de l'interface graphique
+* Suppression rétro compatiblité dc2.2
+* Suppression class.newsletter.rest.php class.newsletter.tabs.php
+* Deplacement des fonctions rest de type admin dans _services.php
+* Suppression de l'utilisation de dotajax sur le widget
+* Ticket #729 : Envoi de newsletters vers des adresses Free ; correction suite indication par Illisible
+* Ticket #728 : Parametre du fichier de sauvegarde
+* Reprise des fonctions d'import/export en m'inspirant du plugin import/export de Dotclear
+* Correction d'un bug sur l'import des fichiers exportés précédemment au format texte
+* Ajout de l'import des fichiers zippés
 
-Newsletter 3.8.1 - 2012-10-29
+Newsletter 3.8.1 - 2013-05-11
 ===========================================================
 * Ticket #718 : bug on http::concatUrl (don't work on 2.4.3, 2.4.4)
+* Ticket #658 : pages en erreur 500 sur Free - closed mais a suivre
 
 Newsletter 3.8.0 - 2011-04-19
 ===========================================================
 * Ticket #600 : Statut confirmé à l'inscription
 * Changement des valeurs par défaut
 * Ticket #564 : vérification du by
-* Ticket #597 : bug avec Restreindre l'aper�u à l'extrait des billets
+* Ticket #597 : bug avec Restreindre l'apercu à l'extrait des billets
 * Ticket #650 : Newsletter : liens corrompus dans certains envois
 * Change le format des posts de la newsletter pour éviter un bug d'envoi sur la lettre auto 
 	(post_url_format = {y}/{m}/{d}/{t}/{id})
@@ -92,7 +93,7 @@ Newsletter 3.7.8 - 2010-08-09
 Newsletter 3.7.7 - 2010-08-03
 ===========================================================
 * Ticket #527 : ajout d'un lien Read more / Lire la suite
-* Ticket #524 : restreindre l'aper�u uniquement à l'extrait des billets
+* Ticket #524 : restreindre l'apercu uniquement à l'extrait des billets
 * Ajout des miniatures dans la lettre automatique
 * Améliore l'affichage de la page about
 
@@ -107,15 +108,15 @@ Newsletter 3.7.5 - 2010-07-23
 ===========================================================
 * correction du style.css pour se rapprocher de la charte graphique de Dotclear
 * quelques corrections pour la compatibilité Dotclear 2.2
-	� validation de la planification en fonctionnement avec dcCron 1.1.8
-	� quelques corrections pour la compatibilité et rétro-compatibilité DC 2.2
+	- validation de la planification en fonctionnement avec dcCron 1.1.8
+	- quelques corrections pour la compatibilité et rétro-compatibilité DC 2.2
 
 Newsletter 3.7.4 - 2010-07-22
 ===========================================================
 * quelques corrections pour la compatibilité Dotclear 2.2
-	� correction de l'adaptation du template dans l'onglet maintenance
-	� correction de l'option de suppression des données dans l'onglet maintenance
-	� correction sur la reprise des anciens paramètres depuis une version 3.5.x
+	- correction de l'adaptation du template dans l'onglet maintenance
+	- correction de l'option de suppression des données dans l'onglet maintenance
+	- correction sur la reprise des anciens paramètres depuis une version 3.5.x
 * corrige le fonctionnement lorsqu'on déselect le paramètre "Affiche le contenu des billets"
 * Ticket #452 : on supprime la relativité des liens dans la newsletter pour la consultation hors ligne
 

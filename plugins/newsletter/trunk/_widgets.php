@@ -1,19 +1,20 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')) { return; }
 
-// initialisation des widgets
+# Initialisation des widgets
 $core->addBehavior('initWidgets', array('newsletterWidgets', 'initWidgets'));
 
 class newsletterWidgets 
@@ -25,8 +26,7 @@ class newsletterWidgets
 			$w->create('newsletter', 'Newsletter', array('publicWidgetsNewsletter', 'initWidgets'));
 			$w->newsletter->setting('title', __('Title').' : ', __('Newsletter'));
 			$w->newsletter->setting('showtitle', __('Show title'), true, 'check');
-			$w->newsletter->setting('inwidget', __('In widget').'<br />('.__('install plugin dotajax for activate the dynamics functions'), 
-				false, 'check');
+			$w->newsletter->setting('inwidget', __('In widget'), false, 'check');
 			$w->newsletter->setting('insublink', __('In sublink'), true, 'check');
 			$w->newsletter->setting('subscription_link',__('Title subscription link').' : ',__('Subscription link'));
 			$w->newsletter->setting('homeonly', __('Home page only'), false, 'check');

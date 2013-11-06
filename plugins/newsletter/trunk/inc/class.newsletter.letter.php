@@ -1,19 +1,20 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
-define("POST_TYPE","newsletter");
-
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+define("POST_TYPE","newsletter");
 
 class newsletterLetter
 {
@@ -59,14 +60,8 @@ class newsletterLetter
 		$this->core = $core;
 		$this->blog = $core->blog;
 
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$this->meta = $core->meta;
-			$this->system_settings = $core->blog->settings->system;
-		} else {
-			$this->meta = new dcMeta($core);
-			$this->system_settings = $core->blog->settings;
-		}		
+		$this->meta = $core->meta;
+		$this->system_settings = $core->blog->settings->system;
 
 		$this->init();
 		$this->setLetterId($letter_id);
@@ -282,14 +277,14 @@ class newsletterLetter
 				
 				if ($next_rs !== null) {
 					$next_link = sprintf($post_link,$next_rs->post_id,
-						html::escapeHTML($next_rs->post_title),__('next letter').'&nbsp;&#187;');
+						html::escapeHTML($next_rs->post_title),__('Next letter').'&nbsp;&#187;');
 					$next_headlink = sprintf($post_headlink,'next',
 						html::escapeHTML($next_rs->post_title),$next_rs->post_id);
 				}
 				
 				if ($prev_rs !== null) {
 					$prev_link = sprintf($post_link,$prev_rs->post_id,
-						html::escapeHTML($prev_rs->post_title),'&#171;&nbsp;'.__('previous letter'));
+						html::escapeHTML($prev_rs->post_title),'&#171;&nbsp;'.__('Previous letter'));
 					$prev_headlink = sprintf($post_headlink,'previous',
 						html::escapeHTML($prev_rs->post_title),$prev_rs->post_id);
 				}
@@ -470,6 +465,18 @@ class newsletterLetter
 			echo '<p class="message">'.__('Don\'t forget to validate your XHTML conversion by saving your post.').'</p>';
 		}
 
+		# Preview page
+		if ($post_id && $post->post_status == 1) {
+			echo '<p><a id="post-preview" href="'.$post->getURL().'" class="button">'.__('View letter').'</a></p>';
+		} elseif ($post_id) {
+			$preview_url =
+			$core->blog->url.$core->url->getBase('letterpreview').'/'.
+			$core->auth->userID().'/'.
+			http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
+			'/'.$post->post_url;
+			echo '<a id="post-preview" href="'.$preview_url.'" class="button modal" accesskey="p">'.__('Preview letter').' (p)'.'</a> ';
+		}
+		
 		# Exit if we cannot view page
 		if (!$can_view_page) {
 			exit;
@@ -477,9 +484,12 @@ class newsletterLetter
 		
 		if ($post_id)
 		{
-			echo '<p>';
+			//echo '<p>';
+			
+			echo '<p class="nav_prevnext">';
+			
 			if ($prev_link) { echo $prev_link; }
-			if ($next_link && $prev_link) { echo ' - '; }
+			if ($next_link && $prev_link) { echo ' | '; }
 			if ($next_link) { echo $next_link; }
 			
 			# --BEHAVIOR-- adminLetterNavLinks
@@ -597,21 +607,9 @@ class newsletterLetter
 			echo
 			'<p>'.
 			($post_id ? form::hidden('id',$post_id) : '').
-			'<input type="submit" value="'.__('Save').' (s)" tabindex="4" '.
-			'accesskey="s" name="save" /> ';
-			
-			if ($post_id && $post->post_status == 1) {
-				echo '<a id="post-preview" href="'.$post->getURL().'" class="button">'.__('View letter').'</a>';
-			} elseif ($post_id) {
-				$preview_url =
-				$core->blog->url.$core->url->getBase('letterpreview').'/'.
-				$core->auth->userID().'/'.
-				http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
-				'/'.$post->post_url;
-				echo '<a id="post-preview" href="'.$preview_url.'" class="button">'.__('Preview letter').'</a>';
-			}			
-			echo
-			($can_delete ? '<input type="submit" class="delete" value="'.__('Delete').'" name="delete" />' : '').
+			'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
+			'accesskey="s" name="save" /> '.
+			($can_delete ? '<input type="submit" value="'.__('delete').'" name="delete" />' : '').
 			$core->formNonce().
 			'</p>';
 			
@@ -637,13 +635,8 @@ class newsletterLetter
 				'<div id="link_posts"><fieldset>';
 				echo '<h3 class="clear">'.__('Entries linked').'</h3>';
 
-				# Settings compatibility test
-				if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-					$meta = $core->meta;
-				} else {
-					$meta = new dcMeta($core);
-				}				
-				
+				$meta = $core->meta;
+			
 				$params=array();
 				$params['no_content'] = true;
 		
@@ -653,18 +646,13 @@ class newsletterLetter
 
 				# Get posts
 				try {
-					/*$posts = $meta->getPostsByMeta($params);
-					$counter = $meta->getPostsByMeta($params,true);*/
-					
 					$posts = $meta->getPostsByMeta($params);
 					$counter = $meta->getPostsByMeta($params,true);
 					$post_list = new newsletterLinkedPostList($core,$posts,$counter->f(0));
 				} catch (Exception $e) {
 					$core->error->add($e->getMessage());
 				}
-
 				//print($counter->f(0));
-				
 				$page = 1;
 				$nb_per_page = 10;
 				
@@ -708,27 +696,24 @@ class newsletterLetter
 						'LINK_VISU_ONLINE' => __('displays the link to the newsletter up on your blog'),
 						'USER_DELETE' => __('displays the delete link of the user subscription'),
 						'USER_SUSPEND' => __('displays the link suspension of the user subscription'));		
-		echo '<fieldset><legend>'.__('Information').'</legend>';
+		
+		echo '<h3>'.__('Information').'</h3>';
+		echo '<div class="fieldset">';
 		echo '<div class="col">';
-		echo '<h3>'.__('List of keywords').'</h3>';
+		echo '<h4>'.__('List of keywords').'</h4>';
 		echo '<ul>';
 		foreach ($tab_keywords as $k => $v) {
 			echo '<li>'.html::escapeHTML($k.' = '.$v).'</li>';
 		}			
 		echo '</ul>';
 		echo '</div>';
-		echo '</fieldset>';	
+		echo '</div>';	
 	}
 			
 	
 	public function getPostsLetter() 
 	{
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$meta = $this->meta;
-		} else {
-			$meta = new dcMeta($this->core);
-		}				
+		$meta = $this->meta;
 		$newsletter_settings = new newsletterSettings($this->core);
 
 		$params=array();
@@ -1340,22 +1325,19 @@ class newsletterLetter
 			$post_type = $post->post_type;
 			unset($post);
 
-			echo 
-			'<fieldset>'.
-			'<legend>'.__('Associate posts for this letter').'</legend>';
-			echo '<h3>'.__('Title of letter :').' '.$post_title.'</h3>';
-
+			echo '<h3>'.__('Associate posts for this letter').'</h3>'; 
+			echo '<div class="fieldset">';
+			echo '<h4>'.__('Title of letter :').' '.$post_title.'</h4>';
 			self::displayPostsList($letter_id);
-
-			echo '</fieldset>';
+			echo '</div>';
 			echo '<p><a class="back" href="'.html::escapeURL($redir_url).'&amp;id='.$letter_id.'">'.__('back').'</a></p>';	
 
 		} else {
+			echo '<h3>'.__('Associate posts for this letter').'</h3>';
 			echo 
-				'<fieldset>'.
-				'<legend>'.__('Associate posts for this letter').'</legend>'.
+				'<div class="fieldset">'.
 				'no letter active'.
-				'</fieldset>';
+				'</div>';
 			echo '<p><a class="back" href="'.html::escapeURL('plugin.php?p=newsletter&m=letters').'">'.__('back').'</a></p>';
 		}
 	}
@@ -1561,8 +1543,6 @@ class newsletterLetter
 			
 			echo
 			'<form action="plugin.php" method="get" id="filters-form">'.
-			//'<form action="posts.php" method="get" id="filters-form">'.
-			
 			
 			'<fieldset><legend>'.__('Filters').'</legend>'.
 			'<div class="three-cols">'.

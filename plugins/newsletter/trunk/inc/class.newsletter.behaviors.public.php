@@ -1,14 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')) { return; }
@@ -17,14 +18,8 @@ class dcBehaviorsNewsletterPublic
 {
 	public static function publicHeadContent(dcCore $core,$_ctx)
 	{
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$blog_settings =& $core->blog->settings->newsletter;
-			$system_settings =& $core->blog->settings->system;
-		} else {
-			$blog_settings =& $core->blog->settings;
-			$system_settings =& $core->blog->settings;
-		}
+		$blog_settings =& $core->blog->settings->newsletter;
+		$system_settings =& $core->blog->settings->system;
 		
 		try {
 			$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
@@ -41,21 +36,18 @@ class dcBehaviorsNewsletterPublic
 				echo $css_style;
 			}
 
-			# if dotajax is installed
-			if($core->plugins->moduleExists('dotajax') && !isset($core->plugins->getDisabledModules['dotajax'])) {
-				echo
+			echo
 				"<script type=\"text/javascript\" src=\"".
-					'?pf=newsletter/js/_newsletter_pub.js">'.
+				'?pf=newsletter/js/_newsletter_pub.js">'.
+				"</script>\n";
+			
+			echo
+				'<script type="text/javascript">'."\n".
+				"//<![CDATA[\n".
+				"please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
+				"\n//]]>\n".
 				"</script>\n";
 
-				echo 
-					'<script type="text/javascript">'."\n".
-					"//<![CDATA[\n".
-					"please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
-					"\n//]]>\n".
-					"</script>\n";				
-			}
-		
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

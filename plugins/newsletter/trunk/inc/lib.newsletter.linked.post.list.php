@@ -1,17 +1,18 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 class newsletterLinkedPostList extends adminGenericList
 {
@@ -30,13 +31,15 @@ class newsletterLinkedPostList extends adminGenericList
 			$pager->var_page = 'page';
 			
 			$html_block =
-			'<table class="clear"><tr>'.
-			'<th>'.__('Remove').'</th>'.
-			'<th>'.__('Title').'</th>'.
-			'<th>'.__('Date').'</th>'.
-			'<th>'.__('Author').'</th>'.
-			'<th>'.__('Status').'</th>'.
-			'</tr>%s</table>';
+			'<div class="table-outer">'.
+			'<table id="linkedPostList">'.
+			'<tr>'.
+				'<th scope="col">'.__('Remove').'</th>'.
+				'<th scope="col">'.__('Title').'</th>'.
+				'<th scope="col">'.__('Date').'</th>'.
+				'<th scope="col">'.__('Author').'</th>'.
+				'<th scope="col">'.__('Status').'</th>'.
+			'</tr>%s</table></div>';
 			
 			if ($enclose_block) {
 				$html_block = sprintf($enclose_block,$html_block);
@@ -100,7 +103,7 @@ class newsletterLinkedPostList extends adminGenericList
 		$res .=
 		'<td class="nowrap">'.
 			'<form action="plugin.php?p=newsletter&amp;m=letter" method="post" id="letter_detach">'.
-			'<input type="image" src="images/minus.png" alt="'.__('Remove').'" style="border: 0px;" '.
+			'<input type="image" src="images/trash.png" alt="'.__('Remove').'" style="border: 0px;" '.
 			'title="'.__('Remove').'" />&nbsp;'.__('Remove').' '.
 			form::hidden(array('link_id'),$this->rs->post_id).
 			form::hidden(array('m'),'letter').

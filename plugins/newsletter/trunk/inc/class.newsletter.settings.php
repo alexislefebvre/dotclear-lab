@@ -1,14 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 class newsletterSettings
@@ -30,16 +31,9 @@ class newsletterSettings
 		$this->core = &$core;
 		$this->blog = &$core->blog;
 		$this->blogname = $this->blog->name;
+		$this->blog_settings =& $core->blog->settings->newsletter;
+		$this->system_settings = $core->blog->settings->system;
 
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$this->blog_settings =& $core->blog->settings->newsletter;
-			$this->system_settings = $core->blog->settings->system;
-		} else {
-			$this->blog_settings =& $core->blog->settings;
-			$this->system_settings =& $core->blog->settings;
-		}	
-		
 		/* correction pour eviter de planter */
 		//$this->parameters = $this->blog_settings->newsletter_parameters != '' ? unserialize($this->blog_settings->newsletter_parameters) : array();
 		if($this->blog_settings->newsletter_parameters != '') {
@@ -281,7 +275,7 @@ class newsletterSettings
 	}
 
 	/**
-	* retourne le flag Restreindre l'aperçu uniquement à l'extrait des billets
+	* retourne le flag Restreindre l'apercu uniquement a l'extrait des billets
 	*/
 	public function getExcerptRestriction() 
 	{ 
@@ -289,7 +283,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* positionne le flag Restreindre l'aperçu uniquement à l'extrait des billets
+	* positionne le flag Restreindre l'apercu uniquement a l'extrait des billets
 	*/
 	public function setExcerptRestriction($value) 
 	{
@@ -297,7 +291,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* initialise le flag Restreindre l'aperçu uniquement à l'extrait des billets
+	* initialise le flag Restreindre l'apercu uniquement a l'extrait des billets
 	*/
 	public function clearExcerptRestriction() 
 	{ 
@@ -1360,7 +1354,7 @@ class newsletterSettings
 	{ 
 		if($value===null) {
 			//$date_previous_send = time() + dt::getTimeOffset($this->system_settings->blog_timezone);
-			// on ajoute 5s pour eviter de recuperer 2 fois le même post			
+			// on ajoute 5s pour eviter de recuperer 2 fois le mï¿½me post			
 			//$date_previous_send = time()+5;
 			$date_previous_send = time()+5;
 		} else {
@@ -1769,14 +1763,8 @@ class newsletterSettings
 	{
 		global $core;
 		
-		# Settings compatibility test
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$this->blog_settings =& $core->blog->settings->newsletter;
-			$this->system_settings = $core->blog->settings->system;
-		} else {
-			$this->blog_settings =& $core->blog->settings;
-			$this->system_settings =& $core->blog->settings;
-		}
+		$this->blog_settings =& $core->blog->settings->newsletter;
+		$this->system_settings = $core->blog->settings->system;
 		
 		$old_parameters = array(
 						// parameters

@@ -1,14 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 class newsletterMail
@@ -67,11 +68,7 @@ class newsletterMail
 		$this->x_originating_ip = (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : null);
 		$this->x_content_transfer_encoding = (function_exists('imap_8bit') ? 'quoted-printable' : '8bit');
 		
-		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$system_settings =& $core->blog->settings->system;
-		} else {
-			$system_settings =& $core->blog->settings;
-		}			
+		$system_settings =& $core->blog->settings->system;
 		$this->date = date('r', time() + dt::getTimeOffset($system_settings->blog_timezone));
 		
 		$this->state = false;
@@ -157,7 +154,7 @@ class newsletterMail
 					'Delivered-to: '.$email_to,
 					'X-Sender:'.$this->email_from,
 					'MIME-Version: 1.0',
-					(($_type == 'html') ? 'Content-Type: text/html; charset=UTF-8;' : 'Content-Type: text/plain; charset=UTF-8;'),
+					(($_type == 'html') ? 'Content-Type: text/html; charset="UTF-8";' : 'Content-Type: text/plain; charset="UTF-8";'),
 					'Content-Transfer-Encoding: '.$this->x_content_transfer_encoding,
 					'X-Mailer: Dotclear '.$this->x_mailer,
 					'X-Blog-Id: '.$this->x_blog_id,

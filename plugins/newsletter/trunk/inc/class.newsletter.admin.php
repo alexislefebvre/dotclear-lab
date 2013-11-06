@@ -1,19 +1,16 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
-
-/** ==================================================
-	administration
-================================================== */
 
 class newsletterAdmin
 {
@@ -35,36 +32,27 @@ class newsletterAdmin
 		}
 	}
 
-	/**
-	* export the schema content
+   	/**
+	* export the newsletter's subscribers
 	*/
-	public static function exportToBackupFile($onlyblog = true, $format = 'dat', $outfile = null)
+	public static function exportToBackupFile($onlyblog = true, $file_format = 'dat', $file_zip = false, $file_name = null)
 	{
 		global $core;
 		try {
 			$blog = &$core->blog;
-			$blogid = (string)$blog->id;
-
-			// generate the content of file from data
-			if (isset($outfile)) {
-				$filename = $outfile;
-			} else {
-				if ($onlyblog)
-					$filename = $core->blog->public_path.'/'.$blogid.'-'.newsletterPlugin::pname().'.'.$format;
-				else 
-					$filename = $core->blog->public_path.'/'.newsletterPlugin::pname().'.'.$format;
-			}
-
+			$blogid = (string)$blog->id;			
+			$fullname = $core->blog->public_path.'/.backup_newsletter_'.sha1(uniqid());
+			
+			// generate content file
 			$content = '';
 			$datas = newsletterCore::getRawDatas($onlyblog);
 			if (is_object($datas) !== FALSE) {
 				$datas->moveStart();
-				
-				if($format == 'txt') {
+			
+				if($file_format == 'txt') {
 					while ($datas->fetch())
 					{
 						$elems = array();
-	
 						// generate component
 						$elems[] = $datas->subscriber_id;
 						$elems[] = $datas->blog_id;
@@ -74,15 +62,13 @@ class newsletterAdmin
 						$elems[] = $datas->subscribed;
 						$elems[] = $datas->lastsent;
 						$elems[] = $datas->modesend;
-	
 						$line = implode(";", $elems);
-	                    $content .= "$line\n";
+						$content .= "$line\n";
 					}
 				} else {
 					while ($datas->fetch())
 					{
 						$elems = array();
-	
 						// generate component
 						$elems[] = $datas->subscriber_id;
 						$elems[] = base64_encode($datas->blog_id);
@@ -92,61 +78,144 @@ class newsletterAdmin
 						$elems[] = base64_encode($datas->subscribed);
 						$elems[] = base64_encode($datas->lastsent);
 						$elems[] = base64_encode($datas->modesend);
-	
 						$line = implode(";", $elems);
-	                    $content .= "$line\n";
+						$content .= "$line\n";
 					}
 				}
 			}
 
+			if ($content == '')
+				throw new Exception(__('No data found'));
+			
+			$export_file = $fullname;
+			$export_filename = $file_name;
+			$export_fileformat = $file_format;
+			$export_filezip = $file_zip;
+			
 			// write in file
-			if(@file_put_contents($filename, $content)) {
-				return $msg = __('Datas exported in file').' '.$filename;
+			if(@file_put_contents($export_file, $content)) {
+
+				# Send file content
+				if (!file_exists($export_file)) {
+					throw new Exception(__('Export file not found.'));
+				}
+                
+                ob_end_clean();
+
+				if (substr($export_filename,-4) == '.zip') {
+					$export_filename = substr($export_filename,0,-4);
+				}
+				
+				if (empty($export_filezip)) {
+					# Flat export
+					header('Content-Disposition: attachment;filename='.$export_filename);
+					header('Content-Type: text/plain; charset="UTF-8"');
+					readfile($export_file);
+					
+					unlink($export_file);
+					unset($export_file,$export_filename,$export_filezip);
+					exit;
+				} else {
+					# Zip export
+					try
+					{
+						$file_zipname = $export_filename.'.zip';
+							
+						$fp = fopen('php://output','wb');
+						$zip = new fileZip($fp);
+						$zip->addFile($export_file,$export_filename);
+							
+						header('Content-Disposition: attachment;filename='.$file_zipname);
+						header('Content-Type: application/x-zip');
+							
+						$zip->write();
+							
+						unlink($export_file);
+						unset($zip,$export_file,$export_filename,$file_zipname);
+						exit;
+					}
+					catch (Exception $e)
+					{
+						unset($zip,$export_file,$export_filename,$export_filezip,$file_zipname);
+						@unlink($export_file);
+							
+						throw new Exception(__('Failed to compress export file.'));
+					}					
+				}
 			} else {
 				throw new Exception(__('Error during export'));
 			}
-			
-			
 		} catch (Exception $e) { 
+			@unlink($fullname);
+			//throw $e;
 			$core->error->add($e->getMessage()); 
 		}
 	}
 
 	/**
-	* import a backup file
+	* import subscribers from a backup file
 	*/
-	public static function importFromBackupFile($infile = null)
+	public static function importFromBackupFile($infile = null, $file_format = 'txt')
 	{
 		global $core;
 
 		$blog = &$core->blog;
-		$blogid = (string)$blog->id;
+		$blog_id = (string)$blog->id;
 		$counter=0;
 		$counter_ignore=0;
 		$counter_failed=0;
 
 		try {
-			if (!empty($infile)){
+			files::uploadStatus($infile);
+			$file_up = DC_TPL_CACHE.'/'.md5(uniqid());
+			if (!move_uploaded_file($infile['tmp_name'],$file_up)) {
+				throw new Exception(__('Unable to move uploaded file.'));
+			}
+			
+			# Try to unzip file
+			$unzip_file = self::unzip($file_up,$file_format);
+			if (false !== $unzip_file) {
+				$file_up = $unzip_file; 
+			/*
+			} else { 
+				# Else this is a normal file
+			*/
+			}
+			
+			if (!empty($file_up)){
         		//$core->error->add('Traitement du fichier ' . $infile);
 
-				if(file_exists($infile) && is_readable($infile)) {
-					$file_content = file($infile);		
+				if(file_exists($file_up) && is_readable($file_up)) {
+					$file_content = file($file_up);		
 		
 					foreach($file_content as $ligne) {
 						// explode line
 						$line = (string) html::clean((string) $ligne);
 						$elems = explode(";", $line);
-	
+						
 						// traitement des données lues
-						$subscriber_id = $elems[0];
-						$blog_id = base64_decode($elems[1]);
-						$email = base64_decode($elems[2]);
-						$regcode = base64_decode($elems[3]);
-						$state = base64_decode($elems[4]);
-						$subscribed = base64_decode($elems[5]);
-						$lastsent = base64_decode($elems[6]);
-						$modesend = base64_decode($elems[7]);						
-				
+						if($file_format == 'dat') {
+							$subscriber_id = $elems[0];
+							//$blog_id = base64_decode($elems[1]);
+							$blog_id = $blog_id;
+							$email = base64_decode($elems[2]);
+							$regcode = base64_decode($elems[3]);
+							$state = base64_decode($elems[4]);
+							$subscribed = base64_decode($elems[5]);
+							$lastsent = base64_decode($elems[6]);
+							$modesend = base64_decode($elems[7]);
+						} else {
+							$subscriber_id = $elems[0];
+							//$blog_id = $elems[1];
+							$blog_id = $blog_id;
+							$email = $elems[2];
+							$regcode = $elems[3];
+							$state = $elems[4];
+							$subscribed = $elems[5];
+							$lastsent = $elems[6];
+							$modesend = rtrim($elems[7]);
+						}
+						
 						if (!text::isEmail($email)) {
 							$core->error->add(html::escapeHTML($email).' '.__('is not a valid email address.'));
 							$counter_failed++;
@@ -195,6 +264,52 @@ class newsletterAdmin
 			$core->error->add($e->getMessage()); 
 		}
 	}
+	
+	private static function unzip($file, $file_format)
+	{
+		$zip = new fileUnzip($file);
+	
+		if ($zip->isEmpty()) {
+			$zip->close();
+			return false;//throw new Exception(__('File is empty or not a compressed file.'));
+		}
+	
+		foreach($zip->getFilesList() as $zip_file)
+		{
+			# Check zipped file name
+			if (substr($zip_file,-4) != '.'.$file_format) {
+				continue;
+			}
+
+			# Check zipped file contents
+			$content = $zip->unzip($zip_file);
+				
+			$target = path::fullFromRoot($zip_file,dirname($file));
+				
+			# Check existing files with same name
+			if (file_exists($target)) {
+				$zip->close();
+				unset($content);
+				throw new Exception(__('Another file with same name exists.'));
+			}
+			
+			# Extract backup content
+			if (file_put_contents($target,$content) === false) {
+				$zip->close();
+				unset($content);
+				throw new Exception(__('Failed to extract backup file.'));
+			}
+				
+			$zip->close();
+			unset($content);
+						
+			# Return extracted file name
+			return $target;
+		}
+		
+		$zip->close();
+		throw new Exception(__('No backup in compressed file.'));
+	}	
 
 	/**
 	* import email addresses from a file
@@ -204,7 +319,7 @@ class newsletterAdmin
 		global $core;
 		try {
 			$blog = &$core->blog;
-			$blogid = (string)$blog->id;
+			$blog_id = (string)$blog->id;
 			$counter=0;
 			$counter_ignore=0;
 			$counter_failed=0;
@@ -409,6 +524,5 @@ class newsletterAdmin
 		}
 	}    
 }
-
 
 ?>

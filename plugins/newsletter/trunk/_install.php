@@ -1,20 +1,19 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 // filtrage des droits
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
-
-global $core;
 
 // chargement des librairies
 require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
@@ -31,17 +30,9 @@ if (version_compare($installed_version, $this_version, '>=')) {
 }
 
 try {
-
- 	# Settings compatibility test
-	if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-		$core->blog->settings->addNamespace('newsletter');
-		$GLOBALS['newsletter_settings'] =& $core->blog->settings->newsletter;
-		$GLOBALS['system_settings'] =& $core->blog->settings->system;
-	} else {
-		$core->blog->settings->setNamespace('newsletter');
-		$GLOBALS['newsletter_settings'] =& $core->blog->settings;
-		$GLOBALS['system_settings'] =& $core->blog->settings;
-	}	
+	$core->blog->settings->addNamespace('newsletter');
+	$GLOBALS['newsletter_settings'] =& $core->blog->settings->newsletter;
+	$GLOBALS['system_settings'] =& $core->blog->settings->system;
 	
 	if ($installed_version != '') {
 		// update

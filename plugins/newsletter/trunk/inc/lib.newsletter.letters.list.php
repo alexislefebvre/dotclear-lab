@@ -1,15 +1,18 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
+
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 class newsletterLettersList extends adminGenericList
 {
@@ -38,8 +41,8 @@ class newsletterLettersList extends adminGenericList
 				);			
 
 		$resume_content =
-				'<fieldset>'.
-				'<legend>'.__('Statistics post type newsletter').'</legend>'.
+				'<div class="fieldset">'.
+				'<h4>'.__('Statistics post type newsletter').'</h4>'.
 				'<table summary="resume_letters" class="minimal">'.
 				'<thead>'.
 					'<tr>'.
@@ -61,7 +64,7 @@ class newsletterLettersList extends adminGenericList
 		$resume_content .= 
 				'</tbody>'.
 				'</table>'.
-				'</fieldset>'.
+				'</div>'.
 				'';
 		
 		return $resume_content;
@@ -74,12 +77,16 @@ class newsletterLettersList extends adminGenericList
 	 * @param	int		nb_per_page
 	 * @param	string	url
 	 */
-	private function display($page,$nb_per_page,$enclose_block='')
+	public function display($page,$nb_per_page,$enclose_block='',$filter=false)
 	{
 		global $core;
 		
 		if ($this->rs->isEmpty()) {
-			echo '<p><strong>'.__('No letters for this blog.').'</strong></p>';
+			if( $filter ) {
+				echo '<p><strong>'.__('No subscriber matches the filter').'</strong></p>';
+			} else {
+				echo '<p><strong>'.__('No letters for this blog').'</strong></p>';
+			}			
 		} else {
 			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
 			$pager->html_prev = $this->html_prev;
@@ -172,160 +179,6 @@ class newsletterLettersList extends adminGenericList
 		
 		return $res;
 	}
-
-	/**
-	* Onglet de la liste des newsletters du blog
-	*/
-	public static function displayTabLettersList()
-	{
-		global $core;
-		
-		try {
-
-			$newsletter_settings = new newsletterSettings($core);
-
-			# Creating filter combo boxes
-			$sortby_combo = array(
-				__('Mailing date') => 'post_dt',
-				__('Title') => 'post_title',
-				__('Author') => 'user_id',
-				__('Status') => 'post_status'
-			);
-		
-			$order_combo = array(
-				__('Descending') => 'desc',
-				__('Ascending') => 'asc'
-			);
-
-			# Actions combo box
-			$combo_action = array();
-			
-			if ($core->auth->check('publish,contentadmin',$core->blog->id))
-			{
-				
-				$combo_action[__('Newsletter')]=array(
-					__('Send') => 'send'
-				);
-			
-				$combo_action[__('Changing state')] = array(
-					__('publish') => 'publish',
-					__('unpublish') => 'unpublish',
-					__('mark as pending') => 'pending',
-					__('delete') => 'delete'
-				);
-
-				if ($core->auth->check('admin',$core->blog->id)) {
-					$combo_action[__('Changing state')][__('change author')]='author';
-				}
-			}			
-
-			$params = array(
-				'post_type' => 'newsletter'
-			);
-
-			$show_filters = false;
-
-			$nb = !empty($_GET['nb']) ? trim($_GET['nb']) : 0;
-			$sortby = !empty($_GET['sortby']) ? $_GET['sortby'] : 'post_dt';
-			$order = !empty($_GET['order']) ? $_GET['order'] : 'desc';
-			$page = !empty($_GET['page']) ? $_GET['page'] : 1;
-			$nb_per_page =  30;
-		
-			if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
-				$nb_per_page = $_GET['nb'];
-			}
-			
-			if ((integer) $nb > 0) {
-				if ($nb_per_page != $nb) {
-					$show_filters = true;
-				}
-				$nb_per_page = (integer) $nb;
-			}
-			
-			# - Sortby and order filter
-			if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
-				if ($order !== '' && in_array($order,$order_combo)) {
-					$params['order'] = $sortby.' '.$order;
-					$show_filters = true;
-				}
-			}
-
-			$params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
-			$params['no_content'] = true;
-
-			// Request the letters list
-			$rs = $core->blog->getPosts($params);
-			$counter = $core->blog->getPosts($params,true);
-			$letters_list = new newsletterLettersList($core,$rs,$counter->f(0));
-
-			if (!$core->error->flag())
-			{
-				//echo '<p><a class="button" href="plugin.php?p=newsletter&amp;m=letter">'.__('New newsletter').'</a></p>';
-				echo '<p class="top-add"><a class="button add" href="plugin.php?p=newsletter&amp;m=letter">'.__('New newsletter').'</a></p>';
-				
-				echo '<p><a id="filter-control" class="form-control" href="#">'.__('Filters').'</a></p>';
-				
-				echo
-				'<form action="plugin.php" method="get" id="filters-form">'.
-				'<fieldset><legend>'.__('Filters').'</legend>'.
-				
-				'<div class="three-cols">'.
-				'<div class="col">'.
-				'<p><label>'.__('Order by:').' '.
-				form::combo('sortby',$sortby_combo,html::escapeHTML($sortby)).
-				'</label> '.
-				'<label>'.__('Sort:').' '.
-				form::combo('order',$order_combo,html::escapeHTML($order)).
-				'</label></p>'.
-				'</div>'.
-				
-				'<div class="col">'.
-				'<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
-				__('Letters per page').'</label> '.
-				'<p>'.
-				'<input type="hidden" name="p" value="'.newsletterPlugin::pname().'" />'.
-				'<input type="hidden" name="m" value="letters" />'.
-				'<input type="submit" value="'.__('Apply filters').'" /></p>'.
-				'</div>'.
-				
-				'</div>'.
-				'<br class="clear" />'. //Opera sucks
-				'</fieldset>'.
-				'</form>';
-
-			}
-
-			// Show letters
-			$letters_list->display($page,$nb_per_page,
-				'<form action="plugin.php?p=newsletter&amp;m=letters" method="post" id="letters_list">'.
-				'<p>' .
-	
-				'%s'.
-			
-				'<div class="two-cols">'.
-				'<p class="col checkboxes-helpers"></p>'.
-				'<p class="col right">'.__('Selected letters action:').
-				form::combo('action',$combo_action).
-				form::hidden(array('m'),'letters').
-				form::hidden(array('p'),newsletterPlugin::pname()).
-				form::hidden(array('sortby'),$sortby).
-				form::hidden(array('order'),$order).
-				form::hidden(array('page'),$page).
-				form::hidden(array('nb'),$nb_per_page).
-				form::hidden(array('post_type'),'newsletter').
-				form::hidden(array('redir'),html::escapeHTML($_SERVER['REQUEST_URI'])).
-				$core->formNonce().
-				'<input type="submit" value="'.__('ok').'" />'.
-				'</p>'.
-				'</div>'.	
-				'</form>'
-			);
-				
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-	}
-
 
 	/**
 	 * --
@@ -459,14 +312,14 @@ class newsletterLettersList extends adminGenericList
 				}
 			} elseif (($action == 'send' || $action == 'send_old') 
 						&& $core->auth->check('admin',$core->blog->id)) {
-				echo '<fieldset>';
-				echo '<legend>'.__('Send letters').'</legend>';
+				echo '<h3>'.__('Send letters').'</h3>';
+				echo '<div class="fieldset">';
 				echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
-				echo '<h3>'.__('Requests').'</h3>';
+				echo '<h4>'.__('Requests').'</h4>';
 				echo '<table id="request"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
-				echo '<h3>'.__('Actions').'</h3>';
+				echo '<h4>'.__('Actions').'</h4>';
 				echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
-				echo '</fieldset>';
+				echo '</div>';
 
 				echo '<p><a class="back" href="'.html::escapeURL($redir).'">'.__('back').'</a></p>';
 			}
@@ -502,8 +355,8 @@ class newsletterLettersList extends adminGenericList
 		
 		if ($action == 'author' && $core->auth->check('admin',$core->blog->id)) {
 	
-			echo '<fieldset>';
-			echo '<legend>'.__('Change author for letters').'</legend>';
+			echo '<div class="fieldset">';
+			echo '<h4>'.__('Change author for letters').'</h4>';
 			echo
 			//'<form action="posts_actions.php" method="post">'.
 			'<form action="plugin.php?p=newsletter&amp;m=letters" method="post">'.
@@ -517,7 +370,7 @@ class newsletterLettersList extends adminGenericList
 			form::hidden(array('action'),'author').
 			'<input type="submit" value="'.__('save').'" /></p>'.
 			'</form>';
-			echo '</fieldset>';
+			echo '</div>';
 			
 			echo '<p><a class="back" href="'.html::escapeURL($redir).'">'.__('back').'</a></p>';	
 		}

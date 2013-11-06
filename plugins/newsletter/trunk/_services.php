@@ -1,40 +1,39 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Newsletter, a plugin for Dotclear.
+#
+# This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 Benoit de Marne.
+# Copyright (c) 2009-2013 Benoit de Marne
 # benoit.de.marne@gmail.com
-# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
-
 // Rest methods
-class newsletterRest 
+class newsletterRest
 {
 	// Prepare the xml tree
-	public static function prepareALetter(dcCore $core,$get,$post) 
+	public static function prepareALetter($core,$get,$post)
 	{
 		if (empty($get['letterId'])) {
 			throw new Exception('No letter selected');
-		}		
+		}
 		$letterId = $get['letterId'];
-		
+
 		$nltr = new newsletterLetter($core,$letterId);
 		//$nltr->getPostTitle();
-		
+
 		$letterTag = new xmlTag();
 		$letterTag = $nltr->getXmlLetterById();
-				
-		// retrieve lists of active subscribers or selected 
+
+		// retrieve lists of active subscribers or selected
 		$subscribers_up = array();
 
 		if (empty($get['subscribersId'])) {
-			$subscribers_up = newsletterCore::getlist(true);	
+			$subscribers_up = newsletterCore::getlist(true);
 		} else {
 			$sub_tmp=array();
 			$sub_tmp = explode(",", $get['subscribersId']);
@@ -50,8 +49,8 @@ class newsletterRest
 		$rsp = new xmlTag();
 		$rsp->insertNode($letterTag);
 
-		$subscribers_up->moveStart();		
-		while ($subscribers_up->fetch()) { 
+		$subscribers_up->moveStart();
+		while ($subscribers_up->fetch()) {
 			$subscriberTag = new xmlTag('subscriber');
 			$subscriberTag->id=$subscribers_up->subscriber_id;
 			$subscriberTag->email=$subscribers_up->email;
@@ -59,7 +58,6 @@ class newsletterRest
 			$subscriberTag->body=$nltr->getLetterBody($subscribers_up->modesend);
 			$rsp->insertNode($subscriberTag);
 		}
-	
 
 		// set status to publish
 		$status = 1;
@@ -70,23 +68,23 @@ class newsletterRest
 		$nltr_settings->setDatePreviousSend();
 		$nltr_settings->save();
 
-		return $rsp;			
+		return $rsp;
 	}
-		
+
 	/**
-	* Rest send letter
-	* - utilisee pour l'envoi manuel : OUI
-	* - utilisee pour l'envoi automatique : NON
-	* - utilisee pour l'envoi automatique par declenchement manuel : OUI
-	* 
-	* Actions : 
-	* - recuperation les champs dynamiques
-	* - selectionne le mode texte ou html
-	* - transforme les mots-cles pour chaque abonne
-	* - transforme le mot-cle de visualisation online
-	* 
-	*/	
-	public static function sendLetterBySubscriber(dcCore $core,$get,$post)
+	 * Rest send letter
+	 * - utilisee pour l'envoi manuel : OUI
+	 * - utilisee pour l'envoi automatique : NON
+	 * - utilisee pour l'envoi automatique par declenchement manuel : OUI
+	 *
+	 * Actions :
+	 * - recuperation les champs dynamiques
+	 * - selectionne le mode texte ou html
+	 * - transforme les mots-cles pour chaque abonne
+	 * - transforme le mot-cle de visualisation online
+	 *
+	 */
+	public static function sendLetterBySubscriber($core,$get,$post)
 	{
 		// retrieve selected letter
 		if (empty($post['p_letter_id'])) {
@@ -109,7 +107,7 @@ class newsletterRest
 		if (empty($post['p_letter_footer'])) {
 			throw new Exception('No footer found');
 		}
-		
+
 		if (empty($post['p_sub_mode'])) {
 			throw new Exception('No mode found');
 		}
@@ -117,7 +115,7 @@ class newsletterRest
 		if (empty($post['p_letter_body'])) {
 			throw new Exception('No body found');
 		}
-		
+
 		if($post['p_sub_mode'] == 'text') {
 			// define text content
 			$letter_content = newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
@@ -125,7 +123,7 @@ class newsletterRest
 			$convert->set_html($letter_content);
 			$convert->labelLinks = __('Links:');
 			$letter_content = $convert->get_text();
-			
+				
 		} else {
 			// define html content
 			$letter_content = $post['p_letter_header'];
@@ -147,10 +145,10 @@ class newsletterRest
 			if($ls_val != 1)
 				throw new Exception($ls_val);
 		}
-		
+
 		return $result;
 	}
-	
+
 } // end class newsletterRest
 
 ?>
