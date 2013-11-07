@@ -3,8 +3,9 @@
 #
 # This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Benoit de Marne
+# Copyright (c) 2009-2013 Benoit de Marne and contributors
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -465,23 +466,6 @@ class newsletterLetter
 			echo '<p class="message">'.__('Don\'t forget to validate your XHTML conversion by saving your post.').'</p>';
 		}
 
-		# Preview page
-		if ($post_id && $post->post_status == 1) {
-			echo '<p><a id="post-preview" href="'.$post->getURL().'" class="button">'.__('View letter').'</a></p>';
-		} elseif ($post_id) {
-			$preview_url =
-			$core->blog->url.$core->url->getBase('letterpreview').'/'.
-			$core->auth->userID().'/'.
-			http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
-			'/'.$post->post_url;
-			echo '<a id="post-preview" href="'.$preview_url.'" class="button modal" accesskey="p">'.__('Preview letter').' (p)'.'</a> ';
-		}
-		
-		# Exit if we cannot view page
-		if (!$can_view_page) {
-			exit;
-		}
-		
 		if ($post_id)
 		{
 			//echo '<p>';
@@ -502,6 +486,23 @@ class newsletterLetter
 		if (!$can_view_page) {
 			exit;
 		}
+		
+		# Preview page
+		if ($post_id && $post->post_status == 1) {
+			echo '<p><a id="post-preview" href="'.$post->getURL().'" class="button">'.__('View letter').'</a></p>';
+		} elseif ($post_id) {
+			$preview_url =
+			$core->blog->url.$core->url->getBase('letterpreview').'/'.
+			$core->auth->userID().'/'.
+			http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
+			'/'.$post->post_url;
+			echo '<a id="post-preview" href="'.$preview_url.'" class="button modal" accesskey="p">'.__('Preview letter').' (p)'.'</a> ';
+		}
+		
+		# Exit if we cannot view page
+		if (!$can_view_page) {
+			exit;
+		}		
 		
 		/* Post form if we can edit post
 		-------------------------------------------------------- */
@@ -786,6 +787,8 @@ class newsletterLetter
 	 */
 	public function letterActions()
 	{
+		global $core;
+		
 		$redir_url = 'plugin.php?p=newsletter&m=letter';
 		$params = array();
 		$entries = array();

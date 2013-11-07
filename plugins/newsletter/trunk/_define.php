@@ -3,8 +3,9 @@
 #
 # This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Benoit de Marne
+# Copyright (c) 2009-2013 Benoit de Marne and contributors
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -22,7 +23,7 @@ $this->registerModule(
 		/* Author */
 		"Benoit de Marne",
 		/* Version */
-		'3.9.0r9',
+		'3.9.0r13',
 		/* Properties */
 		array(
 				'permissions' => 'usage,contentadmin',

@@ -3,8 +3,9 @@
 #
 # This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Benoit de Marne
+# Copyright (c) 2009-2013 Benoit de Marne and contributors
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -17,7 +18,7 @@ class newsletterSubscribersList extends adminGenericList
 	/**
 	 * Count subscribers
 	 */	
-	private static function countSubscribers($state = 'enabled')
+	public static function countSubscribers($state = 'enabled')
 	{
 		$params['state'] = $state;
 		$counter = newsletterCore::getSubscribers($params,true);
@@ -160,7 +161,7 @@ class newsletterSubscribersList extends adminGenericList
 		'<tr class="line">'.
 		'<td>'.
 		form::checkbox(array('subscriber[]'),$this->rs->subscriber_id,'','','',0).'</td>'.
-		'<td class="nowrap"><a href="plugin.php?p=newsletter&amp;m=addedit&amp;id='.$this->rs->subscriber_id.'">'.
+		'<td class="nowrap"><a href="plugin.php?p=newsletter&amp;m=edit_subscriber&amp;id='.$this->rs->subscriber_id.'">'.
 		html::escapeHTML($this->rs->email).'</a></td>'.
 		'<td class="nowrap">'.$subscribed.'</td>'.
 		'<td class="nowrap">'.$lastsent.'</td>'.

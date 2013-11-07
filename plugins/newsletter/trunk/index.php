@@ -3,8 +3,9 @@
 #
 # This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Benoit de Marne
+# Copyright (c) 2009-2013 Benoit de Marne and contributors
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -41,14 +42,15 @@ if ( $newsletter_flag == 0) {
 		case 'letter_associate':
 			require_once dirname(__FILE__).'/inc/index.letters.php';
 			break;
-		case 'tab_subscribers':
-		case 'tab_addedit':
+		case 'subscribers':
+		case 'add_subcriber':
+		case 'edit_subcriber':
 		default:
 			require_once dirname(__FILE__).'/inc/index.subscribers.php';
 			break;
 	}
 } else {
-	require_once dirname(__FILE__).'/inc/index.subscribers.php';
+	require_once dirname(__FILE__).'/inc/index.letters.php';
 }
 
 ?>

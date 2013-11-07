@@ -3,8 +3,9 @@
 #
 # This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Benoit de Marne
+# Copyright (c) 2009-2013 Benoit de Marne and contributors
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -19,7 +20,7 @@ class newsletterLettersList extends adminGenericList
 	/**
 	 * Count letters
 	 */	
-	private static function countLetters($state = '1')
+	public static function countLetters($state = '1')
 	{
 		global $core;
 		
@@ -321,7 +322,8 @@ class newsletterLettersList extends adminGenericList
 				echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
 				echo '</div>';
 
-				echo '<p><a class="back" href="'.html::escapeURL($redir).'">'.__('back').'</a></p>';
+				# correction pour etre sur d'avoir un lien :D
+				echo '<p><a class="back" href="plugin.php?p=newsletter&amp;m=letters">'.__('back').'</a></p>';
 			}
 		}
 			

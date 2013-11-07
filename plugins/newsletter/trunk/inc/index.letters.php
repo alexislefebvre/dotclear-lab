@@ -3,8 +3,9 @@
 #
 # This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Benoit de Marne
+# Copyright (c) 2009-2013 Benoit de Marne and contributors
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -324,7 +325,7 @@ try {
 		$order='desc';
 	}	
 	
-	// Request the letters list
+	# Request the letters list
 	$rs = $core->blog->getPosts($params);
 	$counter = $core->blog->getPosts($params,true);
 	$letters_list = new newsletterLettersList($core,$rs,$counter->f(0));	
@@ -371,22 +372,6 @@ try {
 		"</script>\n";
 		echo dcPage::jsPageTabs($plugin_tab);
 
-	} elseif ($plugin_tab == 'tab_letters') {
-		echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
-		//echo dcPage::jsLoad('js/filter-controls.js');
-
-		echo
-			'<script type="text/javascript">'."\n".
-			"//<![CDATA[\n".
-			dcPage::jsVar('dotclear.msg.confirm_delete_letters', __('Are you sure you want to delete selected letters?')).
-			dcPage::jsVar('dotclear.msg.confirm_delete_subscribers', __('Are you sure you want to delete selected subscribers?')).
-			dcPage::jsVar('dotclear.msg.show_filters', $show_filters ? 'true':'false')."\n".
-			dcPage::jsVar('dotclear.msg.filter_subscribers_list',$form_filter_title)."\n".
-			dcPage::jsVar('dotclear.msg.cancel_the_filter',__('Cancel filters and display options'))."\n".
-			"\n//]]>\n".
-			"</script>\n";
-		echo dcPage::jsPageTabs($plugin_tab);
-		
 	} else if ($plugin_tab == 'tab_letter') {
 		echo dcPage::jsDatePicker().
 		dcPage::jsToolBar().
@@ -399,13 +384,30 @@ try {
 		echo dcPage::jsPageTabs('edit-entry');
 	} else if ($plugin_tab == 'tab_letter_associate') {
 		echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
-		echo dcPage::jsLoad('js/filter-controls.js');
+		echo
+			'<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+			dcPage::jsVar('dotclear.msg.show_filters', $show_filters ? 'true':'false')."\n".
+			dcPage::jsVar('dotclear.msg.filter_subscribers_list',$form_filter_title)."\n".
+			dcPage::jsVar('dotclear.msg.cancel_the_filter',__('Cancel filters and display options'))."\n".
+			"\n//]]>\n".
+			"</script>\n";
 		echo dcPage::jsPageTabs('tab_letter');
 	} else { 
+		echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
+		echo
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		dcPage::jsVar('dotclear.msg.confirm_delete_letters', __('Are you sure you want to delete selected letters?')).
+		dcPage::jsVar('dotclear.msg.confirm_delete_subscribers', __('Are you sure you want to delete selected subscribers?')).
+		dcPage::jsVar('dotclear.msg.show_filters', $show_filters ? 'true':'false')."\n".
+		dcPage::jsVar('dotclear.msg.filter_subscribers_list',$form_filter_title)."\n".
+		dcPage::jsVar('dotclear.msg.cancel_the_filter',__('Cancel filters and display options'))."\n".
+		"\n//]]>\n".
+		"</script>\n";
 		echo dcPage::jsPageTabs($plugin_tab);
 	}
-		
-		
+	
 ?>
 </head>
 <body>
@@ -419,30 +421,32 @@ echo dcPage::breadcrumb(
 
 # print information message
 if (!empty($msg)) {
-	//echo dcPage::message($msg);
-	//echo '<p class="message">'.$msg.'</p>';
 	echo '<p class="success">'.$msg.'</p>';
 }
 
 if ($newsletter_flag != 0) {
 	echo
 		'<ul class="pseudo-tabs">'.
+			'<li><a href="'.$p_url.'&amp;m=letters" class="active">'.__('Letters').'</a></li>'.
 			'<li><a href="'.$p_url.'&amp;m=subscribers">'.__('Subscribers').'</a></li>'.
-			'<li><a href="'.$p_url.'&amp;m=letters">'.__('Letters').'</a></li>'.
 			'<li><a href="'.$p_url.'&amp;m=resume">'.__('Properties').'</a></li>'.
 		'</ul>';
 }	
 try {
-
-	// Print page Letters	
-	echo '<div class="multi-part" id="tab_letters" title="'.__('Letters').'">';
+	
+	if($plugin_tab == 'tab_letter') {
+		$nltr = new newsletterLetter($core);
+		$nltr->displayTabLetter();
+	} else if ($plugin_tab == 'tab_letter_associate') {
+		$nltr = new newsletterLetter($core);
+		$nltr->displayTabLetterAssociate();
+	} else {
+		// Print page Letters
 		if($action == 'author' || $action == 'send' || $action == 'send_old') {
 			newsletterLettersList::lettersActions($letters_id);
 		} else {
-
-			echo '<h3>'.__('Letters').'</h3>';
 			echo '<p class="top-add"><a class="button add" href="plugin.php?p=newsletter&amp;m=letter">'.__('New newsletter').'</a></p>';
-				
+		
 			if (!$core->error->flag())
 			{
 				echo
@@ -463,7 +467,7 @@ try {
 				form::combo('order',$order_combo,$order).'</p>'.
 				'</div>'.
 				'</div>'.
-				
+		
 				'<p>'.
 				form::hidden(array('p'),newsletterPlugin::pname()).
 				form::hidden(array('m'),"letters").
@@ -473,14 +477,14 @@ try {
 				'<br class="clear" /></p>'. //Opera sucks
 				'</form>';
 			}
-			
+				
 			// Show letters
 			$letters_list->display($page,$nb_per_page,
 					'<form action="plugin.php?p=newsletter&amp;m=letters" method="post" id="letters_list">'.
 					'<p>' .
-			
-					'%s'.
 						
+					'%s'.
+		
 					'<div class="two-cols">'.
 					'<p class="col checkboxes-helpers"></p>'.
 					'<p class="col right">'.__('Selected letters action:').
@@ -501,24 +505,13 @@ try {
 					$show_filters
 			);
 		}
-	echo '</div>';
-	
-	if($plugin_tab == 'tab_letter') {
-		echo '<div class="multi-part" id="edit-entry" title="'.__('Letter').'">';
-		$nltr = new newsletterLetter($core);
-		$nltr->displayTabLetter();
-		echo '</div>';
-	} else if ($plugin_tab == 'tab_letter_associate') {
-		echo '<div class="multi-part" id="tab_letter" title="'.__('Letter').'">';
-		$nltr = new newsletterLetter($core);
-		$nltr->displayTabLetterAssociate();
-		echo '</div>';
 	}
 	
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }	
-	
+
+dcPage::helpBlock('newsletter');
 ?>
 
 </body>

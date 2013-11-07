@@ -3,8 +3,9 @@
 #
 # This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Benoit de Marne
+# Copyright (c) 2009-2013 Benoit de Marne and contributors
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -47,8 +48,6 @@ try {
 	# retrieve tab
 	$plugin_tab = 'tab_'.$m;
 	
-	$edit_subscriber = ('addedit'==$m && !empty($_GET['id'])) ? __('Edit') : __('Add');
-
 	if (isset($_REQUEST['tab'])) {
 		$plugin_tab = 'tab_'.$_REQUEST['tab'];
 	}
@@ -77,7 +76,7 @@ try {
 		# add subscriber
 		case 'add':
 		{
-			$m = 'addedit';
+			$m = 'add_subscriber';
 			
 			$email = !empty($_POST['femail']) ? $_POST['femail'] : null;
 	
@@ -105,12 +104,12 @@ try {
 				if ($id == null) {
 					throw new Exception(__('Missing informations'));
 				} else {
-					$plugin_tab = 'tab_addedit';
+					$plugin_tab = 'tab_edit_subscriber';
 				}
 			} else {
 				$regcode = null;
 				if (!newsletterCore::update($id, $email, $state, $regcode, $subscribed, $lastsent, $modesend)) {
-					throw new Exception(__('Error in modify subscriber'));
+					throw new Exception(__('Error to modify a subscriber'));
 				} else {
 					$msg = __('Subscriber updated.');
 				}
@@ -268,7 +267,7 @@ if(isset($core->blog->dcNewsletter)) {
 }
 	
 try {
-	# --- Variables for page AddEdit ---
+	# --- Variables for page EditSubscriber ---
 	$allowed = true;
 	$mode_combo = array(__('text') => 'text',
 			__('html') => 'html');
@@ -277,74 +276,7 @@ try {
 			__('enabled') => 'enabled',
 			__('suspended') => 'suspended',
 			__('disabled') => 'disabled');
-	# test adding or editing
-	if (!empty($_GET['id']))
-	{
-		$id = (integer)$_GET['id'];
-		$datas = newsletterCore::get($id);
-		if ($datas == null) {
-			$allowed = false;
-		} else {
-			$email = $datas->f('email');
-			$subscribed = $datas->f('subscribed');
-			$lastsent = $datas->f('lastsent');
-			$modesend = $datas->f('modesend');
-			$regcode = $datas->f('regcode');
-			$state = $datas->f('state');
-			$form_title = __('Edit a subscriber');
-			$form_op = 'edit';
-			$form_libel = __('Update');
-			$form_id = '<input type="hidden" name="id" value="'.$id.'" />';
-	
-			if ($subscribed != null)
-				$subscribed = dt::dt2str($settings->date_format, $subscribed).' @'.dt::dt2str($settings->time_format, $subscribed);
-			else
-				$subscribed = __('Never');
-	
-			if ($lastsent != null)
-				$lastsent = dt::dt2str($settings->date_format, $lastsent).' @'.dt::dt2str($settings->time_format, $lastsent);
-			else
-				$lastsent = __('Never');
-	
-			$form_update =
-			'<p class="field">'.
-			'<label for="fsubscribed" class="classic">'.__('Subscribed:').'</label>'.
-			form::field('fsubscribed',50,255,$subscribed,'','',true).
-			'</p>'.
-			'<p class="field">'.
-			'<label for="flastsent" class="classic">'.__('Last sent:').'</label>'.
-			form::field('flastsent',50,255,$lastsent,'','',true).
-			'</p>'.
-			'<p class="field">'.
-			'<label for="fmodesend" class="classic">'.__('Mode send').'</label>'.
-			form::combo('fmodesend',$mode_combo,$modesend).
-			'</p>'.
-			'<p class="field">'.
-			'<label for="fregcode" class="classic">'.__('Registration code:').'</label>'.
-			form::field('fregcode',50,255,$regcode,'','',true).
-			'</p>'.
-			'<p class="field">'.
-			'<label for "fstate" class="classic">'.__('Status:').'</label>'.
-			form::combo('fstate',$state_combo,$state).
-			'</p>'.
-			'';
-		}
-			
-	} else {
-		$id = -1;
-		$email = '';
-		$subscribed = '';
-		$lastsent = '';
-		$modesend = '';
-		$status = '';
-		$form_title = __('Add a subscriber');
-		$form_op = 'add';
-		$form_libel = __('Add');
-		$form_id = '';
-		$form_update = '';
-	}		
-	# --- end Variables for page AddEdit ---
-	
+
 	# --- Variables for page Subscribers ---
 	# Creating filter combo boxes
 	$sortby_combo = array(
@@ -461,7 +393,9 @@ try {
 
 <?php	
 
-	if ($plugin_tab == 'tab_subscribers'
+	if ($plugin_tab == 'tab_edit_subscribers') {
+		echo dcPage::jsPageTabs($plugin_tab);
+	} elseif ($plugin_tab == 'tab_subscribers'
 		&& ($action == 'send' || $action == 'send_old')) {
 		echo
 		dcPage::jsLoad('index.php?pf=newsletter/js/_sequential_ajax.js').
@@ -482,7 +416,7 @@ try {
 		"</script>\n";
 		echo dcPage::jsPageTabs($plugin_tab);
 
-	} elseif ($plugin_tab == 'tab_subscribers') {
+	} else {
 		echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
 
 		echo
@@ -495,9 +429,6 @@ try {
 			dcPage::jsVar('dotclear.msg.cancel_the_filter',__('Cancel filters and display options'))."\n".
 			"\n//]]>\n".
 			"</script>\n";
-		echo dcPage::jsPageTabs($plugin_tab);
-		
-	} else {
 		echo dcPage::jsPageTabs($plugin_tab);
 	}
 ?>
@@ -519,117 +450,185 @@ if (!empty($msg)) {
 if ($newsletter_flag != 0) {
 	echo
 		'<ul class="pseudo-tabs">'.
-			'<li><a href="'.$p_url.'&amp;m=subscribers">'.__('Subscribers').'</a></li>'.
 			'<li><a href="'.$p_url.'&amp;m=letters">'.__('Letters').'</a></li>'.
+			'<li><a href="'.$p_url.'&amp;m=subscribers" class="active">'.__('Subscribers').'</a></li>'.
 			'<li><a href="'.$p_url.'&amp;m=resume">'.__('Properties').'</a></li>'.
 		'</ul>';
 }	
 try {
 
-	// Print page Subscribers	
-	echo '<div class="multi-part" id="tab_subscribers" title="'.__('Subscribers').'">';
-	if($plugin_op == 'send') {
-		newsletterSubscribersList::subcribersActions();
-	} else {
+	if($plugin_tab == 'tab_edit_subscriber') {
 
-		if (!$core->error->flag())
+		if (!empty($_GET['id']))
 		{
-			echo '<h3>'.__('Subscribers').'</h3>';
-			echo 
-			'<form action="plugin.php" method="get" id="filters-form">'.
-			'<h3 class="out-of-screen-if-js">'.$form_filter_title.'</h3>'.
-
-			'<div class="table">'.
-			'<div class="cell">'.
-			'<h4>'.__('Filters').'</h4>'.
-			'<p><span class="label ib">'.__('Show').'</span> <label for="nb" class="classic">'.
-			form::field('nb',3,3,$nb_per_page).' '.
-			__('Subscribers per page').'</label></p>'.
-			'</div>'.
-			'<div class="cell filters-options">'.
-			'<h4>'.__('Display options').'</h4>'.
-			'<p><label for="sortby" class="ib">'.__('Order by:').'</label> '.
-			form::combo('sortby',$sortby_combo,$sortby).'</p>'.
-			'<p><label for="order" class="ib">'.__('Sort:').'</label> '.
-			form::combo('order',$order_combo,$order).'</p>'.
-			'</div>'.
-			'</div>'.
-			
-			'<p>'.
-			form::hidden(array('p'),newsletterPlugin::pname()).
-			form::hidden(array('m'),'subscribers').
-			'<input type="submit" value="'.__('Apply filters and display options').'" /></p>'.
-			'</p>'.
-				
-			'<br class="clear" /></p>'. //Opera sucks
-			'</form>';			
+			$id = (integer)$_GET['id'];
+			$datas = newsletterCore::get($id);
+			if ($datas == null) {
+				$allowed = false;
+			} else {
+				$email = $datas->f('email');
+				$subscribed = $datas->f('subscribed');
+				$lastsent = $datas->f('lastsent');
+				$modesend = $datas->f('modesend');
+				$regcode = $datas->f('regcode');
+				$state = $datas->f('state');
+		
+				if ($subscribed != null)
+					$subscribed = dt::dt2str($settings->date_format, $subscribed).' @'.dt::dt2str($settings->time_format, $subscribed);
+				else
+					$subscribed = __('Never');
+		
+				if ($lastsent != null)
+					$lastsent = dt::dt2str($settings->date_format, $lastsent).' @'.dt::dt2str($settings->time_format, $lastsent);
+				else
+					$lastsent = __('Never');
+			} 
+			# --- end Variables for page AddSubscriber ---
 		}
 
-		// Show subscribers
-		$subscribers_list->display($page,$nb_per_page,
-				'<form action="plugin.php?" method="post" id="subscribers_list">'.
-				'<p>' .
-
-				'%s'.
-
-				'<div class="two-cols">'.
-				'<p class="col checkboxes-helpers"></p>'.
-				
-				'<p class="col right">'.__('Selected subscribers action:').
-				form::combo('op',$combo_action).
-				'<input type="submit" value="'.__('ok').'" />'.
-				'</p>'.
-				form::hidden(array('p'),newsletterPlugin::pname()).
-				form::hidden(array('sortby'),$sortby).
-				form::hidden(array('order'),$order).
-				form::hidden(array('page'),$page).
-				form::hidden(array('nb'),$nb_per_page).
-				form::hidden(array('m'),'subscribers').
-				$core->formNonce().
-				'</div>'.
-				'</form>',
-				$show_filters
-		);
+		// Print page Edit
+		if (!$allowed) {
+			echo __('Not allowed.');
+		} else {
+			echo
+			'<form action="plugin.php" method="post" class="fieldset">'.
+			'<h4>'.__('Edit a subscriber').'</h4>'.
 		
-	}
-	echo '</div>';
-	
-	// Print page AddEdit
-	echo '<div class="multi-part" id="tab_addedit" title="'.$edit_subscriber.'">';
-	if (!$allowed) {
-		echo __('Not allowed.');
+			'<p class="field"><label for="femail">'.__('Email').'</label>'.
+			form::field(array('femail','femail'),50,255,$email).
+			'</p>'.
+			
+			'<p class="field"><label for="fsubscribed">'.__('Subscribed').'</label>'.
+			form::field('fsubscribed',50,255,$subscribed,'','',true).
+			'</p>'.
+				
+			'<p class="field"><label for="flastsent">'.__('Last sent').'</label>'.
+			form::field('flastsent',50,255,$lastsent,'','',true).
+			'</p>'.
+
+			'<p class="field"><label for="fmodesend">'.__('Mode send').'</label>'.
+			form::combo('fmodesend',$mode_combo,$modesend).
+			'</p>'.
+			
+			'<p class="field"><label for="fregcode">'.__('Registration code').'</label>'.
+			form::field('fregcode',50,255,$regcode,'','',true).
+			'</p>'.
+				
+			'<p class="field"><label for="fstate">'.__('Status').'</label>'.
+			form::combo('fstate',$state_combo,$state).
+			'</p>'.
+		
+			'<p><input type="submit" value="'.__('Update').'" />'.
+			'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
+			form::hidden(array('p'),newsletterPlugin::pname()).
+			form::hidden(array('m'),'subscribers').
+			form::hidden(array('op'),'edit').
+			form::hidden(array('id'),$id).
+			$core->formNonce().'</p>'.
+		
+			'</form>';
+			'';
+			
+			echo '<p><a class="back" href="'.$p_url.'&amp;m=subscribers">'.__('back').'</a></p>';
+		}
+	} elseif ($plugin_tab == 'tab_add_subscriber') {
+		// Print page Add
+		if ($allowed) {
+			echo '<h3>'.__('Add a subscriber').'</h3>';
+		
+			echo
+			'<form action="plugin.php" method="post" class="fieldset">'.
+		
+			'<p class="field"><label for="femail">'.__('Email:').'</label>'.
+			form::field(array('femail','femail'),50,255,'').
+			'</p>'.
+		
+			'<p><input type="submit" value="'.__('Add').'" />'.
+			'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
+			form::hidden(array('p'),newsletterPlugin::pname()).
+			form::hidden(array('m'),'add_subscribers').
+			form::hidden(array('op'),'add').
+			$core->formNonce().'</p>'.
+		
+			'</form>'.
+			'';
+			
+			echo '<p><a class="back" href="'.$p_url.'&amp;m=subscribers">'.__('back').'</a></p>';
+		}
 	} else {
-		echo '<h3>'.$form_libel.'</h3>';
-			
-		echo
-		'<form action="plugin.php" method="post" id="addedit">'.
-		'<div class="fieldset" id="addedit">'.
-		'<h4>'.$form_title.'</h4>'.
-		'<p class="field">'.
-		'<label for="femail" class="classic">'.__('Email:').'</label>'.
-		form::field('femail',50,255, $email).
+
+		// Print page Subscribers	
+		if($plugin_op == 'send') {
+			newsletterSubscribersList::subcribersActions();
+		} else {
+			if (!$core->error->flag()) {
+				echo '<p class="top-add"><a class="button add" href="plugin.php?p=newsletter&amp;m=add_subscriber">'.__('Add a subscriber').'</a></p>';
+				
+				echo 
+				'<form action="plugin.php" method="get" id="filters-form">'.
+				'<h3 class="out-of-screen-if-js">'.$form_filter_title.'</h3>'.
 	
-		'</p>'.
-		$form_update.
-		'</div>'.
-		'<p>'.
-		'<input type="submit" value="'.$form_libel.'" />'.
-		'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
-		form::hidden(array('p'),newsletterPlugin::pname()).
-		form::hidden(array('m'),'subscribers').
-		form::hidden(array('op'),$form_op).
-		$form_id.
-		$core->formNonce().
-		'</p>'.
+				'<div class="table">'.
+				'<div class="cell">'.
+				'<h4>'.__('Filters').'</h4>'.
+				'<p><span class="label ib">'.__('Show').'</span> <label for="nb" class="classic">'.
+				form::field('nb',3,3,$nb_per_page).' '.
+				__('Subscribers per page').'</label></p>'.
+				'</div>'.
+				'<div class="cell filters-options">'.
+				'<h4>'.__('Display options').'</h4>'.
+				'<p><label for="sortby" class="ib">'.__('Order by:').'</label> '.
+				form::combo('sortby',$sortby_combo,$sortby).'</p>'.
+				'<p><label for="order" class="ib">'.__('Sort:').'</label> '.
+				form::combo('order',$order_combo,$order).'</p>'.
+				'</div>'.
+				'</div>'.
+				
+				'<p>'.
+				form::hidden(array('p'),newsletterPlugin::pname()).
+				form::hidden(array('m'),'subscribers').
+				'<input type="submit" value="'.__('Apply filters and display options').'" /></p>'.
+				'</p>'.
+					
+				'<br class="clear" /></p>'.
+				'</form>';			
+			}
+	
+			// Show subscribers
+			$subscribers_list->display($page,$nb_per_page,
+					'<form action="plugin.php?p=newsletter&amp;m=subscribers" method="post" id="subscribers_list">'.
+					'<p>' .
+	
+					'%s'.
+	
+					'<div class="two-cols">'.
+					'<p class="col checkboxes-helpers"></p>'.
+					
+					'<p class="col right">'.__('Selected subscribers action:').
+					form::combo('op',$combo_action).
+					'<input type="submit" value="'.__('ok').'" />'.
+					'</p>'.
+					form::hidden(array('p'),newsletterPlugin::pname()).
+					form::hidden(array('sortby'),$sortby).
+					form::hidden(array('order'),$order).
+					form::hidden(array('page'),$page).
+					form::hidden(array('nb'),$nb_per_page).
+					form::hidden(array('m'),'subscribers').
+					$core->formNonce().
+					'</div>'.
+					'</form>',
+					$show_filters
+			);
 			
-		'</form>'.
-		'';
+		}
 	}
-	echo '</div>';
+	
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }	
-	
+
+dcPage::helpBlock('newsletter');
+
 ?>
 
 </body>

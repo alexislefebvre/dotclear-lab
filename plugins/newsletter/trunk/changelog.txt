@@ -11,6 +11,8 @@ Newsletter 3.9.0 - 2013-11-xx
 * Reprise des fonctions d'import/export en m'inspirant du plugin import/export de Dotclear
 * Correction d'un bug sur l'import des fichiers exportés précédemment au format texte
 * Ajout de l'import des fichiers zippés
+* Utilisation du plugin License bootstrap pour générer les licences
+* Ajout du plugin dans le DashboardFavorites et ajout de nouvelles icones style dc2.6
 
 Newsletter 3.8.1 - 2013-05-11
 ===========================================================
