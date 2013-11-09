@@ -4,7 +4,7 @@
 # This file is part of enhancePostContent, a plugin for Dotclear 2.
 # 
 # Copyright (c) 2009-2013 Jean-Christian Denis and contributors
-# contact@jcdenis.fr
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -12,9 +12,12 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-global $__autoload;
+if (!defined('DC_RC_PATH')) {
 
-$__autoload['libEPC'] = dirname(__FILE__).'/inc/lib.epc.php';
-$__autoload['epcRecords'] = dirname(__FILE__).'/inc/lib.epc.records.php';
+	return null;
+}
 
-?>
+$d = dirname(__FILE__).'/inc/';
+
+$__autoload['libEPC']		= $d.'lib.epc.php';
+$__autoload['epcRecords']	= $d.'lib.epc.records.php';
