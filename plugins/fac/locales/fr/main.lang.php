@@ -1,191 +1,181 @@
 <?php
 // Language: Français 
-// Module: fac - 0.6
-// Date: 2010-08-16 13:12:19 
-// Translated with dcTranslater - 1.4.1 
+// Module: fac - 0.7
+// Date: 2013-11-11 09:32:36 
+// Translated with dcTranslater - 2013.05.11 
 
-#_admin.php:68
-$GLOBALS['__l10n']['change RSS/ATOM feed:'] = 'changer le flux RSS/Atom :';
+#_admin.php:149
+#_admin.php:162
+#_admin.php:266
+$GLOBALS['__l10n']['Linked feed'] = 'Flux lié';
 
-#_admin.php:68
-$GLOBALS['__l10n']['Add RSS/Atom feed:'] = 'Ajouter un flux RSS/Atom :';
+#_admin.php:150
+$GLOBALS['__l10n']['Add feed'] = 'Ajouter un flux';
 
-#_admin.php:70
-$GLOBALS['__l10n']['change format of feed:'] = 'changer le format du flux';
+#_admin.php:163
+$GLOBALS['__l10n']['Remove feed'] = 'Retirer un flux';
 
-#_admin.php:70
-$GLOBALS['__l10n']['Choose format of feed:'] = 'Choisir le format du flux';
+#_admin.php:195
+$GLOBALS['__l10n']['Linked feed deleted.'] = 'Flux lié effacé.';
 
-#_admin.php:77
+#_admin.php:223
+$GLOBALS['__l10n']['Linked feed added.'] = 'Flux lié ajouté.';
+
+#_admin.php:233
+$GLOBALS['__l10n']['Linked feed to this selection'] = 'Lié un flux a cette selection';
+
+#_admin.php:277
+$GLOBALS['__l10n']['Format:'] = 'Format :';
+
+#_admin.php:284
 $GLOBALS['__l10n']['view feed'] = 'Voir le flux';
 
-#_admin.php:114
-$GLOBALS['__l10n']['add fac'] = 'ajouter un flux';
-
-#_admin.php:118
-$GLOBALS['__l10n']['remove fac'] = 'effacer un flux';
-
-#_admin.php:178
-$GLOBALS['__l10n']['Add fac to entries'] = 'Ajouter un flux au billets :';
-
-#_admin.php:180
-$GLOBALS['__l10n']['It will be added only if there is no feed on entry.'] = 'Il sera ajouter uniquement si le billet n\'a pas de flux.';
-
-#_admin.php:181
-$GLOBALS['__l10n']['feed to add:'] = 'flux à ajouter :';
-
-#_admin.php:183
-$GLOBALS['__l10n']['format:'] = 'format :';
-
-#_admin.php:213
-$GLOBALS['__l10n']['Remove selected facs from entries'] = 'Supprimer des billets les flux selectionnés :';
-
-#_admin.php:217
-$GLOBALS['__l10n']['No fac for selected entries'] = 'Pas de flux pour les billets selectionnés';
-
-#_admin.php:225
-$GLOBALS['__l10n']['Following facs have been found in selected entries:'] = 'Les flux suivant ont été trouvé pour les billets selectionnés :';
-
-#_public.php:91
-$GLOBALS['__l10n']['a related feed'] = 'un flux lié';
-
-#index.php:31
+#_config.php:25
 $GLOBALS['__l10n']['home page'] = 'la page d\'accueil';
 
-#index.php:32
+#_config.php:26
 $GLOBALS['__l10n']['post pages'] = 'la page d\'un billet';
 
-#index.php:33
+#_config.php:27
 $GLOBALS['__l10n']['tags pages'] = 'les pages d\'un tag';
 
-#index.php:34
+#_config.php:28
 $GLOBALS['__l10n']['archives pages'] = 'les pages des archives';
 
-#index.php:35
+#_config.php:29
 $GLOBALS['__l10n']['category pages'] = 'les pages de catégorie';
 
-#index.php:36
+#_config.php:30
 $GLOBALS['__l10n']['entries feed'] = 'le flux des billets';
 
-#index.php:44
+#_config.php:35
 $GLOBALS['__l10n']['"%s" pages from extension muppet'] = 'la page de type "%s" de l\'extension muppet';
 
-#index.php:73
-$GLOBALS['__l10n']['Configuration successfully saved'] = 'Configuration sauvegardée avec succès';
+#_config.php:83
+$GLOBALS['__l10n']['Configuration has been successfully updated.'] = 'La configuration a été mise à jour avec succés.';
 
-#index.php:81
-$GLOBALS['__l10n']['Please wait'] = 'Veuillez patienter';
+#_config.php:103
+$GLOBALS['__l10n']['Enable plugin'] = 'Activer le plugin';
 
-#index.php:96
-$GLOBALS['__l10n']['Plugin activation'] = 'Activation de l\'extension';
+#_config.php:105
+$GLOBALS['__l10n']['Show feed after content on:'] = 'Afficher le flux après le contenu sur :';
 
-#index.php:99
-$GLOBALS['__l10n']['Enable extension'] = 'Activer l\'extension';
-
-#index.php:102
+#_config.php:121
 $GLOBALS['__l10n']['Feed'] = 'Flux';
 
-#index.php:104
+#_config.php:123
 $GLOBALS['__l10n']['Default title'] = 'Titre par défaut';
 
-#index.php:108
-$GLOBALS['__l10n']['Show description of feed'] = 'Afficher la description';
-
-#index.php:110
-#index.php:184
-$GLOBALS['__l10n']['Format'] = 'Format';
-
-#index.php:111
+#_config.php:125
 $GLOBALS['__l10n']['Use %T to insert title of feed.'] = 'Utiliser %T pour insérer le titre du flux';
 
-#index.php:116
-$GLOBALS['__l10n']['Preconfiguration'] = 'Préconfiguration';
+#_config.php:129
+$GLOBALS['__l10n']['Show description of feed'] = 'Afficher la description';
 
-#index.php:119
-$GLOBALS['__l10n']['Name'] = 'Nom';
+#_config.php:142
+$GLOBALS['__l10n']['Format %s'] = 'Format %s';
 
-#index.php:120
-$GLOBALS['__l10n']['Date format'] = 'Format de date';
+#_config.php:159
+#_config.php:361
+$GLOBALS['__l10n']['In order to remove a format, leave its name empty.'] = 'Pour retirer un format, laisser son nom vide.';
 
-#index.php:121
-$GLOBALS['__l10n']['Entries limit'] = 'Nombre de billets maximum';
+#_config.php:175
+#_config.php:377
+$GLOBALS['__l10n']['Use date format of Dotclear or leave empty to use default date format of blog.'] = 'Utiliser le formatage des dates de Dotclear ou laisser vide pour utiliser le format par défaut du blog.';
 
-#index.php:122
-$GLOBALS['__l10n']['Title format'] = 'Format du titre';
+#_config.php:191
+#_config.php:251
+#_config.php:291
+#_config.php:331
+#_config.php:393
+#_config.php:453
+#_config.php:493
+#_config.php:533
+$GLOBALS['__l10n']['Leave lengh empty for no limit.'] = 'Laisser vide pour ne pas mettre de limite.';
 
-#index.php:123
-$GLOBALS['__l10n']['Over title format'] = 'Format du survol du titre';
+#_config.php:197
+#_config.php:399
+$GLOBALS['__l10n']['Title format:'] = 'Format du titre :';
 
-#index.php:124
-$GLOBALS['__l10n']['Maximum length of title'] = 'Longueur maximum du titre';
+#_config.php:209
+#_config.php:230
+#_config.php:411
+#_config.php:432
+$GLOBALS['__l10n']['Format can be:'] = 'Le format peut-être :';
 
-#index.php:125
-$GLOBALS['__l10n']['Show description of entries'] = 'Afficher la description des billets';
-
-#index.php:126
-$GLOBALS['__l10n']['Maximum length of description'] = 'Longueur maximum de la description';
-
-#index.php:127
-$GLOBALS['__l10n']['Remove html of description'] = 'Retirer le code HTML de la description';
-
-#index.php:128
-$GLOBALS['__l10n']['Show content of entries'] = 'Afficher le contenu du flux';
-
-#index.php:129
-$GLOBALS['__l10n']['Maximum length of content'] = 'Longueur maximum du contenu';
-
-#index.php:130
-$GLOBALS['__l10n']['Remove html of content'] = 'Retirer le code HTML du contenu';
-
-#index.php:185
-$GLOBALS['__l10n']['In dorder to delete a configuration, leave its name empty'] = 'Laisser vide le nom d\'une configuration pour la supprimer';
-
-#index.php:186
-$GLOBALS['__l10n']['Use Dotclear date format or leave empty to use default date format of blog.'] = 'Utiliser le formatage des dates de Dotclear ou laisser vide pour utiliser le format par défaut du blog.';
-
-#index.php:187
-$GLOBALS['__l10n']['Format of "Title", "Over title" can be:'] = 'Format de "Titre" et de "Survole du titre" :';
-
-#index.php:193
+#_config.php:214
+#_config.php:235
+#_config.php:294
+#_config.php:416
+#_config.php:437
+#_config.php:496
 $GLOBALS['__l10n']['Content'] = 'Contenu';
 
-#index.php:195
-$GLOBALS['__l10n']['Leave empty for no limit.'] = 'Laiser vide pour pas de limite';
+#_config.php:218
+#_config.php:420
+$GLOBALS['__l10n']['Over title format:'] = 'Format au survole du titre :';
 
-#index.php:199
-$GLOBALS['__l10n']['Display'] = 'Affichage';
+#_config.php:239
+#_config.php:441
+$GLOBALS['__l10n']['Maximum length of title:'] = 'Longueur maximum du titre :';
 
-#index.php:200
-$GLOBALS['__l10n']['Show on:'] = 'Afficher sur :';
+#_config.php:265
+#_config.php:467
+$GLOBALS['__l10n']['Show description of entries'] = 'Afficher la description des billets';
 
-#index.php:214
+#_config.php:276
+#_config.php:478
+$GLOBALS['__l10n']['Remove html of description'] = 'Retirer le code HTML de la description';
+
+#_config.php:279
+#_config.php:481
+$GLOBALS['__l10n']['Maximum length of description:'] = 'Longueur maximum de la description :';
+
+#_config.php:305
+#_config.php:507
+$GLOBALS['__l10n']['Show content of entries'] = 'Afficher le contenu du flux';
+
+#_config.php:316
+#_config.php:518
+$GLOBALS['__l10n']['Remove html of content'] = 'Retirer le code HTML du contenu';
+
+#_config.php:319
+#_config.php:521
+$GLOBALS['__l10n']['Maximum length of content:'] = 'Longueur maximum du contenu :';
+
+#_config.php:344
+$GLOBALS['__l10n']['New format'] = 'Nouveau format';
+
+#_config.php:541
+$GLOBALS['__l10n']['Informations'] = 'Informations';
+
+#_config.php:545
 $GLOBALS['__l10n']['Theme'] = 'Thème';
 
-#index.php:216
-$GLOBALS['__l10n']['Theme must have behavoir publicEntryAfterContent'] = 'Le thème doit avoir le behavoir publicEntryAfterContent';
+#_config.php:547
+$GLOBALS['__l10n']['Theme must have behavoir publicEntryAfterContent.'] = 'Le thème doit avoir le behavior pulicEnryAfterContent.';
 
-#index.php:217
-$GLOBALS['__l10n']['Feeds are inserted after post content'] = 'Les flux sont insérés après le contenu d\'un billet';
+#_config.php:548
+$GLOBALS['__l10n']['To add feed to an entry edit this entry and put in sidebar the url of the feed and select a format.'] = 'Pour ajouter un flux à un billet, modifier ce billet et dans son menu latéral ajouter l\'URL du flux et le format.';
 
-#index.php:219
-$GLOBALS['__l10n']['Add a feed to an entry'] = 'Ajouter un flux à un billet';
-
-#index.php:221
-$GLOBALS['__l10n']['To add feed to an entry edit this entry and put in sidebar the url of the feed.'] = 'Pour ajouter un flux à un billet, éditer le billet et ajouter dans la barre latérale l\'URL du flux.';
-
-#index.php:224
+#_config.php:553
 $GLOBALS['__l10n']['Structure'] = 'Structure';
 
-#index.php:227
+#_config.php:556
 $GLOBALS['__l10n']['Title of feed'] = 'Titre du flux';
 
-#index.php:228
+#_config.php:557
 $GLOBALS['__l10n']['Description of feed'] = 'Descritpion du flux';
 
-#index.php:230
+#_config.php:559
 $GLOBALS['__l10n']['Title of entry'] = 'Titre du billet';
 
-#index.php:231
+#_config.php:560
 $GLOBALS['__l10n']['Description of entry'] = 'Description du billet';
+
+#_public.php:130
+$GLOBALS['__l10n']['a related feed'] = 'un flux lié';
+
+$GLOBALS['__l10n']['Add RSS/Atom feeds after entries content'] = 'Ajouter des flux RSS/Atom après le contenu des billets';
 
 ?>

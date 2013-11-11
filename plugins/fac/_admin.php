@@ -1,261 +1,351 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of fac, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_CONTEXT_ADMIN')) {
 
-# Plugin menu
-$_menu['Plugins']->addItem(
-	__('fac'),
-	'plugin.php?p=fac','index.php?pf=fac/icon.png',
-	preg_match('/plugin.php\?p=fac(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id)
-);
-
-# Admin behaviors
-$core->blog->settings->addNamespace('fac');
-if ($core->blog->settings->fac->fac_active)
-{
-	$core->addBehavior('adminPostHeaders',array('facAdmin','adminPostHeaders'));
-	$core->addBehavior('adminPostFormSidebar',array('facAdmin','adminPostFormSidebar'));
-	$core->addBehavior('adminAfterPostCreate',array('facAdmin','adminAfterPostSave'));
-	$core->addBehavior('adminAfterPostUpdate',array('facAdmin','adminAfterPostSave'));
-	$core->addBehavior('adminBeforePostDelete',array('facAdmin','adminBeforePostDelete'));
-	$core->addBehavior('adminPostsActionsCombo',array('facAdmin','adminPostsActionsCombo'));
-	$core->addBehavior('adminPostsActions',array('facAdmin','adminPostsActions'));
-	$core->addBehavior('adminPostsActionsContent',array('facAdmin','adminPostsActionsContent'));
+	return null;
 }
 
-# Admin behaviors class
+$core->blog->settings->addNamespace('fac');
+
+# Not active
+if (!$core->blog->settings->fac->fac_active) {
+
+	return null;
+}
+
+# Admin behaviors
+$core->addBehavior(
+	'adminPostHeaders',
+	array('facAdmin', 'adminPostHeaders')
+);
+$core->addBehavior(
+	'adminPostFormItems',
+	array('facAdmin', 'adminPostFormItems')
+);
+$core->addBehavior(
+	'adminAfterPostCreate',
+	array('facAdmin', 'adminAfterPostSave')
+);
+$core->addBehavior(
+	'adminAfterPostUpdate',
+	array('facAdmin', 'adminAfterPostSave')
+);
+$core->addBehavior(
+	'adminBeforePostDelete',
+	array('facAdmin', 'adminBeforePostDelete')
+);
+$core->addBehavior(
+	'adminPostsActionsPage',
+	array('facAdmin', 'adminPostsActionsPage')
+);
+
+/**
+ * @ingroup DC_PLUGIN_FAC
+ * @brief Linked feed to entries - admin methods.
+ * @since 2.6
+ */
 class facAdmin
 {
+	/**
+	 * Add javascript (toggle)
+	 * 
+	 * @return string HTML head
+	 */
 	public static function adminPostHeaders()
 	{
 		return dcPage::jsLoad('index.php?pf=fac/js/admin.js');
 	}
-	
-	public static function adminPostFormSidebar($post)
+
+	/**
+	 * Add form to post sidebar
+	 * 
+	 * @param  ArrayObject $main_items    Main items
+	 * @param  ArrayObject $sidebar_items Sidebar items
+	 * @param  record      $post          Post record or null
+	 */
+	public static function adminPostFormItems(ArrayObject $main_items, ArrayObject $sidebar_items, $post)
 	{
 		global $core;
-		
-		$fac_formats = self::facFormatsCombo($core);
-		
+
+		# Get existing linked feed
 		$fac_url = $fac_format = '';
-		if ($post)
-		{
-			$params = array('meta_type'=>'fac','post_id'=>$post->post_id,'limit'=>1);
-			$rs = $core->meta->getMetadata($params);
+		if ($post) {
+
+			$rs = $core->meta->getMetadata(array(
+				'meta_type'	=> 'fac',
+				'post_id'		=> $post->post_id,
+				'limit'		=> 1
+			));
 			$fac_url = $rs->isEmpty() ? '' : $rs->meta_id;
-			
-			$params = array('meta_type'=>'facformat','post_id'=>$post->post_id,'limit'=>1);
-			$rs = $core->meta->getMetadata($params);
+
+			$rs = $core->meta->getMetadata(array(
+				'meta_type'	=> 'facformat',
+				'post_id'		=> $post->post_id,
+				'limit'		=> 1
+			));
 			$fac_format = $rs->isEmpty() ? '' : $rs->meta_id;
 		}
-		
-		echo 
-		'<h3 id="fac-form-title" class="clear">'.__('fac').'</h3>'.
-		'<div id="fac-form-content">'.
-		'<p class="classic">'.
-		'<label for="fac_url">'.
-		($fac_url ? __('change RSS/ATOM feed:') : __('Add RSS/Atom feed:')).
-		'<br />'.form::field('fac_url',10,255,$fac_url,'maximal',3).'</label>'.
-		($fac_url ? __('change format of feed:') : __('Choose format of feed:')).
-		'<br />'.form::combo('fac_format',$fac_formats,$fac_format,'maximal',3).'</label>'.
-		'</p>';
-		
-		if ($fac_url)
-		{
-			echo 
-			'<p><a href="'.$fac_url.'" title="'.$fac_url.'">'.__('view feed').'</a></p>';
-		}
-		echo '</div>';
+
+		# Set linked feed form items
+		$sidebar_items['options-box']['items']['fac'] =
+			self::formFeed($core, $fac_url, $fac_format);
 	}
-	
-	public static function adminAfterPostSave($cur,$post_id)
+
+	/**
+	 * Save linked feed
+	 * 
+	 * @param  cursor $cur      Current post cursor
+	 * @param  integer $post_id Post id
+	 */
+	public static function adminAfterPostSave(cursor $cur, $post_id)
 	{
 		global $core;
-		
-		if (!isset($_POST['fac_url']) || !isset($_POST['fac_format'])) return;
-		
-		$post_id = (integer) $post_id;
-		$core->meta->delPostMeta($post_id,'fac');
-		$core->meta->delPostMeta($post_id,'facformat');
-		
-		if (!empty($_POST['fac_url']) && !empty($_POST['fac_format']))
-		{
-			$core->meta->setPostMeta($post_id,'fac',$_POST['fac_url']);
-			$core->meta->setPostMeta($post_id,'facformat',$_POST['fac_format']);
+
+		if (!isset($_POST['fac_url']) 
+		 || !isset($_POST['fac_format'])
+		) {
+			return null;
 		}
+
+		# Delete old linked feed
+		self::delFeed($core, $post_id);
+
+		# Add new linked feed
+		self::addFeed($core, $post_id, $_POST);
 	}
-	
+
+	/**
+	 * Delete linked feed on post edition
+	 * 
+	 * @param  integer $post_id Post id
+	 */
 	public static function adminBeforePostDelete($post_id)
 	{
-		global $core;
-		
-		$post_id = (integer) $post_id;
-		$core->meta->delPostMeta($post_id,'fac');
-		$core->meta->delPostMeta($post_id,'facformat');
+		self::delFeed($GLOBALS['core'], $post_id);
 	}
-	
-	public static function adminPostsActionsCombo($args)
+
+	/**
+	 * Add actions to posts page combo
+	 * 
+	 * @param  dcCore             $core dcCore instance
+	 * @param  dcPostsActionsPage $ap   dcPostsActionsPage instance
+	 */
+	public static function adminPostsActionsPage(dcCore $core, dcPostsActionsPage $pa)
 	{
-		global $core;
-		
-		if ($core->auth->check('usage,contentadmin',$core->blog->id))
-		{
-			$args[0][__('fac')][__('add fac')] = 'fac_add';
+		$pa->addAction(
+			array(
+				__('Linked feed') => array(
+					__('Add feed') => 'fac_add'
+				)
+			),
+			array('facAdmin', 'callbackAdd')
+		);
+
+		if (!$core->auth->check('delete,contentadmin', $core->blog->id)) {
+
+			return null;
 		}
-		if ($core->auth->check('delete,contentadmin',$core->blog->id))
-		{
-			$args[0][__('fac')][__('remove fac')] = 'fac_remove';
-		}
+		$pa->addAction(
+			array(
+				__('Linked feed') => array(
+					__('Remove feed') => 'fac_remove'
+				)
+			),
+			array('facAdmin', 'callbackRemove')
+		);
 	}
-	
-	public static function adminPostsActions($core,$posts,$action,$redir)
+
+	/**
+	 * Posts actions callback to remove linked feed
+	 * 
+	 * @param  dcCore             $core dcCore instance
+	 * @param  dcPostsActionsPage $pa   dcPostsActionsPage instance
+	 * @param  ArrayObject        $post _POST actions
+	 */
+	public static function callbackRemove(dcCore $core, dcPostsActionsPage $pa, ArrayObject $post)
 	{
-		if ($action == 'fac_add' 
-		 && !empty($_POST['new_fac_url']) && !empty($_POST['new_fac_format']) 
-		 && $core->auth->check('usage,contentadmin',$core->blog->id))
-		{
-			try
-			{
-				$new_fac_url = $_POST['new_fac_url'];
-				$new_fac_format = $_POST['new_fac_format'];
-				
-				while ($posts->fetch())
-				{
-					$params = array('meta_type'=>'fac','post_id'=>$posts->post_id,'limit'=>1);
-					$rs = $core->meta->getMetadata($params);
-					
-					if ($rs->isEmpty())
-					{
-						$core->meta->setPostMeta($posts->post_id,'fac',$new_fac_url);
-						$core->meta->setPostMeta($posts->post_id,'facformat',$new_fac_format);
-					}
-				}
-				http::redirect($redir);
-			}
-			catch (Exception $e)
-			{
-				$core->error->add($e->getMessage());
-			}
+		# No entry
+		$posts_ids = $pa->getIDs();
+		if (empty($posts_ids)) {
+			throw new Exception(__('No entry selected'));
 		}
-		elseif ($action == 'fac_remove' && !empty($_POST['meta_id']) 
-		 && $core->auth->check('delete,contentadmin',$core->blog->id))
-		{
-			try
-			{
-				while ($posts->fetch())
-				{
-					foreach ($_POST['meta_id'] as $v)
-					{
-						$core->meta->delPostMeta($posts->post_id,'fac',$v);
-						$core->meta->delPostMeta($posts->post_id,'facformat',$v);
-					}
-				}
-				http::redirect($redir);
-			}
-			catch (Exception $e)
-			{
-				$core->error->add($e->getMessage());
-			}
+
+		# No right
+		if (!$core->auth->check('delete,contentadmin',$core->blog->id)) {
+			throw new Exception(__('No enough right'));
 		}
+
+		# Delete expired date
+		foreach($posts_ids as $post_id) {
+			self::delFeed($core, $post_id);
+		}
+
+		dcPage::addSuccessNotice(__('Linked feed deleted.'));
+		$pa->redirect(true);
 	}
-	
-	public static function adminPostsActionsContent($core,$action,$hidden_fields)
+
+	/**
+	 * Posts actions callback to add linked feed
+	 * 
+	 * @param  dcCore             $core dcCore instance
+	 * @param  dcPostsActionsPage $pa   dcPostsActionsPage instance
+	 * @param  ArrayObject        $post _POST actions
+	 */
+	public static function callbackAdd(dcCore $core, dcPostsActionsPage $pa, ArrayObject $post)
 	{
-		if ($action == 'fac_add')
-		{
+		# No entry
+		$posts_ids = $pa->getIDs();
+		if (empty($posts_ids)) {
+			throw new Exception(__('No entry selected'));
+		}
+
+		# Save action
+		if (!empty($post['fac_url'])
+		 && !empty($post['fac_format'])
+		) {
+			foreach($posts_ids as $post_id) {
+				self::delFeed($core, $post_id);
+				self::addFeed($core, $post_id, $post);
+			}
+
+			dcPage::addSuccessNotice(__('Linked feed added.'));
+			$pa->redirect(true);
+		}
+
+		# Display form
+		else {
+			$pa->beginPage(
+				dcPage::breadcrumb(array(
+					html::escapeHTML($core->blog->name) => '',
+					$pa->getCallerTitle() => $pa->getRedirection(true),
+					__('Linked feed to this selection') => '' 
+				))
+			);
+
 			echo
-			'<h2>'.__('Add fac to entries').'</h2>'.
-			'<form action="posts_actions.php" method="post">'.
-			'<p>'.__('It will be added only if there is no feed on entry.').'</p>'.
-			'<p class="classic"><label for="new_fac_url">'.__('feed to add:').'<br />'.
-			form::field('new_fac_url',60,255,'',2).'</label></p>'.
-			'<p class="classic"><label for="new_fac_format">'.__('format:').'<br />'.
-			form::combo('new_fac_format',self::facFormatsCombo($core),'',2).'</label></p>'.
+			'<form action="'.$pa->getURI().'" method="post">'.
+			$pa->getCheckboxes().
+
+			self::formFeed($core).
+
 			'<p>'.
-			$hidden_fields.
 			$core->formNonce().
-			form::hidden(array('action'),'fac_add').
-			'<input type="submit" value="'.__('save').'" /></p>'.
+			$pa->getHiddenFields().
+			form::hidden(array('action'), 'fac_add').
+			'<input type="submit" value="'.__('Save').'" /></p>'.
 			'</form>';
-		}
-		elseif ($action == 'fac_remove')
-		{
-			$facs = array();
-			
-			foreach ($_POST['entries'] as $id)
-			{
-				$params = array('meta_type'=>'fac','post_id'=>$id,'limit'=>1);
-				$rs = $core->meta->getMetadata($params);
-				
-				if ($rs->isEmpty()) continue;
-				
-				if (isset($facs[$rs->meta_id]))
-				{
-					$facs[$rs->meta_id]++;
-				}
-				else
-				{
-					$facs[$rs->meta_id] = 1;
-				}
-			}
-			
-			echo '<h2>'.__('Remove selected facs from entries').'</h2>';
-			
-			if (empty($facs))
-			{
-				echo '<p>'.__('No fac for selected entries').'</p>';
-				return;
-			}
-			
-			$posts_count = count($_POST['entries']);
-			
-			echo
-			'<form action="posts_actions.php" method="post">'.
-			'<fieldset><legend>'.__('Following facs have been found in selected entries:').'</legend>';
-			
-			foreach ($facs as $k => $n)
-			{
-				$label = '<label class="classic">%s %s</label>';
-				if ($posts_count == $n)
-				{
-					$label = sprintf($label,'%s','<strong>%s</strong>');
-				}
-				echo 
-				'<p>'.sprintf($label,
-				form::checkbox(array('meta_id[]'),html::escapeHTML($k),'',2),
-				html::escapeHTML($k)).
-				'</p>';
-			}
-			
-			echo
-			'<p><input type="submit" value="'.__('ok').'" /></p>'.
-			$hidden_fields.
-			$core->formNonce().
-			form::hidden(array('action'),'fac_remove').
-			'</fieldset></form>';
+
+			$pa->endPage();
 		}
 	}
-	
-	public static function facFormatsCombo($core)
+
+	/**
+	 * Linked feed form field
+	 * 
+	 * @param  dcCore $core   dcCore instance
+	 * @param  string $url    Feed URL
+	 * @param  string $format Feed format
+	 * @return string         Feed form content
+	 */
+	protected static function formFeed(dcCore $core, $url='', $format='')
+	{
+		return 
+		'<div id="fac">'.
+		'<h5>'.__('Linked feed').'</h5>'.
+		'<p><label for="fac_url">'.
+		__('Feed URL:').'</label>'.
+		form::field(
+			'fac_url',
+			60,
+			255,
+			$url,
+			'maximal'
+		).'</p>'.
+		'<p><label for="fac_format">'.
+		__('Format:').'</label>'.
+		form::combo(
+			'fac_format',
+			self::comboFac($core),
+			$format,
+			'maximal'
+		).'</p>'.
+		($url ? '<p><a href="'.$url.'" title="'.$url.'">'.__('view feed').'</a></p>' : '').
+		'</div>';
+	}
+
+	/**
+	 * List of fac formats
+	 * 
+	 * @param  dcCore $core dcCore instance
+	 * @return array        List of fac formats
+	 */
+	protected static function comboFac(dcCore $core)
 	{
 		$formats = @unserialize($core->blog->settings->fac->fac_formats);
-		if (!is_array($formats) || empty($formats)) return array();
-		foreach($formats as $uid => $f)
-		{
-			$fac_formats[$f['name']] = $uid;
+		if (!is_array($formats) || empty($formats)) {
+
+			return array();
 		}
-		return $fac_formats;
+
+		$res = array();
+		foreach($formats as $uid => $f) {
+			$res[$f['name']] = $uid;
+		}
+
+		return $res;
+	}
+
+	/**
+	 * Delete linked feed
+	 * 
+	 * @param  dcCore  $core    dcCore instance
+	 * @param  integer $post_id Post id
+	 */
+	protected static function delFeed(dcCore $core, $post_id)
+	{
+		$post_id = (integer) $post_id;
+		$core->meta->delPostMeta($post_id, 'fac');
+		$core->meta->delPostMeta($post_id, 'facformat');
+	}
+
+	/**
+	 * Add linked feed
+	 * 
+	 * @param  dcCore  $core    dcCore instance
+	 * @param  integer $post_id Post id
+	 * @param  array   $options Feed options
+	 */
+	protected static function addFeed($core, $post_id, $options)
+	{
+		if (empty($options['fac_url']) 
+		 || empty($options['fac_format'])
+		) {
+			return null;
+		}
+
+		$post_id = (integer) $post_id;
+
+		$core->meta->setPostMeta(
+			$post_id,
+			'fac',
+			$options['fac_url']
+		);
+		$core->meta->setPostMeta(
+			$post_id,
+			'facformat',
+			$options['fac_format']
+		);
 	}
 }
-?>
