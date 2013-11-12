@@ -12,19 +12,33 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
-if (version_compare(str_replace("-r","-p",DC_VERSION),'2.5-alpha','<')){return;}
+if (!defined('DC_RC_PATH')) {
 
-global $__autoload, $core;
+	return null;
+}
+
+# Check Dotclear version
+if (!method_exists('dcUtils', 'versionsCompare') 
+ || dcUtils::versionsCompare(DC_VERSION, '2.6', '<', false)
+) {
+	return null;
+}
+
+$d = dirname(__FILE__).'/inc/';
 
 # DB class
-$__autoload['periodical'] = dirname(__FILE__).'/inc/class.periodical.php';
+$__autoload['periodical'] = $d.'class.periodical.php';
 # Admin list and pagers
-$__autoload['adminPeriodicalList'] = dirname(__FILE__).'/inc/lib.index.pager.php';
+$__autoload['adminPeriodicalList'] = $d.'lib.index.pager.php';
 
 # Add to plugn soCialMe (writer part)
-$__autoload['periodicalSoCialMeWriter'] = dirname(__FILE__).'/inc/lib.periodical.socialmewriter.php';
-$core->addBehavior('soCialMeWriterMarker',array('periodicalSoCialMeWriter','soCialMeWriterMarker'));
-$core->addBehavior('periodicalAfterPublishedPeriodicalEntry',array('periodicalSoCialMeWriter','periodicalAfterPublishedPeriodicalEntry'));
+$__autoload['periodicalSoCialMeWriter'] = $d.'lib.periodical.socialmewriter.php';
 
-?>
+$core->addBehavior(
+	'soCialMeWriterMarker',
+	array('periodicalSoCialMeWriter', 'soCialMeWriterMarker')
+);
+$core->addBehavior(
+	'periodicalAfterPublishedPeriodicalEntry',
+	array('periodicalSoCialMeWriter', 'periodicalAfterPublishedPeriodicalEntry')
+);

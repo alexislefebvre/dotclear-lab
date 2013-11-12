@@ -10,7 +10,9 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) {
+
+	return null;
+}
 
 $__resources['help']['periodical'] = dirname(__FILE__).'/help/help.html';
-?>

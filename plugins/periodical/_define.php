@@ -15,10 +15,20 @@
 if (!defined('DC_RC_PATH')){return;}
  
 $this->registerModule(
-	/* Name */			"Periodical",
-	/* Description*/		"Published periodically entries",
-	/* Author */			"JC Denis",
-	/* Version */			'2013.06.30',
-	/* Permissions */		'usage,contentadmin'
+	/* Name */
+	"Periodical",
+	/* Description*/
+	"Published periodically entries",
+	/* Author */
+	"Jean-Christian Denis",
+	/* Version */
+	'2013.11.11',
+	/* Properies */
+	array(
+		'permissions' => 'usage,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://jcd.lv/q=periodical',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/periodical'
+	)
 );
-?>
