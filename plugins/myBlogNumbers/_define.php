@@ -12,13 +12,25 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) { return; }
- 
+if (!defined('DC_RC_PATH')) {
+
+	return null;
+}
+
 $this->registerModule(
-	/* Name */			"My blog numbers",
-	/* Description*/		"Show some figures of your blog",
-	/* Author */			"JC Denis",
-	/* Version */			'2013.06.29',
-	/* Permissions */		'usage,contentadmin'
+	/* Name */
+	"My blog numbers",
+	/* Description*/
+	"Show some figures of your blog",
+	/* Author */
+	"Jean-Christian Denis",
+	/* Version */
+	'2013.11.12',
+	array(
+		'permissions' => 'usage,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://jcd.lv/q=myBlogNumbers',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/myBlogNumbers'
+	)
 );
-?>

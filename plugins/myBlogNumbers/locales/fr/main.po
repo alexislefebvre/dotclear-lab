@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: myBlogNumbers 2013.06.29\n"
+"Project-Id-Version: myBlogNumbers 2013.11.12\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2013-06-29T01:52:45+00:00\n"
 "Last-Translator: Jean-Christian Denis\n"
@@ -14,17 +14,18 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Show some figures of your blog"
+msgstr "Afficher quelques chiffres de vote blog"
+
 #: _public.php:41
 msgid "no entries"
 msgstr "aucun billet"
 
 #: _public.php:45
 msgid "one entry"
-msgstr "un billet"
-
-#: _public.php:49
-msgid "%s entries"
-msgstr "%s billets"
+msgid_plural "%s entries"
+msgstr[0] "un billet"
+msgstr[1] "%s billets"
 
 #: _public.php:65
 msgid "no categories"
@@ -32,27 +33,29 @@ msgstr "aucune catégorie"
 
 #: _public.php:69
 msgid "one category"
-msgstr "une catégorie"
-
-#: _public.php:73
-msgid "%s categories"
-msgstr "%s catégories"
+msgid_plural "%s categories"
+msgstr[0] "une catégorie"
+msgstr[1] "%s catégories"
 
 #: _public.php:94
 msgid "no comments"
 msgstr "aucun commentaire"
 
 #: _public.php:102
-msgid "%s comments"
-msgstr "%s commentaires"
+msgid "one comment"
+msgid_plural "%s comments"
+msgstr[0] "un commentaire"
+msgstr[1] "%s commentaires"
 
 #: _public.php:123
 msgid "no trackbacks"
 msgstr "aucun rétrolien"
 
 #: _public.php:131
-msgid "%s trackbacks"
-msgstr "%s rétroliens"
+msgid "one trackback"
+msgid_plural "%s trackbacks"
+msgstr[0] "un rétrolien"
+msgstr[1] "%s rétroliens"
 
 #: _public.php:153
 msgid "no tags"
@@ -60,11 +63,9 @@ msgstr "aucun mot clé"
 
 #: _public.php:157
 msgid "one tag"
-msgstr "un mot clé"
-
-#: _public.php:161
-msgid "%s tags"
-msgstr "%s mots clés"
+msgid_plural "%s tags"
+msgstr[0] "un mot clé"
+msgstr[1] "%s mots clés"
 
 #: _public.php:177
 msgid "no author"
@@ -72,11 +73,9 @@ msgstr "aucun auteur"
 
 #: _public.php:181
 msgid "one author"
-msgstr "un auteur"
-
-#: _public.php:185
-msgid "%s authors"
-msgstr "%s auteurs"
+msgid_plural "%s authors"
+msgstr[0] "un auteur"
+msgstr[1] "%s auteurs"
 
 #: _widgets.php:21
 #: _widgets.php:24
@@ -150,4 +149,3 @@ msgstr "Titre pour le nombre d'auteurs :"
 #: _widgets.php:57
 msgid "Authors:"
 msgstr "Auteurs :"
-

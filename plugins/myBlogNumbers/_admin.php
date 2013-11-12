@@ -12,6 +12,9 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!defined('DC_CONTEXT_ADMIN')) {
+
+	return null;
+}
+
 require dirname(__FILE__).'/_widgets.php';
-?>

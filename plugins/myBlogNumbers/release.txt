@@ -1,9 +1,0 @@
-2013.06.29
- * Used new 'homeonly' option
- * Fixed text for 0 count
-
-0.2 20100605
- * Switched to DC 2.2
-
-0.1 20091016
- * First lab release
