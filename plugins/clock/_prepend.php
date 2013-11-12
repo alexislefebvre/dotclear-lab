@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Clock, a plugin for Dotclear 2
-# Copyright (C) 2007-2008,2009,2010 Moe (http://gniark.net/)
+# Copyright (C) 2007-2013 Moe (http://gniark.net/)
 #
 # Clock is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -21,5 +21,3 @@
 if (!defined('DC_RC_PATH')) {return;}
 
 require_once(dirname(__FILE__).'/_widgets.php');
-
-?>
