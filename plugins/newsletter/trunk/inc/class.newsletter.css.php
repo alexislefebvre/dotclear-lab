@@ -28,11 +28,9 @@ class newsletterCSS
 	{
 		$this->core = $core;
 		$this->blog = $core->blog;
-		
 		$this->file_css = 'style_letter.css';
 		$this->setPathCSS();
 		$this->f_content = '';
-			
 		$this->f_name = $this->path_css.'/'.$this->file_css;
 		$this->readFileCSS();
 	}	
@@ -76,10 +74,9 @@ class newsletterCSS
 	private function readFileCSS() 
 	{
 		if($this->isEditable()) {
-			// lecture du fichier et test d'erreur
+			# lecture du fichier et test d'erreur
 			$this->f_content = @file_get_contents($this->f_name);
 		}		
-	
 	}
 	
 	private function writeFileCSS() 
@@ -90,10 +87,7 @@ class newsletterCSS
 			if (!$fp) {
 				throw new Exception('tocatch');
 			}
-			
 			$content = preg_replace('/(\r?\n)/m',"\n",$this->f_content);
-			//$content = preg_replace('/\r/m',"\n",$this->f_content);
-			
 			fwrite($fp,$content);
 			fclose($fp);
 		}
@@ -103,7 +97,32 @@ class newsletterCSS
 		}		
 		return __('Document saved');
 	}	
-	
+
+	public static function copyFileCSSToTheme($theme = null)
+	{
+		if ($theme == null) {
+			echo __('No template selected');
+		} else {
+			global $core;
+			try {
+				$blog = &$core->blog;		
+
+				# source
+				$source = path::real(newsletterPlugin::folder().'..').'/style_letter.css';
+				
+				# fichier destination
+				$dest = $blog->themes_path.'/'.$theme.'/style_letter.css';
+				
+				if (!copy($source, $dest)) {
+					throw new Exception('copy fail');
+				} else {
+					return 'copy success';
+				}
+			} catch (Exception $e) {
+				$core->error->add($e->getMessage());
+			}
+		}
+	}
 }
 
 ?>

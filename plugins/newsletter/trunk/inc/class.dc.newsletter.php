@@ -17,11 +17,11 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 class rsExtNewsletter 
 {
-        public static function getURL($rs)
-        {
-                return $rs->core->blog->url.$rs->core->url->getBase('newsletter').'/'.
-                html::sanitizeURL($rs->post_url);
-        }
+	public static function getURL($rs)
+	{
+		return $rs->core->blog->url.$rs->core->url->getBase('newsletter').'/'.
+		html::sanitizeURL($rs->post_url);
+	}
 }
 
 class dcNewsletter
@@ -32,7 +32,6 @@ class dcNewsletter
 	protected $blogname;
 	protected $errors;
 	protected $messages;
-	
 	public $newsletter_settings;
 		
 	/**
@@ -45,10 +44,8 @@ class dcNewsletter
 		$this->core = $core;
 		$this->blog = $core->blog;
 		$this->blogname = $this->blog->name;
-		
 		$this->blog->settings->addNamespace('newsletter');
 		$this->settings =& $core->blog->settings->newsletter;			
-		
 		$this->newsletter_settings = new newsletterSettings($core);
 		$this->errors = $this->settings->newsletter_errors != '' ? unserialize($this->settings->newsletter_errors) : array();
 		$this->messages = $this->settings->newsletter_messages != '' ? unserialize($this->settings->newsletter_messages) : array();			
@@ -98,7 +95,6 @@ class dcNewsletter
 	{
 		return sizeof($this->errors);
 	}
-
 	
 	###############################################
 	# MESSAGES

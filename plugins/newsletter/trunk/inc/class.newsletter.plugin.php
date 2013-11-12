@@ -187,7 +187,6 @@ class newsletterPlugin
 	/**
 	* url de base pour les mises à jour
 	*/
-	//public static function baseUpdateUrl() { return html::escapeURL("http://phoenix.cybride.net/public/plugins/update/"); }
 	public static function baseUpdateUrl() 
 	{ 
 		return html::escapeURL("http://"); 

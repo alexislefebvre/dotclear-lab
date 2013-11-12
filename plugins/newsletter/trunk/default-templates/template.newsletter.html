@@ -40,6 +40,7 @@
 					<p>
 						<label for="nl_submit">{{tpl:NewsletterFormLabel id="nl_submit"}}</label>
 						<input type="submit" name="nl_submit" id="nl_submit" value="{{tpl:NewsletterFormLabel id="ok"}}" class="submit" />
+						<input type="hidden" name="nl_random" id="nl_random" value="{{tpl:NewsletterFormRandom}}" />
 					</p>
 					
 					</fieldset>
@@ -47,5 +48,6 @@
 				
 			</div>
 		</tpl:NewsletterFormBlock>
+		<div class="post-info" id="message"></div>
 
 	</tpl:NewsletterBlock>

@@ -13,6 +13,15 @@ Newsletter 3.9.0 - 2013-11-xx
 * Ajout de l'import des fichiers zippés
 * Utilisation du plugin License bootstrap pour générer les licences
 * Ajout du plugin dans le DashboardFavorites et ajout de nouvelles icones style dc2.6
+* Reprise du widget Newsletter et du paramétrage des widgets
+* Modification de la gestion du capcha et nettoyage des fichiers temporaires
+* Ajout de la validation dynamique du form de souscription et correction de la gestion du submit
+* Remise à niveau des traductions
+* Ajout dans l'adaptation du template de la page des newsletters
+* Ajout du formulaire de copie du CSS style_letter.css dans le theme sélectionné
+
+TODO
+- resoudre le pb de chargement du js quand le template a été adapté
 
 Newsletter 3.8.1 - 2013-05-11
 ===========================================================

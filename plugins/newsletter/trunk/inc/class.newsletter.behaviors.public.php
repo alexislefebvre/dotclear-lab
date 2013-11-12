@@ -17,7 +17,7 @@ if (!defined('DC_RC_PATH')) { return; }
 
 class dcBehaviorsNewsletterPublic
 {
-	public static function publicHeadContent(dcCore $core,$_ctx)
+	public static function publicHeadContent($core,$_ctx)
 	{
 		$blog_settings =& $core->blog->settings->newsletter;
 		$system_settings =& $core->blog->settings->system;
@@ -25,7 +25,7 @@ class dcBehaviorsNewsletterPublic
 		try {
 			$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 			
-			# seeks plugin status
+			# plugin status
 			if (!$newsletter_flag) 
 				return;		
 		
@@ -37,24 +37,34 @@ class dcBehaviorsNewsletterPublic
 				echo $css_style;
 			}
 
-			echo
-				"<script type=\"text/javascript\" src=\"".
-				'?pf=newsletter/js/_newsletter_pub.js">'.
-				"</script>\n";
+			/*
+			echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter_pub.js');
 			
 			echo
 				'<script type="text/javascript">'."\n".
 				"//<![CDATA[\n".
-				"please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
+				dcPage::jsVar('please_wait',__('Waiting...'))."\n".
 				"\n//]]>\n".
 				"</script>\n";
-
+			//*/
+			echo
+			"<script type=\"text/javascript\" src=\"".
+			'?pf=newsletter/js/_newsletter_pub.js">'.
+			"</script>\n";
+			
+			echo
+			'<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+			"please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
+			"\n//]]>\n".
+			"</script>\n";
+						
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
 	}
 
-	public static function translateKeywords(dcCore $core, $tag, $args)
+	public static function translateKeywords($core,$tag,$args)
 	{
 		global $_ctx;
 		if($tag != 'EntryContent' # tpl value

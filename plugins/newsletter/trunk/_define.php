@@ -23,7 +23,7 @@ $this->registerModule(
 		/* Author */
 		"Benoit de Marne",
 		/* Version */
-		'3.9.0r14',
+		'3.9.0r23',
 		/* Properties */
 		array(
 				'permissions' => 'usage,contentadmin',

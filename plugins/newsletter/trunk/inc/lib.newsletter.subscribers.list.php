@@ -201,24 +201,23 @@ class newsletterSubscribersList extends adminGenericList
 		if(empty($_POST['subscriber'])) {
 			echo '<h3>'.__('Send letters').'</h3>';
 			echo '<div class="fieldset">';
-			echo '<p>'.__('No enabled subscriber in your selection.').'</p>';
+			echo '<p>'.__('No enabled subscriber in your selection').'</p>';
 			echo '</div>';
 			
 			echo '<p><a class="back" href="plugin.php?p=newsletter&amp;m=subscribers">'.__('back').'</a></p>';
 		} else {
-		
+
 			/* Actions
 			-------------------------------------------------------- */
 			if (!empty($_POST['op']) && !empty($_POST['subscriber']))
 			{
-				//$entries = $_POST['subscriber'];
 				$action = $_POST['op'];
 	
 				if ($action == 'send' && $core->auth->check('admin',$core->blog->id)) {
 				
 					$entries = $_POST['subscriber'];
 					foreach ($entries as $k => $v) {
-						// check if users are enabled
+						# check if users are enabled
 						if ($subscriber = newsletterCore::get((integer) $v)){
 							if ($subscriber->state == 'enabled') {
 								$subscribers_id[$k] = (integer) $v;
@@ -238,7 +237,7 @@ class newsletterSubscribersList extends adminGenericList
 						echo '<div class="fieldset">';
 						echo '<h4>'.__('Select letter to send').'</h4>';
 						echo '<form action="plugin.php?p=newsletter&amp;m=letters" method="post">';
-						
+
 						echo '<p><label class="classic">'.__('Letter:').'&nbsp;';
 						echo form::combo(array('letters_id[]'),$letters_combo,'-');
 						echo '</label> ';
@@ -276,7 +275,7 @@ class newsletterSubscribersList extends adminGenericList
 					} else {
 						echo '<h3>'.__('Send letters').'</h3>';
 						echo '<div class="fieldset">';
-						echo '<p>'.__('No enabled subscriber in your selection.').'</p>';
+						echo '<p>'.__('No enabled subscriber in your selection').'</p>';
 						echo '</div>';
 					}
 					

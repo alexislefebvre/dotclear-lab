@@ -18,7 +18,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 require dirname(__FILE__).'/class.newsletter.mail.php';
 require_once dirname(__FILE__).'/class.html2text.php';
 
-// Define behaviors
+# Define behaviors
 class newsletterBehaviors
 {
 	/**
@@ -28,7 +28,7 @@ class newsletterBehaviors
 	{
 		$name = (string) $plugin['name'];
 		if (strcmp($name, newsletterPlugin::pname()) == 0) {
-         		require dirname(__FILE__).'/inc/class.newsletter.admin.php';
+         	require dirname(__FILE__).'/inc/class.newsletter.admin.php';
 			newsletterAdmin::uninstall();
 		}
 	}
@@ -40,7 +40,7 @@ class newsletterBehaviors
 	{
 		global $core;
 
-		// recupere le contenu du billet
+		# recupere le contenu du billet
 		$params = array();
 		$params['post_id'] = (integer) $post_id;
 
@@ -57,11 +57,10 @@ class newsletterBehaviors
 	public static function adminAutosendUpdate($cur, $post_id)
 	{
 		global $core;
-		
 		$newsletter_settings = new newsletterSettings($core);
 		
 		if($newsletter_settings->getSendUpdatePost()) {
-			// recupere le contenu du billet
+			# recupere le contenu du billet
 			$params = array();
 			$params['post_id'] = (integer) $post_id;
 	
@@ -84,9 +83,9 @@ class newsletterBehaviors
 	public static function exportSingle($core,$exp,$blog_id)
 	{
 		$exp->export('newsletter',
-	    		'SELECT subscriber_id, blog_id, email, regcode, state, subscribed, lastsent, modesend '.
-	    		'FROM '.$core->prefix.'newsletter N '.
-	    		"WHERE N.blog_id = '".$blog_id."'"
+	   		'SELECT subscriber_id, blog_id, email, regcode, state, subscribed, lastsent, modesend '.
+	   		'FROM '.$core->prefix.'newsletter N '.
+	   		"WHERE N.blog_id = '".$blog_id."'"
 		);
 	}
 
@@ -103,7 +102,6 @@ class newsletterBehaviors
 		if ($line->__name == 'newsletter') {
 			
 			$cur = $core->con->openCursor($core->prefix.'newsletter');
-			
 			$bk->cur_newsletter->subscriber_id	= (integer) $line->subscriber_id;
 			$bk->cur_newsletter->blog_id 		= (string) $core->blog_id;
 			$bk->cur_newsletter->email 		= (string) $line->email;

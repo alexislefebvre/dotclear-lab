@@ -13,16 +13,16 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-// filtrage des droits
+# filtrage des droits
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-// chargement des librairies
+# chargement des librairies
 require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.admin.php';
 
-// est-ce qu'on a besoin d'installer et est-ce qu'on peut le faire ?
-// on vérifie qu'il s'agit bien d'une version plus récente
+## est-ce qu'on a besoin d'installer et est-ce qu'on peut le faire ?
+# on vérifie qu'il s'agit bien d'une version plus récente
 $this_version = $core->plugins->moduleInfo('newsletter', 'version');
 $installed_version = $core->getVersion('newsletter');
 
@@ -36,9 +36,8 @@ try {
 	$GLOBALS['system_settings'] =& $core->blog->settings->system;
 	
 	if ($installed_version != '') {
-		// update
-		
-		// activation des paramètres par défaut
+		# update
+		# activation des paramètres par défaut
 		$core->blog->dcNewsletter = new dcNewsletter($core);
 
 		if (version_compare($installed_version, '3.6.0', '<')) {
@@ -48,31 +47,31 @@ try {
 			$core->blog->dcNewsletter->newsletter_settings->defaultsSettings();
 		}
 		
-		// activate plugin
+		# activate plugin
 		$newsletter_flag = (boolean)$GLOBALS['newsletter_settings']->newsletter_flag;
 		$GLOBALS['newsletter_settings']->put('newsletter_flag',$newsletter_flag,'boolean','Newsletter plugin enabled');
 		
-		// Prise en compte de la nouvelle version
+		# Prise en compte de la nouvelle version
 		$core->setVersion('newsletter', $this_version);
 		return true;
 		
 	} else {
-		// nouvelle install
-		// création du schéma de la table
+		# nouvelle install
+		# création du schéma de la table
 		$_s = new dbStruct($core->con, $core->prefix);
 		require dirname(__FILE__).'/inc/db-schema.php';
 	
 		$si = new dbStruct($core->con, $core->prefix);
 		$changes = $si->synchronize($_s);
 
-		// activation des paramètres par défaut
+		# activation des paramètres par défaut
 		$core->blog->dcNewsletter = new dcNewsletter($core);
 		$core->blog->dcNewsletter->newsletter_settings->defaultsSettings();
 		
-		// activate plugin
+		# activate plugin
 		$GLOBALS['newsletter_settings']->put('newsletter_flag',false,'boolean','Newsletter plugin enabled');
 
-		// Prise en compte de la nouvelle version
+		# Prise en compte de la nouvelle version
 		$core->setVersion('newsletter', $this_version);
 				
 		return true;

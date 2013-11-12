@@ -13,7 +13,7 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-// Loading libraries
+# Loading libraries
 require dirname(__FILE__).'/class.template.php';
 require dirname(__FILE__).'/class.newsletter.mailing.php';
 
@@ -45,10 +45,7 @@ class newsletterCore
 			}
 
 			$rs = $con->select($strReq);
-			if ($rs->isEmpty())
-				return null;
-			else 
-				return $rs;
+			return($rs->isEmpty() ? null : $rs);
 		} catch (Exception $e) { 
 			$core->blog->dcNewsletter->addError($e->getMessage());
 		}
@@ -65,16 +62,12 @@ class newsletterCore
 			$con = &$core->con;
 			$blogid = (string)$blog->id;
 
-			// requète sur les donnees et renvoi un entier
 			$strReq =
 				'SELECT max(subscriber_id)'.
 				' FROM '.$core->prefix.newsletterPlugin::pname();
 
 			$rs = $con->select($strReq);
-			if ($rs->isEmpty()) 
-				return 0;
-			else 
-				return ((integer)$rs->f(0)) +1;
+			return($rs->isEmpty() ? 0 : ((integer)$rs->f(0)) +1);
 		} catch (Exception $e) { 
 			$core->blog->dcNewsletter->addError($e->getMessage());
 		}
@@ -91,17 +84,13 @@ class newsletterCore
 			$con = &$core->con;
 			$blogid = (string)$blog->id;
 
-			// requète sur les donnees et renvoi un entier
 			$strReq =
     			'SELECT min(subscriber_id), max(subscriber_id)'.
     			' FROM '.$core->prefix.newsletterPlugin::pname().
     			' WHERE blog_id=\''.$blogid.'\'';
 
 			$rs = $con->select($strReq);
-			if ($rs->isEmpty()) 
-				return 0;
-			else 
-				return rand($rs->f(0), $rs->f(1));
+			return($rs->isEmpty() ? 0 : rand($rs->f(0), $rs->f(1)));
 		} catch (Exception $e) { 
 			$core->blog->dcNewsletter->addError($e->getMessage());
 		}
@@ -129,12 +118,9 @@ class newsletterCore
 	    			' WHERE blog_id=\''.$blogid.'\' AND subscriber_id='.$id;
 
 				$rs = $con->select($strReq);
-				if ($rs->isEmpty()) 
-	            		return false;
-				else 
-					return true;
+				return ($rs->isEmpty() ? false : true);
 			} catch (Exception $e) { 
-	        		$core->blog->dcNewsletter->addError($e->getMessage());
+	        	$core->blog->dcNewsletter->addError($e->getMessage());
 			}
 		}
 	}
@@ -166,10 +152,7 @@ class newsletterCore
 				' WHERE blog_id=\''.$blogid.'\' AND email=\''.$email.'\'';
 
 			$rs = $con->select($strReq);
-			if ($rs->isEmpty()) 
-				return null;
-			else 
-				return self::get($rs->f('subscriber_id'));
+			return ($rs->isEmpty() ? null : self::get($rs->f('subscriber_id')));
 		}
 	}
 
@@ -178,35 +161,28 @@ class newsletterCore
 	*/
 	public static function get($id = -1)
 	{
-		// test sur la valeur de l'id qui doit être positive ou null
-		if ($id < 0) return null;
-
-		// recupère les abonnes
-		else
-		{
+		if ($id < 0) { 
+			return null;
+		} else {
 			global $core;
 			try {
 				$blog = &$core->blog;
 				$con = &$core->con;
 				$blogid = (string)$blog->id;
 
-				// mise en forme du tableau d'id
-                	if (is_array($id)) 
-                		$ids = implode(", ", $id);
-				else 
+				# mise en forme du tableau d'id
+                if (is_array($id)) 
+                	$ids = implode(", ", $id);
+                else 
 					$ids = $id;
 
-				// requète sur les donnees et renvoi null si erreur
 				$strReq =
 	    			'SELECT subscriber_id,email,regcode,state,subscribed,lastsent,modesend' .
 	    			' FROM '.$core->prefix.newsletterPlugin::pname().
 	    			' WHERE blog_id=\''.$blogid.'\' AND subscriber_id IN('.$ids.')';
 
 				$rs = $con->select($strReq);
-				if ($rs->isEmpty()) 
-					return null;
-				else 
-					return $rs;
+				return($rs->isEmpty() ? null : $rs);
 			} catch (Exception $e) { 
 				$core->blog->dcNewsletter->addError($e->getMessage());
 			}
@@ -245,7 +221,7 @@ class newsletterCore
 				throw new Exception(__('The email already exist').' : '.$_email);
 			}
 
-			// generate regcode
+			# generate regcode
 			if ($_regcode == null) {
 				$_regcode = newsletterTools::regcode();
 			}
@@ -258,7 +234,7 @@ class newsletterCore
 				$_blogid = $blogid;
 			}
 				
-			// create SQL request
+			# create SQL request
 			$cur = $con->openCursor($core->prefix.newsletterPlugin::pname());
 			$cur->subscriber_id = self::nextId();
 			$cur->blog_id = $_blogid;
@@ -273,7 +249,7 @@ class newsletterCore
 			$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s',$time);
 			$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
 
-			// launch SQL request
+			# launch SQL request
 			return($cur->insert());
 		}
 	}
@@ -292,7 +268,7 @@ class newsletterCore
 				$con = &$core->con;
 				$blogid = $con->escape((string)$blog->id);
 
-				// generation de la requète
+				# generate request
 				$cur = $con->openCursor($core->prefix.newsletterPlugin::pname());
 
 				$cur->subscriber_id = $id;
@@ -339,21 +315,17 @@ class newsletterCore
 				$con = &$core->con;
 				$blogid = $con->escape((string)$blog->id);
 
-				// mise en forme du tableau d'id
+				# mise en forme du tableau d'id
 				if (is_array($id)) 
 					$ids = implode(", ", $id);
 				else 
 					$ids = $id;
 
-				// requète sur les donnees et renvoi un booleen
 				$strReq =
 				'DELETE FROM '.$core->prefix.newsletterPlugin::pname().
 				' WHERE blog_id=\''.$blogid.'\' AND subscriber_id IN('.$ids.')';
 
-				if ($con->execute($strReq)) 
-					return true;
-				else
-					return false;
+				return($con->execute($strReq) ? true : false);
 			} catch (Exception $e) { 
 				$core->blog->dcNewsletter->addError($e->getMessage());
 			}
@@ -426,19 +398,17 @@ class newsletterCore
 			$con = &$core->con;
 			$blogid = $con->escape((string)$blog->id);
 
-			// requête sur les donnees et renvoi null si erreur
 			$strReq =
 				'SELECT *'.
 				' FROM '.$core->prefix.newsletterPlugin::pname().
 				' WHERE blog_id=\''.$blogid.'\'';
 
-			if ($active) $strReq .= ' AND state=\'enabled\'';            
+			if ($active) { 
+				$strReq .= ' AND state=\'enabled\'';
+			}            
                 
 			$rs = $con->select($strReq);
-			if ($rs->isEmpty()) 
-				return null;
-			else 
-				return $rs;
+			return($rs->isEmpty() ? null : $rs);
 		} catch (Exception $e) { 
 			$core->blog->dcNewsletter->addError($e->getMessage());
 		}
@@ -449,13 +419,15 @@ class newsletterCore
 	*/
 	public static function state($id = -1, $_state = null)
 	{
-		// test sur la valeur de l'id qui doit être positive ou null
+		# test sur la valeur de l'id qui doit être positive ou null
 		if ($id < 0) {
 			return null;
 		} else { 
-			// modifie l'etat des abonnes
+			global $core;
+			
+			# modifie l'etat des abonnes
 		
-			// filtrage sur le code de status
+			# filtrage sur le code de status
 			switch ($_state) {
 				case 'pending':
 				case 'enabled':
@@ -465,20 +437,19 @@ class newsletterCore
 				default:
 					return false;
 			}
-
-			global $core;
+			
 			try {
 				$blog = &$core->blog;
 				$con = &$core->con;
 				$blogid = $con->escape((string)$blog->id);
 
-				// mise en forme du tableau d'id
+				# mise en forme du tableau d'id
 				if (is_array($id)) 
 					$ids = implode(", ", $id);
 				else 
 					$ids = $id;
 
-				// generation de la requète
+				# generate request
 				$cur = $con->openCursor($core->prefix.newsletterPlugin::pname());
 
 				$cur->state = $con->escape(html::escapeHTML(html::clean($_state)));
@@ -528,7 +499,6 @@ class newsletterCore
 	*/
 	public static function remove($id = -1)
 	{ 
-		//return self::state($id, 'disabled');
 		return self::delete($id); 
 	}
 		
@@ -545,26 +515,20 @@ class newsletterCore
 	*/
 	public static function lastsent($id = -1, $_lastsent = null) 
 	{
-		// test sur la valeur de l'id qui doit être positive ou null
 		if ($id < 0) {
 			return false;
-		}
-		
-		// modifie l'etat des abonnes
-		else {
+		} else { 		
 			global $core;
 			try {
 				$blog = &$core->blog;
 				$con = &$core->con;
 				$blogid = $con->escape((string)$blog->id);
 
-				// mise en forme du tableau d'id
 				if (is_array($id)) 
 					$ids = implode(", ", $id);
 				else 
 					$ids = $id;
 
-				// generation de la requète
 				if ($_lastsent == 'clear')
                 		$req = 'UPDATE '.$core->prefix.newsletterPlugin::pname().' SET lastsent=subscribed';
 				else if ($_lastsent == null) 
@@ -585,13 +549,11 @@ class newsletterCore
 	*/
 	public static function changemode($id = -1, $_modesend = null)
 	{
-		// test sur la valeur de l'id qui doit être positive ou null
 		if ($id < 0) {
 			return null;
-		} else { 
-			// modifie le format de la lettre de l'abonne
-		
-			// filtrage sur le code de status
+		} else {
+			global $core;
+			
 			switch ($_modesend) {
 				case 'html':
 				case 'text':
@@ -599,24 +561,19 @@ class newsletterCore
 				default:
 					return false;
 			}
-
-			global $core;
+			
 			try {
 				$blog = &$core->blog;
 				$con = &$core->con;
 				$blogid = $con->escape((string)$blog->id);
 
-				// mise en forme du tableau d'id
 				if (is_array($id)) 
 					$ids = implode(", ", $id);
 				else 
 					$ids = $id;
 
-				// generation de la requète
 				$cur = $con->openCursor($core->prefix.newsletterPlugin::pname());
-
 				$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
-
 				$cur->update('WHERE blog_id=\''.$con->escape($blogid).'\' AND subscriber_id IN('.$ids.')');
 				return true;
 			} catch (Exception $e) { 
@@ -659,25 +616,25 @@ class newsletterCore
 			
 			$system_settings = $core->blog->settings->system;
 			
-			// parametrage de la recuperation des billets
+			# parametrage de la recuperation des billets
 			$params = array();
 
-			// selection du contenu
+			# selection du contenu
 			//$params['no_content'] = ($newsletter_settings->getViewContentPost() ? false : true);
 			 $params['no_content'] = false;
 			 
-			// selection des billets
+			# selection des billets
 			$params['post_type'] = 'post';
-			// uniquement les billets publies, sans mot de passe
+			# uniquement les billets publies
 			$params['post_status'] = 1;
-			// sans mot de passe
+			# sans mot de passe
 			$params['sql'] = ' AND P.post_password IS NULL';
 			
-			// envoi d'un billet specifique
+			# envoi d'un billet specifique
 			if($l_post_id !== null) {
 				$params['post_id'] = (integer) $l_post_id;
 			} else {
-				// filtre sur la date du dernier envoi
+				# filtre sur la date du dernier envoi
 				if ($newsletter_settings->getDatePreviousSend() !== null) {
 
 					if ($newsletter_settings->getOrderDate() == 'post_dt') {
@@ -687,31 +644,24 @@ class newsletterCore
 						$date_previous_send = date('Y-m-j H:i:s',$newsletter_settings->getDatePreviousSend());
 						$now = date('Y-m-j H:i:s',time());
 					}
-
-					/*
-					$params['sql'] = ' AND P.'.$newsletter_settings->getOrderDate().' BETWEEN "'.$date_previous_send.'" AND "'.$now.'" ';
-					if($debug) {
-						$core->blog->dcNewsletter->addMessage(' P.'.$newsletter_settings->getOrderDate().' BETWEEN "'.$date_previous_send.'" AND "'.$now.'" ');
-					}
-					//*/
 					$params['sql'] = ' AND P.'.$newsletter_settings->getOrderDate().' BETWEEN \''.$date_previous_send.'\' AND \''.$now.'\' ';
 				}
 			}
 			
-			// limitations du nombre de billets
+			# limitations du nombre de billets
 			$maxPost = $newsletter_settings->getMaxPosts();
 			if ($maxPost > 1) {
 				$params['limit'] = $maxPost;
 			}
 		
-			// definition du tris des enregistrements et filtrage dans le temps
+			# definition du tris des enregistrements et filtrage dans le temps
 			$params['order'] = ' P.'.$newsletter_settings->getOrderDate().' DESC';
 
-			// filtre sur la categorie
+			# filtre sur la categorie
 			$category = $newsletter_settings->getCategory();
 			
 			if ($category) {
-				// filtre sur les sous-categories
+				# filtre sur les sous-categories
 				if ($newsletter_settings->getCheckSubCategories()) {
 				
 					$rs = $con->select(
@@ -738,7 +688,7 @@ class newsletterCore
 				}
 			}
 
-			// recuperation des billets
+			# recuperation des billets
 			$rs = $blog->getPosts($params, false);
 			
 			if($debug) {
@@ -749,7 +699,7 @@ class newsletterCore
            	if($rs->count() < $minPosts)
            		return null;
            	else 
-           		return($rs->isEmpty()?null:$rs);
+           		return($rs->isEmpty() ? null : $rs);
 		} catch (Exception $e) { 
 				$core->blog->dcNewsletter->addError($e->getMessage());
 		}
@@ -761,7 +711,7 @@ class newsletterCore
 		$newsletter_settings = new newsletterSettings($core);
 		$system_settings = $core->blog->settings->system;
 		
-		// boucle sur les billets concernes pour l'abonnes
+		# boucle sur les billets concernes pour l'abonnes
 		$bodies = array();
 		$posts = array();
 	
@@ -775,10 +725,10 @@ class newsletterCore
 			{
 				$_body_swap = html::escapeHTML('');
 				
-				// Affiche les miniatures
+				# Affiche les miniatures
 				if ($newsletter_settings->getViewThumbnails()) {
 					
-					// reprise du code de context::EntryFirstImageHelper et adaptation
+					# reprise du code de context::EntryFirstImageHelper et adaptation
 					$size=$newsletter_settings->getSizeThumbnails();
 					if (!preg_match('/^sq|t|s|m|o$/',$size)) {
 						$size = 's';
@@ -802,7 +752,6 @@ class newsletterCore
 					{
 						foreach ($m[1] as $i => $img) {
 							if (($src = newsletterLetter::ContentFirstImageLookup($p_root,$img,$size)) !== false) {
-								//$src = $p_url.(dirname($img) != '/' ? dirname($img) : '').'/'.$src;
 								if (dirname($img) != '/' && dirname($img) != '\\') {
 									$src = $p_url.dirname($img).'/'.$src;
 								} else {
@@ -824,7 +773,6 @@ class newsletterCore
 						{
 							foreach ($m[1] as $i => $img) {
 								if (($src = newsletterLetter::ContentFirstImageLookup($p_root,$img,$size)) !== false) {
-									//$src = $p_url.(dirname($img) != '/' ? dirname($img) : '').'/'.$src;
 									if (dirname($img) != '/' && dirname($img) != '\\') {
 										$src = $p_url.dirname($img).'/'.$src;
 									} else {
@@ -840,7 +788,6 @@ class newsletterCore
 						};
 					}					
 					
-					
 					if ($src) {
 						$_body_swap .= '<p class="content_img" style="border: 0px;">';
 						$_body_swap .= html::absoluteURLs('<img alt="'.$alt.'" src="'.$src.'" class="'.$class.'" />',$posts->getURL()); 
@@ -848,23 +795,10 @@ class newsletterCore
 					}				
 				}
 				
-				//$_body_save = $_body_swap;
-				
-				// Contenu du billet
-				/*
-				if ($newsletter_settings->getExcerptRestriction()) {
-					$_body_swap .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt($posts,true))),$newsletter_settings->getSizeContentPost()));
-				} else {
-					if ($newsletter_settings->getViewContentPost()) {
-						$_body_swap .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt().' '.$posts->getContent())),$newsletter_settings->getSizeContentPost()));
-					}
-				}
-				//*/
-
-				// Contenu des billets
+				# Contenu des billets
 				$news_content = '';
 				if ($newsletter_settings->getExcerptRestriction()) {
-					// Get only Excerpt
+					# Get only Excerpt
 					$news_content = $posts->getExcerpt($posts,true);
 					$news_content = html::absoluteURLs($news_content,$posts->getURL());
 				} else {
@@ -883,25 +817,20 @@ class newsletterCore
 					} else {
 						$news_content = newsletterTools::truncateHtmlString($news_content,$newsletter_settings->getSizeContentPost(),'...',false,true);
 						$news_content = html::decodeEntities($news_content);
-						//$news_content = preg_replace('/<\/p>$/',"...</p>",$news_content);						
 					}
 
-					// Affichage
+					# Affichage
 					$_body_swap .= $news_content;
 				}
 				
-				// Affiche le lien "read more"
+				# Affiche le lien "read more"
 				//$style_readmore='style="color: #d5b72b; text-decoration: none"';
-				//$_body_swap .= '<a href="'.$posts->getURL().'" '.$style_readmore.'>Read more - Lire la suite</a>';
-				
 				$style_link_read_it = $newsletter_settings->getStyleLinkReadIt();
 				$_body_swap .= '<p class="read-it">';
 				$_body_swap .= '<a href="'.$posts->getURL().'" style="'.$style_link_read_it.'">Read more - Lire la suite</a>';
 				$_body_swap .= '</p>';
-				
 				$_body_swap .= '<br /><br />';
 				
-				//$format = $system_settings->date_format.' - '.$system_settings->time_format;
 				$format = $newsletter_settings->getDateFormatPostInfo();
 				$tdate = $newsletter_settings->getOrderDate();
 				
@@ -931,7 +860,6 @@ class newsletterCore
 	{
 		$bodies = array();
 		foreach ($posts as $k => $v) {
-			//if($dt < $v['post_dt']) {
 			if($dt < $v[$newsletter_settings->getOrderDate()]) {
 				$bodies[] = $posts[$k];
 			}
@@ -964,7 +892,7 @@ class newsletterCore
 	}
 
 	/**
-	* preparation de l'envoi d'un mail à un abonne
+	* preparation de l'envoi d'un mail a un abonne
 	*/
 	private static function BeforeSendmailTo($header, $footer)
 	{
@@ -1041,9 +969,10 @@ class newsletterCore
 				return false;
 			} else if ($id == -1 || $action === null) {
 				return false;
-			} else {								// envoi des mails aux abonnes
+			} else {
+				# envoi des mails aux abonnes
 
-				// list id or single id 
+				# list id or single id 
 				if (is_array($id)) {
 					$ids = $id;
 				} else { 
@@ -1055,17 +984,11 @@ class newsletterCore
 				$newsletter_mailing = new newsletterMailing($core);		
 				$newsletter_settings = new newsletterSettings($core);
 				
-				// filtrage sur le type de mail
+				# filtrage sur le type de mail
 				switch ($action) {
 					case 'newsletter':
 						$tmp_letter_id = self::insertMessageNewsletter($newsletter_mailing,$newsletter_settings,$l_post_id);
 						if ($tmp_letter_id === null) {
-							/*
-							$t_msg='';
-							$t_msg.=date('Y-m-j H:i',time() + dt::getTimeOffset($system_settings->blog_timezone)).': ';
-							$t_msg.=__('not enough posts for sending');
-							$core->blog->dcNewsletter->addMessage($msg);
-							//*/
 							return false;
 						}
 						self::prepareMessagesNewsletter($ids,$newsletter_mailing,$newsletter_settings,$tmp_letter_id);
@@ -1092,7 +1015,7 @@ class newsletterCore
 						return false;
 				}
 
-				// Envoi des messages
+				# Envoi des messages
 				$newsletter_mailing->batchSend();
 
 				if($action == 'newsletter') {
@@ -1107,7 +1030,7 @@ class newsletterCore
 				$sent_nothing = $newsletter_mailing->getNothingToSend();
 				
 				if (is_array($sent_states) && count($sent_states) > 0) {
-					// positionnement de l'etat des comptes
+					# positionnement de l'etat des comptes
 					switch ($action) {
 						case 'newsletter':
 							self::lastsent($sent_states);
@@ -1169,7 +1092,7 @@ class newsletterCore
 		$body='';		
 		$mode = $newsletter_settings->getSendMode();
 
-		// recupere le contenu de la letter
+		# recupere le contenu de la newsletter
 		$params = array();
 		$params['post_type'] = 'newsletter';
 		$params['post_id'] = (integer) $letter_id;
@@ -1180,28 +1103,22 @@ class newsletterCore
 			throw new Exception('No post for this ID');
 		}
 		
-		// formatte les champs de la letter pour l'envoi
+		# formate les champs de la lettre pour l'envoi
 		$subject=text::toUTF8($rs->post_title);
 		$body=$rs->post_content_xhtml;
 		$body=text::toUTF8($body);
 		
 		foreach ($ids as $subscriber_id)
 		{
-			// get subscriber and extract datas
+			# get subscriber and extract datas
 			$subscriber = self::get($subscriber_id);
 
-			// define mode for the current subscriber
+			# define mode for the current subscriber
 			if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
 				$mode = $subscriber->modesend;
 			}
 			
-			/* Remplacement des liens pour les users */
-			/*
-			$patterns[0] = '/{\$urlDisable}/';
-			$patterns[1] = '/{\$urlSuspend}/';
-			$patterns[2] = '/{\$url_visu_online}/';
-			//*/
-
+			# Remplacement des liens pour les users
 			$patterns[0] = '/USER_DELETE/';
 			$patterns[1] = '/USER_SUSPEND/';
 			$patterns[2] = '/LINK_VISU_ONLINE/';
@@ -1209,7 +1126,6 @@ class newsletterCore
 			if($mode != 'text') {
 				$patterns[3] = '/<body>/';
 			}
-			//$patterns[3] = '/<\/head>/';
 			
 			$style_link_disable = $newsletter_settings->getStyleLinkDisable();
 			$style_link_suspend = $newsletter_settings->getStyleLinkSuspend();
@@ -1217,38 +1133,19 @@ class newsletterCore
 			$replacements[0] .= html::escapeHTML($newsletter_settings->getTxtDisable()).'</a>';
 			$replacements[1] = '<a href='.newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email)).'" style="'.$style_link_suspend.'">';
 			$replacements[1] .= html::escapeHTML($newsletter_settings->getTxtSuspend()).'</a>';
-	
-			/*
-			$replacements[0] = newsletterCore::url('disable/'.newsletterTools::base64_url_encode($subscriber->email));
-			if($newsletter_settings->getCheckUseSuspend()) {		
-				$replacements[1] = newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email));
-			} else {
-				$replacements[1] = ' ';
-			}*/
-			
-			//$replacements[2] = newsletterLetter::getURL($letter_id);
 			$text_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
 			$style_link_visu_online = $newsletter_settings->getStyleLinkVisuOnline();
 			$replacements[2] = '';
 			$replacements[2] .= '<p>';
 			$replacements[2] .= '<span class="letter-visu"><a href="'.newsletterLetter::getURL($letter_id).'" style="'.$style_link_visu_online.'">'.$text_visu_online.'</a></span>';
 			$replacements[2] .= '</p>';			
-			/*
-			$replacements[2] .= '<p>';
-			$replacements[2] .= '<span class="letter-visu"><a href="'.newsletterLetter::getURL($letter_id).'">'.$text_visu_online.'</a></span>';
-			$replacements[2] .= '</p>';
-			//*/
 
 			if($mode != 'text') {
 				$replacements[3] = '<body>';
 				$replacements[3] .= newsletterLetter::letter_style();
-				/*				
-				$replacements[3] = newsletterLetter::letter_style();
-				$replacements[3] .= '<body>';
-				//*/
 			}
 		
-			/* chaine initiale */
+			# chaine initiale
 			$count = 0;
 			$scontent = preg_replace($patterns, $replacements, $body, 1, $count);
 
@@ -1259,7 +1156,7 @@ class newsletterCore
 				$scontent = $convert->get_text();
 			}
 
-			// ajoute le message dans la liste d'envoi
+			# ajoute le message dans la liste d'envoi
 			$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$scontent,$mode);
 		}
 		return true;
@@ -1277,11 +1174,7 @@ class newsletterCore
 	public static function insertMessageNewsletter($newsletter_mailing, newsletterSettings $newsletter_settings, $l_post_id=null)
 	{
 		global $core;
-		
 		$system_settings = $core->blog->settings->system;
-		
-		// initialisation des variables de travail
-		//$mode = $newsletter_settings->getSendMode();
 		$subject_with_date = $newsletter_settings->getCheckSubjectWithDate();
 		
 		if($subject_with_date) {
@@ -1292,38 +1185,24 @@ class newsletterCore
 			
 		$minPosts = $newsletter_settings->getMinPosts();
 
-		// initialisation du moteur de template
+		# initialisation du moteur de template
 		self::BeforeSendmailTo($newsletter_settings->getPresentationMsg(), $newsletter_settings->getConcludingMsg());
 
-		// recuperation des billets
+		# recuperation des billets
 		$newsletter_posts = self::getNewsletterPosts($l_post_id);
 		
 		if(count($newsletter_posts) < $minPosts) {
-			/*
-			$t_msg='';
-			$t_msg.=date('Y-m-j H:i',time() + dt::getTimeOffset($system_settings->blog_timezone)).': ';
-			$t_msg.=__('not enough posts for sending');
-			$core->blog->dcNewsletter->addMessage($t_msg);
-			//*/
 			return null;
 		} else {
 			$body = '';
 
-			// include posts in the template
+			# include posts in the template
 			nlTemplate::assign('posts', $newsletter_posts);
 
-			// rendering template
+			# rendering template
 			$body = nlTemplate::render('newsletter', 'html');
 
-			//$body = nlTemplate::render('newsletter', $mode);
-			/*if($mode == 'text') {
-				$convert = new html2text();
-				$convert->set_html($body);
-				$convert->labelLinks = __('Links:');
-				$body = $convert->get_text();
-			}*/
-						
-			// ajoute le message dans la liste d'envoi
+			# ajoute le message dans la liste d'envoi
 			$old_nltr = new newsletterLetter($core);
 			$old_nltr->insertOldLetter($subject,$body);
 			return $old_nltr->getLetterId();
@@ -1341,26 +1220,26 @@ class newsletterCore
 	 */
 	private static function prepareMessagesConfirm($ids=-1,$newsletter_mailing,newsletterSettings $newsletter_settings)
 	{
-		// initialisation des variables de travail
+		# initialisation des variables de travail
 		$mode = $newsletter_settings->getSendMode();
 		$subject = text::toUTF8($newsletter_settings->getConfirmSubject());
 
-		// initialisation du moteur de template
+		# initialisation du moteur de template
 		self::BeforeSendmailTo($newsletter_settings->getConfirmMsg(),$newsletter_settings->getConcludingConfirmMsg());
 		
-		// boucle sur les ids des abonnes
+		# boucle sur les ids des abonnes
 		foreach ($ids as $subscriber_id)
 		{
 			$body = '';
-			// recuperation de l'abonne et extraction des donnees
+			# recuperation de l'abonne et extraction des donnees
 			$subscriber = self::get($subscriber_id);
 
-			// definition du format d'envoi
+			# definition du format d'envoi
 			if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
 				$mode = $subscriber->modesend;
 			}
 
-			// generation du rendu
+			# generation du rendu
 			nlTemplate::assign('urlConfirm', self::url('confirm/'.newsletterTools::base64_url_encode($subscriber->email).'/'.$subscriber->regcode.'/'.newsletterTools::base64_url_encode($subscriber->modesend)));
 			nlTemplate::assign('urlDisable', self::url('disable/'.newsletterTools::base64_url_encode($subscriber->email)));
 
@@ -1373,7 +1252,7 @@ class newsletterCore
 				$body = $convert->get_text();
 			}
 
-			// ajoute le message dans la liste d'envoi
+			# ajoute le message dans la liste d'envoi
 			$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$body,$mode);
 		}
 		return true;
@@ -1390,25 +1269,24 @@ class newsletterCore
 	 */
 	private static function prepareMessagesSuspend($ids=-1,$newsletter_mailing,newsletterSettings $newsletter_settings)
 	{
-		// initialisation des variables de travail
 		$mode = $newsletter_settings->getSendMode();
 		$subject = text::toUTF8($newsletter_settings->getSuspendSubject());
 
-		// initialisation du moteur de template
+		# initialisation du moteur de template
 		self::BeforeSendmailTo($newsletter_settings->getSuspendMsg(),$newsletter_settings->getConcludingSuspendMsg());
 
-		// boucle sur les ids des abonnes
+		# boucle sur les ids des abonnes
 		foreach ($ids as $subscriber_id)
 		{
-			// recuperation de l'abonne et extraction des donnees
+			# recuperation de l'abonne et extraction des donnees
 			$subscriber = self::get($subscriber_id);
 
-			// definition du format d'envoi
+			# definition du format d'envoi
 			if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
 				$mode = $subscriber->modesend;
 			}
 
-			// generation du rendu
+			# generation du rendu
 			nlTemplate::assign('urlEnable', self::url('enable/'.newsletterTools::base64_url_encode($subscriber->email)));
 
 			$body = nlTemplate::render('suspend', $mode);
@@ -1420,7 +1298,7 @@ class newsletterCore
 				$body = $convert->get_text();
 			}
 
-			// ajoute le message dans la liste d'envoi
+			# ajoute le message dans la liste d'envoi
 			$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$body,$mode);
 		}
 		return true;
@@ -1437,31 +1315,30 @@ class newsletterCore
 	 */
 	private static function prepareMessagesEnable($ids=-1,$newsletter_mailing,newsletterSettings $newsletter_settings)
 	{
-		// initialisation des variables de travail
 		$mode = $newsletter_settings->getSendMode();
 		$subject = text::toUTF8($newsletter_settings->getEnableSubject());
 
-		// initialisation du moteur de template
+		# initialisation du moteur de template
 		self::BeforeSendmailTo($newsletter_settings->getEnableMsg(),$newsletter_settings->getConcludingEnableMsg());
 
-		// boucle sur les ids des abonnes
+		# boucle sur les ids des abonnes
 		foreach ($ids as $subscriber_id)
 		{
-			// recuperation de l'abonne et extraction des donnees
+			# recuperation de l'abonne et extraction des donnees
 			$subscriber = self::get($subscriber_id);
 
-			// definition du format d'envoi
+			# definition du format d'envoi
 			if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
 				$mode = $subscriber->modesend;
 			}
 
-			// generation du rendu
+			# generation du rendu
 			nlTemplate::assign('urlDisable', self::url('disable/'.newsletterTools::base64_url_encode($subscriber->email)));
-				if($newsletter_settings->getCheckUseSuspend()) {
-					nlTemplate::assign('urlSuspend', self::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email)));
-				} else {
-					nlTemplate::assign('urlSuspend', ' ');
-				}
+			if($newsletter_settings->getCheckUseSuspend()) {
+				nlTemplate::assign('urlSuspend', self::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email)));
+			} else {
+				nlTemplate::assign('urlSuspend', ' ');
+			}
 
 			$body = nlTemplate::render('enable', $mode);
 
@@ -1472,7 +1349,7 @@ class newsletterCore
 				$body = $convert->get_text();
 			}
 			
-			// ajoute le message dans la liste d'envoi
+			# ajoute le message dans la liste d'envoi
 			$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$body,$mode);
 		}
 		return true;
@@ -1489,25 +1366,24 @@ class newsletterCore
 	 */
 	private static function prepareMessagesDisable($ids=-1,$newsletter_mailing,newsletterSettings $newsletter_settings)
 	{
-		// initialisation des variables de travail
 		$mode = $newsletter_settings->getSendMode();
 		$subject = text::toUTF8($newsletter_settings->getDisableSubject());
 
-		// initialisation du moteur de template
+		# initialisation du moteur de template
 		self::BeforeSendmailTo($newsletter_settings->getDisableMsg(),$newsletter_settings->getConcludingDisableMsg());
 
-		// boucle sur les ids des abonnes
+		# boucle sur les ids des abonnes
 		foreach ($ids as $subscriber_id)
 		{
-			// recuperation de l'abonne et extraction des donnees
+			# recuperation de l'abonne et extraction des donnees
 			$subscriber = self::get($subscriber_id);
 
-			// definition du format d'envoi
+			# definition du format d'envoi
 			if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
 				$mode = $subscriber->modesend;
 			}
 
-			// generation du rendu
+			# generation du rendu
 			nlTemplate::assign('urlEnable', self::url('enable/'.newsletterTools::base64_url_encode($subscriber->email)));
 
 			$body = nlTemplate::render('disable', $mode);
@@ -1519,7 +1395,7 @@ class newsletterCore
 				$body = $convert->get_text();
 			}
 		
-			// ajoute le message dans la liste d'envoi
+			# ajoute le message dans la liste d'envoi
 			$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$body,$mode);
 		}
 		return true;
@@ -1536,17 +1412,16 @@ class newsletterCore
 	 */
 	private static function prepareMessagesResume($ids=-1,$newsletter_mailing,newsletterSettings $newsletter_settings)
 	{
-		// initialisation des variables de travail
 		$mode = $newsletter_settings->getSendMode();
 		$subject = text::toUTF8($newsletter_settings->getResumeSubject());
 
-		// initialisation du moteur de template
+		# initialisation du moteur de template
 		self::BeforeSendmailTo($newsletter_settings->getHeaderResumeMsg(),$newsletter_settings->getFooterResumeMsg());
 
-		// boucle sur les ids des abonnes
+		# boucle sur les ids des abonnes
 		foreach ($ids as $subscriber_id)
 		{
-			// recuperation de l'abonne et extraction des donnees
+			# recuperation de l'abonne et extraction des donnees
 			$subscriber = self::get($subscriber_id);
 
 			$txt_intro_enable = $newsletter_settings->getTxtIntroEnable().', ';
@@ -1569,48 +1444,40 @@ class newsletterCore
 					
 			switch ($subscriber->state) {
 				case 'suspended':
-				{
 					$urlResume = $txt_intro_enable.' <a href="'.$urlEnable.'">'.$txtEnable.'</a><br />';
 					$urlResume .= $txt_intro_disable.' <a href="'.$urlDisable.'">'.$txtDisable.'</a>';
-					nlTemplate::assign('txtResume', __('Your account is suspended.'));
+					nlTemplate::assign('txtResume', __('Your account is suspended'));
 					break;
-				}
 				case 'disabled':
-				{
 					$urlResume = $txt_intro_enable.' <a href="'.$urlEnable.'">'.$txtEnable.'</a><br />';
 					if($newsletter_settings->getCheckUseSuspend()) {
 						$urlResume .= $txt_intro_suspend.' <a href="'.$urlSuspend.'">'.$txtSuspend.'</a>';
 					}
-					nlTemplate::assign('txtResume', __('Your account is disabled.'));
+					nlTemplate::assign('txtResume', __('Your account is disabled'));
 					break;
-				}
 				case 'enabled':
-				{
 					$urlResume = $txt_intro_disable.' <a href="'.$urlDisable.'">'.$txtDisable.'</a><br />';
 					if($newsletter_settings->getCheckUseSuspend()) {
 						$urlResume .= $txt_intro_suspend.' <a href="'.$urlSuspend.'">'.$txtSuspend.'</a>';
 					}
-					nlTemplate::assign('txtResume', __('Your account is enabled.'));
+					nlTemplate::assign('txtResume', __('Your account is enabled'));
 					break;
-				}
 				case 'pending':
-				{
 					$urlResume = $txt_intro_disable.' <a href="'.$urlDisable.'">'.$txtDisable.'</a><br />';
 					$urlResume .= $txt_intro_confirm.' <a href="'.$urlConfirm.'">'.$txtConfirm.'</a>';
-					nlTemplate::assign('txtResume', __('Your account is pending confirmation.'));
+					nlTemplate::assign('txtResume', __('Your account is pending confirmation'));
 					break;
-				}
 				default:
-				{
-				}
+					break;
 			}
  
-			// definition du format d'envoi
+			# definition du format d'envoi
 			if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
 				$mode = $subscriber->modesend;
 			}
-
-			nlTemplate::assign('txtMode', __('Your sending mode is'). ' ' .__(''.$mode.''). '.');
+			$text_mode = sprintf(__('Your sending mode is %s'),$mode);
+			
+			nlTemplate::assign('txtMode', $text_mode);
 			nlTemplate::assign('urlResume', $urlResume);
 			$body = nlTemplate::render('resume', $mode);
 
@@ -1621,7 +1488,7 @@ class newsletterCore
 				$body = $convert->get_text();
 			}
 
-			// ajoute le message dans la liste d'envoi
+			# ajoute le message dans la liste d'envoi
 			$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$body,$mode);
 		}
 		return true;
@@ -1638,25 +1505,25 @@ class newsletterCore
 	 */
 	private static function prepareMessagesChangeMode($ids=-1,$newsletter_mailing,newsletterSettings $newsletter_settings)
 	{
-		// initialisation des variables de travail
+		# initialisation des variables de travail
 		$mode = $newsletter_settings->getSendMode();
 		$subject = text::toUTF8($newsletter_settings->getChangeModeSubject());
 
-		// initialisation du moteur de template
+		# initialisation du moteur de template
 		self::BeforeSendmailTo($newsletter_settings->getHeaderChangeModeMsg(),$newsletter_settings->getFooterChangeModeMsg());		
 
-		// boucle sur les ids des abonnes
+		# boucle sur les ids des abonnes
 		foreach ($ids as $subscriber_id)
 		{
-			// recuperation de l'abonne et extraction des donnees
+			# recuperation de l'abonne et extraction des donnees
 			$subscriber = self::get($subscriber_id);
 
-			// definition du format d'envoi
+			# definition du format d'envoi
 			if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
 				$mode = $subscriber->modesend;
 			}					
 					
-			// generation du rendu
+			# generation du rendu
 			nlTemplate::assign('urlEnable', self::url('enable/'.newsletterTools::base64_url_encode($subscriber->email)));
 
 			$body = nlTemplate::render('changemode', $mode);
@@ -1668,7 +1535,7 @@ class newsletterCore
 				$body = $convert->get_text();
 			}
 
-			// ajoute le message dans la liste d'envoi
+			# ajoute le message dans la liste d'envoi
 			$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$body,$mode);
 		}
 		return true;
@@ -1687,14 +1554,14 @@ class newsletterCore
 		$system_settings =& $core->blog->settings->system;
 		$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 		
-		// test si le plugin est actif
+		# test si le plugin est actif
 		if (!$newsletter_flag) {
 			return;
 		}
 		
 		$newsletter_settings = new newsletterSettings($core);
 		
-		// test si l'envoi automatique est active
+		# test si l'envoi automatique est active
 		if ($newsletter_settings->getAutosend() || $newsletter_settings->getSendUpdatePost()) {
 			
 			$datas = self::getlist(true);
@@ -1710,7 +1577,6 @@ class newsletterCore
                	if ($newsletter_settings->getMinPosts() > 1) {
                		self::send($ids,'newsletter');
                	} else {
-               		//$core->blog->dcNewsletter->addMessage('send post='.$l_post_id);
 					self::send($ids,'newsletter',$l_post_id);
                	}
 			}            	
@@ -1732,13 +1598,13 @@ class newsletterCore
 		$system_settings = $core->blog->settings->system;
 		$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 		
-		// test si le plugin est actif
+		# test si le plugin est actif
 		if (!$newsletter_flag) {
 			return;
 		}
 
 		$newsletter_settings = new newsletterSettings($core);		
-		// test si la planification est activee
+		# test si la planification est activee
 		if (!$newsletter_settings->getCheckSchedule()) {
 			return;
 		} else {
@@ -1770,17 +1636,17 @@ class newsletterCore
 		global $core;
 		try {
 			if ($email == null) {
-				return __('Bad email !');
+				return __('Bad email');
 			} else {
 				if (self::getemail($email) != null) {
-					return __('Email already subscribed.');
+					return __('Email already subscribed');
 				} else if (!self::add($email, null, null, $modesend)) {
-					return __('Error during account creation.');
+					return __('Error during account creation');
 				} else {
 					$subscriber = self::getemail($email);
 					
 					$newsletter_settings = new newsletterSettings($core);		
-					// automatic confirmation
+					# automatic confirmation
 					if ($newsletter_settings->getAutoConfirmSubscription()) {
 						$msg = self::send($subscriber->subscriber_id,'enable');
 					} else {
@@ -1802,12 +1668,13 @@ class newsletterCore
 		global $core;
 		try {		
 			if ($email == null) {
-				return __('Bad email !');
-			} else { 						// suppression du compte
+				return __('Bad email');
+			} else {
+				# suppression du compte
 				$subscriber = self::getemail($email);
 				$msg = null;
 				if (!$subscriber || $subscriber->subscriber_id == null) 
-					return __('Email don\'t exist !');
+					return __('Email does not exist');
 				else {
 					$msg = self::send($subscriber->subscriber_id,'disable');
 					self::delete($subscriber->subscriber_id);
@@ -1828,12 +1695,13 @@ class newsletterCore
 		try {
 
 			if ($email == null) {
-				return __('Bad email !');
-			} else { 						// suspension du compte
+				return __('Bad email');
+			} else {
+				# suspension du compte
 				$subscriber = self::getemail($email);
 				$msg = '';
 				if (!$subscriber || $subscriber->subscriber_id == null) 
-					return __('Email don\'t exist !');
+					return __('Email does not exist');
 				else {
 					$msg = self::send($subscriber->subscriber_id,'suspend');					
 					self::suspend($subscriber->subscriber_id);
@@ -1853,15 +1721,15 @@ class newsletterCore
 		global $core;
 		try {		
 			if ($email == null) {
-				return __('Bad email !');
-			} else { 						// information sur le compte
+				return __('Bad email');
+			} else {
+				# information sur le compte
 				$subscriber = self::getemail($email);
 				$msg = '';
 				if (!$subscriber || $subscriber->subscriber_id == null) 
-					return __('Email don\'t exist !');
+					return __('Email does not exist');
 				else {
 					$msg = self::send($subscriber->subscriber_id,'resume');					
-					//self::resume($subscriber->subscriber_id);
 					return $msg;
 				}
 			}
@@ -1878,12 +1746,13 @@ class newsletterCore
 		global $core;
 		try {
 			if ($email == null) {
-				return __('Bad email !');
-			} else { 						// information sur le compte
+				return __('Bad email');
+			} else {
+				# information sur le compte
 				$subscriber = self::getemail($email);
 				$msg = '';
 				if (!$subscriber || $subscriber->subscriber_id == null) 
-					return __('Email don\'t exist !');
+					return __('Email does not exist');
 				else {
 					$msg = self::send($subscriber->subscriber_id,'changemode');					
 					self::changeMode($subscriber->subscriber_id, $modesend);

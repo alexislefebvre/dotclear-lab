@@ -60,10 +60,8 @@ class newsletterLetter
 	{
 		$this->core = $core;
 		$this->blog = $core->blog;
-
 		$this->meta = $core->meta;
 		$this->system_settings = $core->blog->settings->system;
-
 		$this->init();
 		$this->setLetterId($letter_id);
 		$this->letter_subject = '';
@@ -71,7 +69,6 @@ class newsletterLetter
 		$this->letter_body = '';
 		$this->letter_footer = '';
 		$this->letter_body_text = '';
-	
 	}
 
 	private function init()
@@ -129,7 +126,7 @@ class newsletterLetter
 		$rs_letter = $this->core->blog->getPosts($params);
 			
 		if ($rs_letter->isEmpty()) {
-			$this->core->error->add(__('This letter does not exist.'));
+			$this->core->error->add(__('This letter does not exist'));
 		} else {
 			return $rs_letter;
 		}
@@ -440,20 +437,20 @@ class newsletterLetter
 		/* DISPLAY
 		-------------------------------------------------------- */
 		if (!empty($_GET['upd'])) {
-			echo '<p class="message">'.__('Entry has been successfully updated.').'</p>';
+			echo '<p class="message">'.__('Entry has been successfully updated').'</p>';
 		}
 		elseif (!empty($_GET['crea'])) {
-			echo '<p class="message">'.__('Entry has been successfully created.').'</p>';
+			echo '<p class="message">'.__('Entry has been successfully created').'</p>';
 		}
 		elseif (!empty($_GET['attached'])) {
-			echo '<p class="message">'.__('File has been successfully attached.').'</p>';
+			echo '<p class="message">'.__('File has been successfully attached').'</p>';
 		}
 		elseif (!empty($_GET['rmattach'])) {
-			echo '<p class="message">'.__('Attachment has been successfully removed.').'</p>';
+			echo '<p class="message">'.__('Attachment has been successfully removed').'</p>';
 		}
 		
 		if (!empty($_GET['creaco'])) {
-			echo '<p class="message">'.__('Comment has been successfully created.').'</p>';
+			echo '<p class="message">'.__('Comment has been successfully created').'</p>';
 		}
 
 		# XHTML conversion
@@ -463,7 +460,7 @@ class newsletterLetter
 			$post_content = $post_content_xhtml;
 			$post_format = 'xhtml';
 			
-			echo '<p class="message">'.__('Don\'t forget to validate your XHTML conversion by saving your post.').'</p>';
+			echo '<p class="message">'.__('Don\'t forget to validate your XHTML conversion by saving your post').'</p>';
 		}
 
 		if ($post_id)

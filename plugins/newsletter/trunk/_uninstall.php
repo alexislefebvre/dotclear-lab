@@ -13,7 +13,7 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-// filtrage des droits
+# filtrage des droits
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $this->addUserAction(

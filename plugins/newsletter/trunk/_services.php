@@ -13,10 +13,10 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-// Rest methods
+# Rest methods
 class newsletterRest
 {
-	// Prepare the xml tree
+	# Prepare the xml tree
 	public static function prepareALetter($core,$get,$post)
 	{
 		if (empty($get['letterId'])) {
@@ -25,12 +25,11 @@ class newsletterRest
 		$letterId = $get['letterId'];
 
 		$nltr = new newsletterLetter($core,$letterId);
-		//$nltr->getPostTitle();
 
 		$letterTag = new xmlTag();
 		$letterTag = $nltr->getXmlLetterById();
 
-		// retrieve lists of active subscribers or selected
+		# retrieve lists of active subscribers or selected
 		$subscribers_up = array();
 
 		if (empty($get['subscribersId'])) {
@@ -60,11 +59,11 @@ class newsletterRest
 			$rsp->insertNode($subscriberTag);
 		}
 
-		// set status to publish
+		# set status to publish
 		$status = 1;
 		$core->blog->updPostStatus((integer) $letterId,$status);
 
-		// set date of last sending
+		# set date of last sending
 		$nltr_settings = new newsletterSettings($core);
 		$nltr_settings->setDatePreviousSend();
 		$nltr_settings->save();
@@ -87,12 +86,12 @@ class newsletterRest
 	 */
 	public static function sendLetterBySubscriber($core,$get,$post)
 	{
-		// retrieve selected letter
+		# retrieve selected letter
 		if (empty($post['p_letter_id'])) {
 			throw new Exception('No letter selected');
 		}
 
-		// retrieve selected subscriber
+		# retrieve selected subscriber
 		if (empty($post['p_sub_email']) || empty($post['p_sub_id'])) {
 			throw new Exception('No subscriber selected');
 		}
@@ -118,7 +117,7 @@ class newsletterRest
 		}
 
 		if($post['p_sub_mode'] == 'text') {
-			// define text content
+			# define text content
 			$letter_content = newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
 			$convert = new html2text();
 			$convert->set_html($letter_content);
@@ -126,13 +125,13 @@ class newsletterRest
 			$letter_content = $convert->get_text();
 				
 		} else {
-			// define html content
+			# define html content
 			$letter_content = $post['p_letter_header'];
 			$letter_content .= newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
 			$letter_content .= $post['p_letter_footer'];
 		}
 			
-		// send letter to user
+		# send letter to user
 		$mail = new newsletterMail($core);
 		$mail->setMessage($post['p_sub_id'],$post['p_sub_email'],$post['p_letter_subject'],$letter_content,$post['p_sub_mode']);
 		//throw new Exception('content='.$scontent);
@@ -150,6 +149,6 @@ class newsletterRest
 		return $result;
 	}
 
-} // end class newsletterRest
+} # end class newsletterRest
 
 ?>

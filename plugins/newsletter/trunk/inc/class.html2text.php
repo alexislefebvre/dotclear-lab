@@ -93,7 +93,6 @@ class html2text
 {
 	var $labelLinks = 'Links:';
 
-
     /**
      *  Contains the HTML content to convert.
      *

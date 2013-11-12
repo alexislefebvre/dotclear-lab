@@ -46,7 +46,7 @@ if ($blog_settings->newsletter_flag) {
 	
 	$core->url->register('newsletterRest','newsletterRest','^newsletterRest',array('urlNewsletter','newsletterRestService'));
 	
-	// Dynamic method
+	# Dynamic methods
 	$core->rest->addFunction('prepareALetter', array('newsletterRest','prepareALetter'));
 	$core->rest->addFunction('sendLetterBySubscriber', array('newsletterRest','sendLetterBySubscriber'));
 }

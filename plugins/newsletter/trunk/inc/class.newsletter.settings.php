@@ -35,8 +35,6 @@ class newsletterSettings
 		$this->blog_settings =& $core->blog->settings->newsletter;
 		$this->system_settings = $core->blog->settings->system;
 
-		/* correction pour eviter de planter */
-		//$this->parameters = $this->blog_settings->newsletter_parameters != '' ? unserialize($this->blog_settings->newsletter_parameters) : array();
 		if($this->blog_settings->newsletter_parameters != '') {
 			$this->parameters = unserialize($this->blog_settings->newsletter_parameters); 
 		} 
@@ -203,7 +201,7 @@ class newsletterSettings
 		$this->setMaxPosts(1); 
 	}
 	
-	/*
+	/**
 	* nombre minimum de billet retournes
 	*/
 	public function getMinPosts() 
@@ -941,7 +939,7 @@ class newsletterSettings
 	
 	public function clearConcludingConfirmMsg()
 	{
-		$this->setConcludingConfirmMsg(__('Thanks you for subscribing.'));
+		$this->setConcludingConfirmMsg(__('Thank you for subscribing.'));
 	}
 
 	/**
@@ -1354,9 +1352,7 @@ class newsletterSettings
 	public function setDatePreviousSend($value=null) 
 	{ 
 		if($value===null) {
-			//$date_previous_send = time() + dt::getTimeOffset($this->system_settings->blog_timezone);
-			// on ajoute 5s pour eviter de recuperer 2 fois le m�me post			
-			//$date_previous_send = time()+5;
+			// on ajoute 5s pour eviter de recuperer 2 fois le meme post			
 			$date_previous_send = time()+5;
 		} else {
 			$date_previous_send = strtotime(html::escapeHTML($value)) - dt::getTimeOffset($this->system_settings->blog_timezone) + 5;

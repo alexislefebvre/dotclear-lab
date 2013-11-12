@@ -45,6 +45,9 @@ class Captcha
     var $noise = false;
     var $type = 'png';
 
+    var $filecode = '';    
+    var $fileimg = '';
+    
 	/**
 	* test de disponibilité de la librairie GD
 	*/
@@ -71,14 +74,21 @@ class Captcha
 		if (isset($_length) && !empty($_length)) 
 			$this->length = (integer) $_length;
 
-		// création de l'image
+		# création de l'image
 		$this->img = imagecreateTRUEcolor($this->width, $this->height);
-
+		
 		if(function_exists('imageantialias')) {
 			imageantialias($this->img, 1);
 		}
+
+		# création du code
+		$this->filecode = md5(uniqid());
 	}
 
+	public function getCodeFileName() {
+		return $this->filecode;
+	}
+	
 	/**
 	* génération du code à saisir
 	*/
@@ -110,7 +120,7 @@ class Captcha
 		if (!self::isGD()) 
 			return;
         
-		// on crée les couleurs (départ, finale et liste)
+		# on crée les couleurs (départ, finale et liste)
 		$c1 = array(mt_rand(200, 255), mt_rand(200, 255), mt_rand(200, 255));
 		$c2 = array(mt_rand(150, 200), mt_rand(150, 200), mt_rand(150, 200));
 
@@ -121,7 +131,7 @@ class Captcha
 		}
 
 		if ($this->bkgradient) {
-			// on crée l'image
+			# on crée l'image
 			for ($i = 0; $i < $this->width; $i++)
 			{
 				$r = $c1[0] + $i * ($c2[0] - $c1[0]) / $this->width;
@@ -158,14 +168,14 @@ class Captcha
 			return;
 		} else if (!$this->noise) {
 			return;
-		} else { // on rajoute des petites lignes pour rendre un peu moins lisible
+		} else { # on rajoute des petites lignes pour rendre un peu moins lisible
 			for ($i = 0; $i < 8; $i++) 
 			{ 
 				imageline($this->img, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $this->colors[mt_rand(0, 4)]); 
 			}
 		}
 	}
-
+	
 	/**
 	* on finalise le dessin de l'image
 	*/
@@ -174,7 +184,7 @@ class Captcha
 		if (!self::isGD()) 
 			return;
 
-		// on dessine la bordure
+		# on dessine la bordure
 		$noir = imagecolorallocate($this->img, 0, 0, 0);
 		imageline($this->img, 0, 0, $this->width, 0, $noir);
 		imageline($this->img, 0, 0, 0, $this->height, $noir);
@@ -211,6 +221,8 @@ class Captcha
 		$this->addNoise();
 		$this->finalizeImg();
 		$this->resizeImg();
+		$this->writeImgCaptcha();
+		$this->writeCodeFile();
 	}
 
 	/**
@@ -245,68 +257,107 @@ class Captcha
 	/**
 	* url de génération des fichiers
 	*/
-	public static function path()
+	public static function newsletter_private_path()
 	{
 		global $core;
 		$blog = &$core->blog;
-		return $blog->public_path;
+
+		$newsletter_cache = DC_TPL_CACHE.'/newsletter';
+		if (!file_exists($newsletter_cache)) {
+			@mkdir($newsletter_cache);
+		}
+		if (!is_writable($newsletter_cache)) {
+			throw new Exception('Failed to get temporary directory');
+		}
+		return $newsletter_cache;
 	}
 
+	public static function newsletter_public_path()
+	{
+		global $core;
+		$blog = &$core->blog;
+		
+		$newsletter_public_cache = $blog->public_path.'/newsletter'; 
+		if (!file_exists($newsletter_public_cache)) {
+			@mkdir($newsletter_public_cache);
+		}
+		if (!is_writable($newsletter_public_cache)) {
+			throw new Exception('Failed to get temporary directory');
+		}
+		
+		return $newsletter_public_cache;
+	}
+	
+	
 	/**
 	* url de génération des fichiers
 	*/
-	public static function www()
+	public static function newsletter_public_url()
 	{
 		global $core;
-		return  $core->blog->settings->system->public_url;
+		return $core->blog->settings->system->public_url.'/newsletter';
 	}
 
 	/**
 	* on affiche l'image
 	*/
-	public function file()
+	public function writeImgCaptcha()
 	{
 		if (!self::isGD())
 			return;
                     
-		$file = self::path().'/';
+		$this->fileimg = self::newsletter_public_path().'/'.md5(uniqid());
 		switch ($this->type)
 		{
 			case 'jpg':
-				$file .= 'captcha.img.jpg';
-				imagejpg($this->img, $file, 80);
+				$this->fileimg .= '.jpg';
+				imagejpg($this->img, $this->fileimg, 80);
 				break;
 
 			case 'gif':
-				$file .= 'captcha.img.gif';
-				imagegif($this->img, $file);
+				$this->fileimg .= '.gif';
+				imagegif($this->img, $this->fileimg);
 				break;
 
 			case 'png':
-				$file .= 'captcha.img.png';
-				imagepng($this->img, $file);
+				$this->fileimg .= '.png';
+				imagepng($this->img, $this->fileimg);
 				break;
 		}
 		imagedestroy($this->img);
-		return $file;
+	}
+	
+	public function getImgFileName() {
+		return basename($this->fileimg);
+	}
+
+	public static function deleteImgCaptcha($imgFileName) {
+		if(file_exists(self::newsletter_public_path().'/'.$imgFileName))
+			@unlink(self::newsletter_public_path().'/'.$imgFileName);
+	}
+	
+	/**
+	* écrit le code dans un fichier du cache
+	*/
+	public function writeCodeFile()
+	{
+		@file_put_contents(self::newsletter_private_path().'/'.$this->filecode, $this->code);
 	}
 
 	/**
-	* inscrit dans une variable de session le code
+	* lit le fichier du cache
 	*/
-	public function write()
+	public static function readCodeFile($codeFileName)
 	{
-		@file_put_contents(self::path().'/captcha.key.txt', $this->code);
-	}
-
-	/**
-	* inscrit dans une variable de session le code
-	*/
-	public static function read()
-	{
-		$content = @file_get_contents(self::path().'/captcha.key.txt');
+		$content = @file_get_contents(self::newsletter_private_path().'/'.$codeFileName);
 		return (($content === FALSE) ? null : $content);
 	}
+	
+	public static function deleteCodeFile($codeFileName)
+	{
+		if(file_exists(self::newsletter_private_path().'/'.$codeFileName))
+			@unlink(self::newsletter_private_path().'/'.$codeFileName);
+	}	
 }
 
 ?>

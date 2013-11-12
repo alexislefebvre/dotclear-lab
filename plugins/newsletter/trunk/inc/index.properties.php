@@ -135,7 +135,7 @@ try {
 	
 				# notify the change to the blog
 				$newsletter_settings->save();
-				newsletterTools::redirection($m,rawurldecode(__('Settings updated.')));
+				newsletterTools::redirection($m,rawurldecode(__('Settings updated')));
 			} else {
 				if (empty($_POST['feditoremail']))
 					throw new Exception(__('You must input a valid email'));
@@ -240,7 +240,25 @@ try {
 			newsletterTools::redirection($m,$msg);
 		}
 		break;
-	
+
+		# write the new CSS
+		case 'copy_css':
+		{
+			$m = 'editCSS';
+
+			if (!empty($_POST['fthemes'])) {
+				if (newsletterCSS::copyFileCSSToTheme($_POST['fthemes'])) {
+					$msg = __('CSS successfully copied.');
+				} else {
+					throw new Exception(__('Error to copy CSS to your template'));
+				}
+			} else {
+				$msg = __('No template selected');
+			}
+			newsletterTools::redirection($m,$msg);
+		}
+		break;
+		
 		###############################################
 		# PLANNING
 		###############################################
@@ -260,9 +278,9 @@ try {
 				if ($newsletter_cron->add($interval, $f_first_run)) {
 					$newsletter_settings->setCheckSchedule(true);
 					$newsletter_settings->save();
-					$msg = __('Planning updated.');
+					$msg = __('Planning updated');
 				} else {
-					throw new Exception(__('Error during create planning task.'));
+					throw new Exception(__('Error during create planning task'));
 				}
 			}
 			newsletterTools::redirection($m,$msg);
@@ -276,14 +294,12 @@ try {
 	
 			if ($core->blog->dcCron instanceof dcCron) {
 				$newsletter_cron=new newsletterCron($core);
-				//$newsletter_settings = new newsletterSettings($core);
 				$newsletter_settings->setCheckSchedule(false);
 	
 				# delete scheduled task
 				$newsletter_cron->del();
 				$newsletter_settings->save();
-	
-				$msg = __('Planning updated.');
+				$msg = __('Planning updated');
 			}
 			newsletterTools::redirection($m,$msg);
 		}
@@ -300,8 +316,7 @@ try {
 				# enable scheduled task
 				$newsletter_cron->enable();
 				$newsletter_settings->save();
-				
-				$msg = __('Planning updated.');
+				$msg = __('Planning updated');
 			}
 			newsletterTools::redirection($m,$msg);
 		}
@@ -318,8 +333,7 @@ try {
 				# disable scheduled task
 				$newsletter_cron->disable();
 				$newsletter_settings->save();
-	
-				$msg = __('Planning updated.');
+				$msg = __('Planning updated');
 			}
 			newsletterTools::redirection($m,$msg);
 		}
@@ -401,7 +415,7 @@ try {
 					throw new Exception(__('Error to adapt template'));
 				}
 			} else {
-				$msg = __('No template adapted.');
+				$msg = __('No template adapted');
 			}
 			newsletterTools::redirection($m,$msg);
 		}
@@ -678,9 +692,7 @@ echo dcPage::breadcrumb(
 
 # print information message
 if (!empty($msg)) {
-	//echo dcPage::message($msg);
-	//echo '<p class="message">'.$msg.'</p>';
-	echo '<p class="success">'.$msg.'</p>';
+	dcPage::success($msg);
 }
 
 if ($newsletter_flag != 0) {
@@ -1362,9 +1374,9 @@ try {
 	
 	# Print page EditCSS
 	echo '<div class="multi-part" id="tab_editCSS" title="'.__('CSS for letters').'">';
-	echo	'<form action="plugin.php" method="post" id="file-form" class="fieldset">';
-	echo
-				'<h4>'.__('File editor').'</h4>'.
+	echo '<h3>'.__('File editor').'</h3>';
+	echo	'<form action="plugin.php" method="post" id="file-form">';
+	echo				
 				'<p>'.sprintf(__('Editing file %s'),'<strong>'.$f_name).'</strong></p>'.
 				'<p>'.
 					form::textarea('f_content',72,25,html::escapeHTML($f_content),'maximal','',!$f_editable).
@@ -1383,6 +1395,25 @@ try {
 				'</p>';
 		}
 		echo '</form>';
+		
+		if(!$f_editable) {
+			echo '<form action="plugin.php" method="post" id="file-form">';
+			echo '<h4>'.__('Copy this CSS to your theme').'</h4>';
+			echo
+			'<p><label class="classic" for="fthemes">'.__('Theme name').' : '.
+			form::combo('fthemes',$bthemes,$theme).
+			'</label></p>';
+			echo
+			'<p>'.
+			'<input type="submit" name="write" value="'.__('copy to theme').'" /> '.
+			form::hidden(array('p'),newsletterPlugin::pname()).
+			form::hidden(array('m'),'editCSS').
+			form::hidden(array('op'),'copy_css').
+			$core->formNonce().
+			'</p>';
+			echo '</form>';
+		}		
+		
 		echo '</div>';		
 	}
 } catch (Exception $e) {

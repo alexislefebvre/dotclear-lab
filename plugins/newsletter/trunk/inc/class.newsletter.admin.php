@@ -20,14 +20,13 @@ class newsletterAdmin
 	*/
 	public static function uninstall()
 	{
-		// delete schema
+		# delete schema
 		global $core;
 		try {
-			// delete parameters
+			# delete parameters
 			newsletterPlugin::deleteSettings();
 			newsletterPlugin::deleteVersion();
 			newsletterPlugin::deleteTableNewsletter();
-			
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
@@ -44,7 +43,7 @@ class newsletterAdmin
 			$blogid = (string)$blog->id;			
 			$fullname = $core->blog->public_path.'/.backup_newsletter_'.sha1(uniqid());
 			
-			// generate content file
+			# generate content file
 			$content = '';
 			$datas = newsletterCore::getRawDatas($onlyblog);
 			if (is_object($datas) !== FALSE) {
@@ -54,7 +53,7 @@ class newsletterAdmin
 					while ($datas->fetch())
 					{
 						$elems = array();
-						// generate component
+						# generate component
 						$elems[] = $datas->subscriber_id;
 						$elems[] = $datas->blog_id;
 						$elems[] = $datas->email;
@@ -70,7 +69,7 @@ class newsletterAdmin
 					while ($datas->fetch())
 					{
 						$elems = array();
-						// generate component
+						# generate component
 						$elems[] = $datas->subscriber_id;
 						$elems[] = base64_encode($datas->blog_id);
 						$elems[] = base64_encode($datas->email);
@@ -93,12 +92,12 @@ class newsletterAdmin
 			$export_fileformat = $file_format;
 			$export_filezip = $file_zip;
 			
-			// write in file
+			# write in file
 			if(@file_put_contents($export_file, $content)) {
 
 				# Send file content
 				if (!file_exists($export_file)) {
-					throw new Exception(__('Export file not found.'));
+					throw new Exception(__('Export file not found'));
 				}
                 
                 ob_end_clean();
@@ -140,7 +139,7 @@ class newsletterAdmin
 						unset($zip,$export_file,$export_filename,$export_filezip,$file_zipname);
 						@unlink($export_file);
 							
-						throw new Exception(__('Failed to compress export file.'));
+						throw new Exception(__('Failed to compress export file'));
 					}					
 				}
 			} else {
@@ -148,7 +147,6 @@ class newsletterAdmin
 			}
 		} catch (Exception $e) { 
 			@unlink($fullname);
-			//throw $e;
 			$core->error->add($e->getMessage()); 
 		}
 	}
@@ -159,7 +157,6 @@ class newsletterAdmin
 	public static function importFromBackupFile($infile = null, $file_format = 'txt')
 	{
 		global $core;
-
 		$blog = &$core->blog;
 		$blog_id = (string)$blog->id;
 		$counter=0;
@@ -170,31 +167,25 @@ class newsletterAdmin
 			files::uploadStatus($infile);
 			$file_up = DC_TPL_CACHE.'/'.md5(uniqid());
 			if (!move_uploaded_file($infile['tmp_name'],$file_up)) {
-				throw new Exception(__('Unable to move uploaded file.'));
+				throw new Exception(__('Unable to move uploaded file'));
 			}
 			
 			# Try to unzip file
 			$unzip_file = self::unzip($file_up,$file_format);
 			if (false !== $unzip_file) {
 				$file_up = $unzip_file; 
-			/*
-			} else { 
-				# Else this is a normal file
-			*/
 			}
 			
 			if (!empty($file_up)){
-        		//$core->error->add('Traitement du fichier ' . $infile);
-
 				if(file_exists($file_up) && is_readable($file_up)) {
 					$file_content = file($file_up);		
 		
 					foreach($file_content as $ligne) {
-						// explode line
+						# explode line
 						$line = (string) html::clean((string) $ligne);
 						$elems = explode(";", $line);
 						
-						// traitement des données lues
+						# traitement des données lues
 						if($file_format == 'dat') {
 							$subscriber_id = $elems[0];
 							//$blog_id = base64_decode($elems[1]);
@@ -218,48 +209,34 @@ class newsletterAdmin
 						}
 						
 						if (!text::isEmail($email)) {
-							$core->error->add(html::escapeHTML($email).' '.__('is not a valid email address.'));
+							$core->error->add(html::escapeHTML($email).' '.__('is not a valid email address'));
 							$counter_failed++;
 						} else {
 							try {
-							if(newsletterCore::add($email, $blog_id, $regcode, $modesend)) {
-								$subscriber = newsletterCore::getEmail($email);
-								if ($subscriber != null) {
-								//	$core->error->add('id : '.$subscriber->subscriber_id);
-									newsletterCore::update($subscriber->subscriber_id, $email, $state, $regcode, $subscribed, $lastsent, $modesend);
-								}								
-								$counter++;
-							} else
-								$counter_ignore++;
+								if(newsletterCore::add($email, $blog_id, $regcode, $modesend)) {
+									$subscriber = newsletterCore::getEmail($email);
+									if ($subscriber != null) {
+										newsletterCore::update($subscriber->subscriber_id, $email, $state, $regcode, $subscribed, $lastsent, $modesend);
+									}								
+									$counter++;
+								} else
+									$counter_ignore++;
 							} catch (Exception $e) { 
 								 $counter_ignore++;
 							} 
 						}
 					}				
 
-					// message de retour
-					if(0 == $counter || 1 == $counter) {
-						$retour = $counter . ' ' . __('email inserted');
-					} else {
-						$retour = $counter . ' ' . __('emails inserted');
-					}
-					if(0 == $counter_ignore || 1 == $counter_ignore) {
-						$retour .= ', ' . $counter_ignore . ' ' . __('email ignored');
-					} else {
-						$retour .= ', ' . $counter_ignore . ' ' . __('emails ignored');
-					}
-					if(1 == $counter_failed) {
-						$retour .= ', ' . $counter_failed . ' ' . __('line incorrect');
-					} else {
-						$retour .= ', ' . $counter_failed . ' ' . __('lines incorrect');
-					}				
-
-					return $retour;					
+					# message de retour
+					$res = sprintf(__('%d email inserted','%d emails inserted',$counter),$counter);
+					$res .= ', '.sprintf(__('%d email ignored','%d emails ignored',$counter_ignore),$counter_ignore);
+					$res .= ', '.sprintf(__('%d incorrect line','%d incorrect lines',$counter_failed),$counter_failed);
+					return $res;					
 				} else {
-					throw new Exception(__('No file to read.'));
+					throw new Exception(__('No file to read'));
 				}
 			} else {
-				throw new Exception(__('No file to read.'));
+				throw new Exception(__('No file to read'));
 			}				
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -291,14 +268,14 @@ class newsletterAdmin
 			if (file_exists($target)) {
 				$zip->close();
 				unset($content);
-				throw new Exception(__('Another file with same name exists.'));
+				throw new Exception(__('Another file with same name exists'));
 			}
 			
 			# Extract backup content
 			if (file_put_contents($target,$content) === false) {
 				$zip->close();
 				unset($content);
-				throw new Exception(__('Failed to extract backup file.'));
+				throw new Exception(__('Failed to extract backup file'));
 			}
 				
 			$zip->close();
@@ -309,7 +286,7 @@ class newsletterAdmin
 		}
 		
 		$zip->close();
-		throw new Exception(__('No backup in compressed file.'));
+		throw new Exception(__('No backup in compressed file'));
 	}	
 
 	/**
@@ -343,7 +320,7 @@ class newsletterAdmin
 						foreach($tab_mail as $an_email) {
 							$email = trim($an_email);
 							if (!text::isEmail($email)) {
-								$core->error->add(html::escapeHTML($email).' '.__('is not a valid email address.'));
+								$core->error->add(html::escapeHTML($email).' '.__('is not a valid email address'));
 								$counter_failed++;
 							} else {
 								$regcode = newsletterTools::regcode();
@@ -359,29 +336,16 @@ class newsletterAdmin
 						}
 					}
 					
-					// message de retour
-					if(0 == $counter || 1 == $counter) {
-						$retour = $counter . ' ' . __('email inserted');
-					} else {
-						$retour = $counter . ' ' . __('emails inserted');
-					}
-					if(0 == $counter_ignore || 1 == $counter_ignore) {
-						$retour .= ', ' . $counter_ignore . ' ' . __('email ignored');
-					} else {
-						$retour .= ', ' . $counter_ignore . ' ' . __('emails ignored');
-					}
-					if(1 == $counter_failed) {
-						$retour .= ', ' . $counter_failed . ' ' . __('line incorrect');
-					} else {
-						$retour .= ', ' . $counter_failed . ' ' . __('lines incorrect');
-					}				
-					
-					return $retour;
+					# message de retour
+					$res = sprintf(__('%d email inserted','%d emails inserted',$counter),$counter);
+					$res .= ', '.sprintf(__('%d email ignored','%d emails ignored',$counter_ignore),$counter_ignore);
+					$res .= ', '.sprintf(__('%d incorrect line','%d incorrect lines',$counter_failed),$counter_failed);					
+					return $res;
 				} else {
-					throw new Exception(__('No file to read.'));
+					throw new Exception(__('No file to read'));
 				}
 			} else {
-				throw new Exception(__('No file to read.'));
+				throw new Exception(__('No file to read'));
 			}
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -394,45 +358,46 @@ class newsletterAdmin
 	public static function adaptTheme($theme = null)
 	{
 		if ($theme == null) 
-			echo __('No template to adapt.');
+			echo __('No template to adapt');
 		else {
 			global $core;
 			try {
 				$blog = &$core->blog;
 				
-				// fichier source
+				### Formulaire de souscription
+				# fichier source
 				$sfile = 'home.html';
 				$source = $blog->themes_path.'/'.$theme.'/tpl/'.$sfile;
 				
-				// fichier de template
+				# fichier de template
 				$tfile = 'template.newsletter.html';
 				$template = dirname(__FILE__).'/../default-templates/'.$tfile;
 						
-				// fichier destination
+				# fichier destination
 				$dest = $blog->themes_path.'/'.$theme.'/tpl/'.'subscribe.newsletter.html';
 			
-				if (!@file_exists($source)) {			// test d'existence de la source
+				if (!@file_exists($source)) {
 					$msg = $sfile.' '.__('is not in your theme folder.').' ('.$blog->themes_path.')';
 					$core->error->add($msg);
 					return;
-				} else if (!@file_exists($template)) { 	// test d'existence du template source
+				} else if (!@file_exists($template)) {
 					$msg = $tfile.' '.__('is not in the plugin folder.').' ('.dirname(__FILE__).')';
 					$core->error->add($msg);
 					return;
-				} else if (!@is_readable($source)) { 	// test si le fichier source est lisible
+				} else if (!@is_readable($source)) {
 					$msg = $sfile.' '.__('is not readable.');
 					$core->error->add($msg);
 					return;
 				} else {
-					// lecture du contenu des fichiers template et source
+					# lecture du contenu des fichiers template et source
 					$tcontent = @file_get_contents($template);
 					$scontent = @file_get_contents($source);
 
-					// definition des remplacements
+					# definition des remplacements
 					switch ($theme) {
 						case 'noviny':
 						{
-							// traitement du theme particulier noviny
+							# traitement du theme particulier noviny
 							$patterns[0] = '/<div id=\"overview\" class=\"grid-l\">[\S\s]*<div id=\"extra\"/';
 							$replacements[0] = '<div class="grid-l">'. "\n" .'<div class="post">'. "\n" . $tcontent . "\n" .'</div>'. "\n" . '</div>'. "\n" .'<div id="extra"';
 							$patterns[1] = '/<title>.*<\/title>/';
@@ -451,7 +416,7 @@ class newsletterAdmin
 						}
 						case 'hybrid':
 						{
-							// traitement du theme particulier hybrid
+							# traitement du theme particulier hybrid
 							$patterns[0] = '/<div id=\"maincontent\">[\S\s]*<div id=\"sidenav\"/';
 							$replacements[0] = '<div class="maincontent">'."\n".$tcontent."\n".'</div>'."\n".'</div>'."\n".'<div id="sidenav"';
 							$patterns[1] = '/<title>.*<\/title>/';
@@ -482,15 +447,14 @@ class newsletterAdmin
 							$replacements[3] = '<meta name="dc.title" content="{{tpl:NewsletterPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}" />';
 							$patterns[4] = '/<tpl:Entries no_content=\"1\">[\S\s]*<\/tpl:Entries>/';
 							$replacements[4] = '';
+							break;
 						}
 					}
 
-
 					$count = 0;
 					$scontent = preg_replace($patterns, $replacements, $scontent, 1, $count);
-					//$core->error->add('Nombre de remplacements : ' . $count); 
 
-					// suppression des lignes vides et des espaces de fin de ligne
+					# suppression des lignes vides et des espaces de fin de ligne
 					$a2 = array();
 					$tok = strtok($scontent, "\n\r");
 					while ($tok !== FALSE)
@@ -503,21 +467,123 @@ class newsletterAdmin
 					$c2 = implode("\n", $a2);
 					$scontent = $c2;
 
-					// Writing new template file
+					# Writing new template file
 					if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->themes_path)) {
-	                    	$fp = @fopen($dest, 'w');
-	                    	@fputs($fp, $scontent);
-	                    	@fclose($fp);
-	                    	$msg = __('Template created.');
-	                	} else {
-	                		$msg = __('Unable to write file.');
+                    	$fp = @fopen($dest, 'w');
+                    	@fputs($fp, $scontent);
+                    	@fclose($fp);
+                    	$msg = __('Template created');
+                	} else {
+                		$msg = __('Unable to write file');
+                	}
+				}	
+
+				### Liste des newsletters
+                # fichier source
+                $sfile = 'home.html';
+                $source = $blog->themes_path.'/'.$theme.'/tpl/'.$sfile;
+                	
+                # fichier de template
+                $tfile = 'template.newsletters.html';
+				$template = dirname(__FILE__).'/../default-templates/'.$tfile;
+                	
+                # fichier destination
+                $dest = $blog->themes_path.'/'.$theme.'/tpl/'.'newsletters.html';
+		
+                if (!@file_exists($template)) {
+                	$msg = $tfile.' '.__('is not in the plugin folder.').' ('.dirname(__FILE__).')';
+                	$core->error->add($msg);
+                	return;
+                } else {
+	               	# lecture du contenu des fichiers template et source
+                	$tcontent = @file_get_contents($template);
+                	$scontent = @file_get_contents($source);
+                	
+                	# definition des remplacements
+                	switch ($theme) {
+	                	case 'noviny':
+	                	{
+	                		# traitement du theme particulier noviny
+	                		$patterns[0] = '/<div id=\"overview\" class=\"grid-l\">[\S\s]*<div id=\"extra\"/';
+	                		$replacements[0] = '<div class="grid-l">'. "\n" .'<div class="post">'. "\n" . $tcontent . "\n" .'</div>'. "\n" . '</div>'. "\n" .'<div id="extra"';
+							$patterns[1] = '/<title>.*<\/title>/';
+	                		$replacements[1] = '<title>{{tpl:lang Newsletters}} - {{tpl:BlogName encode_html="1"}}</title>';
+							$patterns[2] = '/dc-home/';
+							$replacements[2] = 'dc-newsletter';
+							$patterns[3] = '/<meta name=\"dc.title\".*\/>/';
+	                		$replacements[3] = '<meta name="dc.title" content="{{tpl:lang Newsletters}} - {{tpl:BlogName encode_html="1"}}" />';
+							$patterns[4] = '/<div id=\"lead\" class="grid-l home-lead">[\S\s]*<div id=\"meta\"/';
+	                		$replacements[4] = '<div id="lead" class="grid-l">'. "\n\t" .'<h2>{{tpl:lang Newsletters}}</h2>'. "\n\t" .'</div>'. "\n\t" . '<div id="meta"';
+	                		$patterns[5] = '/<div id=\"meta\" class=\"grid-s\">[\S\s]*{{tpl:include src=\"inc_meta.html\"}}/';
+	                		$replacements[5] = '<div id="meta" class="grid-s">'. "\n\t" .'{{tpl:include src="inc_meta.html"}}';
+	                		$patterns[6] = '/<h2 class=\"post-title\">{{tpl:lang Newsletters}}<\/h2>/';
+							$replacements[6] = '';
+	                		break;
+						}
+						case 'hybrid':
+						{
+							# traitement du theme particulier hybrid
+	                		$patterns[0] = '/<div id=\"maincontent\">[\S\s]*<div id=\"sidenav\"/';
+	                		$replacements[0] = '<div class="maincontent">'."\n".$tcontent."\n".'</div>'."\n".'</div>'."\n".'<div id="sidenav"';
+	                		$patterns[1] = '/<title>.*<\/title>/';
+	                		$replacements[1] = '<title>{{tpl:lang Newsletters}} - {{tpl:BlogName encode_html="1"}}</title>';
+	                		$patterns[2] = '/dc-home/';
+							$replacements[2] = 'dc-newsletter';
+							$patterns[3] = '/<script type=\"text\/javascript\">[\S\s]*<\/script>/';
+	                		$replacements[3] = '';
+							$patterns[4] = '/<meta name=\"dc.title\".*\/>/';
+							$replacements[4] = '<meta name="dc.title" content="{{tpl:lang Newsletters}} - {{tpl:BlogName encode_html="1"}}" />';
+	                		$patterns[5] = '/<h2 class=\"post-title\">{{tpl:lang Newsletters}}<\/h2>/';
+							$replacements[5] = '<div id="content-info">'."\n".'<h2>{{tpl:lang Newsletters}}</h2>'."\n".'</div>'."\n".'<div class="content-inner">';
+							$patterns[6] = '/<div id=\"sidenav\">[\S\s]*<!-- end #sidenav -->/';
+	                		$replacements[6] = '<div id="sidenav">'."\n".'</div>'."\n".'<!-- end #sidenav -->';
+							$patterns[7] = '/<tpl:Categories>[\S\s]*<link rel=\"alternate\"/';
+	                		$replacements[7] = '<link rel=alternate"';
+	                		break;
 	                	}
-
-					//@file_put_contents($dest,$scontent);
-					$msg = __('Template created.');
-
+						default:
+						{
+							$patterns[0] = '/<tpl:Entries>[\S\s]*<\/tpl:Entries>/';
+							$replacements[0] = $tcontent;
+	                		$patterns[1] = '/<title>.*<\/title>/';
+	                		$replacements[1] = '<title>{{tpl:lang Newsletters}} - {{tpl:BlogName encode_html="1"}}</title>';
+	                		$patterns[2] = '/dc-home/';
+							$replacements[2] = 'dc-newsletter';
+							$patterns[3] = '/<meta name=\"dc.title\".*\/>/';
+	                		$replacements[3] = '<meta name="dc.title" content="{{tpl:lang Newsletters}} - {{tpl:BlogName encode_html="1"}}" />';
+	                		$patterns[4] = '/<tpl:Entries no_content=\"1\">[\S\s]*<\/tpl:Entries>/';
+							$replacements[4] = '';
+							break;
+						}
+	                }
+                	
+	                $count = 0;
+					$scontent = preg_replace($patterns, $replacements, $scontent, 1, $count);
+	                
+	                # suppression des lignes vides et des espaces de fin de ligne
+	                $a2 = array();
+	                $tok = strtok($scontent, "\n\r");
+	                while ($tok !== FALSE)
+	                {
+	                	$l = rtrim($tok);
+	                	if (strlen($l) > 0)
+	                	$a2[] = $l;
+	                	$tok = strtok("\n\r");
+	                }
+	                $c2 = implode("\n", $a2);
+	                $scontent = $c2;
+	                	
+	                # Writing new template file
+	                if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->themes_path)) {
+	                	$fp = @fopen($dest, 'w');
+	                	@fputs($fp, $scontent);
+	                	@fclose($fp);
+	                	$msg .= __('Template created').': '.$dest;
+	                } else {
+	                	$msg .= __('Unable to write file').': '.$dest;
+	                }                	
+                	
 				}
-
 				return $msg;
 			} catch (Exception $e) { 
 				$core->error->add($e->getMessage()); 

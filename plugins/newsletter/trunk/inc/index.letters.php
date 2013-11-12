@@ -421,7 +421,7 @@ echo dcPage::breadcrumb(
 
 # print information message
 if (!empty($msg)) {
-	echo '<p class="success">'.$msg.'</p>';
+	dcPage::success($msg);
 }
 
 if ($newsletter_flag != 0) {

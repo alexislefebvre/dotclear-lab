@@ -13,12 +13,12 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-// chargement des librairies
+# chargement des librairies
 require_once dirname(__FILE__).'/class.html2text.php';
 
 class nlTemplate
 {
-	// variables
+	# variables
 	protected static $metas = null;
 
 	/**
@@ -61,18 +61,17 @@ class nlTemplate
 	{
 		global $core;
 		
-		// test de la variable mode de rendu
+		# test de la variable mode de rendu
 		switch ($mode)
 		{
 			case 'text':
 			case 'html':
 				break;
-			
 			default: 
 				return false;
 		}
 
-		// test de la variable de nom de template
+		# test de la variable de nom de template
 		switch ($template)
 		{
 			case 'newsletter':
@@ -83,13 +82,11 @@ class nlTemplate
 			case 'changemode':
 			case 'resume':
 				break;
-			
 			default: 
 				return false;
 		}
 		
 		try {
-			
 			$blog = $core->blog;
 			$templates = self::templates();
 			
@@ -98,21 +95,21 @@ class nlTemplate
 			
 			$filename = newsletterTools::requestTemplate($core,$templates[$template][$mode]).$templates[$template][$mode];
 			
-			// test d'existence du fichier de droits en lecture
+			# test d'existence du fichier de droits en lecture
 			if (!is_file($filename) || !file_exists($filename) || !is_readable($filename)) 
 				return null;
 			
-			// lecture du fichier et test d'erreur
+			# lecture du fichier et test d'erreur
 			$content = @file_get_contents($filename);
 			if ($content === FALSE) 
 				return null;
 			
-			// détection d'une boucle de traitement
+			# détection d'une boucle de traitement
 			$tagStart = "{loop:";
 			$tagEnd = "{/loop}";
 			$_p1 = stripos($content, "{loop:");
 			if ($_p1 !== FALSE) {
-				// détermination des différentes valeurs de position dans le contenu
+				# détermination des différentes valeurs de position dans le contenu
 				$p1 = (integer)$_p1;
 				$p2 = $p1 + strlen("{loop:");
 				$p3 = (integer)stripos($content, "}", $p1);
@@ -120,52 +117,47 @@ class nlTemplate
 				$p5 = (integer)stripos($content, "{/loop}", $p4);
 				$p6 = $p5 + strlen("{/loop}");
 
-				// identification du nom du meta champ et du meta contenu
+				# identification du nom du meta champ et du meta contenu
 				$pTag = trim(substr($content, $p2, $p3 - $p2));
 				$pContent = trim(substr($content, $p4, $p5 - $p4));
 
-				// on remplace le meta contenu par un tag simple
+				# on remplace le meta contenu par un tag simple
 				$zContent = substr($content, $p1, $p6 - $p1);
 				$content = str_replace($zContent, "{*}", $content);
 
-				// si on a bien le meta champ et le meta contenu, alors on boucle le remplacement
+				# si on a bien le meta champ et le meta contenu, alors on boucle le remplacement
 				if (!empty($pTag) && !empty($pContent)) {
-					// contenu final de la boucle
+					# contenu final de la boucle
 					$bContent = '';
 
-					// contenu à boucler
+					# contenu à boucler
 					$aContent = (array)self::$metas[$pTag];
 					foreach ($aContent as $index => $elem)
 					{
-						// contenu du tour de boucle
+						# contenu du tour de boucle
 						$_content = $pContent;
 
-						// traite chaque élement
+						# traite chaque élement
 						foreach ($elem as $tagKey => $tagValue)
 						{
 							$tag = $pTag.'.'.$tagKey;
 							$_content = str_replace($tag, $tagValue, $_content);
 						}
 
-						// ajoute le contenu du tour de boucle à la boucle
+						# ajoute le contenu du tour de boucle à la boucle
 						$bContent .= $_content;
 					}
 
-					/*
-					$p7 = strripos($bContent, "{nl}");
-					$bContent = substr($bContent, 0, $p7);
-					*/
 					$content = str_replace("{*}", $bContent, $content);
 
 					if ($mode == 'text') 
-						//$content = str_replace("{nl}", "<br />", $content);
 						$content = str_replace("{nl}", "\n", $content);
 					else if ($mode == 'html')
 						$content = str_replace("{nl}", "<br />", $content);
 				}
 			}
 			
-			// boucle sur la liste des méta champs pour en remplacer les valeurs
+			# boucle sur la liste des méta champs pour en remplacer les valeurs
 			foreach (self::$metas as $k => $v)
 			{
 				if (!is_array($v)) {
@@ -173,7 +165,6 @@ class nlTemplate
 					$content = str_replace($tag, $v, $content);
 					
 					if ($mode == 'text') 
-						//$content = str_replace("{nl}", "<br />", $content);
 						$content = str_replace("{nl}", "\n", $content);
 					else if ($mode == 'html') 
 						$content = str_replace("{nl}", "<br />", $content);						
@@ -181,7 +172,7 @@ class nlTemplate
 				}
 			}
 			
-			// renvoi le contenu transformé
+			# retourne le contenu transformé
 			return $content;
 		
 		} catch (Exception $e) { 

@@ -83,7 +83,7 @@ try {
 			if (newsletterCore::add($email)) {
 				$msg = __('Subscriber added.');
 			} else {
-				throw new Exception(__('Error adding subscriber.'));
+				throw new Exception(__('Error adding subscriber'));
 			}
 	
 			newsletterTools::redirection($m,$msg);
@@ -129,7 +129,7 @@ try {
 				}
 	
 				if (newsletterCore::delete($ids)) {
-					$msg = __('Account(s) successfully removed.');
+					$msg = __('Account(s) successfully removed');
 				} else {
 					throw new Exception(__('Error to remove account(s)'));
 				}
@@ -149,7 +149,7 @@ try {
 				}
 	
 				if (newsletterCore::suspend($ids)) {
-					$msg = __('Account(s) successfully suspended.');
+					$msg = __('Account(s) successfully suspended');
 				} else {
 					throw new Exception(__('Error to suspend account(s)'));
 				}			
@@ -169,7 +169,7 @@ try {
 					$ids[$k] = (integer) $v;
 				}
 				if (newsletterCore::enable($ids)) 
-					$msg = __('Account(s) successfully enabled.');
+					$msg = __('Account(s) successfully enabled');
 				else
 					throw new Exception(__('Error to enable account(s)'));
 			}
@@ -189,7 +189,7 @@ try {
 				}
 	
 				if (newsletterCore::disable($ids)) 
-					$msg = __('Account(s) successfully disabled.');
+					$msg = __('Account(s) successfully disabled');
 				else
 					throw new Exception(__('Error to disable account(s)'));
 			}
@@ -200,7 +200,7 @@ try {
 		# set mail format to html
 		case 'changemodehtml':
 		{
-			$msg = __('No account(s) updated.');
+			$msg = __('No account updated.');
 			if (is_array($_POST['subscriber'])) {
 				$ids = array();
 				foreach ($_POST['subscriber'] as $k => $v) {
@@ -208,7 +208,7 @@ try {
 				}
 	
 				if (newsletterCore::changemodehtml($ids)) 
-					$msg = __('Format sending for account(s) successfully updated to html.');
+					$msg = __('Format sending for account(s) successfully updated to html');
 				else
 					throw new Exception(__('Error in modification format'));
 			}
@@ -219,7 +219,7 @@ try {
 		# set mail format to text
 		case 'changemodetext':
 		{
-			$msg = __('No account(s) updated.');
+			$msg = __('No account updated.');
 			if (is_array($_POST['subscriber'])) {
 				$ids = array();
 				foreach ($_POST['subscriber'] as $k => $v) {
@@ -227,7 +227,7 @@ try {
 				}
 	
 				if (newsletterCore::changemodetext($ids)) 
-					$msg = __('Format sending for account(s) successfully updated to text.');
+					$msg = __('Format sending for account(s) successfully updated to text');
 				else
 					throw new Exception(__('Error in modification format'));
 			}
@@ -444,7 +444,7 @@ echo dcPage::breadcrumb(
 
 # print information message
 if (!empty($msg)) {
-	echo '<p class="success">'.$msg.'</p>';
+	dcPage::success($msg);
 }
 
 if ($newsletter_flag != 0) {
