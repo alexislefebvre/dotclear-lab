@@ -12,13 +12,25 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) { return; }
- 
+if (!defined('DC_RC_PATH')) {
+
+	return null;
+}
+
 $this->registerModule(
-	/* Name */			"lastBlogUpdate",
-	/* Description*/		"Show the dates of last updates of your blog in a widget",
-	/* Author */			"JC Denis",
-	/* Version */			'2013.06.30',
-	/* Permissions */		'usage,contentadmin'
+	/* Name */
+	"Last blog update",
+	/* Description*/
+	"Show the dates of last updates of your blog in a widget",
+	/* Author */
+	"Jean-Christian Denis",
+	/* Version */
+	'2013.11.12',
+	array(
+		'permissions' => 'usage,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://jcd.lv/q=lastBlogUpdate',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/lastBlogUpdate'
+	)
 );
-?>

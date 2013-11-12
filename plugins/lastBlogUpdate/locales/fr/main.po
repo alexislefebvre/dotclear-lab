@@ -1,81 +1,87 @@
 # Language: Français
-# Module: lastBlogUpdate - 2013.06.30
-# Date: 2013-07-01 01:35:43
+# Module: lastBlogUpdate - 2013.11.12
+# Date: 2013-11-12 09:56:30
 # Translated with translater 2013.05.11
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: lastBlogUpdate 2013.06.30\n"
+"Project-Id-Version: lastBlogUpdate 2013.11.12\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-07-01T01:35:43+00:00\n"
+"PO-Revision-Date: 2013-11-12T09:56:30+00:00\n"
 "Last-Translator: Jean-Christian Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _widgets.php:23
-#: _widgets.php:26
+#: _widgets.php:28
+#: _widgets.php:36
 msgid "Dates of last updates"
 msgstr "Dates des dernières mise à jour"
 
-#: _widgets.php:27
+#: _widgets.php:41
 msgid "Show blog update"
 msgstr "Afficher la date de mise à jour du blog"
 
-#: _widgets.php:28
+#: _widgets.php:47
 msgid "Title for blog update:"
 msgstr "Titre pour la date de mise à jour du blog :"
 
-#: _widgets.php:30
+#: _widgets.php:53
 msgid "Text for blog update:"
 msgstr "Texte pour la date de mise à jour du blog :"
 
-#: _widgets.php:33
+#: _widgets.php:60
 msgid "Show entry update"
 msgstr "Afficher la date de mise à jour des billets"
 
-#: _widgets.php:34
+#: _widgets.php:66
 msgid "Title for entries update:"
 msgstr "Titre pour la date de mise à jour des billets :"
 
-#: _widgets.php:35
+#: _widgets.php:67
 msgid "Entries:"
 msgstr "Billets :"
 
-#: _widgets.php:36
+#: _widgets.php:72
 msgid "Text for entries update:"
 msgstr "Texte pour la date de mise à jour des billets :"
 
-#: _widgets.php:39
+#: _widgets.php:79
 msgid "Show comment update"
 msgstr "Afficher la date de mise à jour des commentaires"
 
-#: _widgets.php:40
+#: _widgets.php:85
 msgid "Title for comments update:"
 msgstr "Titre pour la date de mise à jour des commentaires :"
 
-#: _widgets.php:41
+#: _widgets.php:86
 msgid "Comments:"
 msgstr "Commentaires :"
 
-#: _widgets.php:42
+#: _widgets.php:91
 msgid "Text for comments update:"
 msgstr "Texte pour la date de mise à jour des commentaires :"
 
-#: _widgets.php:45
+#: _widgets.php:98
 msgid "Show media update"
 msgstr "Afficher la date de mise à jour des médias"
 
-#: _widgets.php:46
+#: _widgets.php:104
 msgid "Title for media update:"
 msgstr "Titre pour la date de mise à jour des médias :"
 
-#: _widgets.php:47
+#: _widgets.php:105
 msgid "Medias:"
 msgstr "Médias :"
 
-#: _widgets.php:48
+#: _widgets.php:110
 msgid "Text for media update:"
 msgstr "Texte pour la date de mise à jour des médias :"
+
+msgid "Show the dates of last updates of your blog in a widget"
+msgstr "Afficher les dates des dernières mises à jour de votre blog"
+
+msgid "Last blog update"
+msgstr "Dernières mises à jour du blog"
 
