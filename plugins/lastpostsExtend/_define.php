@@ -12,13 +12,25 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
- 
+if (!defined('DC_RC_PATH')) {
+
+	return null;
+}
+
 $this->registerModule(
-	/* Name */			"Last entries (Extended)",
-	/* Description*/	"Widget like lastposts with extended options",
-	/* Author */		"JC Denis",
-	/* Version */		'2013.06.30',
-	/* Permissions */	'admin'
+	/* Name */
+	"Last entries (Extended)",
+	/* Description*/
+	"Extended list of entries",
+	/* Author */
+	"Jean-Christian Denis",
+	/* Version */
+	'2013.11.12',
+	array(
+		'permissions' => 'admin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://jcd.lv/q=lastpostsExtend',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/lastpostsExtend'
+	)
 );
-?>

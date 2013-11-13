@@ -1,88 +1,76 @@
 # Language: Français
-# Module: lastpostsExtend - 2013.06.30
-# Date: 2013-07-01 01:47:26
+# Module: lastpostsExtend - 2013.11.12
+# Date: 2013-11-13 07:22:55
 # Translated with translater 2013.05.11
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: lastpostsExtend 2013.06.30\n"
+"Project-Id-Version: lastpostsExtend 2013.11.12\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-07-01T01:47:26+00:00\n"
+"PO-Revision-Date: 2013-11-13T07:22:55+00:00\n"
 "Last-Translator: Jean-Christian Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _widgets.php:28
+#: _widgets.php:34
 msgid "Last entries (Extended)"
 msgstr "Derniers billets (étendu)"
 
-#: _widgets.php:40
+#: _widgets.php:37
+msgid "Extended list of entries"
+msgstr "Liste étendu de billets"
+
+#: _widgets.php:48
 msgid "Post"
 msgstr "Billet"
 
-#: _widgets.php:42
+#: _widgets.php:50
 msgid "Gallery"
 msgstr "Galerie"
 
-#: _widgets.php:80
+#: _widgets.php:95
 msgid "Protection:"
 msgstr "protection :"
 
-#: _widgets.php:85
+#: _widgets.php:100
 msgid "only without password"
 msgstr "seulement sans mot de passe"
 
-#: _widgets.php:86
+#: _widgets.php:101
 msgid "only with password"
 msgstr "seulement avec mot de passe"
 
-#: _widgets.php:106
+#: _widgets.php:121
 msgid "Selected entries only"
 msgstr "Billets séléctionnés seulement"
 
-#: _widgets.php:113
+#: _widgets.php:128
 msgid "Updated entries only"
 msgstr "Billets mis à jour seulement"
 
-#: _widgets.php:122
+#: _widgets.php:137
 msgid "Limit to tags:"
 msgstr "Limiter aux tags :"
 
-#: _widgets.php:130
+#: _widgets.php:145
 msgid "Limit to words:"
 msgstr "Limiter aux mots :"
 
-#: _widgets.php:167
+#: _widgets.php:182
 msgid "Show entries first image:"
 msgstr "Afficher la première image du billet :"
 
-#: _widgets.php:172
-msgid "square"
-msgstr "carrée"
-
-#: _widgets.php:173
-msgid "thumbnail"
-msgstr "aperçue"
-
-#: _widgets.php:174
-msgid "small"
-msgstr "petite"
-
-#: _widgets.php:175
-msgid "medium"
-msgstr "moyenne"
-
-#: _widgets.php:182
+#: _widgets.php:197
 msgid "Show entries excerpt"
 msgstr "Afficher le résumé"
 
-#: _widgets.php:189
+#: _widgets.php:204
 msgid "Excerpt length:"
 msgstr "Taille du résumé :"
 
-#: _widgets.php:196
+#: _widgets.php:211
 msgid "Show comments count"
 msgstr "Afficher le nombre de commentaires"
 
