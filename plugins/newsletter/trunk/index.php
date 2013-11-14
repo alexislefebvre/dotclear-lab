@@ -35,6 +35,7 @@ if ( $newsletter_flag == 0) {
 		case 'messages':
 		case 'maintenance':
 		case 'editCSS':
+		case 'editFormsCSS':
 			require_once dirname(__FILE__).'/inc/index.properties.php';
 			break;
 		case 'letters':

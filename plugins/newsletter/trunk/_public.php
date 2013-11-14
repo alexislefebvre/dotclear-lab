@@ -41,6 +41,7 @@ $core->tpl->addValue('NewsletterFormLabel', array('tplNewsletter', 'NewsletterFo
 $core->tpl->addValue('NewsletterMsgPresentationForm', array('tplNewsletter', 'NewsletterMsgPresentationForm'));
 $core->tpl->addBlock('NewsletterIfUseDefaultFormat',array('tplNewsletter','NewsletterIfUseDefaultFormat'));
 $core->tpl->addValue('NewsletterFormFormatSelect', array('tplNewsletter', 'NewsletterFormFormatSelect'));
+$core->tpl->addBlock('NewsletterIfUseDefaultAction',array('tplNewsletter','NewsletterIfUseDefaultAction'));
 $core->tpl->addValue('NewsletterFormActionSelect', array('tplNewsletter', 'NewsletterFormActionSelect'));
 $core->tpl->addBlock('NewsletterIfUseCaptcha',array('tplNewsletter','NewsletterIfUseCaptcha'));
 $core->tpl->addBlock('NewsletterEntries',array('tplNewsletter','NewsletterEntries'));
@@ -307,10 +308,13 @@ class tplNewsletter
 
 	public static function NewsletterFormLabel($attr, $content)
 	{
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
+		
 		switch ($attr['id'])
 		{
 			case 'ok':
-				$res = __('Send');
+				$res = ($newsletter_settings->getUseDefaultAction() ? __('Subscribe') : __('Ok'));
 				break;
 			case 'subscribe':
 				$res = __('Subscribe');
@@ -362,7 +366,12 @@ class tplNewsletter
 	{
 		global $core;
 		$newsletter_settings = new newsletterSettings($core);
-		return $newsletter_settings->getMsgPresentationForm();
+		$res = '';
+		
+		if($newsletter_settings->getMsgPresentationForm()) {
+			$res = '<p id="newsletter_form-presentation">'.$newsletter_settings->getMsgPresentationForm().'</p>';
+		}
+		return $res;
 	}
 
 	public static function NewsletterIfUseDefaultFormat($attr,$content)
@@ -375,23 +384,36 @@ class tplNewsletter
 	public static function NewsletterFormFormatSelect($attr,$content)
 	{
 		$res = 
-				'<label for="nl_modesend">'.__('Format').'&nbsp;:</label>'.
-				'<select style="border:1px" name="nl_modesend" id="nl_modesend" size="1">'.
+			'<label for="nl_modesend">'.__('Format').'</label>'.
+			'<select name="nl_modesend" id="nl_modesend" size="1">'.
 				'<option value="html" selected="selected">'.__('html').'</option>'.
 				'<option value="text">'.__('text').'</option>'.
-				'</select>';
+			'</select>';
 		return $res;
 	}
 
+	public static function NewsletterIfUseDefaultAction($attr,$content)
+	{
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
+		$res = '';
+		
+		if($newsletter_settings->getUseDefaultAction()) {
+			$res = form::hidden(array('nl_option','nl_option'),'subscribe');
+		}
+
+		return ($newsletter_settings->getUseDefaultAction()? $res : $content);
+	}	
+	
 	public static function NewsletterFormActionSelect($attr,$content)
 	{
 		global $core;
 		$newsletter_settings = new newsletterSettings($core);
 		
 		$res = 
-			'<label for="nl_option">'.__('Action').'&nbsp;:</label>'.
-			'<select style="border:1px width:150px;" name="nl_option" id="nl_option" size="1">'.
-			'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
+			'<label for="nl_option">'.__('Actions').'</label>'.
+				'<select name="nl_option" id="nl_option" size="1">'.
+				'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
 		
 		if(!$newsletter_settings->getUseDefaultFormat()) {
 			$res .= '<option value="changemode">'.__('Change format').'</option>';
@@ -401,10 +423,11 @@ class tplNewsletter
 			$res .= '<option value="suspend">'.__('Suspend').'</option>';
 		}
 		
-		$res .= '<option value="resume">'.__('Resume').'</option>'.
+		$res .= 
+				'<option value="resume">'.__('Resume').'</option>'.
 				'<option value="">---</option>'.
 				'<option value="unsubscribe">'.__('Unsubscribe').'</option>'.
-				'</select>';
+			'</select>';
 		return $res;
 	}	
 
@@ -441,10 +464,7 @@ class tplNewsletter
 		$res = '';
 		
 		if ($newsletter_settings->getCaptcha()) {
-			$res = 
-				'<p>'.
-				'<input type="text" name="nl_captcha" id="nl_captcha" value="" style="width:90px; vertical-align:top;" />'.
-				'</p>';
+			$res = '<input id="nl_captcha" type="text" placeholder="Saisissez le texte " autocomplete="off">';
 		}
 		return $res;
 	}
@@ -785,9 +805,8 @@ class publicWidgetsNewsletter
 		$system_settings =& $core->blog->settings->system;
 
 		try {
-			$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
-				
 			# get state of plugin
+			$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 			if (!$newsletter_flag)
 				return;
 
@@ -796,96 +815,102 @@ class publicWidgetsNewsletter
 				return;
 			}
 
-			$plugin_name = 'Newsletter';
-			$title = ($w->title) ? html::escapeHTML($w->title) : $plugin_name;
-			$showTitle = ($w->showtitle) ? true : false;
-			$text = '';
+			$title = ($w->title) ? html::escapeHTML($w->title) : 'Newsletter';
+			
+			$res  = '<div class="newsletter-widget">';
+			$res .= ($w->showtitle) ? '<h2>'.$title.'</h2>' : '';			
 
 			# mise en place du contenu du widget
 			if ($w->inwidget) {
 				$newsletter_settings = new newsletterSettings($core);
-				
 				$link = newsletterCore::url('submit');
 				
-				$text .= '<form action="'.$link.'" method="post" id="nl_form">'."\n";
+				$res .= 
+				'<form id="nl_form" action="'.$link.'" method="post">';
+				
+				# texte de presentation
+				if($newsletter_settings->getMsgPresentationForm()) {
+					$res .= '<p id="newsletter-widget-presentation">'.$newsletter_settings->getMsgPresentationForm().'</p>';
+				}
+				
+				# saisie de l'adresse email
+				$res .= 
+				'<p>'.
+				'<label for="nl_email">'.__('Email').'</label>'.
+				'<input id="nl_email" type="email" name="nl_email">'.
+				'</p>';
+				
 
-				$text .=
-				'<p>'.$newsletter_settings->getMsgPresentationForm().'</p>'.
+				# selection du mode d'envoi
+				if(!$newsletter_settings->getUseDefaultFormat()) {
+					$res .= 
+						'<p><label for="nl_modesend">'.__('Format').'</label>'.
+							'<select name="nl_modesend" id="nl_modesend" size="1">'.
+								'<option value="html" selected="selected">'.__('html').'</option>'.
+								'<option value="text">'.__('text').'</option>'.
+							'</select>'.
+						'</p>';
+				}
+				
+				# selection du type de message
+				if($newsletter_settings->getUseDefaultAction()) {
+					$res .= form::hidden(array('nl_option','nl_option'),'subscribe');
+				} else {
+					$res .= 
+						'<p>'.
+							'<label for="nl_option">'.__('Actions').'</label>'.
+							'<select name="nl_option" id="nl_option" size="1">'.
+								'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
 					
-				'<p><label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
-				form::field(array('nl_email','nl_email'),15,255).
-				'</p>';
-
-				if(!$newsletter_settings->getUseDefaultFormat()) {
-					$text .= '<p><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
-							'<select style="border:1px inset silver; width:140px;" name="nl_modesend" id="nl_modesend" size="1">'.
-							'<option value="html" selected="selected">'.__('html').'</option>'.
-							'<option value="text">'.__('text').'</option>'.
-							'</select></p>';
+					if(!$newsletter_settings->getUseDefaultFormat()) {
+						$res .= '<option value="changemode">'.__('Change format').'</option>';
+					}
+					if($newsletter_settings->getCheckUseSuspend()) {
+						$res .= '<option value="suspend">'.__('Suspend').'</option>';
+					}
+	
+						$res .=
+								'<option value="resume">'.__('Resume').'</option>'.
+								'<option value="">---</option>'.
+								'<option value="unsubscribe">'.__('Unsubscribe').'</option>'.
+							'</select>'.
+						'</p>';
 				}
-
-				$text .= '<p><label for="nl_option">'.__('Actions').'</label>&nbsp;:&nbsp;'.
-						'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1">'.
-						'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
-
-				if(!$newsletter_settings->getUseDefaultFormat()) {
-					$text .= '<option value="changemode">'.__('Change format').'</option>';
-				}
-
-				if($newsletter_settings->getCheckUseSuspend()) {
-					$text .= '<option value="suspend">'.__('Suspend').'</option>';
-				}
-
-				$text .=
-				'<option value="resume">'.__('Resume').'</option>'.
-				'<option value="">---</option>'.
-				'<option value="unsubscribe">'.__('Unsubscribe').'</option>'.
-				'</select>'.
-				'</p>';
-
+				
+				# utilisation du captcha
 				if ($newsletter_settings->getCaptcha()) {
 					require_once dirname(__FILE__).'/inc/class.captcha.php';
 					$as = new Captcha(80, 35, 5);
 					$as->generate();
-						
-					$text .=
-					'<p><label for="nl_captcha">'.__('Captcha').'</label>:<br />'.
-					'<img id="nl_captcha_img" src="'.Captcha::newsletter_public_url().'/'.$as->getImgFileName().'" alt="'.__('Captcha').'" />'.
-					'<img id="nl_reload_captcha" src="?pf=newsletter/reload.png" alt="'.__('Reload captcha').'" title="'.__('Reload captcha').'" style="cursor:pointer;position:relative;top:-7px;" />'.
-					'<br/>'.
-					form::field(array('nl_captcha','nl_captcha'),10,30,'').
+
+					$res .=
+					'<p>'.
+						'<img id="nl_captcha_img" src="'.Captcha::newsletter_public_url().'/'.$as->getImgFileName().'" alt="'.__('Captcha').'" />'.
+						'<img id="nl_reload_captcha" src="?pf=newsletter/reload.png" alt="'.__('Reload captcha').'" title="'.__('Reload captcha').'" style="cursor:pointer;position:relative;top:-7px;" />'.
+						'<input id="nl_captcha" type="text" placeholder="Saisissez le texte " autocomplete="off">'.
 					'</p>';
+
+					$res .=
+					form::hidden(array('nl_checkid','nl_checkid'),$as->getCodeFileName()).
+					form::hidden(array('nl_captcha_imgname','nl_captcha_imgname'),$as->getImgFileName());					
 				}
 					
-				$text .=
-				'<p><input class="submit" type="submit" name="nl_submit" id="nl_submit" value="'.__('Send').'" /></p>';
-				if ($newsletter_settings->getCaptcha()) {
-					$text .=
-					form::hidden(array('nl_checkid','nl_checkid'),$as->getCodeFileName()).
-					form::hidden(array('nl_captcha_imgname','nl_captcha_imgname'),$as->getImgFileName());
-				}
-				$text .=
-				form::hidden(array('nl_random'),newsletterTools::getRandom()).
+				$res .=
+				'<p><input class="submit" type="submit" name="nl_submit" id="nl_submit" value="'.
+					($newsletter_settings->getUseDefaultAction() ? __('Subscribe') : __('Ok')).'" /></p>';
+				
+				$res .=	form::hidden(array('nl_random'),newsletterTools::getRandom()).
 				$core->formNonce().
 				'</form>';
 			} else {
 				# in sublink
 				$link = newsletterCore::url('form');
 				$subscription_link = ($w->subscription_link) ? html::escapeHTML($w->subscription_link) : __('Subscription link');
-				$text .= '<ul><li><a href="'.$link.'">'.$subscription_link.'</a></li></ul>';
+				$res .= '<ul><li><a href="'.$link.'">'.$subscription_link.'</a></li></ul>';
 			}
 			# affichage dynamique
-			$text .= '<div id="message"></div>';
-			
-			# affichage du widget
-			if ($showTitle === true)
-				$title = '<h2>'.$title.'</h2>';
-			else
-				$title = '';
-
-			$res = '<div class="'.newsletterPlugin::pname().'">';
-			$res .= $title;
-			$res .= $text;
+			$res .= '<div id="newsletter-pub-message"></div>';
+				
 			$res .= '</div>';
 			return $res;
 

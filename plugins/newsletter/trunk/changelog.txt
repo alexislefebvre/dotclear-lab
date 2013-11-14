@@ -1,4 +1,4 @@
-Newsletter 3.9.0 - 2013-11-xx
+Newsletter 3.9.0 - 2013-11-14
 ===========================================================
 * Mise en conformité dotclear 2.6
 * Réorganisation des classes et de l'interface graphique
@@ -17,11 +17,12 @@ Newsletter 3.9.0 - 2013-11-xx
 * Modification de la gestion du capcha et nettoyage des fichiers temporaires
 * Ajout de la validation dynamique du form de souscription et correction de la gestion du submit
 * Remise à niveau des traductions
-* Ajout dans l'adaptation du template de la page des newsletters
-* Ajout du formulaire de copie du CSS style_letter.css dans le theme sélectionné
-
-TODO
-- resoudre le pb de chargement du js quand le template a été adapté
+* Ajout d'une option sur les actions pour simplifier les formulaires de souscription
+* Ajout dans l'adaptation au theme du template de la page des newsletters
+* Ajout d'un CSS style_pub_newsletter.css éditable via le plugin
+* Ajout du formulaire de copie du CSS style_letter ou style_pub_newsletter.css dans le theme sélectionné
+* Modification du template template.newsletter.html et ajout du template template.newsletters.html
+* minify des js
 
 Newsletter 3.8.1 - 2013-05-11
 ===========================================================

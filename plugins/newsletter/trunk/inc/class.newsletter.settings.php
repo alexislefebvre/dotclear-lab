@@ -173,6 +173,24 @@ class newsletterSettings
 	}	
 	
 	/**
+	 * utilisation de l'action par defaut
+	 */
+	public function getUseDefaultAction()
+	{
+		return (boolean)$this->getParameter('use_default_action');
+	}
+	
+	public function setUseDefaultAction($value)
+	{
+		$this->setParameter('use_default_action',(boolean)$value);
+	}
+	
+	public function clearUseDefaultAction()
+	{
+		$this->setUseDefaultAction(false);
+	}
+		
+	/**
 	* nombre maximal de billet retournes
 	*/
 	public function getMaxPosts() 
@@ -1650,6 +1668,24 @@ class newsletterSettings
 	}		
 	
 	/**
+	 * utilisation du CSS pour les formulaires
+	 */
+	public function getUseCSSForms()
+	{
+		return (boolean)$this->getParameter('use_CSSForms');
+	}
+	
+	public function setUseCSSForms($value)
+	{
+		$this->setParameter('use_CSSForms',(boolean)$value);
+	}
+	
+	public function clearUseCSSForms()
+	{
+		$this->setUseCSSForms(false);
+	}
+	
+	/**
 	* initialize settings
 	*/
 	public function defaultsSettings()
@@ -1659,6 +1695,7 @@ class newsletterSettings
 		if(!$this->getEditorEmail()) $this->clearEditorEmail();
 		if(!$this->getSendMode()) $this->clearSendMode();
 		if(!$this->getUseDefaultFormat()) $this->setUseDefaultFormat(true);
+		if(!$this->getUseDefaultAction()) $this->setUseDefaultAction(true);
 		if(!$this->getMaxPosts()) $this->clearMaxPosts();
 		if(!$this->getMinPosts()) $this->clearMinPosts();
 		if(!$this->getAutosend()) $this->clearAutosend();
@@ -1681,6 +1718,7 @@ class newsletterSettings
 		if(!$this->getCheckSubjectWithDate()) $this->setCheckSubjectWithDate(true);
 		if(!$this->getDateFormatPostInfo()) $this->clearDateFormatPostInfo();
 		if(!$this->getAutoConfirmSubscription()) $this->clearAutoConfirmSubscription();
+		if(!$this->getUseCSSForms()) $this->setUseCSSForms(true);
 		
 		# en vrac
 		if(!$this->getTxtLinkVisuOnline()) $this->clearTxtLinkVisuOnline();
@@ -1776,9 +1814,11 @@ class newsletterSettings
 						'category',
 						'check_schedule',
 						'check_notification',
+						'use_CSSForms',
 						'mode',
 						'check_use_suspend',
 						'use_default_format',
+						'use_default_action',
 						'send_update_post',
 						'view_content_in_text_format',
 						'view_thumbnails',

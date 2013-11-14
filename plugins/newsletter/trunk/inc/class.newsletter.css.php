@@ -24,11 +24,11 @@ class newsletterCSS
 	protected $f_content;
 	protected $f_name;
 	
-	public function __construct(dcCore $core)
+	public function __construct(dcCore $core,$file_css='style_letter.css')
 	{
 		$this->core = $core;
 		$this->blog = $core->blog;
-		$this->file_css = 'style_letter.css';
+		$this->file_css = $file_css;
 		$this->setPathCSS();
 		$this->f_content = '';
 		$this->f_name = $this->path_css.'/'.$this->file_css;
@@ -98,7 +98,7 @@ class newsletterCSS
 		return __('Document saved');
 	}	
 
-	public static function copyFileCSSToTheme($theme = null)
+	public static function copyFileCSSToTheme($theme = null, $file_css='style_letter.css')
 	{
 		if ($theme == null) {
 			echo __('No template selected');
@@ -108,10 +108,10 @@ class newsletterCSS
 				$blog = &$core->blog;		
 
 				# source
-				$source = path::real(newsletterPlugin::folder().'..').'/style_letter.css';
+				$source = path::real(newsletterPlugin::folder().'..').'/'.$file_css;
 				
 				# fichier destination
-				$dest = $blog->themes_path.'/'.$theme.'/style_letter.css';
+				$dest = $blog->themes_path.'/'.$theme.'/'.$file_css;
 				
 				if (!copy($source, $dest)) {
 					throw new Exception('copy fail');

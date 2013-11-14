@@ -30,34 +30,27 @@ class dcBehaviorsNewsletterPublic
 				return;		
 		
 			if($core->url->type == "newsletter") {
-				$letter_css = new newsletterCSS($core);
-				$css_style = '<style type="text/css" media="screen">';
-				$css_style .= $letter_css->getLetterCSS();
-				$css_style .= '</style>';
+				$letter_css = new newsletterCSS($core, 'style_letter.css');
+				$css_style = '<style type="text/css" media="screen">'.$letter_css->getLetterCSS().'</style>';
 				echo $css_style;
 			}
+			//echo '<link rel="stylesheet" type="text/css" href="?pf=newsletter/style_pub_newsletter.css" />'."\n";
+			$newsletter_settings = new newsletterSettings($core);
 
-			/*
-			echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter_pub.js');
-			
-			echo
-				'<script type="text/javascript">'."\n".
-				"//<![CDATA[\n".
-				dcPage::jsVar('please_wait',__('Waiting...'))."\n".
-				"\n//]]>\n".
-				"</script>\n";
-			//*/
-			echo
-			"<script type=\"text/javascript\" src=\"".
-			'?pf=newsletter/js/_newsletter_pub.js">'.
-			"</script>\n";
-			
+			if($newsletter_settings->getUseCSSForms()) {
+				$letter_css = new newsletterCSS($core, 'style_pub_newsletter.css');
+				$css_style = '<style type="text/css" media="screen">'.$letter_css->getLetterCSS().'</style>';
+				echo $css_style;
+			}
+			echo '<script type="text/javascript" src="?pf=newsletter/js/_newsletter_pub.js"></script>'."\n";
+				
 			echo
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
 			"please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
 			"\n//]]>\n".
 			"</script>\n";
+						
 						
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 

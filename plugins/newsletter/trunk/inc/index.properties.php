@@ -102,6 +102,7 @@ try {
 				(!empty($_POST['f_auto_confirm_subscription']) ? $newsletter_settings->setAutoConfirmSubscription($_POST['f_auto_confirm_subscription']) : $newsletter_settings->clearAutoConfirmSubscription());
 				(!empty($_POST['fmode']) ? $newsletter_settings->setSendMode($_POST['fmode']) : $newsletter_settings->clearSendMode());
 				(!empty($_POST['f_use_default_format']) ? $newsletter_settings->setUseDefaultFormat($_POST['f_use_default_format']) : $newsletter_settings->clearUseDefaultFormat());
+				(!empty($_POST['f_use_default_action']) ? $newsletter_settings->setUseDefaultAction($_POST['f_use_default_action']) : $newsletter_settings->clearUseDefaultAction());
 				(!empty($_POST['fautosend']) ? $newsletter_settings->setAutosend($_POST['fautosend']) : $newsletter_settings->clearAutosend());
 				(!empty($_POST['f_send_update_post']) ? $newsletter_settings->setSendUpdatePost($_POST['f_send_update_post']) : $newsletter_settings->clearSendUpdatePost());
 				(!empty($_POST['fminposts']) ? $newsletter_settings->setMinPosts($_POST['fminposts']) : $newsletter_settings->clearMinPosts());
@@ -132,7 +133,8 @@ try {
 				(!empty($_POST['f_nb_newsletters_per_public_page']) ? $newsletter_settings->setNbNewslettersPerPublicPage($_POST['f_nb_newsletters_per_public_page']) : $newsletter_settings->clearNbNewslettersPerPublicPage());
 				(!empty($_POST['f_newsletters_public_page_order']) ? $newsletter_settings->setNewslettersPublicPageOrder($_POST['f_newsletters_public_page_order']) : $newsletter_settings->clearNewslettersPublicPageOrder());
 				(!empty($_POST['f_newsletters_public_page_sort']) ? $newsletter_settings->setNewslettersPublicPageSort($_POST['f_newsletters_public_page_sort']) : $newsletter_settings->clearNewslettersPublicPageSort());
-	
+				(!empty($_POST['f_use_CSSForms']) ? $newsletter_settings->setUseCSSForms($_POST['f_use_CSSForms']) : $newsletter_settings->clearUseCSSForms());
+				
 				# notify the change to the blog
 				$newsletter_settings->save();
 				newsletterTools::redirection($m,rawurldecode(__('Settings updated')));
@@ -230,12 +232,14 @@ try {
 		# write the new CSS
 		case 'write_css':
 		{
-			$m = 'editCSS';
-					
-			if (!empty($_POST['write']))
+			if (!empty($_POST['write']) && !empty($_POST['filecss'])) 
 			{
-				$letter_css = new newsletterCSS($core);
-				$msg=$letter_css->setLetterCSS($_POST['f_content']);
+				$letter_css = new newsletterCSS($core,$_POST['filecss']);
+				if($_POST['filecss'] == 'style_pub_newsletter.css') {
+					$msg=$letter_css->setLetterCSS($_POST['f_css_forms_content']);
+				} else { 
+					$msg=$letter_css->setLetterCSS($_POST['f_content']);
+				}
 			}
 			newsletterTools::redirection($m,$msg);
 		}
@@ -244,10 +248,9 @@ try {
 		# write the new CSS
 		case 'copy_css':
 		{
-			$m = 'editCSS';
-
-			if (!empty($_POST['fthemes'])) {
-				if (newsletterCSS::copyFileCSSToTheme($_POST['fthemes'])) {
+			if (!empty($_POST['fthemes']) && !empty($_POST['filecss']))
+			{ 
+				if (newsletterCSS::copyFileCSSToTheme($_POST['fthemes'],$_POST['filecss'])) {
 					$msg = __('CSS successfully copied.');
 				} else {
 					throw new Exception(__('Error to copy CSS to your template'));
@@ -492,17 +495,28 @@ try {
 	$sadmin = (($auth->isSuperAdmin()) ? true : false);
 	# --- end Variables for page maintenance ---
 	
+	# CSS common
+	$default_folder = path::real(newsletterPlugin::folder().'..');
+	
 	# --- Variables for page EditCSS ---
-	$letter_css = new newsletterCSS($core);
+	$file_style_letter = 'style_letter.css';
+	$letter_css = new newsletterCSS($core, $file_style_letter);
 	$f_name = $letter_css->getFilenameCSS();
 	$f_content = $letter_css->getLetterCSS();
 	$f_editable = $letter_css->isEditable();
-	
-	$default_folder = path::real(newsletterPlugin::folder().'..');
-	
 	if ($default_folder == $letter_css->getPathCSS())
 		$f_editable = false;
 	# --- end Variables for page EditCSS ---
+	
+	# --- Variables for page EditCSSforms ---
+	$file_style_newsletter_forms = 'style_pub_newsletter.css';
+	$newsletter_css_forms = new newsletterCSS($core, $file_style_newsletter_forms);
+	$f_css_forms_name = $newsletter_css_forms->getFilenameCSS();
+	$f_css_forms_content = $newsletter_css_forms->getLetterCSS();
+	$f_css_forms_editable = $newsletter_css_forms->isEditable();
+	if ($default_folder == $newsletter_css_forms->getPathCSS())
+		$f_css_forms_editable = false;
+	# --- end Variables for page EditCSSforms ---	
 	
 	# --- Variables for page Planning ---
 	if($core->plugins->moduleExists('dcCron') && !isset($core->plugins->getDisabledModules['dcCron'])) {
@@ -608,6 +622,7 @@ try {
 	$fcaptcha = $newsletter_settings->getCaptcha();
 	$fmode = $newsletter_settings->getSendMode();
 	$f_use_default_format = $newsletter_settings->getUseDefaultFormat();
+	$f_use_default_action = $newsletter_settings->getUseDefaultAction();
 	$fmaxposts = $newsletter_settings->getMaxPosts();
 	$fminposts = $newsletter_settings->getMinPosts();
 	$f_excerpt_restriction = $newsletter_settings->getExcerptRestriction();
@@ -628,7 +643,8 @@ try {
 	$f_nb_newsletters_per_public_page = $newsletter_settings->getNbNewslettersPerPublicPage();
 	$f_newsletters_public_page_sort = $newsletter_settings->getNewslettersPublicPageSort();
 	$f_newsletters_public_page_order = $newsletter_settings->getNewslettersPublicPageOrder();
-		
+	$f_use_CSSForms = $newsletter_settings->getUseCSSForms();
+	
 	$rs = $core->blog->getCategories(array('post_type'=>'post'));
 	$categories = array('' => '', __('Uncategorized') => 'null');
 	while ($rs->fetch()) {
@@ -758,6 +774,10 @@ try {
 		form::checkbox('f_auto_confirm_subscription',1,$f_auto_confirm_subscription).
 		'</p>'.
 		'<p class="field">'.
+		'<label for="f_use_default_action" class="classic">'.__('Use default action subscribe in form').'</label>'.
+		form::checkbox('f_use_default_action',1,$f_use_default_action).
+		'</p>'.
+		'<p class="field">'.
 		'<label for="f_use_default_format" class="classic">'.__('Use default format for sending').'</label>'.
 		form::checkbox('f_use_default_format',1,$f_use_default_format).
 		'</p>'.
@@ -809,6 +829,10 @@ try {
 		'<label for="f_date_format_post_info" class="classic">'.__('Date format for post info').'</label>'.
 		form::field('f_date_format_post_info',20,20,$f_date_format_post_info).
 		'</p>'.
+		'<p class="field">'.
+		'<label for="f_use_CSSForms" class="classic">'.sprintf(__('Use CSS %s in forms'),'style_pub_newsletter.css').'</label>'.
+		form::checkbox('f_use_CSSForms',1,$f_use_CSSForms).
+		'</p>'.		
 		'</div>'.
 		
 		'<div class="fieldset" id="advanced">'.
@@ -1383,7 +1407,7 @@ try {
 				'</p>';
 		if(!$f_editable) {
 			echo '<p>'.__('This file is not writable. Please check your theme files permissions.').'<p>'.
-				'<p>NB: '.__('If you want edit the file CSS, please copy the default file style_letter.css in your current theme folder.').'</p>';
+				'<p>NB: '.sprintf(__('If you want edit the file CSS, please copy the default file %s in your current theme folder.'),$file_style_letter).'</p>';
 		} else {
 			echo
 				'<p>'.
@@ -1391,13 +1415,14 @@ try {
 					form::hidden(array('p'),newsletterPlugin::pname()).
 					form::hidden(array('m'),'editCSS').
 					form::hidden(array('op'),'write_css').
+					form::hidden(array('filecss'),$file_style_letter).
 					$core->formNonce().
 				'</p>';
 		}
 		echo '</form>';
 		
 		if(!$f_editable) {
-			echo '<form action="plugin.php" method="post" id="file-form">';
+			echo '<form action="plugin.php" method="post" id="file-form-copy">';
 			echo '<h4>'.__('Copy this CSS to your theme').'</h4>';
 			echo
 			'<p><label class="classic" for="fthemes">'.__('Theme name').' : '.
@@ -1409,12 +1434,58 @@ try {
 			form::hidden(array('p'),newsletterPlugin::pname()).
 			form::hidden(array('m'),'editCSS').
 			form::hidden(array('op'),'copy_css').
+			form::hidden(array('filecss'),$file_style_letter).
 			$core->formNonce().
 			'</p>';
 			echo '</form>';
 		}		
+		echo '</div>';
+
+		# Print page EditCSSforms
+		echo '<div class="multi-part" id="tab_editFormsCSS" title="'.__('CSS for forms').'">';
+		echo '<h3>'.__('File editor').'</h3>';
+		echo	'<form action="plugin.php" method="post" id="file-form-pub">';
+		echo
+		'<p>'.sprintf(__('Editing file %s'),'<strong>'.$f_css_forms_name).'</strong></p>'.
+		'<p>'.
+		form::textarea('f_css_forms_content',72,25,html::escapeHTML($f_css_forms_content),'maximal','',!$f_css_forms_editable).
+		'</p>';
+		if(!$f_css_forms_editable) {
+			echo '<p>'.__('This file is not writable. Please check your theme files permissions.').'<p>'.
+				'<p>NB: '.sprintf(__('If you want edit the file CSS, please copy the default file %s in your current theme folder.'),$file_style_newsletter_forms).'</p>';
+		} else {
+			echo
+			'<p>'.
+			'<input type="submit" name="write" value="'.__('save').' (s)" accesskey="s" /> '.
+			form::hidden(array('p'),newsletterPlugin::pname()).
+			form::hidden(array('m'),'editFormsCSS').
+			form::hidden(array('op'),'write_css').
+			form::hidden(array('filecss'),$file_style_newsletter_forms).
+			$core->formNonce().
+			'</p>';
+		}
+		echo '</form>';
 		
+		if(!$f_css_forms_editable) {
+			echo '<form action="plugin.php" method="post" id="file-form-pub-copy">';
+			echo '<h4>'.__('Copy this CSS to your theme').'</h4>';
+			echo
+			'<p><label class="classic" for="fthemes">'.__('Theme name').' : '.
+			form::combo('fthemes',$bthemes,$theme).
+			'</label></p>';
+			echo
+			'<p>'.
+			'<input type="submit" name="write" value="'.__('copy to theme').'" /> '.
+			form::hidden(array('p'),newsletterPlugin::pname()).
+			form::hidden(array('m'),'editFormsCSS').
+			form::hidden(array('op'),'copy_css').
+			form::hidden(array('filecss'),$file_style_newsletter_forms).
+			$core->formNonce().
+			'</p>';
+			echo '</form>';
+		}
 		echo '</div>';		
+		
 	}
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
