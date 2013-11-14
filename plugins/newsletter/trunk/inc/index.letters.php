@@ -96,67 +96,6 @@ try {
 		}
 		break;
 		
-		# initialize field lastsent
-		case 'lastsent':
-		{
-			$msg = __('No account changed.');
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach ($_POST['subscriber'] as $k => $v) {
-					$ids[$k] = (integer) $v;
-				}
-		
-				if (newsletterCore::lastsent($ids, 'clear'))
-					$msg = __('Account(s) successfully changed.');
-				else
-					throw new Exception(__('Error in modification of field last sent'));
-			}
-			newsletterTools::redirection($m,$msg);
-		}
-		break;
-		
-		# send confirmation mail
-		case 'sendconfirm':
-		{
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach ($_POST['subscriber'] as $k => $v) {
-					$ids[$k] = (integer) $v;
-				}
-				$msg = newsletterCore::send($ids,'confirm');
-			}
-			newsletterTools::redirection($m,$msg);
-		}
-		break;
-		
-		# send disable mail
-		case 'senddisable':
-		{
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach ($_POST['subscriber'] as $k => $v) {
-					$ids[$k] = (integer) $v;
-				}
-				$msg = newsletterCore::send($ids,'disable');
-			}
-			newsletterTools::redirection($m,$msg);
-		}
-		break;
-		
-		# send enable mail
-		case 'sendenable':
-		{
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach ($_POST['subscriber'] as $k => $v) {
-					$ids[$k] = (integer) $v;
-				}
-				$msg = newsletterCore::send($ids,'enable');
-			}
-			newsletterTools::redirection($m,$msg);
-		}
-		break;
-	
 		case 'none':
 		default:
 		break;
