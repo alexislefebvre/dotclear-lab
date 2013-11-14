@@ -1,0 +1,35 @@
+diclaimer 0.6.2 - 2013-11-14
+===========================================================
+ * Switch to Dotclear 2.6
+
+diclaimer 0.6.1 - 2010-11-12
+===========================================================
+ * Fixed install on nightly build
+ * Fixed some post fields
+
+diclaimer 0.6 - 2010-06-05
+===========================================================
+ * Switched to DC 2.2
+
+diclaimer 0.5 - 2009-12-13
+===========================================================
+ * Added LICENSE
+ * Added versioning
+ * Prepared DC 2.2 break
+
+diclaimer 0.4.1 - 2009-11-12
+===========================================================
+ * Fixed ''header'' errors on public side
+
+diclaimer 0.4 - 2009-09-23
+===========================================================
+ * Fixed DC 2.1.6 URL handlers ending
+
+diclaimer 0.3 - 2009-09-15
+===========================================================
+ * Fixed search engine indexing  
+ * Added support of plugin dcAdvancedCleaner
+
+diclaimer 0.2 - 2009-08-16
+===========================================================
+ * Fixed php 5.3 compatibility
