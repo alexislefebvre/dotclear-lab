@@ -183,8 +183,13 @@ class newsletterLetter
 		
 		$page_title = __('New letter');
 		
-		$can_view_page = true;
-		$can_edit_post = $core->auth->check('usage,contentadmin',$core->blog->id);
+		$can_view_letter = true;
+		
+		/* check perms
+		$can_edit_page = $core->auth->check('pages,usage',$core->blog->id);
+		$can_publish = $core->auth->check('pages,publish,contentadmin',$core->blog->id);
+		*/
+		$can_edit_letter = $core->auth->check('usage,contentadmin',$core->blog->id);
 		$can_publish = $core->auth->check('publish,contentadmin',$core->blog->id);
 		$can_delete = false;
 		
@@ -203,48 +208,36 @@ class newsletterLetter
 		$post_status = -2;
 
 		# Status combo
-		foreach ($core->blog->getAllPostStatus() as $k => $v) {
-			$status_combo[$v] = (string) $k;
-		}
-
+		$status_combo = dcAdminCombos::getPostStatusesCombo();
+		
+		$img_status_pattern = '<img class="img_select_option" alt="%1$s" title="%1$s" src="images/%2$s" />';
+		
 		# Formaters combo
-		foreach ($core->getFormaters() as $v) {
-			$formaters_combo[$v] = $v;
-		}
+		$formaters_combo = dcAdminCombos::getFormatersCombo();
 
 		# Languages combo
 		$rs = $core->blog->getLangs(array('order'=>'asc'));
-		$all_langs = l10n::getISOcodes(0,1);
-		$lang_combo = array('' => '', __('Most used') => array(), __('Available') => l10n::getISOcodes(1,1));
-		while ($rs->fetch()) {
-			if (isset($all_langs[$rs->post_lang])) {
-				$lang_combo[__('Most used')][$all_langs[$rs->post_lang]] = $rs->post_lang;
-				unset($lang_combo[__('Available')][$all_langs[$rs->post_lang]]);
-			} else {
-				$lang_combo[__('Most used')][$rs->post_lang] = $rs->post_lang;
-			}
-		}
-		unset($all_langs);
-		unset($rs);
+		$lang_combo = dcAdminCombos::getLangsCombo($rs,true);
 
+		# Validation flag
+		$bad_dt = false;
+				
 		# Get letter informations
 		if (!empty($_REQUEST['id']))
 		{
 			$params['post_type'] = 'newsletter';
 			$params['post_id'] = $_REQUEST['id'];
-			//$this->setLetterId($_REQUEST['id']);
 			
 			$post = $core->blog->getPosts($params);
 			
 			if ($post->isEmpty())
 			{
 				$core->error->add(__('This letter does not exist.'));
-				$can_view_page = false;
+				$can_view_letter = false;
 			}
 			else
 			{
 				$post_id = $post->post_id;
-				$cat_id = $post->cat_id;
 				$post_dt = date('Y-m-d H:i',strtotime($post->post_dt));
 				$post_format = $post->post_format;
 				$post_password = $post->post_password;
@@ -260,14 +253,14 @@ class newsletterLetter
 				//*/
 				$post_status = $post->post_status;
 				/*
-				$post_selected = (boolean) $post->post_selected;
 				$post_open_comment = (boolean) $post->post_open_comment;
 				$post_open_tb = (boolean) $post->post_open_tb;
+				$post_selected = (boolean) $post->post_selected;
 				//*/
 				
 				$page_title = __('Edit letter');
 				
-				$can_edit_post = $post->isEditable();
+				$can_edit_letter = $post->isEditable();
 				$can_delete= $post->isDeletable();
 				
 				$next_rs = $core->blog->getNextPost($post,1);
@@ -298,22 +291,25 @@ class newsletterLetter
 					$post_meta = self::getPostsLetter($post_id);
 					
 				} catch (Exception $e) {}				*/
+
+				try {
+					$core->media = new dcMedia($core);
+					$post_media = $core->media->getPostMedia($post_id);
+				} catch (Exception $e) {
+					$core->error->add($e->getMessage());
+				}
 				
 			}
 		}
 
-		# Format excerpt and content
-		if (!empty($_POST) && $can_edit_post)
+		# Format content
+		if (!empty($_POST) && $can_edit_letter)
 		{
 			$post_format = $_POST['post_format'];
 			$post_excerpt = $_POST['post_excerpt'];
 			$post_content = $_POST['post_content'];
 			
 			$post_title = $_POST['post_title'];
-			
-			/*
-			$cat_id = (integer) $_POST['cat_id'];
-			//*/
 			
 			if (isset($_POST['post_status'])) {
 				$post_status = (integer) $_POST['post_status'];
@@ -322,8 +318,19 @@ class newsletterLetter
 			if (empty($_POST['post_dt'])) {
 				$post_dt = '';
 			} else {
-				$post_dt = strtotime($_POST['post_dt']);
-				$post_dt = date('Y-m-d H:i',$post_dt);
+				try
+				{
+					$post_dt = strtotime($_POST['post_dt']);
+					if ($post_dt == false || $post_dt == -1) {
+						$bad_dt = true;
+						throw new Exception(__('Invalid publication date'));
+					}
+					$post_dt = date('Y-m-d H:i',$post_dt);
+				}
+				catch (Exception $e)
+				{
+					$core->error->add($e->getMessage());
+				}				
 			}
 			
 			/*
@@ -333,7 +340,6 @@ class newsletterLetter
 			//*/
 			$post_lang = $_POST['post_lang'];
 			$post_password = !empty($_POST['post_password']) ? $_POST['post_password'] : null;
-			
 			//$post_notes = $_POST['post_notes'];
 			
 			if (isset($_POST['post_url'])) {
@@ -346,16 +352,26 @@ class newsletterLetter
 			);
 		}
 
+		# Delete letter
+		if (!empty($_POST['delete']) && $can_delete)
+		{
+			try {
+				# --BEHAVIOR-- adminBeforeLetterDelete
+				$core->callBehavior('adminBeforeLetterDelete',$post_id);
+				$core->blog->delPost($post_id);
+				http::redirect($p_url.'&m=letters');
+			} catch (Exception $e) {
+				$core->error->add($e->getMessage());
+			}
+		}		
+		
 		# Create or update post
-		if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
+		if (!empty($_POST) && !empty($_POST['save']) && $can_edit_letter  && !$bad_dt)
 		{
 			$cur = $core->con->openCursor($core->prefix.'post');
 			
 			$cur->post_type = 'newsletter';
 			$cur->post_title = $post_title;
-			/*
-			$cur->cat_id = ($cat_id ? $cat_id : null);
-			//*/
 			$cur->post_dt = $post_dt ? date('Y-m-d H:i:00',strtotime($post_dt)) : '';
 			$cur->post_format = $post_format;
 			$cur->post_password = $post_password;
@@ -365,15 +381,11 @@ class newsletterLetter
 			$cur->post_excerpt_xhtml = $post_excerpt_xhtml;
 			$cur->post_content = $post_content;
 			$cur->post_content_xhtml = $post_content_xhtml;
-			/*
-			$cur->post_notes = $post_notes;
-			//*/
+			// $cur->post_notes = $post_notes;
 			$cur->post_status = $post_status;
-			/*
-			$cur->post_selected = (integer) $post_selected;
-			$cur->post_open_comment = (integer) $post_open_comment;
-			$cur->post_open_tb = (integer) $post_open_tb;
-			//*/
+			// $cur->post_selected = (integer) $post_selected;
+			// $cur->post_open_comment = (integer) $post_open_comment;
+			// $cur->post_open_tb = (integer) $post_open_tb;
 			
 			if (isset($_POST['post_url'])) {
 				$cur->post_url = $post_url;
@@ -422,36 +434,63 @@ class newsletterLetter
 			}
 		}
 
-		if (!empty($_POST['delete']) && $can_delete)
-		{
-			try {
-				# --BEHAVIOR-- adminBeforeLetterDelete
-				$core->callBehavior('adminBeforeLetterDelete',$post_id);
-				$core->blog->delPost($post_id);
-				http::redirect($p_url.'&m=letters');
-			} catch (Exception $e) {
-				$core->error->add($e->getMessage());
-			}
-		}
-
 		/* DISPLAY
 		-------------------------------------------------------- */
-		if (!empty($_GET['upd'])) {
-			echo '<p class="message">'.__('Entry has been successfully updated').'</p>';
-		}
-		elseif (!empty($_GET['crea'])) {
-			echo '<p class="message">'.__('Entry has been successfully created').'</p>';
-		}
-		elseif (!empty($_GET['attached'])) {
-			echo '<p class="message">'.__('File has been successfully attached').'</p>';
-		}
-		elseif (!empty($_GET['rmattach'])) {
-			echo '<p class="message">'.__('Attachment has been successfully removed').'</p>';
+		/*
+		$default_tab = 'edit-entry';
+		if (!$can_edit_letter) {
+			$default_tab = '';
 		}
 		
-		if (!empty($_GET['creaco'])) {
-			echo '<p class="message">'.__('Comment has been successfully created').'</p>';
+		if (!empty($_GET['co'])) {
+			$default_tab = 'comments';
 		}
+		*/
+		
+		if ($post_id) {
+			switch ($post_status) {
+				case 1:
+					$img_status = sprintf($img_status_pattern,__('Published'),'check-on.png');
+					break;
+				case 0:
+					$img_status = sprintf($img_status_pattern,__('Unpublished'),'check-off.png');
+					break;
+				case -1:
+					$img_status = sprintf($img_status_pattern,__('Scheduled'),'scheduled.png');
+					break;
+				case -2:
+					$img_status = sprintf($img_status_pattern,__('Pending'),'check-wrn.png');
+					break;
+				default:
+					$img_status = '';
+			}
+			$edit_entry_title = '&ldquo;'.$post_title.'&rdquo;'.' '.$img_status;
+		} else {
+			$edit_entry_title = $page_title;
+		}
+
+		/*
+		echo dcPage::breadcrumb(
+				array(
+						html::escapeHTML($core->blog->name) => '',
+						__('Pages') => $p_url,
+						$edit_entry_title => ''
+				));		
+		*/
+		
+		if (!empty($_GET['upd'])) {
+			dcPage::success(__('Page has been successfully updated.'));
+		}
+		elseif (!empty($_GET['crea'])) {
+			dcPage::success(__('Page has been successfully created.'));
+		}
+		elseif (!empty($_GET['attached'])) {
+			dcPage::success(__('File has been successfully attached.'));
+		}
+		elseif (!empty($_GET['rmattach'])) {
+			dcPage::success(__('Attachment has been successfully removed.'));
+		}		
+		
 
 		# XHTML conversion
 		if (!empty($_GET['xconv']))
@@ -459,28 +498,32 @@ class newsletterLetter
 			$post_excerpt = $post_excerpt_xhtml;
 			$post_content = $post_content_xhtml;
 			$post_format = 'xhtml';
-			
-			echo '<p class="message">'.__('Don\'t forget to validate your XHTML conversion by saving your post').'</p>';
+		
+			dcPage::message(__('Don\'t forget to validate your XHTML conversion by saving your post.'));
 		}
-
+		
+		if ($post_id && $post->post_status == 1) {
+			echo '<p><a class="onblog_link outgoing" href="'.$post->getURL().'" title="'.$post_title.'">'.__('Go to this letter on the site').' <img src="images/outgoing-blue.png" alt="" /></a></p>';
+		}		
+		
+		echo '';
+		
+		
 		if ($post_id)
 		{
-			//echo '<p>';
-			
 			echo '<p class="nav_prevnext">';
-			
 			if ($prev_link) { echo $prev_link; }
 			if ($next_link && $prev_link) { echo ' | '; }
 			if ($next_link) { echo $next_link; }
-			
-			# --BEHAVIOR-- adminLetterNavLinks
-			$core->callBehavior('adminLetterNavLinks',isset($post) ? $post : null);
-			
+		
+			# --BEHAVIOR-- adminPageNavLinks
+			$core->callBehavior('adminPageNavLinks',isset($post) ? $post : null);
+		
 			echo '</p>';
 		}
 		
-		# Exit if we cannot view page
-		if (!$can_view_page) {
+		# Exit if we cannot view letter
+		if (!$can_view_letter) {
 			exit;
 		}
 		
@@ -496,125 +539,223 @@ class newsletterLetter
 			echo '<a id="post-preview" href="'.$preview_url.'" class="button modal" accesskey="p">'.__('Preview letter').' (p)'.'</a> ';
 		}
 		
-		# Exit if we cannot view page
-		if (!$can_view_page) {
-			exit;
-		}		
-		
-		/* Post form if we can edit post
+		/* Post form if we can edit letter
 		-------------------------------------------------------- */
-		if ($can_edit_post)
+		if ($can_edit_letter)
 		{
+			$sidebar_items = new ArrayObject(array(
+					'status-box' => array(
+							'title' => __('Status'),
+							'items' => array(
+									'post_status' =>
+									'<p><label for="post_status">'.__('Letter status').'</label> '.
+									form::combo('post_status',$status_combo,$post_status,'','',!$can_publish).
+									'</p>',
+									'post_dt' =>
+									'<p><label for="post_dt">'.__('Publication date and hour').'</label>'.
+									form::field('post_dt',16,16,$post_dt,($bad_dt ? 'invalid' : '')).
+									'</p>',
+									'post_lang' =>
+									'<p><label for="post_lang">'.__('Letter language').'</label>'.
+									form::combo('post_lang',$lang_combo,$post_lang).
+									'</p>',
+									'post_format' =>
+									'<div>'.
+									'<h5 id="label_format"><label for="post_format" class="classic">'.__('Text formatting').'</label></h5>'.
+									'<p>'.form::combo('post_format',$formaters_combo,$post_format,'maximal').
+									'</p>'.
+									'<p class="format_control control_wiki">'.
+									'<a id="convert-xhtml" class="button'.($post_id && $post_format != 'wiki' ? ' hide' : '').
+									'" href="'.html::escapeURL($redir_url).'&amp;id='.$post_id.'&amp;xconv=1">'.
+									__('Convert to XHTML').'</a></p></div>')),			
+					'options-box' => array(
+							'title' => __('Options'),
+							'items' => array(
+									/*
+									'post_open_comment_tb' =>
+									'<div>'.
+									'<h5 id="label_comment_tb">'.__('Comments and trackbacks list').'</h5>'.
+									'<p><label for="post_open_comment" class="classic">'.
+									form::checkbox('post_open_comment',1,$post_open_comment).' '.
+									__('Accept comments').'</label></p>'.
+									($core->blog->settings->system->allow_comments ?
+											(isContributionAllowed($post_id,strtotime($post_dt),true) ?
+													'' :
+													'<p class="form-note warn">'.
+													__('Warning: Comments are not more accepted for this entry.').'</p>') :
+											'<p class="form-note warn">'.
+											__('Comments are not accepted on this blog so far.').'</p>').
+									'<p><label for="post_open_tb" class="classic">'.
+									form::checkbox('post_open_tb',1,$post_open_tb).' '.
+									__('Accept trackbacks').'</label></p>'.
+									($core->blog->settings->system->allow_trackbacks ?
+											(isContributionAllowed($post_id,strtotime($post_dt),false) ?
+													'' :
+													'<p class="form-note warn">'.
+													__('Warning: Trackbacks are not more accepted for this entry.').'</p>') :
+											'<p class="form-note warn">'.__('Trackbacks are not accepted on this blog so far.').'</p>').
+									'</div>',
+									//*/
+									'post_hide' =>
+									'<p><label for="post_selected" class="classic">'.form::checkbox('post_selected',1,$post_selected).' '.
+									__('Hide in widget Newsletters').'</label>'.
+									'</p>',
+									'post_password' =>
+									'<p><label for="post_password">'.__('Password').'</label>'.
+									form::field('post_password',10,32,html::escapeHTML($post_password),'maximal').
+									'</p>',
+									'post_url' =>
+									'<div class="lockable">'.
+									'<p><label for="post_url">'.__('Edit basename').'</label>'.
+									form::field('post_url',10,255,html::escapeHTML($post_url),'maximal').
+									'</p>'.
+									'<p class="form-note warn">'.
+									__('Warning: If you set the URL manually, it may conflict with another letter.').
+									'</p></div>'
+							))));								
+			$main_items = new ArrayObject(array(
+					"post_title" =>
+					'<p class="col">'.
+					'<label class="required no-margin bold"><abbr title="'.__('Required field').'">*</abbr> '.__('Title:').'</label>'.
+					form::field('post_title',20,255,html::escapeHTML($post_title),'maximal').
+					'</p>',
+			
+					"post_excerpt" =>
+					'<p class="area" id="excerpt-area"><label for="post_excerpt" class="bold">'.__('Excerpt:').' <span class="form-note">'.
+					__('Introduction to the letter.').'</span></label> '.
+					form::textarea('post_excerpt',50,5,html::escapeHTML($post_excerpt)).
+					'</p>',
+			
+					"post_content" =>
+					'<p class="area" id="content-area"><label class="required bold" '.
+					'for="post_content"><abbr title="'.__('Required field').'">*</abbr> '.__('Content:').'</label> '.
+					form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content)).
+					'</p>',
+			
+					/*
+					"post_notes" =>
+					'<p class="area" id="notes-area"><label for="post_notes" class="bold">'.__('Personal notes:').' <span class="form-note">'.
+					__('Unpublished notes.').'</span></label>'.
+					form::textarea('post_notes',50,5,html::escapeHTML($post_notes)).
+					'</p>'
+					//*/
+			)
+			);
+				
+			# --BEHAVIOR-- adminPostFormItems
+			$core->callBehavior('adminLetterFormItems',$main_items,$sidebar_items, isset($post) ? $post : null);
+			
+			echo '<div class="multi-part" title="'.($post_id ? __('Edit letter') : __('New letter')).'" id="edit-entry">';
+				
 			echo '<form action="'.html::escapeURL($redir_url).'&amp;m=letter" method="post" id="entry-form">';
-			echo '<div id="entry-sidebar">';
+			
+			echo '<div id="entry-wrapper">';
+			echo '<div id="entry-content"><div class="constrained">';
+			echo '<h3 class="out-of-screen-if-js">'.__('Edit letter').'</h3>';
+				
+			foreach ($main_items as $id => $item) {
+				echo $item;
+			}
+
+			# --BEHAVIOR-- adminLetterForm
+			$core->callBehavior('adminLetterForm',isset($post) ? $post : null);			
+	
+			echo
+			'<p class="border-top">'.
+			($post_id ? form::hidden('id',$post_id) : '').
+			'<input type="submit" value="'.__('Save').' (s)" '.
+			'accesskey="s" name="save" /> ';
+
+
+			if ($post_id) {
+				$preview_url = $core->blog->url.
+				$core->url->getURLFor('letterpreview',
+						$core->auth->userID().'/'.
+						http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
+						'/'.$post->post_url);
+				echo '<a id="post-preview" href="'.$preview_url.'" class="button" accesskey="p">'.__('Preview').' (p)'.'</a>';
+			} else {
+				echo
+				'<a id="post-cancel" href="index.php" class="button" accesskey="c">'.__('Cancel').' (c)</a>';
+			}
 			
 			echo
-			'<p><label>'.__('Entry status:').
-			form::combo('post_status',$status_combo,$post_status,'',3,!$can_publish).
-			'</label></p>'.
+			($can_delete ? '<input type="submit" class="delete" value="'.__('Delete').'" name="delete" />' : '').
+			$core->formNonce().
+			'</p>';
+							
+			echo '</div></div>';		// End #entry-content
 			
-			'<p><label>'.__('Published on:').
-			form::field('post_dt',16,16,$post_dt,'',3).
-			'</label></p>'.
+			echo '</div>';		// End #entry-wrapper
+		
+			echo '<div id="entry-sidebar">';	
 			
-			'<p><label>'.__('Text formating:').
-			form::combo('post_format',$formaters_combo,$post_format,'',3).
-			($post_id && $post_format != 'xhtml' ? '<a href="'.html::escapeURL($redir_url).'&id='.$post_id.'&amp;xconv=1">'.__('Convert to XHTML').'</a>' : '').
-			'</label></p>'.
+			foreach ($sidebar_items as $id => $c) {
+				echo '<div id="'.$id.'" class="sb-box">'.
+						'<h4>'.$c['title'].'</h4>';
+				foreach ($c['items'] as $e_name=>$e_content) {
+					echo $e_content;
+				}
+				echo '</div>';
+			}
 			
-			'<p><label>'.__('Entry lang:').
-			form::combo('post_lang',$lang_combo,$post_lang,'',5).
-			'</label></p>'.
+			# --BEHAVIOR-- adminLetterFormSidebar
+			$core->callBehavior('adminLetterFormSidebar',isset($post) ? $post : null);
+
+			echo '</div>';		// End #entry-sidebar
+
+			echo '</form>';
 			
-			'<p><label>'.__('Entry password:').
-			form::field('post_password',10,32,html::escapeHTML($post_password),'maximal',3).
-			'</label></p>'.
+			echo '</div>';		// End
 			
-			'<div class="lockable">'.
-			'<p><label>'.__('Basename:').
-			form::field('post_url',10,255,html::escapeHTML($post_url),'maximal',3).
-			'</label></p>'.
-			'<p class="form-note warn">'.
-			__('Warning: If you set the URL manually, it may conflict with another entry.').
-			'</p>'.
-			'</div>';
-			
-			/* desactivate attachment in newsletter
+			# attach posts
 			if ($post_id)
 			{
 				echo
-				'<h3 class="clear">'.__('Attachments').'</h3>';
-				foreach ($post_media as $f)
+				'<div id="link_posts" class="clear"><fieldset>';
+				echo '<h3 class="clear">'.__('Entries linked').'</h3>';
+					
+				$meta = $core->meta;
+					
+				$params=array();
+				$params['no_content'] = true;
+					
+				$params['meta_id'] = $post_id;
+				$params['meta_type'] = 'letter_post';
+				$params['post_type'] = '';
+					
+				# Get posts
+				try {
+				$posts = $meta->getPostsByMeta($params);
+				$counter = $meta->getPostsByMeta($params,true);
+				$post_list = new newsletterLinkedPostList($core,$posts,$counter->f(0));
+				} catch (Exception $e) {
+				$core->error->add($e->getMessage());
+				}
+				//print($counter->f(0));
+				$page = 1;
+				$nb_per_page = 10;
+					
+				if (!$core->error->flag())
 				{
-					$ftitle = $f->media_title;
-					if (strlen($ftitle) > 18) {
-						$ftitle = substr($ftitle,0,16).'...';
-					}
-					echo
-					'<div class="media-item">'.
-					'<a class="media-icon" href="media_item.php&id='.$f->media_id.'">'.
-					'<img src="'.$f->media_icon.'" alt="" title="'.$f->basename.'" /></a>'.
-					'<ul>'.
-					'<li><a class="media-link" href="media_item.php&id='.$f->media_id.'"'.
-					'title="'.$f->basename.'">'.$ftitle.'</a></li>'.
-					'<li>'.$f->media_dtstr.'</li>'.
-					'<li>'.files::size($f->size).' - '.
-					'<a href="'.$f->file_url.'">'.__('open').'</a>'.'</li>'.
-					
-					'<li class="media-action"><a class="attachment-remove" id="attachment-'.$f->media_id.'" '.
-					'href="post_media.php?post_id='.$post_id.'&amp;media_id='.$f->media_id.'&amp;remove=1">'.
-					'<img src="images/check-off.png" alt="'.__('remove').'" /></a>'.
-					'</li>'.
-					
-					'</ul>'.
-					'</div>';
-				}
-				unset($f);
-				
-				if (empty($post_media)) {
-					echo '<p>'.__('No attachment.').'</p>';
-				}
-				echo '<p><a href="media.php?post_id='.$post_id.'">'.__('Add files to this entry').'</a></p>';
+				if (!$posts->isEmpty())
+				{
+				;
 			}
-			//*/
+				
+			# Show posts
+			$post_list->display($page,$nb_per_page,
+			'%s'
+			,$post_id);
+				
+			}
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letter_associate&amp;post_id='.$post_id.'">'.__('Add many posts to this letter').'</a></p>';
+				echo '</div>';
+			}
+			
+			self::printKeywords();			
 
-			# --BEHAVIOR-- adminLetterFormSidebar
-			$core->callBehavior('adminLetterFormSidebar',isset($post) ? $post : null);
-			
-			echo '</div>';		// End #entry-sidebar
-			
-			echo '<div id="entry-content"><fieldset class="constrained">';
-			
-			echo
-			'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Title:').
-			form::field('post_title',20,255,html::escapeHTML($post_title),'maximal',2).
-			'</label></p>'.
-			
-			'<p class="area" id="excerpt-area"><label for="post_excerpt">'.__('Excerpt:').'</label> '.
-			form::textarea('post_excerpt',50,5,html::escapeHTML($post_excerpt),'',2).
-			'</p>'.
-			
-			'<p class="area"><label class="required" title="'.__('Required field').'" '.
-			'for="post_content">'.__('Content:').'</label> '.
-			form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
-			'</p>'.
-			
-			# --BEHAVIOR-- adminLetterForm
-			$core->callBehavior('adminLetterForm',isset($post) ? $post : null);
-			
-			echo
-			'<p>'.
-			($post_id ? form::hidden('id',$post_id) : '').
-			'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
-			'accesskey="s" name="save" /> '.
-			($can_delete ? '<input type="submit" value="'.__('delete').'" name="delete" />' : '').
-			$core->formNonce().
-			'</p>';
-			
-			echo '</fieldset></div>';		// End #entry-content
-			echo '</form>';
-			
-			/* desactivate attachment in newsletter
+			/*
 			if ($post_id && !empty($post_media))
 			{
 				echo
@@ -624,63 +765,9 @@ class newsletterLetter
 				form::hidden(array('remove'),1).
 				$core->formNonce().'</div></form>';
 			}
-			//*/
-
-			# attach posts
-			if ($post_id)
-			{
-				echo
-				'<div id="link_posts"><fieldset>';
-				echo '<h3 class="clear">'.__('Entries linked').'</h3>';
-
-				$meta = $core->meta;
+			*/			
 			
-				$params=array();
-				$params['no_content'] = true;
-		
-				$params['meta_id'] = $post_id;
-				$params['meta_type'] = 'letter_post';
-				$params['post_type'] = '';
 
-				# Get posts
-				try {
-					$posts = $meta->getPostsByMeta($params);
-					$counter = $meta->getPostsByMeta($params,true);
-					$post_list = new newsletterLinkedPostList($core,$posts,$counter->f(0));
-				} catch (Exception $e) {
-					$core->error->add($e->getMessage());
-				}
-				//print($counter->f(0));
-				$page = 1;
-				$nb_per_page = 10;
-				
-				if (!$core->error->flag())
-				{
-					if (!$posts->isEmpty())
-					{
-						;
-						/*
-						echo
-						'<form action="'.$this_url.'" method="post">'.
-						'<p><label class="classic">'.__('Rename this tag:').' '.
-						form::field('new_meta_id',20,255,html::escapeHTML($tag)).
-						'</label> <input type="submit" value="'.__('save').'" />'.
-						$core->formNonce().'</p>'.
-						'</form>';
-						*/
-					}
-	
-					# Show posts
-					$post_list->display($page,$nb_per_page,
-					'%s'
-					,$post_id);
-				
-				}
-				echo '<p><a href="plugin.php?p=newsletter&amp;m=letter_associate&amp;post_id='.$post_id.'">'.__('Add many posts to this letter').'</a></p>';
-				echo '</div>';
-			}
-
-			self::printKeywords();
 			
 		}
 	}

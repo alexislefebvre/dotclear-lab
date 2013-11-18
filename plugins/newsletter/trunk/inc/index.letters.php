@@ -312,15 +312,26 @@ try {
 		echo dcPage::jsPageTabs($plugin_tab);
 
 	} else if ($plugin_tab == 'tab_letter') {
-		echo dcPage::jsDatePicker().
+
+		echo
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		dcPage::jsVar('dotclear.msg.confirm_delete_post', __('Are you sure you want to delete this letter?')).
+		"\n//]]>\n".
+		"</script>\n";
+		
+		echo 
+		dcPage::jsDatePicker().
 		dcPage::jsToolBar().
 		dcPage::jsModal().
-		dcPage::jsLoad('js/_post.js');
+		dcPage::jsMetaEditor().
+		dcPage::jsLoad('js/_post.js').
 		//dcPage::jsConfirmClose('entry-form','comment-form').
-		dcPage::jsConfirmClose('entry-form');
+		dcPage::jsConfirmClose('entry-form').
 		# --BEHAVIOR-- adminPageHeaders
 		$core->callBehavior('adminLetterHeaders');
 		echo dcPage::jsPageTabs('edit-entry');
+		//$next_headlink."\n".$prev_headlink;
 	} else if ($plugin_tab == 'tab_letter_associate') {
 		echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
 		echo

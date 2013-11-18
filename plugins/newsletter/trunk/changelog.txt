@@ -1,3 +1,7 @@
+Newsletter 3.9.1 - 2013-11-19
+===========================================================
+* Correction pour l'affichage des options de l'éditeur dans la lettre
+
 Newsletter 3.9.0 - 2013-11-14
 ===========================================================
 * Mise en conformité dotclear 2.6

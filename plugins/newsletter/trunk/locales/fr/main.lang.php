@@ -370,4 +370,9 @@ $GLOBALS['__l10n']['No template selected'] = 'Aucun template sélectionné';
 $GLOBALS['__l10n']['copy to theme'] = 'Copie dans le thème';
 $GLOBALS['__l10n']['Send'] = 'Envoyer';
 $GLOBALS['__l10n']['Use CSS %s in forms'] = 'Utiliser le CSS %s dans les formulaires';
+$GLOBALS['__l10n']['Letter status'] = 'État de la lettre';
+$GLOBALS['__l10n']['Letter language'] = 'Langue de la lettre';
+$GLOBALS['__l10n']['Letter position'] = 'Position de la lettre';
+$GLOBALS['__l10n']['Hide in widget Newsletters'] = 'Ne pas lister dans le widget Newsletters';
+$GLOBALS['__l10n']['Unable to send email'] = 'Impossible d\'envoyer le mail';
 ?>
