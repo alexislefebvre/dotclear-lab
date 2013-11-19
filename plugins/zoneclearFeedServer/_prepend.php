@@ -3,7 +3,7 @@
 #
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Jean-Christian Denis, BG and contributors
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
 # contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
@@ -12,25 +12,45 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
-if (version_compare(str_replace("-r","-p",DC_VERSION),'2.5-alpha','<')){return;}
+if (!defined('DC_RC_PATH')) {
 
-global $__autoload, $core;
+	return null;
+}
 
-$__autoload['zoneclearFeedServer'] = dirname(__FILE__).'/inc/class.zoneclear.feed.server.php';
-$__autoload['zoneclearFeedServerLists'] = dirname(__FILE__).'/inc/lib.zoneclear.feed.server.index.php';
+if ($core->getVersion('zoneclearFeedServer') != 
+    $core->plugins->moduleInfo('zoneclearFeedServer', 'version')) {
+
+	return null;
+}
+
+$d = dirname(__FILE__).'/inc/';
+
+$__autoload['zoneclearFeedServer'] = $d.'class.zoneclear.feed.server.php';
+$__autoload['zcfsFeedsList'] = $d.'lib.zcfs.list.php';
+$__autoload['zcfsEntriesList'] = $d.'lib.zcfs.list.php';
+$__autoload['zcfsFeedsActionsPage'] = $d.'class.zcfs.feedsactions.php';
+$__autoload['zcfsDefaultFeedsActions'] = $d.'class.zcfs.feedsactions.php';
 
 # public url for page of description of the flux
-$core->url->register('zoneclearFeedsPage','zcfeeds','^zcfeeds(.*?)$',array('zoneclearFeedServerURL','zcFeedsPage'));
+$core->url->register(
+	'zoneclearFeedsPage',
+	'zcfeeds',
+	'^zcfeeds(.*?)$',
+	array('zcfsUrlHandler', 'zcFeedsPage')
+);
 
 # Add to plugn soCialMe (writer part)
-$__autoload['zcfsSoCialMeWriter'] = dirname(__FILE__).'/inc/lib.zoneclear.feed.server.socialmewriter.php';
-$core->addBehavior('soCialMeWriterMarker',array('zcfsSoCialMeWriter','soCialMeWriterMarker'));
-$core->addBehavior('zoneclearFeedServerAfterFeedUpdate',array('zcfsSoCialMeWriter','zoneclearFeedServerAfterFeedUpdate'));
+$__autoload['zcfsSoCialMeWriter'] = $d.'lib.zcfs.socialmewriter.php';
+$core->addBehavior(
+	'soCialMeWriterMarker',
+	array('zcfsSoCialMeWriter', 'soCialMeWriterMarker')
+);
+$core->addBehavior(
+	'zoneclearFeedServerAfterFeedUpdate',
+	array('zcfsSoCialMeWriter', 'zoneclearFeedServerAfterFeedUpdate')
+);
 
 # Add to report on plugin activityReport
-if (defined('ACTIVITY_REPORT'))
-{
-	require_once dirname(__FILE__).'/inc/lib.zoneclear.feed.server.activityreport.php';
+if (defined('ACTIVITY_REPORT')) {
+	require_once $d.'lib.zcfs.activityreport.php';
 }
-?>

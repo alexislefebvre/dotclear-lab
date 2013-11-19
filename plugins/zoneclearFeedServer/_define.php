@@ -3,7 +3,7 @@
 #
 # This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Jean-Christian Denis, BG and contributors
+# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
 # contact@jcdenis.fr http://jcd.lv
 # 
 # Licensed under the GPL version 2.0 license.
@@ -12,13 +12,26 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_RC_PATH')) {
+
+	return null;
+}
 
 $this->registerModule(
-	/* Name */			"Feeds server",
-	/* Description*/		"Mix your blog with a feeds planet",
-	/* Author */			"JC Denis, BG",
-	/* Version */			'2013.07.12',
-	/* Permissions */		'admin'
+	/* Name */
+	"Feeds server",
+	/* Description*/
+	"Mix your blog with a feeds planet",
+	/* Author */
+	"Jean-Christian Denis, BG",
+	/* Version */
+	'2013.11.18',
+	/* Properies */
+	array(
+		'permissions' => 'admin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://jcd.lv/q=zoneclearFeedServer',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/zoneclearFeedServer'
+	)
 );
-?>
