@@ -513,6 +513,7 @@ class tplNewsletter
 		}
 
 		$p .= "\$params['post_type'] = 'newsletter';\n";
+		$p .= "\$params['post_selected'] = false;\n";
 
 		if (isset($attr['sortby'])) {
 			switch ($attr['sortby']) {
@@ -540,10 +541,11 @@ class tplNewsletter
 		if (isset($attr['no_content']) && $attr['no_content']) {
 			$p .= "\$params['no_content'] = true;\n";
 		}
-		
+		/*
 		if (isset($attr['selected'])) {
 			$p .= "\$params['post_selected'] = ".(integer) (boolean) $attr['selected'].";";
 		}
+		*/
 
 		if (empty($attr['no_context']))
 		{
@@ -931,7 +933,7 @@ class publicWidgetsNewsletter
 		
 		$orderby = $w->orderby;
 		$orderdir = $w->orderdir;
-
+		$params = '';
 		$order = '';
 		$order .= ($orderby == 'date') ? 'P.post_dt' : 'P.post_title'; 
 		$order .= ' ';
@@ -942,10 +944,20 @@ class publicWidgetsNewsletter
 		}
 
 		if (((integer)$w->limit) != 0) {
-			$rsnsltr = $core->blog->dcNewsletter->getNewsletters(array('order' => $order, 'limit' => array(0,(integer)$w->limit), 'no_content' => true));
+			$params = array(
+						'order' => $order, 
+						'limit' => array(0,(integer)$w->limit), 
+						'no_content' => true,
+						'post_selected' => false
+					);
 		} else {
-			$rsnsltr = $core->blog->dcNewsletter->getNewsletters(array('order' => $order, 'no_content' => true));
+			$params = array(
+						'order' => $order, 
+						'no_content' => true,
+						'post_selected' => false
+					);
 		}
+		$rsnsltr = $core->blog->dcNewsletter->getNewsletters($params);
 
 		$title = $w->title ? html::escapeHTML($w->title) : 'Newsletters';
 		$res =

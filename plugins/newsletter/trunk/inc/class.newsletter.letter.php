@@ -255,8 +255,8 @@ class newsletterLetter
 				/*
 				$post_open_comment = (boolean) $post->post_open_comment;
 				$post_open_tb = (boolean) $post->post_open_tb;
-				$post_selected = (boolean) $post->post_selected;
 				//*/
+				$post_selected = (boolean) $post->post_selected;
 				
 				$page_title = __('Edit letter');
 				
@@ -336,8 +336,8 @@ class newsletterLetter
 			/*
 			$post_open_comment = !empty($_POST['post_open_comment']);
 			$post_open_tb = !empty($_POST['post_open_tb']);
-			$post_selected = !empty($_POST['post_selected']);
 			//*/
+			$post_selected = !empty($_POST['post_selected']);
 			$post_lang = $_POST['post_lang'];
 			$post_password = !empty($_POST['post_password']) ? $_POST['post_password'] : null;
 			//$post_notes = $_POST['post_notes'];
@@ -383,7 +383,7 @@ class newsletterLetter
 			$cur->post_content_xhtml = $post_content_xhtml;
 			// $cur->post_notes = $post_notes;
 			$cur->post_status = $post_status;
-			// $cur->post_selected = (integer) $post_selected;
+			$cur->post_selected = (integer) $post_selected;
 			// $cur->post_open_comment = (integer) $post_open_comment;
 			// $cur->post_open_tb = (integer) $post_open_tb;
 			
@@ -673,7 +673,7 @@ class newsletterLetter
 						$core->auth->userID().'/'.
 						http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
 						'/'.$post->post_url);
-				echo '<a id="post-preview" href="'.$preview_url.'" class="button" accesskey="p">'.__('Preview').' (p)'.'</a>';
+				//echo '<a id="post-preview" href="'.$preview_url.'" class="button" accesskey="p">'.__('Preview').' (p)'.'</a>';
 			} else {
 				echo
 				'<a id="post-cancel" href="index.php" class="button" accesskey="c">'.__('Cancel').' (c)</a>';

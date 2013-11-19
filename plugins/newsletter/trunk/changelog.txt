@@ -1,3 +1,11 @@
+Newsletter 3.9.2 - 2013-11-19
+===========================================================
+* Ajoute quelques traductions
+* Validation fonctionnalité Ne pas lister dans le widget Newsletters
+* Suppression bouton Prévisualisé dans l'éditeur des lettres
+* Correction affichage du calendrier dans l'onglet Planning
+* permettre de définir le nombre d’abonnés par défaut par page
+
 Newsletter 3.9.1 - 2013-11-19
 ===========================================================
 * Correction pour l'affichage des options de l'éditeur dans la lettre

@@ -82,7 +82,7 @@ $GLOBALS['__l10n']['This letter does not exist'] = 'Cette lettre n\'existe pas';
 $GLOBALS['__l10n']['New letter'] = 'Nouvelle lettre';
 $GLOBALS['__l10n']['This letter does not exist.'] = 'Cette lettre n\'existe pas.';
 $GLOBALS['__l10n']['Edit letter'] = 'Editer la lettre';
-$GLOBALS['__l10n']['Next letter'] = 'Nouvelle lettre';
+$GLOBALS['__l10n']['Next letter'] = 'Lettre suivante';
 $GLOBALS['__l10n']['Previous letter'] = 'Lettre précédente';
 $GLOBALS['__l10n']['Entry has been successfully updated'] = 'La lettre a été mise à jour';
 $GLOBALS['__l10n']['Entry has been successfully created'] = 'La lettre a été créée';
@@ -375,4 +375,7 @@ $GLOBALS['__l10n']['Letter language'] = 'Langue de la lettre';
 $GLOBALS['__l10n']['Letter position'] = 'Position de la lettre';
 $GLOBALS['__l10n']['Hide in widget Newsletters'] = 'Ne pas lister dans le widget Newsletters';
 $GLOBALS['__l10n']['Unable to send email'] = 'Impossible d\'envoyer le mail';
+$GLOBALS['__l10n']['Introduction to the letter.'] = 'Introduction à la lettre.';
+$GLOBALS['__l10n']['Go to this letter on the site'] = 'Voir cette lettre sur le site';
+$GLOBALS['__l10n']['Default value for number of subscribers per page'] = 'Valeur par défaut du nombre d\'abonnés par page';
 ?>

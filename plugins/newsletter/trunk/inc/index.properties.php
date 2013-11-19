@@ -134,6 +134,7 @@ try {
 				(!empty($_POST['f_newsletters_public_page_order']) ? $newsletter_settings->setNewslettersPublicPageOrder($_POST['f_newsletters_public_page_order']) : $newsletter_settings->clearNewslettersPublicPageOrder());
 				(!empty($_POST['f_newsletters_public_page_sort']) ? $newsletter_settings->setNewslettersPublicPageSort($_POST['f_newsletters_public_page_sort']) : $newsletter_settings->clearNewslettersPublicPageSort());
 				(!empty($_POST['f_use_CSSForms']) ? $newsletter_settings->setUseCSSForms($_POST['f_use_CSSForms']) : $newsletter_settings->clearUseCSSForms());
+				(!empty($_POST['f_nb_subscribers_per_page']) ? $newsletter_settings->setNbSubscribersPerpage($_POST['f_nb_subscribers_per_page']) : $newsletter_settings->clearNbSubscribersPerpage());
 				
 				# notify the change to the blog
 				$newsletter_settings->save();
@@ -523,7 +524,9 @@ try {
 		$newsletter_cron=new newsletterCron($core);
 		$f_check_schedule = $newsletter_settings->getCheckSchedule();
 		$f_interval = ($newsletter_cron->getTaskInterval() ? $newsletter_cron->getTaskInterval() : 604800);
-		$f_first_run = ($newsletter_cron->getFirstRun() ? $newsletter_cron->getFirstRun() : '');
+		
+		$default_run = date('Y-m-j H:i',(time() + dt::getTimeOffset($system_settings->blog_timezone) + 3 * 3600));
+		$f_first_run = ($newsletter_cron->getFirstRun() ? $newsletter_cron->getFirstRun() : $default_run);
 	}
 	# --- end Variables for page Planning ---
 	
@@ -644,6 +647,7 @@ try {
 	$f_newsletters_public_page_sort = $newsletter_settings->getNewslettersPublicPageSort();
 	$f_newsletters_public_page_order = $newsletter_settings->getNewslettersPublicPageOrder();
 	$f_use_CSSForms = $newsletter_settings->getUseCSSForms();
+	$f_nb_subscribers_per_page = $newsletter_settings->getNbSubscribersPerpage();
 	
 	$rs = $core->blog->getCategories(array('post_type'=>'post'));
 	$categories = array('' => '', __('Uncategorized') => 'null');
@@ -685,7 +689,6 @@ try {
 		}
 		echo dcPage::jsPageTabs($plugin_tab);
 	} else {
-		echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
 		echo
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
@@ -693,6 +696,17 @@ try {
 		dcPage::jsVar('dotclear.msg.confirm_import_backup', __('Are you sure you want to import a backup file?')).
 		"\n//]]>\n".
 		"</script>\n";
+		
+
+		echo
+		dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.cron.js').
+		dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js').
+		dcPage::jsDatePicker();
+		
+		/*
+		echo dcPage::jsDatePicker();
+		echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
+		*/
 		echo dcPage::jsPageTabs($plugin_tab);		
 	}
 ?>
@@ -832,7 +846,11 @@ try {
 		'<p class="field">'.
 		'<label for="f_use_CSSForms" class="classic">'.sprintf(__('Use CSS %s in forms'),'style_pub_newsletter.css').'</label>'.
 		form::checkbox('f_use_CSSForms',1,$f_use_CSSForms).
-		'</p>'.		
+		'</p>'.
+		'<p class="field">'.
+		'<label for="f_nb_subscribers_per_page" class="classic">'.__('Default value for number of subscribers per page').'</label>'.
+		form::field('f_nb_subscribers_per_page',4,4,$f_nb_subscribers_per_page).
+		'</p>'.
 		'</div>'.
 		
 		'<div class="fieldset" id="advanced">'.
@@ -903,10 +921,10 @@ try {
 		'';
 	echo '</div>';
 	
-	// Print page Planning
+	# Print page Planning
 	echo '<div class="multi-part" id="tab_planning" title="'.__('Planning').'">';
 	
-	// Utilisation de dcCron
+	# Utilisation de dcCron
 	if($core->plugins->moduleExists('dcCron') && !isset($core->plugins->getDisabledModules['dcCron'])) {
 	
 		echo
@@ -919,8 +937,8 @@ try {
 			'<p class="comments">'.
 			__('samples').' : ( 1 '.__('day').' = 86400s / 1 '.__('week').' = 604800s / 28 '.__('days').' =  2420000s )'.
 			'</p>'.
-			'<p class="field">'.
-			'<label for="f_first_run" class="classic">'.__('Date for the first run').'</label>'.
+			'<p>'.
+			'<label id="f_first_run_label" for="f_first_run">'.__('Date for the first run').'</label>'.
 			form::field('f_first_run',20,20,$f_first_run).
 			'</p>'.
 	

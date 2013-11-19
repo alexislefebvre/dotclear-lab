@@ -364,6 +364,24 @@ class newsletterSettings
 	}
 
 	/**
+	 * retourne le nombre d'abonnés par page par défaut
+	 */
+	public function getNbSubscribersPerpage()
+	{
+		return (integer)$this->getParameter('nb_subscribers_per_page');
+	}
+	
+	public function setNbSubscribersPerpage($value)
+	{
+		$this->setParameter('nb_subscribers_per_page',(integer)$value);
+	}
+	
+	public function clearNbSubscribersPerpage()
+	{
+		$this->setNbSubscribersPerpage(30);
+	}
+	
+	/**
 	* retourne le message d'introduction de la newsletter
 	*/
 	public function getIntroductoryMsg() 
@@ -1719,6 +1737,7 @@ class newsletterSettings
 		if(!$this->getDateFormatPostInfo()) $this->clearDateFormatPostInfo();
 		if(!$this->getAutoConfirmSubscription()) $this->clearAutoConfirmSubscription();
 		if(!$this->getUseCSSForms()) $this->setUseCSSForms(true);
+		if(!$this->getNbSubscribersPerpage()) $this->clearNbSubscribersPerpage();
 		
 		# en vrac
 		if(!$this->getTxtLinkVisuOnline()) $this->clearTxtLinkVisuOnline();
@@ -1829,6 +1848,7 @@ class newsletterSettings
 						'style_link_read_it',
 						'check_letter_date',
 						'date_format_post_info',
+						'nb_subscribers_per_page',				
 						// agora link
 						'check_agora_link',
 						// newsletter	

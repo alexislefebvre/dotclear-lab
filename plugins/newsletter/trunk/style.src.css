@@ -77,3 +77,8 @@ input.delete:hover {
 #advanced, p.field input, p.field select {
 	left:25em;
 }
+
+#f_first_run_label {
+	word-wrap: break-word;
+	width: 155px;
+}
