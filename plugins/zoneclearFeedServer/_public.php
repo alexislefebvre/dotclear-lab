@@ -198,7 +198,7 @@ class zcfsRsExtPosts extends rsExtPost
 	 * @param  string $info Feed info key
 	 * @return string       Feed info value
 	 */
-	public static function zcFeed(record $rs, $info)
+	public static function zcFeed($rs, $info)
 	{
 		$p = array(
 			'post_id'		=> $rs->post_id,
@@ -238,7 +238,7 @@ class zcfsRsExtPosts extends rsExtPost
 	 * @param  record $rs record instance
 	 * @return string     Author link
 	 */
-	public static function getAuthorLink(record $rs)
+	public static function getAuthorLink($rs)
 	{
 		$author = $rs->zcFeed('author');
 		$site = $rs->zcFeed('site');
@@ -255,7 +255,7 @@ class zcfsRsExtPosts extends rsExtPost
 	 * @param  record $rs record instance
 	 * @return string     Author CN
 	 */
-	public static function getAuthorCN(record $rs)
+	public static function getAuthorCN($rs)
 	{
 		$author = $rs->zcFeed('author');
 		return $author ? 
@@ -269,7 +269,7 @@ class zcfsRsExtPosts extends rsExtPost
 	 * @param  record $rs record instance
 	 * @return string     Post link
 	 */
-	public static function getURL(record $rs)
+	public static function getURL($rs)
 	{
 		$url = $rs->zcFeed('url');
 		$types = @unserialize($rs->core->blog->settings->zoneclearFeedServer->zoneclearFeedServer_post_title_redir);
@@ -286,7 +286,7 @@ class zcfsRsExtPosts extends rsExtPost
 	 * @param  record $rs record instance
 	 * @return string     Post content
 	 */
-	public static function getContent(record $rs, $absolute_urls=false)
+	public static function getContent($rs, $absolute_urls=false)
 	{
 		$url = $rs->zcFeed('url');
 		$sitename = $rs->zcFeed('sitename');
