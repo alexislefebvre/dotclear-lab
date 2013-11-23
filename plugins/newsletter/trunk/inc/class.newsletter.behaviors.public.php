@@ -42,16 +42,19 @@ class dcBehaviorsNewsletterPublic
 				$css_style = '<style type="text/css" media="screen">'.$letter_css->getLetterCSS().'</style>';
 				echo $css_style;
 			}
-			echo '<script type="text/javascript" src="?pf=newsletter/js/_newsletter_pub.js"></script>'."\n";
-				
+
 			echo
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
-			"please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
+			"var please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
+			"var newsletter_rest_service_pub = '".html::escapeJS($core->blog->url.$core->url->getBase('newsletterRest'))."';\n".
+			"var newsletter_img_src = '".html::escapeJS($core->blog->url.'pf='.$core->url->getBase('newsletter'))."';\n".
+			"var newsletter_msg_reload_failed = '".html::escapeJS(__('unable to reload'))."';\n".
+			"var newsletter_msg_register_success = '".html::escapeJS(__('has successfully registered'))."';\n".
 			"\n//]]>\n".
 			"</script>\n";
-						
-						
+			// "var newsletter_url_mode = '".html::escapeJS($core->url->mode)."';\n".			
+			echo '<script type="text/javascript" src="?pf=newsletter/js/_newsletter_pub.js"></script>'."\n";
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

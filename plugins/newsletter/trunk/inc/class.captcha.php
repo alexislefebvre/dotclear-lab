@@ -342,8 +342,28 @@ class Captcha
 	public function writeCodeFile()
 	{
 		@file_put_contents(self::newsletter_private_path().'/'.$this->filecode, $this->code);
+		self::cleanOldFilesInCache();
 	}
 
+	public function cleanOldFilesInCache()
+	{
+		$expires = '600'; # clean files after 10min
+		$dirCache = opendir(self::newsletter_private_path());
+		while(false !== ($curFileName = readdir($dirCache)))
+		{
+			$curFilePath = self::newsletter_private_path()."/".$curFileName;
+			$infos = pathinfo($curFilePath);
+			
+			$timeCurFile = time() - filemtime($curFilePath);
+			
+			if($curFileName!="." && $curFileName!=".." && !is_dir($curFileName) && $timeCurFile > $expires)
+			{
+				unlink($curFilePath);
+			}			
+		}
+		closedir($dirCache);
+	}	
+	
 	/**
 	* lit le fichier du cache
 	*/

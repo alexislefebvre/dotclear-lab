@@ -12,7 +12,7 @@
  *
  * -- END LICENSE BLOCK ------------------------------------*/
 
-$(document).ready(function(){
+$(document).ready(function($){
 
 	function recharger(data){
 		if ($(data).find('rsp').attr('status') == 'ok') {
@@ -24,19 +24,19 @@ $(document).ready(function(){
 			$("#nl_checkid").attr('value',checkid);
 			$("#nl_captcha_imgname").attr('src',src);
 
-			$.post('index.php?newsletterRest', {
+			$.post(newsletter_rest_service_pub, {
 				f: 'newsletterDeleteImgCaptcha',
 				captcha_imgname: src		  	
 			}, deleteImgCaptcha	
 			);
 		} else {
 			$("#newsletter-pub-message").empty();
-			$("#newsletter-pub-message").html('<img src="index.php?pf=newsletter/check-off.png" alt="KO" /> '+'unable to reload');
+			$("#newsletter-pub-message").html(newsletter_msg_reload_failed);
 		}		
 	}
 	
 	$('#nl_reload_captcha').live("click", function() {
-		$.post('index.php?newsletterRest', {
+		$.post(newsletter_rest_service_pub, {
 			f: 'newsletterReloadCaptcha'
 		}, recharger);
 		return false;		
@@ -44,7 +44,7 @@ $(document).ready(function(){
 	
 	function afficher(data){
 		$("#newsletter-pub-message").empty();
-		$("#newsletter-pub-message").html('<img src="index.php?pf=newsletter/progress.gif" alt="'+please_wait+'" />');
+		$("#newsletter-pub-message").html(please_wait);
 		
 		if ($(data).find('rsp').attr('status') == 'ok') {
 			var item=$(data).find('item');
@@ -53,12 +53,16 @@ $(document).ready(function(){
 			
 			$("#nl_form").empty();
 			$("#newsletter-pub-message").empty();
-			$("#newsletter-pub-message").html(email+' <img src="index.php?pf=newsletter/check-on.png" alt="OK" />');
-			$("#newsletter-pub-message").append('<br />'+result);
+			//$("#newsletter-pub-message").html(email);
+			//$("#newsletter-pub-message").append('<br />'+result);
+			$("#newsletter-pub-message").html(result);
 						
 		} else {
 			$("#newsletter-pub-message").empty();
-			$("#newsletter-pub-message").html('<img src="index.php?pf=newsletter/check-off.png" alt="KO" /> '+$(data).find('message').text());
+			$("#newsletter-pub-message").html($(data).find('message').text());
+			$.post(newsletter_rest_service_pub, {
+				f: 'newsletterReloadCaptcha'
+			}, recharger);			
 		}
 	}
 	
@@ -72,26 +76,28 @@ $(document).ready(function(){
 			  	modesend: $('#nl_modesend').val(),
 			  	captcha_imgname: $('#nl_captcha_imgname').val()		
 		}
-		$.post('index.php?newsletterRest', params, afficher);
+		$.post(newsletter_rest_service_pub, params, afficher);
 		return false;
 	});
 
+	/*
 	function deleteImgCaptcha(data){
 		if ($(data).find('rsp').attr('status') == 'ok') {
 			var item=$(data).find('item');
 			var result=$(item).attr('result');
-			//$("#newsletter-pub-message").html(result+' <img src="index.php?pf=newsletter/check-on.png" alt="OK" />');
+			$("#newsletter-pub-message").html(result);
 		} else {
 			$("#newsletter-pub-message").empty();
-			//$("#newsletter-pub-message").html('<img src="index.php?pf=newsletter/check-off.png" alt="KO" /> '+'unable to delete temporary file');
+			$("#newsletter-pub-message").html('unable to delete temporary file);
 		}		
-	}		
+	}
+	//*/		
 
 	$(window).load(function(){
-		$.post('index.php?newsletterRest', {
+		$.post(newsletter_rest_service_pub, {
 			f: 'newsletterDeleteImgCaptcha',
 			captcha_imgname: $('#nl_captcha_imgname').val()		  	
-		}, deleteImgCaptcha
+		}, ''
 		);
 		return false;
 	});

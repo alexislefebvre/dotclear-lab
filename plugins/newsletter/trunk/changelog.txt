@@ -1,3 +1,9 @@
+Newsletter 3.9.3 - 2013-11-23
+===========================================================
+* Ajoute quelques traductions
+* Validation dans la partie publique du formulaire et du widget newsletter en mode path_info
+* Ajout du nettoyage du cache des fichiers regcode au bout de 10min
+
 Newsletter 3.9.2 - 2013-11-19
 ===========================================================
 * Ajoute quelques traductions

@@ -70,7 +70,7 @@ $GLOBALS['__l10n']['You must input an email'] = 'Vous devez entrer un email';
 $GLOBALS['__l10n']['The email already exist'] = 'L\'adresse email existe déjà';
 $GLOBALS['__l10n'][', by'] = ', par';
 $GLOBALS['__l10n']['Successful mail sent for'] = 'Mail envoyé avec succès pour';
-$GLOBALS['__l10n']['Mail sent error for'] = 'Echec de l\'envoi du courriel pour';
+$GLOBALS['__l10n']['Mail sent error for'] = 'Echec de l\'envoi du mail pour';
 $GLOBALS['__l10n']['Nothing to send for'] = 'Rien à envoyer pour';
 $GLOBALS['__l10n']['Your account is pending confirmation'] = 'Votre abonnement est en attente de confirmation';
 $GLOBALS['__l10n']['Your sending mode is %s'] = 'Votre mode d\'envoi est %s';
@@ -378,4 +378,6 @@ $GLOBALS['__l10n']['Unable to send email'] = 'Impossible d\'envoyer le mail';
 $GLOBALS['__l10n']['Introduction to the letter.'] = 'Introduction à la lettre.';
 $GLOBALS['__l10n']['Go to this letter on the site'] = 'Voir cette lettre sur le site';
 $GLOBALS['__l10n']['Default value for number of subscribers per page'] = 'Valeur par défaut du nombre d\'abonnés par page';
+$GLOBALS['__l10n']['Back'] = 'Retour';
+$GLOBALS['__l10n']['unable to reload'] = 'Erreur lors du rechargement';
 ?>
