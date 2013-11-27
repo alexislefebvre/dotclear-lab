@@ -311,7 +311,7 @@ class lastpostsextendWidget
 		# Category
 		if ($w->category) {
 			if ($w->category == 'null') {
-				$params['sql'] .= ' AND p.cat_id IS NULL ';
+				$params['sql'] .= ' AND P.cat_id IS NULL ';
 			}
 			elseif (is_numeric($w->category)) {
 				$params['cat_id'] = (integer) $w->category;
@@ -348,7 +348,7 @@ class lastpostsextendWidget
 		# Return
 		$res =
 		($w->content_only ? '' : '<div class="lastpostsextend'.
-		($w->class ? ' '.html::escapeHTML($w->class) : '').'"">').
+		($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>';
 
