@@ -464,7 +464,7 @@ class tplNewsletter
 		$res = '';
 		
 		if ($newsletter_settings->getCaptcha()) {
-			$res = '<input id="nl_captcha" type="text" placeholder="Saisissez le texte " autocomplete="off">';
+			$res = '<input id="nl_captcha" name="nl_captcha" type="text" placeholder="Saisissez le texte " autocomplete="off">';
 		}
 		return $res;
 	}
@@ -889,7 +889,7 @@ class publicWidgetsNewsletter
 					'<p>'.
 						'<img id="nl_captcha_img" src="'.Captcha::newsletter_public_url().'/'.$as->getImgFileName().'" alt="'.__('Captcha').'" />'.
 						'<img id="nl_reload_captcha" src="?pf=newsletter/reload.png" alt="'.__('Reload captcha').'" title="'.__('Reload captcha').'" style="cursor:pointer;position:relative;top:-7px;" />'.
-						'<input id="nl_captcha" type="text" placeholder="Saisissez le texte " autocomplete="off">'.
+						'<input id="nl_captcha" name="nl_captcha" type="text" placeholder="Saisissez le texte " autocomplete="off">'.
 					'</p>';
 
 					$res .=

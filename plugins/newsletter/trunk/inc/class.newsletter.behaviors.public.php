@@ -51,10 +51,18 @@ class dcBehaviorsNewsletterPublic
 			"var newsletter_img_src = '".html::escapeJS($core->blog->url.'pf='.$core->url->getBase('newsletter'))."';\n".
 			"var newsletter_msg_reload_failed = '".html::escapeJS(__('unable to reload'))."';\n".
 			"var newsletter_msg_register_success = '".html::escapeJS(__('has successfully registered'))."';\n".
-			"\n//]]>\n".
+			"//]]>\n".
 			"</script>\n";
-			// "var newsletter_url_mode = '".html::escapeJS($core->url->mode)."';\n".			
-			echo '<script type="text/javascript" src="?pf=newsletter/js/_newsletter_pub.js"></script>'."\n";
+
+			$res_js = '<script type="text/javascript" src="';
+			if($core->url->mode == 'path_info') {
+				$res_js .= html::escapeURL($core->blog->url.'?pf=newsletter/js/_newsletter_pub.js');
+			} else {
+				$res_js .= html::escapeURL($core->blog->url.'pf=newsletter/js/_newsletter_pub.js');
+			}
+			$res_js .= '"></script>'."\n";
+			echo $res_js;
+			
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

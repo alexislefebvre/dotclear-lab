@@ -809,6 +809,13 @@ class newsletterCore
 				}
 				
 				if(!empty($news_content)) {
+					
+					# supprimer le contenu script dans les extraits si plugin GalleryInsert activé
+					if($core->plugins->moduleExists('GalleryInsert') && !isset($core->plugins->getDisabledModules['GalleryInsert'])) {
+						$search = array('@<script[^>]*?>.*?</script>@si');
+						$news_content = preg_replace($search, '', $news_content);
+					}
+										
 					if($newsletter_settings->getViewContentInTextFormat()) {
 						$news_content = context::remove_html($news_content);
 						$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());

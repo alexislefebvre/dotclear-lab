@@ -380,4 +380,6 @@ $GLOBALS['__l10n']['Go to this letter on the site'] = 'Voir cette lettre sur le 
 $GLOBALS['__l10n']['Default value for number of subscribers per page'] = 'Valeur par défaut du nombre d\'abonnés par page';
 $GLOBALS['__l10n']['Back'] = 'Retour';
 $GLOBALS['__l10n']['unable to reload'] = 'Erreur lors du rechargement';
+$GLOBALS['__l10n']['%d subscriber'] = '%d abonné';
+$GLOBALS['__l10n']['%d subscribers'] = '%d abonnés';
 ?>

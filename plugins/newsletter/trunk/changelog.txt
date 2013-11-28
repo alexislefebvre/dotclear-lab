@@ -1,3 +1,11 @@
+Newsletter 3.9.4 - 2013-11-28
+===========================================================
+* Correction du chargement du js dans la partie publique
+* Ticket #759 : Correction de la validation du code si js désactivé
+* Ajout de la suppression dans le contenu du billet des balises script si GalleryInsert est installé
+* Correction du bug d'affichage de l'onglet properties si dcCron n'est pas installé (merci Dsls)
+* Suppression des CTRL-M
+
 Newsletter 3.9.3 - 2013-11-23
 ===========================================================
 * Ajoute quelques traductions

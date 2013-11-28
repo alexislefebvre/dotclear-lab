@@ -680,16 +680,7 @@ try {
 	<link rel="stylesheet" type="text/css" href="index.php?pf=newsletter/style.css" />
 
 <?php	
-	if ($plugin_tab == 'tab_planning') {
-		if (isset($core->blog->dcCron)) {
-			echo 
-				dcPage::jsDatePicker().
-				dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.cron.js').
-				dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
-		}
-		echo dcPage::jsPageTabs($plugin_tab);
-	} else {
-		echo
+	echo
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
 		dcPage::jsVar('dotclear.msg.confirm_erasing_datas', __('Are you sure you want to delete all informations about newsletter in database?')).
@@ -697,18 +688,14 @@ try {
 		"\n//]]>\n".
 		"</script>\n";
 		
-
+		if (isset($core->blog->dcCron)) {
+			echo
+			dcPage::jsDatePicker().
+			dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.cron.js');
+		}
 		echo
-		dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.cron.js').
-		dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js').
-		dcPage::jsDatePicker();
-		
-		/*
-		echo dcPage::jsDatePicker();
-		echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
-		*/
+		dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
 		echo dcPage::jsPageTabs($plugin_tab);		
-	}
 ?>
 </head>
 <body>
