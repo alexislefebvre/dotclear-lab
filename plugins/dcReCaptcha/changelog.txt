@@ -1,0 +1,5 @@
+dcReCaptcha 0.0.1 - 2013-12-19
+===========================================================
+* utilise reCAPTCHA Library for PHP v1.11
+* ajout de la possibilité d'utiliser reCaptcha dans les filtres antispam
+* creation du plugin
