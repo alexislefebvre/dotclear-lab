@@ -28,16 +28,21 @@ $dcRecaptcha_settings = array(
 	'comments_form_enable' => $blog_settings->reCaptcha_comments_form_enable
 );
 
-if(empty($dcRecaptcha_settings['private_key']) 
-	|| empty($dcRecaptcha_settings['public_key'])
-	|| !$dcRecaptcha_settings['comments_form_enable']) {
+# reCAPTCHA is not correctly configured
+if(empty($dcRecaptcha_settings['private_key'])
+|| empty($dcRecaptcha_settings['public_key'])) {
 	return;
-} 
+}
 
 # adding behaviors
 $core->addBehavior('publicBeforeDocument', array('dcReCaptchaBehaviorsPublic','publicBeforeDocument'));
-$core->addBehavior('publicCommentFormAfterContent', array('dcReCaptchaBehaviorsPublic','publicCommentFormAfterContent'));
 $core->addBehavior('publicHeadContent',	array('dcReCaptchaBehaviorsPublic','publicHeadContent'));
+
+if($dcRecaptcha_settings['comments_form_enable']) {
+	$core->addBehavior('publicCommentFormAfterContent', array('dcReCaptchaBehaviorsPublic','publicCommentFormAfterContent'));
+}
+
+$core->tpl->addValue('dcReCaptchaForm', array('tplDcReCaptcha', 'dcReCaptchaForm'));
 
 class dcReCaptchaBehaviorsPublic
 {
@@ -85,3 +90,21 @@ class dcReCaptchaBehaviorsPublic
 	}
 }
 
+class tplDcReCaptcha
+{
+	public static function dcReCaptchaForm($attr, $content)
+	{
+		global $core;
+		$res = '';
+		
+		if (!isset($_SESSION['recaptcha_ok'])) {
+			
+			$dcReCaptcha = new dcReCaptcha($core);
+			$res = '<p id="dcrecaptcha-form">'.
+				$dcReCaptcha->getReCaptchaHtml().
+				'</p>';
+		}
+		return $res;
+		
+	}
+}

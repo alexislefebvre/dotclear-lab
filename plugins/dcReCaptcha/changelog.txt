@@ -1,3 +1,7 @@
+dcReCaptcha 0.0.2 - 2013-12-20
+===========================================================
+* ajout le template {{tpl:dcReCaptchaForm}} pour utiliser reCAPTCHA dans le page ContactMe
+
 dcReCaptcha 0.0.1 - 2013-12-19
 ===========================================================
 * utilise reCAPTCHA Library for PHP v1.11

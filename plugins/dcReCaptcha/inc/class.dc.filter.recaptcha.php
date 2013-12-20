@@ -140,7 +140,6 @@ class dcFilterReCaptcha extends dcSpamFilter
 		$res .=
 			'<form action="'.html::escapeURL($url).'" method="post" id="reCaptcha">'.
 			
-			'</p>'.
 			'<p><a href="'.$this->dcReCaptcha->getApiUrl().'">'.__('Get your owns API key').'</a></p>'.
 
 			'<p class="field">'.
@@ -161,6 +160,13 @@ class dcFilterReCaptcha extends dcSpamFilter
 			form::checkbox('reCaptcha_comments_form_enable', 1, $dcRecaptcha_settings['comments_form_enable']).
 			'</p>'.
 
+			'<p>If you want add reCAPTCHA form with the plugin ContactMe:'.
+				'<ul>'.
+					'<li>insert template {{tpl:dcReCaptchaForm}} to form in file contact_me.html</li>'.
+					'<li>activate the spam filter option in ContactMe</li>'.
+				'</ul>'.
+			'</p>'.			
+			
 			'<p>'.__('reCAPTCHA is a free CAPTCHA service that protects your site against spam.').'</p>'.
 			
 			'<p><input type="submit" value="'.__('Save').'" /> '.
