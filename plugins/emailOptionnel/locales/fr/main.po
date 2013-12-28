@@ -1,9 +1,14 @@
-# French translation of Email Optionnel
-# Copyright (c) 2007,2011
-# Alex Pirine <alex pirine.fr>, 2011
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: brol <contact@brol.info>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
 
 msgid "Optional e-mail address"
 msgstr "Adresse e-mail optionnelle"
