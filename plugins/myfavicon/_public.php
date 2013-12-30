@@ -88,4 +88,3 @@ class myFavicon
 		return $other_link.$ie_link;
 	}
 }
-?>

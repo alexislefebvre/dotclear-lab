@@ -20,6 +20,12 @@ $this->registerModule(
 	/* Description*/	"Add a customized favicon to your blog",
 	/* Author */		"Oleksandr Syenchuk, Pierre Van Glabeke",
 	/* Version */		'0.7',
-	/* Permissions */	'contentadmin'
+	/* Properties */
+	array(
+		'permissions' => 'contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://forum.dotclear.org/viewtopic.php?pid=323172#p323172',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/myfavicon'
+	)
 );
-?>

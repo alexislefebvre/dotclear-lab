@@ -57,4 +57,3 @@ class myFavicon
 			$settings->addNameSpace('system');
 	}
 }
-?>

@@ -15,9 +15,8 @@
 \***************************************************************/
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$label = 'myfavicon';
-$m_version = $core->plugins->moduleInfo($label,'version');
-$i_version = $core->getVersion($label);
+$m_version = $core->plugins->moduleInfo('myfavicon','version');
+$i_version = $core->getVersion('myfavicon');
 
 if (version_compare($i_version,$m_version,'>=')) {
 	return;
@@ -30,5 +29,4 @@ $settings->myfavicon->put('favicon_url','','string','Favicon URL',false);
 $settings->myfavicon->put('favicon_ie_url','','string','Favicon URL Internet Explorer',false);
 
 # La procédure d'installation commence vraiment là
-$core->setVersion('$label',$m_version);
-?>
+$core->setVersion('myfavicon',$m_version);
