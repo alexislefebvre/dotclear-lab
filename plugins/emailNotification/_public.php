@@ -12,4 +12,3 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicAfterCommentCreate',array('notificationBehaviors','publicAfterCommentCreate'));
-?>

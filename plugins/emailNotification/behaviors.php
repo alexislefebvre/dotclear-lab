@@ -9,6 +9,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) {return;}
 
 class notificationBehaviors
 {
@@ -25,13 +26,12 @@ class notificationBehaviors
 		);
 		
 		echo
-		'<fieldset><legend>'.__('Email notification').'</legend>'.
-		'<p><label class="classic">'.
+		'<div><h4>'.__('Email notification').'</h4>'.
+		'<p><label class="classic" for="notify_comments">'.
 		__('Notify new comments by email:').' '.
 		form::combo('notify_comments',$opt,$notify_comments).
-		
 		'</label></p>'.
-		'</fieldset>';
+		'</div>';
 	}
 	
 	public static function adminBeforeUserUpdate($cur,$user_id='')
@@ -151,4 +151,3 @@ class notificationBehaviors
 		return null;
 	}
 }
-?>

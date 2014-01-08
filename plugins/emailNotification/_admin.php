@@ -15,4 +15,3 @@ $core->addBehavior('adminPreferencesForm',array('notificationBehaviors','adminUs
 $core->addBehavior('adminUserForm',array('notificationBehaviors','adminUserForm'));
 
 $core->addBehavior('adminBeforeUserUpdate',array('notificationBehaviors','adminBeforeUserUpdate'));
-?>

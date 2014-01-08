@@ -15,7 +15,13 @@ $this->registerModule(
 	/* Name */			"Email notification",
 	/* Description*/		"Email notification",
 	/* Author */			"Olivier Meunier",
-	/* Version */			'1.0.5',
-	/* Permissions */		'usage,contentadmin'
+	/* Version */			'1.0.6',
+	/* Properties */
+	array(
+		'permissions' => 'usage,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://forum.dotclear.org/viewforum.php?id=16',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/emailNotification'
+		)
 );
-?>
