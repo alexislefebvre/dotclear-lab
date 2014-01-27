@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX,NOARCHIVE"}}" />
   
   <title>{{tpl:lang Search}} - {{tpl:SysSearchString encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
@@ -27,7 +26,7 @@
     <tpl:EntriesHeader>
       <tpl:Pagination>
         <tpl:PaginationIf end="0">
-        <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
+        <link rel="prev" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
         </tpl:PaginationIf>
         
         <tpl:PaginationIf start="0">
@@ -77,12 +76,12 @@
       <tpl:EntryIf has_category="1">
       <li>{{tpl:lang Category}} <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></li>
       </tpl:EntryIf>
-      
-      <tpl:EntryMetaData>
-        <tpl:MetaDataHeader><li class="post-tags">{{tpl:lang Tags}}</tpl:MetaDataHeader>
-        <a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
-        <tpl:MetaDataFooter></li></tpl:MetaDataFooter>
-      </tpl:EntryMetaData>
+
+      <tpl:EntryTags>
+      <tpl:TagsHeader><li class="post-tags">{{tpl:lang Tags}}</tpl:TagsHeader>
+      <a href="{{tpl:TagURL}}" rel="tag">{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+      <tpl:TagsFooter></li></tpl:TagsFooter>
+      </tpl:EntryTags>
       
       <!-- # Number of comments, trackbacks and attachments -->
       <tpl:EntryIf show_comments="1">

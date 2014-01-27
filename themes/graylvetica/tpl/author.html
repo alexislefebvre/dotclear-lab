@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX"}}" />
 
   <title>{{tpl:AuthorCommonName encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
@@ -30,7 +30,7 @@
     <tpl:EntriesHeader>
       <tpl:Pagination>
         <tpl:PaginationIf end="0">
-        <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
+        <link rel="prev" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
         </tpl:PaginationIf>
         
         <tpl:PaginationIf start="0">
@@ -43,7 +43,6 @@
   </tpl:Entries>
   
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
-  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
   {{tpl:include src="_head.html"}}
 </head>
@@ -70,7 +69,7 @@
 
   <tpl:Entries>
     <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
-    <h2 id="p{{tpl:EntryID}}" class="post-title"><a
+    <h2 class="post-title"><a
     href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
     
     <ul class="post-meta">
@@ -79,12 +78,12 @@
       <tpl:EntryIf has_category="1">
       <li>{{tpl:lang Category}} <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></li>
       </tpl:EntryIf>
-      
-      <tpl:EntryMetaData>
-        <tpl:MetaDataHeader><li class="post-tags">{{tpl:lang Tags}}</tpl:MetaDataHeader>
-        <a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
-        <tpl:MetaDataFooter></li></tpl:MetaDataFooter>
-      </tpl:EntryMetaData>
+
+      <tpl:EntryTags>
+      <tpl:TagsHeader><li class="post-tags">{{tpl:lang Tags}}</tpl:TagsHeader>
+      <a href="{{tpl:TagURL}}" rel="tag">{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+      <tpl:TagsFooter></li></tpl:TagsFooter>
+      </tpl:EntryTags>
       
       <!-- # Number of comments, trackbacks and attachments -->
       <tpl:EntryIf show_comments="1">
@@ -97,6 +96,9 @@
         <li><a href="{{tpl:EntryURL}}#attachments" class="attach_count">{{tpl:EntryAttachmentCount}}</a></li>
       </tpl:EntryIf>
     </ul>
+
+    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
     
     <!-- # Entry with an excerpt -->
     <tpl:EntryIf extended="1">
@@ -110,6 +112,9 @@
     <tpl:EntryIf extended="0">
       <div class="post-content">{{tpl:EntryContent}}</div>
     </tpl:EntryIf>
+
+    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
     </div>
     
     <tpl:EntriesFooter>

@@ -1,9 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:EntryLang}}" lang="{{tpl:EntryLang}}">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
   
   <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
@@ -25,11 +24,12 @@
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:EntryIf pings_active="1"><link rel="pingback" href="{{tpl:BlogXMLRPCURL}}" /></tpl:EntryIf>
   
   <tpl:EntryNext><link rel="next" href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryNext>
   
-  <tpl:EntryPrevious><link rel="previous" href="{{tpl:EntryURL}}"
+  <tpl:EntryPrevious><link rel="prev" href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryPrevious>
   
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
@@ -74,12 +74,12 @@
       <tpl:EntryIf has_category="1">
       <li>{{tpl:lang Category}} <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></li>
       </tpl:EntryIf>
-      
-      <tpl:EntryMetaData>
-        <tpl:MetaDataHeader><li class="post-tags">{{tpl:lang Tags}}</tpl:MetaDataHeader>
-        <a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
-        <tpl:MetaDataFooter></li></tpl:MetaDataFooter>
-      </tpl:EntryMetaData>
+
+      <tpl:EntryTags>
+      <tpl:TagsHeader><li class="post-tags">{{tpl:lang Tags}}</tpl:TagsHeader>
+      <a href="{{tpl:TagURL}}" rel="tag">{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+      <tpl:TagsFooter></li></tpl:TagsFooter>
+      </tpl:EntryTags>
     </ul>
     
     <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
@@ -204,8 +204,7 @@
         <textarea name="c_content" id="c_content" cols="35"
         rows="7">{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
         </p>
-        <p class="form-help">{{tpl:lang HTML code is displayed as text and web addresses are
-        automatically converted.}}</p>
+        <p class="form-help">{{tpl:CommentHelp}}</p>
         
         <!-- # --BEHAVIOR-- publicCommentFormAfterContent -->
         {{tpl:SysBehavior behavior="publicCommentFormAfterContent"}}

@@ -128,6 +128,7 @@ a:hover, a:focus {
 	width: 348px;
 	margin-left: 20px;
 }
+#sidebar img {max-width:100%;}
 #sidebar #blognav {
 	float: left;
 	width: 169px;
@@ -352,7 +353,9 @@ p.pagination {
 	margin-top: 10px;
 	font-size: 1.1em;
 }
-
+.post-excerpt p img, .post-content p img {
+  max-width:100%;
+}
 /* Archives -------------------------------------------- */
 body.dc-archive #content h3 {
 	float: left;
@@ -384,7 +387,9 @@ body.dc-archive #content li {
 	list-style-position: inside;
 	line-height: 1.3;
 }
-
+#content-info p img {
+  max-width:100%;
+}
 /* Tags ------------------------------------------------ */
 .tag0 { font-size: 75%; }
 .tag10 { font-size: 80%; }

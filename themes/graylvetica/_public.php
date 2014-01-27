@@ -11,12 +11,4 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */			"Graylvetica",
-	/* Description*/		"Helvetica on red, black and gray",
-	/* Author */			"Olivier Meunier, Pierre Van Glabeke",
-	/* Version */			'1.1',
-	array(
-		'type'		=>		'theme'
-	)
-);
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');

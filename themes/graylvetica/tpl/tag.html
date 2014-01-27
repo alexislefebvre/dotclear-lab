@@ -3,16 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
   
-  <title>{{tpl:lang Tag}} - {{tpl:MetaID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  <title>{{tpl:lang Tag}} - {{tpl:TagID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
   
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
-  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Tag}} - {{tpl:MetaID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Tag}} - {{tpl:TagID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
   <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
   <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
@@ -27,7 +26,7 @@
     <tpl:EntriesHeader>
       <tpl:Pagination>
         <tpl:PaginationIf end="0">
-        <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
+        <link rel="prev" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
         </tpl:PaginationIf>
         
         <tpl:PaginationIf start="0">
@@ -55,7 +54,7 @@
   <div id="content">
   
   <div id="content-info">
-    <h2>{{tpl:lang Tag}} - {{tpl:MetaID}}</h2>
+    <h2>{{tpl:lang Tag}} - {{tpl:TagID}}</h2>
     
     <p><a type="application/atom+xml" href="{{tpl:TagFeedURL type="atom"}}"
     title="{{tpl:lang This tag's entries Atom feed}}" class="feed">{{tpl:lang Entries feed}}</a>
@@ -78,12 +77,12 @@
       <tpl:EntryIf has_category="1">
       <li>{{tpl:lang Category}} <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></li>
       </tpl:EntryIf>
-      
-      <tpl:EntryMetaData>
-        <tpl:MetaDataHeader><li class="post-tags">{{tpl:lang Tags}}</tpl:MetaDataHeader>
-        <a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
-        <tpl:MetaDataFooter></li></tpl:MetaDataFooter>
-      </tpl:EntryMetaData>
+
+      <tpl:EntryTags>
+      <tpl:TagsHeader><li class="post-tags">{{tpl:lang Tags}}</tpl:TagsHeader>
+      <a href="{{tpl:TagURL}}" rel="tag">{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+      <tpl:TagsFooter></li></tpl:TagsFooter>
+      </tpl:EntryTags>
       
       <!-- # Number of comments, trackbacks and attachments -->
       <tpl:EntryIf show_comments="1">
