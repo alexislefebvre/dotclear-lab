@@ -3,7 +3,7 @@
 #
 # This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Benoit de Marne and contributors
+# Copyright (c) 2009-2014 Benoit de Marne and contributors
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear
 # 
@@ -140,7 +140,7 @@ class newsletterTools
 	 * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
 	 */
 	 
-	function truncateHtmlString($text, $length = 100, $ending = '...', $exact = true, $considerHtml = false) {
+	public static function truncateHtmlString($text, $length = 100, $ending = '...', $exact = true, $considerHtml = false) {
 	    if (is_array($ending)) {
 	        extract($ending);
 	    }

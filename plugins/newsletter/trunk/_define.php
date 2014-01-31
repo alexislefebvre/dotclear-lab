@@ -3,7 +3,7 @@
 #
 # This file is part of newsletter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Benoit de Marne and contributors
+# Copyright (c) 2009-2014 Benoit de Marne and contributors
 # benoit.de.marne@gmail.com
 # Many thanks to Association Dotclear
 # 
@@ -23,10 +23,10 @@ $this->registerModule(
 		/* Author */
 		"Benoit de Marne",
 		/* Version */
-		'3.9.4',
+		'3.9.5',
 		/* Properties */
 		array(
-				'permissions' => 'usage,contentadmin',
+				'permissions' => 'newsletter,contentadmin',
 				'type' => 'plugin',
 				'dc_min' => '2.6',
 				'support' => 'http://forum.dotclear.org/viewtopic.php?id=47581',

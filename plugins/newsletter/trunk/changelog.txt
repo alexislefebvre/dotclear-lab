@@ -1,3 +1,8 @@
+Newsletter 3.9.5 - 2014-01-31
+===========================================================
+* Correction de la déclaration sur la fonction static truncateHtmlString
+* Correction sur la gestion de droits utilisateurs
+
 Newsletter 3.9.4 - 2013-11-28
 ===========================================================
 * Correction du chargement du js dans la partie publique
