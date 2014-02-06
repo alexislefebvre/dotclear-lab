@@ -2,10 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX"}}" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>{{tpl:lang Tags}} - {{tpl:BlogName encode_html="1"}}</title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
@@ -32,23 +29,18 @@
 <body class="dc-tags">
 
 <div data-role="page">
+  <div data-role="header">
+    <h2>{{tpl:lang Tags}}</h2>
+  </div>
 
-    <div data-role="header">
-      <h2>{{tpl:lang Tags}}</h2>
-    </div>
-
-    <div data-role="content">
-
-        <ul data-role="listview">
-            <tpl:Tags>
-                <li><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
-            </tpl:Tags>
-        </ul>
-    </div>
-
-    {{tpl:include src="_footer.html"}}
-
+  <div data-role="content">
+      <ul data-role="listview" data-split-icon="arrow-r" data-theme="c">
+      <tpl:Tags>
+      <li><a data-transition="slide" href="{{tpl:TagURL}}">{{tpl:TagID}} ({{tpl:TagCount}})</a></li>
+      </tpl:Tags>
+    </ul>
+  </div>
+{{tpl:include src="_footer.html"}}
 </div><!-- /page -->
-
 </body>
 </html>

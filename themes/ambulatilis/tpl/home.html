@@ -2,10 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>{{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription cut_string="180" encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
@@ -54,43 +51,32 @@
 <body class="dc-home">
 
 <div data-role="page">
+{{tpl:include src="_top.html"}}
 
-    <div data-role="header">
-      <h1>{{tpl:BlogName encode_html="1"}}</h1>
-    </div>
+  <tpl:Entries lastn="5" no_content="1">
+    <tpl:EntriesHeader>
+      <div data-role="content">
+      <ul data-role="listview" data-split-icon="arrow-r" data-theme="c">
+    </tpl:EntriesHeader>
+      <tpl:DateHeader><li data-role="list-divider" data-theme="b">{{tpl:EntryDate}}</li></tpl:DateHeader>
+      <li><a data-transition="slide" href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a> <span class="ui-li-count">{{tpl:EntryCommentCount}}</span></li>
+    <tpl:EntriesFooter>
+      </ul>
+      </div>
 
-    <tpl:Entries lastn="5" no_content="1">
+      <tpl:Pagination>
+      <div data-role="navbar">
+      <ul>
+        <tpl:PaginationIf end="0"><li><a data-transition="slide" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
+        <tpl:PaginationIf start="0"><li><a data-transition="slide" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
+        </tpl:PaginationIf>
+      </ul>
+      </div>
+      </tpl:Pagination>
+    </tpl:EntriesFooter>
+  </tpl:Entries>
 
-        <tpl:EntriesHeader>
-            <div data-role="content">
-              <ul data-role="listview" data-split-icon="arrow-r" data-split-theme="d">
-        </tpl:EntriesHeader>
-
-              <tpl:DateHeader><li data-role="list-divider" data-theme="d">{{tpl:EntryDate}}</li></tpl:DateHeader>
-              <li><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a> <span class="ui-li-count">{{tpl:EntryCommentCount}}</span></li>
-              
-        <tpl:EntriesFooter>
-            </ul>
-            </div>
-
-            <tpl:Pagination>
-                <div data-role="navbar">
-                     <ul>
-                        <tpl:PaginationIf end="0"><li><a data-transition="slide" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
-                        <tpl:PaginationIf start="0"><li><a data-transition="slide" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
-                        </tpl:PaginationIf>
-                    </ul>
-                </div>
-            </tpl:Pagination>
-
-        </tpl:EntriesFooter>
-
-    </tpl:Entries>
-
-    {{tpl:include src="_footer.html"}}
-
+{{tpl:include src="_footer.html"}}
 </div><!-- /page -->
-
-
 </body>
 </html>

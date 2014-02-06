@@ -2,10 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
-  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
 
   <title>{{tpl:lang Archives}} - {{tpl:BlogName encode_html="1"}}</title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
@@ -35,34 +33,27 @@
 <body class="dc-archive">
 
 <div data-role="page">
-
-    <div data-role="header">
-      <h2>{{tpl:lang Archives}}</h2>
-    </div>
-
-    <div data-role="content">
-      <form action="{{tpl:BlogURL}}" method="get">
-        <input type="search" id="q" name="q" value="" />
-      </form>
-    </div>
-
-    <div data-role="content">
-        <ul data-role="listview" data-dividertheme="d">
-
-        <tpl:Archives>
-            <tpl:ArchivesYearHeader>
-            <li data-role="list-divider">{{tpl:ArchiveDate encode_html="1" format="%Y"}}</li>
-            </tpl:ArchivesYearHeader>
-             <li><a href="{{tpl:ArchiveURL}}" title="{{tpl:ArchiveDate encode_html="1"}}">{{tpl:ArchiveDate encode_html="1" format="%B"}}</a> <span class="ui-li-count">{{tpl:ArchiveEntriesCount}} {{tpl:lang entries}}</span></li>
-
-        </tpl:Archives>
-        </ul>
+  <div data-role="header">
+    <h2>{{tpl:lang Archives}}</h2>
   </div>
 
+  <div data-role="content">
+    <form action="{{tpl:BlogURL}}" method="get">
+      <input type="search" id="q" name="q" value="" />
+    </form>
+  </div>
 
-    {{tpl:include src="_footer.html"}}
-
+  <div data-role="content">
+    <ul data-role="listview" data-split-icon="arrow-r" data-theme="c">
+    <tpl:Archives>
+      <tpl:ArchivesYearHeader>
+        <li data-role="list-divider" data-theme="b">{{tpl:ArchiveDate encode_html="1" format="%Y"}}</li>
+      </tpl:ArchivesYearHeader>
+        <li><a data-transition="slide" href="{{tpl:ArchiveURL}}" title="{{tpl:ArchiveDate encode_html="1"}}">{{tpl:ArchiveDate encode_html="1" format="%B"}}</a> <span class="ui-li-count">{{tpl:ArchiveEntriesCount}} {{tpl:lang entries}}</span></li>
+    </tpl:Archives>
+    </ul>
+  </div>
+{{tpl:include src="_footer.html"}}
 </div><!-- /page -->
-
 </body>
 </html>

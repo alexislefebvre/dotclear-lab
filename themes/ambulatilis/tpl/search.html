@@ -1,18 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX,NOARCHIVE"}}" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>{{tpl:lang Search}} - {{tpl:SysSearchString encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
-  
+
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
   <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Search}} - {{tpl:SysSearchString encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
   <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
@@ -21,33 +17,32 @@
   <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
   <meta name="dc.type" content="text" />
   <meta name="dc.format" content="text/html" />
-  
+
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  
+
   <tpl:Entries no_content="1">
     <tpl:EntriesHeader>
       <tpl:Pagination>
         <tpl:PaginationIf end="0">
         <link rel="prev" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
         </tpl:PaginationIf>
-        
+
         <tpl:PaginationIf start="0">
         <link rel="next" title="{{tpl:lang next entries}}" href="{{tpl:PaginationURL offset="-1"}}" />
         </tpl:PaginationIf>
       </tpl:Pagination>
     </tpl:EntriesHeader>
-    
+
     <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
   </tpl:Entries>
-  
+
   <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
-  
+
   {{tpl:include src="_head.html"}}
 </head>
 
 <body class="dc-search">
-
 
 <div data-role="page">
 
@@ -60,7 +55,7 @@
         <input type="search" id="q" name="q" value="" />
       </form>
     </div>
-    
+
     <div data-role="content" data-theme="e">
        <tpl:SysIf search_count="==0">
         <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned no result."}}</p>
@@ -73,34 +68,28 @@
       </tpl:SysIf>
     </div>
 
-    <div data-role="content">
-        <ul data-role="listview" data-dividertheme="d">
-
+      <div data-role="content">
+      <ul data-role="listview" data-split-icon="arrow-r" data-theme="c">
         <tpl:Entries>
-          <tpl:DateHeader><li data-role="list-divider">{{tpl:EntryDate}}</li></tpl:DateHeader>
-          <li><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a> <span class="ui-li-count">{{tpl:EntryCommentCount}}</span></li>
+          <tpl:DateHeader><li data-role="list-divider" data-theme="b">{{tpl:EntryDate}}</li></tpl:DateHeader>
+          <li><a data-transition="slide" href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a> <span class="ui-li-count">{{tpl:EntryCommentCount}}</span></li>
+    <tpl:EntriesFooter>
+      </ul>
+      </div>
 
+      <tpl:Pagination>
+      <div data-role="navbar">
+      <ul>
+        <tpl:PaginationIf end="0"><li><a data-transition="slide" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
+        <tpl:PaginationIf start="0"><li><a data-transition="slide" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
+        </tpl:PaginationIf>
+      </ul>
+      </div>
+      </tpl:Pagination>
+    </tpl:EntriesFooter>
+  </tpl:Entries>
 
-
-          <tpl:EntriesFooter>
-        </ul>
-    </div>
-          <tpl:Pagination>
-            <div data-role="navbar">
-              <ul>
-                <tpl:PaginationIf end="0"><li><a data-transition="slide" data-icon="arrow-l" href="{{tpl:PaginationURL offset="+1"}}">&#171; {{tpl:lang previous entries}}</a></li></tpl:PaginationIf>
-                <tpl:PaginationIf start="0"><li><a data-transition="slide" data-icon="arrow-r" href="{{tpl:PaginationURL offset="-1"}}">{{tpl:lang next entries}} &#187;</a></li>
-                </tpl:PaginationIf>
-              </ul>
-        </div>
-          </tpl:Pagination>
-          </tpl:EntriesFooter>
-          
-        </tpl:Entries>
-        
-    
-
-    {{tpl:include src="_footer.html"}}
+{{tpl:include src="_footer.html"}}
 
 </div><!-- /page -->
 

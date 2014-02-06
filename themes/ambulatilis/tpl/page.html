@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+
+  <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
+  <meta name="description" lang="{{tpl:EntryLang}}" content="{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="180"}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:EntryAuthorCommonName encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:EntryDate iso8601="1"}}" />
+
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" content="{{tpl:EntryTitle encode_html="1"}}" />
+  <meta name="dc.description" lang="{{tpl:EntryLang}}" content="{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="180"}}" />
+  <meta name="dc.creator" content="{{tpl:EntryAuthorCommonName encode_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:EntryLang}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:EntryDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:EntryIf pings_active="1"><link rel="pingback" href="{{tpl:BlogXMLRPCURL}}" /></tpl:EntryIf>
+
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+
+  {{tpl:include src="_head.html"}}
+
+  <script type="text/javascript" src="{{tpl:BlogThemeURL}}/../default/js/post.js"></script>
+  <script type="text/javascript">
+  //<![CDATA[
+  var post_remember_str = '{{tpl:lang Remember me on this blog}}';
+  //]]>
+  </script>
+</head>
+
+<body class="dc-page">
+
+<div data-role="page">
+  <div data-role="navbar">
+    <ul>
+      <tpl:EntryPrevious><li><a href="{{tpl:EntryURL}}" data-transition="slide" data-icon="arrow-l">{{tpl:EntryTitle encode_html="1"
+      cut_string="50"}}</a></li></tpl:EntryPrevious>
+      <li><a data-transition="none" data-icon="home" href="{{tpl:BlogURL}}">{{tpl:lang Home}}</a></li>
+      <tpl:EntryNext><li><a href="{{tpl:EntryURL}}" data-transition="slide" data-icon="arrow-r">{{tpl:EntryTitle encode_html="1"
+      cut_string="50"}}</a></li></tpl:EntryNext>
+    </ul>
+  </div><!-- /navbar -->
+
+  <div data-role="header">
+    <h2>{{tpl:EntryTitle encode_html="1"}}</h2>
+  </div>
+
+  <div data-role="content">
+    <tpl:EntryIf extended="1">{{tpl:EntryExcerpt}}</tpl:EntryIf>
+    {{tpl:EntryContent}}
+  </div>
+
+  <div data-role="collapsible-set">
+    <div data-role="collapsible" data-collapsed="">
+      <h3>A propos de l'article</h3>
+      <ul data-role="listview" data-theme="d" data-divider-theme="d">
+        <li data-role="list-divider">{{tpl:lang Date}}</li>
+        <li>{{tpl:EntryDate}}, {{tpl:EntryTime}}</li>
+
+        <!-- # Attachments -->
+        <tpl:Attachments>
+          <tpl:AttachmentsHeader>
+            <li data-role="list-divider">{{tpl:lang Attachments}}</li>
+            <ul>
+          </tpl:AttachmentsHeader>
+            <li class="{{tpl:AttachmentType}}">
+              <tpl:AttachmentIf is_mp3="1">
+                {{tpl:include src="_mp3_player.html"/}} -
+              </tpl:AttachmentIf>
+              <tpl:AttachmentIf is_flv="1">
+      	     {{tpl:include src="_flv_player.html"/}}
+      	   </tpl:AttachmentIf>
+      	   <tpl:AttachmentIf is_flv="0">
+      	   	<a href="{{tpl:AttachmentURL}}"
+      		title="{{tpl:AttachmentFileName}} ({{tpl:AttachmentSize}})">{{tpl:AttachmentTitle}}</a>
+              </tpl:AttachmentIf>
+            </li>
+          <tpl:AttachmentsFooter>
+            </ul>
+          </tpl:AttachmentsFooter>
+        </tpl:Attachments>
+      </ul>
+    </div>
+
+    <!-- # Comments -->
+    <tpl:EntryIf show_comments="1">
+    <tpl:Comments>
+      <tpl:CommentsHeader>
+        <div data-role="collapsible" data-collapsed="true">
+          <h3>{{tpl:lang Comments}}</h3>
+            <ul data-role="listview" data-theme="d" data-divider-theme="d">
+      </tpl:CommentsHeader>
+              <li data-role="list-divider">{{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}}</li>
+              <li id="c{{tpl:CommentID}}">
+                <h3>{{tpl:CommentAuthorLink}}</h3>
+                  <div>{{tpl:CommentContent}}</div></li>
+      <tpl:CommentsFooter>
+            </ul>
+        </div>
+      </tpl:CommentsFooter>
+    </tpl:Comments>
+    </tpl:EntryIf>
+
+    <tpl:EntryIf comments_active="1">
+      <!-- # Comment form -->
+      <div data-role="collapsible" data-collapsed="true">
+        <h3>{{tpl:lang Add a comment}}</h3>
+
+            <tpl:SysIfFormError>
+              <div data-role="content" data-theme="e">{{tpl:SysFormError}}</div>
+            </tpl:SysIfFormError>
+
+            <tpl:SysIfCommentPublished>
+              <div data-role="content" data-theme="e">{{tpl:lang Your comment has been published.}}</div>
+            </tpl:SysIfCommentPublished>
+
+            <tpl:SysIfCommentPending>
+              <div data-role="content" data-theme="e" id="pr">{{tpl:lang Your comment has been submitted and
+              will be reviewed for publication.}}</div>
+            </tpl:SysIfCommentPending>
+
+            <form action="{{tpl:EntryURL}}" method="post">
+
+                <div data-role="fieldcontain">
+                    <label for="c_name">{{tpl:lang Name or nickname}}&nbsp;:</label>
+                    <input name="c_name" id="c_name" type="text" value="{{tpl:CommentPreviewName encode_html="1"}}" />
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="c_mail">{{tpl:lang Email address}}&nbsp;:</label>
+                    <input name="c_mail" id="c_mail" type="email" value="{{tpl:CommentPreviewEmail encode_html="1"}}" />
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="c_site">{{tpl:lang Website}} ({{tpl:lang optional}})&nbsp;:</label>
+                    <input name="c_site" id="c_site" type="url" value="{{tpl:CommentPreviewSite encode_html="1"}}" />
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="c_content">{{tpl:lang Comment}}&nbsp;:</label>
+                    <textarea name="c_content" id="c_content" cols="35" rows="7">{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
+                </div>
+
+                <input data-inline="true" data-theme="a" data-icon="plus" type="submit" class="submit" value="{{tpl:lang Send}}" />
+
+            </form>
+        </div>
+      </tpl:EntryIf>
+
+      <!-- # Trackbacks -->
+      <tpl:EntryIf show_pings="1">
+        <tpl:Pings>
+          <tpl:PingsHeader>
+            <div data-role="collapsible" data-collapsed="true">
+              <h3>{{tpl:lang They posted on the same topic}}</h3>
+              <ul data-role="listview" data-theme="d" data-divider-theme="d">
+          </tpl:PingsHeader>
+                <li data-role="list-divider">{{tpl:lang On}} {{tpl:PingDate}}, {{tpl:PingTime}}</li>
+                <li><a href="{{tpl:PingAuthorURL}}" {{tpl:PingNoFollow}}>{{tpl:PingTitle encode_html="1"}}</a></li>
+              <tpl:PingsFooter>
+              </ul>
+            </div>
+          </tpl:PingsFooter>
+        </tpl:Pings>
+      </tpl:EntryIf>
+  </div>
+{{tpl:include src="_footer.html"}}
+
+</div><!-- /page -->
+
+</body>
+</html>

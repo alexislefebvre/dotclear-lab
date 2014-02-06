@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX"}}" />
+
+  <title>{{tpl:lang Categories page}} - {{tpl:BlogName encode_html="1"}}</title>
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Categories page}} - {{tpl:BlogName encode_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:Categories>
+  <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
+
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-categories">
+<div data-role="page">
+  <div data-role="header">
+    <h2>{{tpl:lang Categories}}</h2>
+  </div>
+
+  <div data-role="content">
+      <ul data-role="listview" data-split-icon="arrow-r" data-theme="c">
+      <tpl:Categories>
+      <li><a data-transition="slide" href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}} ({{tpl:CategoryCount}})</a></li>
+      </tpl:Categories>
+    </ul>
+  </div>
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

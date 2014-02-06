@@ -2,10 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
   <meta name="description" lang="{{tpl:EntryLang}}" content="{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="180"}}" />
@@ -26,6 +23,7 @@
 
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:EntryIf pings_active="1"><link rel="pingback" href="{{tpl:BlogXMLRPCURL}}" /></tpl:EntryIf>
 
   <tpl:EntryNext><link rel="next" href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryNext>
@@ -48,138 +46,154 @@
 <body class="dc-post">
 
 <div data-role="page">
+  <div data-role="navbar">
+    <ul>
+      <tpl:EntryPrevious><li><a href="{{tpl:EntryURL}}" data-transition="slide" data-icon="arrow-l">{{tpl:EntryTitle encode_html="1"
+      cut_string="50"}}</a></li></tpl:EntryPrevious>
+      <li><a data-transition="none" data-icon="home" href="{{tpl:BlogURL}}">{{tpl:lang Home}}</a></li>
+      <tpl:EntryNext><li><a href="{{tpl:EntryURL}}" data-transition="slide" data-icon="arrow-r">{{tpl:EntryTitle encode_html="1"
+      cut_string="50"}}</a></li></tpl:EntryNext>
+    </ul>
+  </div><!-- /navbar -->
 
-    <div data-role="navbar">
-        <ul>
-            <tpl:EntryPrevious><li><a href="{{tpl:EntryURL}}" data-transition="slide" data-icon="arrow-l">{{tpl:EntryTitle encode_html="1"
-                  cut_string="50"}}</a></li></tpl:EntryPrevious>
-             <li><a data-transition="none" data-icon="home" href="{{tpl:BlogURL}}">{{tpl:lang Home}}</a></li>
-            <tpl:EntryNext><li><a href="{{tpl:EntryURL}}" data-transition="slide" data-icon="arrow-r">{{tpl:EntryTitle encode_html="1"
-                  cut_string="50"}}</a></li></tpl:EntryNext>
-        </ul>
-    </div><!-- /navbar -->
+  <div data-role="header">
+    <h2>{{tpl:EntryTitle encode_html="1"}}</h2>
+  </div>
 
-    <div data-role="header">
-      <h2>{{tpl:EntryTitle encode_html="1"}}</h2>
-    </div>
+  <div data-role="content">
+    <tpl:EntryIf extended="1">{{tpl:EntryExcerpt}}</tpl:EntryIf>
+    {{tpl:EntryContent}}
+  </div>
 
-    <div data-role="content">
-        <tpl:EntryIf extended="1">{{tpl:EntryExcerpt}}</tpl:EntryIf>
-        {{tpl:EntryContent}}
-    </div>
+  <div data-role="collapsible-set">
+    <div data-role="collapsible" data-collapsed="">
+      <h3>A propos de l'article</h3>
+      <ul data-role="listview" data-theme="d" data-divider-theme="d">
+        <li data-role="list-divider">{{tpl:lang Date}}</li>
+        <li>{{tpl:EntryDate}}, {{tpl:EntryTime}}</li>
 
-    <div data-role="collapsible-set">
+        <tpl:EntryIf has_category="1">
+        <li data-role="list-divider">{{tpl:lang Category}}</li>
+        <li><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></li>
+        </tpl:EntryIf>
 
-      <div data-role="collapsible" data-collapsed="">
-        <h3>A propos de l'article</h3>
-        <ul data-role="listview" data-theme="d" data-divider-theme="d">
-          <li data-role="list-divider">{{tpl:lang Date}}</li>
-          <li>{{tpl:EntryDate}}, {{tpl:EntryTime}}</li>
-
-          <tpl:EntryIf has_category="1">
-          <li data-role="list-divider">{{tpl:lang Category}}</li>
-          <li><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></li>
-          </tpl:EntryIf>
-
-          <tpl:EntryTags>
-            <tpl:TagsHeader>
-              <li data-role="list-divider">{{tpl:lang Tags}}</li>
-            </tpl:TagsHeader>
-            <li><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
+        <tpl:EntryTags>
+          <tpl:TagsHeader>
+            <li data-role="list-divider">{{tpl:lang Tags}}</li>
+          </tpl:TagsHeader>
+          <li><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
         </tpl:EntryTags>
-        </ul>
-      </div>
+        
+        <!-- # Attachments -->
+        <tpl:Attachments>
+          <tpl:AttachmentsHeader>
+            <li data-role="list-divider">{{tpl:lang Attachments}}</li>
+            <ul>
+          </tpl:AttachmentsHeader>
+            <li class="{{tpl:AttachmentType}}">
+              <tpl:AttachmentIf is_mp3="1">
+                {{tpl:include src="_mp3_player.html"/}} -
+              </tpl:AttachmentIf>
+              <tpl:AttachmentIf is_flv="1">
+      	     {{tpl:include src="_flv_player.html"/}}
+      	   </tpl:AttachmentIf>
+      	   <tpl:AttachmentIf is_flv="0">
+      	   	<a href="{{tpl:AttachmentURL}}"
+      		title="{{tpl:AttachmentFileName}} ({{tpl:AttachmentSize}})">{{tpl:AttachmentTitle}}</a>
+              </tpl:AttachmentIf>
+            </li>
+          <tpl:AttachmentsFooter>
+            </ul>
+          </tpl:AttachmentsFooter>
+        </tpl:Attachments>
+      </ul>
+    </div>
 
+    <!-- # Comments -->
+    <tpl:EntryIf show_comments="1">
+    <tpl:Comments>
+      <tpl:CommentsHeader>
+        <div data-role="collapsible" data-collapsed="true">
+          <h3>{{tpl:lang Comments}}</h3>
+            <ul data-role="listview" data-theme="d" data-divider-theme="d">
+      </tpl:CommentsHeader>
+              <li data-role="list-divider">{{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}}</li>
+              <li id="c{{tpl:CommentID}}">
+                <h3>{{tpl:CommentAuthorLink}}</h3>
+                  <div>{{tpl:CommentContent}}</div></li>
+      <tpl:CommentsFooter>
+            </ul>
+        </div>
+      </tpl:CommentsFooter>
+    </tpl:Comments>
+    </tpl:EntryIf>
 
-      <!-- # Comments -->
-      <tpl:EntryIf show_comments="1">
-      <tpl:Comments>
-          <tpl:CommentsHeader>
-            <div data-role="collapsible" data-collapsed="true">
-              <h3>{{tpl:lang Comments}}</h3>
-              <ul data-role="listview" data-theme="d" data-divider-theme="d">
-          </tpl:CommentsHeader>
-                <li data-role="list-divider">{{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}}</li>
-                <li class="comment">
-                  <h4>{{tpl:CommentAuthorLink}}</h4>
-                  {{tpl:CommentContent}}
-                </li>
-          <tpl:CommentsFooter>
-              </ul>
-            </div>
-          </tpl:CommentsFooter>
-      </tpl:Comments>
+    <tpl:EntryIf comments_active="1">
+      <!-- # Comment form -->
+      <div data-role="collapsible" data-collapsed="true">
+        <h3>{{tpl:lang Add a comment}}</h3>
+
+            <tpl:SysIfFormError>
+              <div data-role="content" data-theme="e">{{tpl:SysFormError}}</div>
+            </tpl:SysIfFormError>
+
+            <tpl:SysIfCommentPublished>
+              <div data-role="content" data-theme="e">{{tpl:lang Your comment has been published.}}</div>
+            </tpl:SysIfCommentPublished>
+
+            <tpl:SysIfCommentPending>
+              <div data-role="content" data-theme="e" id="pr">{{tpl:lang Your comment has been submitted and
+              will be reviewed for publication.}}</div>
+            </tpl:SysIfCommentPending>
+
+            <form action="{{tpl:EntryURL}}" method="post">
+
+                <div data-role="fieldcontain">
+                    <label for="c_name">{{tpl:lang Name or nickname}}&nbsp;:</label>
+                    <input name="c_name" id="c_name" type="text" value="{{tpl:CommentPreviewName encode_html="1"}}" />
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="c_mail">{{tpl:lang Email address}}&nbsp;:</label>
+                    <input name="c_mail" id="c_mail" type="email" value="{{tpl:CommentPreviewEmail encode_html="1"}}" />
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="c_site">{{tpl:lang Website}} ({{tpl:lang optional}})&nbsp;:</label>
+                    <input name="c_site" id="c_site" type="url" value="{{tpl:CommentPreviewSite encode_html="1"}}" />
+                </div>
+
+                <div data-role="fieldcontain">
+                    <label for="c_content">{{tpl:lang Comment}}&nbsp;:</label>
+                    <textarea name="c_content" id="c_content" cols="35" rows="7">{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
+                </div>
+                
+                <input data-inline="true" data-theme="a" data-icon="check" type="submit" class="submit" value="{{tpl:lang Send}}" />
+
+            </form>
+        </div>
       </tpl:EntryIf>
 
-      <tpl:EntryIf comments_active="1">
-          <!-- # Comment form -->
-          <div data-role="collapsible" data-collapsed="true">
-              <h3>{{tpl:lang Add a comment}}</h3>
-
-              <tpl:SysIfFormError>
-                <div data-role="content" data-theme="e">{{tpl:SysFormError}}</div>
-              </tpl:SysIfFormError>
-
-              <tpl:SysIfCommentPublished>
-                <div data-role="content" data-theme="e">{{tpl:lang Your comment has been published.}}</div>
-              </tpl:SysIfCommentPublished>
-
-              <tpl:SysIfCommentPending>
-                <div data-role="content" data-theme="e" id="pr">{{tpl:lang Your comment has been submitted and
-                will be reviewed for publication.}}</div>
-              </tpl:SysIfCommentPending>
-
-              <form action="{{tpl:EntryURL}}" method="post">
-
-                  <div data-role="fieldcontain">
-                      <label for="c_name">{{tpl:lang Name or nickname}}&nbsp;:</label>
-                      <input name="c_name" id="c_name" type="text" value="{{tpl:CommentPreviewName encode_html="1"}}" />
-                  </div>
-
-                  <div data-role="fieldcontain">
-                      <label for="c_mail">{{tpl:lang Email address}}&nbsp;:</label>
-                      <input name="c_mail" id="c_mail" type="email" value="{{tpl:CommentPreviewEmail encode_html="1"}}" />
-                  </div>
-
-                  <div data-role="fieldcontain">
-                      <label for="c_site">{{tpl:lang Website}} {{tpl:lang optional}})&nbsp;:</label>
-                      <input name="c_site" id="c_site" type="url" value="{{tpl:CommentPreviewSite encode_html="1"}}" />
-                  </div
-
-                  <div data-role="fieldcontain">
-                      <label for="c_content">{{tpl:lang Comment}}&nbsp;:</label>
-                      <textarea name="c_content" id="c_content" cols="35" rows="7">{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
-                  </p>
-
-                  <input data-inline="true" data-theme="a" data-icon="plus" type="submit" class="submit" value="{{tpl:lang Send}}" />
-
-              </form>
-          </div>
-        </tpl:EntryIf>
-
-        <!-- # Trackbacks -->
-        <tpl:EntryIf show_pings="1">
-          <tpl:Pings>
-            <tpl:PingsHeader>
-              <div data-role="collapsible" data-collapsed="true">
-                <h3>{{tpl:lang They posted on the same topic}}</h3>
-                <ul data-role="listview" data-theme="d" data-divider-theme="d">
-            </tpl:PingsHeader>
-                  <li data-role="list-divider">{{tpl:lang On}} {{tpl:PingDate}}, {{tpl:PingTime}}</li>
-                  <li><a href="{{tpl:PingAuthorURL}}" {{tpl:PingNoFollow}}>{{tpl:PingTitle encode_html="1"}}</a></li>
-                <tpl:PingsFooter>
-                </dl>
-                </tpl:PingsFooter>
-              </tpl:Pings>
-          </div>
-        </tpl:EntryIf>
-
-    </div><!-- /collapsive-set -->
-
-    {{tpl:include src="_footer.html"}}
+      <!-- # Trackbacks -->
+      <tpl:EntryIf show_pings="1">
+        <tpl:Pings>
+          <tpl:PingsHeader>
+            <div data-role="collapsible" data-collapsed="true">
+              <h3>{{tpl:lang They posted on the same topic}}</h3>
+              <ul data-role="listview" data-theme="d" data-divider-theme="d">
+          </tpl:PingsHeader>
+                <li data-role="list-divider">{{tpl:lang On}} {{tpl:PingDate}}, {{tpl:PingTime}}</li>
+                <li><a href="{{tpl:PingAuthorURL}}" {{tpl:PingNoFollow}}>{{tpl:PingTitle encode_html="1"}}</a></li>
+          <tpl:PingsFooter>
+              </ul>
+            </div>
+          </tpl:PingsFooter>
+        </tpl:Pings>
+      </tpl:EntryIf>
+  </div>
+{{tpl:include src="_footer.html"}}
 
 </div><!-- /page -->
-
 
 </body>
 </html>
