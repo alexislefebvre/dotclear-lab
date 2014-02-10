@@ -130,4 +130,3 @@ class tplBlogAnniv
     ($w->content_only ? '' : '</div>');
 	}
 }
-?>

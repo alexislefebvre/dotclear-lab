@@ -22,3 +22,5 @@
 
 == Version 1.4.1 ================================================================
 - Ajustements settings
+- Fin de ligne unix
+- complément _define.php

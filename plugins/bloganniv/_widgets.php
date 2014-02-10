@@ -35,5 +35,3 @@ class blogAnnivWidgets
     $w->blogAnniv->setting('class',__('CSS class:'),'');
 	}
 }
-
-?>
