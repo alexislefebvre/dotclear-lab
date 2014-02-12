@@ -1,27 +1,23 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-/***************************************************************\
- *  This is 'Email Optionnel', a plugin for DotClear.          *
- *                                                             *
- *  Copyright (c) 2007,2008                                    *
- *  Oleksandr Syenchuk                                         *
- *                                                             *
- *  This is an open source software, distributed under the GNU *
- *  General Public License (version 2) terms and  conditions.  *
- *                                                             *
- *  You should have received a copy of the GNU General Public  *
- *  License along with 'Email Optionnel' (see COPYING.txt);    *
- *  if not, write to the Free Software Foundation, Inc.,       *
- *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
-\***************************************************************/
-
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Email Optionnel, a plugin for Dotclear.
+# 
+# Copyright (c) 2007-2014 Oleksandr Syenchuk, Pierre Van Glabeke
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) {return;}
 class emailOptionnelBehaviors
 {
 	public static function adminBlogPreferencesForm($core)
 	{
-		$emailOptionnel = $core->blog->settings->get('emailoptionnel') ? true : false;
-		echo "<div class='fieldset'><h4>".__('Optional e-mail address')."</h4>\n".
-			"<p><label class=\"classic\">".form::checkbox('emailOptionnel','1',$emailOptionnel)."\n".
-			__('Make e-mail address optionnal in comments')."</label></p>\n".
+		$core->blog->settings->addNamespace('emailoptionnel');
+		$emailOptionnel = $core->blog->settings->emailoptionnel->enabled ? true : false;
+		echo "<div class=\"fieldset\"><h4>".__('Optional e-mail address')."</h4>\n".
+			"<p><label class=\"classic\" for=\"emailOptionnel\">".form::checkbox('emailOptionnel','1',$emailOptionnel)."\n".
+			__('Make e-mail address optional in comments')."</label></p>\n".
 			"</div>\n";
 	}
 	
@@ -31,19 +27,20 @@ class emailOptionnelBehaviors
 		
 		$blog_settings->addNamespace('emailoptionnel');
 		$blog_settings->emailoptionnel->put(
-			'emailoptionnel',
+			'enabled',
 			$emailOptionnel,
 			'boolean',
-			'Make e-mail address optionnal in comments');
-		$blog_settings->addNamespace('system');
+			'Make e-mail address optional in comments');
 	}
 	
 	public static function publicPrepend($core)
 	{
+		$core->blog->settings->addNamespace('emailoptionnel');
+		
 		if (!isset($_POST['c_content'])
 		|| !empty($_POST['preview'])
 		|| !empty($_POST['c_mail'])
-		|| !$core->blog->settings->get('emailoptionnel')) {
+		|| !$core->blog->settings->emailoptionnel->enabled) {
 			return;
 		}
 		$_POST['c_mail'] = 'invalid@invalid';
@@ -53,7 +50,9 @@ class emailOptionnelBehaviors
 	{
 		global $core;
 		
-		$emailOptionnel = $core->blog->settings->get('emailoptionnel') ? true : false;
+		$core->blog->settings->addNamespace('emailoptionnel');
+		
+		$emailOptionnel = $core->blog->settings->emailoptionnel->enabled ? true : false;
 		
 		if ($emailOptionnel && $cur->comment_email == 'invalid@invalid')
 		{

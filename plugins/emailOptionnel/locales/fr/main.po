@@ -13,5 +13,5 @@ msgstr ""
 msgid "Optional e-mail address"
 msgstr "Adresse e-mail optionnelle"
 
-msgid "Make e-mail address optionnal in comments"
+msgid "Make e-mail address optional in comments"
 msgstr "Rendre la saisie de l'adresse e-mail optionnelle dans les commentaires"
