@@ -1,15 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of lunarPhase, a plugin for Dotclear.
-# 
-# Copyright (c) 2009-2010 Tomtom
-# http://blog.zenstyle.fr/
-# 
+#
+# Copyright (c) 2009-2014 Tomtom
+# Contributor: Pierre Van Glabeke
+#
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
+if (!defined('DC_RC_PATH')) {return;}
 class lunarPhase
 {
 	# Astronomical constants.
@@ -130,7 +130,7 @@ class lunarPhase
 			$this->live['id'] = 'last_quarter_moon';
 			$this->live['name'] = __('Last quarter moon');
 		}
-		elseif ($this->live['age'] >= self::synodic*7/8 && $this->live['age'] <= self::synodic/8) {
+		elseif ($this->live['age'] >= self::synodic*7/8 && $this->live['age'] <= self::synodic) {
 			$this->live['id'] = 'waning_crescent_moon';
 			$this->live['name'] = __('Waning crescent moon');
 		}
@@ -211,5 +211,3 @@ class lunarPhase
 		return ($e);
 	}
 }
-
-?>

@@ -1,15 +1,14 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of lunarPhase, a plugin for Dotclear.
-# 
-# Copyright (c) 2009-2010 Tomtom
-# http://blog.zenstyle.fr/
-# 
+#
+# Copyright (c) 2009-2014 Tomtom
+# Contributor: Pierre Van Glabeke
+#
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicHeadContent',array('lunarPhaseBehaviors','addCss'));
@@ -70,7 +69,7 @@ class lunarPhasePublic
 	*/
 	public static function getLive($w,$lp)
 	{
-		$ul_mask = '<ul class="%2$s">%1$s</ul>';
+		$ul_mask = '<ul>%1$s</ul>';
 		$li_mask = '<li class="%2$s">%1$s</li>';
 		$live = $lp->getLive();
 		$res = '';
@@ -200,5 +199,3 @@ class lunarPhasePublic
 		return $res;
 	}
 }
-
-?>
