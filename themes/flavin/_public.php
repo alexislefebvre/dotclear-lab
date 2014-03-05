@@ -17,7 +17,7 @@ $core->addBehavior('publicHeadContent','flavin_publicHeadContent');
 
 function flavin_publicHeadContent($core)
 {
-	$style = $core->blog->settings->themes->flavin_style;
+	$style = $core->blog->settings->themes->flavin_color;
 	if (!preg_match('/^pink|blue|green$/',$style)) {
 		$style = 'pink';
 	}
@@ -25,4 +25,3 @@ function flavin_publicHeadContent($core)
 	$url = $core->blog->settings->themes_url.'/'.$core->blog->settings->theme;
 	echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$url."/".$style.".css\" />\n";
 }
-?>

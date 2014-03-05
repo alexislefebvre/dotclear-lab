@@ -10,17 +10,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
-msgid "Style:"
-msgstr "Style :"
+msgid "Colors"
+msgstr "Couleurs"
 
-msgid "Flavin style"
-msgstr "Style pour Flavin"
+msgid "Display:"
+msgstr "Afficher :"
 
-msgid "Pink"
-msgstr "Rose"
+msgid "pink"
+msgstr "rose"
 
-msgid "Blue"
-msgstr "Bleu"
+msgid "blue"
+msgstr "bleu"
 
-msgid "Green"
-msgstr "Vert"
+msgid "green"
+msgstr "vert"

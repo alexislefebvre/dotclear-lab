@@ -12,32 +12,67 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+global $core;
+
+//PARAMS
+
+# Translations
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 
-$flavin_styles = array(
-	__('Pink') => 'pink',
-	__('Blue') => 'blue',
-	__('Green') => 'green'
+# Default values
+$default_color = 'pink';
+
+# Settings
+$my_color = $core->blog->settings->themes->flavin_color;
+
+# Color type
+$flavin_color_combo = array(
+	__('pink') => 'pink',
+	__('blue') => 'blue',
+	__('green') => 'green'
 );
 
-if (!$core->blog->settings->themes->flavin_style) {
-	$core->blog->settings->themes->flavin_style = 'pink';
-}
+// POST ACTIONS
 
-if (!empty($_POST['flavin_style']) && in_array($_POST['flavin_style'],$flavin_styles))
+if (!empty($_POST))
 {
-	$core->blog->settings->themes->flavin_style = $_POST['flavin_style'];
-	$core->blog->settings->addNamespace('themes');
-	$core->blog->settings->themes->put('flavin_style',$core->blog->settings->themes->flavin_style,'string','Flavin theme style',true);
-	$core->blog->triggerBlog();
+	try
+	{
+		$core->blog->settings->addNamespace('themes');
 
-	dcPage::success(__('Theme configuration has been successfully updated.'));
+		# Color type
+		if (!empty($_POST['flavin_color']) && in_array($_POST['flavin_color'],$flavin_color_combo))
+		{
+			$my_color = $_POST['flavin_color'];
+
+		} elseif (empty($_POST['flavin_color']))
+		{
+			$my_color = $default_color;
+
+		}
+		$core->blog->settings->themes->put('flavin_color',$my_color,'string','Color display',true);
+
+		// Blog refresh
+		$core->blog->triggerBlog();
+
+		// Template cache reset
+		$core->emptyTemplatesCache();
+
+		dcPage::success(__('Theme configuration has been successfully updated.'),true,true);
+	}
+	catch (Exception $e)
+	{
+		$core->error->add($e->getMessage());
+	}
 }
 
+// DISPLAY
+
+# Color type
 echo
-'<div class="fieldset"><h4>'.__('Flavin style').'</h4>'.
-'<p class="field"><label>'.__('Style:').'</label>'.
-form::combo('flavin_style',$flavin_styles,$core->blog->settings->themes->flavin_style).
+'<div class="fieldset"><h4>'.__('Colors').'</h4>'.
+'<p class="field"><label>'.__('Display:').'</label>'.
+form::combo('flavin_color',$flavin_color_combo,$my_color).
 '</p>'.
 '</div>';
-?>
