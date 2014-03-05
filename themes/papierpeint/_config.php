@@ -12,33 +12,68 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+global $core;
+
+//PARAMS
+
+# Translations
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
-$papierpeint_styles = array(
+
+# Default values
+$default_style = '1950';
+
+# Settings
+$my_style = $core->blog->settings->themes->papierpeint_style;
+
+# style scheme
+$papierpeint_style_combo = array(
 	"30's" => '1930',
 	"50's" => '1950',
 	"70's" => '1970'
 );
 
-if (!$core->blog->settings->themes->papierpeint_style) {
-	$core->blog->settings->themes->papierpeint_style = '1950';
-}
+// POST ACTIONS
 
-if (!empty($_POST['papierpeint_style']) && in_array($_POST['papierpeint_style'],$papierpeint_styles))
+if (!empty($_POST))
 {
-	$core->blog->settings->themes->papierpeint_style = $_POST['papierpeint_style'];
-	$core->blog->settings->addNamespace('themes');
-	$core->blog->settings->themes->put('papierpeint_style',$core->blog->settings->themes->papierpeint_style,'string','Papier Peint theme style',true);
-	$core->blog->triggerBlog();
-	
-	dcPage::success(__('Theme configuration has been successfully updated.'));
+	try
+	{
+		$core->blog->settings->addNamespace('themes');
 
+		# style scheme
+		if (!empty($_POST['papierpeint_style']) && in_array($_POST['papierpeint_style'],$papierpeint_style_combo))
+		{
+			$my_style = $_POST['papierpeint_style'];
+
+
+		} elseif (empty($_POST['papierpeint_style']))
+		{
+			$my_style = $default_style;
+
+		}
+		$core->blog->settings->themes->put('papierpeint_style',$my_style,'string','Style',true);
+
+		// Blog refresh
+		$core->blog->triggerBlog();
+
+		// Template cache reset
+		$core->emptyTemplatesCache();
+
+		dcPage::success(__('Theme configuration has been successfully updated.'),true,true);
+	}
+	catch (Exception $e)
+	{
+		$core->error->add($e->getMessage());
+	}
 }
 
+// DISPLAY
+
+# Style scheme
 echo
-'<div class="fieldset"><h4>'.__('Papier Peint style').'</h4>'.
+'<div class="fieldset"><h4>'.__('Papier Peint styles').'</h4>'.
 '<p class="field"><label>'.__('Style:').'</label>'.
-form::combo('papierpeint_style',$papierpeint_styles,$core->blog->settings->themes->papierpeint_style).
+form::combo('papierpeint_style',$papierpeint_style_combo,$my_style).
 '</p>'.
 '</div>';
-
-?>

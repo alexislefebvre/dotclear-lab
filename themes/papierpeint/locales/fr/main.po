@@ -10,8 +10,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
+msgid "Papier Peint styles"
+msgstr "Styles de Papier Peint"
+
 msgid "Style:"
 msgstr "Style :"
-
-msgid "Papier Peint style"
-msgstr "Style de papier peint"
