@@ -10,14 +10,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
-msgid "Style:"
-msgstr "Style :"
+msgid "Colors"
+msgstr "Couleurs"
 
-msgid "Warped style"
-msgstr "Style pour Warped"
+msgid "Color display:"
+msgstr "Couleur à afficher :"
 
-msgid "Blue"
-msgstr "Bleu"
+msgid "blue"
+msgstr "bleu"
 
-msgid "Green"
-msgstr "Vert"
+msgid "green"
+msgstr "vert"

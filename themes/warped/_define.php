@@ -16,7 +16,9 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */			    "Warped",
 	/* Description*/		"Warped in green, blue or orange",
-	/* Author */			  "Steven Tlucek",
-	/* Version */			  '1.1'
+	/* Author */			  "Steven Tlucek, Pierre Van Glabeke",
+	/* Version */			  '1.2',
+	array(
+		'type'		=>		'theme'
+	)
 );
-?>

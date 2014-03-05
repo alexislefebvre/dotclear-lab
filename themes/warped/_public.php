@@ -18,7 +18,7 @@ $core->addBehavior('publicHeadContent','warped_publicHeadContent');
 
 function warped_publicHeadContent($core)
 {
-	$style = $core->blog->settings->themes->warped_style;
+	$style = $core->blog->settings->themes->warped_color;
 	if (!preg_match('/^blue|green|orange$/',$style)) {
 		$style = 'orange';
 	}
@@ -26,4 +26,3 @@ function warped_publicHeadContent($core)
 	$url = $core->blog->settings->themes_url.'/'.$core->blog->settings->theme;
 	echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$url."/".$style.".css\" />\n";
 }
-?>

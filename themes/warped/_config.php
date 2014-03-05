@@ -12,32 +12,68 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+global $core;
+
+//PARAMS
+
+# Translations
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
-$warped_styles = array(
-	__('Blue') => 'blue',
-	__('Green') => 'green',
-	__('Orange') => 'orange'
+
+# Default values
+$default_color = 'orange';
+
+# Settings
+$my_color = $core->blog->settings->themes->warped_color;
+
+# Color scheme
+$warped_color_combo = array(
+	__('blue') => 'blue',
+	__('green') => 'green',
+	__('orange') => 'orange'
 );
 
-if (!$core->blog->settings->themes->warped_style) {
-	$core->blog->settings->themes->warped_style = 'orange';
-}
+// POST ACTIONS
 
-if (!empty($_POST['warped_style']) && in_array($_POST['warped_style'],$warped_styles))
+if (!empty($_POST))
 {
-	$core->blog->settings->themes->warped_style = $_POST['warped_style'];
-	$core->blog->settings->addNamespace('themes');
-	$core->blog->settings->themes->put('warped_style',$core->blog->settings->themes->warped_style,'string','Warped theme style',true);
-	$core->blog->triggerBlog();
+	try
+	{
+		$core->blog->settings->addNamespace('themes');
 
-	dcPage::success(__('Theme configuration has been successfully updated.'));
+		# Color scheme
+		if (!empty($_POST['warped_color']) && in_array($_POST['warped_color'],$warped_color_combo))
+		{
+			$my_color = $_POST['warped_color'];
+
+
+		} elseif (empty($_POST['warped_color']))
+		{
+			$my_color = $default_color;
+
+		}
+		$core->blog->settings->themes->put('warped_color',$my_color,'string','Color display',true);
+
+		// Blog refresh
+		$core->blog->triggerBlog();
+
+		// Template cache reset
+		$core->emptyTemplatesCache();
+
+		dcPage::success(__('Theme configuration has been successfully updated.'),true,true);
+	}
+	catch (Exception $e)
+	{
+		$core->error->add($e->getMessage());
+	}
 }
 
+// DISPLAY
+
+# Color scheme
 echo
-'<div class="fieldset"><h4>'.__('Warped style').'</h4>'.
-'<p class="field"><label>'.__('Style:').'</label>'.
-form::combo('warped_style',$warped_styles,$core->blog->settings->themes->warped_style).
+'<div class="fieldset"><h4>'.__('Colors').'</h4>'.
+'<p class="field"><label>'.__('Color display:').'</label>'.
+form::combo('warped_color',$warped_color_combo,$my_color).
 '</p>'.
 '</div>';
-
-?>

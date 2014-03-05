@@ -147,6 +147,9 @@ pre { overflow: auto; width: 100%; height: auto; }
 	padding-left : 1.4em;
 	margin-left: -10px;
 }
+#sidebar img {
+  max-width:100%;
+}
 #sidebar div div {
 	padding : 0 20px 15px 20px;
 	margin : 0 0 15px 0;
@@ -263,7 +266,7 @@ div.post-content {
 	margin: 1em 0;
 }
 .post-excerpt p img, .post-content p img {
-  max-width:474px;
+  max-width:100%;
 }
 p.post-info {
 	font-style : italic;
@@ -331,7 +334,9 @@ ul.tags li {
 	background: transparent url(img/tag.png) no-repeat 0 0.25em;
 }
 
-
+#attachments ul {margin:0;padding:0 0 0 10px;}
+#attachments li {margin: 3px 0; list-style: none;padding: 2px 0;}
+#attachments li.audio object {margin:0;vertical-align:middle;}
 /* Forms
 -------------------------------------------------------- */
 fieldset {
@@ -365,7 +370,7 @@ input.preview, input.submit {
 }
 
 .dc-category #content-info p img {
-  max-width:474px;
+  max-width:100%;
 }
 #subcategories {
 	background: #fbfbfb;
