@@ -16,7 +16,7 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */			"Flavin",
 	/* Description*/		"Flavin in pink, blue or green",
-	/* Author */			"Steven Tlucek",
+	/* Author */			"Steven Tlucek, Pierre Van Glabeke",
 	/* Version */			'1.2',
 	array(
 		'type'		=>		'theme'
