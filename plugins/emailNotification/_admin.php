@@ -12,6 +12,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('adminPreferencesForm',array('notificationBehaviors','adminUserForm'));
-$core->addBehavior('adminUserForm',array('notificationBehaviors','adminUserForm'));
+$core->addBehavior('adminUserForm',array('notificationBehaviors','adminUserForm'));// user.php
 
 $core->addBehavior('adminBeforeUserUpdate',array('notificationBehaviors','adminBeforeUserUpdate'));
+$core->addBehavior('adminBeforeUserOptionsUpdate',array('notificationBehaviors','adminBeforeUserUpdate'));//preferences.php
