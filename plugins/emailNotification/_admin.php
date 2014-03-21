@@ -11,8 +11,16 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$core->addBehavior('adminPreferencesForm',array('notificationBehaviors','adminUserForm'));
+$core->addBehavior('adminPreferencesForm',array('notificationBehaviors','adminPreferencesForm'));// preferences.php
 $core->addBehavior('adminUserForm',array('notificationBehaviors','adminUserForm'));// user.php
 
-$core->addBehavior('adminBeforeUserUpdate',array('notificationBehaviors','adminBeforeUserUpdate'));
-$core->addBehavior('adminBeforeUserOptionsUpdate',array('notificationBehaviors','adminBeforeUserUpdate'));//preferences.php
+$core->addBehavior('adminBeforeUserOptionsUpdate',array('notificationBehaviors','adminBeforeUserUpdate'));// preferences.php
+$core->addBehavior('adminBeforeUserUpdate',array('notificationBehaviors','adminBeforeUserUpdate'));// user.php
+
+$core->addBehavior('adminAfterCommentCreate',array('notificationBehaviors','afterCommentCreate'));
+
+$core->addBehavior('adminAfterPostCreate',array('notificationBehaviors','adminAfterPostCreate'));
+$core->addBehavior('adminBeforePostUpdate',array('notificationBehaviors','adminBeforePostUpdate'));
+$core->addBehavior('adminAfterPostUpdate',array('notificationBehaviors','adminAfterPostUpdate'));
+
+$core->addBehavior('coreBlogAfterTriggerBlog',array('notificationBehaviors','coreBlogAfterTriggerBlog'));

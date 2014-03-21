@@ -11,4 +11,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$core->addBehavior('publicAfterCommentCreate',array('notificationBehaviors','publicAfterCommentCreate'));
+$core->addBehavior('publicAfterCommentCreate',array('notificationBehaviors','afterCommentCreate'));
+
+$core->addBehavior('coreBlogAfterTriggerBlog',array('notificationBehaviors','coreBlogAfterTriggerBlog'));

@@ -12,3 +12,5 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $GLOBALS['__autoload']['notificationBehaviors'] = dirname(__FILE__).'/behaviors.php';
+
+notificationBehaviors::loadBlogPostsStatus();
