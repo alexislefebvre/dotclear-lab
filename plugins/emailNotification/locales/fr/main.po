@@ -1,163 +1,173 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-11 20:50+0100\n"
+"POT-Creation-Date: 2014-03-13 20:51+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: behaviors.php:55 behaviors.php:61
+#: behaviors.php:56 behaviors.php:62
 msgid "never"
 msgstr "jamais"
 
-#: behaviors.php:56
+#: behaviors.php:57
 msgid "my entries"
 msgstr "mes billets"
 
-#: behaviors.php:57
+#: behaviors.php:58
 msgid "all entries"
 msgstr "tous les billets"
 
-#: behaviors.php:62
+#: behaviors.php:63
 msgid "on creation"
 msgstr "lors des créations"
 
-#: behaviors.php:63
+#: behaviors.php:64
 msgid "on publish"
 msgstr "lors de la publication"
 
-#: behaviors.php:64
+#: behaviors.php:65
 msgid "on publish and futher update"
 msgstr "lors de la publication et des mises à jours suivantes"
 
-#: behaviors.php:65
+#: behaviors.php:66
 msgid "on any update (even not published)"
 msgstr "à chaque mise à jour (même non plubliées)"
 
-#: behaviors.php:70 behaviors.php:77
+#: behaviors.php:71 behaviors.php:78
 msgid "Email notification"
 msgstr "Notification par e-mail"
 
-#: behaviors.php:87
+#: behaviors.php:72 behaviors.php:79
+msgid "Posts"
+msgstr ""
+
+#: behaviors.php:88
 msgid "Notify new posts by email:"
 msgstr "Avertir des nouveaux billets par e-mail :"
 
-#: behaviors.php:92
+#: behaviors.php:93
 msgid "Notify new comments by email:"
 msgstr "Avertir des nouveaux commentaires par e-mail :"
 
-#: behaviors.php:97
+#: behaviors.php:98
 msgid "Notify comments even if they are spams"
 msgstr "Avertir des commentaires même si ce sont des indésirables"
 
-#: behaviors.php:166
+#: behaviors.php:167
 #, php-format
 msgid "\"%s\" - New comment"
 msgstr "\"%s\" - Nouveau commentaire"
 
-#: behaviors.php:184 behaviors.php:317
+#: behaviors.php:185 behaviors.php:319
 #, php-format
 msgid "Blog: %s"
 msgstr "Blog : %s"
 
-#: behaviors.php:185 behaviors.php:318
+#: behaviors.php:186 behaviors.php:320
 #, php-format
 msgid "Entry: %s <%s>"
 msgstr "Billet : %s <%s>"
 
-#: behaviors.php:186
+#: behaviors.php:187
 #, php-format
 msgid "Comment by: %s <%s>"
 msgstr "Commentaire par : %s <%s>"
 
-#: behaviors.php:187 behaviors.php:320
+#: behaviors.php:188 behaviors.php:322
 #, php-format
 msgid "Website: %s"
 msgstr "Site web : %s"
 
-#: behaviors.php:188
+#: behaviors.php:189
 #, php-format
 msgid "Comment status: %s"
 msgstr "Statut du commentaire : %s"
 
-#: behaviors.php:189
+#: behaviors.php:190
 #, php-format
 msgid "Edit this comment: <%s>"
 msgstr "Modifier ce commentaire : <%s>"
 
-#: behaviors.php:193
+#: behaviors.php:194
 msgid "You must log in on the backend before clicking on this link to go directly to the comment."
 msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce commentaire."
 
-#: behaviors.php:195
+#: behaviors.php:196
 msgid "You received a new comment on your blog:"
 msgstr "Vous avez reçu un nouveau commentaire sur votre blog :"
 
-#: behaviors.php:267
+#: behaviors.php:268
 msgid "Updated post"
 msgstr "Billet mis à jour"
 
-#: behaviors.php:270
+#: behaviors.php:271
 msgid "Post is published"
 msgstr "Le billet est publié"
 
-#: behaviors.php:272
+#: behaviors.php:273
 msgid "Post just become published"
 msgstr "Le billet vient d'être publié"
 
-#: behaviors.php:274
+#: behaviors.php:275
 msgid "New published post"
 msgstr "Nouvelle publication de billet"
 
-#: behaviors.php:276
+#: behaviors.php:277
 #, php-format
 msgid "Post becomes %s"
 msgstr "Le billet est passé dans l'état %s"
 
-#: behaviors.php:279
-msgid "Post was edited"
-msgstr "Le billet a été édité"
-
-#: behaviors.php:283
+#: behaviors.php:280
 msgid "Post was created"
 msgstr "Le billet a été créé"
 
-#: behaviors.php:284
+#: behaviors.php:281
 msgid "New post"
 msgstr "Nouveau billet"
 
-#: behaviors.php:286
-msgid "Post state changed:"
-msgstr "L'état du billet a changé :"
+#: behaviors.php:284
+msgid "Post was edited"
+msgstr "Le billet a été édité"
 
-#: behaviors.php:308
+#: behaviors.php:287
+#, php-format
+msgid "Post state changed from %s to %s"
+msgstr "L'état du billet a changé de « %s » à « % »"
+
+#: behaviors.php:310
 #, php-format
 msgid "Public URL: <%s>"
 msgstr "URL publique : <%s>"
 
-#: behaviors.php:310
+#: behaviors.php:312
+#, php-format
 msgid "Edit this post: <%s>"
 msgstr "Modifier ce billet : <%s>"
 
-#: behaviors.php:319
+#: behaviors.php:321
 #, php-format
 msgid "Author: %s (%s %s) <%s>"
 msgstr "Auteur : %s (%s %s) <%s>"
 
-#: behaviors.php:321
+#: behaviors.php:323
+#, php-format
 msgid "Entry status: %s"
 msgstr "Statut du billet : %s"
 
-#: behaviors.php:322
+#: behaviors.php:324
 #, php-format
 msgid "Edit this entry: <%s>"
 msgstr "Modifier ce billet : <%s>"
 
-#: behaviors.php:326
+#: behaviors.php:328
 msgid "You must log in on the backend before clicking on this link to go directly to the post."
 msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
 
-#: behaviors.php:328
-msgid "Modification in a post on your blog:"
+#: behaviors.php:331
+msgid "Modification of a post on your blog:"
 msgstr "Modification d'un billet sur votre blog :"
 
+#: behaviors.php:333
+msgid "Creation of a post on your blog:"
+msgstr "Création d'un billet sur votre blog :"

@@ -284,7 +284,7 @@ class notificationBehaviors
 					array_push($info, __("Post was edited"));
 				}
 				if ($cur_status != $prev_status) {
-					array_push($info, __("Post state changed:"). " ".$blog->getPostStatus($prev_status)."->".$blog->getPostStatus($cur_status));
+					array_push($info, sprintf(__("Post state changed from %s to %s"),$blog->getPostStatus($prev_status),$blog->getPostStatus($cur_status)));
 				}
 			}
 
