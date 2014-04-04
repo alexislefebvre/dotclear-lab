@@ -1,7 +1,7 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of Dotclear 2.
+# This file is part of Writers, a plugin for Dotclear.
 #
 # Copyright (c) 2003-2008 Olivier Meunier and contributors
 # Licensed under the GPL version 2.0 license.
@@ -9,7 +9,6 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-
 
 # Following constants can be overrided in your install config.php:
 #
@@ -23,4 +22,3 @@ if (!defined('DC_WR_ALLOW_ADMIN')) {
 if ($GLOBALS['core']->auth->isSuperAdmin()) {
 	return;
 }
-?>
