@@ -23,8 +23,8 @@ msgid "Anonymous comments"
 msgstr "Commentaires anonymes"
 
 #: _public.php:45
-msgid "Anonymous comment:"
-msgstr "Anonyme&nbsp;:"
+msgid "Comment anonymously"
+msgstr "Commenter anonymement"
 
 #: index.php:20
 msgid "Anonymous"
@@ -53,4 +53,3 @@ msgstr "Nom de remplacement : "
 #: index.php:81
 msgid "Replacement email: "
 msgstr "E-mail de remplacement : "
-

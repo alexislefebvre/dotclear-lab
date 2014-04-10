@@ -24,4 +24,3 @@ $_menu['Blog']->addItem(
 		$_SERVER['REQUEST_URI']),
 	# persmissions nécessaires pour afficher le lien
 	$core->auth->check('admin',$core->blog->id));
-?>

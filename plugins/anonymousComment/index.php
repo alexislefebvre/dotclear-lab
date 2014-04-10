@@ -74,17 +74,17 @@ if (!empty($_GET['upd'])) {
 	<form method="post" action="<?php echo($p_url); ?>">
 		<p><?php echo $core->formNonce(); ?></p>
 
-		<p><label class="classic"><?php 
+		<p><label class="classic" for="anonymous_active"><?php
 			echo(form::checkbox('anonymous_active', 1,
 			    (boolean) $anonymous_active).' '.
 			    __('Allow anonymous comments')); ?></label></p>
 
-		<p><label><?php echo(__('Replacement name: ').
-				form::field('anonymous_name',40,255,
+		<p><label class="classic" for="anonymous_name"><?php echo(__('Replacement name: ').
+				form::field('anonymous_name',60,255,
 				$anonymous_name)); ?></label></p>
 
-		<p><label><?php echo(__('Replacement email: ').
-				form::field('anonymous_email',40,255,
+		<p><label class="classic" for="anonymous_email"><?php echo(__('Replacement email: ').
+				form::field('anonymous_email',60,255,
 				$anonymous_email)); ?></label></p>
 
 		<p><input type="submit" name="save"

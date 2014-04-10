@@ -35,18 +35,19 @@ class anonymousCommentBehaviors
 			'//]]>'.
 			'</script>'.
 			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
-			'pf=anonymousComment/anonymousComment.js'.'"></script>'."\n"
+			'pf=anonymousComment/anonymousComment.js'.'"></script>'.
+			'<link rel="stylesheet" type="text/css" media="screen" href="'.$core->blog->getQmarkURL().
+			'pf=anonymousComment/anonymousComment.css'.'" />'."\n"
 			);
 	}
 
 	public static function publicCommentFormBeforeContent($core,$_ctx)
 	{
 		if (!$core->blog->settings->anonymousComment->anonymous_active) { return; }
-		echo ('<p class="field"><label for="c_anonymous">'.
-			  __('Anonymous comment:').'</label>'.
+		echo ('<p class="anonymous">'.
 		    '<input name="c_anonymous" id="c_anonymous" type="checkbox" />'.
+        '<label for="c_anonymous">'.
+			  __('Comment anonymously').'</label>'.
 			 '</p>');
 	}
 }
-
-?>

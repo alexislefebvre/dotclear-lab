@@ -21,8 +21,8 @@ msgid "Anonymous comments"
 msgstr "Anonymous comments"
 
 #: _public.php:45
-msgid "Anonymous comment:"
-msgstr "Anonymous comment:"
+msgid "Comment anonymously"
+msgstr "Comment anonymously"
 
 #: index.php:20
 msgid "Anonymous"

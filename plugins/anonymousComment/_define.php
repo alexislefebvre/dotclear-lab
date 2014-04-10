@@ -15,7 +15,13 @@ $this->registerModule(
 	/* Name */		"Anonymous comments",
 	/* Description*/	"Allows posting comments as anonymous",
 	/* Author */		"Aurélien Bompard",
-	/* Version */		'1.2',
-	/* Permissions */	'admin'
+	/* Version */		'1.3',
+	/* Properties */
+	array(
+		'permissions' => 'admin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/anonymousComment',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/anonymousComment'
+		)
 );
-?>
