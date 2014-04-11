@@ -14,7 +14,7 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */		"Anonymous comments",
 	/* Description*/	"Allows posting comments as anonymous",
-	/* Author */		"Aurélien Bompard",
+	/* Author */		"Aurélien Bompard, Pierre Van Glabeke",
 	/* Version */		'1.3',
 	/* Properties */
 	array(
