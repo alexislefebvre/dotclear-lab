@@ -70,7 +70,7 @@ class tplTagFlash
 
         $res .= '<div id="tagFlashContent">'.self::getTags($w, false).'</div>'."\n";    
         $res .= '</object>'."\n";
-        $res .= '<p><a href="'.$core->blog->url.$core->url->getBase('tags').'">'.__('All tags').'</a></p>';
+        $res .= '<p><strong><a href="'.$core->blog->url.$core->url->getBase('tags').'">'.__('All tags').'</a></strong></p>';
 
         return
             ($w->content_only ? '' : '<div class="tagFlash'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').

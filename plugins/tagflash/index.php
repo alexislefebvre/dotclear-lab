@@ -22,8 +22,9 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$page_title = __('Tag Flash');
+$default_tab = 'tagflash_settings';
 
+$page_title = __('Tag Flash');
 $SpectrumLangs = array('de','dk','es','fi','fr','it','ja','nl','pt-br','ru','sv','tr');
 
 $_key = array_search($core->auth->getInfo('user_lang'), $SpectrumLangs);
@@ -93,5 +94,33 @@ if (!empty($_POST['saveconfig'])) {
         $core->error->add($e->getMessage());
     }
 }
+
+function breadcrumb($elements=null,$options=array()) {
+    if (method_exists('dcPage', 'breadcrumb')) {
+        return dcPage::breadcrumb($elements, $options);
+    } else {
+        $with_home_link = isset($options['home_link'])?$options['home_link']:true;
+        $hl = isset($options['hl'])?$options['hl']:true;
+        $hl_pos = isset($options['hl_pos'])?$options['hl_pos']:-1;
+        // First item of array elements should be blog's name, System or Plugins
+        $res = '<h2>';
+        $index = 0;
+        if ($hl_pos < 0) {
+            $hl_pos = count($elements)+$hl_pos;
+        }
+        foreach ($elements as $element => $url) {
+            if ($hl && $index == $hl_pos) {
+                $element = sprintf('<span class="page-title">%s</span>',$element);
+            }
+            $res .= ($index == 0 ? ' ' : ' &rsaquo; ').
+                ($url ? '<a href="'.$url.'">' : '').$element.($url ? '</a>' : '');
+            $index++;
+        }
+        $res .= '</h2>';
+
+        return $res;
+    }
+}
+
 
 include(dirname(__FILE__).'/tpl/index.tpl');

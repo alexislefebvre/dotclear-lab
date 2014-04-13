@@ -1,6 +1,10 @@
+Tag Flash 1.2.1 - 2014-04-13
+=================================
+* Small fixes (breacrumb does not exist in doclear prior to 2.6; missing default tab).
+
 Tag Flash 1.2.0 - 2014-04-12
 =================================
-* A special thanks to Brol for following changes
+* A special thanks to Pierre Van Glabeke for following changes
 * Updates plugin to make it working with dotclear 2.6
 * Add combo bo to display  content_only + css
 * Fixes html code

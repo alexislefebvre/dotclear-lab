@@ -8,7 +8,7 @@
     <?php echo dcPage::jsPageTabs($default_tab); ?>
   </head>
   <body>
-    <?php echo dcPage::breadcrumb(array(html::escapeHTML($core->blog->name) => '', '<span class="page-title">'.$page_title.'</span>' => ''));?>
+    <?php echo breadcrumb(array(html::escapeHTML($core->blog->name) => '', '<span class="page-title">'.$page_title.'</span>' => ''));?>
     <?php if (!empty($message)):?>
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>

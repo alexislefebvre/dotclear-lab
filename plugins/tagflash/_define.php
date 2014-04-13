@@ -23,9 +23,14 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-    /* Name */          "Tag Flash",
-    /* Description*/    "Flash based Tag Cloud for Dotclear",
-    /* Author */        "Gwénaël Després (based on WordPress plugin by Roy Tanck)",
-    /* Version */       "1.2.0",
-    /* Permissions */   "usage,contentadmin"
-);
+	/* Name */			"Tag Flash",
+	/* Description*/	"Flash based Tag Cloud for Dotclear",
+	/* Author */		"Gwénaël Després (based on WordPress plugin by Roy Tanck)",
+	/* Version */		"1.2.1",
+	/* Permissions */	"usage,contentadmin",
+	/* Properties */	array('type' => 'plugin',
+							  'dc_min' => '2.6',
+							  'support' => 'http://forum.dotclear.net/viewtopic.php?id=34559',
+							  'details' => 'http://plugins.dotaddict.org/dc2/details/tagflash'
+							 )
+					  );

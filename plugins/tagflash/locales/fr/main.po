@@ -50,3 +50,18 @@ msgstr "Fond transparent"
 
 msgid "Maximun displayed tags (empty=no limit):"
 msgstr "Limite (laisser vide si pas de limite) :"
+
+msgid "About"
+msgstr "A propos"
+
+msgid "If you want more informations on that plugin or have new ideas to develope it, or want to submit a bug or need help (to install or configure it) or for anything else ..."
+msgstr "Si vous voulez des informations sur ce plugin ou si vous avez des idées pour l'améliorer ou si vous pensez avoir trouvé un bug ou si vous avez besoin d'aide (pour l'installer ou le configurer) ou pour tout autre chose..."
+
+msgid "Go to %sthe dedicated page%s in"
+msgstr "Allez sur la %spage dédiée%s du"
+
+msgid "Made by:"
+msgstr "Créé par : "
+
+msgid "Contributor:"
+msgstr "Contributeur : "
