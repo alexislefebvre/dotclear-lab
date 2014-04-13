@@ -1,59 +1,32 @@
 <html>
   <head>
-    <title><?php echo __('Tag Flash'); ?></title>
-    <link rel="stylesheet" type="text/css" href="index.php?pf=tagflash/colorpicker.css"/>
-    <?php echo dcPage::jsLoad('index.php?pf=tagflash/js/jquery.colorpicker.js');?>
-    <style type="text/css">
-      form p{clear: both;}
-      label{float:left;width:180px;margin-right:10px;text-align:right;}
-    </style>
-    <script type="text/javascript">
-      $(function() {
-      $('input.color-picker')
-      .each(function() {
-      if ($(this).val() !== undefined) {
-      if ($(this).val().indexOf('#',0)==-1) {
-      $(this).css('background-color', '#'+$(this).val());
-      } else {
-      $(this).css('background-color', $(this).val());
-      }
-      }
-      })
-      .ColorPicker({
-      onSubmit: function(hsb, hex, rgb, el) {
-      $(el).val(hex);
-      $(el).ColorPickerHide();
-      $(el).css('background-color', '#'+hex);
-      },
-      onBeforeShow: function () {
-      $(this).ColorPickerSetColor(this.value);
-      }
-      })
-      .bind('keyup', function(){
-      $(this).ColorPickerSetColor(this.value);
-      });
-      });
-    </script>
+    <title><?php echo $page_title;?></title>
+    <?php echo dcPage::jsLoad('index.php?pf=tagflash/js/jquery.spectrum.js');?>
+    <?php echo dcPage::jsLoad('index.php?pf=tagflash/js/i18n/jquery.spectrum-'.$spectrum_lang.'.js');?>
+    <?php echo dcPage::jsLoad('index.php?pf=tagflash/js/spectrum.js');?>
+    <link rel="stylesheet" type="text/css" href="index.php?pf=tagflash/css/spectrum.css"/>
     <?php echo dcPage::jsPageTabs($default_tab); ?>
   </head>
   <body>
-    <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('Tag Flash'); ?></h2>
+    <?php echo dcPage::breadcrumb(array(html::escapeHTML($core->blog->name) => '', '<span class="page-title">'.$page_title.'</span>' => ''));?>
     <?php if (!empty($message)):?>
     <p class="message"><?php echo $message;?></p>
     <?php endif;?>
 
     <div class="multi-part" id="tagflash_settings" title="<?php echo __('Settings'); ?>">
       <form action="<?php echo $p_url;?>" method="post">
-	<fieldset>
-	  <legend><?php echo __('Plugin activation'); ?></legend>
+	<div class="fieldset">
+	  <h3><?php echo __('Plugin activation'); ?></h3>
 	  <p>
-	    <label for="tagflash_active"><?php echo __('Enable Tag Flash plugin');?></label>
-	    <?php echo form::checkbox('tagflash_active', 1, $tagflash_active); ?>
+	    <label for="tagflash_active">
+	      <?php echo form::checkbox('tagflash_active', 1, $tagflash_active); ?>
+	      <?php echo __('Enable Tag Flash plugin');?>
+	    </label>
 	  </p>
-	</fieldset>
+	</div>
 	<?php if ($tagflash_active):?>
-	<fieldset>
-	  <legend><?php echo __('General configuration'); ?></legend>
+	<div class="fieldset">
+	  <h3><?php echo __('General configuration'); ?></h3>
 	  <p>
 	    <label for="tagflash_width"><?php echo __('Animation width');?></label>
 	    <?php echo form::field('tagflash_width', 10, 10, $tagflash_width);?>
@@ -66,9 +39,9 @@
 	    <label for="tagflash_speed"><?php echo __('Animation rotation speed');?></label>
 	    <?php echo form::field('tagflash_speed', 10, 10, $tagflash_speed);?>
 	  </p>
-	</fieldset>
-	<fieldset>
-	  <legend><?php echo __('Color configuration'); ?></legend>
+	</div>
+	<div class="fieldset">
+	  <h3><?php echo __('Color configuration'); ?></h3>
 	  <p>
 	    <label for="tagflash_bgcolor"><?php echo __('Animation background');?></label>
 	    <?php echo form::field('tagflash_bgcolor', 10, 10, $tagflash_bgcolor, 'color-picker');?>
@@ -85,11 +58,13 @@
 	    <label for="tagflash_hicolor"><?php echo __('MouseOver color');?></label>
 	    <?php echo form::field('tagflash_hicolor', 10, 10, $tagflash_hicolor, 'color-picker');?>
 	  </p>
-	</fieldset
+	</div>
 	<?php endif;?>
-	<?php echo form::hidden('p', 'tagflash');?>
-	<?php echo $core->formNonce();?>
-	<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
+	<p>
+	  <?php echo form::hidden('p', 'tagflash');?>
+	  <?php echo $core->formNonce();?>
+	  <input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
+	</p>
       </form>
     </div>
     <div class="multi-part" id="tagflash_about" title="<?php echo __('About'); ?>">
