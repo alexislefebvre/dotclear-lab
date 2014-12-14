@@ -29,6 +29,6 @@ class shortArchivesWidgets
 		);
     $w->shortArchives->setting('content_only',__('Content only'),0,'check');
     $w->shortArchives->setting('class',__('CSS class:'),'');
+		$w->shortArchives->setting('offline',__('Offline'),0,'check');
 	}
 }
-?>

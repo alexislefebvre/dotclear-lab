@@ -34,6 +34,9 @@ class tplShortArchives
 	{
 		global $core;
 
+		if ($w->offline)
+			return;
+
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
@@ -54,9 +57,10 @@ class tplShortArchives
 					  'nbpost' => $rs->nb_post);
         }
 
-		    $res = ($w->content_only ? '' : '<div class="shortArchives'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-            ($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-            '<ul>';
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>';
+		
 		foreach($posts as $annee=>$post) {
 			$res .= '<li><span>'.$annee.'</span><ul>';
 			for($i=0; $i<sizeof($post); $i++) {
@@ -67,11 +71,9 @@ class tplShortArchives
 			}
 			$res .= '</ul></li>';
 		}
-        $res .= '</ul>'.
-		($w->content_only ? '' : '</div>');
-		
-        return $res;
+        $res .= '</ul>';
+
+		return $w->renderDiv($w->content_only,'shortArchives '.$w->class,'',$res);
 	}
 	
 }
-?>

@@ -16,7 +16,13 @@ $this->registerModule(
 	/* Name */			    "shortArchives",
 	/* Description*/		"Display complete archives of your blog displayed in an accordion",
 	/* Author */			"annso, Pierre Van Glabeke",
-	/* Version */			'1.4',
-	/* Permissions */		'usage,contentadmin'
+	/* Version */			"1.5",
+	/* Properties */
+	array(
+		'permissions' => 'usage,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.7',
+		'support' => 'http://forum.dotclear.org/viewtopic.php?pid=321044#p321044',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/shortArchives'
+		)
 );
-?>
