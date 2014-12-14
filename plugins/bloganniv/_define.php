@@ -15,12 +15,12 @@ $this->registerModule(
 	/* Name */				"Blog Anniv",
 	/* Description*/		"Décompte du nombre de jours avant et après la date anniversaire du blog",
 	/* Author */			"Fran6t, Pierre Van Glabeke",
-	/* Version */			'1.4.1',
+	/* Version */			'1.5',
 	/* Properties */
 	array(
 		'permissions' => 'blogAnniv',
 		'type' => 'plugin',
-		'dc_min' => '2.6',
+		'dc_min' => '2.7',
 		'support' => 'http://www.myouaibe.com/index.php/post/2007/08/23/Plugin-BlogAnniv-pour-DOTCLEAR-2',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/bloganniv'
 		)

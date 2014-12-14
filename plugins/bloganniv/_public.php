@@ -37,6 +37,9 @@ class tplBlogAnniv
 	public static function BlogAnnivWidget($w)
 	{
 		global $core;
+
+		if ($w->offline)
+			return;
 		
 		// Si nous sommes pas en page accueil et que c'est coché page accueil uniquement on fait rien
 
@@ -119,14 +122,17 @@ class tplBlogAnniv
       __('year(s)').
       '</li>';
 		}
-		return
-		$res = ($w->content_only ? '' : '<div class="bloganniv'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-		'<h2>'.$title.'</h2>'.'<ul>'.
+
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>'.
 		$dispyearborn.
 		$dispyear.
 		'<li>'.__('Birthday in').
     ' <span class="annivjrs">'.$nbrejours.'</span> '.
-    __('day(s)').'</li></ul>'.
-    ($w->content_only ? '' : '</div>');
+    __('day(s)').'</li></ul>';
+		
+		return $w->renderDiv($w->content_only,'bloganniv '.$w->class,'',$res);
+
 	}
 }

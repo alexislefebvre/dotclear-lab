@@ -20,7 +20,10 @@
 == Version 1.4 ================================================================
 - Modifs affichage pour le widget (remplacement paragraphe par une liste)
 
-== Version 1.4.1 ================================================================
+== Version 1.4.1 : Pierre Van Glabeke =========================================
 - Ajustements settings
 - Fin de ligne unix
 - complément _define.php
+
+== Version 1.5 : Pierre Van Glabeke =========================================
+- compatibilité dc2.7
