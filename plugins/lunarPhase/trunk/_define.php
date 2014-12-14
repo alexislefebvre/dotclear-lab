@@ -14,9 +14,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			     'lunarPhase',
-	/* Description */		 'Display the moon phases',
+	/* Description */		 'Display the moon phases / Afficher les phases lunaire et autres données',
 	/* Author */			   'Tomtom, Pierre Van Glabeke',
-	/* Verion */			   '1.2',
+	/* Verion */			   '1.3',
 	/* Properties */
 	array(
 		'permissions' => 'usage,contentadmin',

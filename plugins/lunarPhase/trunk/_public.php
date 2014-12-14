@@ -39,6 +39,9 @@ class lunarPhasePublic
 	public static function widget($w)
 	{
 		global $core;
+
+		if ($w->offline)
+			return;
 		
 		$lp = new lunarPhase();
 
@@ -46,18 +49,17 @@ class lunarPhasePublic
 		($w->homeonly == 2 && $core->url->type == 'default')) {
 		return;
 		}
-		
-		$res = strlen($w->title) > 0 ? '<h2>'.$w->title.'</h2>' : '';
+
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '');
 		
 		# Get live content
 		$res .= lunarPhasePublic::getLive($w,$lp);
 		# Get prevision content
 		$res .= lunarPhasePublic::getPrevisions($w,$lp);
+
+		return $w->renderDiv($w->content_only,'lunarphase '.$w->class,'',$res);
 			
-		return
-    	($w->content_only ? '' : '<div class="lunarphase'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-			$res.
-			($w->content_only ? '' : '</div>');
 	}
 	
 	/**

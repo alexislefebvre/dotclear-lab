@@ -37,5 +37,6 @@ class lunarPhaseWidgets
 		);
     $w->lunarphase->setting('content_only',__('Content only'),0,'check');
     $w->lunarphase->setting('class',__('CSS class:'),'');
+		$w->lunarphase->setting('offline',__('Offline'),0,'check');
 	}
 }
