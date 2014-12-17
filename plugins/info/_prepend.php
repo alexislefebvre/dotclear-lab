@@ -15,4 +15,3 @@ if (!defined('DC_RC_PATH')) {return;}
 $__autoload['myUrlHandlers'] = dirname(__FILE__).'/inc/class.myurlhandlers.php';
 
 myUrlHandlers::init($core);
-?>

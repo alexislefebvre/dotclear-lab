@@ -27,5 +27,3 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 $_menu['Plugins']->addItem(__('Informations'),'plugin.php?p=info','index.php?pf=info/icon.png',
 	preg_match('/plugin.php\?p=info(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
-
-?>

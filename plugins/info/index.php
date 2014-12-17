@@ -65,7 +65,7 @@ unset($rs);
 	}
 	else
 	{
-		echo('<h2>'.__('Informations').'</h2>');
+		echo('<h2>'.$page_title.'</h2>');
 	}
 	?>
 	

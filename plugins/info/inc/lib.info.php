@@ -502,5 +502,3 @@ class info
 		return implode(', ',$levels);
 	}
 }
-
-?>

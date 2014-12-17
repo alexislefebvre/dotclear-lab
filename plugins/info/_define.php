@@ -31,4 +31,3 @@ $this->registerModule(
      /* Version */                   '1.8.5',
      /* Permissions */               null
 );
-?>
