@@ -28,7 +28,13 @@ $this->registerModule(
     /* Name */             "New Navigation Links",
     /* Description*/       "New Navigation links widget",
     /* Author */           "Moe (http://gniark.net/)",
-    /* Version */          '1.2',
-    /* Permissions */      'admin'
+    /* Version */          '1.3',
+	/* Properties */
+	array(
+		'permissions' => 'admin',
+		'type' => 'plugin',
+		'dc_min' => '2.7',
+		'support' => 'http://forum.dotclear.org/viewforum.php?id=16',
+		'details' => 'http://lab.dotclear.org/wiki/plugin/newnavlinks'
+	)
 );
-?>

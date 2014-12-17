@@ -67,11 +67,15 @@ class NewNavLinksBehaviors
 		);
     $w->NewNavLinks->setting('content_only',__('Content only'),0,'check');
     $w->NewNavLinks->setting('class',__('CSS class:'),'');
+		$w->NewNavLinks->setting('offline',__('Offline'),0,'check');
 	}
 	
 	public static function Show($w)
 	{
 		global $core;
+
+		if ($w->offline)
+			return;
 		
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 		($w->homeonly == 2 && $core->url->type == 'default')) {
@@ -98,10 +102,11 @@ class NewNavLinksBehaviors
 		{
 			$str = implode('<span> - </span>',$elements);
 			$class = ($w->tag == 'p') ? ' class="text"' : '';
-      return 		$res = ($w->content_only ? '' : '<div class="newnav'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-      '<'.$w->tag.$class.'>'.$str.'</'.$w->tag.'>'.
-      ($w->content_only ? '' : '</div>');
+
+		$res =
+		'<'.$w->tag.$class.'>'.$str.'</'.$w->tag.'>';
+
+		return $w->renderDiv($w->content_only,'newnav '.$w->class,'',$res);
 		}
 	}
 }
-?>

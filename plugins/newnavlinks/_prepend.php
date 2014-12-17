@@ -25,5 +25,3 @@
 if (!defined('DC_RC_PATH')) {return;}
 
 require_once(dirname(__FILE__).'/_widget.php');
-
-?>
