@@ -1,0 +1,11 @@
+v1.7 17-12-2014 Pierre Van Glabeke :
+compatibilité dc2.7
+html5 (mustek et currywurst)
+mise en place de la barre d'édition pour la description de l'auteur (merci à Nikrou)
+
+v1.6.1 02-10-2014 Pierre Van Glabeke :
+ajout d'un lien vers la liste des auteurs
+modif du widget
+modif de la page listant les auteurs
+ajout aide intégrée
+dc2.6 requis

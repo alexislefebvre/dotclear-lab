@@ -33,4 +33,3 @@ elseif (version_compare($cur_version,'1.1','<='))
 }
 $core->setVersion('authorMode',$new_version);
 return true;
-?>

@@ -15,7 +15,13 @@ $this->registerModule(
 	/* Name */			"authorMode",
 	/* Description*/		"Post entries per author + author desc handling",
 	/* Author */			"xave, Pierre Van Glabeke",
-	/* Version */			'1.6.1',
-	/* Permissions */		'admin,contentadmin'
+	/* Version */			'1.7',
+	/* Properties */
+	array(
+		'permissions' => 'admin,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.7',
+		'support' => 'http://forum.dotclear.org/viewtopic.php?pid=323173#p323173',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/authorMode'
+		)
 );
-?>

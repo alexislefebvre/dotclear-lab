@@ -64,4 +64,3 @@ if ($core->blog->settings->authormode->authormode_active)
 		unset($url_prefix);
 	}
 }
-?>

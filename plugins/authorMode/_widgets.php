@@ -21,6 +21,9 @@ class widgetsAuthorMode
 		
 		if (!$core->blog->settings->authormode->authormode_active) return;
 
+		if ($w->offline)
+			return;
+
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
@@ -42,15 +45,15 @@ class widgetsAuthorMode
 			default :
 				$currentuser = '';
 		}
-		
-		$res = ($w->content_only ? '' : '<div class="authors'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
 		'<ul>';
 
 		$res .=
 		'<li class="listauthors"><strong><a href="'.$core->blog->url.$core->url->getBase("authors").'">'.
 		__('List of authors').'</a></strong></li>';
-		
+
 		while ($rs->fetch()) {
 			$res .= '<li'.
 			($rs->user_id == $currentuser ? ' class="current-author"' : '').
@@ -62,10 +65,10 @@ class widgetsAuthorMode
 			($w->postcount ? ' ('.$rs->nb_post.')' : '').
 			'</li>';
 		}
-		$res .= '</ul>'.
-		($w->content_only ? '' : '</div>');
+		$res .= '</ul>';
+
+		return $w->renderDiv($w->content_only,'authors '.$w->class,'',$res);
 		
-		return $res;
 	}
 	
 	public static function init($w)
@@ -83,6 +86,6 @@ class widgetsAuthorMode
 		);
     $w->authors->setting('content_only',__('Content only'),0,'check');
     $w->authors->setting('class',__('CSS class:'),'');
+		$w->authors->setting('offline',__('Offline'),0,'check');
 	}
 }
-?>

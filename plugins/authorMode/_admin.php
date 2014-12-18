@@ -33,11 +33,25 @@ class authorModeBehaviors
 	}
 	
 	public static function adminAuthorHeaders()
-	{
-		return
+{
+        global $core;
+
+        $post_format = $core->auth->getOption('post_format');
+        $post_editor = $core->auth->getOption('editor');
+
+        $admin_post_behavior = '';
+        if ($post_editor && !empty($post_editor[$post_format])) {
+            $admin_post_behavior = $core->callBehavior('adminPostEditor', $post_editor[$post_format],
+                                                       'user_desc', array('#user_desc')
+            );
+        }
+
+	return
 		dcPage::jsToolBar().
-		dcPage::jsLoad('index.php?pf=authorMode/_user.js');
-	}
+    $admin_post_behavior.
+    dcPage::jsConfirmClose('opts-forms').
+    dcPage::jsLoad('index.php?pf=authorMode/_user.js');
+}
 	
 	public static function adminAuthorForm($rs)
 	{
@@ -58,4 +72,3 @@ class authorModeBehaviors
 		'</p>';
 	}
 }
-?>
