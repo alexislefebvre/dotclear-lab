@@ -15,8 +15,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Blog']->addItem(__('ComListe'),'plugin.php?p=comListe','index.php?pf=comListe/icon.png',
+$_menu['Blog']->addItem(__('List of comments'),'plugin.php?p=comListe','index.php?pf=comListe/icon.png',
 		preg_match('/plugin.php\?p=comListe(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('admin',$core->blog->id));
-
-?>

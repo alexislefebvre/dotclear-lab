@@ -30,6 +30,6 @@ class comListeWidgets
 		);
     $w->comListe->setting('content_only',__('Content only'),0,'check');
     $w->comListe->setting('class',__('CSS class:'),'');
+		$w->comListe->setting('offline',__('Offline'),0,'check');
 	}
 }
-?>

@@ -15,9 +15,14 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
         /* Name */                      "ComListe",
         /* Description*/                "Plugin for printing comments list",
-        /* Author */                    "Benoit de Marne",
-        /* Version */                   '0.1.9',
-        /* Permissions */               'admin'
+        /* Author */                    "Benoit de Marne, Pierre Van Glabeke",
+        /* Version */                   '0.2',
+	/* Properties */
+	array(
+		'permissions' => 'admin',
+		'type' => 'plugin',
+		'dc_min' => '2.7',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/comListe/fr',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/comListe'
+		)
 );
-
-?>

@@ -12,7 +12,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$page_title = __('ComListe');
+$page_title = __('List of comments');
 
 # Settings compatibility test
 if (version_compare(DC_VERSION,'2.2-alpha','>=')) {

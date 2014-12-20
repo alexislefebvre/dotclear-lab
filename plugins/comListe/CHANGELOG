@@ -1,3 +1,15 @@
+comListe 0.2 - 19-12-2014 - Pierre Van Glabeke
+===========================================================
+* compatibilit√© dc2.7
+* suppression dossier .settings + fichiers .buildpath et .project
+* modification tpl
+* modification localisation
+* modification ic√¥ne
+
+comListe 0.1.9 - 2013-10-13 - Pierre Van Glabeke
+===========================================================
+* compatibilit√© dc2.6
+
 comListe 0.1.8 - 2009-07-20
 ===========================================================
 * correction sur le calcul du nombre de commentaires
@@ -18,11 +30,11 @@ comListe 0.1.6 - 2009-10-07
 comListe 0.1.5
 * correction des termes de la licence
 * mise aux normes structurelles de Dotclear des fichiers
-* Ticket #132 : ajout du titre du post dans le template par dÈfaut
+* Ticket #132 : ajout du titre du post dans le template par d√©faut
 
 comListe 0.1.4
-* creation de templates personnalisÈs dans le repertoire adapt-themes
-* remplacement de la mÈthode de traduction
+* creation de templates personnalis√©s dans le repertoire adapt-themes
+* remplacement de la m√©thode de traduction
 
 comListe 0.1.3
 * correction du template comListe.html
@@ -31,7 +43,7 @@ comListe 0.1.2
 * suppression du fichier _install.php pour supprimer le bug d'affichage dans la partie admin
 
 comListe 0.1.1
-* ajout de l'initialisation des paramËtres par dÈfaut
+* ajout de l'initialisation des param√®tres par d√©faut
 * ajout de l'aide dans la partie admin
 * ajout d'une icone pour la partie admin
 
@@ -42,5 +54,3 @@ comListe 0.1.0
 * creation de la partie publique
 * creation du widget
 * creation de la partie admin
-
-

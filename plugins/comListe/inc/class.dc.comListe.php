@@ -9,6 +9,7 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) {return;}
 
 class urlcomListe extends dcUrlHandlers
 {
@@ -40,8 +41,14 @@ class urlcomListe extends dcUrlHandlers
 		$_ctx->nb_comment_per_page=$blog_settings->comliste_nb_comments_per_page;
 
 		// ouverture de la page html
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/../default-templates');
+  $tplset = $core->themes->moduleInfo($core->blog->settings->system->theme,'tplset');
+        if (!empty($tplset) && is_dir(dirname(__FILE__).'/../default-templates/'.$tplset)) {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/../default-templates/'.$tplset);
+        } else {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/../default-templates/'.DC_DEFAULT_TPLSET);
+        }
 		self::serveDocument('comListe.html');
+		exit;
 	}
 }
 
@@ -311,6 +318,9 @@ class tplComListe
 		} else {
 			$blog_settings =& $core->blog->settings;
 		}
+
+		if ($w->offline)
+			return;
 		
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default')) {
@@ -319,18 +329,14 @@ class tplComListe
 		if (!$blog_settings->comliste_enable) {
 			return;
 		}
-		
+
 		$res =
-    ($w->content_only ? '' : '<div class="comliste'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		'<ul><li><a href="'.$core->blog->url.$core->url->getBase('comListe').'">'.
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<p><a href="'.$core->blog->url.$core->url->getBase('comListe').'">'.
 		($w->link_title ? html::escapeHTML($w->link_title) : __('List of comments')).
-		'</a></li></ul>'.
-    ($w->content_only ? '' : '</div>');
-		
-		return $res;
+		'</a></p>';
+
+		return $w->renderDiv($w->content_only,'comliste '.$w->class,'',$res);
 	}	
 
 }
-
-?>
