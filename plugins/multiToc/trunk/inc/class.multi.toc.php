@@ -9,6 +9,7 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) {return;}
 
 class multiTocPost
 {
@@ -53,7 +54,7 @@ class multiTocPost
 		$count = array(0,0,0,0,0,0);
 		
 		foreach ($levels as $k => $v) {
-			$title = $titles[$k];
+			$title = "$titles[$k]";
 			
 			if ($title === 'Notes') { continue; }
 			
@@ -180,8 +181,8 @@ class multiTocUi
 			case 'tag':
 				$legend = __('TOC by tags');
 				$enable = __('Enable TOC by tags');
-				$order_group = __('Order of tags');
-				$order_entry = __('Order of entries');
+				$order_group = __('Order of tags:');
+				$order_entry = __('Order of entries:');
 				$order_group_data = array(
 					__('Name up') =>  'asc',
 					__('Name down') =>  'desc',
@@ -190,8 +191,8 @@ class multiTocUi
 			case 'alpha':
 				$legend = __('TOC by alpha list');
 				$enable = __('Enable TOC by alpha list');
-				$order_group = __('Order of alpha list');
-				$order_entry = __('Order of entries');
+				$order_group = __('Order of alpha list:');
+				$order_entry = __('Order of entries:');
 				$order_group_data = array(
 					__('Alpha up') =>  'post_letter asc',
 					__('Alpha down') =>  'post_letter desc',
@@ -205,8 +206,8 @@ class multiTocUi
 			default:
 				$legend = __('TOC by category');
 				$enable = __('Enable TOC by category');
-				$order_group = __('Order of categories');
-				$order_entry = __('Order of entries');
+				$order_group = __('Order of categories:');
+				$order_entry = __('Order of entries:');
 				$order_group_data = array(
 					__('No option') => '',
 				);
@@ -215,9 +216,10 @@ class multiTocUi
 		
 		if ($type !== 'post') {
 			$res = 
-			'<fieldset>'.
-			'<legend>'.$legend.'</legend>'.
-			'<div class="two-cols"><div class="col">'.
+			'<div class="fieldset">'.
+			'<h4>'.$legend.'</h4>'.
+			'<div class="two-cols clearfix">'.
+      '<div class="col">'.
 			'<p><label for="'.$type.'_enable" class="classic">'.
 			form::checkbox($type.'_enable',1,multiTocUi::getSetting($type,'enable')).$enable.
 			'</label></p>'.
@@ -251,32 +253,32 @@ class multiTocUi
 			'</label></p>'.
 			'</div><div class="col">'.
 			'<p><label for="'.$type.'_order_group">'.
-			$order_group.
+			$order_group.'</label>'.
 			form::combo(array($type.'_order_group'),$order_group_data,multiTocUi::getSetting($type,'order_group')).
-			'</label></p>'.
+			'</p>'.
 			'<p><label for="'.$type.'_order_entry">'.
-			$order_entry.
+			$order_entry.'</label>'.
 			form::combo(array($type.'_order_entry'),$order_entry_data,multiTocUi::getSetting($type,'order_entry')).
-			'</label></p>'.
+			'</p>'.
 			'<p><label for="'.$type.'_format_date">'.
-			__('Format date').
+			__('Format date:').'</label>'.
 			form::field($type.'_format_date',40,255,multiTocUi::getSetting($type,'format_date')).
-			'</label></p>'.
+			'</p>'.
 			'</div></div>'.
-			'</fieldset>' ;
+			'</div>' ;
 		}
 		else {
 			$res = 
-			'<fieldset>'.
-			'<legend>'.$legend.'</legend>'.
-			'<p><label for="'.$type.'_enable" class="classic">'.
+			'<div class="fieldset">'.
+			'<h4>'.$legend.'</h4>'.
+      '<p><label for="'.$type.'_enable" class="classic">'.
 			form::checkbox($type.'_enable',1,multiTocUi::getSetting($type,'enable'),null,null,!$core->plugins->moduleExists('stacker')).$enable.
 			'</label></p>'.
 			'<p><label for="'.$type.'_numbering" class="classic">'.
 			form::checkbox($type.'_numbering',1,multiTocUi::getSetting($type,'numbering'),null,null,!$core->plugins->moduleExists('stacker')).$numbering.
 			'</label></p>'.
-			'<p class="form-note">'.__('Those options require stacker plugin').'</p>'.
-			'</fieldset>';
+			'<p class="info">'.__('Those options require stacker plugin').'</p>'.
+			'</div>';
 			
 		}
 		
@@ -292,5 +294,3 @@ class multiTocUi
 		return isset($settings[$type][$value]) ? $settings[$type][$value] : '';
 	}
 }
-
-?>

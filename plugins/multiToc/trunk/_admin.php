@@ -15,7 +15,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 $core->addBehavior('adminPostHeaders',array('multiTocBehaviors','postHeaders'));
 $core->addBehavior('adminPageHeaders',array('multiTocBehaviors','postHeaders'));
 
-$_menu['Plugins']->addItem(
+$_menu['Blog']->addItem(
 	__('Tables of content'),
 	'plugin.php?p=multiToc',
 	'index.php?pf=multiToc/icon.png',
@@ -24,4 +24,15 @@ $_menu['Plugins']->addItem(
 	$core->auth->isSuperAdmin()
 );
 
-?>
+$core->addBehavior('adminDashboardFavorites','multiTocDashboardFavorites');
+
+function multiTocDashboardFavorites($core,$favs)
+{
+	$favs->register('multiToc', array(
+		'title' => __('Tables of content'),
+		'url' => 'plugin.php?p=multiToc',
+		'small-icon' => 'index.php?pf=multiToc/icon.png',
+		'large-icon' => 'index.php?pf=multiToc/icon-big.png',
+		'permissions' => 'usage,contentadmin'
+	));
+}

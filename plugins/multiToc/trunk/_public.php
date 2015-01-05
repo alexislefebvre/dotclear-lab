@@ -118,7 +118,7 @@ class multiTocTpl
 		$p = "\$_ctx->multitoc_settings = unserialize(\$core->blog->settings->multiToc->multitoc_settings);\n";
 		$p .= "\$params = array();\n";
 		$p .= "if (\$_ctx->multitoc_type == 'cat') :\n";
-			$p .= "\$_ctx->multitoc_group = \$core->blog->getCategories();\n";
+			$p .= "\$_ctx->multitoc_group = \$core->blog->getCategories(array('post_type'=>'post'));\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'tag') :\n";
 			$p .= "\$meta = new dcMeta(\$core);\n";
 			$p .= "\$meta_rs = \$meta->getMetadata(array('meta_type' => 'tag'));\n";
@@ -464,5 +464,3 @@ class multiTocPublic
 		return(staticRecord::newFromArray($array));
 	}
 }
-
-?>

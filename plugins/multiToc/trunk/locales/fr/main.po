@@ -39,7 +39,7 @@ msgstr "Par catégorie"
 #: _public.php:348
 #: _widgets.php:48
 msgid "By tag"
-msgstr "Par tag"
+msgstr "Par mot-clé"
 
 #: _public.php:350
 #: _widgets.php:52
@@ -56,7 +56,7 @@ msgstr "Table des matières par ordre alphabétique"
 
 #: default-templates/multitoc.html:73
 msgid "Table of content by tag"
-msgstr "Table des matières par tag"
+msgstr "Table des matières par mot-clé"
 
 #: default-templates/multitoc.html:75
 msgid "Click on each group name to display or hide entries list"
@@ -104,21 +104,21 @@ msgstr "Nombre de rétroliens décroissant"
 
 #: inc/class.multi.toc.php:181
 msgid "TOC by tags"
-msgstr "Table des matières par tag"
+msgstr "Table des matières par mot-clé"
 
 #: inc/class.multi.toc.php:182
 msgid "Enable TOC by tags"
-msgstr "Activer la table des matières par tag"
+msgstr "Activer la table des matières par mot-clé"
 
 #: inc/class.multi.toc.php:183
-msgid "Order of tags"
-msgstr "Ordre des tags"
+msgid "Order of tags:"
+msgstr "Ordre des mots-clés :"
 
 #: inc/class.multi.toc.php:184
 #: inc/class.multi.toc.php:194
 #: inc/class.multi.toc.php:209
-msgid "Order of entries"
-msgstr "Ordre des billets"
+msgid "Order of entries:"
+msgstr "Ordre des billets :"
 
 #: inc/class.multi.toc.php:186
 msgid "Name up"
@@ -137,8 +137,8 @@ msgid "Enable TOC by alpha list"
 msgstr "Activer la table des matières par lettre"
 
 #: inc/class.multi.toc.php:193
-msgid "Order of alpha list"
-msgstr "Ordre de la liste des lettres"
+msgid "Order of alpha list:"
+msgstr "Ordre de la liste des lettres :"
 
 #: inc/class.multi.toc.php:196
 msgid "Alpha up"
@@ -169,8 +169,8 @@ msgid "Enable TOC by category"
 msgstr "Activer la table des matières par catégorie"
 
 #: inc/class.multi.toc.php:208
-msgid "Order of categories"
-msgstr "Ordre des catégories"
+msgid "Order of categories:"
+msgstr "Ordre des catégories :"
 
 #: inc/class.multi.toc.php:211
 msgid "No option"
@@ -202,11 +202,11 @@ msgstr "Afficher le nombre de rétroliens"
 
 #: inc/class.multi.toc.php:250
 msgid "Display tags"
-msgstr "Afficher les tags"
+msgstr "Afficher les mots-clés"
 
 #: inc/class.multi.toc.php:262
-msgid "Format date"
-msgstr "Format de la date"
+msgid "Format date:"
+msgstr "Format de la date :"
 
 #: inc/class.multi.toc.php:278
 msgid "Those options require stacker plugin"

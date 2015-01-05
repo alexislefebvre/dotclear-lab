@@ -20,21 +20,32 @@ class multiTocWidgets
 	{
 		$w->create('multiToc',__('Table of content'),array('multiTocWidgets','widget'));
 		$w->multiToc->setting('title',__('Title:'),__('Table of content'));
-		$w->multiToc->setting('homeonly',__('Home page only'),true,'check');
+		$w->multiToc->setting('homeonly',__('Display on:'),0,'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+				)
+		);
+		$w->multiToc->setting('content_only',__('Content only'),0,'check');
+		$w->multiToc->setting('class',__('CSS class:'),'');
+		$w->multiToc->setting('offline',__('Offline'),0,'check');
 	}
 	
 	public static function widget($w)
 	{
 		global $core;
 		
-		if ($w->homeonly && $core->url->type != 'default') {
+		if ($w->offline)
+		return;
+
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 		
 		$amask = '<a href="%1$s">%2$s</a>';
 		$limask = '<li class="%1$s">%2$s</li>';
-		
-		$title = (strlen($w->title) > 0) ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
 		
 		$res = '';
 		
@@ -54,15 +65,13 @@ class multiTocWidgets
 		}
 		
 		if (!empty($res)) {
-			$res = 
-			'<div id="info-blog">'.
-			$title.
-			'<ul>'.$res.'</ul>'.
-			'</div>';
+    $res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>'.$res.'</ul>';
+
+		return $w->renderDiv($w->content_only,'info-blog '.$w->class,'',$res);
+
 		}
 		
-		return $res;
 	}
 }
-
-?>

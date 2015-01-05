@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Configuration de MultiToc</title>
+  </head>
+  <body>
+    <h4>Template personnalisé</h4>
+    <p>Vous pouvez si vous le souhaitez personnaliser la structure de la page des
+    tables des matières pour l'adapter à votre thème, ajouter ou supprimer certaines
+    parties, tout cela grâce à l'héritage des thèmes de Dotclear. Il vous suffit
+    simplement d'ajouter dans le <strong>répertoire de votre thème</strong> le
+    fichier <strong>multitoc.html</strong> que vous souhaitez voir apparaître.
+    Dotclear se chargera ensuite de prendre ce fichier lors de l'affichage des
+    tables à la place de celui du plugin.</p>
+
+    <h4>Feuille de style CSS personnalisée</h4>
+    <p>Tout comme pour le template, vous pouvez utiliser une feuille de style
+    CSS personnalisée pour l'affichage des tables des matières en ajoutant le
+    fichier <strong>multitoc.css</strong> dans le <strong>répertoire de votre
+    thème</strong>.</p>
+
+    <h4>Balises de template</h4>
+    <p>Vous avez la possibilité de personnaliser l'affichage de certaines balises
+    de template listées ci-dessous&nbsp;:</p>
+    <ul>
+      <li>{{tpl:MultiTocItemDate}}</li>
+      <li>{{tpl:MultiTocItemAuthor}}</li>
+      <li>{{tpl:MultiTocItemCategory}}</li>
+      <li>{{tpl:MultiTocItemNbComments}}</li>
+      <li>{{tpl:MultiTocItemNbTrackbacks}}</li>
+    </ul>
+    <p>Pour chacune de ces balises, vous devez utiliser l'option <strong>mask</strong>.
+    <strong>%s</strong> représente le contenu réel. Voici un exemple avec la balise
+    {{tpl:MultiTocItemAuthor}}&nbsp;:<br />
+    <code># Retournera le code HTML suivant : &lt;span class=&quot;tagada&quot;&gt;&lt;a href=&quot;lien_auteur&quot;&gt;nom_auteur&lt;/a&gt;&lt;/span&gt;
+    {{tpl:MultiTocItemAuthor mask=&quot;&lt;span class=&quot;tagada&quot;&gt;%s&lt;/span&gt;&quot; }}</code></p>
+  </body>
+</html>

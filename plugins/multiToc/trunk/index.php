@@ -12,6 +12,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+$page_title = __('Tables of content');
+
 $p_url	= 'plugin.php?p=multiToc';
 
 if (!empty($_POST['save']))
@@ -39,17 +41,18 @@ if (!empty($_POST['save']))
 echo
 '<html>'.
 '<head>'.
-	'<title>'.__('Tables of content').'</title>'.
+	'<title>'.$page_title.'</title>'.
 '</head>'.
 '<body>'.
-'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Tables of content').'</h2>';
+	dcPage::breadcrumb(
+    array(
+    html::escapeHTML($core->blog->name) => '',
+    '<span class="page-title">'.$page_title.'</span>' => ''
+    ));
 
 # Information message
 if (!empty($_GET['upd'])) {
-	echo
-	'<p class="message">'.
-	__('Configuration has been saved successfully').
-	'</p>';
+  dcPage::success(__('Configuration has been saved successfully'));
 }
 
 echo
@@ -61,7 +64,6 @@ echo
 	$core->formNonce().
 '<p><input name="save" value="'.__('Save').'" type="submit" /></p>'.
 '</form>'.
+ dcPage::helpBlock('multiToc').
 '</body>'.
 '</html>';
-
-?>

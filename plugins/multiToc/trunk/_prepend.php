@@ -9,6 +9,7 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
 $__autoload['multiTocPost'] = dirname(__FILE__).'/inc/class.multi.toc.php';
 $__autoload['multiTocUi'] = dirname(__FILE__).'/inc/class.multi.toc.php';
@@ -24,8 +25,16 @@ require dirname(__FILE__).'/_widgets.php';
 class multiTocBehaviors
 {
 	public static function addTplPath()
+        
 	{
-		$GLOBALS['core']->tpl->setPath($GLOBALS['core']->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		global $core;
+		
+		$tplset = $core->themes->moduleInfo($core->blog->settings->system->theme,'tplset');
+        if (!empty($tplset) && is_dir(dirname(__FILE__).'/default-templates/'.$tplset)) {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.$tplset);
+        } else {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.DC_DEFAULT_TPLSET);
+        }
 	}
 	
 	public static function coreBlogGetPosts($rs)
@@ -84,5 +93,3 @@ class rsMultiTocPost
 		}
 	}
 }
-
-?>

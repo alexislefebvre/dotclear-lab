@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Configuration de MultiToc</title>
+  </head>
+  <body>
+    <h4>Custom template</h4>
+    <p>If you want to custimize multitoc layout to adapt it to your theme or change
+    some stuff, you can do it thanks to Dotclear theme legacy. The only thing to
+    do is to provide <strong>multitoc.html</strong> file and put it in your
+    <strong>theme folder</strong>. Dotclear will use your template if it exists.</p>
+
+    <h4>Custom CSS stylesheet</h4>
+    <p>Like custom template, you can change and use your CSS stylesheet by put
+    <strong>multitoc.css</strong> file in your <strong>theme folder</strong>.</p>
+
+    <h4>Template tags</h4>
+    <p>You can customize display of some template tags listed below:</p>
+    <ul>
+      <li>{{tpl:MultiTocItemDate}}</li>
+      <li>{{tpl:MultiTocItemAuthor}}</li>
+      <li>{{tpl:MultiTocItemCategory}}</li>
+      <li>{{tpl:MultiTocItemNbComments}}</li>
+      <li>{{tpl:MultiTocItemNbTrackbacks}}</li>
+    </ul>
+    <p>For each of them, you have to use option <strong>mask</strong>.
+    <strong>%s</strong> represents the real content. There is an example with a
+    {{tpl:MultiTocItemAuthor}} tag:<br />
+    <code># Will returns HTML code: &lt;span class=&quot;tagada&quot;&gt;&lt;a href=&quot;lien_auteur&quot;&gt;nom_auteur&lt;/a&gt;&lt;/span&gt;
+    {{tpl:MultiTocItemAuthor mask=&quot;&lt;span class=&quot;tagada&quot;&gt;%s&lt;/span&gt;&quot; }}</code></p>
+  </body>
+</html>

@@ -27,6 +27,7 @@ dl#multitoc dt {
 	font-size: 1.2em;
 	padding: 5px 10px;
 	margin: 4px 0 0px 0;
+	cursor:pointer;
 }
 .dc-multitoc p.toc-group-desc {
 	background : #efece7;
