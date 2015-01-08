@@ -144,8 +144,9 @@ class dlManager
 	public static function inJail($path)
 	{
 		global $core;
-		
-		$root = $core->blog->settings->dlmanager_root;
+
+		$core->blog->settings->addNamespace('dlManager');
+		$root = $core->blog->settings->dlManager->dlmanager_root;
 		
 		if (!empty($root) && (strpos($path,$root) !== 0))
 		{
@@ -290,5 +291,3 @@ class dlManager
 		return $rs;
 	}
 }
-
-?>

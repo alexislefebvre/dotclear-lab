@@ -23,7 +23,8 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-if (!$core->blog->settings->dlmanager_active) {return;}
+$core->blog->settings->addNamespace('dlManager');
+if (!$core->blog->settings->dlManager->dlmanager_active) {return;}
 
 /**
 @ingroup Download manager
@@ -1080,5 +1081,3 @@ class dlManagerPageTpl
 		return('<?php echo($_ctx->dlManager_pager->getLinks()); ?>');
 	}
 }
-
-?>

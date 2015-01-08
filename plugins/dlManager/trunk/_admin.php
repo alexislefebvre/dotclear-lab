@@ -28,4 +28,3 @@ $_menu['Plugins']->addItem(__('Download Manager'),
 	'index.php?pf=dlManager/icon.png',
 	preg_match('/plugin.php\?p=dlManager(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
-?>

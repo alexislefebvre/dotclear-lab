@@ -39,7 +39,7 @@ class dlManagerWidget
 	{
 		# set timezone
 		global $core;
-		$tz = $core->blog->settings->blog_timezone;
+		$tz = $core->blog->settings->system->blog_timezone;
 
 		$w->create('dlManager',__('Download manager'),
 			array('dlManagerWidget','show'));
@@ -89,8 +89,10 @@ class dlManagerWidget
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
+
+		$core->blog->settings->addNamespace('dlManager');
 		
-		if (!$core->blog->settings->dlmanager_active) {return;}
+		if (!$core->blog->settings->dlManager->dlmanager_active) {return;}
 		
 		if (!dlManager::inJail($w->root)) {return;}
 		
@@ -116,7 +118,7 @@ class dlManagerWidget
 			$items = $core->media->dir['dirs'];
 			
 			# define root of DL Manager
-			$page_root = $core->blog->settings->dlmanager_root;
+			$page_root = $core->blog->settings->dlManager->dlmanager_root;
 
 			# used to remove root from path
 			$page_root_len = strlen($page_root);
@@ -213,5 +215,3 @@ class dlManagerWidget
 		return '<div class="dlmanager">'.$header.$str.$link.'</div>';
 	}
 }
-
-?>

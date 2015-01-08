@@ -30,4 +30,3 @@ $this->registerModule(
      /* Version */                   '1.1.5',
      /* Permissions */               'admin'
 );
-?>

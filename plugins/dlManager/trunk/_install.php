@@ -56,4 +56,3 @@ $cur->update('WHERE setting_ns = \'publicmedia\';');
 # La procédure d'installation commence vraiment là
 $core->setVersion('dlManager',$m_version);
 return true;
-?>

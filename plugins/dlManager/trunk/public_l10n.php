@@ -24,4 +24,3 @@ __("Size");
 __("Sort files:");
 __("Type");
 __("Zip file content");
-?>

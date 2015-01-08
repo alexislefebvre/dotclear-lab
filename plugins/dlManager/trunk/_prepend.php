@@ -27,7 +27,9 @@ $__autoload['dlManager'] = dirname(__FILE__).'/inc/lib.dlManager.php';
 
 require_once(dirname(__FILE__).'/_widget.php');
 
-if ($core->blog->settings->dlmanager_active)
+$core->blog->settings->addNamespace('dlmanager');
+
+if ($core->blog->settings->dlmanager->dlmanager_active)
 {
 	$core->url->register('media','media',
 		'^media(/.+)?$',array('dlManagerPageDocument','page'));
@@ -38,5 +40,3 @@ if ($core->blog->settings->dlmanager_active)
 	$core->url->register('viewfile','viewfile',
 		'^viewfile/(.+)$',array('dlManagerPageDocument','viewfile'));
 }
-
-?>
