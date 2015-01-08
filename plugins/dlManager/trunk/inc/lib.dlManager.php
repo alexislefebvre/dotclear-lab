@@ -144,8 +144,7 @@ class dlManager
 	public static function inJail($path)
 	{
 		global $core;
-
-		$core->blog->settings->addNamespace('dlManager');
+		
 		$root = $core->blog->settings->dlManager->dlmanager_root;
 		
 		if (!empty($root) && (strpos($path,$root) !== 0))
@@ -165,7 +164,7 @@ class dlManager
 	{
 		global $core;
 		
-		$count_dl = unserialize($core->blog->settings->dlmanager_count_dl);
+		$count_dl = unserialize($core->blog->settings->dlManager->dlmanager_count_dl);
 		if (!is_array($count_dl))
 		{
 			$count_dl = array();
@@ -176,7 +175,7 @@ class dlManager
 		foreach ($array as $k => $v)
 		{
 			$dl = '0';
-			if ($core->blog->settings->dlmanager_counter)
+			if ($core->blog->settings->dlManager->dlmanager_counter)
 			{
 				if ((isset($v->media_id))
 					&& (array_key_exists($v->media_id,$count_dl)))
@@ -276,7 +275,7 @@ class dlManager
 		
 		if ($file->media_image)
 		{ # We look for thumbnails too
-			$media_root = $core->blog->host.path::clean($core->blog->settings->public_url).'/';
+			$media_root = $core->blog->host.path::clean($core->blog->settings->system->public_url).'/';
 			foreach ($file->media_thumb as $v) {
 				$v = preg_replace('/^'.preg_quote($media_root,'/').'/','',$v);
 				$params['sql'] .= "OR post_content_xhtml LIKE '%".$core->con->escape($v)."%' ";

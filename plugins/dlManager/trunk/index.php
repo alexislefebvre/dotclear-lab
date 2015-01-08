@@ -23,20 +23,22 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+$page_title = __('Download Manager');
+
 $settings =& $core->blog->settings;
 
 try
 {
 	if (!empty($_POST['saveconfig']))
 	{
-		$settings->setNameSpace('dlmanager');
-		$settings->put('dlmanager_active',!empty($_POST['dlmanager_active']),
+		$settings->addNameSpace('dlManager');
+		$settings->dlManager->put('dlmanager_active',!empty($_POST['dlmanager_active']),
 			'boolean','Enable DL Manager');
-		$settings->put('dlmanager_hide_urls',!empty($_POST['dlmanager_hide_urls']),
+		$settings->dlManager->put('dlmanager_hide_urls',!empty($_POST['dlmanager_hide_urls']),
 			'boolean','Hide files URLs');
-		$settings->put('dlmanager_counter',!empty($_POST['dlmanager_counter']),
+		$settings->dlManager->put('dlmanager_counter',!empty($_POST['dlmanager_counter']),
 			'boolean','Enable download counter');
-		$settings->put('dlmanager_attachment_url',!empty($_POST['dlmanager_attachment_url']),
+		$settings->dlManager->put('dlmanager_attachment_url',!empty($_POST['dlmanager_attachment_url']),
 			'boolean','Redirect attachments links to DL Manager');
 		
 		if ((isset($_POST['dlmanager_nb_per_page']))
@@ -48,14 +50,14 @@ try
 		{
 			$nb_per_page = 20;
 		}
-		$settings->put('dlmanager_nb_per_page',$nb_per_page,
+		$settings->dlManager->put('dlmanager_nb_per_page',$nb_per_page,
 		'integer','Files per page');
-		$settings->put('dlmanager_enable_sort',!empty($_POST['dlmanager_enable_sort']),
+		$settings->dlManager->put('dlmanager_enable_sort',!empty($_POST['dlmanager_enable_sort']),
 			'boolean','Allow visitors to choose how to sort files');
-		$settings->put('dlmanager_file_sort',
+		$settings->dlManager->put('dlmanager_file_sort',
 			(!empty($_POST['dlmanager_file_sort']) ? $_POST['dlmanager_file_sort'] : ''),
 			'string','file sort');
-		$settings->put('dlmanager_root',
+		$settings->dlManager->put('dlmanager_root',
 			(!empty($_POST['dlmanager_root']) ? $_POST['dlmanager_root'] : ''),
 			'string', 'root directory');
 
@@ -78,22 +80,31 @@ if (isset($_GET['saveconfig']))
 ?>
 <html>
 <head>
-	<title><?php echo __('Download Manager'); ?></title>
+	<title><?php echo $page_title; ?></title>
 </head>
 <body>
-
-	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.__('Download Manager'); ?></h2>
-	
-	<?php 
-		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
-	?>
-	
+<?php
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+if (!empty($msg)) {
+  dcPage::success($msg);
+}
+?>
 	<form method="post" action="<?php echo http::getSelfURI(); ?>">
-		<fieldset>
-			<legend><?php echo __('Download manager'); ?></legend>
-			<p>
+		<div class="fieldset">
+
+<?php
+if ($core->blog->settings->dlManager->dlmanager_active) {
+	echo '<p><a class="onblog_link outgoing" href="'.$core->blog->url.$core->url->getBase('media').'" title="'.__('View the Download Manager public page').'">'.__('View the Download Manager public page').' <img src="images/outgoing-blue.png" alt="" /></a></p>';
+}
+?>
+		<h4><?php echo __('Plugin activation'); ?></h4>
+      <p>
 				<?php echo form::checkbox('dlmanager_active',1,
-				$core->blog->settings->dlmanager_active); ?>
+				$core->blog->settings->dlManager->dlmanager_active); ?>
 				<label class="classic" for="dlmanager_active">
 					<?php printf(__('Enable the %s'),__('Download manager')); ?>
 				</label>
@@ -102,9 +113,12 @@ if (isset($_GET['saveconfig']))
 				<?php printf(__('The %s display media on a public page.'),
 					__('Download manager')); ?>
 			</p>
+	</div>
+	<div class="fieldset">
+		<h4><?php echo __('Advanced options'); ?></h4>
 			<p>
 				<?php echo form::checkbox('dlmanager_hide_urls',1,
-					$core->blog->settings->dlmanager_hide_urls); ?>
+					$core->blog->settings->dlManager->dlmanager_hide_urls); ?>
 				<label class="classic" for="dlmanager_hide_urls">
 					<?php echo __('Hide URLs of images, mp3, flv, mp4 and m4v files'); ?>
 				</label>
@@ -118,14 +132,14 @@ if (isset($_GET['saveconfig']))
 			</p>
 			<p>
 				<?php echo form::checkbox('dlmanager_counter',1,
-					$core->blog->settings->dlmanager_counter); ?>
+					$core->blog->settings->dlManager->dlmanager_counter); ?>
 				<label class="classic" for="dlmanager_counter">
 					<?php echo __('Enable the download counter'); ?>
 				</label>
 			</p>
 			<p>
 				<?php echo form::checkbox('dlmanager_attachment_url',1,
-				$core->blog->settings->dlmanager_attachment_url); ?>
+				$core->blog->settings->dlManager->dlmanager_attachment_url); ?>
 				<label class="classic" for="dlmanager_attachment_url">
 					<?php printf(__('Redirect attachments links to %s'),
 				__('Download manager')); ?>
@@ -146,12 +160,12 @@ if (isset($_GET['saveconfig']))
 				<?php echo __('Files per page:'); ?>
 				</label> 
 				<?php echo form::field('dlmanager_nb_per_page',7,7,
-				(($core->blog->settings->dlmanager_nb_per_page)
-					? $core->blog->settings->dlmanager_nb_per_page : 20)); ?>
+				(($core->blog->settings->dlManager->dlmanager_nb_per_page)
+					? $core->blog->settings->dlManager->dlmanager_nb_per_page : 20)); ?>
 			</p>
 			<p>
 				<?php echo form::checkbox('dlmanager_enable_sort',1,
-					$core->blog->settings->dlmanager_enable_sort); ?>
+					$core->blog->settings->dlManager->dlmanager_enable_sort); ?>
 				<label class="classic" for="dlmanager_enable_sort">
 					<?php echo __('Allow visitors to choose how to sort files'); ?>
 				</label> 
@@ -160,7 +174,7 @@ if (isset($_GET['saveconfig']))
 			<label for="dlmanager_file_sort">
 				<?php echo __('Sort files:').
 					form::combo('dlmanager_file_sort',dlManager::getSortValues(true),
-						$core->blog->settings->dlmanager_file_sort); ?>
+						$core->blog->settings->dlManager->dlmanager_file_sort); ?>
 			</label> 
 			</p>
 			<p class="form-note">
@@ -170,7 +184,7 @@ if (isset($_GET['saveconfig']))
 				<label for="dlmanager_root">
 				<?php printf(__('Define root of %s:'),__('Download manager'));
 					echo form::combo('dlmanager_root',dlManager::listDirs(false,true),
-						$core->blog->settings->dlmanager_root); ?>
+						$core->blog->settings->dlManager->dlmanager_root); ?>
 				</label> 
 			</p>
 			<p class="form-note">
@@ -185,7 +199,7 @@ if (isset($_GET['saveconfig']))
 				<!-- filemanager->$exclude_list is protected -->
 				<?php printf(
 				__('Files can be excluded from %1$s by editing %2$s in %3$s.'),
-				__('Download manager'),'<strong>media_exclusion</strong>','<strong>about:config</strong>');
+				__('Download manager'),'<strong>media_exclusion</strong>','<strong>about:config (system)</strong>');
 				echo ' ';
 				printf(__('For example, to exclude %1$s and %2$s files: %3$s'),
 				'PNG','JPG','<code>/\.(png|jpg)/i</code>'); ?>
@@ -195,17 +209,13 @@ if (isset($_GET['saveconfig']))
 			<br />
 			<code><?php echo dlManager::pageURL(); ?></code>
 			</p>
-			<p>
-				<a href="<?php echo dlManager::pageURL(); ?>">
-				<?php printf(__('View the %s page'),__('Download manager')); ?></a>
-			</p>
-		</fieldset>
+		</div>
 		
 		<p><?php echo $core->formNonce(); ?></p>
 		<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
 	</form>
 
-<?php dcPage::helpBlock('dlManager_widget');?>
+<?php dcPage::helpBlock('dlManager');?>
 
 </body>
 </html>

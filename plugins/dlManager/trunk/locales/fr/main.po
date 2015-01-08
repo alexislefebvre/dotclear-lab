@@ -271,6 +271,9 @@ msgstr "URL de la page %s&nbsp;:"
 msgid "View the %s page"
 msgstr "Voir la page %s"
 
+msgid "View the Download Manager public page"
+msgstr "Voir la page publique Gestionnaire de téléchargement"
+
 #: index.php:202
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
@@ -284,7 +287,7 @@ msgstr "Titre&nbsp;:"
 #: _widget.php:67
 #: _widget.php:76
 msgid "optional"
-msgstr "facultatif"
+msgstr "optionnel"
 
 #: _widget.php:54
 msgid "root directory:"
@@ -318,8 +321,3 @@ msgstr "Affichage d'un élément&nbsp;:"
 #, php-format
 msgid "Add a link to %s in the widget:"
 msgstr "Ajouter un lien vers %s dans le widget&nbsp;:"
-
-#: _widget.php:78
-msgid "Home page only"
-msgstr ""
-

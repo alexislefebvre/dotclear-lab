@@ -1,0 +1,9 @@
+v1.1.6 (28-06-2014) Pierre Van Glabeke :
+Correction php 5.3
+Ajout combo page, content_only et css dans le widget
+Ajout dans le dashboard
+Début mise à plat des settings
+Modifications de l'aide intégrée et localisation
+Modifications visuelles de la page d'admin du plugin (dc2.6) + icône
+Déplacement et renommage de facebox.css
+Suppression fin de ligne unix

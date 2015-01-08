@@ -23,8 +23,22 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-$_menu['Plugins']->addItem(__('Download Manager'),
+$_menu['Blog']->addItem(__('Download Manager'),
 	'plugin.php?p=dlManager',
 	'index.php?pf=dlManager/icon.png',
 	preg_match('/plugin.php\?p=dlManager(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
+
+#dashboard
+$core->addBehavior('adminDashboardFavorites','dlManagerDashboardFavorites');
+
+function dlManagerDashboardFavorites($core,$favs)
+{
+	$favs->register('dlManager', array(
+		'title' => __('Download Manager'),
+		'url' => 'plugin.php?p=dlManager',
+		'small-icon' => 'index.php?pf=dlManager/icon.png',
+		'large-icon' => 'index.php?pf=dlManager/icon-big.png',
+		'permissions' => 'usage,contentadmin'
+	));
+}

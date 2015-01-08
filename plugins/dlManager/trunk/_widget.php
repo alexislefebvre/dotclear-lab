@@ -73,8 +73,17 @@ class dlManagerWidget
 		$w->dlManager->setting('link',
 			sprintf(__('Add a link to %s in the widget:'),__('Download manager')).
 			' ('.__('optional').')',__('Download manager'),'text');
+			
 
-		$w->dlManager->setting('homeonly',__('Home page only'),false,'check');
+		$w->dlManager->setting('homeonly',__('Display on:'),0,'combo',
+			array(
+				__('All pages') => 0,
+				__('Home page only') => 1,
+				__('Except on home page') => 2
+				)
+		);
+		$w->dlManager->setting('content_only',__('Content only'),0,'check');
+		$w->dlManager->setting('class',__('CSS class:'),'');
 	}
 	
 	/**
@@ -82,15 +91,13 @@ class dlManagerWidget
 	@param	w	<b>object</b>	Widget
 	@return	<b>string</b> XHTML
 	*/
-	public static function show(&$w)
+	public static function show($w)
 	{
 		global $core;
-
-		if ($w->homeonly && $core->url->type != 'default') {
+		
+  if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default'))
 			return;
-		}
-
-		$core->blog->settings->addNamespace('dlManager');
 		
 		if (!$core->blog->settings->dlManager->dlmanager_active) {return;}
 		
@@ -212,6 +219,9 @@ class dlManagerWidget
 		$link = (strlen($w->link) > 0) ? '<p class="text"><a href="'.
 			dlManager::pageURL().'">'.html::escapeHTML($w->link).'</a></p>' : null;
 
-		return '<div class="dlmanager">'.$header.$str.$link.'</div>';
+		return
+      ($w->content_only ? '' : '<div class="dlmanager'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
+        $header.$str.$link.
+			($w->content_only ? '' : '</div>');
 	}
 }

@@ -23,7 +23,6 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-$core->blog->settings->addNamespace('dlManager');
 if (!$core->blog->settings->dlManager->dlmanager_active) {return;}
 
 /**
@@ -38,7 +37,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		global $core;
 		
 		# if the plugin is disabled
-		if (!$core->blog->settings->dlmanager_active)
+		if (!$core->blog->settings->dlManager->dlmanager_active)
 		{
 			self::p404();
 			return;
@@ -71,7 +70,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		try
 		{
 			# define root of DL Manager
-			$page_root = $core->blog->settings->dlmanager_root;
+			$page_root = $core->blog->settings->dlManager->dlmanager_root;
 
 			# used to remove root from path
 			$page_root_len = strlen($page_root);
@@ -101,7 +100,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 			
 			# file sort
 			# if visitor can choose how to sort files
-			if ($core->blog->settings->dlmanager_enable_sort === true)
+			if ($core->blog->settings->dlManager->dlmanager_enable_sort === true)
 			{
 				# from /dotclear/admin/media.php
 				if ((!empty($_POST['media_file_sort']))
@@ -119,7 +118,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 			else
 			{
 				# default value
-				$_ctx->dlManager_fileSort = $core->blog->settings->dlmanager_file_sort;
+				$_ctx->dlManager_fileSort = $core->blog->settings->dlManager->dlmanager_file_sort;
 			}
 
 			# exit if the directory doesn't exist
@@ -170,12 +169,12 @@ class dlManagerPageDocument extends dcUrlHandlers
 			$files =& $core->media->dir['files'];
 			
 			$_ctx->dlManager_multiple_pages = (boolean) (count($files) >
-				$core->blog->settings->dlmanager_nb_per_page);
+				$core->blog->settings->dlManager->dlmanager_nb_per_page);
 			
 			$_ctx->dlManager_pager = new pager(
 				# current page
 				((isset($_GET['page'])) ? $_GET['page'] : 1),count($files),
-				$core->blog->settings->dlmanager_nb_per_page,10);
+				$core->blog->settings->dlManager->dlmanager_nb_per_page,10);
 			
 			$_ctx->dlManager_pager->html_prev = '&#171; '.__('previous');
 			$_ctx->dlManager_pager->html_next = __('next').' &#187;';
@@ -235,7 +234,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 			}
 			
 			# file_url for mp3, flv, mp4 and m4v players
-			if ($core->blog->settings->dlmanager_hide_urls)
+			if ($core->blog->settings->dlManager->dlmanager_hide_urls)
 			{
 				$_ctx->file_url = $core->blog->url.$core->url->getBase('viewfile').
 				'/'.$file->media_id;
@@ -246,7 +245,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 			}
 			
 			# define root of DL Manager
-			$page_root = $core->blog->settings->dlmanager_root;
+			$page_root = $core->blog->settings->dlManager->dlmanager_root;
 			
 			# used to remove root from path
 			$page_root_len = strlen($page_root);
@@ -324,17 +323,17 @@ class dlManagerPageDocument extends dcUrlHandlers
 		  
 			if (is_readable($file->file))
 			{
-				if ($core->blog->settings->dlmanager_counter)
+				if ($core->blog->settings->dlManager->dlmanager_counter)
 				{
-					$count = unserialize($core->blog->settings->dlmanager_count_dl);
+					$count = unserialize($core->blog->settings->dlManager->dlmanager_count_dl);
 					if (!is_array($count)) {$count = array();}
 					$count[$file->media_id] = array_key_exists($file->media_id,$count)
 						? $count[$file->media_id]+1 : 1;
 					
 					$settings =& $core->blog->settings;
 					
-					$settings->setNamespace('dlmanager');
-					$settings->put('dlmanager_count_dl',serialize($count),'string',
+					$settings->addNamespace('dlManager');
+					$settings->dlManager->put('dlmanager_count_dl',serialize($count),'string',
 						'Download counter');
 					//$core->callBehavior('publicDownloadedFile',(integer)$args);
 				}
@@ -368,8 +367,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 	{
 		global $core;
 		
-		if (!$GLOBALS['core']->blog->settings->dlmanager_hide_urls
-		|| empty($args) || !$core->blog->settings->dlmanager_active)
+		if (!$GLOBALS['core']->blog->settings->dlManager->dlmanager_hide_urls
+		|| empty($args) || !$core->blog->settings->dlManager->dlmanager_active)
 		{
 			self::p404();
 			return;
@@ -520,7 +519,7 @@ $core->tpl->addBlock('DLMItemEntries',array('dlManagerPageTpl',
 $core->tpl->addValue('DLMPageLinks',array('dlManagerPageTpl',
 	'pageLinks'));
 
-if ($core->blog->settings->dlmanager_attachment_url)
+if ($core->blog->settings->dlManager->dlmanager_attachment_url)
 {
 	# redefine {{tpl:AttachmentURL}}
 	$core->tpl->addValue('AttachmentURL',array('dlManagerPageTpl',
@@ -551,7 +550,7 @@ class dlManagerPageTpl
 	public static function ifSortIsEnabled($attr,$content)
 	{
 		return
-		'<?php if ($core->blog->settings->dlmanager_enable_sort === true) : ?>'."\n".
+		'<?php if ($core->blog->settings->dlManager->dlmanager_enable_sort === true) : ?>'."\n".
 		$content.
 		'<?php endif; ?>';
 	}
@@ -795,7 +794,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		if ($GLOBALS['core']->blog->settings->dlmanager_hide_urls)
+		if ($GLOBALS['core']->blog->settings->dlManager->dlmanager_hide_urls)
 		{
 			return('<?php echo($core->blog->url.'.
 			'$core->url->getBase(\'viewfile\').\'/\'.'.
@@ -895,11 +894,11 @@ class dlManagerPageTpl
 		{
 			if ($attr['format'] == 'date_format')
 			{
-				$format = $GLOBALS['core']->blog->settings->date_format;
+				$format = $GLOBALS['core']->blog->settings->system->date_format;
 			}
 			elseif ($attr['format'] == 'time_format')
 			{
-				$format = $GLOBALS['core']->blog->settings->time_format;
+				$format = $GLOBALS['core']->blog->settings->system->time_format;
 			}
 			else
 			{
@@ -930,7 +929,7 @@ class dlManagerPageTpl
 	*/
 	public static function ifDownloadCounter($attr,$content)
 	{
-		return('<?php if ($core->blog->settings->dlmanager_counter) : ?>'.
+		return('<?php if ($core->blog->settings->dlManager->dlmanager_counter) : ?>'.
 		$content.
 		'<?php endif; ?>');
 	}
@@ -950,7 +949,7 @@ class dlManagerPageTpl
 			&& array_key_exists($attr['size'],$core->media->thumb_sizes))
 		{$size = $attr['size'];}
 		
-		if ($GLOBALS['core']->blog->settings->dlmanager_hide_urls)
+		if ($GLOBALS['core']->blog->settings->dlManager->dlmanager_hide_urls)
 		{
 			return('<?php '.
 			'echo($core->blog->url.$core->url->getBase(\'viewfile\').\'/\'.'.
