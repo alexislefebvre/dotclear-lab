@@ -1,3 +1,11 @@
+zoneclearFeedServer 2015.01.10 (Pierre Van Glabeke)
+===========================================================
+ * Dotclear 2.7 requis
+ * Fin de ligne unix
+ * Ajout case hors ligne pour les widgets
+ * Jeux de templates modifiés (mustek/currywurst)
+ * Modifications locales
+
 zoneclearFeedServer xxxx.xx.xx
 ===========================================================
  * Not fixed disallow self blog feeds

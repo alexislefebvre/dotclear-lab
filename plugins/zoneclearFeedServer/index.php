@@ -846,8 +846,6 @@ else {
 	);
 }
 
-dcPage::helpBlock('zoneclearFeedServer');
-
 echo 
 '<hr class="clear"/><p class="right modules">
 <a class="module-config" '.

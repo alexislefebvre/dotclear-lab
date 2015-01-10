@@ -42,7 +42,7 @@ class zoneclearFeedServerWidget
 	{
 		$w->create(
 			'zcfssource',
-			__('Feeds server : sources'),
+			__('Feeds server: sources'),
 			array('zoneclearFeedServerWidget', 'publicSource'),
 			null,
 			__('List sources of feeds')
@@ -108,6 +108,7 @@ class zoneclearFeedServerWidget
 			__('CSS class:'),
 			''
 		);
+		$w->zcfssource->setting('offline',__('Offline'),0,'check');
 	}
 
 	/**
@@ -119,7 +120,7 @@ class zoneclearFeedServerWidget
 	{
 		$w->create(
 			'zcfsnumber',
-			__('Feeds server : numbers'),
+			__('Feeds server: numbers'),
 			array('zoneclearFeedServerWidget', 'publicNumber'),
 			null,
 			__('Show some numbers about feeds')
@@ -181,6 +182,7 @@ class zoneclearFeedServerWidget
 			__('CSS class:'),
 			''
 		);
+		$w->zcfsnumber->setting('offline',__('Offline'),0,'check');
 	}
 
 	/**
@@ -190,7 +192,10 @@ class zoneclearFeedServerWidget
 	 */
 	public static function publicSource($w)
 	{
-		global $core; 
+		global $core;
+
+		if ($w->offline)
+			return;
 		
 		if (!$core->blog->settings->zoneclearFeedServer->zoneclearFeedServer_active 
 		 || $w->homeonly == 1 && $core->url->type != 'default' 
@@ -228,12 +233,11 @@ class zoneclearFeedServerWidget
 			$res .= '<li><a href="'.$core->blog->url.$core->url->getBase('zoneclearFeedsPage').'">'.__('All sources').'</a></li>';
 		}
 
-		return
-		($w->content_only ? '' : '<div class="zoneclear-sources'.
-		($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		'<ul>'.$res.'</ul>'.
-		($w->content_only ? '' : '</div>');
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+    '<ul>'.$res.'</ul>';
+
+		return $w->renderDiv($w->content_only,'zoneclear-sources '.$w->class,'',$res);
 	}
 
 	/**
@@ -244,6 +248,9 @@ class zoneclearFeedServerWidget
 	public static function publicNumber($w)
 	{
 		global $core;
+
+		if ($w->offline)
+			return;
 
 		if (!$core->blog->settings->zoneclearFeedServer->zoneclearFeedServer_active 
 		 || $w->homeonly == 1 && $core->url->type != 'default' 
@@ -311,11 +318,10 @@ class zoneclearFeedServerWidget
 		}
 
 		# Display
-		return 
-		($w->content_only ? '' : '<div class="oneclear-number'.
-		($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		'<ul>'.$content.'</ul>'.
-		($w->content_only ? '' : '</div>');
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+    '<ul>'.$content.'</ul>';
+
+		return $w->renderDiv($w->content_only,'zoneclear-number '.$w->class,'',$res);
 	}
 }

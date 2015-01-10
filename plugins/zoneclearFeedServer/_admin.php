@@ -31,7 +31,7 @@ if ($core->getVersion('zoneclearFeedServer') !=
 require_once dirname(__FILE__).'/_widgets.php';
 
 # Admin menu
-$_menu['Plugins']->addItem(
+$_menu['Blog']->addItem(
 	__('Feeds server'),
 	'plugin.php?p=zoneclearFeedServer',
 	'index.php?pf=zoneclearFeedServer/icon.png',

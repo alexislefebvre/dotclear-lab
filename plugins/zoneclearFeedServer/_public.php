@@ -381,10 +381,7 @@ class zcfsUrlHandler extends dcUrlHandlers
 		elseif ($args == '/zcfsupd.js' 
 		 && 3 == $s->zoneclearFeedServer_bhv_pub_upd
 		) {
-			$core->tpl->setPath(
-				$core->tpl->getPath(),
-				dirname(__FILE__).'/default-templates'
-			);
+			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 			self::serveDocument(
 				'zcfsupd.js',
 				'text/javascript',
@@ -396,10 +393,12 @@ class zcfsUrlHandler extends dcUrlHandlers
 		elseif (in_array($args, array('', '/')) 
 		 && $s->zoneclearFeedServer_pub_active
 		) {
-			$core->tpl->setPath(
-				$core->tpl->getPath(),
-				dirname(__FILE__).'/default-templates'
-			);
+			$tplset = $core->themes->moduleInfo($core->blog->settings->system->theme,'tplset');
+        if (!empty($tplset) && is_dir(dirname(__FILE__).'/default-templates/'.$tplset)) {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.$tplset);
+        } else {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.DC_DEFAULT_TPLSET);
+        }
 			self::serveDocument('zcfeeds.html');
 		}
 		# Unknow

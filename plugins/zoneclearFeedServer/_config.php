@@ -114,6 +114,14 @@ $combo_tagcase = array(
 $pub_page_url = $core->blog->url.$core->url->getBase('zoneclearFeedsPage');
 
 # -- Display form --
+
+if (!is_writable(DC_TPL_CACHE)) {
+	echo
+	'<p class="error">'.
+	__('Dotclear cache is not writable or not well configured!').
+	'</p>';
+	}
+	
 echo '
 
 <div class="fieldset">
@@ -122,10 +130,14 @@ echo '
 <p><label for="active">'.
 form::checkbox('active', 1, $active).
 __('Enable plugin').'</label></p>
+</div>';
 
-</div>
+if ($core->blog->settings->zoneclearFeedServer->zoneclearFeedServer_pub_active) {
+	echo '<p><a class="onblog_link" href="'.$pub_page_url.'" title="'.$pub_page_url.''.'">'.__('View the public list of feeds').'</a></p>';
+}
 
-<div class="fieldset">
+echo '
+<div class="fieldset" style="margin-top:3.5em;">
 <h4>'.__('Rules').'</h4>
 
 <div class="two-boxes">
@@ -197,25 +209,6 @@ echo '
 </div>
 
 </div>
-
-<div class="fieldset">
-<h4>'.__('Informations').'</h4>
 ';
 
-if (!is_writable(DC_TPL_CACHE)) {
-	echo 
-	'<p class="error">'.
-	__('Dotclear cache is not writable or not well configured!').
-	'</p>';
-}
-
-echo '
-<ul>
-<li>'.__('A writable cache folder is required to use this extension.').'</li>
-<li>'.__('If you set a large number of feeds to update at one time, this may cause a timeout error. We recommand to keep it to one.').'</li>
-<li>'.__('If you use cron script, you can disable public update.').'</li>
-<li>'.sprintf(__('If active, a public list of feeds are available at "%s".'),'<a href="'.$pub_page_url.'">'.$pub_page_url.'</a>').'</li>
-<li>'.__('In order to do update through Ajax, your theme must have behavior publicHeadContent.').'</li>
-</ul>
-
-</div>';
+dcPage::helpBlock('zoneclearFeedServer');

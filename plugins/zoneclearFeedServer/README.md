@@ -13,7 +13,7 @@ It mix your blog with a feeds planet.
 
   * admin perms for configuration
   * admin perms to manager feeds
-  * Dotclear 2.6
+  * Dotclear 2.7
 
 ## USAGE
 

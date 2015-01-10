@@ -23,15 +23,15 @@ $this->registerModule(
 	/* Description*/
 	"Mix your blog with a feeds planet",
 	/* Author */
-	"Jean-Christian Denis, BG",
+	"Jean-Christian Denis, BG, Pierre Van Glabeke",
 	/* Version */
-	'2013.11.18',
+	'2015.01.10',
 	/* Properies */
 	array(
 		'permissions' => 'admin',
 		'type' => 'plugin',
-		'dc_min' => '2.6',
-		'support' => 'http://jcd.lv/q=zoneclearFeedServer',
+		'dc_min' => '2.7',
+		'support' => 'http://forum.dotclear.org/viewtopic.php?pid=331158',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/zoneclearFeedServer'
 	)
 );

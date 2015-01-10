@@ -17,7 +17,7 @@ if (!defined('DC_CONTEXT_ADMIN')) {
 	return null;
 }
 
-$dc_min = '2.6';
+$dc_min = '2.7';
 $mod_id = 'zoneclearFeedServer';
 
 try {

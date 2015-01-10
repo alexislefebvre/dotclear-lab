@@ -50,7 +50,7 @@ msgstr "URL du site"
 
 #: _config.php:98
 msgid "Disable"
-msgstr "Déactiver"
+msgstr "Désactiver"
 
 #: _config.php:99
 msgid "Before display"
@@ -80,77 +80,57 @@ msgstr "Tout en minuscule"
 msgid "All upper case"
 msgstr "Tout en majuscule"
 
-#: _config.php:124
-msgid "Enable plugin"
-msgstr "Activer l'extension"
+#: _config.php:121
+msgid "Dotclear cache is not writable or not well configured!"
+msgstr "Le cache de Dotclear n'est pas accessible en écriture ou n'est pas configuré !"
 
-#: _config.php:129
+#: _config.php:132
+msgid "Enable plugin"
+msgstr "Activer le plugin"
+
+#: _config.php:136
+msgid "View the public list of feeds"
+msgstr "Voir la page publique de la liste des flux"
+
+#: _config.php:141
 msgid "Rules"
 msgstr "Règles"
 
-#: _config.php:134
+#: _config.php:146
 msgid "Status of new posts:"
 msgstr "Status des nouveaux billets :"
 
-#: _config.php:138
+#: _config.php:150
 msgid "Owner of entries created by zoneclearFeedServer:"
 msgstr "Propriétaire des billets créés par zoneclearFeedServer :"
 
-#: _config.php:142
+#: _config.php:154
 msgid "How to transform imported tags:"
 msgstr "Comment tranformer la casse des mots-clés importés :"
 
-#: _config.php:148
+#: _config.php:160
 msgid "Update feeds on public side:"
 msgstr "Mettre à jour les flux depuis la partie publique :"
 
-#: _config.php:152
+#: _config.php:164
 msgid "Number of feeds to update at one time:"
 msgstr "Nombre de flux à mettre à jour à la fois :"
 
-#: _config.php:157
+#: _config.php:169
 msgid "Keep active empty feeds"
 msgstr "Garder actif les flux vides"
 
-#: _config.php:161
+#: _config.php:173
 msgid "Enable public page"
 msgstr "Activer la page publique"
 
-#: _config.php:165
+#: _config.php:177
 msgid "Redirect to original post on:"
 msgstr "Rediriger vers le billet original sur :"
 
-#: _config.php:182
+#: _config.php:194
 msgid "Show full content on:"
 msgstr "Afficher le contenu complet sur :"
-
-#: _config.php:202
-msgid "Informations"
-msgstr "Informations"
-
-#: _config.php:208
-msgid "Dotclear cache is not writable or not well configured!"
-msgstr "Le cache de Dotclear n'est pas accessible en écriture ou n'est pas configuré!"
-
-#: _config.php:214
-msgid "A writable cache folder is required to use this extension."
-msgstr "Un dossier de cache accessible en écriture est nécessaire pour utiliser cette extension."
-
-#: _config.php:215
-msgid "If you set a large number of feeds to update at one time, this may cause a timeout error. We recommand to keep it to one."
-msgstr "Si vous paramètrez un grand nombre de flux à mettre à jour, ceci peut causer une erreur de timeout. Il est recommandé de laisser cette valeur à 1."
-
-#: _config.php:216
-msgid "If you use cron script, you can disable public update."
-msgstr "Si vous utilisez un script cron, vous pouvez désactiver la mise à jour publique."
-
-#: _config.php:217
-msgid "If active, a public list of feeds are available at \"%s\"."
-msgstr "Si activé, une page publique de la liste des flux est disponible à l'adresse %s ."
-
-#: _config.php:218
-msgid "In order to do update through Ajax, your theme must have behavior publicHeadContent."
-msgstr "Pour utiliser la mise à jour depuis Ajax, votre thème doit avoir le behavior publicheadContent."
 
 #: _public.php:234
 msgid "Original post on <a href=\"%s\">%s</a>"
@@ -161,7 +141,7 @@ msgid "Read more details about this feed"
 msgstr "Lire plus de détails à propos de ce flux"
 
 #: _widgets.php:35
-msgid "Feeds server : sources"
+msgid "Feeds server: sources"
 msgstr "Serveur de flux : les sources"
 
 #: _widgets.php:38
@@ -185,7 +165,7 @@ msgid "Add link to feeds page"
 msgstr "Ajouter un lien vers la page des flux"
 
 #: _widgets.php:107
-msgid "Feeds server : numbers"
+msgid "Feeds server: numbers"
 msgstr "Serveur de flux : les chiffres"
 
 #: _widgets.php:110
@@ -244,6 +224,10 @@ msgstr "aucun billet"
 msgid "one entry"
 msgstr "un billet"
 
+#: _widgets.php:308
+msgid "%d entries"
+msgstr "%d billets"
+
 #: default-templates/zcfeeds.html:50
 msgid "List of feeds"
 msgstr "Liste des sources"
@@ -252,7 +236,7 @@ msgstr "Liste des sources"
 #: index.php:469
 #: index.php:794
 msgid "Feeds"
-msgstr "Fils de syndication"
+msgstr "Flux de syndication"
 
 #: inc/class.zcfs.feedsactions.php:40
 msgid "Back to feeds list"
