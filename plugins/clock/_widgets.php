@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Clock, a plugin for Dotclear 2
-# Copyright (C) 2007-2013 Moe (http://gniark.net/)
+# Copyright (C) 2007-2015 Moe (http://gniark.net/)
 #
 # Clock is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -52,6 +52,7 @@ class ClockBehaviors
 		);
     $w->Clock->setting('content_only',__('Content only'),0,'check');
     $w->Clock->setting('class',__('CSS class:'),'');
+		$w->Clock->setting('offline',__('Offline'),0,'check');
 	}
 }
 
@@ -60,6 +61,9 @@ class publicClock
 	public static function Show($w)
 	{
 	global $core;
+
+		if ($w->offline)
+			return;
 
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default')) {
@@ -108,8 +112,10 @@ class publicClock
 			$js = null;
 		}
 
-		return $res = ($w->content_only ? '' : '<div class="clock'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').$header.
-		'<p class="text">'.$time.'</p>'.$js.
-    ($w->content_only ? '' : '</div>');
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+    '<p class="text">'.$time.'</p>'.$js;
+
+		return $w->renderDiv($w->content_only,'clock '.$w->class,'',$res);
 	}
 }
