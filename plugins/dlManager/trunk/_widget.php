@@ -84,6 +84,7 @@ class dlManagerWidget
 		);
 		$w->dlManager->setting('content_only',__('Content only'),0,'check');
 		$w->dlManager->setting('class',__('CSS class:'),'');
+		$w->dlManager->setting('offline',__('Offline'),0,'check');
 	}
 	
 	/**
@@ -94,6 +95,9 @@ class dlManagerWidget
 	public static function show($w)
 	{
 		global $core;
+
+		if ($w->offline)
+			return;
 		
   if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default'))
@@ -213,15 +217,13 @@ class dlManagerWidget
 		unset($items);
 
 		# output
-		$header = (strlen($w->title) > 0)
-			? '<h2>'.html::escapeHTML($w->title).'</h2>' : null;
-
 		$link = (strlen($w->link) > 0) ? '<p class="text"><a href="'.
 			dlManager::pageURL().'">'.html::escapeHTML($w->link).'</a></p>' : null;
 
-		return
-      ($w->content_only ? '' : '<div class="dlmanager'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-        $header.$str.$link.
-			($w->content_only ? '' : '</div>');
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		$str.$link;
+
+		return $w->renderDiv($w->content_only,'dlmanager '.$w->class,'',$res);
 	}
 }

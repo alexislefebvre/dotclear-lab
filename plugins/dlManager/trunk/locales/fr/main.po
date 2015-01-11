@@ -16,11 +16,6 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:74
-#: public_l10n.php:13
-msgid "Home"
-msgstr ""
-
 #: _public.php:146
 msgid "parent directory"
 msgstr "répertoire parent"
@@ -54,10 +49,6 @@ msgstr "Par dates, décroissantes"
 #: index.php:82
 msgid "Download Manager"
 msgstr "Gestionnaire de téléchargements"
-
-#: public_l10n.php:2
-msgid "Archives"
-msgstr ""
 
 #: public_l10n.php:3
 msgid "Basename"
@@ -98,10 +89,6 @@ msgstr "Télécharger ce fichier"
 #: public_l10n.php:8
 msgid "Entries containing this media"
 msgstr "Billets contenant ce média"
-
-#: public_l10n.php:9
-msgid "Extension"
-msgstr "Extension"
 
 #: public_l10n.php:10
 msgid "File"
@@ -147,12 +134,12 @@ msgstr "Page(s)&nbsp;:"
 #: public_l10n.php:21
 #: _widget.php:184
 msgid "Preview:"
-msgstr ""
+msgstr "Voir :"
 
 #: public_l10n.php:22
 #: _widget.php:186
 msgid "Preview"
-msgstr ""
+msgstr "Voir"
 
 #: public_l10n.php:23
 msgid "Size"
@@ -234,7 +221,7 @@ msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
 #: index.php:164
 #: index.php:174
 msgid "Leave empty to cancel this feature."
-msgstr ""
+msgstr "Laisser vide pour annuler cette fonction."
 
 #: index.php:168
 #, php-format
@@ -282,13 +269,6 @@ msgstr "Enregistrer la configuration"
 msgid "Title:"
 msgstr "Titre&nbsp;:"
 
-#: _widget.php:48
-#: _widget.php:61
-#: _widget.php:67
-#: _widget.php:76
-msgid "optional"
-msgstr "optionnel"
-
 #: _widget.php:54
 msgid "root directory:"
 msgstr "répertoire de base&nbsp;:"
@@ -321,3 +301,6 @@ msgstr "Affichage d'un élément&nbsp;:"
 #, php-format
 msgid "Add a link to %s in the widget:"
 msgstr "Ajouter un lien vers %s dans le widget&nbsp;:"
+
+msgid "close"
+msgstr "fermer"
