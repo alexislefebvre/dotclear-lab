@@ -132,12 +132,14 @@ form::checkbox('active', 1, $active).
 __('Enable plugin').'</label></p>
 </div>';
 
+echo '
+<div class="fieldset">';
+
 if ($core->blog->settings->zoneclearFeedServer->zoneclearFeedServer_pub_active) {
 	echo '<p><a class="onblog_link" href="'.$pub_page_url.'" title="'.$pub_page_url.''.'">'.__('View the public list of feeds').'</a></p>';
 }
 
 echo '
-<div class="fieldset" style="margin-top:3.5em;">
 <h4>'.__('Rules').'</h4>
 
 <div class="two-boxes">
