@@ -20,7 +20,7 @@ msgstr "Derniers billets (étendu)"
 
 #: _widgets.php:37
 msgid "Extended list of entries"
-msgstr "Liste étendu de billets"
+msgstr "Liste étendue de billets"
 
 #: _widgets.php:48
 msgid "Post"
@@ -32,7 +32,7 @@ msgstr "Galerie"
 
 #: _widgets.php:95
 msgid "Protection:"
-msgstr "protection :"
+msgstr "Protection :"
 
 #: _widgets.php:100
 msgid "only without password"
@@ -44,7 +44,7 @@ msgstr "seulement avec mot de passe"
 
 #: _widgets.php:121
 msgid "Selected entries only"
-msgstr "Billets séléctionnés seulement"
+msgstr "Billets sélectionnés seulement"
 
 #: _widgets.php:128
 msgid "Updated entries only"
@@ -52,7 +52,7 @@ msgstr "Billets mis à jour seulement"
 
 #: _widgets.php:137
 msgid "Limit to tags:"
-msgstr "Limiter aux tags :"
+msgstr "Limiter aux mots-clés :"
 
 #: _widgets.php:145
 msgid "Limit to words:"
@@ -64,11 +64,11 @@ msgstr "Afficher la première image du billet :"
 
 #: _widgets.php:197
 msgid "Show entries excerpt"
-msgstr "Afficher le résumé"
+msgstr "Afficher l'extrait"
 
 #: _widgets.php:204
 msgid "Excerpt length:"
-msgstr "Taille du résumé :"
+msgstr "Taille de l'extrait :"
 
 #: _widgets.php:211
 msgid "Show comments count"

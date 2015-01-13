@@ -237,6 +237,7 @@ class lastpostsextendWidget
 			__('CSS class:'),
 			''
 		);
+		$w->lastpostsextend->setting('offline',__('Offline'),0,'check');
 	}
 	
 	public static function parseWidget($w)
@@ -248,6 +249,9 @@ class lastpostsextendWidget
 			'columns' => array(),
 			'from' => ''
 		);
+
+		if ($w->offline)
+			return;
 		
 		# Home page only
 		if ($w->homeonly == 1 && $core->url->type != 'default' 
@@ -346,10 +350,9 @@ class lastpostsextendWidget
 		}
 
 		# Return
+
 		$res =
-		($w->content_only ? '' : '<div class="lastpostsextend'.
-		($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
 		'<ul>';
 
 		while ($rs->fetch()) {
@@ -403,7 +406,9 @@ class lastpostsextendWidget
 			}
 			$res .= '</li>';
 		}
-		$res .= '</ul>'.($w->content_only ? '' : '</div>');
+		$res .= '</ul>';
+
+		return $w->renderDiv($w->content_only,'lastpostsextend '.$w->class,'',$res);
 
 		return $res;
 	}

@@ -1,4 +1,10 @@
-lastpostsExtend 2013.11.27
+lastpostsExtend 2015.01.13 Pierre Van Glabeke
+===========================================================
+ * Compatibilité dotclear 2.7
+ * Ajout options widget et compatibilité currywurst
+ * Modifications locales
+
+lastpostsExtend 2013.12.01
 ===========================================================
  * Fix XHTML validation on widget
  * Fix category id from wrong table. thx BG

@@ -25,12 +25,12 @@ $this->registerModule(
 	/* Author */
 	"Jean-Christian Denis",
 	/* Version */
-	'2013.11.12',
+	'2015.01.13',
 	array(
 		'permissions' => 'admin',
 		'type' => 'plugin',
 		'dc_min' => '2.6',
-		'support' => 'http://jcd.lv/q=lastpostsExtend',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/lastpostsExtend',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/lastpostsExtend'
 	)
 );
