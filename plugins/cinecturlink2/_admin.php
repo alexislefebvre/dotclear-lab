@@ -20,7 +20,7 @@ if (!defined('DC_CONTEXT_ADMIN')) {
 require_once dirname(__FILE__).'/_widgets.php';
 
 # Admin menu
-$_menu['Plugins']->addItem(
+$_menu['Blog']->addItem(
 	__('My cinecturlink'),
 	'plugin.php?p=cinecturlink2',
 	'index.php?pf=cinecturlink2/icon.png',

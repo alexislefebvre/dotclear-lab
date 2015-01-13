@@ -340,7 +340,7 @@ class cinecturlink2
 				throw new Exception(__('No category title'));
 			}
 			if ($cur->cat_desc == '') {
-				throw new Exception(__('No category description'));
+				throw new Exception(__('You must provide a description.'));
 			}
 
 			$cur->cat_id = $this->getNextCatId();

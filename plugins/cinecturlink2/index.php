@@ -308,9 +308,9 @@ catch (Exception $e) {
 
 $langs_combo = l10n::getISOcodes(true);
 $links_action_combo = array(
-	__('delete')			=> 'delete_links',
-	__('change category')	=> 'moveto_change_links_category',
-	__('change my rating')	=> 'moveto_change_links_note'
+	__('Delete')			=> 'delete_links',
+	__('Change category')	=> 'moveto_change_links_category',
+	__('Change my rating')	=> 'moveto_change_links_note'
 );
 $notes_combo = array();
 for ($i=0;$i<21;$i++) {
@@ -391,7 +391,7 @@ if (!empty($_POST['links']) && $action == 'moveto_change_links_category') {
 	<p><label for="upd_category">'.__('Select a category:').' '.
 	form::combo('upd_category', $categories_combo, '', 'maximal').'
 	</label></p><p>
-	<input type="submit" name="updlinkcat" value="ok" />'.
+	<input type="submit" name="updlinkcat" value="'.__('Save').'" />'.
 	form::hidden(array('action'), 'change_links_category').
 	$core->formNonce().'
 	</p>
@@ -432,7 +432,7 @@ elseif (!empty($_POST['links']) && $action == 'moveto_change_links_note')
 	<p><label for="upd_note">'.__('Select a rating:').' '.
 	form::combo('upd_note',$notes_combo, 10, 'maximal').'
 	</label></p><p>
-	<input type="submit" name="updlinknote" value="ok" />'.
+	<input type="submit" name="updlinknote" value="'.__('Save').'" />'.
 	form::hidden(array('action'), 'change_links_note').
 	$core->formNonce().'
 	</p>
@@ -493,7 +493,7 @@ else {
 		<p class="col checkboxes-helpers"></p>
 		<p class="col right">'.__('Selected links action:').' '.
 		form::combo(array('action'),$links_action_combo).'
-		<input type="submit" value="'.__('ok').'" />'.
+		<input type="submit" value="'.__('Save').'" />'.
 		form::hidden(array('sortby'),$sortby).
 		form::hidden(array('order'),$order).
 		form::hidden(array('page'),$page).
@@ -534,15 +534,15 @@ else {
 	<div class="two-cols clearfix">
 	<div class="col70">
 
-	<p><label for="new_title">'.__('Title:').' '.
+	<p><label class="classic required" for="new_title"><abbr title="'.__('Required field').'">*</abbr> '.__('Title:').' '.
 	form::field('new_title', 60, 255, $new_title, 'maximal').
 	'</label></p>
 
-	<p><label for="new_desc">'.__('Description:').' '.
+	<p><label class="classic required" for="new_desc"><abbr title="'.__('Required field').'">*</abbr> '.__('Description:').' '.
 	form::field('new_desc', 60, 255, $new_desc, 'maximal').
 	'</label></p>
 
-	<p><label for="new_author">'.__('Author:').' '.
+	<p><label class="classic required" for="new_author"><abbr title="'.__('Required field').'">*</abbr> '.__('Author:').' '.
 	form::field('new_author', 60, 255, $new_author, 'maximal').
 	'</label></p>
 
@@ -552,7 +552,7 @@ else {
 	__('Search with Google').'</a>'.
 	'</p>
 
-	<p><label for="new_image">'.__('Image URL:').' '.
+	<p><label class="classic required" for="new_image"><abbr title="'.__('Required field').'">*</abbr> '.__('Image URL:').' '.
 	form::field('new_image', 60, 255, $new_image, 'maximal').'</label>'.
 	'<a class="modal" href="http://amazon.com" id="newimagesearch">'.
 	__('Search with Amazon').'</a>'.
@@ -593,7 +593,7 @@ else {
 	form::hidden(array('link_id'),$upd_link_id).
 	form::hidden(array('action'),'create_link').
 	$core->formNonce().'
-	<input type="submit" name="newlink" value="'.($upd_link_id ? __('update link') : __('create link')).'" />
+	<input type="submit" name="newlink" value="'.($upd_link_id ? __('Update link') : __('Create link')).'" />
 	</p>
 	</form>
 	</div>';
@@ -608,7 +608,7 @@ else {
 		echo '
 		<form method="post" action="'.$p_url.'#cats">
 		<table class="maximal dragable">
-		<thead><tr><th colspan="2">#</th><th>'.__('name').'</th><th>'.__('description').'</th></tr></thead>
+		<thead><tr><th colspan="2">'.__('Order').'</th><th>'.__('Name').'</th><th>'.__('Description').'</th></tr></thead>
 		<tbody id="links-list-cat">';
 
 		$i = 0;
@@ -635,7 +635,7 @@ else {
 		form::hidden('cats_order', '').
 		form::hidden(array('action'), 'update_categories').
 		$core->formNonce().'
-		<input type="submit" name="updcats" value="'.__('update categories').'" />
+		<input type="submit" name="updcats" value="'.__('Update categories').'" />
 		</p>
 		</form>';
 	}
@@ -648,18 +648,18 @@ else {
 	<div class="multi-part" id="newcat" title="'.__('New category').'">
 	<form method="post" action="'.$p_url.'#newcat">
 
-	<p><label for="new_cattitle">'.__('Title:').' '.
+	<p><label class="classic required" for="new_cattitle"><abbr title="'.__('Required field').'">*</abbr> '.__('Title:').' '.
 	form::field('new_cattitle', 60, 64, $new_cattitle, 'maximal').
 	'</label></p>
 
-	<p><label for="new_catdesc">'.__('Description:').' '.
+	<p><label class="classic required" for="new_catdesc"><abbr title="'.__('Required field').'">*</abbr> '.__('Description:').' '.
 	form::field('new_catdesc', 60, 64, $new_catdesc, 'maximal').
 	'</label></p>
 
 	<p>'.
 	form::hidden(array('action'), 'create_category').
 	$core->formNonce().'
-	<input type="submit" name="newcat" value="'.__('save').'" />
+	<input type="submit" name="newcat" value="'.__('Save').'" />
 	</p>
 	</form>
 	</div>';

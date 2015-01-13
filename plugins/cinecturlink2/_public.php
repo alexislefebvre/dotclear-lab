@@ -110,10 +110,12 @@ class urlCinecturlink2 extends dcUrlHandlers
 			return null;
 		}
 
-		$core->tpl->setPath(
-			$core->tpl->getPath(),
-			dirname(__FILE__).'/default-templates/'
-		);
+		$tplset = $core->themes->moduleInfo($core->blog->settings->system->theme,'tplset');
+        if (!empty($tplset) && is_dir(dirname(__FILE__).'/default-templates/'.$tplset)) {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.$tplset);
+        } else {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.DC_DEFAULT_TPLSET);
+        }
 
 		$params = array();
 
@@ -144,7 +146,7 @@ class urlCinecturlink2 extends dcUrlHandlers
 			$params['limit'] = $core->blog->settings->system->nb_post_per_feed;
 			$_ctx->c2_page_params = $params;
 
-			header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->system->robots_policy, ''));
+			header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->system->robots_policy,''));
 			self::serveDocument('cinecturlink2-'.$f.'.xml', $mime);
 		}
 		else {

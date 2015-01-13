@@ -95,7 +95,7 @@ __('Enable extension').'</label></p>
 <p><label for="cinecturlink2_widthmax">'.__('Maximum width of images (in pixel):').' '.
 form::field('cinecturlink2_widthmax', 10, 4, $cinecturlink2_widthmax, 'maximal').'</label></p>
 
-<p><label for="cinecturlink2_folder">'.__('Public folder of images (under public folder of blog):').' '.
+<p><label class="classic required" for="cinecturlink2_folder"><abbr title="'.__('Required field').'">*</abbr> '.__('Public folder of images (under public folder of blog):').' '.
 form::field('cinecturlink2_folder', 60, 64, $cinecturlink2_folder, 'maximal').'</label></p>
 
 </div>
@@ -105,18 +105,24 @@ form::field('cinecturlink2_folder', 60, 64, $cinecturlink2_folder, 'maximal').'<
 
 <p><label class="classic" for="cinecturlink2_triggeronrandom">'.
 form::checkbox('cinecturlink2_triggeronrandom', 1, $cinecturlink2_triggeronrandom).
-__('Update cache when use "Random" or "Number of view" order on widget (Need reload of widgets on change)').'</label></p>
-<p class="form-note">'.__('This increases the random effect, but updates the cache of the blog whenever the widget is displayed, which reduces the perfomances of your blog.').'</p>
+__('Update cache when use "Random" or "Number of view" order on widget (need reload of widgets on change)').'</label></p>
+<p class="form-note warn">'.__('This increases the random effect, but updates the cache of the blog whenever the widget is displayed, which reduces the perfomances of your blog.').'</p>
 
-</div>
+</div>';
 
-<div class="fieldset">
+echo '
+<div class="fieldset">';
+
+if ($core->blog->settings->cinecturlink2->cinecturlink2_public_active) {
+	echo '<p><a class="onblog_link" href="'.$core->blog->url.$core->url->getBase('cinecturlink2').'" title="'.__('View the public page').'">'.__('View the public page').'</a></p>';
+}
+
+echo '
 <h4>'.__('Public page').'</h4>
 
 <p><label class="classic" for="cinecturlink2_public_active">'.
 form::checkbox('cinecturlink2_public_active', 1, $cinecturlink2_public_active).
 __('Enable public page').'</label></p>
-<p class="form-note">'.sprintf(__('Public page has url: %s'),'<a href="'.$core->blog->url.$core->url->getBase('cinecturlink2').'" title="public page">'.$core->blog->url.$core->url->getBase('cinecturlink2').'</a>').'</p>
 
 <p><label for="cinecturlink2_public_title">'.__('Title of the public page:').' '.
 form::field('cinecturlink2_public_title', 60, 255, $cinecturlink2_public_title, 'maximal').'</label></p>
@@ -127,18 +133,6 @@ form::field('cinecturlink2_public_description', 60, 255, $cinecturlink2_public_d
 <p><label for="cinecturlink2_public_nbrpp">'.__('Limit number of entries per page on pulic page to:').' '.
 form::field('cinecturlink2_public_nbrpp', 5, 10, $cinecturlink2_public_nbrpp, 'maximal').'</label></p>
 
-</div>
-
-<div class="fieldset">
-<h4>'.__('Informations').'</h4>
-
-<ul>
-<li>'.__('Once the extension has been configured and your links have been created, you can place one of the cinecturlink widgets in the sidebar.').'</li>
-<li>'.sprintf(__('In order to open links in new window you can use plugin %s.'),'<a href="http://plugins.dotaddict.org/dc2/details/externalLinks">External Links</a>').'</li>
-<li>'.sprintf(__('In order to change URL of public page you can use plugin %s.'),'<a href="http://lab.dotclear.org/wiki/plugin/myUrlHandlers">My URL handlers</a>').'</li>
-<li>'.sprintf(__('You can add public pages of cinecturlink to the plugin %s.'),'<a href="http://plugins.dotaddict.org/dc2/details/sitemaps">sitemaps</a>').'</li>
-<li>'.sprintf(__('The plugin Cinecturlink2 is compatible with plugin %s.'),'<a href="http://plugins.dotaddict.org/dc2/details/rateIt">Rate it</a>').'</li>
-<li>'.sprintf(__('The plugin Cinecturlink2 is compatible with plugin %s.'),'<a href="http://plugins.dotaddict.org/dc2/details/activityReport">Activity report</a>').'</li>
-</ul>
-
 </div>';
+
+dcPage::helpBlock('cinecturlink2');

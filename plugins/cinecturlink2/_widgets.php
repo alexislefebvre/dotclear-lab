@@ -55,7 +55,7 @@ class cinecturlink2Widget
 
 		$w->create(
 			'cinecturlink2links',
-			__('My cinecturlink'),
+			__('Cineturlink: my cinecturlink'),
 			array('cinecturlink2Widget', 'publicLinks'),
 			'null',
 			__('Show selection of cinecturlinks')
@@ -134,13 +134,16 @@ class cinecturlink2Widget
 				__('Except on home page')	=> 2
 			)
 		);
+		$w->cinecturlink2links->setting('content_only',__('Content only'),0,'check');
+		$w->cinecturlink2links->setting('class',__('CSS class:'),'');
+		$w->cinecturlink2links->setting('offline',__('Offline'),0,'check');
 	}
 
 	public static function adminCats($w)
 	{
 		$w->create(
 			'cinecturlink2cats',
-			__('List of categories of cinecturlink'),
+			__('Cinecturlink: list of categories'),
 			array('cinecturlink2Widget', 'publicCats'),
 			null,
 			__('List of categories of cinecturlink')
@@ -168,13 +171,19 @@ class cinecturlink2Widget
 				__('Except on home page')	=> 2
 			)
 		);
+		$w->cinecturlink2cats->setting('content_only',__('Content only'),0,'check');
+		$w->cinecturlink2cats->setting('class',__('CSS class:'),'');
+		$w->cinecturlink2cats->setting('offline',__('Offline'),0,'check');
 	}
 
 	public static function publicLinks($w)
 	{
 		global $core;
 
-		$core->blog->settings->addNamespace('cinecturlink2'); 
+		if ($w->offline)
+			return;
+
+		$core->blog->settings->addNamespace('cinecturlink2');
 
 		if (!$core->blog->settings->cinecturlink2->cinecturlink2_active 
 		 || $w->homeonly == 1 && $core->url->type != 'default'
@@ -196,7 +205,7 @@ class cinecturlink2Widget
 
 		$limit = abs((integer) $w->limit);
 
-		# Tirage aléatoire
+		# Tirage alÃ©atoire
 		# Consomme beaucoup de ressources!
 		if ($w->sortby == 'RANDOM') {
 			$big_rs = $C2->getLinks($params);
@@ -272,7 +281,7 @@ class cinecturlink2Widget
 
 			}
 		}
-		# Tirage aléatoire
+		# Tirage alÃ©atoire
 		if ($w->sortby == 'RANDOM' 
 		 || $w->sortby == 'COUNTER'
 		) {
@@ -282,19 +291,23 @@ class cinecturlink2Widget
 			}
 		}
 
-		return 
-		'<div class="cinecturlink2list">'.
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		implode(' ',$entries).
-		($w->showpagelink && $core->blog->settings->cinecturlink2->cinecturlink2_public_active ? 
-		'<p><a href="'.$core->blog->url.$core->url->getBase('cinecturlink2').'" title="'.__('view all links').'">'.__('More links').'</a></p>' : ''
-		).
-		'</div>';
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+    implode(' ',$entries).
+		($w->showpagelink && $core->blog->settings->cinecturlink2->cinecturlink2_public_active ?
+		'<p><strong><a href="'.$core->blog->url.$core->url->getBase('cinecturlink2').'" title="'.__('More links').'">'.__('More links').'</a></strong></p>' : ''
+		)
+    ;
+
+		return $w->renderDiv($w->content_only,'cinecturlink2list '.$w->class,'',$res);
 	}
 
 	public static function publicCats($w)
 	{
 		global $core;
+
+		if ($w->offline)
+			return;
 
 		$core->blog->settings->addNamespace('cinecturlink2'); 
 
@@ -315,10 +328,10 @@ class cinecturlink2Widget
 			return null;
 		}
 
-		$res = 
-		'<li><a href="'.
+		$res =
+		'<li style="display:none;"><a href="'.
 		$core->blog->url.$core->url->getBase('cinecturlink2').
-		'" title="'.__('view all links').'">'.__('all links').
+		'" title="'.__('View all links').'">'.__('View all links').
 		'</a>';
 		if ($w->shownumlink) {
 			$res .= ' ('.($C2->getLinks(array(), true)->f(0)).')';
@@ -329,7 +342,7 @@ class cinecturlink2Widget
 			$res .= 
 			'<li><a href="'.
 			$core->blog->url.$core->url->getBase('cinecturlink2').'/'.$core->blog->settings->cinecturlink2->cinecturlink2_public_caturl.'/'.urlencode($rs->cat_title).
-			'" title="'.__('view links of this category').'">'.
+			'" title="'.__('View links of this category').'">'.
 			html::escapeHTML($rs->cat_title).
 			'</a>';
 			if ($w->shownumlink) {
@@ -338,10 +351,11 @@ class cinecturlink2Widget
 			$res .= '</li>';
 		}
 
-		return 
-		'<div class="cinecturlink2cat">'.
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		'<ul>'.$res.'</ul>'.
-		'</div>';
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+    '<ul>'.$res.'</ul>'.
+		'<p><strong><a href="'.$core->blog->url.$core->url->getBase('cinecturlink2').'" title="'.__('View all links').'">'.__('View all links').'</a></strong></p>';
+
+		return $w->renderDiv($w->content_only,'cinecturlink2cat '.$w->class,'',$res);
 	}
 }

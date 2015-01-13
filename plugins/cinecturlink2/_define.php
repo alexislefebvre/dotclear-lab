@@ -29,15 +29,15 @@ $this->registerModule(
 	/* Description*/
 	"Widgets and pages about books, musics, films, blogs you are interested in",
 	/* Author */
-	"Jean-Christian Denis",
+	"Jean-Christian Denis, Pierre Van Glabeke",
 	/* Version */
-	'0.7',
+	'0.8',
 	/* Properties */
 	array(
 		'permissions' => 'contentadmin',
 		'type' => 'plugin',
-		'dc_min' => '2.6',
-		'support' => 'http://jcd.lv/q=cinecturlink2',
+		'dc_min' => '2.7',
+		'support' => 'http://forum.dotclear.org/viewtopic.php?id=40893',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/cinecturlink2'
 	)
 );

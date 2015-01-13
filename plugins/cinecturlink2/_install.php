@@ -28,13 +28,13 @@ try {
 		return null;
 	}
 
-	# Check Dotclear version
-	if (!method_exists('dcUtils', 'versionsCompare') 
-	 || dcUtils::versionsCompare(DC_VERSION, '2.6', '>', false)) {
-		throw new Exception(sprintf(
-			'%s requires Dotclear %s', 'cinecturlink2', '2.6'
-		));
-	}
+  # Check Dotclear version
+#	if (!method_exists('dcUtils', 'versionsCompare')
+#	|| dcUtils::versionsCompare(DC_VERSION, '2.6', '>', false)) {
+#  throw new Exception(sprintf(
+#  '%s requires Dotclear %s', 'cinecturlink2', '2.6'
+#  ));
+#  }
 
 	# Tables
 	$s = new dbStruct($core->con, $core->prefix);

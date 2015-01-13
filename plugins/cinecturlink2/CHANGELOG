@@ -1,3 +1,9 @@
+cinecturlink2 0.8 - 12-01-2014 Pierre Van Glabeke
+===========================================================
+ * Dotclear 2.7 requis
+ * Compatibilité dc2.7 (widget + templates)
+ * Ajout aide, modification localisation
+
 cinecturlink2 0.7 - 2013-11-03
 ===========================================================
  * Switch to Dotclear 2.6
