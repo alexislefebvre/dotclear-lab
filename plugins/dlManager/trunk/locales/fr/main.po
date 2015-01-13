@@ -134,12 +134,7 @@ msgstr "Page(s)&nbsp;:"
 #: public_l10n.php:21
 #: _widget.php:184
 msgid "Preview:"
-msgstr "Voir :"
-
-#: public_l10n.php:22
-#: _widget.php:186
-msgid "Preview"
-msgstr "Voir"
+msgstr "Aperçu :"
 
 #: public_l10n.php:23
 msgid "Size"
@@ -301,6 +296,3 @@ msgstr "Affichage d'un élément&nbsp;:"
 #, php-format
 msgid "Add a link to %s in the widget:"
 msgstr "Ajouter un lien vers %s dans le widget&nbsp;:"
-
-msgid "close"
-msgstr "fermer"
