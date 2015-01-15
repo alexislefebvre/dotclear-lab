@@ -16,12 +16,12 @@ $this->registerModule(
 		/* Name */			"switchWelcome",
 		/* Description*/		"Welcome your visitors by a personnal message and help them to navigate",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
-		/* Version */			'0.2.4',
+		/* Version */			'0.2.5',
 	/* Properties */
 	array(
 		'permissions' => 'usage',
 		'type' => 'plugin',
-		'dc_min' => '2.5',
+		'dc_min' => '2.6',
 		'support' => 'http://lab.dotclear.org/wiki/plugin/switchWelcome',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/switchWelcome'
 		)

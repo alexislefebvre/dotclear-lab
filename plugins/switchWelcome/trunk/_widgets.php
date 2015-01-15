@@ -31,13 +31,15 @@ class switchWelcomeWidgets
 		);
 		$w->switchWelcome->setting('content_only',__('Content only'),0,'check');
 		$w->switchWelcome->setting('class',__('CSS class:'),'');
+		$w->switchWelcome->setting('offline',__('Offline'),0,'check');
 	}
 
 	public static function widget($w)
 	{
 		global $core;
 
-		// Si nous sommes pas en page accueil et que c'est coché page accueil uniquement on fait rien
+		if ($w->offline)
+			return;
 
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default')) {
@@ -48,8 +50,6 @@ class switchWelcomeWidgets
 			return;
 		}
 
-		$title = strlen($w->title) > 0 ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
-
 		$visitor = isset($_COOKIE['comment_info']) ? preg_split('#\n#',$_COOKIE['comment_info']) : array(__('visitor'));
 
 		$res = '<li>'.sprintf($w->welcometext,$visitor[0],switchWelcome::getHostRefererLink()).'</li>';
@@ -58,12 +58,12 @@ class switchWelcomeWidgets
 			$res .= '<li>'.sprintf($w->welcomesearchtext,switchWelcome::getSearchWordsList(),switchWelcome::getRelatedPosts()).'</li>';
 		}
 
-		return
-			($w->content_only ? '' : '<div class="switchwelcome'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-			$title.
-			'<ul>'.
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>'.
 			$res.
-			'</ul>'.
-			($w->content_only ? '' : '</div>');
+		'</ul>';
+
+		return $w->renderDiv($w->content_only,'switchwelcome '.$w->class,'',$res);
 	}
 }

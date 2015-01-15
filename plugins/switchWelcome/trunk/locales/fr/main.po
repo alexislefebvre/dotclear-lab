@@ -31,7 +31,7 @@ msgstr "Bonjour %1$s provenant de %2$s, bienvenue sur ce blog !"
 
 #: _widgets.php:24
 msgid "Welcome text if search exists (use %1$s for keywords and %2$s for related posts's list):"
-msgstr "Texte d'accueil si une recherche a été faite (utilisez %1$s pour les mots clés et %2$s pour la liste des billets en relation)&nbsp;:"
+msgstr "Texte d'accueil si une recherche a été faite (utilisez %1$s pour les mots-clés et %2$s pour la liste des billets en relation)&nbsp;:"
 
 #: _widgets.php:24
 msgid "Do you search anything about %1$s? Check those related posts: %2$s"

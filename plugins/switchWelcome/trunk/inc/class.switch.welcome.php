@@ -10,6 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) {return;}
+
 class switchWelcome
 {
 	public static function getHostReferer($ref = null)
