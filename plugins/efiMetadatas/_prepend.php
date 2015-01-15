@@ -15,4 +15,3 @@ if (!defined('DC_RC_PATH')){return;}
 global $__autoload;
 
 $__autoload['efiMetadatas'] = dirname(__FILE__).'/inc/class.efimetadatas.php';
-?>

@@ -13,4 +13,3 @@
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 require_once dirname(__FILE__).'/_widgets.php';
-?>

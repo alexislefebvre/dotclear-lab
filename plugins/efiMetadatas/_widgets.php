@@ -29,7 +29,7 @@ class efiMetadatasWidget
 		}
 		
 		$thumbnail_combo = array(
-			'-' => '',
+      __('none') => '',
 			__('square') => 'sq',
 			__('thumbnail') => 't',
 			__('small') => 's',
@@ -51,11 +51,17 @@ class efiMetadatasWidget
 		$w->efim->setting('showmeta',
 			__('Show empty metadatas'),0,'check'
 		);
+    $w->efim->setting('content_only',__('Content only'),0,'check');
+    $w->efim->setting('class',__('CSS class:'),'');
+		$w->efim->setting('offline',__('Offline'),0,'check');
 	}
 	
 	public static function publicEFIM($w)
 	{
-		global $core, $_ctx; 
+		global $core, $_ctx;
+
+		if ($w->offline)
+			return;
 		
 		# Not in post context
 		if (!$_ctx->exists('posts') || !$_ctx->posts->post_id) return;
@@ -84,7 +90,7 @@ class efiMetadatasWidget
 		{
 			// keep empty meta if wanted
 			if (!$w->showmeta && empty($v[1])) continue;
-			$content .= '<li class="efi-'.$k.'"><strong>'.$v[0].':</strong><br />'.$v[1].'</li>';
+			$content .= '<li class="efi-'.$k.'"><strong>'.$v[0].'</strong><br />'.$v[1].'</li>';
 		}
 		
 		# No meta
@@ -93,20 +99,14 @@ class efiMetadatasWidget
 		# thumbnail
 		if ($img['thumb'])
 		{
-			$thumb = 
-			'<div class="img-box">'.				
-			'<div class="img-thumbnail">'.
-			'<img alt="'.$img['title'].'" src="'.$img['thumb'].'" />'.
-			'</div>'.
-			"</div>\n";
+			$thumb =
+			'<li><img class="img-thumbnail" alt="'.$img['title'].'" src="'.$img['thumb'].'" /></li>';
 		}
-		
-		return 
-		'<div class="entryFirstImageMetas">'.
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		$thumb.
-		'<ul>'.$content.'</ul>'.
-		'</div>';
+
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>'.$thumb.$content.'</ul>';
+
+		return $w->renderDiv($w->content_only,'entryFirstImageMetas '.$w->class,'',$res);
 	}
 }
-?>

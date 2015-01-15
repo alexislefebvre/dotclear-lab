@@ -9,6 +9,7 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) {return;}
 
 class efiMetadatas
 {
@@ -21,14 +22,14 @@ class efiMetadatas
 		
 		# Image pattern
 		$pattern = '(?:'.preg_quote($p_site,'/').')?'.preg_quote($p_url,'/');
-		$pattern = sprintf('/<img.+?src="%s(.*?\.(?:jpg|gif|png))"[^>]+/msu',$pattern);
+		$pattern = sprintf('/<img.+?src="%s(.*?\.(?:jpg|jpeg|png|gif))"[^>]+/msu',$pattern);
 		
 		# No image
 		if (!preg_match_all($pattern,$subject,$m)) return;
 		
 		$src = $thb = $alt = false;
 		$alt = $metas = $thumb = '';
-		$allowed_ext = array('.jpg','.JPG','.png','.PNG','.gif','.GIF');
+		$allowed_ext = array('.jpg','.JPG','.jpeg','.JPEG','.png','.PNG','.gif','.GIF');
 		
 		# Loop through images
 		foreach ($m[1] as $i => $img)
@@ -84,20 +85,20 @@ class efiMetadatas
 	public static function imgMeta($core,$src)
 	{
 		$metas = array(
-			'Title' => array(__('Title'),''),
-			'Description' => array(__('Description'),''),
-			'Location' => array(__('Location'),''),
-			'DateTimeOriginal' => array(__('Date'),''),
-			'Make' => array(__('Manufacturer'),''),
-			'Model' => array(__('Model'),''),
-			'Lens' => array(__('Lens'),''),
-			'ExposureProgram' => array(__('Program'),''),
-			'Exposure' => array(__('Speed'),''),
-			'FNumber' => array(__('Aperture'),''),
-			'ISOSpeedRatings' => array(__('ISO'),''),
-			'FocalLength' => array(__('Focal'),''),
-			'ExposureBiasValue' => array(__('Exposure Bias'),''),
-			'MeteringMode' => array(__('Metering mode'),'')
+			'Title' => array(__('Title:'),''),
+			'Description' => array(__('Description:'),''),
+			'Location' => array(__('Location:'),''),
+			'DateTimeOriginal' => array(__('Date:'),''),
+			'Make' => array(__('Manufacturer:'),''),
+			'Model' => array(__('Model:'),''),
+			'Lens' => array(__('Lens:'),''),
+			'ExposureProgram' => array(__('Program:'),''),
+			'Exposure' => array(__('Speed:'),''),
+			'FNumber' => array(__('Aperture:'),''),
+			'ISOSpeedRatings' => array(__('ISO:'),''),
+			'FocalLength' => array(__('Focal:'),''),
+			'ExposureBiasValue' => array(__('Exposure Bias:'),''),
+			'MeteringMode' => array(__('Metering mode:'),'')
 		);
 		
 		$exp_prog = array(
@@ -231,4 +232,3 @@ class efiMetadatas
 		return $metas;
 	}
 }
-?>
