@@ -18,7 +18,8 @@ $w = null;
 
 $types = array(
 	'nav',
-	'extra'
+	'extra',
+	'custom'
 );
 
 foreach($types as $type)
@@ -39,8 +40,6 @@ if (!empty($w)) {
 	$rd->getRandomComment();
 
 	echo
-		'<p id="rd_text">'.$rd->getWidgetContent().'</p>'.
-		'<p id="rd_info">'.$rd->getWidgetInfo().'</p>';
+		'<li id="rd_text">'.$rd->getWidgetContent().'</li>'.
+		'<li id="rd_info">'.$rd->getWidgetInfo().'</li>';
 }
-
-?>

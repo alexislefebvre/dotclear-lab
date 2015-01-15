@@ -38,26 +38,24 @@ class randomCommentPublic
 	{
 		global $core;
 
-		if ($w->homeonly && $core->url->type != 'default') {
+		if ($w->offline)
+			return;
+
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 
-		$title = strlen($w->title) > 0 ? '<h2>'.$w->title.'</h2>' : '';
-
 		$res =
-			'<script type="text/javascript">'.
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<script type="text/javascript">'.
 			'var random_comment_url = \''.$core->blog->url.$core->url->getBase('randomComment').'\';'.
 			'var random_comment_ttl = '.($w->ttl*1000).';'.
 			'</script>'.
-			'<script type="text/javascript" src="'.$core->blog->url.'pf='.basename(dirname(__FILE__)).'/js/randomcomment.js"></script>'.
-			'<div id="randomcomment">'.
-			$title.
-			'<div id="rd_content">'.
-			'</div>'.
-			'</div>';
+			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__)).'/js/randomcomment.js"></script>'.
+			'<ul id="rd_content">'.
+			'</ul>';
 
-		return $res;
+		return $w->renderDiv($w->content_only,'randomcomment '.$w->class,'',$res);
 	}
 }
-
-?>

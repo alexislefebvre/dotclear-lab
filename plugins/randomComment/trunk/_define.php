@@ -15,9 +15,14 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 		/* Name */			'randomComment',
 		/* Description */		'Display random comments on your blog',
-		/* Author */			'Tomtom (http://blog.zenstyle.fr/)',
-		/* Version */			'1.0.7',
-		/* Premission */		'usage'
+		/* Author */			'Tomtom (http://blog.zenstyle.fr/), Pierre Van Glabeke',
+		/* Version */			'1.1',
+	/* Properties */
+	array(
+		'permissions' => 'usage',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/randomComment',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/randomComment'
+		)
 );
-
-?>

@@ -1,0 +1,5 @@
+1.1 - 15/01/2015 - Pierre Van Glabeke
+* ajout combo affichage + class + hors ligne dans widget
+* modifications localisation
+* modification et ajout mise en forme dans le widget (auteur, billet)
+* suppression fin de ligne unix

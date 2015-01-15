@@ -70,10 +70,8 @@ class randomComment
 	public function getWidgetInfo()
 	{
 		$link = '<a href="'.$this->link.'">'.$this->title.'</a>';
-		$str = str_replace(array('%author%','%entry%','%date%'),array('%1$s','%2$s','%3$s'),$this->w->comment_info);
+		$str = str_replace(array('%author%','%entry%','%date%'),array('<span class="rd_author">%1$s</span>','<span class="rd_entry">%2$s</span>','%3$s'),$this->w->comment_info);
 
 		return sprintf($str,$this->author,$link,$this->date);
 	}
 }
-
-?>

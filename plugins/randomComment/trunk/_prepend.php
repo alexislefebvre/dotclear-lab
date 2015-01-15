@@ -17,5 +17,3 @@ $__autoload['randomComment'] = dirname(__FILE__).'/inc/class.random.comment.php'
 $core->url->register('randomComment','randomComment','^randomComment$',array('randomCommentUrl','randomComment'));
 
 require dirname(__FILE__).'/_widgets.php';
-
-?>
