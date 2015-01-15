@@ -25,5 +25,3 @@ $core->blog->settings->referer->put('last_referer',serialize(array()),'string','
 $core->blog->settings->referer->put('top_referer',serialize(array()),'string','Top referers',false);
 
 $core->setVersion('referer',$m_version);
-
-?>

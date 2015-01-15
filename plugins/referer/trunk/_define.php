@@ -15,9 +15,14 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 		/* Name */			'referer',
 		/* Description */		'Displays your blog referers',
-		/* Author */			'Tomtom (http://plugins.zenstyle.fr/)',
-		/* Version */			'0.3.5',
-		/* Permissions */		'usage,contentadmin'
+		/* Author */			'Tomtom (http://plugins.zenstyle.fr/), Pierre Van Glabeke',
+		/* Version */			'0.4',
+	/* Properties */
+	array(
+		'permissions' => 'usage,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/referer',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/referer'
+		)
 );
-
-?>

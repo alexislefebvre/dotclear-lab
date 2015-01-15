@@ -95,14 +95,16 @@ class refererPublic
 	{
 		global $core;
 
-		if ($w->homeonly && $core->url->type != 'default') {
+		if ($w->offline)
+			return;
+
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 
 		$limask = '<li>%s</li>';
 		$amask = '<a href="%1$s">%2$s</a>';
-
-		$title = strlen($w->title) > 0 ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
 
 		$last = unserialize($core->blog->settings->referer->last_referer);
 		
@@ -119,11 +121,11 @@ class refererPublic
 			}
 		}
 
-		return 
-			'<div id="last_referers">'.
-			$title.
-			(!empty($res) ? '<ul>'.$res.'</ul>' : '').
-			'</div>';
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		(!empty($res) ? '<ul>'.$res.'</ul>' : '');
+
+		return $w->renderDiv($w->content_only,'last_referers '.$w->class,'',$res);
 	}
 
 	/**
@@ -137,14 +139,16 @@ class refererPublic
 	{
 		global $core;
 
-		if ($w->homeonly && $core->url->type != 'default') {
+		if ($w->offline)
+			return;
+
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
 			return;
 		}
 
 		$limask = '<li>%s</li>';
 		$amask = '<a href="%1$s">%2$s</a>';
-
-		$title = strlen($w->title) > 0 ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
 
 		$top = unserialize($core->blog->settings->referer->top_referer);
 
@@ -161,12 +165,10 @@ class refererPublic
 			}
 		}
 
-		return
-			'<div id="top_referers">'.
-			$title.
-			(!empty($res) ? '<ul>'.$res.'</ul>' : '').
-			'</div>';
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		(!empty($res) ? '<ul>'.$res.'</ul>' : '');
+
+		return $w->renderDiv($w->content_only,'top_referers '.$w->class,'',$res);
 	}
 }
-
-?>
