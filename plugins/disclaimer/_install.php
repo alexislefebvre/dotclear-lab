@@ -19,7 +19,7 @@ if (!defined('DC_CONTEXT_ADMIN')) {
 
 # -- Module specs --
 
-$dc_min = '2.6';
+$dc_min = '2.7';
 $mod_id = 'disclaimer';
 $mod_conf = array(
 	array(
@@ -30,14 +30,14 @@ $mod_conf = array(
 	),
 	array(
 		'disclaimer_remember',
-		'Remember user who seen disclaimer',
+		'Remember the visitor who has already accepted the terms',
 		false,
 		'boolean'
 	),
 	array(
 		'disclaimer_redir',
 		'Redirection if disclaimer is refused',
-		'http://google.com',
+		'https://www.google.fr',
 		'string'
 	),
 	array(

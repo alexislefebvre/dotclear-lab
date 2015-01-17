@@ -1,8 +1,3 @@
-# Language: Français
-# Module: disclaimer - 0.6.2
-# Date: 2013-11-14 16:46:36
-# Translated with translater 2013.05.11
-
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,52 +9,61 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "disclaimer"
+msgstr "disclaimer"
+
 #: _admin.php:102
 #: _public.php:27
-#: default-templates/disclaimer.html:9
-#: default-templates/disclaimer.html:15
+#: disclaimer.html:9
+#: disclaimer.html:15
 msgid "Disclaimer"
-msgstr "Avertissement"
+msgstr "Disclaimer"
 
 #: _admin.php:112
 msgid "Enable disclaimer"
 msgstr "Activer l'avertissement"
 
 #: _admin.php:133
-msgid "Remember user"
-msgstr "Se souvenir de l'utilisateur"
+msgid "Remember the visitor"
+msgstr "Se souvenir du visiteur"
 
 #: _admin.php:136
 msgid "Link output:"
 msgstr "Lien de sortie :"
+
+msgid "Leave blank to redirect to the site Dotclear"
+msgstr "Laisser vide pour rediriger vers le site de Dotclear"
 
 #: _admin.php:148
 msgid "Disclaimer:"
 msgstr "Avertissement :"
 
 #: _admin.php:158
-msgid "List of robots allowed to index the site pages:"
-msgstr "Liste des robots autorisés à indexer les pages du site :"
+msgid "List of robots allowed to index the site pages (separated by semicolons):"
+msgstr "Liste des robots autorisés à indexer les pages du site (séparés par un point virgule) :"
 
 #: _admin.php:173
 msgid "Disable the authorization of indexing by search engines"
 msgstr "Désactiver l'autorisation d'indexation par les moteurs de recherches"
 
 #: _public.php:28
-#: default-templates/disclaimer.html:43
+#: disclaimer.html:43
 msgid "Accept terms of uses"
 msgstr "Accepter les conditions d'utilisation"
 
 #: _public.php:29
-#: default-templates/disclaimer.html:46
+#: disclaimer.html:46
 msgid "I agree"
 msgstr "J'accepte"
 
 #: _public.php:30
-#: default-templates/disclaimer.html:47
+#: disclaimer.html:47
 msgid "I disagree"
 msgstr "Je refuse"
 
 msgid "Add a disclaimer to your blog entrance"
 msgstr "Ajoute un avertissement à l'entrée sur le blog"
+
+msgid "You must accept this term before entering"
+msgstr "Vous devez accepter ces conditions avant d'entrer"
 

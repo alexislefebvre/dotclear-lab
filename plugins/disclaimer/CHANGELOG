@@ -1,3 +1,10 @@
+diclaimer 0.7 - 16-01-2015 - Pierre Van Glabeke
+===========================================================
+ * compatibilité dc2.7
+ * modification tpl pour html5 (currywurst et mustek)
+ * modification localisation
+ * modification fichier css
+
 diclaimer 0.6.2 - 2013-11-14
 ===========================================================
  * Switch to Dotclear 2.6

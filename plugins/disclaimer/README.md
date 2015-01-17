@@ -3,13 +3,13 @@
 ## QU'EST CE QUE DISCLAIMER ?
 
 "disclaimer" est un plugin pour l'outil open source de 
-publication web nommé Dotclear.
+publication web nommÃ© Dotclear.
 
 Ce plugin permet d'ajouter un texte d'avertissement 
-pour le visiteur avant son entrée sur le blog.
+pour le visiteur avant son entrÃ©e sur le blog.
 
-Le code de cette extension est largement inspiré de 
-l'extension "Private mode" d'Osku.
+Le code de ce plugin est largement inspirÃ© du plugin
+"Private mode" d'Osku.
 
 ## LICENCE
 
@@ -27,28 +27,27 @@ http://creativecommons.org/licenses/by/2.5/
 
 ## SUPPORT
 
-http://jcd.lv/q=disclaimer
 http://forum.dotclear.net
 
 ### Note
 
-Certains thèmes ne sont pas compatibles avec ce plugin.
+Certains thÃ¨mes ne sont pas compatibles avec ce plugin.
 
 ## USAGE
 
-### Paramètres
+### ParamÃ¨tres
 
-La configuration de l'extension est situé dans 
-la rubrique "Avertissement" de la page des paramètres du blog.
+La configuration du plugin est situÃ© dans
+la rubrique "Disclaimer" de la page des paramÃ¨tres du blog.
 
-#### Activer l'extension
+#### Activer le plugin
 
 Permet d'activer ou non la page d'avertissement.
 
 #### Se souvenir de l'utilisateur
 
-Permet d'envoyer un cookie au visiteur pour qu'il n'est pas 
-a revalider l'avertissement lors de sa prochaine visite.
+Permet d'envoyer un cookie au visiteur pour qu'il n'ait pas
+Ã  revalider l'avertissement lors d'une visite ultÃ©rieure.
 
 #### Titre
 
@@ -56,38 +55,36 @@ C'est le titre principale de la page d'avertissement.
 
 #### Lien de sortie
 
-Lien vers lequel sera renvoyé le visiteur si il refuse les termes.
+Lien vers lequel sera renvoyÃ© le visiteur s'il refuse les termes.
 
 #### Avertissement
 
-Texte principale de la page d'avertissement, cette page accepte le code html.
-(sauf si l'attribue encode_html est actif dans les templates)
+Texte principal de la page d'avertissement, cette page accepte le code html.
+(sauf si l'attribut encode_html est actif dans les templates)
 
-#### Liste des robots autorisés à indexer les pages du site
+#### Liste des robots autorisÃ©s Ã  indexer les pages du site
 
-Liste séparés par un point-virgule des robots d'indexation.
-Cela permet au robot utilisant ce user-agent de ne pas être bloquer par
+Liste des robots d'indexation sÃ©parÃ©s par un point-virgule.
+Cela permet au robot utilisant ce user-agent de ne pas Ãªtre bloquÃ© par
 le disclaimer.
 
-#### Désactiver l'autorisation d'indexation par les moteurs de recherches
+#### DÃ©sactiver l'autorisation d'indexation par les moteurs de recherches
 
-Permet de désactiver la fonction de recherche de user-agent et de rediriger
-tout les user-agent vers le disclaimer.
+Permet de dÃ©sactiver la fonction de recherche de user-agent et de rediriger
+tous les user-agent vers le disclaimer.
 
 ### Templates
 
 Le fichier de template par default pour la page d'avertissement 
-se situe dans le repertoire "/default-template/disclaimer.html" de l'extension.
+se situe dans le repertoire "/default-template/mustek/disclaimer.html" ou
+"/default-template/currywurst/disclaimer.html" du plugin.
 
-Il peut être copié dans le repertoire /tpl d'un thème pour être modifié.
-
-Pour modifier les CSS un fichier disclaimer.css est également disponible.
-Il est accesible et modifiable de la même manière que le fichier html.
+Il faut le copier dans le repertoire /tpl du thÃ¨me pour le modifier.
 
 
 ### Balises
 
-L'extension ajoute les baslises de template suivantes:
+Le plugin ajoute les balises de template suivantes :
 
 #### DisclaimerTitle
 
@@ -99,11 +96,11 @@ Texte de l'avertissement.
 
 #### DisclaimerFormURL
 
-A mettre dans l'attribue "action" de la balise "form".
+A mettre dans l'attribut "action" de la balise "form".
 
-Ces balises supportent les attribus communs.
+Ces balises supportent les attributs communs.
 
 
 ---
-Cordialement et en français dans le texte,
+Cordialement et en franÃ§ais dans le texte,
 Jean-Christian Denis

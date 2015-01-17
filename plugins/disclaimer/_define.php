@@ -19,19 +19,19 @@ if (!defined('DC_RC_PATH')) {
  
 $this->registerModule(
 	/* Name */
-	"Disclaimer",
+	"disclaimer",
 	/* Description*/
 	"Add a disclaimer to your blog entrance",
 	/* Author */
-	"Jean-Christian Denis",
+	"Jean-Christian Denis, Pierre Van Glabeke",
 	/* Version */
-	'0.6.2',
+	'0.7',
 	/* Properties */
 	array(
 		'permissions' => 'admin',
 		'type' => 'plugin',
-		'dc_min' => '2.6',
-		'support' => 'http://jcd.lv/q=disclaimer',
+		'dc_min' => '2.7',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/disclaimer',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/disclaimer'
 	)
 );

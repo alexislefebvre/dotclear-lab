@@ -132,7 +132,7 @@ class adminDisclaimer
 			'1',
 			$disclaimer_remember
 		).
-		__('Remember user').'</label></p>'.
+		__('Remember the visitor').'</label></p>'.
 
 		'<p><label for="disclaimer_redir">'.
 		__('Link output:').
@@ -143,6 +143,7 @@ class adminDisclaimer
 			255,
 			html::escapeHTML($disclaimer_redir)
 		).'</p>'.
+    '<p class="form-note info">'.__('Leave blank to redirect to the site Dotclear').'</p>'.
 
 		'</div><div class="clear">'.
 
@@ -157,7 +158,7 @@ class adminDisclaimer
 		).'</p>'.
 
 		'<p><label for="disclaimer_bots_agents">'.
-		__('List of robots allowed to index the site pages:').
+		__('List of robots allowed to index the site pages (separated by semicolons):').
 		'</label>'.
 		form::field(
 			'disclaimer_bots_agents',

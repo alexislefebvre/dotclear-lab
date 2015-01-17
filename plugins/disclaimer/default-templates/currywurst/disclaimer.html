@@ -1,0 +1,87 @@
+{{tpl:extends parent="__layout.html"}}
+
+<tpl:Block name="head-title">
+	<title>{{tpl:lang Disclaimer}} - {{tpl:BlogName encode_html="1"}}</title>
+</tpl:Block>
+
+<tpl:Block name="meta-robots">
+	<meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX"}}" />
+</tpl:Block>
+
+<tpl:Block name="meta-entry">
+	<meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription encode_html="1" cut_string="180" remove_html="1"}}" />
+	<meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+	<meta name="date" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+</tpl:Block>
+
+<tpl:Block name="dc-entry">
+	<meta property="dc.title" content="{{tpl:lang Disclaimer}} - {{tpl:BlogName encode_html="1"}}" />
+	<meta property="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription encode_html="1" cut_string="180" remove_html="1"}}" />
+  <meta property="dc.language" content="{{tpl:BlogLanguage}}" />
+	<meta property="dc.date" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+</tpl:Block>
+
+<tpl:Block name="head-linkrel">
+	<link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+	<link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+</tpl:Block>
+
+<tpl:Block name="html-head">
+	{{tpl:parent}}
+</tpl:Block>
+
+<tpl:Block name="body-tag"><body class="dc-disclaimer"></tpl:Block>
+
+<tpl:Block name="page-top">
+<div class="header">
+	<nav role="navigation">
+		<ul class="skip-links" id="prelude">
+			<li><a href="#main">{{tpl:lang To content}}</a></li>
+			<li><a href="#blognav">{{tpl:lang To menu}}</a></li>
+			<li><a href="#search">{{tpl:lang To search}}</a></li>
+		</ul>
+	</nav>
+
+	<div class="banner" role="banner">
+		<h1 class="site-title"><a class="site-title__link"
+			href="{{tpl:BlogURL}}"><span class="site-title__text">{{tpl:BlogName encode_html="1"}}</span></a></h1>
+		<p class="site-baseline">{{tpl:BlogDescription}}</p>
+	</div>
+
+	<!-- # --BEHAVIOR-- publicTopAfterContent -->
+	{{tpl:SysBehavior behavior="publicTopAfterContent"}}
+</div>
+</tpl:Block>
+
+<tpl:Block name="main-content">
+  <div id="content-info">
+    <h2>{{tpl:DisclaimerTitle}}</h2>
+  </div>
+
+  <div class="content-inner">
+    <div class="disclaimer-text">
+    {{tpl:DisclaimerText}}
+    </div>
+
+    <div id="disclaimer-form">
+    <form action="{{tpl:DisclaimerFormURL}}" method="post" id="comment-form">
+
+      <p class="disclaimer-accept">{{tpl:lang Accept terms of uses}}</p>
+        <p class="buttons">
+		      <input type="submit" class="submit" name="disclaimeragree" value="{{tpl:lang I agree}}" />
+          <input type="submit" class="submit" name="disclaimerdisagree" value="{{tpl:lang I disagree}}" />
+		    </p>
+    </form>
+    </div>
+
+  </div>
+</tpl:Block>
+
+<tpl:Block name="wrapper-sidebar">
+</tpl:Block>
+
+<tpl:Block name="page-footer">
+<div class="footer" id="footer" role="contentinfo">
+	<p>{{tpl:SysPoweredBy}}</p>
+</div>
+</tpl:Block>

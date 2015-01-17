@@ -67,9 +67,9 @@ class urlDisclaimer extends dcUrlHandlers
 		'Mirago','search','find','loader','archive','Spider','Crawler'
 	);
 
-	/**
+ /**
 	 * Remove public callbacks (and serve disclaimer css)
-	 * 
+	 *
 	 * @param  array $args Arguments
 	 */
 	public static function overwriteCallbacks($args)
@@ -84,16 +84,17 @@ class urlDisclaimer extends dcUrlHandlers
 
 	/**
 	 * Add CSS for disclaimer
-	 * 
+	 *
 	 * @param  dcCore $core dcCore instance
 	 * @return [type]       [description]
 	 */
 	public static function publicHeadContent(dcCore $core)
 	{
-		echo 
+    $url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
+		echo
 		"<style type=\"text/css\">\n@import url(".
-			$core->blog->url.
-		"disclaimer.css);\n</style>\n";
+			$url.
+		"/css/disclaimer.css);\n</style>\n";
 	}
 
 	/**
@@ -126,10 +127,12 @@ class urlDisclaimer extends dcUrlHandlers
 		}
 
 		# Set default-templates path for disclaimer files
-		$core->tpl->setPath(
-			$core->tpl->getPath(),
-			dirname(__FILE__).'/default-templates'
-		);
+		$tplset = $core->themes->moduleInfo($core->blog->settings->system->theme,'tplset');
+        if (!empty($tplset) && is_dir(dirname(__FILE__).'/default-templates/'.$tplset)) {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.$tplset);
+        } else {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.DC_DEFAULT_TPLSET);
+        }
 
 		# New URL handler
 		$urlHandler = new urlHandler();
