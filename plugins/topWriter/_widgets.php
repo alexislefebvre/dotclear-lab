@@ -28,7 +28,7 @@ class topWriterWidget
 			__('Top comments'),
 			array('topWriterWidget', 'topCom'),
 			null,
-			__('List users who write more posts')
+			__('List users who write more comments')
 		);
 		$w->topcom->setting(
 			'title',
@@ -78,20 +78,9 @@ class topWriterWidget
 			'check'
 		);
 		$w->topcom->setting(
-			'content_only',
-			__('Content only'),
-			0,
-			'check'
-		);
-		$w->topcom->setting(
-			'class',
-			__('CSS class:'),
-			''
-		);
-		$w->topcom->setting(
 			'homeonly',
 			__('Display on:'),
-			1,
+			0,
 			'combo',
 			array(
 				__('All pages')			=> 0,
@@ -99,13 +88,16 @@ class topWriterWidget
 				__('Except on home page')	=> 2
 			)
 		);
+    $w->topcom->setting('content_only',__('Content only'),0,'check');
+    $w->topcom->setting('class',__('CSS class:'),'');
+		$w->topcom->setting('offline',__('Offline'),0,'check');
 
 		$w->create(
 			'toppost',
 			__('Top entries'),
 			array('topWriterWidget', 'topPost'),
 			null,
-			__('List users who write more comments')
+			__('List users who write more posts')
 		);
 		$w->toppost->setting(
 			'title',
@@ -148,20 +140,9 @@ class topWriterWidget
 			'text'
 		);
 		$w->toppost->setting(
-			'content_only',
-			__('Content only'),
-			0,
-			'check'
-		);
-		$w->toppost->setting(
-			'class',
-			__('CSS class:'),
-			''
-		);
-		$w->toppost->setting(
 			'homeonly',
 			__('Display on:'),
-			1,
+			0,
 			'combo',
 			array(
 				__('All pages')			=> 0,
@@ -169,11 +150,17 @@ class topWriterWidget
 				__('Except on home page')	=> 2
 			)
 		);
+    $w->toppost->setting('content_only',__('Content only'),0,'check');
+    $w->toppost->setting('class',__('CSS class:'),'');
+		$w->toppost->setting('offline',__('Offline'),0,'check');
 	}
 
 	public static function topCom($w)
 	{
 		global $core;
+
+		if ($w->offline)
+			return;
 
 		if ($w->homeonly == 1 && $core->url->type != 'default'
 		 || $w->homeonly == 2 && $core->url->type == 'default'
@@ -255,17 +242,19 @@ class topWriterWidget
 			return null;
 		}
 
-		return 
-		($w->content_only ? '' : '<div class="topcomments'.
-		($w->class ? ' '.html::escapeHTML($w->class) : '').'"">').
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		'<ul>'.$content.'</ul>'.
-		($w->content_only ? '' : '</div>');
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>'.$content.'</ul>';
+
+		return $w->renderDiv($w->content_only,'topcomments '.$w->class,'',$res);
 	}
 	
 	public static function topPost($w)
 	{
 		global $core;
+
+		if ($w->offline)
+			return;
 
 		if ($w->homeonly == 1 && $core->url->type != 'default'
 		 || $w->homeonly == 2 && $core->url->type == 'default'
@@ -337,12 +326,11 @@ class topWriterWidget
 			return null;
 		}
 
-		return 
-		($w->content_only ? '' : '<div class="topentries'.
-		($w->class ? ' '.html::escapeHTML($w->class) : '').'"">').
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		'<ul>'.$content.'</ul>'.
-		($w->content_only ? '' : '</div>');
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>'.$content.'</ul>';
+
+		return $w->renderDiv($w->content_only,'topentries '.$w->class,'',$res);
 	}
 
 	private static function period($t,$p)

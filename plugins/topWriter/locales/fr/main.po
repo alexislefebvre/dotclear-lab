@@ -1,8 +1,3 @@
-# Language: Français
-# Module: topWriter - 0.4
-# Date: 2013-11-12 17:15:44
-# Translated with translater 2013.05.11
-
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -96,6 +91,5 @@ msgid_plural "%s posts"
 msgstr[0] "un billet"
 msgstr[1] "%s billets"
 
-msgid "Widgets to list users who write more posts or comments"
-msgstr "Widgets de liste des utilisateurs qui ont écrit le plus de billets ou de commentaires"
-
+msgid "Rranking of the most prolific writers and/or commentators"
+msgstr "Classement des plus prolifiques rédacteurs et/ou commentateurs"

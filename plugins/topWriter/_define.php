@@ -19,18 +19,18 @@ if (!defined('DC_RC_PATH')) {
 
 $this->registerModule(
 	/* Name */
-	"Top writer",
+	"topWriter",
 	/* Description*/
-	"Widgets to list users who write more posts or comments",
+	"Ranking of the most prolific writers and commentators",
 	/* Author */
-	"Jean-Christian Denis",
+	"Jean-Christian Denis, Pierre Van Glabeke",
 	/* Version */
-	'0.4',
+	'0.5',
 	array(
 		'permissions' => 'admin',
 		'type' => 'plugin',
 		'dc_min' => '2.6',
-		'support' => 'http://jcd.lv/q=topWriter',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/topWriter',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/topWriter'
 	)
 );
