@@ -28,21 +28,22 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-$settings =& $core->blog->settings;
+$page_title = __('Link Summarizer');
 
-$settings->setNameSpace('linksummarizer');
-
+# Everything's fine, save options
+$core->blog->settings->addNamespace('linksummarizer');
+		
 try
 {
 	if (!empty($_POST['saveconfig']))
 	{
 		# Enable Link Summarizer
-		$settings->put('linksummarizer_active',
+		$core->blog->settings->linksummarizer->put('linksummarizer_active',
 			(!empty($_POST['linksummarizer_active'])),'boolean',
 			'Enable Link Summarizer');
 		
 		# Display Link Summarizer only in post context
-		$settings->put('linksummarizer_only_post',
+		$core->blog->settings->linksummarizer->put('linksummarizer_only_post',
 			(!empty($_POST['linksummarizer_only_post'])),'boolean',
 			'Display Link Summarizer only in post context');	
 		
@@ -62,41 +63,46 @@ if (isset($_GET['saveconfig']))
 ?>
 <html>
 <head>
-	<title><?php echo __('Link Summarizer'); ?></title>
+	<title><?php echo $page_title; ?></title>
 </head>
 <body>
+<?php
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+if (!empty($_GET['saveconfig'])) {
+  dcPage::success(__('Configuration successfully updated.'));
+};
+?>
 
-	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.
-		__('Link Summarizer'); ?></h2>
-	
 	<form method="post" action="<?php echo http::getSelfURI(); ?>">
+	<div class="fieldset">
+		<h4><?php echo __('Configuration'); ?></h4>
 		<p>
 			<?php echo(form::checkbox('linksummarizer_active',1,
-				$settings->linksummarizer_active)); ?>
+				$core->blog->settings->linksummarizer->linksummarizer_active)); ?>
 			<label class="classic" for="linksummarizer_active">
-			<?php echo(__('Display a summary of the links included in posts after the posts')); ?></label>
+			<?php echo(__('Activate the plugin (display a summary of links contained in the Notes after the entries)')); ?></label>
 		</p>
-		
-		<p>
-			<?php echo(form::checkbox('linksummarizer_only_post',1,
-				$settings->linksummarizer_only_post)); ?>
-			<label class="classic" for="linksummarizer_only_post">
-			<?php echo(__('Display the links summary only in post context')); ?></label>
-		</p>
-		
+
+
+<?php
+if ($core->blog->settings->linksummarizer->linksummarizer_active) {
+	echo
+
+		'<p>'.
+			(form::checkbox('linksummarizer_only_post',1,$core->blog->settings->linksummarizer->linksummarizer_only_post)).
+			'<label class="classic" for="linksummarizer_only_post">'.
+			__('Display the links summary only in post context').'</label>'.
+		'</p>';
+}
+?>
+  </div>
 		<p><?php echo $core->formNonce(); ?></p>
 		<p><input type="submit" name="saveconfig"
-			value="<?php echo __('Save configuration'); ?>" /></p>
+			value="<?php echo __('Save'); ?>" /></p>
 	</form>
-	
-	<div id="help" title="<?php echo __('Help'); ?>">
-		<div class="help-content">
-			<h2><?php echo(__('Help')); ?></h2>
-			<p><?php printf(__('Inspired by <a href="%1$s">%2$s</a>'),
-				'http://wordpress.org/extend/plugins/link-summarizer/',
-				__('Link Summarizer for WordPress')); ?></p>
-		</div>
-	</div>
-
 </body>
 </html>

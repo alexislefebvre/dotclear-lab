@@ -28,7 +28,7 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-if ($core->blog->settings->linksummarizer_active)
+if ($core->blog->settings->linksummarizer->linksummarizer_active)
 {
 	$core->addBehavior('publicEntryAfterContent',array('linkSummarizerBehaviors','publicEntryAfterContent'));
 }
@@ -46,7 +46,7 @@ class linkSummarizerBehaviors
 	public static function publicEntryAfterContent()
 	{		
 		# Display Link Summarizer only in post context
-		if (($GLOBALS['core']->blog->settings->linksummarizer_only_post)
+		if (($GLOBALS['core']->blog->settings->linksummarizer->linksummarizer_only_post)
 			&& ($GLOBALS['core']->url->type != 'post')) {return;}
 		
 		$post = $GLOBALS['_ctx']->posts->post_excerpt_xhtml.
@@ -92,4 +92,3 @@ class linkSummarizerBehaviors
 		}
 	}
 }
-?>

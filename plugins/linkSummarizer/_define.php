@@ -29,10 +29,16 @@
 if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
-     /* Name */                      'Link Summarizer',
-     /* Description*/                'Extracts links from posts',
-     /* Author */                    'Moe (http://gniark.net/)',
-     /* Version */                   '0.1.2',
-     /* Permissions */               'admin,contentadmin'
+	/* Name */			"linkSummarizer",
+	/* Description*/		"Extracts links from posts",
+	/* Author */			"Moe (http://gniark.net/), Pierre Van Glabeke",
+	/* Version */			'0.2',
+	/* Properties */
+	array(
+		'permissions' => 'admin,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.7',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/linkSummarizer',
+		'details' => 'http://lab.dotclear.org/wiki/plugin/linkSummarizer'
+		)
 );
-?>

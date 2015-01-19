@@ -1,24 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Link Summarizer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-19 23:31+0100\n"
-"PO-Revision-Date: 2009-02-19 23:36+0100\n"
-"Last-Translator: Moe <poedit@gniark.net>\n"
-"Language-Team: Moe <poedit@gniark.net>\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: brol <contact@brol.info>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __\n"
-"X-Poedit-Basepath: ../..\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: _public.php:89
 msgid "Links"
-msgstr ""
+msgstr "Liens"
 
 #: _admin.php:31
 #: index.php:65
@@ -31,8 +25,8 @@ msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
 #: index.php:77
-msgid "Display a summary of the links included in posts after the posts"
-msgstr "Afficher un résumé des liens contenus dans les billets après les billets"
+msgid "Activate the plugin (display a summary of links contained in the Notes after the entries)"
+msgstr "Activer le plugin (affichera un résumé des liens contenus dans les billets après les billets)"
 
 #: index.php:84
 msgid "Display the links summary only in post context"

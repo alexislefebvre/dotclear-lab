@@ -28,10 +28,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem(__('Link Summarizer'),
+$_menu['Blog']->addItem(__('Link Summarizer'),
 	'plugin.php?p=linkSummarizer',
 	'index.php?pf=linkSummarizer/icon.png',
 	preg_match('/plugin.php\?p=linkSummarizer(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('contentadmin',$core->blog->id));
-
-?>
