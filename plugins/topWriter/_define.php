@@ -21,7 +21,7 @@ $this->registerModule(
 	/* Name */
 	"topWriter",
 	/* Description*/
-	"Ranking of the most prolific writers and commentators",
+	"Ranking of the most prolific writers and/or commentators",
 	/* Author */
 	"Jean-Christian Denis, Pierre Van Glabeke",
 	/* Version */

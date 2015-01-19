@@ -91,5 +91,5 @@ msgid_plural "%s posts"
 msgstr[0] "un billet"
 msgstr[1] "%s billets"
 
-msgid "Rranking of the most prolific writers and/or commentators"
+msgid "Ranking of the most prolific writers and/or commentators"
 msgstr "Classement des plus prolifiques rédacteurs et/ou commentateurs"
