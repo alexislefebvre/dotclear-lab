@@ -27,6 +27,9 @@ function myBlogNumbersWidgetPublic($w)
 	$s_line = '<li>%s%s</li>';
 	$s_title = '<strong>%s</strong> ';
 
+		if ($w->offline)
+			return;
+
 	# Home only
 	if ($w->homeonly == 1 && $core->url->type != 'default'
 	 || $w->homeonly == 2 && $core->url->type == 'default'
@@ -144,10 +147,9 @@ function myBlogNumbersWidgetPublic($w)
 	}
 
 	# Display
-	return 
-	($w->content_only ? '' : '<div class="myblognumbers'.
-	($w->class ? ' '.html::escapeHTML($w->class) : '').'"">').
-	($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-	'<ul>'.$content.$addons.'</ul>'.
-	($w->content_only ? '' : '</div>');
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>'.$content.$addons.'</ul>';
+
+		return $w->renderDiv($w->content_only,'myblognumbers '.$w->class,'',$res);
 }

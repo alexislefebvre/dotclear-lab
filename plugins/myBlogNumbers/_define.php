@@ -19,18 +19,18 @@ if (!defined('DC_RC_PATH')) {
 
 $this->registerModule(
 	/* Name */
-	"My blog numbers",
+	"myBlogNumbers",
 	/* Description*/
 	"Show some figures of your blog",
 	/* Author */
-	"Jean-Christian Denis",
+	"Jean-Christian Denis, Pierre Van Glabeke",
 	/* Version */
-	'2013.11.12',
+	'2015.01.20',
 	array(
 		'permissions' => 'usage,contentadmin',
 		'type' => 'plugin',
-		'dc_min' => '2.6',
-		'support' => 'http://jcd.lv/q=myBlogNumbers',
+		'dc_min' => '2.7',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/myBlogNumbers',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/myBlogNumbers'
 	)
 );

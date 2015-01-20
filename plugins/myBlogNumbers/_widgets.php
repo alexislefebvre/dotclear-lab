@@ -151,4 +151,5 @@ function myBlogNumbersWidgetAdmin($w)
 		__('CSS class:'),
 		''
 	);
+		$w->myblognumbers->setting('offline',__('Offline'),0,'check');
 }
