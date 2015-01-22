@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | tagFlash  - a plugin for Dotclear                                     |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2010,2014 Nicolas Roudaire        http://www.nikrou.net  |
+// | Copyright(C) 2010,2015 Nicolas Roudaire        http://www.nikrou.net  |
 // | Copyright(C) 2010 Guenaël                                             |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
@@ -22,10 +22,15 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
+$self_ns = $core->blog->settings->addNamespace('tagflash');
+if (!$self_ns->active) {
+    return;
+}
+
 $core->addBehavior('initWidgets',array('tagFlashWidgetBehaviors','initWidgets'));
 $core->addBehavior('initDefaultWidgets',array('tagFlashWidgetBehaviors','initDefaultWidgets'));
 
-class tagFlashWidgetBehaviors 
+class tagFlashWidgetBehaviors
 {
     public static function initDefaultWidgets($w, $d) {
         $d['extra']->append($w->tagFlash);
@@ -33,12 +38,12 @@ class tagFlashWidgetBehaviors
 
     public static function initWidgets($w) {
         $w->create('tagFlash',__('Tags Flash'), array('tplTagFlash','widget'));
-        
+
         $w->tagFlash->setting('title',__('Title:'),'Tags','text');
         $w->tagFlash->setting('seo_content',__('Add tags for SEO'),1,'check');
         $w->tagFlash->setting('transparent_mode',__('Transparent mode'),1,'check');
         $w->tagFlash->setting('limit',__('Maximun displayed tags (empty=no limit):'),0,'text');
-        
+
         $w->tagFlash->setting('homeonly',
         __('Display on:'), 0, 'combo',
         array(
@@ -49,5 +54,6 @@ class tagFlashWidgetBehaviors
         );
         $w->tagFlash->setting('content_only', __('Content only'), 0, 'check');
         $w->tagFlash->setting('class', __('CSS class:'), '');
+        $w->tagFlash->setting('offline',__('Offline'),0,'check');
     }
 }

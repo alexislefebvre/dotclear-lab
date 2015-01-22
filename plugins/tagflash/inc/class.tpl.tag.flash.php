@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | tagFlash  - a plugin for Dotclear                                     |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2010,2014 Nicolas Roudaire        http://www.nikrou.net  |
+// | Copyright(C) 2010,2015 Nicolas Roudaire        http://www.nikrou.net  |
 // | Copyright(C) 2010 Guenaël                                             |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
@@ -20,6 +20,8 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
+if (!defined('DC_RC_PATH')) { return; }
+
 class tplTagFlash
 {
     private static $size_translator = array(
@@ -29,10 +31,13 @@ class tplTagFlash
 
     public static function widget($w) {
         global $core, $_ctx;
-    
+
         if (!$core->blog->settings->tagflash->active) {
             return;
         }
+
+		if ($w->offline)
+			return;
 
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
         ($w->homeonly == 2 && $core->url->type == 'default')) {
@@ -44,17 +49,13 @@ class tplTagFlash
         $settings = $core->blog->settings->tagflash;
 
         $res = '';
-        
-        if ($w->title) {
-            $res .= '<h2>'.$w->title.'</h2>';
-        }
 
         $res .= sprintf('<object data="%s" width="%s" height="%s" type="application/x-shockwave-flash">'."\n",
         $flash_url,
         $settings->width,
         $settings->height
         );
-		    
+
         $res .= sprintf('<param name="movie" value="%s"/>', $flash_url);
         $res .= '<param name="allowScriptAccess" value="sameDomain"/>'."\n";
         $res .= sprintf('<param name="flashvars" value="%s"/>',
@@ -68,14 +69,15 @@ class tplTagFlash
             $res .= '<param name="bgcolor" value="'.$settings->bgcolor.'"/>'."\n";
         }
 
-        $res .= '<div id="tagFlashContent">'.self::getTags($w, false).'</div>'."\n";    
+        $res .= '<div id="tagFlashContent">'.self::getTags($w, false).'</div>'."\n";
         $res .= '</object>'."\n";
         $res .= '<p><strong><a href="'.$core->blog->url.$core->url->getBase('tags').'">'.__('All tags').'</a></strong></p>';
 
-        return
-            ($w->content_only ? '' : '<div class="tagFlash'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').
-            $res.
-            ($w->content_only ? '' : '</div>');
+        $res =
+        ($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		    $res;
+
+		    return $w->renderDiv($w->content_only,'tagFlash '.$w->class,'',$res);
     }
 
     public static function tagFlashParams($w) {
@@ -95,40 +97,40 @@ class tplTagFlash
 
     public static function getTags($w, $for_flash=true) {
         global $core;
-      
+
         $limit = null;
         if ($w->limit && is_numeric($w->limit)) {
             $limit = $w->limit;
         }
-    
+
         $rs = $core->meta->computeMetaStats(
             $core->meta->getMetadata(array('meta_type'=> 'tag',
             'limit'=> $limit)
             )
-        ); 
+        );
         $res = '';
         if ($for_flash) {
             $fmt_tag = "<a href='%s' rel='tag' style='font-size:%spt'>%s</a>";
         } else {
             $fmt_tag = '<li><a href="%s" class="tag%s" rel="tag">%s</a></li>';
         }
-    
+
         if (!$rs->isEmpty()) {
             while ($rs->fetch()) {
-                $res .= sprintf($fmt_tag, 
+                $res .= sprintf($fmt_tag,
                 $core->blog->url.$core->url->getBase('tag').'/'.urlencode(utf8_encode($rs->meta_id)),
                 self::$size_translator[$rs->roundpercent],
                 $rs->meta_id
                 );
             }
         }
-        
+
         if ($for_flash) {
             $res = '<tags>'.$res.'</tags>';
         } else {
             $res = '<ul>'.$res.'</ul>';
         }
-        
+
         return $res;
     }
 }

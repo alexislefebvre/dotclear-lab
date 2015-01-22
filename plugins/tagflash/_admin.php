@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | tagFlash  - a plugin for Dotclear                                     |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2010,2014 Nicolas Roudaire        http://www.nikrou.net  |
+// | Copyright(C) 2010,2015 Nicolas Roudaire        http://www.nikrou.net  |
 // | Copyright(C) 2010 Guenaël                                             |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
@@ -22,12 +22,11 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Blog']->addItem(__('Tag Flash'), 
+$_menu['Blog']->addItem(__('Tag Flash'),
 			   'plugin.php?p=tagflash',
 			   'index.php?pf=tagflash/img/icon.png',
 			   preg_match('/plugin.php\?p=tagflash(&.*)?$/', $_SERVER['REQUEST_URI']),
 			   $core->auth->check('usage,contentadmin', $core->blog->id)
 			   );
-
 
 require dirname(__FILE__).'/_widgets.php';

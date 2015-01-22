@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | tagFlash  - a plugin for Dotclear                                     |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2010,2014 Nicolas Roudaire        http://www.nikrou.net  |
+// | Copyright(C) 2010,2015 Nicolas Roudaire        http://www.nikrou.net  |
 // | Copyright(C) 2010 Guenaël                                             |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
@@ -26,11 +26,11 @@ $this->registerModule(
 	/* Name */			"Tag Flash",
 	/* Description*/	"Flash based Tag Cloud for Dotclear",
 	/* Author */		"Gwénaël Després (based on WordPress plugin by Roy Tanck)",
-	/* Version */		"1.2.1",
+	/* Version */		"1.2.2",
 	/* Permissions */	"usage,contentadmin",
 	/* Properties */	array('type' => 'plugin',
 							  'dc_min' => '2.6',
 							  'support' => 'http://forum.dotclear.net/viewtopic.php?id=34559',
 							  'details' => 'http://plugins.dotaddict.org/dc2/details/tagflash'
-							 )
-					  );
+    )
+);

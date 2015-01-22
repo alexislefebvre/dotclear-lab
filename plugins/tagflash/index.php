@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------+
 // | tagFlash  - a plugin for Dotclear                                     |
 // +-----------------------------------------------------------------------+
-// | Copyright(C) 2010,2014 Nicolas Roudaire        http://www.nikrou.net  |
+// | Copyright(C) 2010,2015 Nicolas Roudaire        http://www.nikrou.net  |
 // | Copyright(C) 2010 Guenaël                                             |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
@@ -49,37 +49,37 @@ if (!empty($_POST['saveconfig'])) {
     try {
         $tagflash_active = (empty($_POST['tagflash_active']))?false:true;
         $core->blog->settings->tagflash->put('active', $tagflash_active, 'boolean');
-        
+
         if (!empty($_POST['tagflash_width'])) {
             $tagflash_width = trim($_POST['tagflash_width'], " /\n\t\r\0\x0B");
             $core->blog->settings->tagflash->put('width', $tagflash_width, 'string');
         }
-        
+
         if (!empty($_POST['tagflash_height'])) {
             $tagflash_height = trim($_POST['tagflash_height'], " /\n\t\r\0\x0B");
             $core->blog->settings->tagflash->put('height', $tagflash_height, 'string');
         }
-        
+
         if (!empty($_POST['tagflash_bgcolor'])) {
             $tagflash_bgcolor = trim($_POST['tagflash_bgcolor'], " /\n\t\r\0\x0B");
             $core->blog->settings->tagflash->put('bgcolor', $tagflash_bgcolor, 'string');
         }
-        
+
         if (!empty($_POST['tagflash_color1'])) {
             $tagflash_color1 = trim($_POST['tagflash_color1'], " /\n\t\r\0\x0B");
             $core->blog->settings->tagflash->put('color1', $tagflash_color1, 'string');
         }
-        
+
         if (!empty($_POST['tagflash_color2'])) {
             $tagflash_color2 = trim($_POST['tagflash_color2'], " /\n\t\r\0\x0B");
             $core->blog->settings->tagflash->put('color2', $tagflash_color2, 'string');
         }
-        
+
         if (!empty($_POST['tagflash_hicolor'])) {
             $tagflash_hicolor = trim($_POST['tagflash_hicolor'], " /\n\t\r\0\x0B");
             $core->blog->settings->tagflash->put('hicolor', $tagflash_hicolor, 'string');
         }
-        
+
         if (!empty($_POST['tagflash_speed'])) {
             $tagflash_speed = (int)trim($_POST['tagflash_speed'], " /\n\t\r\0\x0B");
             if ($tagflash_speed==0) {
@@ -88,7 +88,7 @@ if (!empty($_POST['saveconfig'])) {
             $core->blog->settings->tagflash->put('speed', $tagflash_speed, 'string');
         }
 
-        $core->blog->triggerBlog();    
+        $core->blog->triggerBlog();
         $message = __('Configuration successfully updated.');
     } catch (Exception $e) {
         $core->error->add($e->getMessage());
