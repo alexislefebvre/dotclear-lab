@@ -10,6 +10,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: _widgets.php:26
+msgid "Top Writer: top comments"
+msgstr "Top Writer : top commentaires"
+
 #: _widgets.php:34
 msgid "Top comments"
 msgstr "Top commentaires"
@@ -57,7 +60,10 @@ msgstr "Limite :"
 msgid "Exclude post writer from list"
 msgstr "Exclure de la liste les auteurs de billets"
 
-#: _widgets.php:103
+#: _widgets.php:99
+msgid "Top Writer: top entries"
+msgstr "Top Writer : top billets"
+
 #: _widgets.php:111
 msgid "Top entries"
 msgstr "Top billets"

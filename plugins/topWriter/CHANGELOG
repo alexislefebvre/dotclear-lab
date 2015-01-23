@@ -2,6 +2,10 @@ topWriter x.x - xxxx-xx-xx
 ===========================================================
  * literal rank of writer depending of num of com
 
+topWriter 0.6 - 23-01-2015 - Pierre Van Glabeke
+===========================================================
+ * Modifications locales pour widget
+
 topWriter 0.5 - 19-01-2015 - Pierre Van Glabeke
 ===========================================================
  * Compatibilité dc2.7

@@ -23,9 +23,10 @@ class topWriterWidget
 {
 	public static function init($w)
 	{
+    #Top comments widget
 		$w->create(
 			'topcom',
-			__('Top comments'),
+			__('Top Writer: top comments'),
 			array('topWriterWidget', 'topCom'),
 			null,
 			__('List users who write more comments')
@@ -92,9 +93,10 @@ class topWriterWidget
     $w->topcom->setting('class',__('CSS class:'),'');
 		$w->topcom->setting('offline',__('Offline'),0,'check');
 
+    #Top entries widget
 		$w->create(
 			'toppost',
-			__('Top entries'),
+			__('Top Writer: top entries'),
 			array('topWriterWidget', 'topPost'),
 			null,
 			__('List users who write more posts')
