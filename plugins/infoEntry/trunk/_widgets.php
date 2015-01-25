@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of infoEntry, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Tomtom
+# Copyright (c) 2009 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -23,7 +23,9 @@ class infoEntryWidgets
 	 */
 	public static function initWidgets($w)
 	{
-		$w->create('infoEntry',__('Information about entry'),array('infoEntryPublic','widget'));
+		$w->create('infoEntry',__('InfoEntry: information about entry'),array('infoEntryPublic','widget'),
+			null,
+			__('Display all information on current entry'));
 		$w->infoEntry->setting('title',__('Title:'),__('Information about entry'),'text');
 		$w->infoEntry->setting('displayauthor',__('Display author'),true,'check');
 		$w->infoEntry->setting('displaydate',__('Display date'),true,'check');
@@ -44,7 +46,8 @@ class infoEntryWidgets
 		$w->infoEntry->setting('displaypreventry',__('Display previous entry'),true,'check');
 		$w->infoEntry->setting('displaynextentrycat',__("Display next same category's entry"),true,'check');
 		$w->infoEntry->setting('displaypreventrycat',__("Display previous same category's entry"),true,'check');
+    $w->infoEntry->setting('content_only',__('Content only'),0,'check');
+    $w->infoEntry->setting('class',__('CSS class:'),'');
+		$w->infoEntry->setting('offline',__('Offline'),0,'check');
 	}
 }
-
-?>

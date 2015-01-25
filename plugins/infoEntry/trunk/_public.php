@@ -2,14 +2,13 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of infoEntry, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Tomtom
+# Copyright (c) 2009 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
 if (!defined('DC_RC_PATH')) { return; }
 
 class infoEntryPublic
@@ -25,11 +24,14 @@ class infoEntryPublic
 	{
 		global $core, $_ctx;
 
+		if ($w->offline)
+			return;
+
 		if ($core->url->type != 'post') { return; }
 
-		$res = (strlen($w->title) > 0) ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
+		$res = '<ul>';
 
-		$pmask = '<p class="%1$s">%2$s</p>';
+		$pmask = '<li class="%1$s">%2$s</li>';
 		$amask = '<a href="%1$s">%2$s</a>';
 
 		if ($w->displayauthor) {
@@ -52,16 +54,14 @@ class infoEntryPublic
 			$_ctx->meta = $tags->getMetaRecordset($_ctx->posts->post_meta,'tag');
 			$_ctx->meta->sort($w->sortby,$w->orderby);
 
-			$res .= '<ul class="info-tags">';
-
 			while ($_ctx->meta->fetch())
 			{
 				$url = $core->blog->url.$core->url->getBase('tag').'/'.rawurlencode($_ctx->meta->meta_id);
 				$link = sprintf($amask,$url,html::escapeHTML($_ctx->meta->meta_id));
-				$res .= '<li>'.$link.'</li>';
+				$res .= '<li class="info-tags">'.$link.'</li>';
 			}
 
-			$res .= '</ul>';
+			//$res .= '</ul>';
 		}
 		if ($w->displaynextentry) {
 			$res .= infoEntryPublic::getRelatedPost(__('Next entry: %s'),'info-next-entry',1);
@@ -76,10 +76,13 @@ class infoEntryPublic
 			$res .= infoEntryPublic::getRelatedPost(__('Previous entry in category: %s'),'info-prev-entry',-1,true);
 		}
 
-		return
-			'<div id="info-entry">'.
-			$res.
-			'</div>';
+    $res .= '</ul>';
+
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+    $res;
+    
+		return $w->renderDiv($w->content_only,'info-entry '.$w->class,'',$res);
 	}
 
 	/**
@@ -96,7 +99,7 @@ class infoEntryPublic
 	{
 		global $core, $_ctx;
 
-		$pmask = '<p class="%1$s">%2$s</p>';
+		$pmask = '<li class="%1$s">%2$s</li>';
 		$amask = '<a href="%1$s">%2$s</a>';
 		$res = '';
 
@@ -113,5 +116,3 @@ class infoEntryPublic
 		return $res;
 	}
 }
-
-?>
