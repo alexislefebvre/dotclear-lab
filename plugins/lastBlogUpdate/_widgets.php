@@ -25,7 +25,7 @@ function lastBlogUpdateWidgetAdmin($w)
 	
 	$w->create(
 		'lastblogupdate',
-		__('Dates of last updates'),
+		__('LastBlogUpdate: dates of lastest updates'),
 		'lastBlogUpdateWidgetPublic',
 		null,
 		"Show the dates of last updates of your blog in a widget"
@@ -33,7 +33,7 @@ function lastBlogUpdateWidgetAdmin($w)
 	$w->lastblogupdate->setting(
 		'title',
 		__('Title:'),
-		__('Dates of last updates'),
+		__('Dates of lastest updates'),
 		'text'
 	);
 	$w->lastblogupdate->setting(
@@ -137,4 +137,5 @@ function lastBlogUpdateWidgetAdmin($w)
 		__('CSS class:'),
 		''
 	);
+	$w->lastblogupdate->setting('offline',__('Offline'),0,'check');
 }

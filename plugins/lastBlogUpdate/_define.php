@@ -19,18 +19,18 @@ if (!defined('DC_RC_PATH')) {
 
 $this->registerModule(
 	/* Name */
-	"Last blog update",
+	"lastBlogUpdate",
 	/* Description*/
 	"Show the dates of last updates of your blog in a widget",
 	/* Author */
-	"Jean-Christian Denis",
+	"Jean-Christian Denis, Pierre Van Glabeke",
 	/* Version */
-	'2013.11.12',
+	'2015.01.29',
 	array(
 		'permissions' => 'usage,contentadmin',
 		'type' => 'plugin',
 		'dc_min' => '2.6',
-		'support' => 'http://jcd.lv/q=lastBlogUpdate',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/lastBlogUpdate',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/lastBlogUpdate'
 	)
 );

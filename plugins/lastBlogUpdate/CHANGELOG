@@ -1,3 +1,9 @@
+lastBlogUpdate 2015.01.29 - Pierre Van Glabeke
+===========================================================
+ * ajout option hors ligne widget
+ * modif code pour affichage widget (compatibilité currywurst)
+ * modifs locales
+
 lastBlogUpdate 2013.11.12
 ===========================================================
  * Tiny clean up and add options to widgets

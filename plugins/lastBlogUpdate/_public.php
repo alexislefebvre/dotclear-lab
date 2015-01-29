@@ -23,6 +23,9 @@ function lastBlogUpdateWidgetPublic($w)
 {
 	global $core;
 
+	if ($w->offline)
+		return;
+
 	# Nothing to display
 	if ($w->homeonly == 1 && $core->url->type != 'default' 
 	||  $w->homeonly == 2 && $core->url->type == 'default' 
@@ -90,10 +93,9 @@ function lastBlogUpdateWidgetPublic($w)
 	}
 
 	# Display
-	return 
-	($w->content_only ? '' : '<div class="lastblogupdate'.
-	($w->class ? ' '.html::escapeHTML($w->class) : '').'"">').
-	($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-	'<ul>'.$blog.$post.$comment.$media.$addons.'</ul>'.
-	($w->content_only ? '' : '</div>');
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>'.$blog.$post.$comment.$media.$addons.'</ul>';
+
+		return $w->renderDiv($w->content_only,'lastblogupdate '.$w->class,'',$res);
 }
