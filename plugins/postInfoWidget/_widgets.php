@@ -30,7 +30,7 @@ class postInfoWidget
 
 		$w->create(
 			'postinfowidget',
-			__('Entry information list'),
+			__('PostInfoWidget: entry information list'),
 			array('postInfoWidget', 'publicWidget'),
 			null,
 			__('Show Entry informations on a widget')
@@ -61,51 +61,51 @@ class postInfoWidget
 		);
 		$w->postinfowidget->setting(
 			'lang_str',
-			__('Language: (%T = name, %C = code, %F = flag)'),
+			__('Language (%T = name, %C = code, %F = flag):'),
 			__('Language: %T %F'),
 			'text'
 		);
 		$w->postinfowidget->setting(
 			'author_str',
-			__('Author text: (%T = author)'),
+			__('Author text (%T = author):'),
 			__('Author: %T'),
 			'text'
 		);
 		$w->postinfowidget->setting(
 			'category_str',
-			__('Category text: (%T = category)'),
+			__('Category text (%T = category):'),
 			__('Category: %T'),
 			'text'
 		);
 		if ($core->plugins->moduleExists('tags')) {
 			$w->postinfowidget->setting(
 				'tag_str',
-				__('Tags text: (%T = tags list)'),
+				__('Tags text (%T = tags list):'),
 				__('Tags: %T'),
 				'text'
 			);
 		}
 		$w->postinfowidget->setting(
 			'attachment_str',
-			__('Attachments text: (%T = text, %D = numeric)'),
+			__('Attachments text (%T = text, %D = numeric):'),
 			__('Attachments: %T'),
 			'text'
 		);
 		$w->postinfowidget->setting(
 			'comment_str',
-			__('Comments text: (%T = text, %D = numeric)'),
+			__('Comments text (%T = text, %D = numeric):'),
 			__('Comments: %T'),
 			'text'
 		);
 		$w->postinfowidget->setting(
 			'trackback_str',
-			__('Trackbacks text: (%T = text, %D = numeric)'),
+			__('Trackbacks text (%T = text, %D = numeric):'),
 			__('Trackbacks: %T'),
 			'text'
 		);
 		$w->postinfowidget->setting(
 			'permalink_str',
-			__('Permalink text: (%T = text link, %F = full link)'),
+			__('Permalink text (%T = text link, %F = full link):'),
 			__('%T'),
 			'text'
 		);
@@ -117,25 +117,25 @@ class postInfoWidget
 		);
 		$w->postinfowidget->setting(
 			'navprevpost',
-			__('Link to previous entry: (%T = navigation text, %F = entry title)'),
+			__('Link to previous entry (%T = navigation text, %F = entry title):'),
 			__('%T'),
 			'text'
 		);
 		$w->postinfowidget->setting(
 			'navnextpost',
-			__('Link to next entry: (%T = navigation text, %F = entry title)'),
+			__('Link to next entry (%T = navigation text, %F = entry title):'),
 			__('%T'),
 			'text'
 		);
 		$w->postinfowidget->setting(
 			'navprevcat',
-			__('Link to previous entry of this category: (%T = navigation text, %F = entry title)'),
+			__('Link to previous entry of this category (%T = navigation text, %F = entry title):'),
 			__('%T'),
 			'text'
 		);
 		$w->postinfowidget->setting(
 			'navnextcat',
-			__('Link to next entry of this category: (%T = navigation text, %F = entry title)'),
+			__('Link to next entry of this category (%T = navigation text, %F = entry title):'),
 			__('%T'),
 			'text'
 		);
@@ -184,11 +184,15 @@ class postInfoWidget
 			__('CSS class:'),
 			''
 		);
+    $w->postinfowidget->setting('offline',__('Offline'),0,'check');
 	}
 
 	public static function publicWidget($w)
 	{
 		global $core, $_ctx;
+
+  	if ($w->offline)
+  		return;
 
 		if ($core->url->type != 'post' 
 		|| !$_ctx->posts->post_id
@@ -581,14 +585,12 @@ class postInfoWidget
 			'});'."\n".
 			"</script>\n";
 		}
+		
+		$rmv =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<ul>'.$content.'</ul>';
 
-		return 
-		$rmv.
-		($w->content_only ? '' : '<div class="postinfowidget'.
-		($w->class ? ' '.html::escapeHTML($w->class) : '').'"">').
-		$title.
-		'<ul>'.$content.'</ul>'.
-		($w->content_only ? '' : '</div>');
+		return $w->renderDiv($w->content_only,'postinfowidget '.$w->class,'',$rmv);
 	}
 
 	public static function li($w, $i, $c)

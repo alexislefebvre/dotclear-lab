@@ -1,4 +1,10 @@
-postInfoWidget 0.3 - 2013-11-12
+postInfoWidget 0.5 - 2015-01-29 - Pierre Van Glabeke
+===========================================================
+ * ajout case hors ligne
+ * modif localisation
+ * fin de ligne unix (LF)
+
+postInfoWidget 0.4 - 2013-11-12
 ===========================================================
  * Switch to Dotclear 2.6
  * Clean up code 

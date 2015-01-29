@@ -19,18 +19,18 @@ if (!defined('DC_RC_PATH')) {
 
 $this->registerModule(
 	/* Name */
-	"Entry information list",
+	"postInfoWidget",
 	/* Description*/
 	"Show Entry informations on a widget",
 	/* Author */
-	"Jean-Christian Denis",
+	"Jean-Christian Denis, Pierre Van Glabeke",
 	/* Version */
-	'0.4',
+	'0.5',
 	array(
 		'permissions' => 'usage,contentadmin',
 		'type' => 'plugin',
 		'dc_min' => '2.6',
-		'support' => 'http://jcd.lv/q=postInfoWidget',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/postInfoWidget',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/postInfoWidget'
 	)
 );
