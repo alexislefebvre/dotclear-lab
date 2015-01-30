@@ -108,6 +108,7 @@ code, pre {
 	font-size:30px;
 	font-style:normal;
 	font-weight:bolder;
+	width:590px;
 }
 #top h1 a {
 	color:#FFFFFF;
@@ -181,7 +182,10 @@ code, pre {
 	width:960px;
 	margin:0 auto;
 }
-#main { float:left; }
+#main {
+  float:left;
+	background:#fff;
+}
 #content {
 	width:632px;
 	min-height:500px;
@@ -192,7 +196,7 @@ code, pre {
 #content-info h2, #content-info p {
 	display:block;
 	margin-bottom:10px;
-	padding: 2px 0 0 16px;
+	padding: 2px 16px 0;
 	color:#b2b2b2;
 	font-size:10px;
 	line-height:100%;
@@ -324,9 +328,9 @@ code, pre {
 	margin:25px 0 20px;
 	padding-left:16px;
 	font-size:13px;	
-	background:url(img/tag.gif) 0 50% no-repeat;
+	background:url(img/tag.gif) 0 3px no-repeat;
 }
-.post-tags li {display: inline; padding-right: 4px; }
+.post-tags a {padding-left: 4px; }
 
 .post-excerpt, .post-content { clear: both;}
 
@@ -369,6 +373,7 @@ code, pre {
 	padding-top:0;
 	border-top: none;
 }
+#comments dd p {margin:0;}
 #comments .author { font-size: 13px; font-weight: bold; }
 #comments .author a { text-decoration: none; }
 
@@ -410,7 +415,11 @@ code, pre {
 	color:#888;
 	border-top:1px solid #1d1d1d;
 }
-#blogextra { display: none; }
+
+#sidebar img,
+.widget img,
+.post img,
+.dc-category #content-info p img {max-width:100%;}
 
 #blognav div {
 	margin:15px 0;
@@ -434,6 +443,13 @@ code, pre {
 	line-height:30px;
 	text-transform:uppercase;
 }
+
+#sidebar h2 a,
+#footer .widget h2 a {
+	color:#fff;
+	border-bottom:none;
+}
+
 #sidebar ul, #sidebar p {
 	padding:0 10px 15px;
 	color:#888;
@@ -448,8 +464,15 @@ code, pre {
 }
 #sidebar li a:hover { color:#d1d1d1; }
 
+#sidebar .categories li.category-current a {
+	font-weight: bold;
+}
+#sidebar .categories li.category-current li a {
+	font-weight: normal;
+}
 
-/* boites du menu des widgets livres avec Dotclear */
+
+/* boites du menu des widgets livrés avec Dotclear */
 #sidebar #search {
 	margin:0;
 	padding:20px 0 20px 10px;
@@ -619,6 +642,6 @@ feed.png a piocher dans le theme par defaut par ex.) */
 	ici ceux le plus souvent necessaires
 --------------------------------------------------- */
 .post, .post-content, .footnotes, .attachments, 
-.post-info-co, #comments, #copyright {
+.post-info-co, #comments, #copyright, .post-end {
     clear:both;
 }

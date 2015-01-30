@@ -2,7 +2,7 @@ a { color: #99CC30; }
 .post ul { list-style-image:url(../img/green/bullet_star_featured.png); }
 
 #logo { background:url(../img/green/logo.png) no-repeat; }
-#logo h1 { color:#99CC30; }
+#logo h1 a { color:#99CC30; }
 
 h2 a { border-bottom:1px dotted #99CC30; }
 
@@ -15,6 +15,7 @@ h2 a { border-bottom:1px dotted #99CC30; }
 
 #sidebar h2 { background:url(../img/green/bk_h2_right.png) 0 0 no-repeat; }
 #sidebar li { background:url(../img/green/bullet_star.png) 0 11px no-repeat; }
+#sidebar .categories li.category-current a { color:#99CC30;}
 
 #search input[type=submit] { background:url(../img/green/but_search.png) 0 90% no-repeat; }
 

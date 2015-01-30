@@ -1,10 +1,9 @@
-<div id="top">
+<div id="top"><!-- v1.3 -->
 
 	<div id="logo">
 		<h1><a href="{{tpl:BlogURL}}">{{tpl:BlogName encode_html="1"}}</a></h1>
 		<p>{{tpl:BlogDescription}}</p>
 	</div>
-
 	
 	<div id="top-menu">
 		<!-- {{tpl:MenuFreshy}} -->
@@ -14,13 +13,12 @@
 			<li><a href="{{tpl:BlogURL}}contact">Contact</a></li>
 		</ul>
 	</div>
-
 	
 	<!-- # --BEHAVIOR-- publicTopAfterContent -->
 	{{tpl:SysBehavior behavior="publicTopAfterContent"}}
 
 </div>
 
-<p id="prelude"><a href="#main">{{tpl:lang To content}}</a> |
+<p id="prelude" role="navigation"><a href="#main">{{tpl:lang To content}}</a> |
 <a href="#blognav">{{tpl:lang To menu}}</a> |
 <a href="#search">{{tpl:lang To search}}</a></p>

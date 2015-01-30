@@ -18,22 +18,41 @@ if (!defined('DC_CONTEXT_ADMIN')) exit;
 // Locales
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 
-echo '<script type="text/javascript" src="js/_blog_theme.js"></script>';
-
-// Initialisation
+# Default values
+$default_color = 'pink';
 $separator = ';';
-$color = "pink";
-$social_links = array('', '', '');
+$social_links = array('', '', '/feed/atom');
 
-$core->blog->settings->setNameSpace('designPile');
+# Settings
+$my_color = $core->blog->settings->themes->designPileColor;
 
-// Mise à jour des settings
+# Color scheme
+$designPileColor_combo = array(
+	__('pink') => 'pink',
+	__('blue') => 'blue',
+	__('green') => 'green'
+);
+
+// POST ACTIONS
+
 if (!empty($_POST))
 {
+	try
+	{
+		$core->blog->settings->addNamespace('themes');
 
-	// Couleur
-	$color = (!empty($_POST['color'])) ? $_POST['color'] : '';
-	$core->blog->settings->put('designPileColor',serialize($color),'string');
+		# Color scheme
+		if (!empty($_POST['designPileColor']) && in_array($_POST['designPileColor'],$designPileColor_combo))
+		{
+			$my_color = $_POST['designPileColor'];
+
+
+		} elseif (empty($_POST['designPileColor']))
+		{
+			$my_color = $default_color;
+
+		}
+		$core->blog->settings->themes->put('designPileColor',$my_color,'string','Color display',true);
 
 	// Liens
 	$social_links[0] = (!empty($_POST['twitter'])) ? $_POST['twitter'] : '';
@@ -41,71 +60,41 @@ if (!empty($_POST))
 	$social_links[2] = (!empty($_POST['rss'])) ? $_POST['rss'] : '';
 
 	$string = implode($separator, $social_links);
-	$core->blog->settings->put('designPileSocialLinks',serialize($string),'string');
+	$core->blog->settings->themes->put('designPileSocialLinks',serialize($string),'string','social_links',true);
+
+	// Blog refresh
 	$core->blog->triggerBlog();
 
-	echo '<p class="message">'.__('La configuration du thème a été mise à jour avec succès.').'</p>';
+	// Template cache reset
+	$core->emptyTemplatesCache();
 
-	// Vidage du cache
-	try {
-		$core->emptyTemplatesCache();
-	} catch (Exception $e) {
+	dcPage::success(__('Theme configuration has been successfully updated.'),true,true);
+	}
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
-	}
-
-
-} else {
-
-	// Lecture des settings
-	if ($core->blog->settings->designPile->designPileColor) {
-		$color = @unserialize($core->blog->settings->designPile->designPileColor);
-	} else {
-		$core->blog->settings->put('designPileColor',serialize($color),'string');
-		$core->blog->triggerBlog();
-	}
-	if ($core->blog->settings->designPile->designPileSocialLinks) {
-		$string = @unserialize($core->blog->settings->designPile->designPileSocialLinks);
-		$social_links = explode($separator, $string);
-	} else {
-		$social_links[2] = $core->blog->url.$core->url->getBase("feed")."/atom";
-		$string = implode($separator, $social_links);
-		$core->blog->settings->put('designPileSocialLinks',serialize($string),'string');
-		$core->blog->triggerBlog();
-
-		// Vidage du cache
-		try {
-			$core->emptyTemplatesCache();
-		} catch (Exception $e) {
-			$core->error->add($e->getMessage());
-		}
 	}
 
 }
 
 // Choix de la couleur
-$url = 'blog_theme.php?shot=designPile&amp;src=img/config/';
-echo '<fieldset><legend>'.__('Color').'</legend>';
-echo '<p>';
 
-$pink = '<label class="classic" style="padding: 0 5px">'.form::radio('color', 'pink').
-			'<img src="'.$url.'rose.jpg" alt="Rose" />'.'</label>';
-$green = '<label class="classic" style="padding: 0 5px">'.form::radio('color', 'green').
-			'<img src="'.$url.'vert.jpg" alt="Vert" />'.'</label>';
-$blue = '<label class="classic" style="padding: 0 5px">'.form::radio('color', 'blue').
-			'<img src="'.$url.'bleu.jpg" alt="Bleu" />'.'</label>';
-if($color == 'pink') echo $green.$blue.$pink;
-if($color == 'green') echo $blue.$pink.$green;
-if($color == 'blue') echo $pink.$green.$blue;
-echo '</p>';
+
+# Color scheme
+echo
+'<div class="fieldset"><h4>'.__('Color').'</h4>'.
+'<p class="field"><label>'.__('Color display:').'</label>'.
+form::combo('designPileColor',$designPileColor_combo,$my_color).
+'</p>';
 
 // Liens sociaux
 $url = 'blog_theme.php?shot=designPile&amp;src=img/social/';
-echo '<fieldset><legend>'.__('Social links').'</legend>';
-echo '<div><p><label class="classic"><img style="padding-right: 15px;" src="'.$url.'ico_twitter.png" alt="Twitter" />'.
-		form::field('twitter',50,250,html::escapeHTML($social_links[0]),'',1).'</label></p></div>';
-echo '<div><p><label class="classic"><img style="padding-right: 22px;" src="'.$url.'ico_facebook.png" alt="Facebook" />'.
-		form::field('facebook',50,250,html::escapeHTML($social_links[1]),'',1).'</label></p></div>';
-echo '<div><p><label class="classic"><img style="padding-right: 22px;" src="'.$url.'ico_rss.png" alt="RSS" />'.
-		form::field('rss',50,250,html::escapeHTML($social_links[2]),'',1).'</label></p></div>';
-echo '<p class="clear" style="padding-top: 30px;">'.__('If you don\'t want to display a link, keep its field empty.').' </p>';
-echo '</fieldset>';
+echo '<h4>'.__('Social links').'</h4>';
+echo '<p><label class="classic"><img style="padding-right: 15px;" src="'.$url.'ico_twitter.png" alt="Twitter" />'.
+		form::field('twitter',50,250,html::escapeHTML($social_links[0]),'',1).'</label></p>';
+echo '<p><label class="classic"><img style="padding-right: 22px;" src="'.$url.'ico_facebook.png" alt="Facebook" />'.
+		form::field('facebook',50,250,html::escapeHTML($social_links[1]),'',1).'</label></p>';
+echo '<p><label class="classic"><img style="padding-right: 22px;" src="'.$url.'ico_rss.png" alt="RSS" />'.
+		form::field('rss',50,250,html::escapeHTML($social_links[2]),'',1).'</label></p>';
+echo '<p class="info">'.__('If you don\'t want to display a link, keep its field empty.').' </p>';
+echo '</div>';

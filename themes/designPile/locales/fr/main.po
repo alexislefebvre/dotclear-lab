@@ -1,6 +1,21 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: brol <contact@brol.info>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+
 #: _config.php:74
 msgid "Color"
 msgstr "Couleur"
+
+msgid "Color display:"
+msgstr "Couleur à afficher :"
 
 #: _config.php:90
 msgid "Social links"
@@ -8,4 +23,13 @@ msgstr "Liens sociaux"
 
 #: _config.php:97
 msgid "If you don't want to display a link, keep its field empty."
-msgstr "Laisser un champ vide pour ne pas le faire apparaitre."
+msgstr "Vider le champ pour ne pas faire apparaître le lien social."
+
+msgid "green"
+msgstr "vert"
+
+msgid "blue"
+msgstr "bleu"
+
+msgid "pink"
+msgstr "rose"

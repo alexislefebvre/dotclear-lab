@@ -2,7 +2,7 @@ a { color: #0C9FE7; }
 .post ul { list-style-image:url(../img/blue/bullet_star_featured.png); }
 
 #logo { background:url(../img/blue/logo.png) no-repeat; }
-#logo h1 { color:#0C9FE7; }
+#logo h1 a { color:#0C9FE7; }
 
 h2 a { border-bottom:1px dotted #0C9FE7; }
 	
@@ -15,6 +15,7 @@ h2 a { border-bottom:1px dotted #0C9FE7; }
 
 #sidebar h2 { background:url(../img/blue/bk_h2_right.png) 0 0 no-repeat; }
 #sidebar li { background:url(../img/blue/bullet_star.png) 0 11px no-repeat; }
+#sidebar .categories li.category-current a { color:#0C9FE7;}
 
 #search input[type=submit] { background:url(../img/blue/but_search.png) 0 90% no-repeat; }
 

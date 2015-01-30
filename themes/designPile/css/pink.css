@@ -2,7 +2,7 @@ a { color: #F50C56; }
 .post ul { list-style-image:url(../img/pink/bullet_star_featured.png); }
 
 #logo { background:url(../img/pink/logo.png) no-repeat; }
-#logo h1 { color:#F30C55; }
+#logo h1 a { color:#F30C55; }
 
 h2 a { border-bottom:1px dotted #F30C55; }
 	
@@ -15,6 +15,7 @@ h2 a { border-bottom:1px dotted #F30C55; }
 
 #sidebar h2 { background:url(../img/pink/bk_h2_right.png) 0 0 no-repeat; }
 #sidebar li { background:url(../img/pink/bullet_star.png) 0 11px no-repeat; }
+#sidebar .categories li.category-current a { color:#F30C55;}
 
 #search input[type=submit] { background:url(../img/pink/but_search.png) 0 90% no-repeat; }
 

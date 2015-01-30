@@ -17,8 +17,20 @@ if (!defined('DC_RC_PATH')) { return; }
 
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
 
-# appel du bon fichier css dans le head
-$core->addBehavior('publicHeadContent',array('publicDesignPile','publicHeadContent'));
+# appel css couleur
+$core->addBehavior('publicHeadContent','designPileColor_publicHeadContent');
+
+function designPileColor_publicHeadContent($core)
+{
+	$style = $core->blog->settings->themes->designPileColor;
+	if (!preg_match('/^blue|green|pink$/',$style)) {
+		$style = 'pink';
+	}
+
+	$url = $core->blog->settings->themes_url.'/'.$core->blog->settings->theme;
+	echo '<link rel="stylesheet" type="text/css" media="screen" href="'.$url."/css/".$style.".css\" />\n";
+}
+
 # balise d'affichage des liens sociaux
 $core->addBehavior('publicTopAfterContent',array('publicDesignPile','publicTopAfterContent'));
 
@@ -28,43 +40,18 @@ $core->url->registerDefault(array('urlHandlersDesignPile','home'));
 
 class publicDesignPile
 {
-	public static function publicHeadContent($core)
-	{
-
-		$color;
-		if ($core->blog->settings->designPile->designPileColor) {
-			$color = @unserialize($core->blog->settings->designPile->designPileColor);
-		} else {
-			$color = "pink";
-			$core->blog->settings->setNameSpace('designPile');
-			$core->blog->settings->put('designPileColor',serialize($color),'string');
-			$core->blog->triggerBlog();
-		}
-
-		if(file_exists(dirname(__FILE__).'/css/'.$color.'.css')) {
-			$css = '/css/'.$color.'.css';
-		} else {
-			$css = '/css/pink.css';
-		}
-		$url = $core->blog->settings->system->themes_url."/".$core->blog->settings->theme."/";
-		echo '<style type="text/css">';
-		echo '@import url('.$url.$css.');';
-		echo '</style>';
-
-	}
-
-	public static function publicTopAfterContent(&$core)
+	public static function publicTopAfterContent($core)
 	{
 		$separator = ';';
 		$social_links;
 		$res = '';
 
-		if ($core->blog->settings->designPileSocialLinks) {
+		if ($core->blog->settings->themes->designPileSocialLinks) {
 
-			$string = @unserialize($core->blog->settings->designPileSocialLinks);
+			$string = @unserialize($core->blog->settings->themes->designPileSocialLinks);
 			$social_links = explode($separator, $string);
 
-			$url = $core->blog->settings->themes_url."/".$core->blog->settings->theme."/img/social/";
+			$url = $core->blog->settings->system->themes_url."/".$core->blog->settings->system->theme."/img/social/";
 
 			if($social_links[0] != '') {
 				$res .= '<li><a href="'.$social_links[0].'"><img src="'.$url.'ico_twitter.png" alt="Twitter" /></a></li>';
@@ -128,5 +115,3 @@ class urlHandlersDesignPile extends dcUrlHandlers
 		}
 	}
 }
-
-?>

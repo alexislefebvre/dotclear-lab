@@ -17,7 +17,9 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */			"Design Pile",
 	/* Description*/	"A dark and clean theme",
-	/* Author */		"Site 5 - adapted to Dotclear by annso",
-	/* Version */		'1.2.2'
+	/* Author */		"Site 5 - adapted to Dotclear by annso, Pierre Van Glabeke",
+	/* Version */		'1.3',
+	array(
+		/* Type */		'type' =>			'theme'
+	)
 );
-?>
