@@ -1,14 +1,29 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of designPile, a theme for Dotclear.
+#
+# Original Wordpress Theme from Site5
+# http://www.site5.com/wordpress-themes/
+#
+# Copyright (c) 2010
+# annso contact@as-i-am.fr
+#
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------ */
+
 a { color: #99CC30; }
-.post ul { list-style-image:url(../img/green/bullet_star_featured.png); }
+.post ul, #comments ul { list-style-image:url(../img/green/bullet_star.png); }
 
 #logo { background:url(../img/green/logo.png) no-repeat; }
 #logo h1 a { color:#99CC30; }
 
-h2 a { border-bottom:1px dotted #99CC30; }
+h2 a, .dc-home .first h2 a { border-bottom:1px dotted #99CC30; }
 
-.featured .label { background:url(../img/green/bullet_star_featured.png) 0 50% no-repeat; }
+.dc-home .first .label { background:url(../img/green/bullet_star.png) 0 50% no-repeat; }
 
-.post-title { color: #99CC30; }
+.dc-home .first .post-title { color: #99CC30; }
 .home-post h2 a:hover { color:#99CC30; }
 
 .date .month { color:#FF6600; }
@@ -25,4 +40,4 @@ h2 a { border-bottom:1px dotted #99CC30; }
 #footer li { background:url(../img/green/bullet_arrow.png) 0 11px no-repeat; }
 #footer li a:hover { color:#99CC30; }
 
-#content-info h2 { background:url(../img/green/bullet_star_featured.png) 0 50% no-repeat; }
+#content-info h2 { background:url(../img/green/bullet_star.png) 0 50% no-repeat; }

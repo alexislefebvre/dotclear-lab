@@ -118,6 +118,7 @@ code, pre {
 	color:#8D8D8D;
 	font-size:11px;
 	text-transform:uppercase;
+	width:590px;
 }
 
 #top-menu {
@@ -189,7 +190,7 @@ code, pre {
 #content {
 	width:632px;
 	min-height:500px;
-	padding:25px 24px 35px;
+	padding:25px 24px 22px;
 	background:#fff;	
 }
 
@@ -211,12 +212,52 @@ code, pre {
 	text-align: center;
 	padding-top: 30px;
 }
-#navlinks { display: none; }
-
+#navlinks {
+  text-align: center;
+}
 
 /* ------------------------------------------------------------
 	6. BILLETS
 ------------------------------------------------------------- */
+/* premier billet home */
+.dc-home .first {
+	/*float:none;
+	display:inline;*/
+	width:592px;
+	min-height:200px;
+	padding:0 0 20px 20px;
+}
+
+.dc-home .first .label {
+	display:block;
+	margin-bottom:10px;
+	padding-left:16px;
+	font-size:10px;
+	color:#b2b2b2;
+	line-height:100%;
+	text-transform: uppercase;
+}
+
+.dc-home .first h2 {padding:0;}
+
+.dc-home .first h2 a {font-size:26px;}
+
+.dc-home .first .post-info {
+	margin: 10px 0 15px 0;
+	padding: 0 0 15px 0;
+	color:#999;
+	background:url(img/bk_featured.jpg) 0 100% repeat-x;
+	font-size:11px;
+}
+.dc-home .first .post-content {
+	padding:20px 0;
+	font-size:14px;
+	background:url(img/bk_featured.jpg) 0 100% repeat-x;
+}
+.dc-home .first .post-content p { margin:0 0 15px; }
+.dc-home .first .post-content a img { border:none; }
+.dc-home .first img { max-width:100%; }
+.dc-home .first .read-it {font-size:14px;margin:1em 0;}
 
 .author a {color:#333;}
 
@@ -237,69 +278,41 @@ code, pre {
 	font-weight:bold;
 }
 
-.featured { margin-bottom:20px; }
-.featured.post { border-bottom: none; }
-.featured .label {
-	display:block;
-	margin-bottom:10px;
-	padding-left:16px;
-	font-size:10px;
-	color:#b2b2b2;
-	line-height:100%;
-	text-transform: uppercase;
-}
-.featured .post-info {
-	margin: 0;
-	padding: 10px 0 12px 0;
-	color:#999;
-	background:url(img/bk_featured.jpg) 0 100% repeat-x;
-	font-size:11px;
-}
-.featured .post-content {
-	padding:20px 0;
-	font-size:14px;
-	background:url(img/bk_featured.jpg) 0 100% repeat-x;
-}
-.featured .post-content p { margin:0 0 15px; }
-.featured .post-content a img { border:none; }
-
-.home-post {
+.dc-home .home-post {
 	float:left;
 	display:block;
-	width:300px;
+	width:305px;
 	min-height:200px;
 	margin-top:10px;
 	padding:0 10px 20px 0;
 	border-bottom:1px dashed #b2b2b2;
 	border-right:1px dashed #b2b2b2;
 }
-.dc-home .home-post {
-	padding-left:10px;
-	border-right: none;
-}
-.dc-home-page1 .odd {
-	padding-left:20px;
-	padding-right:0;
-	border-right:none;	
-}
 .dc-home .odd {
-	padding-left:0;
-	border-right:1px dashed #b2b2b2;
+	padding:0 0 20px 10px;
+	float:left;
+	display:block;
+	width:295px;
+	min-height:200px;
+	margin-top:10px;
+	padding:0 0 20px 10px;
+	border-bottom:1px dashed #b2b2b2;
+	border-right:none;
 }
-
-.home-post .post-content { margin:0.5em 0; }
-.home-post h2 {
+.dc-home .home-post .home-category {display:none;}
+.dc-home .home-post .post-content { margin:0.5em 0; }
+.dc-home .home-post h2 {
 	height:45px;
 	padding: 0 0 5px;
 	font-size:20px;
 	line-height:110%;
 }
-.home-post h2 a {
+.dc-home .home-post h2 a {
 	color:#000;
 	border: none;
 	text-decoration:none;
 }
-.home-post .post-info {
+.dc-home .home-post .post-info {
 	margin:0;
 	padding:6px 0;
 	color:#999;
@@ -373,7 +386,7 @@ code, pre {
 	padding-top:0;
 	border-top: none;
 }
-#comments dd p {margin:0;}
+#comments dd p, #pings dd p {margin:0;}
 #comments .author { font-size: 13px; font-weight: bold; }
 #comments .author a { text-decoration: none; }
 
@@ -449,6 +462,8 @@ code, pre {
 	color:#fff;
 	border-bottom:none;
 }
+
+#sidebar h3 {padding:0 0 0 5px;}
 
 #sidebar ul, #sidebar p {
 	padding:0 10px 15px;

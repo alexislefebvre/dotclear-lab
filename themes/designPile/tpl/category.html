@@ -93,7 +93,7 @@
 		<span class="month">{{tpl:EntryDate format="%b"}}</span>
 	</div>
 
-	 <h2 class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
+	 <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
 
 	 <p class="post-info">{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span>
      <tpl:EntryIf has_category="1">

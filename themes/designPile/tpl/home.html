@@ -60,39 +60,52 @@
   <div id="content">
 
   <tpl:Entries>
-    <div id="p{{tpl:EntryID}}" class="home-post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" role="article">
+  
+  <tpl:SysIf current_mode="default">
+    {{tpl:include src="_first.html"}}
+  </tpl:SysIf>
+
+  <tpl:EntryIf first="0">
+  <div id="p{{tpl:EntryID}}" class="home-post {{tpl:EntryIfOdd}}" lang="{{tpl:EntryLang}}" role="article">
 
 		<div class="date">
 			<span class="day">{{tpl:EntryDate format="%d"}}</span>
 			<span class="month">{{tpl:EntryDate format="%b"}}</span>
 		</div>
 
-		 <p class="post-info">{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span>
-		 <tpl:EntryIf show_comments="1">
-		 // <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="0 commentaire"}}</a>
-		 </tpl:EntryIf>
-		 </p>
+		<p class="post-info">
+			{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span>
+			<span class="home-category">
+      <tpl:EntryIf has_category="1">
+			// <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
+			</tpl:EntryIf>
+			</span>
+			<tpl:EntryIf show_comments="1">
+			// <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="%s comment"}}</a>
+			</tpl:EntryIf>
+		</p>
 
 		<h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
     
 		<!-- # --BEHAVIOR-- publicEntryBeforeContent -->
 		{{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
-		
+
 		<!-- # Entry with an excerpt -->
 		<tpl:EntryIf extended="1">
-		  <div class="post-content">{{tpl:EntryFirstImage size="sq" class="left"}} {{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="200"}} [...]</div>
+		  <div class="post-content">{{tpl:EntryFirstImage size="sq" class="left"}} {{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="200"}} <a class="read-next" href="{{tpl:EntryURL}}">[...]</a></div>
 		</tpl:EntryIf>
 		
 		<!-- # Entry without excerpt -->
 		<tpl:EntryIf extended="0">
-		  <div class="post-content">{{tpl:EntryFirstImage size="sq" class="left"}} {{tpl:EntryContent encode_html="1" remove_html="1" cut_string="200"}} [...]</div>
+		  <div class="post-content">{{tpl:EntryFirstImage size="sq" class="left"}} {{tpl:EntryContent encode_html="1" remove_html="1" cut_string="200"}} <a class="read-next" href="{{tpl:EntryURL}}">[...]</a></div>
 		</tpl:EntryIf>
 		
 		<!-- # --BEHAVIOR-- publicEntryAfterContent -->
 		{{tpl:SysBehavior behavior="publicEntryAfterContent"}}
 
     </div>
-    
+  </tpl:EntryIf>
+
     <tpl:EntriesFooter>
       <tpl:Pagination>
         <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;

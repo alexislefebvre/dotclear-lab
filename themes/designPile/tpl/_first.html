@@ -1,0 +1,37 @@
+  <tpl:EntryIf first="1">
+  <div id="p{{tpl:EntryID}}" class="{{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" role="article">
+		<span class="label">{{tpl:lang on}} {{tpl:EntryDate}}, {{tpl:EntryTime}}</span>
+
+		 <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+
+		 <p class="post-info">
+			{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}} </span>
+			<tpl:EntryIf has_category="1">
+			// <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
+			</tpl:EntryIf>
+			<tpl:EntryIf show_comments="1">
+			// <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="%s comment"}}</a>
+			</tpl:EntryIf>
+		</p>
+
+		<!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+		{{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+
+		<!-- # Entry with an excerpt -->
+		<tpl:EntryIf extended="1">
+		  <div class="post-content">{{tpl:EntryExcerpt}}</div>
+		  <p class="read-it"><a href="{{tpl:EntryURL}}"
+		  title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue
+		  reading}}</a>...</p>
+		</tpl:EntryIf>
+
+		<!-- # Entry without excerpt -->
+		<tpl:EntryIf extended="0">
+		  <div class="post-content">{{tpl:EntryContent}}</div>
+		</tpl:EntryIf>
+
+		<!-- # --BEHAVIOR-- publicEntryAfterContent -->
+		{{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+
+  </div>
+  </tpl:EntryIf>

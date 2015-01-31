@@ -59,10 +59,10 @@
   <p id="navlinks">
   <tpl:EntryPrevious><a href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" class="prev">&#171; {{tpl:EntryTitle encode_html="1"
-  cut_string="50"}}</a></tpl:EntryPrevious>
+  cut_string="45"}}</a></tpl:EntryPrevious>
   <tpl:EntryNext> <span>-</span> <a href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" class="next">{{tpl:EntryTitle encode_html="1"
-  cut_string="50"}} &#187;</a></tpl:EntryNext>
+  cut_string="45"}} &#187;</a></tpl:EntryNext>
   </p>
   
   <div id="p{{tpl:EntryID}}" class="post" role="article">
@@ -98,7 +98,7 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
     
     <tpl:EntryTags>
-		<tpl:TagsHeader><div class="post-tags">{{tpl:lang Tags:}}</tpl:TagsHeader><a href="{{tpl:TagURL}}" rel="tag">{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1"> </tpl:LoopPosition>
+		<tpl:TagsHeader><div class="post-tags post-end">{{tpl:lang Tags:}}</tpl:TagsHeader><a href="{{tpl:TagURL}}" rel="tag">{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1"> </tpl:LoopPosition>
 		<tpl:TagsFooter></div></tpl:TagsFooter>
 		</tpl:EntryTags>
     

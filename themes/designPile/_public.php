@@ -34,10 +34,6 @@ function designPileColor_publicHeadContent($core)
 # balise d'affichage des liens sociaux
 $core->addBehavior('publicTopAfterContent',array('publicDesignPile','publicTopAfterContent'));
 
-# première page personnalisée
-$core->url->registerDefault(array('urlHandlersDesignPile','home'));
-
-
 class publicDesignPile
 {
 	public static function publicTopAfterContent($core)
@@ -74,44 +70,4 @@ class publicDesignPile
 
 	}
 
-}
-
-class urlHandlersDesignPile extends dcUrlHandlers
-{
-	public static function home($args)
-	{
-		$core =& $GLOBALS['core'];
-
-		$n = self::getPageNumber($args);
-
-		if ($args && !$n)
-		{
-			self::p404();
-		}
-		if (!$n && empty($_GET['q']))
-		{
-			# The entry
-			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-			//header('Pragma: no-cache');
-			//header('Cache-Control: no-cache');
-			self::serveDocument('home-page1.html');
-			$core->blog->publishScheduledEntries();
-			exit;
-		}
-		else
-		{
-			if ($n) {
-				$GLOBALS['_page_number'] = $n;
-				$core->url->type = $n > 0 ? 'defaut-page' : 'default';
-			}
-
-			if (empty($_GET['q'])) {
-				self::serveDocument('home.html');
-				$core->blog->publishScheduledEntries();
-				exit;
-			} else {
-				self::search();
-			}
-		}
-	}
 }
