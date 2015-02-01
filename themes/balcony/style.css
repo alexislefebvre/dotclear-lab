@@ -1,14 +1,15 @@
-/* -----------------------------------------------------------------
-	1. STRUCTURE
-	a inscrire ici ou en important une css de structure placee dans
-	le meme repertoire et appelee grace a l'instruction ci-dessous
------------------------------------------------------------------- */
-/* @import url(nom_du_fichier.css); */
-
-
-/* ------------------------------------------------------------
-	2. BALISES HTML PAR DEFAUT
-------------------------------------------------------------- */
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Balcony, a theme for Dotclear.
+#
+# Copyright (c) 2010
+# annso contact@as-i-am.fr
+#
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+*/
 
 body { 
 	color: #4F4F4F;
@@ -40,7 +41,7 @@ h5 { font-size: 1.7em;}
 h6 { font-size: 1.5em;}
 
 p { }
-img { }
+img {border : none; }
 sup { }
 abbr, acronym { }
 
@@ -106,35 +107,14 @@ hr { }
 #top h1 a { color: #3F4C54; }
 #top h1 a:hover { color: #D18A88; }
 #top #blogdesc { }
-#prelude { display: none; }
-#navigation {
-	width : 100%;
-	height : 30px;
-	background : #eee;
-	border-bottom: 1px solid #DDDDDD;
-	position : fixed;
-	top : 0;
-	left : 0;
-	text-transform: uppercase;
-	letter-spacing: 3px;
-}
-#navigation ul {
-	margin : 0 auto;
-	padding : 8px 30px 0;
-}
-#navigation ul li {
-	display : block;
-	float : left;
-	margin : 0 20px 0 0;
-	font-size : 90%;
-}
-#navigation ul li.nav-active a { border: 1px solid #fff; }
-#navigation ul li a { 
-	color: #999; 
-	text-decoration: none;
-}
-#navigation ul li a:hover {
-	border-bottom: 1px solid #ccc;
+#prelude {
+	position: fixed;
+	top: 7px;
+	right: 20px;
+	padding: 0 10px;
+	font-size: 0.9em;
+	z-index:100;
+	margin: 0;
 }
 
 /* ------------------------------------------------------------
@@ -159,6 +139,9 @@ hr { }
 #content-info { }
 #content-info h2 { }
 #content-info p { }
+#content-info img {
+  max-width:100%;
+}
 
 .content-inner { }
 
@@ -224,11 +207,15 @@ hr { }
 .post-tags a:hover { color: #327876; }
 .post-excerpt { }
 .post-content { }
-
+.post-excerpt p img, .post-content p img {
+  max-width:100%;
+}
+.post embed, .post iframe {max-width:100%;}
 .read-it { }
 
 .footnotes { }
-.footnotes h4 { }
+.footnotes h4 { font-size:1.3em;margin:30px 0 10px 0; }
+.footnotes p { margin:0; }
 
 .post-info-co { 
 	background : #fff;
@@ -366,6 +353,13 @@ hr { }
 	list-style-type: none;
 }
 
+#sidebar .categories li.category-current {
+	font-weight: bold;
+}
+#sidebar .categories li.category-current li {
+	font-weight: normal;
+}
+#sidebar img {max-width:100%;}
 /* boites du menu des widgets livres avec Dotclear */
 #search { 
 	padding: 0;
@@ -457,7 +451,7 @@ feed.png a piocher dans le theme par defaut par ex.) */
 
 .feed { 
 	padding-left:16px;
-	background : transparent url(images/feed.png) no-repeat left center;
+	background : transparent url(img/feed.png) no-repeat left center;
 	 }
 
 
@@ -521,8 +515,22 @@ feed.png a piocher dans le theme par defaut par ex.) */
 .dc-post { }
 .dc-categories { }
 .dc-category { }
+#subcategories {
+	padding: 5px 0 20px 0;
+}
+#subcategories h3 {
+	margin: 0;
+}
+#subcategories ul {
+	margin: 0.5em 0 0 0;
+	padding: 0 0 0 20px;
+	line-height: 1.4;
+}
 .dc-archive { }
 .dc-archive-month { }
+.dc-archive-month .post-info {
+	margin: 3px 0 10px 0;
+}
 .dc-tags { }
 .dc-tag { }
 .dc-404 { }
