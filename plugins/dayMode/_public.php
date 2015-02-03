@@ -3,17 +3,17 @@
 #
 # This file is part of dayMode, a plugin for Dotclear 2.
 #
-# Copyright (c) 2006-2009 Pep and contributors
+# Copyright (c) 2006-2010 Pep and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) return;
 
 require_once dirname(__FILE__).'/_widgets.php';
 
-if (!$core->blog->settings->daymode_active) {
+if (!$core->blog->settings->daymode->daymode_active) {
 	return;
 }
 
@@ -58,7 +58,7 @@ class dayModeTemplates
 	{
 		if ($GLOBALS['_ctx']->exists("day")) {
 			$trg = 'day';
-			$format = $GLOBALS['core']->blog->settings->date_format;
+			$format = $GLOBALS['core']->blog->settings->system->date_format;
 		} else {
 			$trg = 'archives';
 			$format = '%B %Y';
@@ -167,7 +167,6 @@ class dayModeUrlHandlers extends dcUrlHandlers
 			$_ctx->day = $core->blog->getDates($params);
 			if ($_ctx->day->isEmpty()) {
 				self::p404();
-				return;
 			}
 
 			self::serveDocument('archive_day.html');
@@ -175,7 +174,5 @@ class dayModeUrlHandlers extends dcUrlHandlers
 		else {
 			parent::archive($args);
 		}
-		return;
 	}
 }
-?>

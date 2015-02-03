@@ -3,13 +3,13 @@
 #
 # This file is part of dayMode, a plugin for Dotclear 2.
 #
-# Copyright (c) 2006-2009 Pep and contributors
+# Copyright (c) 2006-2010 Pep and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) return;
 
 $GLOBALS['__autoload']['dcCalendar'] = dirname(__FILE__).'/inc/class.dc.calendar.php';
 $GLOBALS['__autoload']['dcDayTools'] = dirname(__FILE__).'/inc/class.dc.calendar.php';
@@ -48,33 +48,36 @@ class dayModeBehaviors
 		}
 	}
 
-	public static function addTplPath(&$core)
+	public static function addTplPath($core)
 	{
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		$tplset = $core->themes->moduleInfo($core->blog->settings->system->theme,'tplset');
+        if (!empty($tplset) && is_dir(dirname(__FILE__).'/default-templates/'.$tplset)) {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.$tplset);
+        } else {
+            $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/'.DC_DEFAULT_TPLSET);
+        }
 	}
 
 	// Admin behaviors
-	public static function adminBlogPreferencesForm(&$core,&$settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
-		'<fieldset><legend>'.__('Daily Archives').'</legend>'.
+		'<div class="fieldset"><h4>'.__('Daily Archives').'</h4>'.
 		'<p><label class="classic">'.
-		form::checkbox('daymode_active','1',$settings->daymode_active).
+		form::checkbox('daymode_active','1',$settings->daymode->daymode_active).
 		__('Enable daily archives and calendar').'</label></p>'.
-		'</fieldset>';
+		'</div>';
 	}
 	
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
-		$settings->setNameSpace('daymode');
+		$settings->addNameSpace('daymode');
 		try {
-			$settings->put('daymode_active',!empty($_POST['daymode_active']),'boolean');
+			$settings->daymode->put('daymode_active',!empty($_POST['daymode_active']),'boolean');
 		}
 		catch (Exception $e) {
-			$settings->drop('daymode_active');
-			$settings->put('daymode_active',!empty($_POST['daymode_active']),'boolean');
+			$settings->daymode->drop('daymode_active');
+			$settings->daymode->put('daymode_active',!empty($_POST['daymode_active']),'boolean');
 		}
-		$settings->setNameSpace('system');
 	}
 }
-?>

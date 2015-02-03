@@ -3,13 +3,13 @@
 #
 # This file is part of dayMode, a plugin for Dotclear 2.
 #
-# Copyright (c) 2006-2009 Pep and contributors
+# Copyright (c) 2006-2010 Pep and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-
+if (!defined('DC_RC_PATH')) {return;}
 class dcCalendar
 {
 	const	SUNDAY_TS = 1042329600;
@@ -223,4 +223,3 @@ class dcDayTools
 		return $rs;
 	}
 }
-?>

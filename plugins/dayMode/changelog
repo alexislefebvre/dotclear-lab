@@ -1,0 +1,6 @@
+dayMode 1.1-RC3 - 03/02/2015 - Pierre Van Glabeke
+* widget : ajout combo affichage + hors ligne + content_only + class
+* modifs locales
+* ajout tpl currywurst/mustek
+* html5
+* dc2.7 requis
