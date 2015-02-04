@@ -88,7 +88,7 @@ class AtReplyTpl
 			'//<![CDATA['."\n".
 			'var atReplyDisplayTitle = '.$title.';'."\n".
 			'var atReplyTitle = \''.
-				html::escapeHTML(__('Reply to this comment by {author}')).'\';'."\n".
+				html::escapeHTML(__('Reply to comment {author}')).'\';'."\n".
 			'var atReplyImage = \''.$image_url.'\';'."\n".
 			'var atReply_switch_text = \''.
 				html::escapeHTML(__('Threaded comments')).'\';'."\n".
@@ -133,5 +133,3 @@ class AtReplyTpl
 				'" style="display:none;"></span>';
 	}
 }
-
-?>

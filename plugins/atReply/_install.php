@@ -52,4 +52,3 @@ $core->con->execute('DELETE FROM '.$core->prefix.'setting '.
 $core->setVersion('atReply',$m_version);
 
 return true;
-?>

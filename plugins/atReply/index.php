@@ -224,18 +224,21 @@ if (strlen($settings->atreply_color) > 1)
 	?>
 	
 	<form method="post" action="<?php echo $p_url; ?>">
-		<p><?php echo(form::checkbox('atreply_active',1,
+		<div class="fieldset"><h4><?php echo(__('Activation')); ?></h4>
+    <p><?php echo(form::checkbox('atreply_active',1,
 			$settings->atreply_active)); ?>
 			<label class="classic" for="atreply_active">
 				<?php echo(__('Add arrows to easily reply to comments on the blog')); ?>
 			</label>
 		</p>
-		<p class="form-note">
+		<p class="info">
 			<?php
 				# from commentsWikibar/index.php
 				echo(' '.__('Activating this plugin also enforces wiki syntax in blog comments.')); ?>
 		</p>
-
+		</div>
+		
+		<div class="fieldset"><h4><?php echo(__('Settings')); ?></h4>
 		<p><?php echo(form::checkbox('atreply_display_title',1,
 			$settings->atreply_display_title)); ?>
 			<label class="classic" for="atreply_display_title">
@@ -256,8 +259,8 @@ if (strlen($settings->atreply_color) > 1)
 				<?php echo(__('Display a switch to toggle threading')); ?>
 			</label>
 		</p>
-		<p class="form-note">
-			<?php printf(__('Requires %s.'),
+		<p class="info">
+			<?php printf(__('Requires "%s".'),
 				__('Append replies to appropriate comments')); ?>
 		</p>
 
@@ -268,7 +271,7 @@ if (strlen($settings->atreply_color) > 1)
 					__('Reply to this comment'),__('Subscribe to comments')); ?>
 			</label>
 		</p>
-		<p class="form-note">
+		<p class="info">
 			<?php printf(__('Requires the %s plugin.'),
 				__('Subscribe to comments')); ?>
 		</p>
@@ -280,7 +283,7 @@ if (strlen($settings->atreply_color) > 1)
 			<?php echo(form::field('atreply_color',7,7,
 				$settings->atreply_color,'colorpicker')); ?>
 		</p>
-		<p class="form-note">
+		<p class="info">
 			<?php echo(__('Leave blank to disable this feature.').' '.
 				__('The default image will be used.')); ?>
 		</p>
@@ -288,10 +291,11 @@ if (strlen($settings->atreply_color) > 1)
 		<?php echo('<p>'.__('Preview:').' <img src="'.$image_url.
 			'" alt="reply.png" /></p>'); ?>
 		
-		<p class="form-note"><?php echo(__('Visitors may see the old image if their browser still use it.')); ?></p>
+		<p class="info"><?php echo(__('Visitors may see the old image if their browser still use it.')); ?></p>
+		</div>
 		
 		<p><?php echo $core->formNonce(); ?></p>
-		<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
+		<p><input type="submit" name="saveconfig" value="<?php echo __('Save'); ?>" /></p>
 	</form>
 
 </body>

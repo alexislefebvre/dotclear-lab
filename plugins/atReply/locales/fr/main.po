@@ -25,8 +25,8 @@ msgid "@%s:"
 msgstr "@%s&nbsp;:"
 
 #: _public.php:101
-msgid "Reply to this comment by {author}"
-msgstr "Répondre à ce commentaire par {author}"
+msgid "Reply to comment {author}"
+msgstr "Répondre au commentaire de {author}"
 
 #: _public.php:104
 msgid "Threaded comments"

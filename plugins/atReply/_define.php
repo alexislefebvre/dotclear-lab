@@ -34,7 +34,13 @@ $this->registerModule(
   /* Name */				'@ Reply',
   /* Description*/	'Easily reply to comments',
   /* Author */			'Moe (http://gniark.net/) append extension by buns.fr',
-  /* Version */			'1.8.1',
-  /* Permissions */	'usage,contentadmin'
+  /* Version */			'1.8.2',
+	/* Properties */
+	array(
+		'permissions' => 'usage,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/atReply',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/atReply'
+		)
 );
-?>

@@ -50,9 +50,6 @@ $core->addBehavior('adminBeforeCommentCreate',
 $core->addBehavior('adminAfterCommentCreate',
 	array('AtReplyAdmin','adminAfterCommentCreate'));
 
-$core->addBehavior('adminDashboardFavs',
-	array('AtReplyAdmin','adminDashboardFavs'));
-
 $_menu['Blog']->addItem(__('@ Reply'),'plugin.php?p=atReply',
 	'index.php?pf=atReply/icon.png',preg_match('/plugin.php\?p=atReply(&.*)?$/',
 		$_SERVER['REQUEST_URI']),$core->auth->check('admin',$core->blog->id));	
@@ -162,20 +159,17 @@ class AtReplyAdmin
 		}
 	}
 	# /from hum plugin
-	
-	public static function adminDashboardFavs($core,$favs)
-	{
-		$favs['atReply'] = new ArrayObject(array(
-			'atReply',
-			__('@ Reply'),
-			'plugin.php?p=atReply',
-			'index.php?pf=atReply/icon.png',
-			'index.php?pf=atReply/icon-big.png',
-			'usage,contentadmin',
-			null,
-			null)
-		);
-	}
 }
 
-?>
+$core->addBehavior('adminDashboardFavorites','atReplyDashboardFavorites');
+
+function atReplyDashboardFavorites($core,$favs)
+{
+	$favs->register('atReply', array(
+		'title' => __('@ Reply'),
+		'url' => 'plugin.php?p=atReply',
+		'small-icon' => 'index.php?pf=atReply/icon.png',
+		'large-icon' => 'index.php?pf=atReply/icon-big.png',
+		'permissions' => 'usage,contentadmin'
+	));
+}

@@ -40,7 +40,7 @@ msgstr "Ajouter des flèches pour répondre facilement aux commentaires sur le b
 
 #: index.php:211
 msgid "Activating this plugin also enforces wiki syntax in blog comments."
-msgstr "L'activation de cette extension force la syntaxe wiki dans les commentaires du blog."
+msgstr "L'activation de ce plugin force la syntaxe wiki dans les commentaires du blog."
 
 #: index.php:217
 msgid "Display a text when the cursor is hovering the arrow"
@@ -56,12 +56,12 @@ msgid "Display a switch to toggle threading"
 msgstr "Afficher un bouton pour basculer l'affichage en fil de commentaires"
 
 #: index.php:235
-msgid "Requires %s."
-msgstr "Nécessite %s."
+msgid "Requires "%s"."
+msgstr "Nécessite "%s"."
 
 #: index.php:242
 msgid "When clicking on the \"%s\" button in a comment list of the administration, subscribe to comments the email address of the replied comment with the %s plugin"
-msgstr "Lors du clic sur le bouton \"%s\" dans une liste de commentaires de l'administration, abonner aux commentaires l'adresse email du commentaire répondu avec l'extension %s"
+msgstr "Lors du clic sur le bouton \"%s\" dans une liste de commentaires de l'administration, abonner aux commentaires l'adresse email du commentaire répondu avec le plugin %s"
 
 #: index.php:243
 msgid "Reply to this comment"
@@ -69,7 +69,7 @@ msgstr "Répondre à ce commentaire"
 
 #: index.php:247
 msgid "Requires the %s plugin."
-msgstr "Ceci nécessite l'extension %s."
+msgstr "Le plugin %s est requis."
 
 #: index.php:253
 msgid "Create an image with another color"
@@ -83,13 +83,12 @@ msgstr "L'image par défaut sera utilisée."
 msgid "Preview:"
 msgstr "Aperçu&nbsp;:"
 
-#: index.php:267
-msgid "Save configuration"
-msgstr "Enregistrer la configuration"
-
 msgid "Visitors may see the old image if their browser still use it."
 msgstr "Les visiteurs peuvent voir l'ancienne image si leur navigateur l'utilise toujours."
 
 msgid "Leave blank to disable this feature."
 msgstr "Laissez vide pour annuler ce comportement."
 
+#: _define.php:35
+msgid "Easily reply to comments"
+msgstr "Répondre facilement aux commentaires"
