@@ -17,7 +17,9 @@ class lunarPhaseWidgets
 {
 	public static function initWidgets($w)
 	{
-		$w->create('lunarphase',__('Moon phases'),array('lunarPhasePublic','widget'));
+		$w->create('lunarphase',__('LunarPhase: moon phases'),array('lunarPhasePublic','widget'),
+			null,
+			__('Display the moon phases'));
 		$w->lunarphase->setting('title',__('Title:'),__('Moon phases'));
 		$w->lunarphase->setting('phase',__('Display actual phase of moon'),1,'check');
 		$w->lunarphase->setting('illumination',__('Display actual illumination of moon'),1,'check');

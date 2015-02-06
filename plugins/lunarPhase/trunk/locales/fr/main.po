@@ -10,7 +10,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Display the moon phases"
-msgstr "Afficher les phases lunaire et autres données"
+msgstr "Afficher les phases de la Lune et autres données"
 
 #: _public.php:84
 msgid "Illumination: %s%%"
@@ -18,7 +18,7 @@ msgstr "Illumination : %s%%"
 
 #: _public.php:91
 msgid "Age of moon: %s days"
-msgstr "Age de la lune : %s jours"
+msgstr "Age de la Lune : %s jours"
 
 #: _public.php:98
 msgid "Distance to earth: %s km"
@@ -48,44 +48,47 @@ msgstr "En direct"
 msgid "Previsions"
 msgstr "Prévisions"
 
-#: _widgets.php:21
+#: _widgets.php:20
+msgid "LunarPhase: moon phases"
+msgstr "LunarPhase : phases de la Lune"
+
 #: _widgets.php:22
 msgid "Moon phases"
-msgstr "Phases lunaires"
-
-#: _widgets.php:23
-msgid "Display actual phase of moon"
-msgstr "Afficher la phase lunaire actuelle"
+msgstr "Phases de la Lune"
 
 #: _widgets.php:24
+msgid "Display actual phase of moon"
+msgstr "Afficher la phase actuelle de la Lune"
+
+#: _widgets.php:25
 msgid "Display actual illumination of moon"
 msgstr "Afficher le taux d'illumination actuel de la Lune"
 
-#: _widgets.php:25
+#: _widgets.php:26
 msgid "Display actual age of moon"
 msgstr "Afficher l'âge actuel de la Lune"
 
-#: _widgets.php:26
+#: _widgets.php:27
 msgid "Display actual distance between moon and earth"
 msgstr "Afficher la distance actuelle entre la Terre et la Lune"
 
-#: _widgets.php:27
+#: _widgets.php:28
 msgid "Display actual distance between moon and sun"
 msgstr "Afficher la distance actuelle entre le Soleil et la Lune"
 
-#: _widgets.php:28
+#: _widgets.php:29
 msgid "Display actual angle of moon"
 msgstr "Afficher l'angle actuel de la Lune"
 
-#: _widgets.php:29
+#: _widgets.php:30
 msgid "Display actual angle of sun"
 msgstr "Afficher l'angle actuel du Soleil"
 
-#: _widgets.php:30
+#: _widgets.php:31
 msgid "Display actual parallax of moon"
 msgstr "Afficher la parallaxe actuelle de la Lune"
 
-#: _widgets.php:31
+#: _widgets.php:32
 msgid "Display all previsions for the next moon phases"
 msgstr "Afficher toutes les prévisions des prochaines lunaisons"
 
