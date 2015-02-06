@@ -2,8 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of multiToc, a plugin for Dotclear.
 # 
-# Copyright (c) 2009-2010 Tomtom and contributors
-# http://blog.zenstyle.fr/
+# Copyright (c) 2009-2015 Tomtom and contributors
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -70,5 +69,3 @@ $core->blog->settings->multiToc->put('multitoc_settings',serialize($settings),'s
 $core->setVersion('multiToc',$m_version);
 
 return true;
-
-?>
