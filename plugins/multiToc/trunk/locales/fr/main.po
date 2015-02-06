@@ -9,6 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Makes posts or content's tables of content"
+msgstr "Créer des tables des matières pour une liste de billet ou le contenu d'un billet"
+
 #: _admin.php:19
 #: index.php:42
 #: index.php:45
