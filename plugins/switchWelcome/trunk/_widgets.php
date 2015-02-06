@@ -2,8 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of switchWelcome, a plugin for Dotclear.
 #
-# Copyright (c) 2009 Tomtom
-# http://blog.zenstyle.fr/
+# Copyright (c) 2009-2015 Tomtom and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -18,7 +17,9 @@ class switchWelcomeWidgets
 {
 	public static function initWidgets($w)
 	{
-		$w->create('switchWelcome',__('Custom welcome'),array('switchWelcomeWidgets','widget'));
+		$w->create('switchWelcome',__('SwitchWelcome: custom welcome'),array('switchWelcomeWidgets','widget'),
+			null,
+			__('Welcome your visitors by a personnal message and help them to navigate'));
 		$w->switchWelcome->setting('title',__('Title:'),__('Welcome!'),'text');
 		$w->switchWelcome->setting('welcometext',__('Welcome text (use %1$s for visitor\'s name and %2$s for where he comes from):'),__('Hi %1$s from %2$s! Welcome on this blog!'),'textarea');
 		$w->switchWelcome->setting('welcomesearchtext',__('Welcome text if search exists (use %1$s for keywords and %2$s for related posts\'s list):'),__('Do you search anything about %1$s? Check those related posts: %2$s'),'textarea');
