@@ -1,4 +1,4 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
+<?php
 /***************************************************************\
  *  This is 'My Favicon', a plugin for Dotclear 2              *
  *                                                             *
@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */		"My Favicon",
 	/* Description*/	"Add a customized favicon to your blog",
 	/* Author */		"Oleksandr Syenchuk, Pierre Van Glabeke",
-	/* Version */		'0.7',
+	/* Version */		'0.8',
 	/* Properties */
 	array(
 		'permissions' => 'contentadmin',

@@ -1,4 +1,4 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
+<?php
 /***************************************************************\
  *  This is 'My Favicon', a plugin for Dotclear 2              *
  *                                                             *
