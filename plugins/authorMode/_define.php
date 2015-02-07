@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"authorMode",
 	/* Description*/		"Post entries per author + author desc handling",
 	/* Author */			"xave, Pierre Van Glabeke",
-	/* Version */			'1.7',
+	/* Version */			'1.7.1',
 	/* Properties */
 	array(
 		'permissions' => 'admin,contentadmin',

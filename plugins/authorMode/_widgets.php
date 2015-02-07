@@ -73,9 +73,10 @@ class widgetsAuthorMode
 	
 	public static function init($w)
 	{
-	  $w->create('authors',__('Authors'),array('widgetsAuthorMode','authors'));
+	  $w->create('authors',__('AuthorMode: authors'),array('widgetsAuthorMode','authors'),
+			null,
+			__('List of authors'));
 	  $w->authors->setting('title',__('Title:'),__('Authors'));
-	  //$w->authors->setting('archiveonly',__('Archives only'),1,'check');
 	  $w->authors->setting('postcount',__('With entries counts'),0,'check');
 		$w->authors->setting('homeonly',__('Display on:'),0,'combo',
 			array(

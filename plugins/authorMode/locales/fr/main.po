@@ -10,14 +10,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
+msgid "Post entries per author + author desc handling"
+msgstr "Afficher les billets en les filtrant par auteur"
+
+msgid "AuthorMode: authors"
+msgstr "AuthorMode : auteurs"
+
 msgid "Authors"
 msgstr "Auteurs"
 
 msgid "List of authors"
 msgstr "Liste des auteurs"
-
-msgid "Archives only"
-msgstr "Archives seulement"
 
 msgid "URLs prefixes"
 msgstr "Préfixes des URLs"
