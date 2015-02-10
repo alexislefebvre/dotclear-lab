@@ -13,6 +13,9 @@ msgstr ""
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
+msgid "Add XML Sitemaps"
+msgstr "Ajoutez Sitemaps XML"
+
 #: _admin.php:13
 msgid "Sitemaps"
 msgstr "Sitemaps"
@@ -65,10 +68,6 @@ msgstr "Pages"
 msgid "Categories"
 msgstr "Catégories"
 
-#: index.php:29
-msgid "Tags"
-msgstr "Tags"
-
 #: index.php:103
 msgid "Response does not seem OK"
 msgstr "La réponse ne semble pas être OK"
@@ -101,10 +100,6 @@ msgstr "Sitemaps XML"
 #: index.php:135
 msgid "Configuration"
 msgstr "Configuration"
-
-#: index.php:138
-msgid "Plugin activation"
-msgstr "Activation de l'extension"
 
 #: index.php:141
 msgid "Enable sitemaps"

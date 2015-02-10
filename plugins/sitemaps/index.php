@@ -2,13 +2,15 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
 # This file is part of Sitemaps, a plugin for DotClear2.
-# Copyright (c) 2006-2009 Pep and contributors.
+# Copyright (c) 2006-2015 Pep and contributors.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_ADMIN')) return;
+
+$page_title = __('XML Sitemaps');
 
 $periods = array(
 		__('undefined') => 0,
@@ -34,34 +36,34 @@ $core->callBehavior('sitemapsDefineParts',$map_parts);
 
 $msg = '';
 $default_tab = 'sitemaps_options';
-$active = $core->blog->settings->sitemaps_active;
+$active = $core->blog->settings->sitemaps->sitemaps_active;
 
 foreach ($map_parts as $k => $v) {
-	${$v.'_url'} = $core->blog->settings->get('sitemaps_'.$v.'_url');
-	${$v.'_pr'}  = $core->blog->settings->get('sitemaps_'.$v.'_pr');
-	${$v.'_fq'}  = $core->blog->settings->get('sitemaps_'.$v.'_fq');
+	${$v.'_url'} = $core->blog->settings->sitemaps->get('sitemaps_'.$v.'_url');
+	${$v.'_pr'}  = $core->blog->settings->sitemaps->get('sitemaps_'.$v.'_pr');
+	${$v.'_fq'}  = $core->blog->settings->sitemaps->get('sitemaps_'.$v.'_fq');
 }
 
-$engines = @unserialize($core->blog->settings->sitemaps_engines);
-$default_pings = explode(',',$core->blog->settings->sitemaps_pings);
+$engines = @unserialize($core->blog->settings->sitemaps->sitemaps_engines);
+$default_pings = explode(',',$core->blog->settings->sitemaps->sitemaps_pings);
 
 // Save new configuration
 if (!empty($_POST['saveconfig'])) {
 	try
 	{
-		$core->blog->settings->setNameSpace('sitemaps');
+		$core->blog->settings->addNameSpace('sitemaps');
 
 		$active = (empty($_POST['active']))?false:true;
-		$core->blog->settings->put('sitemaps_active',$active,'boolean');
+		$core->blog->settings->sitemaps->put('sitemaps_active',$active,'boolean');
 
 		foreach ($map_parts as $k => $v) {
 			${$v.'_url'} = (empty($_POST[$v.'_url']))?false:true;
 			${$v.'_pr'}  = min(abs((float)$_POST[$v.'_pr']),1);
 			${$v.'_fq'}  = min(abs(intval($_POST[$v.'_fq'])),6);
 
-			$core->blog->settings->put('sitemaps_'.$v.'_url', ${$v.'_url'}, 'boolean');
-			$core->blog->settings->put('sitemaps_'.$v.'_pr' , ${$v.'_pr'}, 'double');
-			$core->blog->settings->put('sitemaps_'.$v.'_fq' , ${$v.'_fq'}, 'integer');
+			$core->blog->settings->sitemaps->put('sitemaps_'.$v.'_url', ${$v.'_url'}, 'boolean');
+			$core->blog->settings->sitemaps->put('sitemaps_'.$v.'_pr' , ${$v.'_pr'}, 'double');
+			$core->blog->settings->sitemaps->put('sitemaps_'.$v.'_fq' , ${$v.'_fq'}, 'integer');
 		}
 		$core->blog->triggerBlog();
 		http::redirect('plugin.php?p='.$p.'&conf=1');
@@ -80,8 +82,8 @@ elseif (!empty($_POST['saveprefs']))
 		if (!empty($_POST['pings'])) {
 			$new_prefs = implode(',',$_POST['pings']);
 		}
-		$core->blog->settings->setNamespace('sitemaps');
-		$core->blog->settings->put('sitemaps_pings',$new_prefs,'string');
+		$core->blog->settings->addNamespace('sitemaps');
+		$core->blog->settings->sitemaps->put('sitemaps_pings',$new_prefs,'string');
 		http::redirect('plugin.php?p='.$p.'&prefs=1');
 		exit;
 	}
@@ -125,49 +127,56 @@ else {
 ?>
 <html>
 <head>
-	<title><?php echo __('XML Sitemaps'); ?></title>
+  <title><?php echo $page_title; ?></title>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
 </head>
 <body>
-<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('XML Sitemaps'); ?></h2>
-<?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>'; ?>
+<?php
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+
+if (!empty($msg)) {
+  dcPage::success($msg);
+}
+?>
 <!-- Configuration panel -->
 <div class="multi-part" id="sitemaps_options" title="<?php echo __('Configuration'); ?>">
 	<form method="post" action="<?php echo http::getSelfURI(); ?>">
-	<fieldset>
-		<legend><?php echo __('Plugin activation'); ?></legend>
+	<div class="fieldset">
+		<h4><?php echo __('Plugin activation'); ?></h4>
 		<p class="field">
 		<label class=" classic"><?php echo form::checkbox('active', 1, $active); ?>&nbsp;
 		<?php echo __('Enable sitemaps');?>
 		</label>
 		</p>
-	</fieldset>
-	<fieldset>
-		<legend><?php echo __('For your information'); ?></legend>
-		<p>
+		<p class="info">
 		<?php echo __("This blog's Sitemap URL:"); ?>&nbsp;
 		<strong><?php echo $core->blog->url.$core->url->getBase('gsitemap'); ?></strong>
 		</p>
-	</fieldset>
-	<fieldset>
-		<legend><?php echo __('Elements to integrate'); ?></legend>
+	</div>
+	
+	<div class="fieldset">
+		<h4><?php echo __('Elements to integrate'); ?></h4>
 		<table class="maximal">
 		<tbody>
 <?php foreach ($map_parts as $k => $v) : ?>
 		<tr>
 		<td>
-			<label class=" classic">
+			<label class="classic">
 			<?php echo form::checkbox($v.'_url', 1, ${$v.'_url'});?>
 			&nbsp;<?php echo $k;?>
 			</label>
 		</td>
 		<td>
-			<label class=" classic"><?php echo __('Priority'); ?>&nbsp;
+			<label class="classic"><?php echo __('Priority'); ?>&nbsp;
 			<?php echo form::field($v.'_pr', 4, 4, ${$v.'_pr'}); ?>
 			</label>
 		</td>
 		<td>
-			<label class=" classic"><?php echo __('Periodicity'); ?>&nbsp;
+			<label class="classic"><?php echo __('Periodicity'); ?>&nbsp;
 			<?php echo form::combo($v.'_fq', $periods, ${$v.'_fq'}); ?>
 			</label>
 		</td>
@@ -175,7 +184,7 @@ else {
 <?php endforeach; ?>
 	</tbody>
 	</table>
-	</fieldset>
+	</div>
 
 	<p><input type="hidden" name="p" value="sitemaps" />
 	<?php echo $core->formNonce(); ?>
@@ -190,14 +199,14 @@ else {
 <!-- Notifications panel -->
 <div class="multi-part" id="sitemaps_notifications" title="<?php echo __('Search engines notification'); ?>">
 	<form method="post" action="<?php echo http::getSelfURI(); ?>">
-	<fieldset>
-		<legend><?php echo __('Available search engines'); ?></legend>
+	<div class="fieldset">
+		<h4><?php echo __('Available search engines'); ?></h4>
 		<table class="maximal">
 			<tbody>
 <?php foreach ($engines as $eng => $eng_infos) : ?>
 			<tr>
 			<td>
-				<label class=" classic">
+				<label class="classic">
 				<?php echo form::checkbox('pings[]', $eng, in_array($eng,$default_pings));?>
 				&nbsp;<?php echo $eng_infos['name'];?>
 				</label>
@@ -206,7 +215,7 @@ else {
 <?php endforeach; ?>
 			</tbody>
 		</table>
-	</fieldset>
+	</div>
 	<p><input type="hidden" name="p" value="sitemaps" />
 	<?php echo $core->formNonce(); ?>
 	<input type="submit" name="saveprefs" value="<?php echo __('Save preferences'); ?>" />
@@ -216,6 +225,6 @@ else {
 	</p>
 	</form>
 </div>
-
+<?php dcPage::helpBlock('sitemaps'); ?>
 </body>
 </html>

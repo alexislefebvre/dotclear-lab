@@ -2,19 +2,19 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
 # This file is part of Sitemaps, a plugin for DotClear2.
-# Copyright (c) 2006-2009 Pep and contributors.
+# Copyright (c) 2006-2015 Pep and contributors.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) return;
 
-$GLOBALS['__autoload']['dcSitemaps'] = dirname(__FILE__).'/inc/class.dc.sitemaps.php';
+global $core, $__autoload;
+
+$__autoload['dcSitemaps'] = dirname(__FILE__).'/inc/class.dc.sitemaps.php';
 
 // Behavior(s)
-$GLOBALS['core']->addBehavior('publicBeforeDocument', array('sitemapsBehaviors','addTemplatePath'));
-
 class sitemapsBehaviors
 {
 	public static function addTemplatePath($core)
@@ -24,16 +24,17 @@ class sitemapsBehaviors
 	
 }
 
-// URL Handler(s)
-$GLOBALS['core']->url->register('gsitemap','sitemap.xml','^sitemap[_\.]xml$',array('sitemapsUrlHandlers','sitemap'));
+$core->addBehavior('publicBeforeDocument', array('sitemapsBehaviors','addTemplatePath'));
 
+
+// URL Handler(s)
 class sitemapsUrlHandlers extends dcUrlHandlers
 {
 	public static function sitemap($args)
 	{
 		global $core,$_ctx;
 		
-		if (!$core->blog->settings->sitemaps_active) {
+		if (!$core->blog->settings->sitemaps->sitemaps_active) {
 			self::p404();
 			return;
 		}
@@ -48,4 +49,5 @@ class sitemapsUrlHandlers extends dcUrlHandlers
 		}
 	}
 }
-?>
+
+$core->url->register('gsitemap','sitemap.xml','^sitemap[_\.]xml$',array('sitemapsUrlHandlers','sitemap'));
