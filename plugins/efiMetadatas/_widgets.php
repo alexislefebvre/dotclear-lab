@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of efiMetadatas, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
+# Copyright (c) 2009-2015 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -29,7 +29,7 @@ class efiMetadatasWidget
 		}
 		
 		$thumbnail_combo = array(
-      __('none') => '',
+      __('None') => '',
 			__('square') => 'sq',
 			__('thumbnail') => 't',
 			__('small') => 's',
@@ -37,8 +37,9 @@ class efiMetadatasWidget
 		);
 		
 		$w->create('efim',
-			__('Entry first image metadatas'),array('efiMetadatasWidget','publicEFIM')
-		);
+			__('EfiMetadatas'),array('efiMetadatasWidget','publicEFIM'),
+			null,
+			__('Entry first image metadatas'));
 		$w->efim->setting('title',
 			__('Title:'),__('Image infos'),'text'
 		);
@@ -97,6 +98,7 @@ class efiMetadatasWidget
 		if (empty($content)) return;
 		
 		# thumbnail
+		$thumb = '';
 		if ($img['thumb'])
 		{
 			$thumb =

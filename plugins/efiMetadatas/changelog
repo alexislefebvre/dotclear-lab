@@ -2,6 +2,7 @@
  * ajout options dans le widget (class, content only, hors ligne)
  * modifications affichage pour compatibilité currywurst
  * modifications localisation
+ * merci à Philippe pour le bug du choix de pas d'image
 
 0.3 20100605
  * Writed now for DC 2.2 or higher
