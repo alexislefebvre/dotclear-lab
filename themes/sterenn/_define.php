@@ -12,7 +12,9 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */				  "Sterenn",
 	/* Description*/		"Le thème d'une étoile bretonne",
-	/* Author */			  "Ludovic Toinel",
-	/* Version */			  '1.1'
+	/* Author */			  "Ludovic Toinel, Pierre Van Glabeke",
+	/* Version */			  '1.2',
+	array(
+		'type'		=>		'theme'
+	)
 );
-?>
