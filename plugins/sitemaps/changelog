@@ -1,5 +1,6 @@
-v1.1-RC5 - 10-02-2015 - Pierre Van Glabeke
+v1.1-RC6 - 13-02-2015 - Pierre Van Glabeke
 * intégration du ticket http://lab.dotclear.org/ticket/642
+* intégration modif http://forum.dotclear.org/viewtopic.php?id=47812
 * comme ms live et yahoo sont intégrés à Bing, les trois adresses deviennent identiques
 * modifications cosmétiques pour charte dc2.6
 * ajout aide contextuelle très sommaire

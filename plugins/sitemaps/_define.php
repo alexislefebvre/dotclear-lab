@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */		"Sitemaps",
 	/* Description*/	"Add XML Sitemaps",
 	/* Author */		"Pep and contributors",
-	/* Version */		'1.1-RC5',
+	/* Version */		'1.1-RC6',
 	/* Properties */
 	array(
 		'permissions' => 'contentadmin',
