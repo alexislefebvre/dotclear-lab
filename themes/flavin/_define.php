@@ -17,7 +17,7 @@ $this->registerModule(
 	/* Name */			"Flavin",
 	/* Description*/		"Flavin in pink, blue or green",
 	/* Author */			"Steven Tlucek, Pierre Van Glabeke",
-	/* Version */			'1.2',
+	/* Version */			'1.3',
 	array(
 		'type'		=>		'theme'
 	)
