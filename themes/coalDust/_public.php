@@ -30,5 +30,3 @@ class tplCoalDustTheme
 		'</style>'."\n";
 	}
 }
-
-?>

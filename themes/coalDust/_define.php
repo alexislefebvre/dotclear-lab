@@ -15,6 +15,8 @@ $this->registerModule(
 	/* Name */			"Coal Dust",
 	/* Description*/		"One column, black, on gray and gray theme.",
 	/* Author */			"Olivier Meunier",
-	/* Version */			'1.1.3'
+	/* Version */			'1.2',
+	array(
+		'type'		=>		'theme'
+	)
 );
-?>

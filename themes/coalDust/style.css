@@ -311,11 +311,13 @@ ul.sidebarmenu a:hover {
 	list-style-image: none;
 }
 
+.post embed, .post iframe {max-width:100%;}
+
 .post-content a, .post-excerpt a, #comments a, #pings a {
 	color: #b0a088;
 }
-.post-excerpt p img, .post-content p img {
-  max-width:640px;
+.post-excerpt img, .post-content img {
+  max-width:100%;
 }
 .post-content blockquote {
 	margin-left: 1em;
@@ -338,11 +340,11 @@ ul.sidebarmenu a:hover {
 	padding-left: 20px;
 	margin-right: 5px;
 }
-
+.post-content, .post-excerpt, .read-it, .clear {clear:both;}
 /* Categories
 -------------------------------------------------------- */
 .dc-category #content-info p img {
-  max-width:640px;
+  max-width:100%;
 }
 #subcategories {
 	margin: 1em 0 2em;
