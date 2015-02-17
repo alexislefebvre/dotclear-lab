@@ -17,7 +17,7 @@ $this->registerModule(
 	/* Name */			    "Warped",
 	/* Description*/		"Warped in green, blue or orange",
 	/* Author */			  "Steven Tlucek, Pierre Van Glabeke",
-	/* Version */			  '1.2',
+	/* Version */			  '1.3',
 	array(
 		'type'		=>		'theme'
 	)

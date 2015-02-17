@@ -265,9 +265,13 @@ div.post {
 div.post-content {
 	margin: 1em 0;
 }
-.post-excerpt p img, .post-content p img {
+.post-excerpt, .post-content, .read-it {
+  clear:both;
+}
+.post-excerpt img, .post-content img {
   max-width:100%;
 }
+.post embed, .post iframe {max-width:100%;}
 p.post-info {
 	font-style : italic;
 	color : #BBB;
