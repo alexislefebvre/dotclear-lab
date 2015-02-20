@@ -64,6 +64,6 @@ msgstr "Je refuse"
 msgid "Add a disclaimer to your blog entrance"
 msgstr "Ajoute un avertissement à l'entrée sur le blog"
 
-msgid "You must accept this term before entering"
-msgstr "Vous devez accepter ces conditions avant d'entrer"
+msgid "<p>You must accept this term before entering</p>"
+msgstr "<p>Vous devez accepter ces conditions avant d'entrer</p>"
 

@@ -49,7 +49,8 @@ $mod_conf = array(
 	array(
 		'disclaimer_text',
 		'Description for disclaimer',
-		'You must accept this term before entering',
+		__('<p>You must accept this term before entering</p>'),
+		//'You must accept this term before entering',
 		'string'
 	),
 	array(

@@ -22,6 +22,10 @@ $core->addBehavior(
 	array('adminDisclaimer', 'adminBeforeBlogSettingsUpdate')
 );
 $core->addBehavior(
+	'adminBlogPreferencesHeaders',
+	array('adminDisclaimer', 'adminDisclaimerHeaders')
+);
+$core->addBehavior(
 	'adminBlogPreferencesForm',
 	array('adminDisclaimer', 'adminBlogPreferencesForm')
 );
@@ -33,6 +37,7 @@ $core->addBehavior(
  */
 class adminDisclaimer
 {
+
 	/**
 	 * Save settings
 	 * 
@@ -76,6 +81,26 @@ class adminDisclaimer
 		}
 	}
 
+	public static function adminDisclaimerHeaders()
+{
+        global $core;
+
+        $post_format = $core->auth->getOption('post_format');
+        $post_editor = $core->auth->getOption('editor');
+
+        $admin_post_behavior = '';
+        if ($post_editor && !empty($post_editor[$post_format])) {
+            $admin_post_behavior = $core->callBehavior('adminPostEditor', $post_editor[$post_format],
+                                                       'disclaimer_text', array('#disclaimer_text')
+            );
+        }
+
+	return
+		dcPage::jsToolBar().
+    $admin_post_behavior.
+    dcPage::jsConfirmClose('opts-forms').
+    dcPage::jsLoad('index.php?pf=disclaimer/js/config.js');
+}
 	/**
 	 * Form
 	 * 
