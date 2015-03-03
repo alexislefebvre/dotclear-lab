@@ -1,40 +1,44 @@
-<?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Arlequin, a plugin for Dotclear.
-# 
-# Copyright (c) 2007,2008,2011 Alex Pirine <alex pirine.fr>
-# 
-# Licensed under the GPL version 2.0 license.
-# A copy is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
-
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
+/***************************************************************\
+ *  This is 'Arlequin', a plugin for Dotclear 2                *
+ *                                                             *
+ *  Copyright (c) 2007,2015                                    *
+ *  Oleksandr Syenchuk and contributors.                       *
+ *                                                             *
+ *  This is an open source software, distributed under the GNU *
+ *  General Public License (version 2) terms and  conditions.  *
+ *                                                             *
+ *  You should have received a copy of the GNU General Public  *
+ *  License along with 'Arlequin' (see COPYING.txt);           *
+ *  if not, write to the Free Software Foundation, Inc.,       *
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
+\***************************************************************/
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+$page_title = __('Arlequin');
 
 try
 {
 	include dirname(__FILE__).'/models.php';
 
 	$messages = array();
-	$default_tab = empty($_GET['tab']) ? 'mt_config' : html::escapeHTML($_GET['tab']);
 	
 	/* Initialisation
 	--------------------------------------------------- */
 	
-	$s = &$core->blog->settings->arlequin;
-	
-	list($config,$exclude) = adminArlequin::loadSettings($s,$initialized);
+	$core->blog->settings->addNameSpace('multitheme');
+	list($mt_cfg,$mt_exclude) =
+		adminArlequin::loadSettings ($core->blog->settings,$initialized);
 	
 	/* Enregistrement des données depuis les formulaires
 	--------------------------------------------------- */
 	
 	if (isset($_POST['mt_action_config']))
 	{
-		$config['e_html'] = $_POST['e_html'];
-		$config['a_html'] = $_POST['a_html'];
-		$config['s_html'] = $_POST['s_html'];
-		$config['homeonly'] = (bool) $_POST['mt_homeonly'];
-		$exclude = $_POST['mt_exclude'];
+		$mt_cfg['e_html'] = $_POST['e_html'];
+		$mt_cfg['a_html'] = $_POST['a_html'];
+		$mt_cfg['s_html'] = $_POST['s_html'];
+		$mt_exclude = $_POST['mt_exclude'];
 	}
 	
 	/* Traitement des requêtes
@@ -42,17 +46,18 @@ try
 	
 	if (isset($_POST['mt_action_config']))
 	{
-		$s->put('config',serialize($config));
-		$s->put('exclude',$exclude);
+		$core->blog->settings->multitheme->put('mt_cfg',serialize($mt_cfg));
+		$core->blog->settings->multitheme->put('mt_exclude',$mt_exclude);
 		$messages[] = __('Settings have been successfully updated.');
 		$core->blog->triggerBlog();
+		http::redirect($p_url.'&config=1');
 	}
 	if (isset($_POST['mt_action_restore']))
 	{
-		$s->drop('config');
-		$s->drop('exclude');
+		$core->blog->settings->multitheme->drop('mt_cfg');
+		$core->blog->settings->multitheme->drop('mt_exclude');
 		$core->blog->triggerBlog();
-		http::redirect($p_url);
+		http::redirect($p_url.'&restore=1');
 	}
 }
 catch (Exception $e)
@@ -83,8 +88,7 @@ foreach ($mt_models as $m)
 
 echo '
 <html><head>
-<title>'.__('Arlequin - theme switcher configuration').'</title>'.
-dcPage::jsToolMan().($default_tab ? dcPage::jsPageTabs($default_tab) : '').
+<title>'.$page_title.'</title>'.
 dcPage::jsLoad('index.php?pf=arlequin/js/models.js').'
 <script type="text/javascript">
 //<![CDATA[
@@ -97,36 +101,41 @@ $(function() {
 });
 //]]>
 </script>
-</head><body>
-<h2 style="padding:8px 0 8px 34px;background:url(index.php?pf=arlequin/icon_32.png) no-repeat;">'.
-	__('Arlequin configuration').'</h2>';
+</head><body>'.
+dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
 
 // Messages
-if (!empty($messages))
-{
-	if (count($messages) < 2)
-	{
-		echo '	<p class="message">'.end($messages)."</p>\n";
-	}
-	else
-	{
-		echo '<ul class="message">';
-		foreach ($messages as $message)
-		{
-			echo '	<li>'.$message."</li>\n";
-		}
-		echo "</ul>\n";
-	}
+if (!empty($_GET['config'])) {
+  dcPage::success(__('Settings have been successfully updated.'));
+}
+if (!empty($_GET['restore'])) {
+  dcPage::success(__('Settings have been reinitialized.'));
 }
 
-include dirname(__FILE__).'/forms.php';
-
 echo
-	'<div class="multi-part" id="mt_config" title="'.__('Configuration').'">'.
-	$mt_forms['admin_cfg'].
-	"</div>\n\n".
-	'<div class="multi-part" id="mt_help" title="'.__('Help').'">'.
-	$mt_forms['admin_help'].
-	"</div>\n\n";
-?>
+	'<div class="fieldset"><form action="'.$p_url.'" method="post">
+<div class="two-cols"><h4>'.__('Switcher display format').'</h4>
+<div id="models"></div>
+<p class="col"><label for="s_html">'.__('Switcher HTML code:').'</label> '.
+	form::textArea('s_html',50,10,html::escapeHTML($mt_cfg['s_html'])).'</p>
+<div class="col">
+<p><label>'.__('Item HTML code:').' '.
+	form::field('e_html',35,'',html::escapeHTML($mt_cfg['e_html'])).'</label></p>
+<p><label>'.__('Active item HTML code:').' '.
+	form::field('a_html',35,'',html::escapeHTML($mt_cfg['a_html'])).'</label></p>
+</div><br class="clear" />
+
+<p><label>'.__('Excluded themes (separated by slashs \'/\'):').' '.
+	form::field(array('mt_exclude'),40,'',html::escapeHTML($mt_exclude)).'</label></p>
+</div>
+<p><input type="submit" name="mt_action_config" value="'.__('Update').'" />
+	<input type="submit" name="mt_action_restore" value="'.__('Restore defaults').'" />'.
+	(is_callable(array($core,'formNonce')) ? $core->formNonce() : '').'</p>
+</form></div>';
+
+dcPage::helpBlock('arlequin'); ?>
 </body></html>

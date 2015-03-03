@@ -1,20 +1,24 @@
-<?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Arlequin, a plugin for Dotclear.
-# 
-# Copyright (c) 2007,2008,2011 Alex Pirine <alex pirine.fr>
-# 
-# Licensed under the GPL version 2.0 license.
-# A copy is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
-
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
+/***************************************************************\
+ *  This is 'Arlequin', a plugin for Dotclear 2                *
+ *                                                             *
+ *  Copyright (c) 2007,2015                                    *
+ *  Oleksandr Syenchuk and contributors.                       *
+ *                                                             *
+ *  This is an open source software, distributed under the GNU *
+ *  General Public License (version 2) terms and  conditions.  *
+ *                                                             *
+ *  You should have received a copy of the GNU General Public  *
+ *  License along with 'Arlequin' (see COPYING.txt);           *
+ *  if not, write to the Free Software Foundation, Inc.,       *
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
+\***************************************************************/
 if (!defined('DC_RC_PATH')) { return; }
 
 require dirname(__FILE__).'/_widgets.php';
 
-/***
- * Arlequin public interface
+/** @doc
+	Arlequin public interface
 */
 
 publicArlequinEngine::trigger($core->blog);
@@ -26,7 +30,7 @@ class publicArlequinEngine
 	public static $cookie_theme;
 	public static $cookie_upddt;
 	
-	public static function trigger(&$blog)
+	public static function trigger($blog)
 	{
 		$cname = base_convert($blog->uid,16,36);
 		self::$cookie_theme = 'dc_theme_'.$cname;
@@ -51,17 +55,17 @@ class publicArlequinEngine
 		}
 	}
 	
-	public static function adjustCache(&$core)
+	public static function adjustCache($core)
 	{
 		if (!empty($_COOKIE[self::$cookie_upddt])) {
 			$GLOBALS['mod_ts'][] = (integer) $_COOKIE[self::$cookie_upddt];
 		}
 	}
 	
-	public static function switchTheme(&$blog,$theme)
+	public static function switchTheme($blog,$theme)
 	{
-		if ($blog->settings->arlequin->exclude) {
-			if (in_array($theme,explode('/',$blog->settings->arlequin->exclude))) {
+		if ($blog->settings->multitheme->mt_exclude) {
+			if (in_array($theme,explode('/',$blog->settings->multitheme->mt_exclude))) {
 				return;
 			}
 		}
@@ -72,7 +76,7 @@ class publicArlequinEngine
 
 class publicArlequinInterface
 {
-	public static function widget($w)
+	public static function arlequinWidget($w)
 	{
 		return self::getHTML($w);
 	}
@@ -85,11 +89,18 @@ class publicArlequinInterface
 	public static function getHTML($w=false)
 	{
 		global $core;
+
+		if ($w->offline)
+			return;
 		
-		$cfg = @unserialize($core->blog->settings->arlequin->config);
+		$cfg = @unserialize($core->blog->settings->multitheme->get('mt_cfg'));
+
+		if (($w->homeonly == 1 && $core->url->type != 'default') ||
+			($w->homeonly == 2 && $core->url->type == 'default')) {
+			return;
+		}
 		
 		if ($cfg === false ||
-			($cfg['homeonly'] && $core->url->type != 'default') ||
 			($names = self::getNames()) === false) {
 			return;
 		}
@@ -146,9 +157,12 @@ class publicArlequinInterface
 		$res = sprintf($cfg['s_html'],$s_url,$res);
 		
 		if ($w) {
-			$res = '<div id="arlequin">'.
-				($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-				"\n".$res."</div>\n";
+
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		$res;
+
+		return $w->renderDiv($w->content_only,'arlequin '.$w->class,'',$res);
 		}
 		
 		return $res;
@@ -158,12 +172,14 @@ class publicArlequinInterface
 	{
 		global $core;
 		
-		$exclude = $core->blog->settings->arlequin->exclude;
-		$exclude = $exclude ? array_flip(explode('/',$exclude)) : array();
+		$mt_exclude = $core->blog->settings->multitheme->mt_exclude;
+		$exclude = array();
+		if (!empty($mt_exclude)) {
+			$exclude = array_flip(explode('/',$core->blog->settings->multitheme->mt_exclude));
+		}
 		
 		$names = array_diff_key($core->themes->getModules(),$exclude);
 		
 		return empty($names) ? false : $names;
 	}
 }
-?>

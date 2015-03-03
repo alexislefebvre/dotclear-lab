@@ -1,19 +1,20 @@
-2011-02-22  Alex Pirine  <alex pirine.fr>
+v1.1 - 03-03-2015 - Pierre Van Glabeke
+* compatibilité dc2.7
+* localisation
+* aide intégrée
+* version effectuée depuis la v1.0.1 présente sur DA
 
- * Dotclear 2.2.2 compatibility. thx <gaetan bistroduweb.com>
-
+2010-07-15  Gaetan Guillard  <gaetan@bistroduweb.com>
+* v1.0.1 - Corrections for compatibility with Dotclear 2.2
 
 2008-10-18  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
-
- * v2008.10 - Removed theme parameter from URL
+* v2008.10 - Removed theme parameter from URL
 
 
 2008-08-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
-
- * Excluded themes can not be selected by user.
+* Excluded themes can not be selected by user.
 
 
 2008-04-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
-
- * Dotclear r1790 compatibility, see
+* Dotclear r1790 compatibility, see
    http://dev.dotclear.net/2.0/changeset/1790

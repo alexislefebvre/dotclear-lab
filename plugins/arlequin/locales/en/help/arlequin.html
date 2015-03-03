@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Aide Arlequin</title>
+  </head>
+  <body>
+  <h4>Inserting the theme selector in the blog interface</h4>
+
+  <dl>
+  <dt>With a widget</dt>
+  <dd>The easiest way is to use the <em>Theme Selector</em>
+  <a href="plugin.php?p=widgets">widget</a> that displays a list of available themes.</dd>
+
+  <dt>In the template file</dt>
+  <dd>The switch can also be integrated into the blog interface by editing your
+  template file. Simply add the <code>{{tpl:themesList}}</code> instruction in
+  the desired location.</dd>
+  </dl>
+
+  <h4>Understanding Models</h4>
+  <p>Arlequin is notable for its flexible configuration, due to the concept of
+  <em>models</em> that create their own interfaces for the theme selector.</p>
+  <p>The information needed to operate the theme selector contained in variables
+  of the form <strong>%n$s</strong> where <strong>n</strong> is an integer
+  denoting a variable.</p>
+  <p>Here is the list of variables that you can use:</p>
+  <dl>
+  <dt>In switcher HTML code</dt>
+  <dd><table><thead>
+  <tr><th>Variable</th><th>Meaning</th></tr>
+  </thead><tbody class="noborder">
+  <tr><th>%1$s</th><td>Current page URL</td></tr>
+  <tr><th>%2$s</th><td>Items HTML code</td></tr>
+  </tbody></table></dd>
+
+  <dt>In items HTML code</dt>
+  <dd><table><thead>
+  <tr><th>Variable</th><th>Meaning</th></tr>
+  </thead><tbody class="noborder">
+  <tr><th>%1$s</th><td>Current page URL</td></tr>
+  <tr><th>%2$s</th><td>A suffix to send theme setting through URL, e.g. "<strong>&amp;theme=</strong>"</td></tr>
+  <tr><th>%3$s</th><td>Theme identifier <em>only to be used in a URL</em></td></tr>
+  <tr><th>%4$s</th><td>Theme name</td></tr>
+  <tr><th>%5$s</th><td>Theme description</td></tr>
+  <tr><th>%6$s</th><td>Theme identifier</td></tr>
+  </tbody></table></dd>
+  </dl>
+
+  <h4>Add your own predefined templates</h4>
+  <p>If you are the administrator of a platform of blogs, you can change the
+  predefined templates by editing the file <strong>plugins/arlequin/models.php</strong>.</p>
+  <p><strong>Suggestion</strong>: some interesting models can be created in
+  association with JavaScript or CSS property, changing your themes.</p>
+  </body>
+</html>

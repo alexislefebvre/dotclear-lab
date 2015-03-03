@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Aide Arlequin</title>
+  </head>
+  <body>
+  <h4>Insertion du sélecteur de thème dans l'interface du blog</h4>
+
+  <dl>
+  <dt>Avec un widget</dt>
+  <dd>Le plus simple est d'utiliser le <a href="plugin.php?p=widgets">widget</a>
+  <em>Sélecteur de thème</em> qui affiche la liste des thèmes disponibles.</dd>
+
+  <dt>Dans le fichier template</dt>
+  <dd>Le sélecteur peut aussi être intégré dans l'interface du blog en éditant
+  directement votre fichier template. Il suffit pour cela d'ajouter l'instruction
+  <code>{{tpl:themesList}}</code> à l'endroit voulu.</dd>
+  </dl>
+  
+  <h4>Comprendre les modèles</h4>
+  <p>Arlequin est remarquable pour sa souplesse de configuration, due à la notion
+  de <em>modèles</em> qui permettent de créer ses propres interfaces pour le
+  sélecteur de thème.</p>
+  <p>Les informations nécessaires au fonctionnement du sélecteur de thème sont
+  contenues dans des variables de la forme <strong>%n$s</strong> où <strong>n</strong>
+  est un entier désignant une variable.</p>
+  <p>Voici la liste des variables que vous pouvez utiliser :</p>
+  <dl>
+  <dt>Dans le code HTML du sélecteur</dt>
+  <dd><table><thead>
+  <tr><th>Variable</th><th>Signification</th></tr>
+  </thead><tbody class="noborder">
+  <tr><th>%1$s</th><td>L'adresse URL de la page courante</td></tr>
+  <tr><th>%2$s</th><td>Le code HTML des items</td></tr>
+  </tbody></table></dd>
+  
+  <dt>Dans le code HTML des items</dt>
+  <dd><table><thead>
+  <tr><th>Variable</th><th>Signification</th></tr>
+  </thead><tbody class="noborder">
+  <tr><th>%1$s</th><td>L'adresse URL de la page courante</td></tr>
+  <tr><th>%2$s</th><td>Un suffixe pour envoyer le paramètre du thème à travers
+  l'URL, p. ex. "<strong>&amp;theme=</strong>"</td></tr>
+  <tr><th>%3$s</th><td>L'identifiant du thème <em>à utiliser uniquement dans une URL</em></td></tr>
+  <tr><th>%4$s</th><td>Le nom du thème</td></tr>
+  <tr><th>%5$s</th><td>La description du thème</td></tr>
+  <tr><th>%6$s</th><td>L'identifiant du thème</td></tr>
+  </tbody></table></dd>
+  </dl>
+  
+  <h4>Ajouter ses propres modèles prédéfinis</h4>
+  <p>Si vous êtes l'administrateur d'une plate-forme de blogs, vous pouvez modifier
+  les modèles prédéfinis en éditant le fichier <strong>plugins/arlequin/models.php</strong>.</p>
+  <p><strong>Conseil</strong> : des modèles assez intéressants peuvent être créés
+  en association avec du JavaScript ou avec des propriétés CSS, en modifiant vos thèmes.</p>
+  </body>
+</html>
