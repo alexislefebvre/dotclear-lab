@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of comListe, a plugin for Dotclear.
 # 
-# Copyright (c) 2008-2010 Benoit de Marne
+# Copyright (c) 2008-2015 Benoit de Marne
 # benoit.de.marne@gmail.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -13,10 +13,10 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-        /* Name */                      "ComListe",
-        /* Description*/                "Plugin for printing comments list",
-        /* Author */                    "Benoit de Marne, Pierre Van Glabeke",
-        /* Version */                   '0.2',
+        /* Name */         "ComListe",
+        /* Description*/   "Display a list of all comments and trackbacks of a blog in a public page",
+        /* Author */       "Benoit de Marne, Pierre Van Glabeke",
+        /* Version */      '0.3',
 	/* Properties */
 	array(
 		'permissions' => 'admin',

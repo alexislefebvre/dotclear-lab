@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of comListe, a plugin for Dotclear.
 # 
-# Copyright (c) 2008-2010 Benoit de Marne
+# Copyright (c) 2008-2015 Benoit de Marne
 # benoit.de.marne@gmail.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -18,7 +18,9 @@ class comListeWidgets
 {
 	public static function initWidgets($w)
 	{
-		$w->create('comListe',__('List of comments'),array('tplComListe','comListeWidget'));
+		$w->create('comListe',__('ComListe'),array('tplComListe','comListeWidget'),
+			null,
+			__('List of comments'));
 		$w->comListe->setting('title',__('Title:'),__('ComListe'));
 		$w->comListe->setting('link_title',__('Link title:'),__('List of comments'));
 		$w->comListe->setting('homeonly',__('Display on:'),0,'combo',

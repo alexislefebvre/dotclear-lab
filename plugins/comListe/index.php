@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of comListe, a plugin for Dotclear.
 # 
-# Copyright (c) 2008-2010 Benoit de Marne
+# Copyright (c) 2008-2015 Benoit de Marne
 # benoit.de.marne@gmail.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -136,14 +136,14 @@ __('Descending') => 'desc' );
 		'<p><label class="classic">'. __('Title page').' : '.
 		form::field('comliste_page_title', 30,256, $comliste_page_title).
 		'</label></p>'.
-		'<p><label class=" classic">'. __('Number of comments per page').' : '.
+		'<p><label class=" classic">'. __('Number of comments per page:').' '.
 		form::field('comliste_nb_comments_per_page', 4, 4, $comliste_nb_comments_per_page).
 		'</label></p>'.
 		'<p><label class=" classic">'. __('Comments order').' : '.
 		form::combo('comliste_comments_order', $order_combo, $comliste_comments_order).
 		'</label></p>'.
 		'</div>'.
-		'<p><input type="submit" value="'.__('Save configuration').'" onclick="affinfo(\''.__('Save configuration').'\')" /> '.
+		'<p><input type="submit" value="'.__('Save').'" onclick="affinfo(\''.__('Save').'\')" /> '.
 		$core->formNonce().
 		form::hidden(array('action'),'saveconfig').
 		form::hidden(array('p'),'comListe').'</p>'.
