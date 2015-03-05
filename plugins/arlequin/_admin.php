@@ -27,7 +27,7 @@ $core->addBehavior('adminDashboardFavorites','arlequinDashboardFavorites');
 function arlequinDashboardFavorites($core,$favs)
 {
 	$favs->register('arlequin', array(
-		'title' => __('Arlequin'),
+		'title' => __('Theme switcher'),
 		'url' => 'plugin.php?p=arlequin',
 		'small-icon' => 'index.php?pf=arlequin/icon.png',
 		'large-icon' => 'index.php?pf=arlequin/icon-big.png',
