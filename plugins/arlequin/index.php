@@ -117,8 +117,8 @@ if (!empty($_GET['restore'])) {
 }
 
 echo
-	'<div class="fieldset"><form action="'.$p_url.'" method="post">
-<div class="two-cols"><h4>'.__('Switcher display format').'</h4>
+	'<form action="'.$p_url.'" method="post">
+<div class="fieldset two-cols"><h4>'.__('Switcher display format').'</h4>
 <div id="models"></div>
 <p class="col"><label for="s_html">'.__('Switcher HTML code:').'</label> '.
 	form::textArea('s_html',50,10,html::escapeHTML($mt_cfg['s_html'])).'</p>
@@ -135,7 +135,7 @@ echo
 <p><input type="submit" name="mt_action_config" value="'.__('Update').'" />
 	<input type="submit" name="mt_action_restore" value="'.__('Restore defaults').'" />'.
 	(is_callable(array($core,'formNonce')) ? $core->formNonce() : '').'</p>
-</form></div>';
+</form>';
 
 dcPage::helpBlock('arlequin'); ?>
 </body></html>
