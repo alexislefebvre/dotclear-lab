@@ -2,8 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of xiti, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2015 JC Denis and contributors
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -37,4 +36,3 @@ catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }
 return false;
-?>

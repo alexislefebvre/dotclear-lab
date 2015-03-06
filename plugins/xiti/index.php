@@ -2,8 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of xiti, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2015 JC Denis and contributors
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -11,6 +10,8 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
+
+$page_title = __('XITI');
 
 dcPage::check('amdin');
 
@@ -52,30 +53,30 @@ if (isset($_POST['xiti_save']))
 }
 
 echo '
-<html><head><title>'.__('XITI').'</title></head>
-<body>
-<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('XITI').'</h2>'.
-(!empty($_REQUEST['done']) ? '<p class="message">'.__('Configuration successfully updated').'</p>' : '').'
-<fieldset><legend>'.__('Settings').'</legend>
-<form method="post" action="plugin.php">
+<html><head><title>'.$page_title.'</title></head>
+<body>';
+echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+if (!empty($_REQUEST['done'])) {
+  dcPage::success(__('Configuration successfully updated'));
+};
+
+echo '<form method="post" action="plugin.php">
+<div class="fieldset"><h4>'.__('Settings').'</h4>
 <p><label class="classic">'.form::checkbox('xiti_active','1',$xiti_active).__('Enable XITI').'</label></p>
-<p><label>'.__('Your XITI account number:').form::field('xiti_serial',30,255,html::escapeHTML($xiti_serial)).'</label></p>
-<p><label>'.__('Image style:').form::combo('xiti_image',$combo_image,$xiti_image).'</label></p>
+<p><label>'.__('Your XITI account number:').' '.form::field('xiti_serial',30,255,html::escapeHTML($xiti_serial)).'</label></p>
+<p><label>'.__('Image style:').' '.form::combo('xiti_image',$combo_image,$xiti_image).'</label></p>
 <p><label class="classic">'.form::checkbox('xiti_footer','1',$xiti_footer).__('Add to theme footer').'</label></p>
-<p><input type="submit" name="xiti_save" value="'.__('save').'" />'.$core->formNonce().form::hidden(array('p'),'xiti').'</p>
+</div>
+<p><input type="submit" name="xiti_save" value="'.__('Save').'" />'.$core->formNonce().form::hidden(array('p'),'xiti').'</p>
 </form>
-</fieldset>
-<fieldset><legend>'.__('Help').'</legend>
-<ul>
-<li>'.__('In order to add XITI to your theme footer, theme must have sysBehavoir "publicAfterContent", commonly in template file "_footer.html"').'</li>
-<li>'.__('You can use instead the XITI widget but this plugin must be enabled and well configured here.').'</li>
-<li>'.__('In footer template, XITI is encapsuled in a "div" tag of class "xiti-footer".').'</li>
-<li>'.__('In widget, XITI is encapsuled in a "div" tag of class "xiti-widget".').'</li>
-</ul>
-</fieldset>
 <br class="clear"/>
 <p class="right">
 xiti - '.$core->plugins->moduleInfo('xiti','version').'&nbsp;
 <img alt="'.__('XITI').'" src="index.php?pf=xiti/icon.png" />
-</p></body></html>';
-?>
+</p>';
+echo dcPage::helpBlock('xiti');
+echo '</body></html>';

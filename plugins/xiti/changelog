@@ -1,0 +1,14 @@
+0.5 - 05-03-2015 - Pierre Van Glabeke
+* cosmétique dc2.6
+* aide intégrée
+* localisation
+* mise à jour widget (content_only, class, hors ligne)
+* mise à jour code xiti (v7.5)
+* mise à jour bloc licence + encodage UTF8, UNIX (LF)
+
+0.4 - 20100828
+* Fixed links
+* Fixed document title (only in js)
+
+0.3 - 20100602
+* Switched to DC 2.2

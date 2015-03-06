@@ -2,8 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of xiti, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2010 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2015 JC Denis and contributors
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -39,11 +38,14 @@ class xitiPublic
 		if (!$core->blog->settings->xiti->xiti_active 
 		 || '' == $core->blog->settings->xiti->xiti_serial) return;
 
-		return 
-		'<div class="xiti-widget">'.
-		(strlen($w->title) > 0 ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		self::xitiLink($core).
-		'</div>';
+		if ($w->offline)
+			return;
+
+		$res =
+		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		self::xitiLink($core);
+
+		return $w->renderDiv($w->content_only,'xiti-widget '.$w->class,'',$res);
 	}
 
 	public static function xitiLink($core)
@@ -64,6 +66,7 @@ class xitiPublic
 		
 		return 
 		"<p>\n".
+		"<a href=\"http://www.xiti.com/xiti.asp?s=".$s."\" title=\"WebAnalytics\" target=\"_top\"> \n".
 		"<script type=\"text/javascript\"> \n".
 		"<!-- \n".
 		"document.write('<a href=\"http://www.xiti.com/xiti.asp?s=".$s."\" title=\"WebAnalytics\">'); \n".
@@ -76,13 +79,12 @@ class xitiPublic
 		"Xt_i += '&hl='+Xt_h.getHours()+'x'+Xt_h.getMinutes()+'x'+Xt_h.getSeconds(); \n".
 		"if(parseFloat(navigator.appVersion)>=4) \n".
 		"{Xt_s=screen;Xt_i+='&r='+Xt_s.width+'x'+Xt_s.height+'x'+Xt_s.pixelDepth+'x'+Xt_s.colorDepth;} \n".
-		"document.write(Xt_i+'&ref='+Xt_r.replace(/[<>\"]/g, '').replace(/&/g, '$')+'\"></a>'); \n".
+		"document.write(Xt_i+'&ref='+Xt_r.replace(/[<>\"]/g, '').replace(/&/g, '$')+'\" title=\"Internet Audience\"></a>'); \n".
 		"//--> \n".
 		"</script> \n".
 		"<noscript>\n".
-		"<img width=\"".$combo_image[$i]['w']."\" height=\"".$combo_image[$i]['h']."\" src=\"http://logv10.xiti.com/".$combo_image[$i]['n'].".xiti?s=".$s."&p=\" alt=\"WebAnalytics\" />\n".
+		"<img width=\"".$combo_image[$i]['w']."\" height=\"".$combo_image[$i]['h']."\" src=\"http://logv143.xiti.com/".$combo_image[$i]['n'].".xiti?s=".$s."&amp;p=\" alt=\"WebAnalytics\" />\n".
 		"</noscript></a>".
 		"</p>\n";
 	}
 }
-?>
