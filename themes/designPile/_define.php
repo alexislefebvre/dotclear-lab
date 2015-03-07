@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */			"Design Pile",
 	/* Description*/	"A dark and clean theme",
 	/* Author */		"Site 5 - adapted to Dotclear by annso, Pierre Van Glabeke",
-	/* Version */		'1.4',
+	/* Version */		'1.5',
 	array(
 		/* Type */		'type' =>			'theme'
 	)

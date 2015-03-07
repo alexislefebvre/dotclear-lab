@@ -417,7 +417,12 @@ code, pre {
 }
 #comment-form input[type=submit]:hover, #comment-form input[type=reset]:hover { background: #000; }
 
-
+#comment-form .jstSpacer {display:none;}
+#comment-form .jstEditor textarea {
+  width: 500px;
+	border: 1px dashed #ccc;
+}
+#comment-form .jstHandle {background-position:240px -160px;}
 /* ------------------------------------------------------------
 	8. SIDEBAR
 ------------------------------------------------------------- */
