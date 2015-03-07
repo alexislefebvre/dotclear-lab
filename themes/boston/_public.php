@@ -1,84 +1,28 @@
 <?php
-$core->tpl->addValue('MyEntriesCount',array('myTpl','MyEntriesCount'));
-$core->tpl->addValue('MyCommentsCount',array('myTpl','MyCommentsCount'));
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Boston, a theme for Dotclear.
+#
+# Copyright (c) 2009
+# annso contact@as-i-am.fr
+#
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
-# Ajax search URL
-$core->url->register('ajaxsearch','ajaxsearch','^ajaxsearch(?:(?:/)(.*))?$',array('urlsBokeh','ajaxsearch'));
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
 
-class myTpl
+# appel css menu
+$core->addBehavior('publicHeadContent','bostonmenu_publicHeadContent');
+
+function bostonmenu_publicHeadContent($core)
 {
-	/*
-	Cette fonction affiche le nombre de billets
-	*/
-	public static function MyEntriesCount($attr)
-	{
-		$tbl_billets = $GLOBALS['core']->blog->prefix."post";
-        $billets = $GLOBALS['core']->con->select("
-            SELECT count(post_id) as somme
-            FROM ".$tbl_billets." billets
-            WHERE post_status=1 AND
-                  blog_id='asiam'")->field("somme");
-	    return '<?php echo '.$billets.'; ?>';
+	$style = $core->blog->settings->themes->boston_menu;
+	if (!preg_match('/^simplemenu|menu-no$/',$style)) {
+		$style = 'simplemenu';
 	}
 
-
-     /*
-	Cette fonction affiche le nombre de commentaires
-	*/
-	public static function MyCommentsCount($attr)
-	{
-	    global $core;
-        $tbl_billets = $GLOBALS['core']->blog->prefix."post";
-		$tbl_comments = $core->blog->prefix."comment";
-        $comments = $core->con->select("
-            SELECT count(comment_id) as somme
-            FROM ".$tbl_billets." billets, ".$tbl_comments." comments
-            WHERE comments.post_id = billets.post_id AND
-                  billets.post_status=1 AND
-                  comment_status=1 AND
-                  comment_trackback=0 AND
-                  blog_id='asiam'")->field("somme");
-
-	    return '<?php echo '.$comments.'; ?>';
-	}
-
+	$url = $core->blog->settings->system->themes_url.'/'.$core->blog->settings->system->theme;
+	echo '<link rel="stylesheet" type="text/css" media="projection, screen" href="'.$url."/".$style.".css\" />\n";
 }
-
-class urlsBokeh
-{
-	public static function ajaxsearch($args)
-	{
-		global $core;
-		$res = '';
-
-		try
-		{
-			if (!$args) {
-				throw new Exception;
-			}
-
-			$q = rawurldecode($args);
-			$rs = $core->blog->getPosts(array(
-				'search' => $q,
-				'limit' => 5
-			));
-
-			if ($rs->isEmpty()) {
-				throw new Exception;
-			}
-
-			$res = '<ul>';
-			while ($rs->fetch())
-			{
-				$res .= '<li><a href="'.$rs->getURL().'">'.html::escapeHTML($rs->post_title).'</a></li>';
-			}
-			$res .= '</ul>';
-		}
-		catch (Exception $e) {}
-
-		header('Content-Type: text/plain; charset=UTF-8');
-		echo $res;
-	}
-}
-
-?>

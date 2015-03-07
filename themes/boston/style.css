@@ -1,28 +1,26 @@
 /*
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Boston, a theme for Dotclear.
-# It is based from Aorakits, a set of themes for DotClear.
 #
-# Copyright (c) 2007 Kozlika and contributors - 2009 annso
-# contact@as-i-am.fr
+# Copyright (c) 2009
+# annso contact@as-i-am.fr
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------*/
+# -- END LICENSE BLOCK ------------------------------------
+*/
 
 /* -----------------------------------------------------------------
 	1. STRUCTURE
 ------------------------------------------------------------------ */
 @import url(layout.css);
-
-
 /* ------------------------------------------------------------
 	2. BALISES HTML PAR DEFAUT
 ------------------------------------------------------------- */
 
 body {
-	background: #DFDFDF; /*#DFDFDF;*/
+	background: #DFDFDF;
 	color: #6B6F61;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 75%;
@@ -51,7 +49,10 @@ a:hover { text-decoration: underline; }
 
 a img { border: none; }
 
-
+code, pre {
+	white-space: normal;
+	width: 100%;
+}
 /* ------------------------------------------------------------
 	3. PAGE
 ------------------------------------------------------------- */
@@ -60,52 +61,12 @@ a img { border: none; }
 	background: #fff;
 }
 
-
 /* ------------------------------------------------------------
 	4. HAUT DE PAGE
 ------------------------------------------------------------- */
 
-#top h1 { display: none; }
-#prelude { display: none;}
-
-.menu {
-	width: 940px;
-	margin: 0;
-	padding: 0;
-	border-top: 10px solid #6B6F61;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-}
-.menu ul {
-	margin: 0;
-	padding: 0;
-}
-.menu li {
-	float: left;
-	margin-top: -10px;
-	list-style-type: none;
-	border-right: 1px solid #ddd;
-}
-.menu li a{
-	border-top: 10px solid #000;
-	color: #666666;
-	float: left;
-	padding: 35px 20px 10px;
-}
-.menu li a:first-letter{
-	font-size: 1.1em;
-}
-.menu li a:hover{
-	/*border-top: 10px solid #6B6F61;*/
-	text-decoration: none;
-	color: #fff;
-	background: #7E858D;
-}
-a.current_page_item {
-	font-weight: bold;
-}
-
-
+#top {height:20px;}
+#prelude { top:-50px; position:fixed; }
 
 /* ------------------------------------------------------------
 	5. WRAPPER MAIN CONTENT
@@ -244,7 +205,16 @@ a.comment_count:hover, a.ping_count:hover, a.attach_count:hover {
 .field textarea {
 	width: 421px;
 }
-
+#comment-form .jstSpacer {display:none;}
+#comment-form .jstEditor textarea {
+  width: 65%;
+	border: 1px solid #ddd;
+	margin-left:168px;
+}
+#comment-form .jstEditor textarea:hover {
+  border: 1px solid #E8E8CE;
+}
+#comment-form .jstHandle {margin-left:168px;}
 #comments-feed { margin-left:10px;}
 
 
@@ -274,12 +244,19 @@ a.comment_count:hover, a.ping_count:hover, a.attach_count:hover {
 	font-style: normal;
 	text-transform: uppercase;
 }
-
+#sidebar img {max-width:100%;}
 #sidebar ul {
 	margin:5px 0 20px;
 	padding: 0;
 }
 #sidebar li { list-style-type:none;}
+
+#sidebar .categories li.category-current {
+	font-weight: bold;
+}
+#sidebar .categories li.category-current li {
+	font-weight: normal;
+}
 #sidebar a { color: #6B6F61;}
 #sidebar a:hover {
 	color: #6B6F61;
@@ -391,7 +368,7 @@ a.comment_count:hover, a.ping_count:hover, a.attach_count:hover {
 	11. PAGES SPECIFIQUES
 ------------------------------------------------------------- */
 
-.dc-archive .content-inner .mois {
+.dc-archive .content-inner .month {
 	float: left;
 	width: 24%;
 }
@@ -401,15 +378,33 @@ a.comment_count:hover, a.ping_count:hover, a.attach_count:hover {
 .dc-tags a { color: #6B6F61; }
 .dc-tags a:hover { color: #000; }
 
+#subcategories {
+	padding: 5px 0 20px 0;
+}
+#subcategories h3 {
+	margin: 0;
+}
+#subcategories ul {
+	margin: 0.5em 0 0 0;
+	padding: 0 0 0 20px;
+	line-height: 1.4;
+}
+
 /* ---------------------------------------------------
   12. ET POUR FINIR NE PAS OUBLIER LES CLEARERS
 --------------------------------------------------- */
 .post, .post-content, .footnotes, .attachments,
 .post-info-co, #comments, #footer {
-    clear:both;
-    }
-
-
-.test {
-	width: 200px;
+  clear:both;
 }
+
+/* en sus */
+#content-info img {
+  max-width:100%;
+}
+.post-excerpt p img, .post-content p img {
+  max-width:100%;
+}
+.post embed, .post iframe {max-width:100%;}
+
+.dc-contactme .field textarea {width:auto;}

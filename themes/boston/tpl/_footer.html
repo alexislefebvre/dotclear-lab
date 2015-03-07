@@ -1,16 +1,10 @@
-<div id="footer">
+<div id="footer" role="contentinfo">
 
-	<p class="left"><a href="http://fr.dotclear.org/">
-		<img src="http://fr.dotclear.org/affiliates/w-logo.png" alt="Dotclear 2" /></a>
-	</p>
+	<p class="left"><a href="http://fr.dotclear.org/"><img src="http://fr.dotclear.org/affiliates/w-logo.png" alt="Dotclear 2" /></a></p>
 
 	<p class="right texte">
-		<a href="{{tpl:BlogURL}}" class="site"><strong>{{tpl:BlogName}}</strong></a>  par
-		<a href="{{tpl:BlogURL}}contact">{{tpl:BlogEditor}}</a> -
-		<br />
-		<span class="infos">
-			{{tpl:MyEntriesCount}} articles - {{tpl:MyCommentsCount}} commentaires
-		</span>
+		<a href="{{tpl:BlogURL}}" class="site"><strong>{{tpl:BlogName encode_html="1"}}</strong></a> {{tpl:lang by}}
+		<a href="/contact">{{tpl:BlogEditor}}</a>.
 	</p>
 </div>
 

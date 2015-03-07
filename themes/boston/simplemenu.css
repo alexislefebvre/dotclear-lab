@@ -1,0 +1,66 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Boston, a theme for Dotclear.
+#
+# Copyright (c) 2009
+# annso contact@as-i-am.fr
+#
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+*/
+#top {height:100px;}
+/* SimpleMenu */
+#navsm {
+  /*display:block;
+  clear: both;
+  margin: 0;
+  padding: 0;*/
+}
+
+#supranav {
+	width: 940px;
+	margin: 0;
+	padding: 0;
+	border-top: 10px solid #6B6F61;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+#supranav li {
+	float: left;
+	margin-top: -10px;
+	list-style-type: none;
+	border-right: 1px solid #ddd;
+}
+* html #navsm li { /* Filter for IE6 to prevent li stacking */
+  float: left;
+  text-decoration: none;
+}
+* html #navsm li a { /* Filter for IE6 to prevent li stacking */
+  float: left;
+  margin-left: 4px;
+  text-decoration: none;
+}
+#supranav li a {
+	border-top: 10px solid #000;
+	color: #666666;
+	float: left;
+	padding: 35px 20px 10px;
+}
+#supranav li a:first-letter{
+	font-size: 1.1em;
+}
+#supranav li.active {
+}
+#supranav li.active a {
+	font-weight: bold;
+}
+#supranav li:hover {
+  text-decoration: none;
+}
+#supranav li a:hover {
+	text-decoration: none;
+	color: #fff;
+	background: #7E858D;
+}
