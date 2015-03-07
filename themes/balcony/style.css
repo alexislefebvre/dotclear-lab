@@ -310,10 +310,19 @@ hr { }
 	width: 65%;
 	border: 1px solid #EEF9FD;
 }
-.field input:hover , .field textarea :hover {
+.field input:hover , .field textarea:hover {
   border: 1px solid #E8E8CE;
 }
-
+#comment-form .jstSpacer {display:none;}
+#comment-form .jstEditor textarea {
+  width: 65%;
+	border: 1px solid #EEF9FD;
+	margin-left:168px;
+}
+#comment-form .jstEditor textarea:hover {
+  border: 1px solid #E8E8CE;
+}
+#comment-form .jstHandle {margin-left:168px;}
 #comment-form input[type=submit] { }
 #comment-form input[type=reset] { }
 

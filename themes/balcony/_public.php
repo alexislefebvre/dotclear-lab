@@ -24,6 +24,6 @@ function balconymenu_publicHeadContent($core)
 		$style = 'simplemenu';
 	}
 
-	$url = $core->blog->settings->themes_url.'/'.$core->blog->settings->theme;
+	$url = $core->blog->settings->system->themes_url.'/'.$core->blog->settings->system->theme;
 	echo '<link rel="stylesheet" type="text/css" media="projection, screen" href="'.$url."/".$style.".css\" />\n";
 }

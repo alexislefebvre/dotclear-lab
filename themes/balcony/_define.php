@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"Balcony",
 	/* Description*/	"Thème illustré par Sophie Griotto",
 	/* Author */		"annso, Pierre Van Glabeke",
-	/* Version */		'1.1',
+	/* Version */		'1.2',
 	array(
 		/* Type */		'type' =>			'theme',
 		              'dc_min' => '2.7'
