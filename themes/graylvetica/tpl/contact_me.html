@@ -1,8 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<!DOCTYPE html>
+<html lang="{{tpl:BlogLanguage}}">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="UTF-8" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX,NOARCHIVE"}}" />
   
   <title>{{tpl:ContactMePageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
@@ -29,7 +28,7 @@
 
 <div id="wrapper">
 
-<div id="main">
+<div id="main" role="main">
   <div id="content">
   
   <div id="content-info">
@@ -55,8 +54,7 @@
         value="{{tpl:ContactMeEmail encode_html="1"}}" />
         </p>
         
-        <p class="field"><label for="c_site">{{tpl:lang Website}}
-        ({{tpl:lang optional}})&nbsp;:</label>
+        <p class="field"><label for="c_site">{{tpl:lang Website}} ({{tpl:lang optional}})&nbsp;:</label>
         <input name="c_site" id="c_site" type="text" size="30" maxlength="255"
         value="{{tpl:ContactMeSite encode_html="1"}}" />
         </p>
@@ -83,7 +81,7 @@
   </div>
 </div>
 
-<div id="sidebar">
+<div id="sidebar" role="complementary">
   <div id="blognav">
     {{tpl:Widgets type="nav"}}
   </div> <!-- End #blognav -->

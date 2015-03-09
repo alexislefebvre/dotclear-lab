@@ -2,7 +2,7 @@
 #
 # This file is part of Graylevtica, a Dotclear 2 theme.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2003-2015 Olivier Meunier and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -353,9 +353,10 @@ p.pagination {
 	margin-top: 10px;
 	font-size: 1.1em;
 }
-.post-excerpt p img, .post-content p img {
+.post-excerpt img, .post-content img {
   max-width:100%;
 }
+.post embed, .post iframe {max-width:100%;}
 /* Archives -------------------------------------------- */
 body.dc-archive #content h3 {
 	float: left;
@@ -387,7 +388,7 @@ body.dc-archive #content li {
 	list-style-position: inside;
 	line-height: 1.3;
 }
-#content-info p img {
+#content-info img {
   max-width:100%;
 }
 /* Tags ------------------------------------------------ */
@@ -483,7 +484,6 @@ div.author-info p {
 	margin-left: -65px;
 }
 #comments dt span, #pings dt span {
-	display: block;
 }
 
 #comments a.comment-number, #pings a.ping-number {
@@ -696,3 +696,4 @@ div.post legend {
   border: none;
   white-space: nowrap;
 }
+.dc-.post .post-excerpt, .dc-post .post-content {clear:both;}

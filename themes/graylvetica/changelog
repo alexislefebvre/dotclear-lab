@@ -1,0 +1,5 @@
+v1.2 - 09-03-2015 - Pierre Van Glabeke
+* html5
+* modifs css
+* compatibilité dc2.7
+* suppression _public.php et locales (inclus dans dotclear)
