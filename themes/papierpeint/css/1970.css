@@ -1,0 +1,79 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# Copyright (c) 2008 Steven Tlucek
+#
+# This work is licensed under the Creative Commons
+# Attribution-Share Alike 3.0 Unported License.
+# To view a copy of this license, visit
+# http://creativecommons.org/licenses/by-sa/3.0/ or send a
+# letter to Creative Commons, 171 Second Street, Suite 300,
+# San Francisco, California, 94105, USA.
+#
+# -- END LICENSE BLOCK ------------------------------------
+*/
+body {
+	background : #E4E5CB url(../img_1970/background.png) repeat 0 0;
+}
+
+a {
+	color : #E09315;
+}
+#top {
+	background : transparent url(../img_1970/top.png) no-repeat 0 100%;
+}
+#top h1 a {
+	color : #FBFAF0;
+}
+#prelude {
+	color : #586221;
+}
+#prelude a {
+	color : #586221;
+}
+#prelude a:hover {
+	color : #747F36;
+}
+#wrapper {
+	background : url(../img_1970/sidebar.png) repeat-y;
+}
+#content-info h2 {
+	color : #E09315;
+}
+#footer {
+	color : #586221;
+	background : url(../img_1970/footer.png) no-repeat 0 0;
+}
+#footer a {
+	color : #586221;
+}
+#footer a:hover {
+	color : #747F36;
+}
+#sidebar {
+	background : url(../img_1970/sidebar_top.png) no-repeat top right;
+}
+#sidebar a {
+	color : #E09315;
+}
+#sidebar a:hover {
+	background-color : #E09315;
+}
+#sidebar h2 {
+	background : transparent url(../img_1970/sidebar_picto.png) no-repeat 0 0.2em;
+}
+#search .submit {
+	background : #E09315;
+}
+h2.post-title {
+	margin : 8px 0 0 -31px;
+	background : transparent url(../img_1970/post_picto.png) no-repeat;
+	padding: 0 0 2px 31px;
+	color : #E09315;
+}
+input.submit {
+	background : #E09315;
+}
+input.preview {
+	background : #E09315;
+}

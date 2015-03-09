@@ -17,7 +17,7 @@ $this->registerModule(
 	/* Name */			"Papier Peint",
 	/* Description*/		"Papier Peint, from 30's, 50's and 70's",
 	/* Author */			"Steven Tlucek, Pierre Van Glabeke",
-	/* Version */			'1.3',
+	/* Version */			'1.4',
 	array(
 		'type'		=>		'theme'
 	)
