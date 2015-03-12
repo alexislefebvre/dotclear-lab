@@ -1,4 +1,3 @@
-
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,3 +12,23 @@ msgstr ""
 msgid "Versions manager"
 msgstr "Gestionnaire de versions"
 
+msgid "no version"
+msgstr "pas de version"
+
+msgid "Versions"
+msgstr "Versions"
+
+msgid "versions"
+msgstr "versions"
+
+msgid "Versions updated or deleted."
+msgstr "Versions mises à jour ou supprimées."
+
+msgid "Are you sure you want to delete versions?"
+msgstr "Êtes-vous certain de vouloir supprimer les versions ?"
+
+msgid "Deleting the version of a plugin will reinstall it if the plugin has an install process."
+msgstr "Effacer la version d'un plugin le réinstallera si le plugin a une procédure d'installation."
+
+msgid "Perform selected actions"
+msgstr "Effectuer les actions sélectionnées"

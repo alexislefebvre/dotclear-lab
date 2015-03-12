@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Versions Manager, a plugin for Dotclear 2
-# Copyright 2010 Moe (http://gniark.net/)
+# Copyright 2010-2015 Moe (http://gniark.net/)
 #
 # Versions Manager is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -24,7 +24,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 
-l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+$page_title = __('Versions manager');
 
 require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 require_once(dirname(__FILE__).'/inc/lib.versionsManager.php');
@@ -59,7 +59,7 @@ if (isset($_GET['updated']))
 ?>
 <html>
 <head>
-	<title><?php echo __('Versions manager'); ?></title>
+	<title><?php echo $page_title; ?></title>
 	<!-- from /dotclear/plugins/widgets -->
 	<script type="text/javascript">
 	//<![CDATA[
@@ -82,14 +82,19 @@ if (isset($_GET['updated']))
 </head>
 <body>
 
-	<h2><?php echo __('Versions manager'); ?></h2>
+<?php echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+
+if (!empty($msg)) {
+  dcPage::success($msg);
+}
+?>
 	
-	<?php 
-		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
-	?>
-	
-	<div id="versions" title="<?php echo __('versions'); ?>">
-		<p><?php echo(__('Deletting the version of a plugin will reinstall it if the plugin has an install process.')); ?></p>
+	<div id="versions">
+		<p class="warn"><?php echo(__('Deleting the version of a plugin will reinstall it if the plugin has an install process.')); ?></p>
 		<form method="post" action="<?php echo($p_url); ?>">
 			<?php echo(versionsManager::versions()); ?>
 			<p class="checkboxes-helpers"></p>

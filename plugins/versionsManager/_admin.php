@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Versions Manager, a plugin for Dotclear 2
-# Copyright 2010 Moe (http://gniark.net/)
+# Copyright 2010-2015 Moe (http://gniark.net/)
 #
 # Versions Manager is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -29,5 +29,3 @@ $_menu['Plugins']->addItem(__('Versions manager'),
 	'index.php?pf=versionsManager/icon.png',
 	preg_match('/plugin.php\?p=versionsManager(&.*)?$/',
 	$_SERVER['REQUEST_URI']),$core->auth->check('admin',$core->blog->id));
-
-?>
