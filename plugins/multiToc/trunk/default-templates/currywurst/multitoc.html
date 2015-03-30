@@ -12,7 +12,6 @@
 </tpl:Block>
 
 <tpl:Block name="head-linkrel">
-	<link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
 	<link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
 	
   <tpl:Categories>
@@ -51,48 +50,48 @@
 <tpl:Block name="body-tag"><body class="dc-multitoc"></tpl:Block>
 
 <tpl:Block name="main-content">
-				<div id="content">
+  <div id="content">
 
-					<div id="content-info">
-						<tpl:MultiTocIf type="cat">
-							<h2>{{tpl:lang Table of content by category}}</h2>
-						</tpl:MultiTocIf>
-						<tpl:MultiTocIf type="alpha">
-							<h2>{{tpl:lang Table of content by alpha list}}</h2>
-						</tpl:MultiTocIf>
-						<tpl:MultiTocIf type="tag">
-							<h2>{{tpl:lang Table of content by tag}}</h2>
-						</tpl:MultiTocIf>
-						<p class="note">{{tpl:lang Click on each group name to display or hide entries list}}</p>
-					</div>
+		<div id="content-info">
+			<tpl:MultiTocIf type="cat">
+				<h2>{{tpl:lang Table of content by category}}</h2>
+			</tpl:MultiTocIf>
+			<tpl:MultiTocIf type="alpha">
+				<h2>{{tpl:lang Table of content by alpha list}}</h2>
+			</tpl:MultiTocIf>
+			<tpl:MultiTocIf type="tag">
+				<h2>{{tpl:lang Table of content by tag}}</h2>
+			</tpl:MultiTocIf>
+			<p class="note">{{tpl:lang Click on each group name to display or hide entries list}}</p>
+		</div>
 
-					<div class="content-inner">
-						<dl id="multitoc">
-						<tpl:MultiTocGroup>
-							<dt>{{tpl:MultiTocGroupTitle}} {{tpl:MultiTocGroupCount}}</dt>
-							<dd>
-								<div class="toc-group-desc">{{tpl:MultiTocGroupDesc}}</div>
-								<ul>
-								<tpl:MultiTocItem>
-									<li>
-										{{tpl:MultiTocItemDate}}
-										<a href="{{tpl:MultiTocItemUrl}}">{{tpl:MultiTocItemTitle}}</a>
-										{{tpl:MultiTocItemAuthor}}
-										{{tpl:MultiTocItemCategory}}
-										{{tpl:MultiTocItemNbComments}}
-										{{tpl:MultiTocItemNbTrackbacks}}
-										<tpl:MultiTocMetaData>
-										<tpl:TagsHeader> - <ul class="post-tags-list"></tpl:TagsHeader>
-										<li class="post-tags-item"><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
-										<tpl:TagsFooter></ul></tpl:TagsFooter>
-										</tpl:MultiTocMetaData>
-									</li>
-								</tpl:MultiTocItem>
-								</ul>
-							</dd>
-						</tpl:MultiTocGroup>
-						</dl>
-					</div>
+		<div class="content-inner">
+			<dl id="multitoc">
+			<tpl:MultiTocGroup>
+				<dt>{{tpl:MultiTocGroupTitle}} {{tpl:MultiTocGroupCount}}</dt>
+				<dd>
+					<div class="toc-group-desc">{{tpl:MultiTocGroupDesc}}</div>
+					<ul>
+					<tpl:MultiTocItem>
+						<li>
+						{{tpl:MultiTocItemDate}}
+						<a href="{{tpl:MultiTocItemUrl}}">{{tpl:MultiTocItemTitle}}</a>
+						{{tpl:MultiTocItemAuthor}}
+						{{tpl:MultiTocItemCategory}}
+						{{tpl:MultiTocItemNbComments}}
+						{{tpl:MultiTocItemNbTrackbacks}}
+						<tpl:MultiTocMetaData>
+						  <tpl:TagsHeader> - <ul class="post-tags-list"></tpl:TagsHeader>
+						  <li class="post-tags-item"><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
+						  <tpl:TagsFooter></ul></tpl:TagsFooter>
+						  </tpl:MultiTocMetaData>
+						</li>
+					</tpl:MultiTocItem>
+					</ul>
+					</dd>
+			</tpl:MultiTocGroup>
+			</dl>
+	 </div>
 
-				</div>
+	</div>
 </tpl:Block>

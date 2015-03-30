@@ -9,7 +9,6 @@
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
   
-  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
   <meta property="dc.title" content="{{tpl:MultiTocPageTitle}} - {{tpl:BlogName encode_html="1"}}" />
   <meta property="dc.language" content="{{tpl:BlogLanguage}}" />
   <meta property="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
@@ -22,8 +21,6 @@
   <tpl:Categories>
   <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
   </tpl:Categories>
-
-	<link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
 
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />

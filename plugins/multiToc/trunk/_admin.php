@@ -20,7 +20,7 @@ $_menu['Blog']->addItem(
 	'index.php?pf=multiToc/icon.png',
 	preg_match('/plugin.php\?p=multiToc(&.*)?$/',
 	$_SERVER['REQUEST_URI']),
-	$core->auth->isSuperAdmin()
+	$core->auth->check('admin',$core->blog->id)
 );
 
 $core->addBehavior('adminDashboardFavorites','multiTocDashboardFavorites');

@@ -17,7 +17,9 @@ class multiTocWidgets
 {
 	public static function initWidgets($w)
 	{
-		$w->create('multiToc',__('Table of content'),array('multiTocWidgets','widget'));
+		$w->create('multiToc',__('MultiToc: table of content'),array('multiTocWidgets','widget'),
+			null,
+			__('Contents by category, keyword and alphabetical order'));
 		$w->multiToc->setting('title',__('Title:'),__('Table of content'));
 		$w->multiToc->setting('homeonly',__('Display on:'),0,'combo',
 			array(

@@ -13,7 +13,7 @@ $this->registerModule(
 		/* Name */			"multiToc",
 		/* Description*/		"Makes posts or content's tables of content",
 		/* Author */			"Tomtom, Kozlika, Franck Paul, Pierre Van Glabeke",
-		/* Version */			'1.8',
+		/* Version */			'1.9',
 	/* Properties */
 	array(
 		'permissions' => 'usage,contentadmin',

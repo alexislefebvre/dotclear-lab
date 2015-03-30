@@ -36,6 +36,7 @@ dl#multitoc dt {
 dl#multitoc ul {
 	list-style: none;
 	padding: 5px;
+	background:transparent;
 }
 span.toc-item-date {
 	background: transparent url(index.php?pf=multiToc/img/date.png) no-repeat left top;

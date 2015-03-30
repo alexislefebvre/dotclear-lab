@@ -1,9 +1,13 @@
+v1.9 - 30-03-2015 - Pierre Van Glabeke
+* modif droits sur le plugin (superadmin -> admin)
+* modif identification widget + localisation
+
 v1.8 - 06-02-2015 - Pierre Van Glabeke
-modifs bloc licence et divers
+* modifs bloc licence et divers
 
 v1.7 - 20-12-2014 - Pierre Van Glabeke :
-dc2.7 requis
-mise en compatibilité dc2.7
-tickets 668 (http://lab.dotclear.org/ticket/668) et 761 (http://lab.dotclear.org/ticket/761) pris en compte
-modifications icône, localisation, css
-création aide intégrée
+* dc2.7 requis
+* mise en compatibilité dc2.7
+* tickets 668 (http://lab.dotclear.org/ticket/668) et 761 (http://lab.dotclear.org/ticket/761) pris en compte
+* modifications icône, localisation, css
+* création aide intégrée
