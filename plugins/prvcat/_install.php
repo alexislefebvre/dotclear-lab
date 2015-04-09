@@ -1,7 +1,7 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# Copyright (c) 2010 Arnaud Renevier
+# Copyright (c) 2010-2015 Arnaud Renevier
 # published under the modified BSD license.
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
@@ -16,4 +16,3 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
     $perms = new prvCatPermMgr($core->con, $core->prefix);
     $perms->install();
-?>

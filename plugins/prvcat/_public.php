@@ -1,7 +1,7 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# Copyright (c) 2010 Arnaud Renevier
+# Copyright (c) 2010-2015 Arnaud Renevier
 # published under the modified BSD license.
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
@@ -42,6 +42,7 @@ class prvCatPublic extends dcUrlHandlers {
                 return;
             } 
             $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+        
             global $_ctx;
             $_ctx->categories = $category;
             self::load('prvcat-password.html','text/html',false);
@@ -94,4 +95,3 @@ class prvCatPublic extends dcUrlHandlers {
 
 $core->addBehavior('publicBeforeDocument', array('prvCatPublic', 'beforeDocumentCallback'));
 $core->addBehavior('publicBeforeContentFilter', array('prvCatPublic', 'beforeContentFilterCallback'));
-?>

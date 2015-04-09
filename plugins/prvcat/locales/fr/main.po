@@ -9,8 +9,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Make private all tickets a category"
+msgstr "Rendre privés tous les billets d'une catégorie"
+
 #: _admin.php:11 index.php:12 index.php:19
-msgid "private categories"
+msgid "Private categories"
 msgstr "Catégories privées"
 
 #: index.php:24

@@ -1,14 +1,14 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# Copyright (c) 2010 Arnaud Renevier
+# Copyright (c) 2010-2015 Arnaud Renevier
 # published under the modified BSD license.
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem(
+$_menu['Blog']->addItem(
     # nom du lien (en anglais)
-    __('private categories'),
+    __('Private categories'),
     # URL de base de la page d'administration
     'plugin.php?p=prvcat',
     # URL de l'image utilisée comme icône
@@ -96,4 +96,16 @@ class prvCatAdmin {
 $core->addBehavior('adminBeforePostUpdate', array('prvCatAdmin', 'beforePostUpdateCallback'));
 # we need to use *after* behavior to get post_id
 $core->addBehavior('adminAfterPostCreate', array('prvCatAdmin', 'afterPostCreateCallback'));
-?>
+
+$core->addBehavior('adminDashboardFavorites','prvCatDashboardFavorites');
+
+function prvCatDashboardFavorites($core,$favs)
+{
+	$favs->register('prvcat', array(
+		'title' => __('Private categories'),
+		'url' => 'plugin.php?p=prvcat',
+		'small-icon' => 'index.php?pf=prvcat/icon.png',
+		'large-icon' => 'index.php?pf=prvcat/icon-big.png',
+		'permissions' => 'categories'
+	));
+}

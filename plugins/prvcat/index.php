@@ -1,23 +1,30 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# Copyright (c) 2010 Arnaud Renevier
+# Copyright (c) 2010-2015 Arnaud Renevier
 # published under the modified BSD license.
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
     dcPage::check('categories');
+$page_title = __('Private categories');
+
 ?>
 <html>
 <head>
-<title><?php echo (__('private categories'))?></title>
+<title><?php echo $page_title; ?></title>
   <?php
   echo dcPage::jsLoad('index.php?pf=prvcat/js/config.js');
   ?>
+  <link rel="stylesheet" type="text/css" href="index.php?pf=prvcat/style.css" />
 </head>
 <body>
-
-    <h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.  __('private categories'); ?></h2>
-    <?php
+<?php
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+		
     $categories = $core->blog->getCategories()->rows();
 
     if (empty($categories)) {
@@ -61,13 +68,13 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
             $pwdmismatch = $pwdmissing = false;
         }
 
-        echo '<form id="prvcat-form" action="'.$p_url.'" method="post">'.
-             '<fieldset>'.
-             '<legend>'.__('Categories list').'</legend>';
-
         if ($hasupdate and !$pwdmismatch and !$pwdmissing) {
-            echo '<p class="message">'.__('Configuration successfully updated').'</p>';
+        dcPage::success(__('Configuration successfully updated'));
         }
+
+        echo '<form id="prvcat-form" action="'.$p_url.'" method="post">'.
+             '<div class="fieldset">'.
+             '<h4>'.__('Categories list').'</h4>';
 
         $ref_level = $level = $categories[0]['level'];
         foreach ($categories as $cat) {
@@ -77,7 +84,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
                 $check_private = $perms->isprivate($cat['cat_id']);
             }
 
-            $li_content = html::escapeHTML($cat['cat_title']).'<br />'.
+            $li_content = html::escapeHTML($cat['cat_title']).' '.
                           form::checkbox('prvcat_'.$cat['cat_id'], 'private', $check_private).
                           __('make private');
 
@@ -113,15 +120,14 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
         # not handle well different password in the same page. 
         # FIXME: We still save in the database one password for each private
         # category (it will be the same for all categories).
-        echo '<label class="'.$class.'">'.$label.
+        echo '<p><label class="'.$class.'">'.$label.' '.
               form::password('prvcat_pwd', 20, 32).
-              '</label>';
-        echo '<label class="'.$class.'">'._('Confirm password').
+              '</label></p>';
+        echo '<p><label class="'.$class.'">'.__('Confirm password').' '.
               form::password('prvcat_pwd_confirm', 20, 32).
-              '</label>';
+              '</label></p></div>';
         echo '<input type="submit" name="prvcat_upd" value="'.__('Save').'" />'.
             $core->formNonce().
-            '</fieldset>'.
              '</form>';
     }
 

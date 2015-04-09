@@ -1,11 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# Copyright (c) 2010 Arnaud Renevier
+# Copyright (c) 2010-2015 Arnaud Renevier
 # published under the modified BSD license.
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
-
 
 class prvCatPermMgr {
     const dbname = 'prvcat';
@@ -257,4 +256,3 @@ class prvCatPermMgr {
     }
 
 }
-?>
