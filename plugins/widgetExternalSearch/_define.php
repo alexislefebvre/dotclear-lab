@@ -25,7 +25,13 @@ $this->registerModule(
 	/* Name */					'External Search',
 	/* Description*/		'External search in a widget',
 	/* Author */				'Moe (http://gniark.net/)',
-	/* Version */				'0.1.1',
-	/* Permissions */		'usage,contentadmin'
+	/* Version */				'0.2',
+	/* Properties */
+	array(
+		'permissions' => 'usage,contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.7',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/widgetExternalSearch',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/widgetExternalSearch'
+		)
 );
-?>

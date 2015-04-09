@@ -52,4 +52,3 @@ class externalSearchDocument extends dcUrlHandlers
 		http::redirect($url);
 	}
 }
-?>

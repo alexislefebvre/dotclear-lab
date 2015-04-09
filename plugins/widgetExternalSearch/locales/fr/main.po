@@ -25,23 +25,13 @@ msgstr "moteur de recherche invalide"
 msgid "External search engine"
 msgstr "Moteur de recherche externe"
 
-#: _widgets.php:46
-msgid "Title:"
-msgstr ""
+msgid "External search engine form"
+msgstr "Formulaire de recherche externe"
 
 #: _widgets.php:46
-msgid "optional"
-msgstr "facultatif"
-
-#: _widgets.php:47
-msgid "Search"
-msgstr ""
+msgid "External search in a widget"
+msgstr "Recherche externe dans un widget"
 
 #: _widgets.php:49
 msgid "Search engine:"
 msgstr "Moteur de recherche&nbsp;:"
-
-#: _widgets.php:57
-msgid "Home page only"
-msgstr ""
-

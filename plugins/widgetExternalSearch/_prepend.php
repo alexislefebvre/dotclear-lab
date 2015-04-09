@@ -21,10 +21,7 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-# inspired by contactMe/_public.php
 $core->url->register('externalSearch','externalSearch',
 	'^externalSearch$',array('externalSearchDocument','page'));
 
 require_once(dirname(__FILE__).'/_widgets.php');
-
-?>
