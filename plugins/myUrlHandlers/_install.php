@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of My URL handlers, a plugin for Dotclear.
 # 
-# Copyright (c) 2007,2008,2011 Alex Pirine
+# Copyright (c) 2007-2015 Alex Pirine
 # <alex pirine.fr>
 # 
 # Licensed under the GPL version 2.0 license.
@@ -26,4 +26,3 @@ $s->put('url_handlers','','string','Personalized URL handlers',false);
 
 $core->setVersion($label,$m_version);
 return true;
-?>

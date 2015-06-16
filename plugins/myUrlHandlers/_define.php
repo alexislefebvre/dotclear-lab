@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of My URL handlers, a plugin for Dotclear.
 # 
-# Copyright (c) 2007,2008,2011 Alex Pirine
+# Copyright (c) 2007-2015 Alex Pirine
 # <alex pirine.fr>
 # 
 # Licensed under the GPL version 2.0 license.
@@ -15,9 +15,15 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */		'My URL handlers',
 	/* Description*/	'Change Dotclear URL handlers',
-	/* Author */		'Alex Pirine',
-	/* Version */		'2011.02',
-	/* Permissions */	'contentadmin',
-	/* Priority */		1500
+	/* Author */		'Alex Pirine and contributors',
+	/* Version */		'2015.01',
+	/* Properties */
+	array(
+		'permissions' => 'contentadmin',
+		'priority' =>		150000,
+		'type' => 'plugin',
+		'dc_min' => '2.7',
+		'support' => 'http://forum.dotclear.org/viewtopic.php?id=48345',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/arlequin'
+		)
 );
-?>

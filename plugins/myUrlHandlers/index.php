@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of My URL handlers, a plugin for Dotclear.
 # 
-# Copyright (c) 2007,2008,2011 Alex Pirine
+# Copyright (c) 2007-2015 Alex Pirine
 # <alex pirine.fr>
 # 
 # Licensed under the GPL version 2.0 license.
@@ -116,8 +116,8 @@ foreach ($handlers as $name=>$url)
 ?>
   </tbody>
 </table>
-<p><input type="submit" name="act_save" value="<?php echo __('save'); ?>" />
-  <input type="submit" name="act_restore" value="<?php echo __('reset'); ?>" />
+<p><input type="submit" name="act_save" value="<?php echo __('Save'); ?>" />
+  <input type="submit" name="act_restore" value="<?php echo __('Reset'); ?>" />
   <?php echo $core->formNonce(); ?></p>
 </form>
 <?php endif; ?>

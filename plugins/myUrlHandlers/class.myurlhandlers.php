@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of My URL handlers, a plugin for Dotclear.
 # 
-# Copyright (c) 2007,2008,2011 Alex Pirine
+# Copyright (c) 2007-2015 Alex Pirine
 # <alex pirine.fr>
 # 
 # Licensed under the GPL version 2.0 license.
@@ -19,7 +19,7 @@ class myUrlHandlers
 	private static $url2post = array();
 	private static $post_adm_url = array();
 	
-	public static function init(&$core)
+	public static function init($core)
 	{
 		# Set defaults
 		foreach ($core->url->getTypes() as $k=>$v)
@@ -81,4 +81,3 @@ class myUrlHandlers
 		return $res;
 	}
 }
-?>

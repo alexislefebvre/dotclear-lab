@@ -53,11 +53,6 @@ msgstr "Il n'y a aucun gestionnaire d'URL à définir."
 msgid "You can write your own URL for each handler of this list."
 msgstr "Vous pouvez écrire votre propre URL pour chaque gestionnaire de cette liste."
 
-#: index.php:119
-msgid "save"
-msgstr "enregistrer"
-
 #: index.php:120
-msgid "reset"
-msgstr "réinitialiser"
-
+msgid "Reset"
+msgstr "Réinitialiser"

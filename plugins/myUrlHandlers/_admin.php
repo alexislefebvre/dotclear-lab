@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of My URL handlers, a plugin for Dotclear.
 # 
-# Copyright (c) 2007,2008,2011 Alex Pirine
+# Copyright (c) 2007-2015 Alex Pirine
 # <alex pirine.fr>
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,4 +16,3 @@ $_menu['Plugins']->addItem(__('URL handlers'),'plugin.php?p=myUrlHandlers',
 	'index.php?pf=myUrlHandlers/icon.png',
 	preg_match('/plugin.php\?p=myUrlHandlers$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('contentadmin',$core->blog->id));
-?>
