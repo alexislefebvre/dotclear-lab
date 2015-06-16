@@ -12,7 +12,20 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem(__('URL handlers'),'plugin.php?p=myUrlHandlers',
+$_menu['Blog']->addItem(__('URL handlers'),'plugin.php?p=myUrlHandlers',
 	'index.php?pf=myUrlHandlers/icon.png',
 	preg_match('/plugin.php\?p=myUrlHandlers$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('contentadmin',$core->blog->id));
+	
+$core->addBehavior('adminDashboardFavorites','myUrlHandlersDashboardFavorites');
+
+function myUrlHandlersDashboardFavorites($core,$favs)
+{
+	$favs->register('myUrlHandlers', array(
+		'title' => __('URL handlers'),
+		'url' => 'plugin.php?p=myUrlHandlers',
+		'small-icon' => 'index.php?pf=myUrlHandlers/icon.png',
+		'large-icon' => 'index.php?pf=myUrlHandlers/icon-big.png',
+		'permissions' => 'contentadmin'
+	));
+}

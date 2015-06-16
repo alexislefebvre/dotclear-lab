@@ -12,6 +12,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+$page_title = __('URL handlers');
+
 try
 {
 	# Read default handlers
@@ -84,14 +86,18 @@ catch (Exception $e)
 
 ?>
 <html><head>
-<title><?php echo __('URL handlers'); ?></title>
+<title><?php echo $page_title; ?></title>
 </head><body>
-<h2 style="padding:8px 0 8px 34px;background:url(index.php?pf=myUrlHandlers/icon-b.png) no-repeat;">
-  <?php echo html::escapeHTML($core->blog->name).' › '.__('URL handlers'); ?></h2>
-
 <?php
+
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+
 if (!empty($msg)) {
-	echo '<p class="message">'.html::escapeHTML($msg).'</p>';
+  dcPage::success($msg);
 }
 ?>
 

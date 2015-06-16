@@ -16,14 +16,14 @@ $this->registerModule(
 	/* Name */		'My URL handlers',
 	/* Description*/	'Change Dotclear URL handlers',
 	/* Author */		'Alex Pirine and contributors',
-	/* Version */		'2015.01',
+	/* Version */		'2015.04',
 	/* Properties */
 	array(
 		'permissions' => 'contentadmin',
 		'priority' =>		150000,
 		'type' => 'plugin',
 		'dc_min' => '2.7',
-		'support' => 'http://forum.dotclear.org/viewtopic.php?id=48345',
-		'details' => 'http://plugins.dotaddict.org/dc2/details/arlequin'
+		'support' => 'http://forum.dotclear.org/viewforum.php?id=16',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/myUrlHandlers'
 		)
 );
