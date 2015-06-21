@@ -3,13 +3,16 @@
 #
 # This file is part of Dotclear 2 "Fake Me Up" plugin.
 #
-# Copyright (c) 2010 Bruno Hondelatte, and contributors.
+# Copyright (c) 2010-2015 Bruno Hondelatte, and contributors.
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+$page_title = __('Fake Me Up');
+
 //define('DC_DIGESTS',DC_ROOT.'/inc/digests');
 define('DC_DIGESTS_BACKUP',DC_ROOT.'/inc/digests.bak');
 
@@ -109,16 +112,23 @@ function backup ($changes) {
 
 ?>
 <html>
-<head><title><?php echo __('Fake Me Up'); ?></title>
+<head><title><?php echo($page_title); ?></title>
 </head>
 <body>
-<?php
-
-  	echo dcPage::breadcrumb(
-		array(
+	<?php
+	if (is_callable(array('dcPage', 'breadcrumb')))
+	{
+		echo dcPage::breadcrumb(
+			array(
 			__('System') => '',
-			'<span class="page-title">'.__('Fake Me Up').'</span>' => ''
-		));
+				'<span class="page-title">'.$page_title.'</span>' => ''
+			));
+	}
+	else
+	{
+		echo('<h2>'.__('System').' &rsaquo; '.
+			$page_title.'</h2>');
+	}
 
 	if (isset($_POST['erase_backup'])) {
 		@unlink(DC_DIGESTS_BACKUP);
@@ -197,7 +207,7 @@ function backup ($changes) {
 				'</form></div>';
 		}
 	}
-	echo '<p><a class="back" href="index.php">'.__('back').'</a></p>';
+	echo '<p><a class="back" href="index.php">'.__('Back').'</a></p>';
 ?>
 
 </body>

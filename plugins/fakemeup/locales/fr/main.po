@@ -13,6 +13,9 @@ msgstr ""
 msgid "Fake Me Up"
 msgstr ""
 
+msgid "Fakes Dotclear digest to force automatic updates"
+msgstr "Passer outre les restrictions de dotclear lors d'une mise à jour"
+
 msgid "The updates have been performed."
 msgstr "Les mises à jour ont été faites."
 
