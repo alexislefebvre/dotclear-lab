@@ -26,9 +26,15 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
   /* Name */				'Widgets to Template',
-  /* Description*/	'Get template code for your widgets',
+  /* Description*/	'Get widget code for templates',
   /* Author */			'Moe (http://gniark.net/)',
-  /* Version */			'0.1',
-  /* Permissions */	'admin'
+  /* Version */			'0.2',
+	/* Properties */
+	array(
+		'permissions' => 'admin',
+		'type' => 'plugin',
+		'dc_min' => '2.6',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/widgets2Tpl',
+		'details' => 'http://lab.dotclear.org/wiki/plugin/widgets2Tpl'
+	)
 );
-?>

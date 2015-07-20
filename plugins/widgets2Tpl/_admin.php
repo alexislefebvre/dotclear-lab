@@ -24,11 +24,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
-
 $_menu['Plugins']->addItem(__('Widgets to Template'),'plugin.php?p=widgets2Tpl',
 	'index.php?pf=widgets2Tpl/icon.png',
 	preg_match('/plugin.php\?p=widgets2Tpl(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));	
-
-?>

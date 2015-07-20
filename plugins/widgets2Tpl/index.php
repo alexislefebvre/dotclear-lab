@@ -24,6 +24,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
+$page_title = __('Widgets to Template');
+
 if ($core->plugins->moduleExists('widgets'))
 {
 	# load widgets
@@ -36,7 +38,7 @@ else
 
 ?><html>
 <head>
-	<title><?php echo(('Widgets to Template')); ?></title>
+  <title><?php echo $page_title; ?></title>
 	<?php echo dcPage::jsPageTabs('template'); ?>
 	<!-- force tab display -->
 	<style type="text/css">
@@ -44,9 +46,14 @@ else
 	</style>
 </head>
 <body>
+<?php
 
-	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.
-		__('Widgets to Template'); ?></h2>
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+?>
 	
 	<div class="multi-part" id="template" title="<?php echo __('Template'); ?>">
 		<?php
@@ -71,11 +78,11 @@ else
 						switch ($s['type'])
 						{
 							case 'check':
-								$s_values = ', '.__('Allowed values:').' (0|1)';
+								$s_values = ', '.__('Allowed values:').'(0|1)';
 								$type = __('boolean');
 								break;
 							case 'combo':
-								$s_values = ', '.__('Allowed values:').' ('.
+								$s_values = ', '.__('Allowed values:').'('.
 									html::escapeHTML(implode('|',$s['options']).')');
 								$type = __('list');
 								break;
