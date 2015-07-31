@@ -32,7 +32,7 @@ $this->registerModule(
 	array(
 		'permissions' => 'admin',
 		'type' => 'plugin',
-		'dc_min' => '2.7.3',
+		'dc_min' => '2.8',
 		'support' => 'http://lab.dotclear.org/wiki/plugin/dlManager/fr',
 		'details' => 'http://lab.dotclear.org/wiki/plugin/dlManager/fr'
 		)
