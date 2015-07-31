@@ -26,8 +26,8 @@ if (!defined('DC_RC_PATH')) {return;}
 $this->registerModule(
      /* Name */                      "DL Manager",
      /* Description*/                "Download manager with a public page and a widget",
-     /* Author */                    "Moe (http://gniark.net/), Osku and Tomtom (http://blog.zenstyle.fr)",
-     /* Version */                   '1.1.7',
+     /* Author */                    "Moe (http://gniark.net/), Osku and Tomtom",
+     /* Version */                   '1.1.8',
 	/* Properties */
 	array(
 		'permissions' => 'admin',

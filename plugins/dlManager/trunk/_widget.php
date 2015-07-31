@@ -41,8 +41,9 @@ class dlManagerWidget
 		global $core;
 		$tz = $core->blog->settings->system->blog_timezone;
 
-		$w->create('dlManager',__('Download manager'),
-			array('dlManagerWidget','show'));
+		$w->create('dlManager',__('Download manager'),array('dlManagerWidget','show'),
+			null,
+			__('List of resources for download'));
 
 		$w->dlManager->setting('title',__('Title:').' ('.__('optional').')',
 			__('Download manager'),'text');
@@ -50,7 +51,7 @@ class dlManagerWidget
 		$w->dlManager->setting('file_sort',__('Sort files:'),'','combo',
 			dlManager::getSortValues(true));
 
-		$w->dlManager->setting('root',__('root directory:'),'','combo',
+		$w->dlManager->setting('root',__('Root directory:'),'','combo',
 			dlManager::listDirs(true,false));
 		
 		$w->dlManager->setting('display_dirs',__('Display subdirectories'),

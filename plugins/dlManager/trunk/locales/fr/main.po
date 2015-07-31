@@ -44,12 +44,6 @@ msgstr "Par dates, croissantes"
 msgid "By dates, descendant"
 msgstr "Par dates, décroissantes"
 
-#: _admin.php:26
-#: index.php:78
-#: index.php:82
-msgid "Download Manager"
-msgstr "Gestionnaire de téléchargements"
-
 #: public_l10n.php:3
 msgid "Basename"
 msgstr "Nom du fichier"
@@ -77,6 +71,9 @@ msgstr "Répertoires"
 #: _widget.php:76
 msgid "Download manager"
 msgstr "Gestionnaire de téléchargements"
+
+msgid "Download manager - Preview"
+msgstr "Gestionnaire de téléchargements - Aperçu"
 
 #: public_l10n.php:6
 msgid "Downloads"
@@ -139,20 +136,6 @@ msgstr "Aperçu :"
 #: public_l10n.php:23
 msgid "Size"
 msgstr "Taille"
-
-#: public_l10n.php:24
-#: index.php:158
-#: _widget.php:51
-msgid "Sort files:"
-msgstr "Trier les fichiers&nbsp;:"
-
-#: public_l10n.php:25
-msgid "Type"
-msgstr "Type"
-
-#: public_l10n.php:26
-msgid "Zip file content"
-msgstr "Contenu du fichier zip"
 
 #: index.php:72
 msgid "Configuration successfully updated."
@@ -260,13 +243,9 @@ msgstr "Voir la page publique Gestionnaire de téléchargement"
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: _widget.php:48
-msgid "Title:"
-msgstr "Titre&nbsp;:"
-
 #: _widget.php:54
-msgid "root directory:"
-msgstr "répertoire de base&nbsp;:"
+msgid "Root directory:"
+msgstr "Répertoire de base&nbsp;:"
 
 #: _widget.php:57
 msgid "Display subdirectories"
@@ -296,3 +275,8 @@ msgstr "Affichage d'un élément&nbsp;:"
 #, php-format
 msgid "Add a link to %s in the widget:"
 msgstr "Ajouter un lien vers %s dans le widget&nbsp;:"
+
+#: _widget.php
+msgid "List of resources for download"
+msgstr "Liste des ressources à télécharger"
+

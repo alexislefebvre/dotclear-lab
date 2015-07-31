@@ -1,3 +1,9 @@
+v1.1.8 (31-07-2015) Pierre Van Glabeke :
+Modifs widget
+Intégration breadcrumb
+Mustek compatible dc2.8
+dc2.8 requis
+
 v1.1.7 (10-01-2015) Pierre Van Glabeke :
 Compatibilité dc2.7 (widget + templates)
 Dotclear 2.7.3 requis

@@ -1088,3 +1088,27 @@ class dlManagerPageTpl
 		return('<?php echo($_ctx->dlManager_pager->getLinks()); ?>');
 	}
 }
+
+$core->addBehavior('publicBreadcrumb',array('extdlManager','publicBreadcrumb'));
+
+class extdlManager
+{
+    public static function publicBreadcrumb($context,$separator)
+    {
+        if ($context == 'media') {
+            return __('Download manager');
+        }
+    }
+}
+
+$core->addBehavior('publicBreadcrumb',array('extdlManagerpreview','publicBreadcrumb'));
+
+class extdlManagerpreview
+{
+    public static function publicBreadcrumb($context,$separator)
+    {
+        if ($context == 'mediaplayer') {
+            return __('Download manager - Preview');
+        }
+    }
+}

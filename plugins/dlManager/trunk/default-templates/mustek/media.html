@@ -1,26 +1,36 @@
-<!DOCTYPE html>
-<html lang="{{tpl:BlogLanguage}}">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX,NOFOLLOW"}}" />
+{{tpl:extends parent="__layout.html"}}
 
-  <title>{{tpl:lang Download manager}} - {{tpl:DLMCurrentDir}} - {{tpl:BlogName encode_html="1"}}</title>
-  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
-  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+<tpl:Block name="head-title">
+	<title>{{tpl:lang Download manager}} - {{tpl:DLMCurrentDir}} - {{tpl:BlogName encode_html="1"}}</title>
+</tpl:Block>
 
-  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Download manager}} - {{tpl:DLMCurrentDir}} - {{tpl:BlogName encode_html="1"}}" />
-  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
-  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
-  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
-  <meta name="dc.type" content="text" />
-  <meta name="dc.format" content="text/html" />
+<tpl:Block name="meta-robots">
+	<meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX,NOFOLLOW"}}" />
+</tpl:Block>
 
-  <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+<tpl:Block name="meta-entry">
+	<meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+	<meta name="date" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+</tpl:Block>
+
+<tpl:Block name="dc-entry">
+	<meta property="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Download manager}} - {{tpl:DLMCurrentDir}} - {{tpl:BlogName encode_html="1"}}" />
+	<meta property="dc.language" content="{{tpl:BlogLanguage}}" />
+	<meta property="dc.date" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+</tpl:Block>
+
+<tpl:Block name="head-linkrel">
+	<link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+	<link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
 
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
   <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
-  
+</tpl:Block>
+
+<tpl:Block name="html-head">
+	{{tpl:parent}}
+
   <style type="text/css">
 		.center {text-align:center;}
 		.size {white-space:pre;}
@@ -30,10 +40,8 @@
 
   <link rel="stylesheet" href="{{tpl:BlogQmarkURL}}pf=dlManager/css/dlmanager_facebox.css" type="text/css" media="screen" />
 
-  {{tpl:include src="_head.html"}}
-  
 	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=dlManager/js/facebox.pack.js"></script>
-	
+
 	<script type="text/javascript">
 	//<![CDATA[
 	  $(document).ready(function () {
@@ -59,16 +67,11 @@
 		});
 	//]]>
   </script>
-</head>
+</tpl:Block>
 
-<body class="dc-dlmanager">
-<div id="page">
-{{tpl:include src="_top.html"}}
+<tpl:Block name="body-tag"><body class="dc-dlmanager"></tpl:Block>
 
-<div id="wrapper">
-
-<div id="main" role="main">
-	<div id="content">
+<tpl:Block name="main-content">
 
 <div class="content-inner">
 	<div id="content-info">
@@ -90,9 +93,9 @@
 					{{tpl:DLMBreadCrumbDirName}}</a> /
 			</tpl:DLMBreadCrumb>
 		</p>
-		
+
 		<!-- #<h3>{{tpl:lang Directories}}</h3>
-		
+
 		<tpl:DLMIfNoItem type="dirs">
 			<p>{{tpl:lang No directory.}}</p>
 		</tpl:DLMIfNoItem>-->
@@ -110,7 +113,7 @@
 		</tpl:DLMItems>
 
 		<!-- #<h3>{{tpl:lang Files}}</h3>
-		
+
 		<tpl:DLMIfSortIsEnabled>
 			<form method="post" action="{{tpl:SysSelfURI}}">
 				<p>
@@ -120,7 +123,7 @@
 				</p>
 			</form>
 		</tpl:DLMIfSortIsEnabled>
-		
+
 		<tpl:DLMIfNoItem type="files">
 			<p>{{tpl:lang No file.}}</p>
 		</tpl:DLMIfNoItem>-->
@@ -128,7 +131,7 @@
 		<tpl:DLMItems type="files">
 			<tpl:LoopPosition start="1" length="1">
 				<h3>{{tpl:lang Files}}</h3>
-				
+
 				<tpl:DLMIfSortIsEnabled>
 					<form method="post" action="{{tpl:SysSelfURI}}">
 						<p>
@@ -138,11 +141,11 @@
 						</p>
 					</form>
 				</tpl:DLMIfSortIsEnabled>
-				
+
 				<tpl:DLMIfPages>
 					<p>{{tpl:lang Page(s):}} {{tpl:DLMPageLinks}}</p>
 				</tpl:DLMIfPages>
-				
+
 				<table rules="rows" id="dlmanager-files">
 					<thead>
 						<tr>
@@ -221,23 +224,4 @@
 	</div><!-- End #dlmanager -->
 
 </div><!-- End #content-inner -->
-  
-	</div><!-- End #content -->
-</div> <!-- End #main -->
-
-<div id="sidebar" role="complementary">
-  <div id="blognav">
-    {{tpl:Widgets type="nav"}}
-  </div> <!-- End #blognav -->
-  
-  <div id="blogextra">
-    {{tpl:Widgets type="extra"}}
-  </div> <!-- End #blogextra -->
-</div><!-- End #sidebar -->
-
-</div> <!-- End #wrapper -->
-
-{{tpl:include src="_footer.html"}}
-</div> <!-- End #page -->
-</body>
-</html>
+</tpl:Block>
