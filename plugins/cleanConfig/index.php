@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of clean:config, a plugin for Dotclear 2
-# Copyright (C) 2007,2009,2010 Moe (http://gniark.net/)
+# Copyright (C) 2007-2016 Moe (http://gniark.net/)
 #
 # clean:config is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -25,6 +25,8 @@
 if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
+$page_title = __('clean:config');
 
 require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 require_once(dirname(__FILE__).'/inc/lib.cleanconfig.php');
@@ -52,7 +54,7 @@ if ((isset($_POST['delete'])) AND (($limit == 'blog') OR ($limit == 'global')))
 		}
 		$msg = '<div class="message"><p>'.
 		
-		http::redirect($p_url.'&settingsdeleted=1&limit='.$limit);
+		http::redirect($p_url.'&amp;settingsdeleted=1&amp;limit='.$limit);
 	}
 }
 
@@ -66,7 +68,7 @@ if (isset($_GET['settingsdeleted']))
 ?>
 <html>
 <head>
-	<title><?php echo __('clean:config'); ?></title>
+  <title><?php echo $page_title; ?></title>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
 	<style type="text/css">
 		.ns-name { background: #ccc; color: #000; padding-top: 0.3em; padding-bottom: 0.3em; font-size: 1.1em; }
@@ -93,22 +95,26 @@ if (isset($_GET['settingsdeleted']))
 	</script>
 </head>
 <body>
-
-	<h2><?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; <?php echo __('clean:config'); ?></h2>
+<?php
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+if (!empty($msg)) {
+  dcPage::success($msg);
+}
+?>
 	
-	<?php 
-		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
-	?>
-	
-	<div class="multi-part" id="blog_settings" title="<?php echo __('blog settings'); ?>">
+	<div class="multi-part" id="blog_settings" title="<?php echo __('Blog settings'); ?>">
 		<?php echo(cleanconfig::settings('blog')); ?>
 	</div>
 
-	<div class="multi-part" id="global_settings" title="<?php echo __('global settings'); ?>">
+	<div class="multi-part" id="global_settings" title="<?php echo __('Global settings'); ?>">
 		<?php echo(cleanconfig::settings('global')); ?>
 	</div>
 
-	<div class="multi-part" id="versions" title="<?php echo __('versions'); ?>">
+	<div class="multi-part" id="versions" title="<?php echo __('Versions'); ?>">
 		<p><?php printf(__('This function has been moved to the %s plugin.'),
 			'<a href="http://plugins.dotaddict.org/dc2/details/versionsManager">'.
 			__('Versions Manager').'</a>'); ?></p>

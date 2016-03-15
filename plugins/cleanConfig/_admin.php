@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of clean:config, a plugin for Dotclear 2
-# Copyright (C) 2007,2009,2010 Moe (http://gniark.net/)
+# Copyright (C) 2007-2016 Moe (http://gniark.net/)
 #
 # clean:config is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -27,4 +27,16 @@ if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 $_menu['Plugins']->addItem(__('clean:config'),'plugin.php?p=cleanConfig',
 	'index.php?pf=cleanConfig/icon.png',preg_match('/plugin.php\?p=cleanConfig(&.*)?$/',
 	$_SERVER['REQUEST_URI']),$core->auth->check('admin',$core->blog->id));
-?>
+	
+$core->addBehavior('adminDashboardFavorites','cleanConfigDashboardFavorites');
+
+function cleanConfigDashboardFavorites($core,$favs)
+{
+	$favs->register('cleanConfig', array(
+		'title' => __('clean:config'),
+		'url' => 'plugin.php?p=cleanConfig',
+		'small-icon' => 'index.php?pf=cleanConfig/icon.png',
+		'large-icon' => 'index.php?pf=cleanConfig/icon-big.png',
+		'permissions' => 'usage,contentadmin'
+	));
+}

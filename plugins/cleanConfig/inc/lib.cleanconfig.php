@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of clean:config, a plugin for Dotclear 2
-# Copyright (C) 2007,2009,2010 Moe (http://gniark.net/)
+# Copyright (C) 2007-2016 Moe (http://gniark.net/)
 #
 # clean:config is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -125,7 +125,7 @@ class cleanconfig
 					else
 					{
 						$value = form::field(html::escapeHTML($ns.'_field'),40,
-							null,html::escapeHTML($v['value']),null,null,null,
+							null,html::escapeHTML(($v['type'] == 'array' ? json_encode($v['value']) : $v['value'])),null,null,null,
 							'readonly="readonly"');
 					}
 					$table->cell($value);
@@ -157,5 +157,3 @@ class cleanconfig
 		return($str);
 	}
 }
-
-?>

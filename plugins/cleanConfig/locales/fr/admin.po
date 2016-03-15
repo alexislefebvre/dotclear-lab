@@ -39,9 +39,6 @@ msgstr "Les paramètres sélectionnés ont été supprimés."
 msgid "Are you sure you want to delete settings?"
 msgstr "Êtes-vous certain de vouloir supprimer les paramètres ?"
 
-msgid "versions"
-msgstr "versions"
-
 msgid "This function has been moved to the %s plugin."
 msgstr "Cette fonction a été déplacée dans le plugin %s."
 
