@@ -28,7 +28,9 @@ class ClockBehaviors
 		# set timezone
 		$tz = $GLOBALS['core']->blog->settings->system->blog_timezone;
 
-		$w->create('Clock',__('Clock'),array('publicClock','Show'));
+		$w->create('Clock',__('Clock'),array('publicClock','Show'),
+			null,
+			__('Display the date of a time zone'));
 
 		$w->Clock->setting('title',__('Title:').' ('.__('optional').')',
 			sprintf(__('Local time in %s'),substr(strrchr($tz,'/'),1)),

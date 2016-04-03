@@ -23,12 +23,12 @@ $this->registerModule(
     /* Name */             "Clock",
     /* Description*/       "Display the date of a time zone with the strftime() format in a widget",
     /* Author */           "Moe (http://gniark.net/)",
-    /* Version */          '1.3',
+    /* Version */          '1.4',
 	/* Properties */
 	array(
 		'permissions' => 'admin',
 		'type' => 'plugin',
-		'dc_min' => '2.7',
+		'dc_min' => '2.8',
 		'support' => 'http://lab.dotclear.org/wiki/plugin/clock',
 		'details' => 'http://plugins.dotaddict.org/dc2/details/clock'
 	)

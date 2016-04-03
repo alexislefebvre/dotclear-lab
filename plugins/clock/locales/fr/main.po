@@ -14,6 +14,12 @@ msgstr ""
 msgid "Clock"
 msgstr "Horloge"
 
+msgid "Display the date of a time zone with the strftime() format in a widget"
+msgstr "Affichez la date d'un fuseau horaire avec le format strftime () dans un widget"
+
+msgid "Display the date of a time zone"
+msgstr "Afficher la date d'un fuseau horaire"
+
 #: _widget.php:37
 msgid "Title:"
 msgstr "Titre&nbsp;:"
@@ -35,7 +41,7 @@ msgid "Are you sure you want to leave this page?"
 msgstr "Êtes-vous sûr de vouloir quitter la page&nbsp;?"
 
 msgid "Format (see <a href="%1$s" %2$s>PHP strftime function</a>) (HMS display dynamically %%H:%%M:%%S):"
-msgstr "Format (voir la <a href="%1$s" %2$s>fonction strftime de PHP</a>) (HMS affiche dynamiquement %%H:%%M:%%S) :"
+msgstr "Format (voir la <a href="%1$s" %2$s>fonction strftime de PHP</a>) (HMS affiche dynamiquement %%H:%%M:%%S)&nbsp;:"
 
 msgid "Local time in %s"
 msgstr "Heure de %s"
