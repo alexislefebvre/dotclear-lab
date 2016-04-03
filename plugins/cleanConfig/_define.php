@@ -26,9 +26,9 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
 	/* Name        */		"clean:config",
-	/* Description */		"Delete blog and global settings",
-	/* Author      */		"Moe (http://gniark.net/)",
-	/* Version     */		"1.4.4",
+	/* Description */		"Delete the blog settings or global settings",
+	/* Author      */		"Moe (http://gniark.net/), Pierre Van Glabeke",
+	/* Version     */		"1.4.5",
 	/* Properties */
 	array(
 		'permissions' => null,

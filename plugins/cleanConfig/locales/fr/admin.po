@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: cleanConfig 1.4\n"
+"Project-Id-Version: cleanConfig 1.4.5\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2010-08-29 21:29+0100\n"
 "Last-Translator: Franck Paul <carnet.franck.paul@gmail.com>\n"
@@ -12,8 +12,11 @@ msgstr ""
 msgid "clean:config"
 msgstr "clean:config"
 
+msgid "Delete the blog settings or global settings"
+msgstr "Supprimer les paramètres du blog ou les réglages globaux"
+
 msgid "Use carefully. Only settings related to plugins can be deleted."
-msgstr "À utiliser avec précaution. Seuls les paramètres liés aux extensions peuvent être effacés."
+msgstr "À utiliser avec précaution. Seuls les paramètres liés aux plugins peuvent être effacés."
 
 msgid "Settings"
 msgstr "Paramètres"
@@ -50,4 +53,3 @@ msgstr "%s est vide"
 
 msgid "plugin"
 msgstr "plugin"
-
