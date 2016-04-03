@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Informations, a plugin for Dotclear 2
-# Copyright 2007,2008,2009 Moe (http://gniark.net/)
+# Copyright 2007-2015 Moe (http://gniark.net/)
 #
 # Informations is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -23,8 +23,6 @@
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
-
-l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
 require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 require_once(dirname(__FILE__).'/inc/lib.info.php');
@@ -55,22 +53,12 @@ unset($rs);
 </head>
 <body>
 	<?php
-	if (is_callable(array('dcPage', 'breadcrumb')))
-	{
 		echo dcPage::breadcrumb(
 			array(
 				html::escapeHTML($core->blog->name) => '',
 				'<span class="page-title">'.$page_title.'</span>' => ''
 			));
-	}
-	else
-	{
-		echo('<h2>'.$page_title.'</h2>');
-	}
 	?>
-	
-	<h3><?php echo(__('Legend:')); ?></h3>
-	<p><?php echo(info::yes().__('ok').', '.info::no().__('error')); ?></p>
 	
 	<div class="multi-part" id="blog" title="<?php echo __('Blog'); ?>">
 		<?php 
@@ -196,6 +184,9 @@ unset($rs);
 				'</div>');
 		}
 	?>
+
+	<p style="padding-left:1em;"><strong><?php echo(__('Legend:')); ?></strong><br />
+	<?php echo(info::yes().__('ok')); ?><br /><?php echo(info::no().__('error')); ?></p>
 	
 </body>
 </html>

@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Informations, a plugin for Dotclear 2
-# Copyright 2007,2008,2009,2010 Moe (http://gniark.net/)
+# Copyright 2007-2015 Moe (http://gniark.net/)
 #
 # Informations is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -150,7 +150,7 @@ class info
 		
 		$dotclear_tables = array('blog','category','session',
 			'setting','user','permissions','post','media','post_media',
-			'log','version','ping','comment','meta');
+			'log','version','ping','comment','meta','pref');
 		
 		$default_plugins_tables = array(
 			'spamrule' => array(

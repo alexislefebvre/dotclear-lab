@@ -1,18 +1,16 @@
-# Language: Français
-# Module: info - 1.8.1
-# Date: 2011-04-16 17:55:53
-# Translated with translater 1.5
-
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: info 1.8.1\n"
+"Project-Id-Version: info 1.8.6\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2011-04-16T17:55:53+00:00\n"
 "Last-Translator: Ubuntu\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "Informations about Dotclear and your system"
+msgstr "Informations à propos de Dotclear et de votre système"
 
 #: inc/lib.info.php:148
 msgid "SQLite is not supported"
@@ -48,11 +46,11 @@ msgstr "Total&nbsp;:"
 
 #: inc/lib.info.php:273
 msgid "Directory"
-msgstr "Répertoire"
+msgstr "Dossier"
 
 #: inc/lib.info.php:274
 msgid "Is a directory"
-msgstr "Est un répertoire"
+msgstr "Est un dossier"
 
 #: inc/lib.info.php:275
 msgid "Is writable"
@@ -74,10 +72,9 @@ msgstr "Chemin absolu"
 msgid "Owner"
 msgstr "Propriétaire"
 
-#: inc/lib.info.php:297
 #: inc/lib.info.php:306
 msgid "plugins"
-msgstr "extensions"
+msgstr "plugins"
 
 #: inc/lib.info.php:311
 msgid "cache"
@@ -97,23 +94,23 @@ msgstr "thème"
 
 #: inc/lib.info.php:425
 msgid "%1$s is not a valid directory, create the directory %2$s or change the settings"
-msgstr "%1$s n'est pas un répertoire valide, créez le répertoire %2$s ou changez les paramètres"
+msgstr "%1$s n'est pas un dossier valide, créez le dossier %2$s ou changez les paramètres"
 
 #: inc/lib.info.php:433
 msgid "%1$s directory is not writable, its path is %2$s"
-msgstr "le répertoire %1$s n'est pas accessible en écriture, son chemin est %2$s"
+msgstr "le dossier %1$s n'est pas accessible en écriture, son chemin est %2$s"
 
 #: inc/lib.info.php:440
 msgid "%1$s directory is not readable, its path is %2$s"
-msgstr "le répertoire %1$s n'est pas accessible en lecture, son chemin est %2$s"
+msgstr "le dossier %1$s n'est pas accessible en lecture, son chemin est %2$s"
 
 #: inc/lib.info.php:450
 msgid "%1$s directory's owner is %2$s"
-msgstr "le propriétaire du répertoire %1$s est %2$s"
+msgstr "le propriétaire du dossier %1$s est %2$s"
 
 #: inc/lib.info.php:454
 msgid "%1$s directory's permissions are %2$s"
-msgstr "les permissions du répertoire %1$s sont %2$s"
+msgstr "les permissions du dossier %1$s sont %2$s"
 
 #: index.php:57
 msgid "Legend:"
@@ -156,11 +153,11 @@ msgstr "URLs enregistrées"
 #: index.php:118
 #: index.php:166
 msgid "Directory informations"
-msgstr "Informations sur les répertoires"
+msgstr "Informations sur les dossiers"
 
 #: index.php:119
 msgid "Public directory is optional."
-msgstr "Le répertoire public est facultatif."
+msgstr "Le dossier public est facultatif."
 
 #: index.php:125
 msgid "The Dotclear version is %s"
@@ -226,4 +223,7 @@ msgstr "Les tables de votre base de données dont le nom commence par le préfix
 #: index.php:175
 msgid "Errors"
 msgstr "Erreurs"
+
+msgid "error"
+msgstr "erreur"
 
