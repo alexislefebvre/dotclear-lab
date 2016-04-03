@@ -17,9 +17,6 @@
 # License along with this program. If not, see
 # <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) and images are from Silk Icons :
-# <http://www.famfamfam.com/lab/icons/silk/>
-#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_CONTEXT_ADMIN')) {exit;}

@@ -17,9 +17,6 @@
 # License along with this program. If not, see
 # <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) and images are from Silk Icons :
-# <http://www.famfamfam.com/lab/icons/silk/>
-#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_RC_PATH')) {return;}
@@ -27,8 +24,8 @@ if (!defined('DC_RC_PATH')) {return;}
 $this->registerModule(
 	/* Name        */		"Versions Manager",
 	/* Description */		"Delete and update plugins versions",
-	/* Author      */		"Moe (http://gniark.net/)",
-	/* Version     */		"0.2",
+	/* Author      */		"Moe (http://gniark.net/), Pierre Van Glabeke",
+	/* Version     */		"0.3",
 	/* Properties */
 	array(
 		'permissions' => null,

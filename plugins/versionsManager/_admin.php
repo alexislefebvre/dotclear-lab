@@ -17,9 +17,6 @@
 # License along with this program. If not, see
 # <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) and images are from Silk Icons :
-# <http://www.famfamfam.com/lab/icons/silk/>
-#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_CONTEXT_ADMIN')) {exit;}
@@ -29,3 +26,16 @@ $_menu['Plugins']->addItem(__('Versions manager'),
 	'index.php?pf=versionsManager/icon.png',
 	preg_match('/plugin.php\?p=versionsManager(&.*)?$/',
 	$_SERVER['REQUEST_URI']),$core->auth->check('admin',$core->blog->id));
+
+$core->addBehavior('adminDashboardFavorites','versionsManagerDashboardFavorites');
+
+function versionsManagerDashboardFavorites($core,$favs)
+{
+	$favs->register('versionsManager', array(
+		'title' => __('Versions manager'),
+		'url' => 'plugin.php?p=versionsManager',
+		'small-icon' => 'index.php?pf=versionsManager/icon.png',
+		'large-icon' => 'index.php?pf=versionsManager/icon-big.png',
+		'permissions' => 'usage,contentadmin'
+	));
+}

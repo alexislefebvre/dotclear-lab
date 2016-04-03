@@ -1,3 +1,7 @@
+v0.3 - 03-04-2016 - Pierre Van Glabeke
+* ajout favori
+* dc2.6 requis
+
 v0.2 - 12-03-2015 - Pierre Van Glabeke
 * cosmétique dc2.6 (breadcrumb + affichage message)
 * fin de ligne php

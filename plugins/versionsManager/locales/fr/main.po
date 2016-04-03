@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: versionsManager 0.1\n"
+"Project-Id-Version: versionsManager 0.3\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2010-06-26T17:05:34+00:00\n"
 "Last-Translator: Ubuntu\n"
@@ -11,6 +11,9 @@ msgstr ""
 
 msgid "Versions manager"
 msgstr "Gestionnaire de versions"
+
+msgid "Delete and update plugins versions"
+msgstr "Supprimer et mettre à jour les versions des plugins"
 
 msgid "no version"
 msgstr "pas de version"
