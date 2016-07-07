@@ -1,105 +1,80 @@
+# Language: Français
+# Module: robotsTxt - 0.3
+# Date: 2016-07-07 09:16:21
+# Translated with translater 2015.03.02
+
 msgid ""
 msgstr ""
-"Project-Id-Version: robotsTxt\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-27 21:27+0100\n"
-"PO-Revision-Date: 2008-10-27 21:28+0100\n"
-"Last-Translator: Moe <poedit@gniark.net>\n"
-"Language-Team: Moe <poedit@gniark.net>\n"
-"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: robotsTxt 0.3\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-07-07T09:16:21+00:00\n"
+"Last-Translator: brol\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __\n"
-"X-Poedit-Basepath: ../..\n"
-"X-Poedit-SearchPath-0: .\n"
 
-#: _admin.php:23
-#: index.php:189
-#: index.php:323
-msgid "robotsTxt"
-msgstr ""
+#: _define.php:25
+msgid "robots.txt file generator"
+msgstr "Générateur de fichier robots.txt"
 
-#: index.php:165
+#: index.php:71
+msgid "Delete user-agent and all connected rules"
+msgstr "Supprimer l'agent utilisateur et toutes les règles liées"
+
+#: index.php:77
+msgid "Delete rule"
+msgstr "Supprimer la règle"
+
+#: index.php:167
 msgid "robotsTxt is now unactive"
 msgstr "robotsTxt est maintenant désactivé"
 
-#: index.php:326
-msgid "Plugin activation"
-msgstr ""
-
-#: index.php:329
+#: index.php:342
 msgid "Enable robotsTxt"
 msgstr "Activer robotsTxt"
 
-#: index.php:333
-msgid "General"
-msgstr ""
-
-#: index.php:339
+#: index.php:353
 msgid "Allow all robots (recommended)"
 msgstr "Autoriser tous les robots (recommandé)"
 
-#: index.php:343
+#: index.php:357
 msgid "Block all robots"
 msgstr "Bloquer tous les robots"
 
-#: index.php:350
+#: index.php:364
 msgid "Sitemap url"
 msgstr "URL de la Sitemap"
 
-#: index.php:359
+#: index.php:373
 msgid "Save sitemap url"
 msgstr "Sauvegarder l'URL de la Sitemap"
 
-#: index.php:368
+#: index.php:383
 msgid "Rule"
 msgstr "Règle"
 
-#: index.php:370
-msgid "User-agent:"
-msgstr ""
-
-#: index.php:374
+#: index.php:389
 msgid "Action:"
 msgstr "Action :"
 
-#: index.php:375
+#: index.php:390
 msgid "Allow"
 msgstr "Autoriser"
 
-#: index.php:375
+#: index.php:390
 msgid "Disallow"
 msgstr "Interdire"
 
-#: index.php:378
+#: index.php:393
 msgid "Action value:"
 msgstr "Valeur de l'action :"
 
-#: index.php:383
+#: index.php:398
 msgid "Add rule"
 msgstr "Ajouter la règle"
 
-#: index.php:388
+#: index.php:404
 msgid "Result"
-msgstr "Rèsultat"
+msgstr "Résultat"
 
-#: index.php:394
-#: index.php:396
-msgid "Help"
-msgstr ""
-
-#: index.php:397
-msgid "If the plugin is activated, you will be able to see the result at http://yourdomain/robots.txt"
-msgstr "Si le plugin est activé, vous pourrez voir le résultat sur http://votredomaine/robots.txt"
-
-#: index.php:398
-msgid "You could see differences between your configuration and the result. To resolve it, erase the Dotclear cache."
-msgstr "Vous pouvez voir des différences entre votre configuration et le résultat. Pour résoudre cela, effacez le cache de Dotclear."
-
-#: index.php:399
-#, php-format
-msgid "More about robots.txt on %s."
-msgstr "Plus à propos des robots sur %s"

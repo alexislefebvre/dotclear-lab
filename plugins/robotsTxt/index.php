@@ -19,8 +19,10 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+
+$page_title = __('robotTxt');
+
 $core->blog->settings->addNameSpace('robotstxt');
 
 if (is_null($core->blog->settings->robotstxt->robotstxt_active))
@@ -66,13 +68,13 @@ function displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive)
   $ikey = 0;
   foreach ($rules as $key => $value)
     {
-      echo '<br />User-Agent: '.$key.'&nbsp;&nbsp;&nbsp;&nbsp;(<a title="Delete user-agent and all connected rules" href="plugin.php?p=robotsTxt&amp;deleteUA='.$ikey.'">delete</a>)<br />';
+      echo '<br />User-Agent: '.$key.'&nbsp;&nbsp;&nbsp;&nbsp;(<a title="'.__('Delete user-agent and all connected rules').'" href="plugin.php?p=robotsTxt&amp;deleteUA='.$ikey.'">'.__('delete').'</a>)<br />';
       $ikey2 = 0;
       foreach ($value as $key1 => $value1)
 	{
 	  foreach ($value1 as $key2 => $value2)
 	    {
-	      echo $key1.': '.$key2.'&nbsp;&nbsp;&nbsp;&nbsp;(<a title="Delete rule" href="plugin.php?p=robotsTxt&amp;deleteUA='.$ikey.'&amp;deleteRule='.$ikey2++.'">delete</a>)<br />';
+	      echo $key1.': '.$key2.'&nbsp;&nbsp;&nbsp;&nbsp;(<a title="'.__('Delete rule').'" href="plugin.php?p=robotsTxt&amp;deleteUA='.$ikey.'&amp;deleteRule='.$ikey2++.'">'.__('delete').'</a>)<br />';
 	    }
 	}
       if ($defaultRule === true)
@@ -186,7 +188,7 @@ if (isSet($_REQUEST['allow']))
 ?>
 <html>
   <head>
-    <title><?php echo __('robotsTxt'); ?></title>
+    <title><?php echo $page_title; ?></title>
     <script type="text/javascript" charset="utf-8">
     $(function() {
       $('#addRule').submit(function() {
@@ -320,84 +322,91 @@ if (isSet($_REQUEST['allow']))
     </script>
   </head>
   <body>
-    <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('robotsTxt'); ?></h2>
-    <div>
-      <fieldset>
-        <legend><?php echo __('Plugin activation'); ?></legend>
-        <p class="field">
+<?php
+
+	echo dcPage::breadcrumb(
+		array(
+			html::escapeHTML($core->blog->name) => '',
+			'<span class="page-title">'.$page_title.'</span>' => ''
+		));
+
+if (!empty($msg)) {
+  dcPage::success($msg);
+}
+?>
+
+<div class="fieldset">
+  <h4><?php echo __('Plugin activation'); ?></h4>
+    <p class="field">
 	  <?php echo form::checkbox('active', 1, $active); ?>
 	  <label for="active">&nbsp;<?php echo __('Enable robotsTxt');?></label>
-        </p>
-      </fieldset>
-      <fieldset>
-        <legend><?php echo(__('General')); ?></legend>
+    </p>
+</div>
+
+<div class="fieldset">
+  <h4><?php echo(__('General')); ?></h4>
 	<table class="maximal">
-	  <tbody>
-            <tr>
-	      <td>
-	        <?php echo form::radio(array('defaultRule', 'allowAll'), 'allow', ($defaultRule == true ? true : false)); ?>
-                <label for="allowAll" class="classic"><?php echo(__('Allow all robots (recommended)')); ?></label>
-	      </td>
-	      <td>
-	        <?php echo form::radio(array('defaultRule', 'disallowAll'), 'disallow', ($defaultRule == true ? false : true)); ?>
-		<label for="disallowAll" class="classic"><?php echo(__('Block all robots')); ?></label>
-	      </td>
-	    </tr>
+    <tbody>
+      <tr>
+        <td>
+          <?php echo form::radio(array('defaultRule', 'allowAll'), 'allow', ($defaultRule == true ? true : false)); ?>
+          <label for="allowAll" class="classic"><?php echo(__('Allow all robots (recommended)')); ?></label>
+        </td>
+        <td>
+          <?php echo form::radio(array('defaultRule', 'disallowAll'), 'disallow', ($defaultRule == true ? false : true)); ?>
+          <label for="disallowAll" class="classic"><?php echo(__('Block all robots')); ?></label>
+        </td>
+      </tr>
 	    <tr>
 	      <td>
 	        <label for="sitemapUrlActive" class="classic">
-		  <?php echo form::checkbox('sitemapUrlActive', 1, ${'sitemapUrlActive'});?>
-		  &nbsp;<?php echo __('Sitemap url'); ?>
+		      <?php echo form::checkbox('sitemapUrlActive', 1, ${'sitemapUrlActive'});?>
+		      &nbsp;<?php echo __('Sitemap url'); ?>
 	        </label>
 	      </td>
-	      <td>
-		<form method="get" action="<?php http::getSelfURI(); ?>" id="saveSitemapUrl">
-	          <label for="sitemapUrl" class="classic">
-		    <?php echo form::field('sitemapUrl', 40, 128, $sitemapUrl); ?>
-	          </label>
-		  <?php echo $core->formNonce(); ?>
-		  <input type="submit" name="saveSitemapUrl" value="<?php echo __('Save sitemap url'); ?>" />
-		</form>
-	      </td>
-	    </tr>
-	  </tbody>
-        </table>
-      </fieldset>
-      <form method="get" action="<?php http::getSelfURI(); ?>" id="addRule">
-	<fieldset>
-          <legend><?php echo(__('Rule')); ?></legend>
-          <p class="field">
-            <label for="userAgent" class="classic"><?php echo(__('User-agent:')); ?></label>
-	    <?php echo form::field('userAgent', 40, 128, '*'); ?>
+        <td>
+  		  <form method="get" action="<?php http::getSelfURI(); ?>" id="saveSitemapUrl">
+	        <label for="sitemapUrl" class="classic">
+		      <?php echo form::field('sitemapUrl', 40, 128, $sitemapUrl); ?>
+	        </label>
+		      <p><?php echo $core->formNonce(); ?>
+		      <input type="submit" name="saveSitemapUrl" value="<?php echo __('Save sitemap url'); ?>" /></p>
+		    </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<form method="get" action="<?php http::getSelfURI(); ?>" id="addRule">
+<div class="fieldset">
+  <h4><?php echo(__('Rule')); ?></h4>
+    <p class="field">
+    <label for="userAgent" class="classic"><?php echo(__('User-agent:')); ?></label>
+	  <?php echo form::field('userAgent', 40, 128, '*'); ?>
 	  </p>
 	  <p class="field">
-	    <label for="ruleAction" class="classic"><?php echo(__('Action:')); ?></label>
-	    <?php echo form::combo('ruleAction', array(__('Allow') => 'allow', __('Disallow') => 'disallow')); ?>
-          </p>
-          <p class="field">
-            <label for="actionValue" class="classic"><?php echo(__('Action value:')); ?></label>
-	    <?php echo form::field('actionValue', 40, 128, ''); ?>
-          </p>
-          <p>
-            <?php echo $core->formNonce(); ?>
-            <input type="submit" name="addRule" value="<?php echo __('Add rule'); ?>" />
-          </p>
-        </fieldset>
-      </form>
-      <fieldset>
-        <legend><?php echo(__('Result')); ?></legend>
+	  <label for="ruleAction" class="classic"><?php echo(__('Action:')); ?></label>
+	  <?php echo form::combo('ruleAction', array(__('Allow') => 'allow', __('Disallow') => 'disallow')); ?>
+    </p>
+    <p class="field">
+    <label for="actionValue" class="classic"><?php echo(__('Action value:')); ?></label>
+	  <?php echo form::field('actionValue', 40, 128, ''); ?>
+    </p>
+    <p>
+    <?php echo $core->formNonce(); ?>
+    <input type="submit" name="addRule" value="<?php echo __('Add rule'); ?>" />
+    </p>
+</div>
+</form>
+
+<div class="fieldset">
+  <h4><?php echo(__('Result')); ?></h4>
 	<div class="contentToChange">
-        <p><?php displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive); ?></p>
-      </div>
-      </fieldset>
-    </div>
-    <div id="help" title="<?php echo __('Help'); ?>">
-      <div class="help-content">
-        <h2><?php echo(__('Help')); ?></h2>
-	<p><?php echo(__('If the plugin is activated, you will be able to see the result at http://yourdomain/robots.txt')); ?></p>
-	<p><?php echo(__('You could see differences between your configuration and the result. To resolve it, erase the Dotclear cache.')); ?></p>
-	<p><?php printf(__('More about robots.txt on %s.'),'<a title="robotstxt.org" href="http://www.robotstxt.org/">robotstxt.org</a>'); ?></p>
-      </div>
-    </div>
+    <p><?php displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive); ?></p>
+  </div>
+</div>
+
+<?php dcPage::helpBlock('robotsTxt'); ?>
   </body>
 </html>

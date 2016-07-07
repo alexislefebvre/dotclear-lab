@@ -24,7 +24,13 @@ $this->registerModule(
 /* Name */                      "robotsTxt",
 /* Description*/                "robots.txt file generator",
 /* Author */                    "William Dauchy and contributors",
-/* Version */                   '0.2',
-/* Permissions */               'contentadmin'
-				);
-?>
+/* Version */                   '0.3',
+	/* Properties */
+	array(
+		'permissions' => 'contentadmin',
+		'type' => 'plugin',
+		'dc_min' => '2.9',
+		'support' => 'https://forum.dotclear.org/viewforum.php?id=16',
+		'details' => 'http://lab.dotclear.org/wiki/plugin/robotsTxt'
+		)
+);

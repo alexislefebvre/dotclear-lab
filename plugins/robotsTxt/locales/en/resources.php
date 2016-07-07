@@ -19,21 +19,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Blog']->addItem(__('robotsTxt'),'plugin.php?p=robotsTxt','index.php?pf=robotsTxt/icon.png',
-		preg_match('/plugin.php\?p=robotsTxt(&.*)?$/',$_SERVER['REQUEST_URI']),
-		$core->auth->check('contentadmin',$core->blog->id));
-
-$core->addBehavior('adminDashboardFavorites','robotsTxtDashboardFavorites');
-
-function robotsTxtDashboardFavorites($core,$favs)
+if (!isset($__resources['help']['robotsTxt']))
 {
-	$favs->register('robotsTxt', array(
-		'title' => __('robotsTxt'),
-		'url' => 'plugin.php?p=robotsTxt',
-		'small-icon' => 'index.php?pf=robotsTxt/icon.png',
-		'large-icon' => 'index.php?pf=robotsTxt/icon-big.png',
-		'permissions' => 'usage,contentadmin'
-	));
+	$__resources['help']['robotsTxt'] = dirname(__FILE__).'/help/robotsTxt.html';
 }

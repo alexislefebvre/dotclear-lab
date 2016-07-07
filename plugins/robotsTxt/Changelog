@@ -1,6 +1,14 @@
+v0.3 - 07-07-2016 - Pierre Van Glabeke
+* code sécurité
+* cosmétique dc2.6
+* modif localisation
+* dc2.9 requis
+
 - 2010-07-02
   v0.2 - compatibility with dc2.2
+
 - 2008-10-29
   Adding french translation
+
 - 2008-07-20
   Initial version.

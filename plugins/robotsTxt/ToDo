@@ -1,0 +1,6 @@
+BUG :
+il faut cliquer deux fois pour supprimer une règle
+
+A FAIRE :
+ajouter bouton d'enregistrement de configuration
+ajouter message de confirmation d'action (succès ou échec)
