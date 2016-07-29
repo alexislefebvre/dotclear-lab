@@ -23,9 +23,15 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
 	/* Name */					"CountDown",
-	/* Description*/		"CountDown widget",
-	/* Author */				"Moe (http://gniark.net/)",
-	/* Version */				'1.4',
-	/* Permissions */		'admin'
+	/* Description*/		"Countdown and stopwatch",
+	/* Author */				"Moe (http://gniark.net/), Pierre Van Glabeke",
+	/* Version */				'1.5',
+	/* Properties */
+	array(
+		'permissions' => 'admin',
+		'type' => 'plugin',
+		'dc_min' => '2.9',
+		'support' => 'http://lab.dotclear.org/wiki/plugin/countdown',
+		'details' => 'http://plugins.dotaddict.org/dc2/details/countdown'
+		)
 );
-?>

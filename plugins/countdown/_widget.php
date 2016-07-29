@@ -32,8 +32,10 @@ class CountDownBehaviors
 		global $core;
 		$tz = $core->blog->settings->system->blog_timezone;
 
-		$w->create('CountDown',__('CountDown'),
-			array('CountDownBehaviors','Show'));
+		$w->create('CountDown',__('Countdown'),
+			array('CountDownBehaviors','Show'),
+			null,
+			__('A countdown to a future date or stopwatch to a past date'));
 
 		$w->CountDown->setting('title',__('Title:'),__('CountDown'),'text');
 
@@ -132,6 +134,7 @@ class CountDownBehaviors
 		);
     $w->CountDown->setting('content_only',__('Content only'),0,'check');
     $w->CountDown->setting('class',__('CSS class:'),'');
+		$w->CountDown->setting('offline',__('Offline'),0,'check');
 	}
 	
 	# escape quotes but not XHTML tags
@@ -147,6 +150,9 @@ class CountDownBehaviors
 	{
 		# set timezone
 		global $core;
+
+		if ($w->offline)
+			return;
 
 		if (($w->homeonly == 1 && $core->url->type != 'default') ||
 			($w->homeonly == 2 && $core->url->type == 'default')) {
@@ -194,8 +200,6 @@ class CountDownBehaviors
 		}
 		
 		# output
-		$header = (strlen($w->title) > 0)
-			? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
 		$text = ($after) ? $w->text_after : $w->text_before;
 		if (strlen($text) > 0) {$text .= ' ';}
 		
@@ -210,10 +214,12 @@ class CountDownBehaviors
 		
 		if (!$w->dynamic)
 		{
-		return $res = ($w->content_only ? '' : '<div class="countdown'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').$header.
-		'<p class="text">'.$text.'<span>'.$str.'</span></p>'.
-		($w->content_only ? '' : '</div>');
+
+		$res = ($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+		'<p>'.$text.'<span>'.$str.'</span></p>';
+		return $w->renderDiv($w->content_only,'countdown '.$w->class,'',$res);
 		}
+		
 		else
 		{
 			# dynamic display with Countdown for jQuery
@@ -256,8 +262,8 @@ class CountDownBehaviors
 				$layout = $w->dynamic_layout_before;
 			}
 			
-			return $res = ($w->content_only ? '' : '<div class="countdown'.($w->class ? ' '.html::escapeHTML($w->class) : '').'">').$header.
-				'<p class="text" id="countdown-'.$id.'">'.$text.$str.'</p>'.
+			$res = ($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+				'<p id="countdown-'.$id.'">'.$text.$str.'</p>'.
 				'<script type="text/javascript">'."\n".
 				'//<![CDATA['."\n".
 					'$().ready(function() {'.
@@ -273,9 +279,8 @@ class CountDownBehaviors
 					});".
 					'});'."\n".
 				'//]]>'.
-				'</script>'."\n".
-			($w->content_only ? '' : '</div>');
+				'</script>'."\n";
+				return $w->renderDiv($w->content_only,'countdown '.$w->class,'',$res);
 		}
 	}
 }
-?>

@@ -10,8 +10,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
+msgid "Countdown and stopwatch"
+msgstr "Compte à rebours ou chronomètre"
+
+msgid "A countdown to a future date or stopwatch to a past date"
+msgstr "Un compte à rebours vers une date à venir ou un chronomètre vers une date passée"
+
 #: _widget.php:38
-msgid "CountDown"
+msgid "Countdown"
 msgstr "Chronomètre"
 
 #: _widget.php:41
@@ -36,7 +42,7 @@ msgstr "tous"
 
 #: _widget.php:162
 msgid "year"
-msgstr "année"
+msgstr "an"
 
 #: _widget.php:164
 msgid "month"
@@ -92,7 +98,7 @@ msgstr "Depuis {y<}{yn} {yl}, {y>} {o<}{on} {ol}, {o>} {w<}{wn} {wl}, {w>} {d<}{
 
 #: _widget.php:162
 msgid "years"
-msgstr "années"
+msgstr "ans"
 
 #: _widget.php:164
 msgid "months"
