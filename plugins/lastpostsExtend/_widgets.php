@@ -3,8 +3,8 @@
 #
 # This file is part of lastpostsExtend, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
-# contact@jcdenis.fr http://jcd.lv
+# Copyright (c) 2009-2016 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcdenis.net
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -237,7 +237,13 @@ class lastpostsextendWidget
 			__('CSS class:'),
 			''
 		);
-		$w->lastpostsextend->setting('offline',__('Offline'),0,'check');
+		# widget option - put offline
+		$w->lastpostsextend->setting(
+			'offline',
+			__('Offline'),
+			0,
+			'check'
+		);
 	}
 	
 	public static function parseWidget($w)
@@ -250,9 +256,10 @@ class lastpostsextendWidget
 			'from' => ''
 		);
 
-		if ($w->offline)
-			return;
-		
+		# Widget is offline
+		if ($w->offline) 
+			return; 
+
 		# Home page only
 		if ($w->homeonly == 1 && $core->url->type != 'default' 
 		||  $w->homeonly == 2 && $core->url->type == 'default'
@@ -350,10 +357,7 @@ class lastpostsextendWidget
 		}
 
 		# Return
-
-		$res =
-		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
-		'<ul>';
+		$res = $w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '';
 
 		while ($rs->fetch()) {
 			$res .= '<li>'.
@@ -406,11 +410,13 @@ class lastpostsextendWidget
 			}
 			$res .= '</li>';
 		}
-		$res .= '</ul>';
 
-		return $w->renderDiv($w->content_only,'lastpostsextend '.$w->class,'',$res);
-
-		return $res;
+		return $w->renderDiv(
+			$w->content_only, 
+			'lastpostsextend '.$w->class, 
+			'', 
+			'<ul>'.$res.'</ul>'
+		);
 	}
 	
 	private static function entryFirstImage($core, $type, $id, $size='s')

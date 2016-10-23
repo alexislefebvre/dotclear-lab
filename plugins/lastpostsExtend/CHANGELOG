@@ -1,8 +1,17 @@
-lastpostsExtend 2015.01.13 Pierre Van Glabeke
+lastpostsExtend 2016.10.24
 ===========================================================
- * Compatibilité dotclear 2.7
- * Ajout options widget et compatibilité currywurst
- * Modifications locales
+ * oops missed 2015 update
+
+lastpostsExtend 2016.10.23
+===========================================================
+ * Used new widget rendering method
+ * Updated year 
+
+lastpostsExtend 2015.01.13 Pierre Van Glabeke 
+=========================================================== 
+ * Compatibilité dotclear 2.7 
+ * Ajout options widget et compatibilité currywurst 
+ * Modifications locales 
 
 lastpostsExtend 2013.12.01
 ===========================================================
