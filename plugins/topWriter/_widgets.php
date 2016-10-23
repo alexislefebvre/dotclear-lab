@@ -3,8 +3,8 @@
 #
 # This file is part of topWriter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
-# contact@jcdenis.fr http://jcd.lv
+# Copyright (c) 2009-2016 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcdenis.net
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -89,9 +89,23 @@ class topWriterWidget
 				__('Except on home page')	=> 2
 			)
 		);
-    $w->topcom->setting('content_only',__('Content only'),0,'check');
-    $w->topcom->setting('class',__('CSS class:'),'');
-		$w->topcom->setting('offline',__('Offline'),0,'check');
+		$w->topcom->setting(
+			'content_only',
+			__('Content only'),
+			0,
+			'check'
+		);
+		$w->topcom->setting(
+			'class',
+			__('CSS class:'),
+			''
+		);
+		$w->topcom->setting(
+			'offline',
+			__('Offline'),
+			0,
+			'check'
+		);
 
     #Top entries widget
 		$w->create(
@@ -152,9 +166,23 @@ class topWriterWidget
 				__('Except on home page')	=> 2
 			)
 		);
-    $w->toppost->setting('content_only',__('Content only'),0,'check');
-    $w->toppost->setting('class',__('CSS class:'),'');
-		$w->toppost->setting('offline',__('Offline'),0,'check');
+		$w->toppost->setting(
+			'content_only',
+			__('Content only'),
+			0,
+			'check'
+		);
+		$w->toppost->setting(
+			'class',
+			__('CSS class:'),
+			''
+		);
+		$w->toppost->setting(
+			'offline',
+			__('Offline'),
+			0,
+			'check'
+		);
 	}
 
 	public static function topCom($w)
@@ -248,9 +276,14 @@ class topWriterWidget
 		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
 		'<ul>'.$content.'</ul>';
 
-		return $w->renderDiv($w->content_only,'topcomments '.$w->class,'',$res);
+		return $w->renderDiv(
+			$w->content_only,
+			'topcomments '.$w->class,
+			'',
+			$res
+		);
 	}
-	
+
 	public static function topPost($w)
 	{
 		global $core;
@@ -332,7 +365,12 @@ class topWriterWidget
 		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
 		'<ul>'.$content.'</ul>';
 
-		return $w->renderDiv($w->content_only,'topentries '.$w->class,'',$res);
+		return $w->renderDiv(
+			$w->content_only,
+			'topentries '.$w->class,
+			'',
+			$res
+		);
 	}
 
 	private static function period($t,$p)
