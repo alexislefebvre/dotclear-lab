@@ -3,8 +3,8 @@
 #
 # This file is part of lastBlogUpdate, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2013 Jean-Christian Denis and contributors
-# contact@jcdenis.fr http://jcd.lv
+# Copyright (c) 2009-2016 Jean-Christian Denis and contributors
+# contact@jcdenis.fr http://jcdenis.net
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -23,6 +23,7 @@ function lastBlogUpdateWidgetPublic($w)
 {
 	global $core;
 
+	# offline mod
 	if ($w->offline)
 		return;
 
@@ -93,9 +94,9 @@ function lastBlogUpdateWidgetPublic($w)
 	}
 
 	# Display
-		$res =
-		($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
-		'<ul>'.$blog.$post.$comment.$media.$addons.'</ul>';
+	$res =
+	($w->title ? $w->renderTitle(html::escapeHTML($w->title)) : '').
+	'<ul>'.$blog.$post.$comment.$media.$addons.'</ul>';
 
-		return $w->renderDiv($w->content_only,'lastblogupdate '.$w->class,'',$res);
+	return $w->renderDiv($w->content_only,'lastblogupdate '.$w->class,'',$res);
 }
