@@ -1,8 +1,3 @@
-# Language: Français
-# Module: simplyFavicon - 2011.06.3
-# Date: 2011-08-03 21:55:04
-# Translated with translater 1.5
-
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,10 +10,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: _admin.php:26
-msgid "Enable \"Simply favicon\" extension"
-msgstr "Activer l'extension \"Simply favicon\""
+msgid "Enable \"Simply favicon\" plugin"
+msgstr "Activer le plugin \"Simply favicon\""
 
 #: _admin.php:28
 msgid "You must place an image called favicon.png or .jpg or .ico into your blog's public directory."
-msgstr "Vous devez placer une image nommée favicon.png, .jpg ou .ico dans le répertoire publique du blog."
+msgstr "Vous devez placer une image nommée favicon.png, .jpg ou .ico dans le répertoire public du blog."
 
+#: _define.php:17
+msgid "Multi-agents favicon"
+msgstr "Favicon multi-agents"

@@ -2,8 +2,8 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of simplyFavicon, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009-2011 JC Denis and contributors
-# jcdenis@gdwd.com
+# Copyright (c) 2009-2016 JC Denis and contributors
+# contact@jcdenis.fr http://jcdenis.net
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -17,22 +17,23 @@ $core->addBehavior('adminBeforeBlogSettingsUpdate',array('adminSimplyFavicon','a
 
 class adminSimplyFavicon
 {
-	public static function adminBlogPreferencesForm($core,$blog_settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
-		'<fieldset><legend>Favicon</legend>'.
+		'<div class="fieldset"><h4>Favicon</h4>'.
 		'<p><label class="classic">'.
-		form::checkbox('simply_favicon','1',(boolean) $blog_settings->system->simply_favicon).
-		__('Enable "Simply favicon" extension').'</label></p>'.
+		form::checkbox('simply_favicon','1',(boolean) $settings->simplyfavicon->simply_favicon).
+		__('Enable "Simply favicon" plugin').'</label></p>'.
 		'<p class="form-note">'.
 		__("You must place an image called favicon.png or .jpg or .ico into your blog's public directory.").
 		'</p>'.
-		'</fieldset>';
+		'</div>';
 	}
 	
-	public static function adminBeforeBlogSettingsUpdate($blog_settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
-		$blog_settings->system->put('simply_favicon',!empty($_POST['simply_favicon']));
+		$settings->addNameSpace('simplyfavicon');
+		$settings->simplyfavicon->put('simply_favicon',!empty($_POST['simply_favicon']));
+		$settings->addNameSpace('system');
 	}
 }
-?>
