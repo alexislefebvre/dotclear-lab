@@ -186,7 +186,7 @@ function backup ($changes) {
 		}
 	} else {
 		if (file_exists(DC_DIGESTS_BACKUP)) {
-			echo '<div class="error"><p>'.__('Fake Me Up has already been run once.').'</p>'.
+			echo '<div class="static-msg"><p>'.__('Fake Me Up has already been run once.').'</p>'.
 				'<form action="'.$p_url.'" method="post">'.
 				'<p><input type="checkbox" name="erase_backup" id="erase_backup" class="classic" />&nbsp;'.
 				'<label for="erase_backup" class="classic">'.__("Remove the backup digest file, I want to play again").'</label>'.
