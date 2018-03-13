@@ -1,7 +1,35 @@
-Th�me en cours de nettoyage pour sa premiere apparition sur le Lab 
+Théme en cours de nettoyage pour sa premiere apparition sur le Lab
 
-arriver pr�vus dans le courant de la semaine 3 de l'ann�e 2009
+arriver prévus dans le courant de la semaine 3 de l'année 2009
 
-a bient�t 
+a bientôt
 
 Renard Blanc
+
+Explication du thème Coquelicot.
+
+Ce thème comporte les principales balises d'un blog réalisé avec Dotclear - Etablie dans le cadre des " Aorakits " par Kozlika pour la dcTeam Kit base 3 colonnes fluides, nav-main-extra. Thème en version 1.0 du 30 janvier 2009 par Renard Blanc.
+Le titre du bandeau supérieur est modifiable par vos soins et pour cela je vous livre le fichier Pspimage (paint shop pro) nécessaire.
+
+Listes des plugins officiels :
+
+1.  aboutConfig   0.2
+2.  akismet     1.0
+3.  antispam    1.2
+4.  blogroll    1.1
+5.  blowupConfig    1.0
+6.  externalMedia     0.6
+7.  fairTrackbacks    1.0
+8.  importExport    2.0
+9.  maintenance   1.0
+10. metadata    1.0.2
+11. pages     1.0
+12. pings     1.0
+13. themeEditor   0.6
+14. widgets   1.6
+
+
+
+Explaining the theme Coquelicot
+
+This includes the main theme of a blog tags made with Dotclear - Established under the "Aorakits" by Kozlika Kit for dcTeam base fluid 3 columns, nav-main-extra. Theme in version 1.0 of 30 January 2009 by Renard Blanc.
